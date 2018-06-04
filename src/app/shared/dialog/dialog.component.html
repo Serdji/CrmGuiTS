@@ -1,0 +1,3 @@
+<h2 mat-dialog-title *ngIf="data.status === 'ok'" class="dialog__ok">{{ data.message }}</h2>
+<h2 mat-dialog-title *ngIf="data.status === 'error'" class="dialog__error">{{ data.message }}</h2>
+<h2 mat-dialog-title *ngIf="data.status === 'text'" class="dialog__text">{{ data.message }}</h2>
