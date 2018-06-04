@@ -20,7 +20,7 @@ export class AppComponent implements OnInit {
     this.localStorage.getItem( 'token' ).subscribe(
       value => {
         if ( !value ) this.router.navigate([ '/' ] );
-        if ( this.location.path() === '' ) this.router.navigate([ '/admin/users' ] );
+        if ( this.location.path() === '' ) this.router.navigate([ '/profile/profilesearch' ] );
       }
     );
   }

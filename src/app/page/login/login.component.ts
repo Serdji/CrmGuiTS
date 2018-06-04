@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.localStorage.setItem( 'user', this.formLogin.getRawValue() )
               .subscribe();
             this.localStorage.setItem( 'token', value )
-              .subscribe( _ => this.router.navigate( [ 'admin/users' ] ) );
+              .subscribe( _ => this.router.navigate( [ 'profile/profilesearch' ] ) );
           },
           _ => this.isErrorAuth = true
         );

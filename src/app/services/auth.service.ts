@@ -20,6 +20,6 @@ export class AuthService {
         .set( 'password', params.password )
         .set( 'grant_type', 'password' ),
     };
-    return this.http.post( environment.crmApi + 'web_auth/oauth/token', options.params, { headers: options.headers } );
+    return this.http.post( environment.crmApi + 'api/oauth/token', options.params, { headers: options.headers } );
   }
 }
