@@ -15,6 +15,8 @@ import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
 
 
 @NgModule( {
@@ -34,6 +36,8 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatPaginatorModule,
     MatProgressBarModule,
     MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   exports: [
     MatToolbarModule,
@@ -51,6 +55,11 @@ import { MatGridListModule } from '@angular/material/grid-list';
     MatPaginatorModule,
     MatProgressBarModule,
     MatGridListModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+  ],
+  providers: [
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
   ],
 } )
 export class MaterialModule {

@@ -1,3 +1,83 @@
-<p>
-  profile-search works!
-</p>
+<div class="profile-search">
+  <form class="profile-search__form" [formGroup]="formProfileSearch">
+    <mat-grid-list cols="4" rowHeight="300px">
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="lastname" autocomplete="off" type="text" placeholder="Фамилия">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="firstname" autocomplete="off" type="text" placeholder="Имя">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="ticketnum" autocomplete="off" type="text" placeholder="№ билета">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="booknum" autocomplete="off" type="text" placeholder="№ брони">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="emdnum" autocomplete="off" type="text" placeholder="№ EMD">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="flightnum" autocomplete="off" type="text" placeholder="№ рейса">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="flightdatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="flightDateFrom">
+              <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="flightdateto" placeholder="dd.MM.yyyy" [matDatepicker]="flightDateTo">
+              <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #flightDateTo color="primary"></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <mat-select  formControlName="cityfrom" placeholder="Откуда">
+                <mat-option *ngFor="let city of citys" id="{{ city.id }}" value="{{ city.value }}">{{ city.value }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <mat-select  formControlName="cityto" placeholder="Куда">
+                <mat-option *ngFor="let city of citys" id="{{ city.id }}" value="{{ city.value }}">{{ city.value }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="citydatefrom" placeholder="dd/MM/yyyy" [matDatepicker]="cityDateFrom">
+              <mat-datepicker-toggle matSuffix [for]="cityDateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #cityDateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="citydateto" placeholder="dd/MM/yyyy" [matDatepicker]="cityDateTo">
+              <mat-datepicker-toggle matSuffix [for]="cityDateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #cityDateTo></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+    </mat-grid-list>
+  </form>
+</div>

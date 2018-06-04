@@ -24,6 +24,7 @@ import { SidenavComponent } from './shared/layout/sidenav/sidenav.component';
 import { LayoutService } from './shared/layout/layout.service';
 import { ProfileComponent } from './page/profile/profile.component';
 import { ProfileSearchComponent } from './components/profile-search/profile-search.component';
+import { ProfileSearchService } from './components/profile-search/profile-search.service';
 
 
 if ( environment.production ) {
@@ -61,6 +62,7 @@ if ( environment.production ) {
     HttpQueryService,
     LoginService,
     LayoutService,
+    ProfileSearchService,
   ],
   bootstrap: [ AppComponent ],
 } )
