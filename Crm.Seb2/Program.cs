@@ -20,8 +20,7 @@ namespace Crm.Seb2
                 Console.WriteLine();
             }
 
-            AirlineElement x = ss.Airlines.SingleOrDefaul
-                t(a => a.Code == "7R");
+            AirlineElement x = ss.Airlines.SingleOrDefault(a => a.Code == "7R");
             if (x != null)
                 Console.WriteLine(x.PathIn);
             Console.ReadKey(true);
