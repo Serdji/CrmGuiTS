@@ -1,4 +1,4 @@
-export const OriginDestination = [ { 'value': 'БИДЖАЯ (BJA)', 'id': 2101837825 }, {
+export const originDestinationObj = [ { 'value': 'БИДЖАЯ (BJA)', 'id': 2101837825 }, {
   'value': 'PERAITEPUY (PPH)',
   'id': 2102303225
 }, { 'value': 'АТАР (ATR)', 'id': 2101739525 }, {

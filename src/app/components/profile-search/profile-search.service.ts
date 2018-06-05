@@ -1,6 +1,5 @@
-import { OriginDestination } from './OriginDestination';
-import { Observable } from 'rxjs';
-import { of } from 'rxjs/observable/of';
+import { originDestinationObj } from './origin-destination';
+import { Observable, of } from 'rxjs';
 import { Icity } from '../../interface/icity';
 
 
@@ -9,7 +8,7 @@ export class ProfileSearchService {
   constructor() { }
 
   getCity(): Observable<Icity[]> {
-    return of( OriginDestination );
+    return of( originDestinationObj );
   }
 
 }
