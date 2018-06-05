@@ -67,12 +67,12 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="citydatefrom" placeholder="dd/MM/yyyy" [matDatepicker]="cityDateFrom">
+              <input matInput formControlName="citydatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="cityDateFrom">
               <mat-datepicker-toggle matSuffix [for]="cityDateFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #cityDateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="citydateto" placeholder="dd/MM/yyyy" [matDatepicker]="cityDateTo">
+              <input matInput formControlName="citydateto" placeholder="dd.MM.yyyy" [matDatepicker]="cityDateTo">
               <mat-datepicker-toggle matSuffix [for]="cityDateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #cityDateTo></mat-datepicker>
             </mat-form-field>
@@ -80,6 +80,26 @@
         </mat-card>
       </mat-grid-tile>
 
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <mat-select formControlName="divisionid" placeholder="Название группы">
+                <mat-option *ngFor="let tree of trees" [value]="tree.Name" [id]="tree.ID" >
+                  {{ tree.Name }} | ID={{ tree.ID }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <mat-select formControlName="groupid" placeholder="Название спец группы">
+                <mat-option *ngFor="let group of groups" [value]="group.Name" [id]="group.Id">
+                  {{ group.Name }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
     </mat-grid-list>
   </form>
 </div>
