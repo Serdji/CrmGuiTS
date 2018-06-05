@@ -1,7 +1,10 @@
 import { Injectable } from '@angular/core';
-import { takeWhile } from 'rxjs/operators';
+import { fromEvent } from 'rxjs/observable/fromEvent';
+import { interval } from 'rxjs/observable/interval';
+import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { LocalStorage } from '@ngx-pwa/local-storage';
+import { takeWhile } from 'rxjs/operators';
 
 @Injectable()
 export class ActivityUserService {
@@ -20,17 +23,18 @@ export class ActivityUserService {
 
   idleLogout() {
     let t;
-    const resetTimer = _ => {
+    const resetTimer = () => {
       clearTimeout( t );
       t = setTimeout( _ => { this.logout(); }, this.getMinutes( 15 ) );  // time is in milliseconds
     };
 
-    window.onload = resetTimer;
-    window.onmousemove = resetTimer;
-    window.onmousedown = resetTimer; // catches touchscreen presses
-    window.onclick = resetTimer;     // catches touchpad clicks
-    window.onscroll = resetTimer;    // catches scrolling with arrow keys
-    window.onkeypress = resetTimer;
+
+    fromEvent(document, 'load').subscribe( _ => resetTimer() );
+    fromEvent(document, 'mousemove').subscribe( _ => resetTimer() );
+    fromEvent(document, 'mousedown').subscribe( _ => resetTimer() );
+    fromEvent(document, 'click').subscribe( _ => resetTimer() );
+    fromEvent(document, 'scroll').subscribe( _ => resetTimer() );
+    fromEvent(document, 'keypress').subscribe( _ => resetTimer() );
   }
 
 
