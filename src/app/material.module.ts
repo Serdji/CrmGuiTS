@@ -17,6 +17,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
+import {MatAutocompleteModule} from '@angular/material/autocomplete';
 
 
 @NgModule( {
@@ -38,6 +39,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
   ],
   exports: [
     MatToolbarModule,
@@ -57,6 +59,7 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
     MatGridListModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
