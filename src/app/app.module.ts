@@ -8,12 +8,10 @@ import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { LoginComponent } from './page/login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { AuthService } from './services/auth.service';
-import { LocalStorageModule } from '@ngx-pwa/local-storage';
 import { AuthGuard } from './auth.guard';
 import { ActivityUserService } from './services/activity-user.service';
-import { HttpQueryService } from './services/http-query.service';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { TabletExampleComponent } from './shared/tablet-example/tablet-example.component';
 import { environment } from '../environments/environment';
@@ -24,6 +22,8 @@ import { SidenavComponent } from './shared/layout/sidenav/sidenav.component';
 import { LayoutService } from './shared/layout/layout.service';
 import { ProfileComponent } from './page/profile/profile.component';
 import { ProfileSearchComponent } from './components/profile-search/profile-search.component';
+import { ProfileSearchService } from './components/profile-search/profile-search.service';
+import { AuthInterceptor } from './services/auth-interceptor';
 
 
 if ( environment.production ) {
@@ -52,15 +52,19 @@ if ( environment.production ) {
     MaterialModule,
     ReactiveFormsModule,
     HttpClientModule,
-    LocalStorageModule,
   ],
   providers: [
     AuthService,
     AuthGuard,
     ActivityUserService,
-    HttpQueryService,
     LoginService,
     LayoutService,
+    ProfileSearchService,
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    }
   ],
   bootstrap: [ AppComponent ],
 } )

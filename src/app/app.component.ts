@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 
 @Component( {
   selector: 'app-root',
@@ -12,17 +11,12 @@ export class AppComponent implements OnInit {
 
   constructor(
     private router: Router,
-    private localStorage: LocalStorage,
     private location: Location,
   ) { }
 
   ngOnInit(): void {
-    this.localStorage.getItem( 'token' ).subscribe(
-      value => {
-        if ( !value ) this.router.navigate([ '/' ] );
-        if ( this.location.path() === '' ) this.router.navigate([ '/profile/profilesearch' ] );
-      }
-    );
+    const token = JSON.parse(localStorage.getItem('token'));
+    if ( !token ) this.router.navigate([ '/' ] );
   }
 
 }
