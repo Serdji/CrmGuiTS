@@ -10,7 +10,11 @@ namespace Crm.Seb2
     public sealed class ServiceSettings : ConfigurationSection
     {
         private const string serviceSettingsLabel = "serviceSettings";
-        private const string connectionStringLabel = "connectionString";
+        private const string dateStartLabel = "dateStart";
+        private const string rangeInMinutesLabel = "rangeInMinutes";
+  
+        private const string sebGatewayLabel = "sebGateway";
+
         private const string airlinesLabel = "airlines";
         private const string airlineLabel = "airline";
 
@@ -19,11 +23,24 @@ namespace Crm.Seb2
 
         public static ServiceSettings Instance { get { return lazy.Value; } }
 
-        [ConfigurationProperty(connectionStringLabel)]
-        public string ConnectionString
+        [ConfigurationProperty(dateStartLabel)]
+        public DateTime DateStart
         {
-            get { return (string)this[connectionStringLabel]; }
+            get { return (DateTime)this[dateStartLabel]; }
         }
+
+        [ConfigurationProperty(rangeInMinutesLabel)]
+        public int RangeInMinutes
+        {
+            get { return (int)this[rangeInMinutesLabel]; }
+        }
+
+        [ConfigurationProperty(sebGatewayLabel)]
+        public SebGatewayElement SebGateway
+        {
+            get { return (SebGatewayElement)this[sebGatewayLabel]; }
+        }
+
 
         [ConfigurationProperty(airlinesLabel)]
         [ConfigurationCollection(typeof(AirlineElementCollection), AddItemName = airlineLabel)]
@@ -31,6 +48,34 @@ namespace Crm.Seb2
         {
             get { return (AirlineElementCollection)this[airlinesLabel]; }
         }
+    }
+
+    public class SebGatewayElement : ConfigurationElement
+    {
+        private const string urlLabel = "url";
+        private const string proxyLabel = "proxy";
+        private const string transactionInBatchLimitLabel = "transactionInBatchLimit";
+        private const string connectionLimitLabel = "connectionLimit";
+        private const string getTransactionsListDelayInMillisecondLabel = "getTransactionsListDelayInMillisecond";
+        private const string getTransactionsDetailDelayInMillisecondLabel = "getTransactionsDetailDelayInMillisecond";
+
+        [ConfigurationProperty(urlLabel)]
+        public string URL { get { return (string)this[urlLabel]; } }
+
+        [ConfigurationProperty(proxyLabel)]
+        public string Proxy { get { return (string)this[proxyLabel]; } }
+
+        [ConfigurationProperty(transactionInBatchLimitLabel)]
+        public int TransactionInBatchLimit { get { return (int)this[transactionInBatchLimitLabel]; } }
+
+        [ConfigurationProperty(connectionLimitLabel)]
+        public int ConnectionLimit { get { return (int)this[connectionLimitLabel]; } }
+
+        [ConfigurationProperty(getTransactionsListDelayInMillisecondLabel)]
+        public int GetTransactionsListDelayInMillisecond { get { return (int)this[getTransactionsListDelayInMillisecondLabel]; } }
+
+        [ConfigurationProperty(getTransactionsDetailDelayInMillisecondLabel)]
+        public int GetTransactionsDetailDelayInMillisecond { get { return (int)this[getTransactionsDetailDelayInMillisecondLabel]; } }
     }
 
     public class AirlineElementCollection : ConfigurationElementCollection, IEnumerable<AirlineElement>

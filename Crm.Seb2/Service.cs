@@ -6,6 +6,10 @@ using System.Threading.Tasks;
 using WinService;
 using NLog;
 using System.Threading;
+using Crm.Seb2;
+using Crm.Seb.Models.Request;
+using Crm.Seb.Models.Response;
+using System.Net;
 
 namespace Crm.Seb2
 {
@@ -13,51 +17,92 @@ namespace Crm.Seb2
     public class Service : IWinService
     {
         private readonly Logger log = LogManager.GetCurrentClassLogger();
+        private ServiceSettings ss = ServiceSettings.Instance;
 
-        private Task _proccessSmsQueueTask;
-        private CancellationTokenSource _cancellationTokenSource;
+        private Task processRangeTask;
+        private Task processTransactionsTask;
+        private CancellationTokenSource cancellationTokenSource;
 
         public Service()
         {
             AppDomain.CurrentDomain.UnhandledException += OnUnhandledException;
+            ServicePointManager.DefaultConnectionLimit = ss.SebGateway.ConnectionLimit;
         }
 
         public void Start()
         {
-            _cancellationTokenSource = new CancellationTokenSource();
-            _proccessSmsQueueTask = Task.Run(() => DoWorkAsync(_cancellationTokenSource.Token));
+            var sebManager = new SebManager(ss.SebGateway.URL, ss.SebGateway.Proxy);
+
+            cancellationTokenSource = new CancellationTokenSource();
+            processRangeTask = Task.Run(() => DoProcessRange(sebManager, cancellationTokenSource.Token));
+            processTransactionsTask = Task.Run(() => DoProcessTransactions(sebManager, cancellationTokenSource.Token));
         }
 
-        private async Task DoWorkAsync(CancellationToken token)
+        private async Task DoProcessRange(SebManager sebManager, CancellationToken cancellationToken)
         {
-            while (true)
+            try
             {
-                try
+                DateTime dateStart = ss.DateStart;
+                DateTime dateEnd = dateStart.AddMinutes(ss.RangeInMinutes);
+        
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    // some work
-                    ServiceSettings ss = ServiceSettings.Instance;
-                    log.Info(ss.ConnectionString);
+                    int awaitingTransactionLimit = ss.SebGateway.TransactionInBatchLimit * ss.SebGateway.ConnectionLimit * 2;
+                    if (sebManager.TransactionsToProcessCount < awaitingTransactionLimit) {
+                        var range = new DateRange(dateStart, dateEnd);
+                        sebManager.AddRangeToProcess(range);
 
-                    foreach (var airline in ss.Airlines)
-                    {
-                        log.Trace("Airline code: {0}", airline.Code);
-                        log.Trace("Airline pathIn: {0}", airline.PathIn);
+                        Task task = Task.Run(() => sebManager.GetTransactionsListAsync(cancellationToken));
+
+                        dateStart = dateEnd;
+                        dateEnd = dateStart.AddMinutes(ss.RangeInMinutes);
                     }
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(ss.SebGateway.GetTransactionsListDelayInMillisecond), cancellationToken);
                 }
-                catch (Exception e)
+            }
+            catch (OperationCanceledException e)
+            {
+                log.Info(e.Message);
+            }
+            catch (Exception e)
+            {
+                log.Fatal(e);
+            }
+        }
+
+        private async Task DoProcessTransactions(SebManager sebManager, CancellationToken cancellationToken)
+        {
+            try
+            {
+                while (!cancellationToken.IsCancellationRequested)
                 {
-                    log.Fatal(e);
+                    if (sebManager.TransactionsToProcessCount > 0)
+                    {
+                        Task task = Task.Run(() => sebManager.GetTransactionsDetailAsync(ss.SebGateway.TransactionInBatchLimit
+                            , cancellationToken));
+                    }
+
+                    await Task.Delay(TimeSpan.FromMilliseconds(ss.SebGateway.GetTransactionsDetailDelayInMillisecond), cancellationToken);
                 }
-                await Task.Delay(TimeSpan.FromSeconds(1), token);
+            }
+            catch (OperationCanceledException e)
+            {
+                log.Info(e.Message);
+            }
+            catch (Exception e)
+            {
+                log.Fatal(e);
             }
         }
 
         public void Stop()
         {
-            _cancellationTokenSource.Cancel();
+            cancellationTokenSource.Cancel();
             try
             {
-                _proccessSmsQueueTask.Wait();
+                processRangeTask.Wait();
+                //processTransactionsTask.Wait();
             }
             catch (Exception e)
             {

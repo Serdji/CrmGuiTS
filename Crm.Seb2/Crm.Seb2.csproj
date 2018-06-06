@@ -32,6 +32,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=11.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.11.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
       <HintPath>..\packages\NLog.4.5.6\lib\net45\NLog.dll</HintPath>
     </Reference>
@@ -53,10 +56,18 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DateRange.cs" />
+    <Compile Include="Models\Request\GetTransactionsListReq.cs" />
+    <Compile Include="Models\Request\GetTransactionsDetailReq.cs" />
+    <Compile Include="Models\Response\GetTransactionsResp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SebGatewayClient.cs" />
+    <Compile Include="SebManager.cs" />
     <Compile Include="Service.cs" />
     <Compile Include="ServiceSettings.cs" />
+    <Compile Include="Transaction.cs" />
+    <Compile Include="TransactionDetail.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="NLog.config">
@@ -75,6 +86,8 @@
     <None Include="Publish\serviceSettings.Debug.config" />
     <None Include="Publish\serviceSettings.Release.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Models\Settings\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
