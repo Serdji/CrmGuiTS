@@ -1,10 +1,6 @@
 import { Injectable } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
-import { interval } from 'rxjs/observable/interval';
-import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
-import { LocalStorage } from '@ngx-pwa/local-storage';
-import { takeWhile } from 'rxjs/operators';
 
 @Injectable()
 export class ActivityUserService {
@@ -13,11 +9,10 @@ export class ActivityUserService {
 
   constructor(
     private router: Router,
-    private localStorage: LocalStorage,
   ) { }
 
   logout() {
-    this.localStorage.clear().subscribe();
+    localStorage.clear();
     this.router.navigate( [ '' ] );
   }
 

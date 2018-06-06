@@ -1,16 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { LocalStorage } from '@ngx-pwa/local-storage';
 import { Observable } from 'rxjs/Observable';
 
 @Injectable()
 export class AuthService {
 
-  constructor(
-    private http: HttpClient,
-    private localStorage: LocalStorage,
-  ) { }
+  constructor( private http: HttpClient ) { }
 
   setToken( params ): Observable<any> {
     const options = {
@@ -20,6 +16,6 @@ export class AuthService {
         .set( 'password', params.password )
         .set( 'grant_type', 'password' ),
     };
-    return this.http.post( environment.crmApi + 'api/oauth/token', options.params, { headers: options.headers } );
+    return this.http.post( environment.crmApi + '/api/oauth/token', options.params, { headers: options.headers } );
   }
 }
