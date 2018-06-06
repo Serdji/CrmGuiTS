@@ -6,6 +6,8 @@ import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
+import { Icount } from '../../interface/icount';
+import { Iprofile } from '../../interface/iprofile';
 
 @Component( {
   selector: 'app-profile-search',
@@ -20,6 +22,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public cityToOptions: Observable<Icity[]>;
   public trees: Itree[];
   public groups: Igroups[];
+  public isTableCard: boolean = false;
+  public isLoader: boolean = false;
 
   private autDelay: number = 500;
   private autLength: number = 3;
@@ -36,6 +40,52 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initTree();
     this.initGroups();
+  }
+
+
+  sendForm(): void {
+
+    this.isTableCard = true;
+    this.isLoader = true;
+
+    console.log( this.formProfileSearch.getRawValue() );
+    console.log( this.formProfileSearch.invalid );
+
+    if ( !this.formProfileSearch.invalid ) {
+      let params = '?';
+      for ( const key in this.formProfileSearch.value ) {
+        if ( this.formProfileSearch.get( `${key}` ).value !== '' ) {
+          params += `${key}=${this.formProfileSearch.get( key ).value}&`;
+        }
+      }
+
+      this.profileSearchService.getProfileSearchCount( params )
+        .pipe(
+          takeWhile( _ => this.isActive ),
+          map( ( val: any ) => val.Data.Id )
+        )
+        .subscribe( ( count: Icount[] ) => {
+          const paramsAndCount = `from=0&sorttype=1&sortvalue=last_name&count=${count}`;
+          this.profileSearchService.getProfileSearch( paramsAndCount )
+            .pipe(
+              takeWhile( _ => this.isActive ),
+              map( ( val: any ) => val.Data )
+            )
+            .subscribe( ( profile: Iprofile[] ) => console.log( profile ) );
+        } );
+
+    }
+  }
+
+  clearForm(): void {
+    this.resetForm();
+  }
+
+  private resetForm() {
+    for ( const formControlName in this.formProfileSearch.value ) {
+      this.formProfileSearch.get( `${ formControlName }` ).patchValue( '' );
+      this.formProfileSearch.get( `${ formControlName }` ).setErrors( null );
+    }
   }
 
   private initAutocomplete() {
@@ -102,6 +152,18 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       citydateto: '',
       divisionid: '',
       groupid: '',
+      amountfrom: '',
+      amountto: '',
+      email: '',
+      phone: '',
+      withoutcontact: false,
+      id: '',
+    },{
+      updateOn: 'submit',
+    } );
+    this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
+      this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
+      this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
     } );
   }
 
