@@ -8,8 +8,11 @@ namespace Crm.Seb2
 {
     class DateRange
     {
-        public DateTime DateStart { get; set; }
-        public DateTime DateEnd { get; set; }
+        public DateTime DateStart;
+        public DateTime DateEnd;
+
+        public DateTime LastTryDT = DateTime.MinValue;
+        public int TryCount = 0;
 
         public DateRange()
         {

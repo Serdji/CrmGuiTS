@@ -8,9 +8,12 @@ namespace Crm.Seb2
 {
     public class Transaction
     {
-        public int Version { get; set; }
-        public long Id { get; set; }
-        public string Recloc { get; set; }
+        public int Version;
+        public long Id;
+        public string Recloc;
+
+        public DateTime LastTryDT = DateTime.MinValue;
+        public int TryCount = 0;
 
         public override bool Equals(object obj)
         {
@@ -29,9 +32,4 @@ namespace Crm.Seb2
             return this.Id.GetHashCode();
         }
     }
-
-   // class Transactions: List<long>
-   // {
-   //     public string CsvIds { get => string.Join(",", Ids); }
-   // }
 }

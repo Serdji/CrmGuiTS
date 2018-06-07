@@ -11,8 +11,9 @@ namespace Crm.Seb2
     {
         private const string serviceSettingsLabel = "serviceSettings";
         private const string dateStartLabel = "dateStart";
-        private const string rangeInMinutesLabel = "rangeInMinutes";
-  
+        private const string getTransactionsListDelayInMillisecondLabel = "getTransactionsListDelayInMillisecond";
+        private const string getTransactionsDetailDelayInMillisecondLabel = "getTransactionsDetailDelayInMillisecond";
+
         private const string sebGatewayLabel = "sebGateway";
 
         private const string airlinesLabel = "airlines";
@@ -29,11 +30,11 @@ namespace Crm.Seb2
             get { return (DateTime)this[dateStartLabel]; }
         }
 
-        [ConfigurationProperty(rangeInMinutesLabel)]
-        public int RangeInMinutes
-        {
-            get { return (int)this[rangeInMinutesLabel]; }
-        }
+        [ConfigurationProperty(getTransactionsListDelayInMillisecondLabel)]
+        public int GetTransactionsListDelayInMillisecond { get { return (int)this[getTransactionsListDelayInMillisecondLabel]; } }
+
+        [ConfigurationProperty(getTransactionsDetailDelayInMillisecondLabel)]
+        public int GetTransactionsDetailDelayInMillisecond { get { return (int)this[getTransactionsDetailDelayInMillisecondLabel]; } }
 
         [ConfigurationProperty(sebGatewayLabel)]
         public SebGatewayElement SebGateway
@@ -56,8 +57,7 @@ namespace Crm.Seb2
         private const string proxyLabel = "proxy";
         private const string transactionInBatchLimitLabel = "transactionInBatchLimit";
         private const string connectionLimitLabel = "connectionLimit";
-        private const string getTransactionsListDelayInMillisecondLabel = "getTransactionsListDelayInMillisecond";
-        private const string getTransactionsDetailDelayInMillisecondLabel = "getTransactionsDetailDelayInMillisecond";
+        private const string rangeInMinutesLabel = "rangeInMinutes";
 
         [ConfigurationProperty(urlLabel)]
         public string URL { get { return (string)this[urlLabel]; } }
@@ -71,11 +71,11 @@ namespace Crm.Seb2
         [ConfigurationProperty(connectionLimitLabel)]
         public int ConnectionLimit { get { return (int)this[connectionLimitLabel]; } }
 
-        [ConfigurationProperty(getTransactionsListDelayInMillisecondLabel)]
-        public int GetTransactionsListDelayInMillisecond { get { return (int)this[getTransactionsListDelayInMillisecondLabel]; } }
-
-        [ConfigurationProperty(getTransactionsDetailDelayInMillisecondLabel)]
-        public int GetTransactionsDetailDelayInMillisecond { get { return (int)this[getTransactionsDetailDelayInMillisecondLabel]; } }
+        [ConfigurationProperty(rangeInMinutesLabel)]
+        public int RangeInMinutes
+        {
+            get { return (int)this[rangeInMinutesLabel]; }
+        }
     }
 
     public class AirlineElementCollection : ConfigurationElementCollection, IEnumerable<AirlineElement>
@@ -102,20 +102,13 @@ namespace Crm.Seb2
     public class AirlineElement : ConfigurationElement
     {
         private const string codeLabel = "code";
-        private const string pathInLabel = "pathIn";
-        private const string pathOutLabel = "pathOut";
-        private const string pathErrLabel = "pathErr";
+        private const string pathLabel = "path";
+
 
         [ConfigurationProperty(codeLabel)]
         public string Code { get { return (string)this[codeLabel]; } }
 
-        [ConfigurationProperty(pathInLabel)]
-        public string PathIn { get { return (string)this[pathInLabel]; } }
-
-        [ConfigurationProperty(pathOutLabel)]
-        public string PathOut { get { return (string)this[pathOutLabel]; } }
-
-        [ConfigurationProperty(pathErrLabel)]
-        public string PathErr { get { return (string)this[pathErrLabel]; } }
+        [ConfigurationProperty(pathLabel)]
+        public string Path { get { return (string)this[pathLabel]; } }
     }
 }

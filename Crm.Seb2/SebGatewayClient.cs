@@ -17,15 +17,17 @@ namespace Crm.Seb2
     class SebGatewayClient
     {
         private readonly Logger log = LogManager.GetCurrentClassLogger();
+        private ServiceSettings ss = ServiceSettings.Instance;
+
         private System.Net.Http.HttpClient httpClient;    
 
-        public SebGatewayClient(string url, string proxy)
+        public SebGatewayClient()
         {
-            if (!string.IsNullOrEmpty(proxy))
+            if (!string.IsNullOrEmpty(ss.SebGateway.Proxy))
             {
                 var httpClientHandler = new HttpClientHandler()
                 {
-                    Proxy = new WebProxy(proxy),
+                    Proxy = new WebProxy(ss.SebGateway.Proxy),
                     UseProxy = true
                 };
 
@@ -36,30 +38,35 @@ namespace Crm.Seb2
                 httpClient = new HttpClient();
             }
 
-            httpClient.BaseAddress = new Uri(url);
+            httpClient.BaseAddress = new Uri(ss.SebGateway.URL);
             httpClient.DefaultRequestHeaders.Accept.Clear();
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
         public async Task<IEnumerable<Transaction>> GetTransactionsListAsync(DateRange range, CancellationToken cancellationToken)
         {
+            if (range == null) return null;
+
+            GetTransactionsResp getTransactionsResp = null;
+            GetTransactionsListReq request = new GetTransactionsListReq(range);
+            string uri = request.ToUri();
+            log.Trace(uri);
+
             try
             {
-                GetTransactionsResp getTransactionsResp = null;
-                GetTransactionsListReq request = new GetTransactionsListReq(range);
-                log.Trace(request.ToUri());
-
-                HttpResponseMessage response = await httpClient.GetAsync(request.ToUri(), cancellationToken);
+                HttpResponseMessage response = await httpClient.GetAsync(uri, cancellationToken);
 
                 response.EnsureSuccessStatusCode();
                 getTransactionsResp = JsonConvert.DeserializeObject<GetTransactionsResp>(
                                         await response.Content.ReadAsStringAsync());
 
+                log.Info("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}; ids: {2}"
+                    , uri, getTransactionsResp.Transactions.Count(), string.Join(",", getTransactionsResp.Transactions.Select(t => t.Id)));
                 return getTransactionsResp.Transactions;
             }
             catch (Exception e)
             {
-                log.Error(e);
+                log.Error("SebGatewayClient.GetTransactionsListAsync. uri: {0}; error: {1}", e.Message);
                 return null;
             }
         }
@@ -67,23 +74,27 @@ namespace Crm.Seb2
         public async Task<IEnumerable<TransactionDetail>> GetTransactionsDetailAsync(IEnumerable<Transaction> transactions
             , CancellationToken cancellationToken)
         {
+            if (transactions == null) return null;
+
+            List<TransactionDetail> transactionsDetail;
+            GetTransactionsDetailReq request = new GetTransactionsDetailReq(transactions);
+            string uri = request.ToUri();
+            log.Info(uri);
+
             try
             {
-                List<TransactionDetail> result;
-                GetTransactionsDetailReq request = new GetTransactionsDetailReq(transactions);
-                log.Trace(request.ToUri());
-
-                HttpResponseMessage response = await httpClient.GetAsync(request.ToUri(), cancellationToken);
+                HttpResponseMessage response = await httpClient.GetAsync(uri, cancellationToken);
 
                 response.EnsureSuccessStatusCode();
                 var bytes = await response.Content.ReadAsByteArrayAsync();
-                result = new List<TransactionDetail>(ParseTransactionDetail(System.Text.Encoding.UTF8.GetString(bytes)));
+                transactionsDetail = new List<TransactionDetail>(ParseTransactionDetail(System.Text.Encoding.UTF8.GetString(bytes)));
 
-                return result;
+                log.Info("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}", uri, transactionsDetail.Count);
+                return transactionsDetail;
             }
             catch (Exception e)
             {
-                log.Error(e);
+                log.Error("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; error: {1}", uri, e.Message);
                 return null;
             }
         }

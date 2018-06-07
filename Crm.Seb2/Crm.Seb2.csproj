@@ -59,6 +59,7 @@
     <Compile Include="DateRange.cs" />
     <Compile Include="Models\Request\GetTransactionsListReq.cs" />
     <Compile Include="Models\Request\GetTransactionsDetailReq.cs" />
+    <Compile Include="Models\Response\GetTransactionsDetailResp.cs" />
     <Compile Include="Models\Response\GetTransactionsResp.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
