@@ -8,6 +8,8 @@ import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
 import { Icount } from '../../interface/icount';
 import { Iprofile } from '../../interface/iprofile';
+import { TableAsyncService } from '../../shared/table-async/table-async.service';
+import { IpagPage } from '../../interface/ipag-page';
 
 @Component( {
   selector: 'app-profile-search',
@@ -22,6 +24,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public cityToOptions: Observable<Icity[]>;
   public trees: Itree[];
   public groups: Igroups[];
+  public profiles: Iprofile[];
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
@@ -32,6 +35,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private profileSearchService: ProfileSearchService,
+    private tableAsyncService: TableAsyncService,
   ) { }
 
   ngOnInit(): void {
@@ -40,6 +44,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initTree();
     this.initGroups();
+    this.initTableAsync();
   }
 
 
@@ -48,9 +53,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.isTableCard = true;
     this.isLoader = true;
 
-    console.log( this.formProfileSearch.getRawValue() );
-
-    if ( this.formProfileSearch.dirty) {
+    if ( this.formProfileSearch.dirty ) {
       let params = '?';
       for ( const formControlName in this.formProfileSearch.value ) {
         if ( this.formProfileSearch.get( `${formControlName}` ).value !== '' ) {
@@ -64,17 +67,19 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           map( ( val: any ) => val.Data.Id )
         )
         .subscribe( ( count: Icount[] ) => {
-          console.log(count);
-          const paramsAndCount = `from=0&sorttype=1&sortvalue=last_name&count=${count}`;
+          this.tableAsyncService.countPage = +count;
+          const paramsAndCount = `from=0&sorttype=1&sortvalue=last_name&count=10`;
           this.profileSearchService.getProfileSearch( paramsAndCount )
             .pipe(
               takeWhile( _ => this.isActive ),
               map( ( val: any ) => val.Data )
             )
             .subscribe(
-              ( profile: Iprofile[] ) => console.log( profile ),
-              err => console.log(err.status)
-              )
+              ( profile: Iprofile[] ) => {
+                this.profiles = profile;
+                this.isLoader = false;
+              },
+            );
         } );
 
     }
@@ -82,6 +87,18 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   clearForm(): void {
     this.resetForm();
+  }
+
+  private initTableAsync() {
+    this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
+      const paramsAndCount = `from=${ ( value.pageIndex + 1 ) * 10}&sorttype=1&sortvalue=last_name&count=10`;
+      this.profileSearchService.getProfileSearch( paramsAndCount )
+        .pipe(
+          takeWhile( _ => this.isActive ),
+          map( ( val: any ) => val.Data )
+        )
+        .subscribe( ( profile: Iprofile[] ) => this.tableAsyncService.setTableDataSource( profile ) );
+    } );
   }
 
   private resetForm() {
