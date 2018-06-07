@@ -49,13 +49,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.isLoader = true;
 
     console.log( this.formProfileSearch.getRawValue() );
-    console.log( this.formProfileSearch.invalid );
 
-    if ( !this.formProfileSearch.invalid ) {
+    if ( this.formProfileSearch.dirty) {
       let params = '?';
-      for ( const key in this.formProfileSearch.value ) {
-        if ( this.formProfileSearch.get( `${key}` ).value !== '' ) {
-          params += `${key}=${this.formProfileSearch.get( key ).value}&`;
+      for ( const formControlName in this.formProfileSearch.value ) {
+        if ( this.formProfileSearch.get( `${formControlName}` ).value !== '' ) {
+          params += `${formControlName}=${this.formProfileSearch.get( formControlName ).value}&`;
         }
       }
 
@@ -65,13 +64,17 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           map( ( val: any ) => val.Data.Id )
         )
         .subscribe( ( count: Icount[] ) => {
+          console.log(count);
           const paramsAndCount = `from=0&sorttype=1&sortvalue=last_name&count=${count}`;
           this.profileSearchService.getProfileSearch( paramsAndCount )
             .pipe(
               takeWhile( _ => this.isActive ),
               map( ( val: any ) => val.Data )
             )
-            .subscribe( ( profile: Iprofile[] ) => console.log( profile ) );
+            .subscribe(
+              ( profile: Iprofile[] ) => console.log( profile ),
+              err => console.log(err.status)
+              )
         } );
 
     }
@@ -158,7 +161,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       phone: '',
       withoutcontact: false,
       id: '',
-    },{
+    }, {
       updateOn: 'submit',
     } );
     this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {

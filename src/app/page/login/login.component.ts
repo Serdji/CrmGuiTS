@@ -54,9 +54,9 @@ export class LoginComponent implements OnInit, OnDestroy {
           ( value ) => {
             const user = this.formLogin.getRawValue();
             Object.assign( user, { grant_type: 'password' } );
-            localStorage.setItem( 'user', JSON.stringify( user ) );
-            localStorage.setItem( 'token', JSON.stringify( value ) );
-            if ( JSON.parse( localStorage.getItem( 'token' ) ) ) {
+            localStorage.setItem( 'paramsUser', JSON.stringify( user ) );
+            localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
+            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) {
               this.router.navigate( [ 'profile/profilesearch' ] );
             }
           },

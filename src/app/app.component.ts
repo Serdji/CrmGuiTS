@@ -15,7 +15,7 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const token = JSON.parse(localStorage.getItem('token'));
+    const token = JSON.parse(localStorage.getItem('paramsToken'));
     if ( !token ) this.router.navigate([ '/' ] );
   }
 
