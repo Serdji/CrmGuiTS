@@ -24,7 +24,9 @@
               "src/styles.css",
               "src/theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/moment/min/moment.min.js"
+            ]
           },
           "configurations": {
             "production": {

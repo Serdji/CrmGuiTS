@@ -10,6 +10,8 @@ import { Icount } from '../../interface/icount';
 import { Iprofile } from '../../interface/iprofile';
 import { TableAsyncService } from '../../shared/table-async/table-async.service';
 import { IpagPage } from '../../interface/ipag-page';
+import * as moment from 'moment';
+import { log } from 'util';
 
 @Component( {
   selector: 'app-profile-search',
@@ -176,17 +178,25 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         && formControlName !== 'cityto'
         && formControlName !== 'divisionid'
         && formControlName !== 'groupid'
+        && formControlName !== 'flightdatefrom'
+        && formControlName !== 'flightdateto'
+        && formControlName !== 'citydatefrom'
+        && formControlName !== 'citydateto'
       ) {
         params += `${ formControlName }=${this.formProfileSearch.get( formControlName ).value}&`;
       }
     }
 
-    const cityIdFrom: string = this.getCityIdSerialize('cityfrom');
-    const cityIdTo: string   = this.getCityIdSerialize('cityto');
-    const divisionId: string = this.getGroupAndDivisionidIdSerialize('divisionid', this.trees, 'ID');
-    const groupTd: string    = this.getGroupAndDivisionidIdSerialize('groupid', this.groups, 'Id');
+    const cityIdFrom: string = this.getCityIdSerialize( 'cityfrom' );
+    const cityIdTo: string = this.getCityIdSerialize( 'cityto' );
+    const divisionId: string = this.getGroupAndDivisionidIdSerialize( 'divisionid', this.trees, 'ID' );
+    const groupTd: string = this.getGroupAndDivisionidIdSerialize( 'groupid', this.groups, 'Id' );
+    const flightDateFrom: string = this.dateFormatSerialize( 'flightdatefrom' );
+    const flightDateTo: string = this.dateFormatSerialize( 'flightdateto' );
+    const cityDateFrom: string = this.dateFormatSerialize( 'citydatefrom' );
+    const cityDateTo: string = this.dateFormatSerialize( 'citydateto' );
 
-    params += `${cityIdFrom}${cityIdTo}${divisionId}${groupTd}`;
+    params += `${cityIdFrom}${cityIdTo}${divisionId}${groupTd}${flightDateFrom}${flightDateTo}${cityDateFrom}${cityDateTo}`;
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
         takeWhile( _ => this.isActive ),
@@ -209,30 +219,38 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private getCityIdSerialize(formControlName: string): string {
+  private getCityIdSerialize( formControlName: string ): string {
     const cityValue = this.formProfileSearch.get( formControlName ).value;
     let cityId;
     if ( cityValue.length >= this.autLength ) {
       cityId = this.cities
-        .filter((cities: Icity) => cities.value === cityValue)
-        .map(cities => cities.id);
-      return `${formControlName}=${cityId[0]}&`;
+        .filter( ( cities: Icity ) => cities.value === cityValue )
+        .map( cities => cities.id );
+      return `${formControlName}=${cityId[ 0 ]}&`;
     }
     return '';
   }
 
-  private getGroupAndDivisionidIdSerialize(formControlName: string, params: any, keyId: string): string {
+  private getGroupAndDivisionidIdSerialize( formControlName: string, params: any, keyId: string ): string {
     const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
     let id: number[];
-    if ( formControlNameValue.length !== 0  ) {
+    if ( formControlNameValue.length !== 0 ) {
       id = params
-        .filter((value: any) => value.Name === formControlNameValue)
-        .map(value => value[keyId]);
-      return `${formControlName}=${id[0]}&`;
+        .filter( ( value: any ) => value.Name === formControlNameValue )
+        .map( value => value[ keyId ] );
+      return `${formControlName}=${id[ 0 ]}&`;
     }
     return '';
   }
 
+  private dateFormatSerialize( formControlName: string ) {
+    const formControlNameDate = this.formProfileSearch.get( formControlName ).value;
+    if ( formControlNameDate.length !== 0 ) {
+      const date = moment( formControlNameDate ).format( 'DD.MM.YYYY' );
+      return `${formControlName}=${date}&`;
+    }
+    return '';
+  }
 
 
   ngOnDestroy(): void {
