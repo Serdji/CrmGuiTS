@@ -160,32 +160,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.switchСheckbox();
   }
 
-  private getCityIdSerialize(formControlName: string): string {
-    const cityValue = this.formProfileSearch.get( formControlName ).value;
-    let cityId;
-    if ( cityValue.length >= this.autLength ) {
-      cityId = this.cities
-        .filter((cities: Icity) => cities.value === cityValue)
-        .map(cities => cities.id);
-      return `${formControlName}=${cityId[0]}&`;
-    }
-    return '';
-  }
-
-  private getGroupAndDivisionidIdSerialize(formControlName: string, params: any, keyId: string): string {
-    const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
-    let id: number[];
-    if ( formControlNameValue.length !== 0  ) {
-      id = params
-        .filter((value: any) => value.Name === formControlNameValue)
-        .map(value => value[keyId]);
-      return `${formControlName}=${id[0]}&`;
-    }
-    return '';
+  private switchСheckbox() {
+    this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
+      this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
+      this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
+    } );
   }
 
   private serializeForm() {
-
 
     let params: string = '?';
     for ( const formControlName in this.formProfileSearch.value ) {
@@ -226,12 +208,32 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private switchСheckbox() {
-    this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
-      this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
-      this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
-    } );
+
+  private getCityIdSerialize(formControlName: string): string {
+    const cityValue = this.formProfileSearch.get( formControlName ).value;
+    let cityId;
+    if ( cityValue.length >= this.autLength ) {
+      cityId = this.cities
+        .filter((cities: Icity) => cities.value === cityValue)
+        .map(cities => cities.id);
+      return `${formControlName}=${cityId[0]}&`;
+    }
+    return '';
   }
+
+  private getGroupAndDivisionidIdSerialize(formControlName: string, params: any, keyId: string): string {
+    const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
+    let id: number[];
+    if ( formControlNameValue.length !== 0  ) {
+      id = params
+        .filter((value: any) => value.Name === formControlNameValue)
+        .map(value => value[keyId]);
+      return `${formControlName}=${id[0]}&`;
+    }
+    return '';
+  }
+
+
 
   ngOnDestroy(): void {
     this.isActive = false;
