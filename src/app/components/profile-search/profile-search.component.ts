@@ -28,6 +28,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
+  private paramsPaginatinDefault: string = `&sorttype=1&sortvalue=last_name`;
   private autDelay: number = 500;
   private autLength: number = 3;
   private isActive: boolean = true;
@@ -49,56 +50,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
 
   sendForm(): void {
-
-    this.isTableCard = true;
-    this.isLoader = true;
-
     if ( this.formProfileSearch.dirty ) {
-      let params = '?';
-      for ( const formControlName in this.formProfileSearch.value ) {
-        if ( this.formProfileSearch.get( `${formControlName}` ).value !== '' ) {
-          params += `${formControlName}=${this.formProfileSearch.get( formControlName ).value}&`;
-        }
-      }
-
-      this.profileSearchService.getProfileSearchCount( params )
-        .pipe(
-          takeWhile( _ => this.isActive ),
-          map( ( val: any ) => val.Data.Id )
-        )
-        .subscribe( ( count: Icount[] ) => {
-          this.tableAsyncService.countPage = +count;
-          const paramsAndCount = `from=0&sorttype=1&sortvalue=last_name&count=10`;
-          this.profileSearchService.getProfileSearch( paramsAndCount )
-            .pipe(
-              takeWhile( _ => this.isActive ),
-              map( ( val: any ) => val.Data )
-            )
-            .subscribe(
-              ( profile: Iprofile[] ) => {
-                this.profiles = profile;
-                this.isLoader = false;
-              },
-            );
-        } );
-
+      this.isTableCard = true;
+      this.isLoader = true;
+      this.serializeForm();
     }
   }
 
   clearForm(): void {
     this.resetForm();
-  }
-
-  private initTableAsync() {
-    this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
-      const paramsAndCount = `from=${ ( value.pageIndex + 1 ) * 10}&sorttype=1&sortvalue=last_name&count=10`;
-      this.profileSearchService.getProfileSearch( paramsAndCount )
-        .pipe(
-          takeWhile( _ => this.isActive ),
-          map( ( val: any ) => val.Data )
-        )
-        .subscribe( ( profile: Iprofile[] ) => this.tableAsyncService.setTableDataSource( profile ) );
-    } );
   }
 
   private resetForm() {
@@ -108,27 +68,17 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private initAutocomplete() {
-    this.cityFromOptions = this.formProfileSearch.get( 'cityfrom' ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          if ( val.length >= this.autLength ) {
-            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
-          }
-        } )
-      );
-    this.cityToOptions = this.formProfileSearch.get( 'cityto' ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          if ( val.length >= this.autLength ) {
-            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
-          }
-        } )
-      );
+  private initTableAsync() {
+    this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
+      const pageIndex = ( value.pageIndex + 1 ) * value.pageSize;
+      const paramsAndCount = `${ this.paramsPaginatinDefault }&from=${ pageIndex }&count=${ value.pageSize }`;
+      this.profileSearchService.getProfileSearch( paramsAndCount )
+        .pipe(
+          takeWhile( _ => this.isActive ),
+          map( ( val: any ) => val.Data )
+        )
+        .subscribe( ( profile: Iprofile[] ) => this.tableAsyncService.setTableDataSource( profile ) );
+    } );
   }
 
 
@@ -153,7 +103,32 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initCity() {
     this.profileSearchService.getCity()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Icity[] ) => this.cities = value );
+      .subscribe( ( value: Icity[] ) => {
+        this.cities = value;
+      } );
+  }
+
+  private initAutocomplete() {
+    this.cityFromOptions = this.formProfileSearch.get( 'cityfrom' ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( this.autDelay ),
+        map( val => {
+          if ( val.length >= this.autLength ) {
+            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
+          }
+        } )
+      );
+    this.cityToOptions = this.formProfileSearch.get( 'cityto' ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( this.autDelay ),
+        map( val => {
+          if ( val.length >= this.autLength ) {
+            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
+          }
+        } )
+      );
   }
 
   private initForm() {
@@ -181,13 +156,84 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     }, {
       updateOn: 'submit',
     } );
+
+    this.switchСheckbox();
+  }
+
+  private getCityIdSerialize(formControlName: string): string {
+    const cityValue = this.formProfileSearch.get( formControlName ).value;
+    let cityId;
+    if ( cityValue.length >= this.autLength ) {
+      cityId = this.cities
+        .filter((cities: Icity) => cities.value === cityValue)
+        .map(cities => cities.id);
+      return `${formControlName}=${cityId[0]}&`;
+    }
+    return '';
+  }
+
+  private getGroupAndDivisionidIdSerialize(formControlName: string, params: any, keyId: string): string {
+    const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
+    let id: number[];
+    if ( formControlNameValue.length !== 0  ) {
+      id = params
+        .filter((value: any) => value.Name === formControlNameValue)
+        .map(value => value[keyId]);
+      return `${formControlName}=${id[0]}&`;
+    }
+    return '';
+  }
+
+  private serializeForm() {
+
+
+    let params: string = '?';
+    for ( const formControlName in this.formProfileSearch.value ) {
+      if ( this.formProfileSearch.get( `${ formControlName }` ).value !== ''
+        && formControlName !== 'cityfrom'
+        && formControlName !== 'cityto'
+        && formControlName !== 'divisionid'
+        && formControlName !== 'groupid'
+      ) {
+        params += `${ formControlName }=${this.formProfileSearch.get( formControlName ).value}&`;
+      }
+    }
+
+    const cityIdFrom: string = this.getCityIdSerialize('cityfrom');
+    const cityIdTo: string   = this.getCityIdSerialize('cityto');
+    const divisionId: string = this.getGroupAndDivisionidIdSerialize('divisionid', this.trees, 'ID');
+    const groupTd: string    = this.getGroupAndDivisionidIdSerialize('groupid', this.groups, 'Id');
+
+    params += `${cityIdFrom}${cityIdTo}${divisionId}${groupTd}`;
+    this.profileSearchService.getProfileSearchCount( params )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( ( val: Icount ) => val.Data.Id )
+      )
+      .subscribe( ( count ) => {
+        this.tableAsyncService.countPage = +count;
+        this.profileSearchService.getProfileSearch( `${this.paramsPaginatinDefault}&from=0&count=10` )
+          .pipe(
+            takeWhile( _ => this.isActive ),
+            map( ( val: any ) => val.Data )
+          )
+          .subscribe(
+            ( profile: Iprofile[] ) => {
+              this.profiles = profile;
+              this.isLoader = false;
+            },
+          );
+      } );
+  }
+
+  private switchСheckbox() {
     this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
       this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
       this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
     } );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.isActive = false;
   }
 

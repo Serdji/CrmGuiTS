@@ -9,7 +9,6 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { TableAsyncService } from './table-async.service';
 import { IpagPage } from '../../interface/ipag-page';
-import { Iprofile } from '../../interface/iprofile';
 
 @Component( {
   selector: 'app-table-async',
