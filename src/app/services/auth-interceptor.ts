@@ -17,7 +17,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(  private auth: AuthService ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    const idToken: Itoken = JSON.parse(localStorage.getItem('token'));
+    const idToken: Itoken = JSON.parse(localStorage.getItem('paramsToken'));
     if ( idToken ) {
       const request = req.clone({
         headers: req.headers.set('Authorization', `Bearer ${idToken.access_token}` )
@@ -27,9 +27,9 @@ export class AuthInterceptor implements HttpInterceptor {
           map(res => res),
           catchError((err: HttpErrorResponse) => {
             if (err.status === 401) {
-              localStorage.removeItem('token');
-              const user = JSON.parse(localStorage.getItem('user'));
-              this.auth.setToken(user).subscribe( (value: Itoken) => localStorage.setItem( 'token', JSON.stringify(value)) );
+              localStorage.removeItem('paramsToken');
+              const user = JSON.parse(localStorage.getItem('paramsUser'));
+              this.auth.setToken(user).subscribe( (value: Itoken) => localStorage.setItem( 'paramsToken', JSON.stringify(value)) );
             }
             return Observable.throw(err);
           })

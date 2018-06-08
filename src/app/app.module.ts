@@ -13,7 +13,7 @@ import { AuthService } from './services/auth.service';
 import { AuthGuard } from './auth.guard';
 import { ActivityUserService } from './services/activity-user.service';
 import { DialogComponent } from './shared/dialog/dialog.component';
-import { TabletExampleComponent } from './shared/tablet-example/tablet-example.component';
+import { TableExampleComponent } from './shared/tablet-example/table-example.component';
 import { environment } from '../environments/environment';
 import { LoginService } from './page/login/login.service';
 import { LayoutComponent } from './shared/layout/layout.component';
@@ -24,6 +24,8 @@ import { ProfileComponent } from './page/profile/profile.component';
 import { ProfileSearchComponent } from './components/profile-search/profile-search.component';
 import { ProfileSearchService } from './components/profile-search/profile-search.service';
 import { AuthInterceptor } from './services/auth-interceptor';
+import { TableAsyncComponent } from './shared/table-async/table-async.component';
+import { TableAsyncService } from './shared/table-async/table-async.service';
 
 
 if ( environment.production ) {
@@ -35,12 +37,13 @@ if ( environment.production ) {
     AppComponent,
     LoginComponent,
     DialogComponent,
-    TabletExampleComponent,
+    TableExampleComponent,
     LayoutComponent,
     ToolbarComponent,
     SidenavComponent,
     ProfileComponent,
     ProfileSearchComponent,
+    TableAsyncComponent,
   ],
   entryComponents: [
     DialogComponent,
@@ -60,6 +63,7 @@ if ( environment.production ) {
     LoginService,
     LayoutService,
     ProfileSearchService,
+    TableAsyncService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: AuthInterceptor,

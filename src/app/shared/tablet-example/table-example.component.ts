@@ -9,11 +9,11 @@ import { DialogComponent } from '../dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 
 @Component( {
-  selector: 'app-tablet-example',
-  templateUrl: './tablet-example.component.html',
-  styleUrls: [ './tablet-example.component.styl' ],
+  selector: 'app-table-example',
+  templateUrl: './table-example.component.html',
+  styleUrls: [ './table-example.component.styl' ],
 } )
-export class TabletExampleComponent implements OnInit {
+export class TableExampleComponent implements OnInit {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;

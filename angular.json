@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "crm-gui-admin": {
+    "crm-gui-ts": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -24,7 +24,9 @@
               "src/styles.css",
               "src/theme.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "./node_modules/moment/min/moment.min.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -49,18 +51,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "crm-gui-admin:build"
+            "browserTarget": "crm-gui-ts:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "crm-gui-admin:build:production"
+              "browserTarget": "crm-gui-ts:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "crm-gui-admin:build"
+            "browserTarget": "crm-gui-ts:build"
           }
         },
         "test": {
@@ -94,7 +96,7 @@
         }
       }
     },
-    "crm-gui-admin-e2e": {
+    "crm-gui-ts-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -103,7 +105,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "crm-gui-admin:serve"
+            "devServerTarget": "crm-gui-ts:serve"
           }
         },
         "lint": {
@@ -120,7 +122,7 @@
       }
     }
   },
-  "defaultProject": "crm-gui-admin",
+  "defaultProject": "crm-gui-ts",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
