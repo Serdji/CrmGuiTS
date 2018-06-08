@@ -34,7 +34,7 @@ namespace Crm.Seb2
             cancellationTokenSource = new CancellationTokenSource();
             processRangeTask = Task.Run(() => DoProcessRange(sebManager, cancellationTokenSource.Token));
             processTransactionsTask = Task.Run(() => DoProcessTransactions(sebManager, cancellationTokenSource.Token));
-            utilityTask = Task.Run(() => DoSomeWork(sebManager, cancellationTokenSource.Token));
+            utilityTask = Task.Run(() => DoInfo(sebManager, cancellationTokenSource.Token));
         }
 
         private async Task DoProcessRange(SebManager sebManager, CancellationToken cancellationToken)
@@ -44,8 +44,10 @@ namespace Crm.Seb2
                 DateTime dateStart = ss.DateStart;
                 DateTime dateEnd = dateStart.AddMinutes(ss.SebGateway.RangeInMinutes);
                 
-                while (!cancellationToken.IsCancellationRequested)
+                while (true)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
+                    
                     int awaitingTransactionLimit = ss.SebGateway.TransactionInBatchLimit * ss.SebGateway.ConnectionLimit * 2;
                     if (sebManager.TransactionsToProcessCount < awaitingTransactionLimit) {
                         var range = new DateRange(dateStart, dateEnd);
@@ -63,11 +65,11 @@ namespace Crm.Seb2
             }
             catch (OperationCanceledException e)
             {
-                log.Info(e.Message);
+                log.Info("DoProcessRange. {0}", e.Message);
             }
             catch (Exception e)
             {
-                log.Fatal(e);
+                log.Fatal("DoProcessRange. error: {0}", e.Message);
             }
         }
 
@@ -77,36 +79,38 @@ namespace Crm.Seb2
             {
                 dynamic Airlines = ss.Airlines;
 
-                while (!cancellationToken.IsCancellationRequested)
+                while (true)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
                     if (sebManager.TransactionsToProcessCount > 0)
                     {
                         Task task = Task.Run(() => sebManager.GetTransactionsDetailAsync(ss.SebGateway.TransactionInBatchLimit
                                                             , cancellationToken))
                                                     .ContinueWith(t => { log.Error(t.Exception); },
                                                         TaskContinuationOptions.OnlyOnFaulted);
-                        ;
                     }
-
+                    
                     await Task.Delay(TimeSpan.FromMilliseconds(ss.GetTransactionsDetailDelayInMillisecond), cancellationToken);
                 }
             }
             catch (OperationCanceledException e)
             {
-                log.Info(e.Message);
+                log.Info("DoProcessTransactions. {0}", e.Message);
             }
             catch (Exception e)
             {
-                log.Fatal(e);
+                log.Fatal("DoProcessTransactions. error: {0}", e.Message);
             }
         }
 
-        private async Task DoSomeWork(SebManager sebManager, CancellationToken cancellationToken)
+        private async Task DoInfo(SebManager sebManager, CancellationToken cancellationToken)
         {
             try
             {
-                while (!cancellationToken.IsCancellationRequested)
+                while (true)
                 {
+                    cancellationToken.ThrowIfCancellationRequested();
+
                     log.Info("transactions. ToProcess: {0}; InProcess: {1}; Delayed: {2}"
                             , sebManager.TransactionsToProcessCount
                             , sebManager.TransactionsInProcessCount
@@ -116,11 +120,11 @@ namespace Crm.Seb2
             }
             catch (OperationCanceledException e)
             {
-                log.Info(e.Message);
+                log.Info("DoInfo. {0}", e.Message);
             }
             catch (Exception e)
             {
-                log.Fatal(e);
+                log.Fatal("DoInfo. error: {0}", e.Message);
             }
         }
 
@@ -156,26 +160,31 @@ namespace Crm.Seb2
 
         public void OnStart(string[] args)
         {
+            log.Info("Service start");
             Start();
         }
 
         public void OnStop()
         {
+            log.Info("Service stop");
             Stop();
         }
 
         public void OnPause()
         {
+            log.Info("Service pause");
             Stop();
         }
 
         public void OnContinue()
         {
+            log.Info("Service continue");
             Start();
         }
 
         public void OnShutdown()
         {
+            log.Info("Service shutdown");
             Stop();
         }
 

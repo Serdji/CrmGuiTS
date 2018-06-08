@@ -66,7 +66,7 @@ namespace Crm.Seb2
             }
             catch (Exception e)
             {
-                log.Error("SebGatewayClient.GetTransactionsListAsync. uri: {0}; error: {1}", e.Message);
+                log.Error("SebGatewayClient.GetTransactionsListAsync. uri: {0}; error: {1}", uri, e.Message);
                 return null;
             }
         }

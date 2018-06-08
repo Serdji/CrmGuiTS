@@ -11,6 +11,7 @@ namespace Crm.Seb2
     {
         private const string serviceSettingsLabel = "serviceSettings";
         private const string dateStartLabel = "dateStart";
+        private const string mongoDBConnectionStringLabel = "mongoDBConnectionString";        
         private const string getTransactionsListDelayInMillisecondLabel = "getTransactionsListDelayInMillisecond";
         private const string getTransactionsDetailDelayInMillisecondLabel = "getTransactionsDetailDelayInMillisecond";
 
@@ -25,10 +26,10 @@ namespace Crm.Seb2
         public static ServiceSettings Instance { get { return lazy.Value; } }
 
         [ConfigurationProperty(dateStartLabel)]
-        public DateTime DateStart
-        {
-            get { return (DateTime)this[dateStartLabel]; }
-        }
+        public DateTime DateStart{ get { return (DateTime)this[dateStartLabel]; } }
+
+        [ConfigurationProperty(mongoDBConnectionStringLabel)]
+        public string MongoDBConnectionString { get { return (string)this[mongoDBConnectionStringLabel]; } }
 
         [ConfigurationProperty(getTransactionsListDelayInMillisecondLabel)]
         public int GetTransactionsListDelayInMillisecond { get { return (int)this[getTransactionsListDelayInMillisecondLabel]; } }

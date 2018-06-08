@@ -36,6 +36,8 @@ namespace Crm.Seb2
 
             Service S = new Service();
             ConsoleUtils.RunService(args, S);
+            Console.ReadKey();
+
         }
     }
 

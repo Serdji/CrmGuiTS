@@ -8,6 +8,9 @@ using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using MongoDB.Driver;
+using Newtonsoft.Json.Linq;
+using MongoDB.Bson;
 
 namespace Crm.Seb2
 {
@@ -18,6 +21,9 @@ namespace Crm.Seb2
         private readonly Logger log = LogManager.GetCurrentClassLogger();
         private ServiceSettings ss = ServiceSettings.Instance;
 
+        private MongoClient mongoClient;
+        private IMongoDatabase dbSeb;
+
         private List<DateRange> rangesToProcess;
         private List<DateRange> rangesInProcess;
 
@@ -27,10 +33,15 @@ namespace Crm.Seb2
 
         public int TransactionsToProcessCount { get => transactionsToProcess.Count; }
         public int TransactionsInProcessCount { get => transactionsInProcess.Count; }
-        public int TransactionsDelayedCount { get => transactionsToProcess.ToList().Where(t => t.LastTryDT.AddMinutes(constErrorDelayInMinutes) > DateTime.Now).Count(); }
+        public int TransactionsDelayedCount { get => transactionsToProcess.Except(transactionsInProcess).ToList()
+                                                .Where(t => t.LastTryDT.AddMinutes(constErrorDelayInMinutes) > DateTime.Now).Count(); }
 
         public SebManager()
         {
+            mongoClient = new MongoClient(ss.MongoDBConnectionString);
+            string databaseName = MongoUrl.Create(ss.MongoDBConnectionString).DatabaseName;
+            dbSeb = mongoClient.GetDatabase(string.IsNullOrEmpty(databaseName) ? "seb" : databaseName);
+
             rangesToProcess = new List<DateRange>();
             rangesInProcess = new List<DateRange>();
 
@@ -109,7 +120,6 @@ namespace Crm.Seb2
             {
                 rangesToProcess.RemoveAll(t => t.Equals(range));
                 rangesInProcess.RemoveAll(t => t.Equals(range));
-
             }
         }
 
@@ -117,13 +127,24 @@ namespace Crm.Seb2
         {
             if (transactionsDetail == null) return;
 
-            lock (transactionsToProcess)
+            try
             {
-                transactionsToProcess.RemoveAll(t => transactionsDetail.Any(td => t.Id == td.Id));
-                transactionsInProcess.RemoveAll(t => transactionsDetail.Any(td => t.Id == td.Id));
+                await SaveTransactionsDetailAsync(transactionsDetail, cancellationToken);
+
+                lock (transactionsToProcess)
+                {
+                    transactionsToProcess.RemoveAll(t => transactionsDetail.Any(td => t.Id == td.Id));
+                    transactionsInProcess.RemoveAll(t => transactionsDetail.Any(td => t.Id == td.Id));
+                }
+            }
+            catch (Exception e)
+            {
+                lock (transactionsToProcess)
+                    transactionsInProcess.RemoveAll(t => transactionsDetail.Any(td => t.Id == td.Id));
+                log.Error(e.Message);
+                throw e;
             }
 
-            await SaveTransactionsDetailAsync(transactionsDetail, cancellationToken);
         }
 
         private async Task SaveTransactionsDetailAsync(IEnumerable<TransactionDetail> transactionsDetail, CancellationToken cancellationToken)
@@ -132,25 +153,47 @@ namespace Crm.Seb2
 
             foreach (var td in transactionsDetail)
             {
-                var transactionDetailRsp = JsonConvert.DeserializeObject<TransactionDetailRsp>(td.Data);
+                dynamic data = JObject.Parse(td.Data);
+                string airline = data.Reclocs.Airline[0];
 
                 // Filtering only necessary aircompanies.
-                var airlineSettings = ss.Airlines.FirstOrDefault(a => a.Code == transactionDetailRsp.Reclocs.Airline[0]);
+                var airlineSettings = ss.Airlines.FirstOrDefault(a => a.Code == airline);
                 if (airlineSettings != null)
                 {
-                    await WriteToFileAsync(airlineSettings.Path, transactionDetailRsp, td.Data, cancellationToken);
+                    //await WriteToFileAsync(airlineSettings.Path, transactionDetailRsp, td.Data, cancellationToken);
+                    await WriteToMongoAsync(td.Data, cancellationToken);
                 };
             }
         }
 
-        private async Task WriteToFileAsync(string path, TransactionDetailRsp transactionDetailRsp, string data, CancellationToken cancellationToken)
+        private async Task WriteToMongoAsync(string json, CancellationToken cancellationToken)
+        {
+            DateTime date = DateTime.Now;
+            dynamic data = JObject.Parse(json);
+
+            string airline = data.Reclocs.Airline[0];
+
+            data.SebServiceInfo = new JObject() as dynamic;
+            data.SebServiceInfo.CreateDate = DateTime.Now;
+
+            var collection = dbSeb.GetCollection<BsonDocument>(airline);
+
+            string updatedJson = (data as JObject).ToString(Formatting.None);
+            var bsonDocument = BsonDocument.Parse(updatedJson);
+
+            await collection.InsertOneAsync(bsonDocument, new InsertOneOptions { BypassDocumentValidation = true }, cancellationToken);
+        }
+
+        private async Task WriteToFileAsync(string path, string json, CancellationToken cancellationToken)
         {
             try
             {
                 DateTime date = DateTime.Now;
-                string airline = transactionDetailRsp.Reclocs.Airline[0];
-                string recloc = transactionDetailRsp.Reclocs.Local;
-                string version = transactionDetailRsp.Transaction.Version;
+                dynamic data = JObject.Parse(json);
+
+                string airline = data.Reclocs.Airline[0];
+                string recloc = data.Reclocs.Local;
+                string version = data.Transaction.Version;
 
                 string fileName = String.Format("{0}-{1}-{2}"
                             , (!String.IsNullOrWhiteSpace(airline)) ? airline : "SEB"
@@ -173,13 +216,14 @@ namespace Crm.Seb2
                 //log.Debug(String.Format("File: {0}", fullPath));
                 using (FileStream fileStream = new FileStream(fullPath, FileMode.OpenOrCreate))
                 {
-                    byte[] msgBytes = System.Text.Encoding.UTF8.GetBytes(data);
+                    byte[] msgBytes = System.Text.Encoding.UTF8.GetBytes(json);
                     await fileStream.WriteAsync(msgBytes, 0, msgBytes.Length, cancellationToken);
                 }
             }
             catch (Exception e)
             {
                 log.Error(e.Message);
+                throw e;
             }
         }
 
@@ -194,12 +238,18 @@ namespace Crm.Seb2
 
                     IEnumerable<Transaction> transactions = await sebGatewayClient.GetTransactionsListAsync(range, cancellationToken);
 
-                    AddTransactionsToProcess(transactions);
-                    FinishRange(range);
+                    if (transactions != null)
+                    {
+                        AddTransactionsToProcess(transactions);
+                        FinishRange(range);
 
-                    log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; received: {2}; ids: {3}"
-                                , range.DateStart, range.DateEnd
-                                , transactions.ToList().Count, string.Join(",", transactions.Select(t => t.Id)));
+                        log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; received: {2}; ids: {3}"
+                                    , range.DateStart, range.DateEnd
+                                    , transactions.ToList().Count, string.Join(",", transactions.Select(t => t.Id)));
+                    } else
+                    {
+                        AddRangeToProcess(range);
+                    }
                 }
                 catch (Exception e)
                 {
