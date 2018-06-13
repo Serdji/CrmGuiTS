@@ -29,15 +29,19 @@ namespace Crm.Seb2
 
         public void Start()
         {
+            log.Info("Started");
             var sebManager = new SebManager();
 
             cancellationTokenSource = new CancellationTokenSource();
-            processRangeTask = Task.Run(() => DoProcessRange(sebManager, cancellationTokenSource.Token));
-            processTransactionsTask = Task.Run(() => DoProcessTransactions(sebManager, cancellationTokenSource.Token));
-            utilityTask = Task.Run(() => DoInfo(sebManager, cancellationTokenSource.Token));
+
+            processRangeTask = Task.Run(async () => await DoProcessRangeAsync(sebManager, cancellationTokenSource.Token));
+
+            processTransactionsTask = Task.Run(async () => await DoProcessTransactionsAsync(sebManager, cancellationTokenSource.Token));
+
+            utilityTask = Task.Run(async () => await DoInfoAsync(sebManager, cancellationTokenSource.Token));
         }
 
-        private async Task DoProcessRange(SebManager sebManager, CancellationToken cancellationToken)
+        private async Task DoProcessRangeAsync(SebManager sebManager, CancellationToken cancellationToken)
         {
             try
             {
@@ -49,8 +53,8 @@ namespace Crm.Seb2
                     cancellationToken.ThrowIfCancellationRequested();
                     
                     int awaitingTransactionLimit = ss.SebGateway.TransactionInBatchLimit * ss.SebGateway.ConnectionLimit * 2;
-                    if (sebManager.TransactionsToProcessCount < awaitingTransactionLimit) {
-                        var range = new DateRange(dateStart, dateEnd);
+                    if ((sebManager.RangesInProcessCount < 10) && (sebManager.TransactionsToProcessCount < awaitingTransactionLimit)) {
+                        var range = new DateRange(dateStart, dateEnd.AddSeconds(-1));
                         sebManager.AddRangeToProcess(range);
 
                         Task task = Task.Run(() => sebManager.GetTransactionsListAsync(cancellationToken))
@@ -65,15 +69,15 @@ namespace Crm.Seb2
             }
             catch (OperationCanceledException e)
             {
-                log.Info("DoProcessRange. {0}", e.Message);
+                log.Info("DoProcessRangeAsync. {0}", e.Message);
             }
             catch (Exception e)
             {
-                log.Fatal("DoProcessRange. error: {0}", e.Message);
+                log.Error(e);
             }
         }
 
-        private async Task DoProcessTransactions(SebManager sebManager, CancellationToken cancellationToken)
+        private async Task DoProcessTransactionsAsync(SebManager sebManager, CancellationToken cancellationToken)
         {
             try
             {
@@ -82,7 +86,7 @@ namespace Crm.Seb2
                 while (true)
                 {
                     cancellationToken.ThrowIfCancellationRequested();
-                    if (sebManager.TransactionsToProcessCount > 0)
+                    if ((sebManager.TransactionsToProcessCount > 0) && (sebManager.TransactionsInProcessCount < 1000))
                     {
                         Task task = Task.Run(() => sebManager.GetTransactionsDetailAsync(ss.SebGateway.TransactionInBatchLimit
                                                             , cancellationToken))
@@ -95,15 +99,15 @@ namespace Crm.Seb2
             }
             catch (OperationCanceledException e)
             {
-                log.Info("DoProcessTransactions. {0}", e.Message);
+                log.Info("DoProcessTransactionsAsync. {0}", e.Message);
             }
             catch (Exception e)
             {
-                log.Fatal("DoProcessTransactions. error: {0}", e.Message);
+                log.Error(e);
             }
         }
 
-        private async Task DoInfo(SebManager sebManager, CancellationToken cancellationToken)
+        private async Task DoInfoAsync(SebManager sebManager, CancellationToken cancellationToken)
         {
             try
             {
@@ -111,7 +115,9 @@ namespace Crm.Seb2
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    log.Info("transactions. ToProcess: {0}; InProcess: {1}; Delayed: {2}"
+                    log.Info("ranges. ToProcess: {0}; InProcess: {1}; transactions. ToProcess: {2}; InProcess: {3}; Delayed: {4}"
+                            , sebManager.RangesToProcessCount
+                            , sebManager.RangesInProcessCount
                             , sebManager.TransactionsToProcessCount
                             , sebManager.TransactionsInProcessCount
                             , sebManager.TransactionsDelayedCount);
@@ -124,7 +130,7 @@ namespace Crm.Seb2
             }
             catch (Exception e)
             {
-                log.Fatal("DoInfo. error: {0}", e.Message);
+                log.Error(e);
             }
         }
 
@@ -142,6 +148,7 @@ namespace Crm.Seb2
                 log.Fatal(e);
             }
         }
+
 
         private void OnUnhandledException(object sender, UnhandledExceptionEventArgs e)
         {

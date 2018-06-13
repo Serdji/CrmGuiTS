@@ -31,10 +31,59 @@ namespace Crm.Seb2
         private List<Transaction> transactionsInProcess;
         private SebGatewayClient sebGatewayClient;
 
-        public int TransactionsToProcessCount { get => transactionsToProcess.Count; }
-        public int TransactionsInProcessCount { get => transactionsInProcess.Count; }
-        public int TransactionsDelayedCount { get => transactionsToProcess.Except(transactionsInProcess).ToList()
-                                                .Where(t => t.LastTryDT.AddMinutes(constErrorDelayInMinutes) > DateTime.Now).Count(); }
+
+        public int RangesToProcessCount
+        {
+            get
+            {
+                lock (rangesToProcess)
+                {
+                    return rangesToProcess.Count;
+                }
+            }
+        }
+        public int RangesInProcessCount
+        {
+            get
+            {
+                lock (rangesToProcess)
+                {
+                    return rangesInProcess.Count;
+                }
+            }
+        }
+        public int TransactionsToProcessCount
+        {
+            get
+            {
+                lock (transactionsToProcess)
+                {
+                    return transactionsToProcess.Count;
+                }
+            }
+        }
+        public int TransactionsInProcessCount
+        {
+            get
+            {
+                lock (transactionsToProcess)
+                {
+                    return transactionsInProcess.Count;
+                }
+            }
+        }
+        public int TransactionsDelayedCount
+        {
+            get
+            {
+                lock (transactionsToProcess)
+                {
+                    return transactionsToProcess.Except(transactionsInProcess).ToList()
+                                                .Where(t => t.LastTryDT.AddMinutes(constErrorDelayInMinutes) > DateTime.Now)
+                                                .ToList().Count();
+                }
+            }
+        }
 
         public SebManager()
         {
@@ -78,7 +127,7 @@ namespace Crm.Seb2
 
         private DateRange PrepareRangeToProcess()
         {
-            lock (transactionsToProcess)
+            lock (rangesToProcess)
             {
                 var range = rangesToProcess.Except(rangesInProcess)
                     .OrderBy(t => t.LastTryDT)
@@ -102,7 +151,6 @@ namespace Crm.Seb2
                                 .Where(t => t.LastTryDT.AddMinutes(constErrorDelayInMinutes) <= DateTime.Now)
                                 .OrderBy(t => t.LastTryDT)
                                 .Take(topN).ToList();
-
 
                 transactions.ForEach(t => { t.LastTryDT = DateTime.Now; t.TryCount += 1; });
 
@@ -161,27 +209,34 @@ namespace Crm.Seb2
                 if (airlineSettings != null)
                 {
                     //await WriteToFileAsync(airlineSettings.Path, transactionDetailRsp, td.Data, cancellationToken);
-                    await WriteToMongoAsync(td.Data, cancellationToken);
+                    await WriteToMongoAsync((string.IsNullOrEmpty(airlineSettings.CollectionName) ? airlineSettings.CollectionName : airlineSettings.Code)
+                                            , td.Data, cancellationToken);
                 };
             }
         }
 
-        private async Task WriteToMongoAsync(string json, CancellationToken cancellationToken)
+        private async Task WriteToMongoAsync(string CollectionName, string json, CancellationToken cancellationToken)
         {
             DateTime date = DateTime.Now;
             dynamic data = JObject.Parse(json);
 
-            string airline = data.Reclocs.Airline[0];
+            Int64 _id = data.transaction.Id;
+            data._id = _id;
 
             data.SebServiceInfo = new JObject() as dynamic;
             data.SebServiceInfo.CreateDate = DateTime.Now;
 
-            var collection = dbSeb.GetCollection<BsonDocument>(airline);
+            var collection = dbSeb.GetCollection<BsonDocument>(CollectionName);
 
             string updatedJson = (data as JObject).ToString(Formatting.None);
             var bsonDocument = BsonDocument.Parse(updatedJson);
 
-            await collection.InsertOneAsync(bsonDocument, new InsertOneOptions { BypassDocumentValidation = true }, cancellationToken);
+            //await collection.InsertOneAsync(bsonDocument, new InsertOneOptions { BypassDocumentValidation = true }, cancellationToken);
+            await collection.ReplaceOneAsync(filter: new BsonDocument("_id", _id)
+                , replacement: bsonDocument
+                , options: new UpdateOptions { IsUpsert = true, BypassDocumentValidation = true }
+                , cancellationToken: cancellationToken);
+
         }
 
         private async Task WriteToFileAsync(string path, string json, CancellationToken cancellationToken)
@@ -251,6 +306,11 @@ namespace Crm.Seb2
                         AddRangeToProcess(range);
                     }
                 }
+                catch (OperationCanceledException e)
+                {
+                    log.Info("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; {2}"
+                                , range.DateStart, range.DateEnd, e.Message);
+                }
                 catch (Exception e)
                 {
                     log.Error("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; error: {2}"
@@ -283,14 +343,22 @@ namespace Crm.Seb2
                     }
                     else
                     {
+                        log.Warn("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
+                            , "Return transactions to list to process" );
+
                         AddTransactionsToProcess(transactions);
                     }
+                }
+                catch (OperationCanceledException e)
+                {
+                    log.Info("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
+                        , e.Message);
                 }
                 catch (Exception e)
                 {
                     AddTransactionsToProcess(transactions);
-                    log.Error("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; error: {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id)
-                        , e.Message));
+                    log.Error("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; error: {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
+                        , e.Message);
                     throw e;
                 }
             }

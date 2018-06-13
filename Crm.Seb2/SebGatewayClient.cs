@@ -60,14 +60,19 @@ namespace Crm.Seb2
                 getTransactionsResp = JsonConvert.DeserializeObject<GetTransactionsResp>(
                                         await response.Content.ReadAsStringAsync());
 
-                log.Info("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}; ids: {2}"
+                log.Debug("SebGatewayClient.GetTransactionsListAsync. uri: {0}; received: {1}; ids: {2}"
                     , uri, getTransactionsResp.Transactions.Count(), string.Join(",", getTransactionsResp.Transactions.Select(t => t.Id)));
                 return getTransactionsResp.Transactions;
+            }
+            catch (OperationCanceledException e)
+            {
+                log.Info("SebGatewayClient.GetTransactionsListAsync. uri: {0}; {1}", uri, e.Message);
+                return null;
             }
             catch (Exception e)
             {
                 log.Error("SebGatewayClient.GetTransactionsListAsync. uri: {0}; error: {1}", uri, e.Message);
-                return null;
+                throw e;
             }
         }
 
@@ -79,7 +84,7 @@ namespace Crm.Seb2
             List<TransactionDetail> transactionsDetail;
             GetTransactionsDetailReq request = new GetTransactionsDetailReq(transactions);
             string uri = request.ToUri();
-            log.Info(uri);
+            log.Trace(uri);
 
             try
             {
@@ -89,40 +94,39 @@ namespace Crm.Seb2
                 var bytes = await response.Content.ReadAsByteArrayAsync();
                 transactionsDetail = new List<TransactionDetail>(ParseTransactionDetail(System.Text.Encoding.UTF8.GetString(bytes)));
 
-                log.Info("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}", uri, transactionsDetail.Count);
+                log.Debug("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}", uri, transactionsDetail.Count);
                 return transactionsDetail;
+            }
+            catch (OperationCanceledException e)
+            {
+                log.Info("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; {1}", uri, e.Message);
+                return null;
             }
             catch (Exception e)
             {
                 log.Error("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; error: {1}", uri, e.Message);
-                return null;
+                throw e;
             }
         }
 
         // Parse GetTransactionDetail
         public IEnumerable<TransactionDetail> ParseTransactionDetail(string response)
         {
-            try
+            dynamic transactions = JsonConvert.DeserializeObject(response);
+
+            List<TransactionDetail> result = new List<TransactionDetail>();
+
+            foreach (var tran in transactions.Transactions)
             {
-                dynamic transactions = JsonConvert.DeserializeObject(response);
-
-                List<TransactionDetail> result = new List<TransactionDetail>();
-
-                foreach (var tran in transactions.Transactions)
+                var tr = new TransactionDetail
                 {
-                    TransactionDetail tr = new TransactionDetail();
-                    tr.Id = tran.transaction.Id;
-                    tr.Data = JsonConvert.SerializeObject(tran);
-                    result.Add(tr);
-                }
+                    Id = tran.transaction.Id,
+                    Data = JsonConvert.SerializeObject(tran)
+                };
+                result.Add(tr);
+            }
 
-                return result;
-            }
-            catch (Exception e)
-            {
-                log.Error(e);
-                return null;
-            }
+            return result;
         }
 
     }

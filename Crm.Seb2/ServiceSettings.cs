@@ -103,13 +103,13 @@ namespace Crm.Seb2
     public class AirlineElement : ConfigurationElement
     {
         private const string codeLabel = "code";
-        private const string pathLabel = "path";
+        private const string collectionNameLabel = "collectionName";
 
 
         [ConfigurationProperty(codeLabel)]
-        public string Code { get { return (string)this[codeLabel]; } }
+        public string Code { get { return (string)this[collectionNameLabel]; } }
 
-        [ConfigurationProperty(pathLabel)]
-        public string Path { get { return (string)this[pathLabel]; } }
+        [ConfigurationProperty(collectionNameLabel)]
+        public string CollectionName { get { return (string)this[collectionNameLabel]; } }
     }
 }
