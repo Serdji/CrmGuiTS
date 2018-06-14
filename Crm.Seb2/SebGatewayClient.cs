@@ -57,11 +57,18 @@ namespace Crm.Seb2
                 HttpResponseMessage response = await httpClient.GetAsync(uri, cancellationToken);
 
                 response.EnsureSuccessStatusCode();
-                getTransactionsResp = JsonConvert.DeserializeObject<GetTransactionsResp>(
-                                        await response.Content.ReadAsStringAsync());
+                string responseString = await response.Content.ReadAsStringAsync();
+                log.Trace(string.Concat(uri, Environment.NewLine, responseString));
+                getTransactionsResp = JsonConvert.DeserializeObject<GetTransactionsResp>(responseString);
 
                 log.Debug("SebGatewayClient.GetTransactionsListAsync. uri: {0}; received: {1}; ids: {2}"
                     , uri, getTransactionsResp.Transactions.Count(), string.Join(",", getTransactionsResp.Transactions.Select(t => t.Id)));
+
+                if (getTransactionsResp.Transactions.Count(t => t.Id == 0) > 0)
+                {
+                    log.Warn(string.Concat(uri, Environment.NewLine, responseString));
+                    throw new Exception("Wrong response data");
+                }
                 return getTransactionsResp.Transactions;
             }
             catch (OperationCanceledException e)
@@ -92,7 +99,10 @@ namespace Crm.Seb2
 
                 response.EnsureSuccessStatusCode();
                 var bytes = await response.Content.ReadAsByteArrayAsync();
-                transactionsDetail = new List<TransactionDetail>(ParseTransactionDetail(System.Text.Encoding.UTF8.GetString(bytes)));
+                string responseString = System.Text.Encoding.UTF8.GetString(bytes);
+                log.Trace(string.Concat(uri, Environment.NewLine, responseString));
+
+                transactionsDetail = new List<TransactionDetail>(ParseTransactionDetail(responseString));
 
                 log.Debug("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}", uri, transactionsDetail.Count);
                 return transactionsDetail;

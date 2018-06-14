@@ -15,6 +15,8 @@ namespace Crm.Seb2
         public DateTime LastTryDT = DateTime.MinValue;
         public int TryCount = 0;
 
+        public bool InProcess = false;
+
         public override bool Equals(object obj)
         {
             var item = obj as Transaction;

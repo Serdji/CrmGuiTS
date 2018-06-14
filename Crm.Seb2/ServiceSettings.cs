@@ -11,10 +11,9 @@ namespace Crm.Seb2
     {
         private const string serviceSettingsLabel = "serviceSettings";
         private const string dateStartLabel = "dateStart";
-        private const string mongoDBConnectionStringLabel = "mongoDBConnectionString";        
-        private const string getTransactionsListDelayInMillisecondLabel = "getTransactionsListDelayInMillisecond";
-        private const string getTransactionsDetailDelayInMillisecondLabel = "getTransactionsDetailDelayInMillisecond";
+        private const string delayInMillisecondLabel = "delayInMillisecond";
 
+        private const string mongoDBLabel = "mongoDB";
         private const string sebGatewayLabel = "sebGateway";
 
         private const string airlinesLabel = "airlines";
@@ -28,14 +27,14 @@ namespace Crm.Seb2
         [ConfigurationProperty(dateStartLabel)]
         public DateTime DateStart{ get { return (DateTime)this[dateStartLabel]; } }
 
-        [ConfigurationProperty(mongoDBConnectionStringLabel)]
-        public string MongoDBConnectionString { get { return (string)this[mongoDBConnectionStringLabel]; } }
+        [ConfigurationProperty(delayInMillisecondLabel)]
+        public int DelayInMillisecond { get { return (int)this[delayInMillisecondLabel]; } }
 
-        [ConfigurationProperty(getTransactionsListDelayInMillisecondLabel)]
-        public int GetTransactionsListDelayInMillisecond { get { return (int)this[getTransactionsListDelayInMillisecondLabel]; } }
-
-        [ConfigurationProperty(getTransactionsDetailDelayInMillisecondLabel)]
-        public int GetTransactionsDetailDelayInMillisecond { get { return (int)this[getTransactionsDetailDelayInMillisecondLabel]; } }
+        [ConfigurationProperty(mongoDBLabel)]
+        public MongoDBElement MongoDB
+        {
+            get { return (MongoDBElement)this[mongoDBLabel]; }
+        }
 
         [ConfigurationProperty(sebGatewayLabel)]
         public SebGatewayElement SebGateway
@@ -50,6 +49,22 @@ namespace Crm.Seb2
         {
             get { return (AirlineElementCollection)this[airlinesLabel]; }
         }
+    }
+
+    public class MongoDBElement : ConfigurationElement
+    {
+        private const string connectionStringLabel = "connectionString";
+        private const string mainCollectionNameLabel = "mainCollectionName";
+        private const string serviceCollectionPrefixLabel = "serviceCollectionPrefix";
+
+        [ConfigurationProperty(connectionStringLabel)]
+        public string ConnectionString { get { return (string)this[connectionStringLabel]; } }
+
+        [ConfigurationProperty(mainCollectionNameLabel)]
+        public string MainCollectionName { get { return (string)this[mainCollectionNameLabel]; } }
+
+        [ConfigurationProperty(serviceCollectionPrefixLabel)]
+        public string ServiceCollectionPrefix { get { return (string)this[serviceCollectionPrefixLabel]; } }
     }
 
     public class SebGatewayElement : ConfigurationElement
@@ -73,10 +88,7 @@ namespace Crm.Seb2
         public int ConnectionLimit { get { return (int)this[connectionLimitLabel]; } }
 
         [ConfigurationProperty(rangeInMinutesLabel)]
-        public int RangeInMinutes
-        {
-            get { return (int)this[rangeInMinutesLabel]; }
-        }
+        public int RangeInMinutes { get { return (int)this[rangeInMinutesLabel]; } }
     }
 
     public class AirlineElementCollection : ConfigurationElementCollection, IEnumerable<AirlineElement>
@@ -103,13 +115,8 @@ namespace Crm.Seb2
     public class AirlineElement : ConfigurationElement
     {
         private const string codeLabel = "code";
-        private const string collectionNameLabel = "collectionName";
-
 
         [ConfigurationProperty(codeLabel)]
-        public string Code { get { return (string)this[collectionNameLabel]; } }
-
-        [ConfigurationProperty(collectionNameLabel)]
-        public string CollectionName { get { return (string)this[collectionNameLabel]; } }
+        public string Code { get { return (string)this[codeLabel]; } }
     }
 }

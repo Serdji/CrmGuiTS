@@ -55,7 +55,7 @@ namespace Crm.Seb2
                     int awaitingTransactionLimit = ss.SebGateway.TransactionInBatchLimit * ss.SebGateway.ConnectionLimit * 2;
                     if ((sebManager.RangesInProcessCount < 10) && (sebManager.TransactionsToProcessCount < awaitingTransactionLimit)) {
                         var range = new DateRange(dateStart, dateEnd.AddSeconds(-1));
-                        sebManager.AddRangeToProcess(range);
+                        await sebManager.AddRangeToProcessAsync(range, cancellationToken);
 
                         Task task = Task.Run(() => sebManager.GetTransactionsListAsync(cancellationToken))
                                                     .ContinueWith(t => { log.Error(t.Exception); },
@@ -64,7 +64,7 @@ namespace Crm.Seb2
                         dateEnd = dateStart.AddMinutes(ss.SebGateway.RangeInMinutes);
                     }
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(ss.GetTransactionsListDelayInMillisecond), cancellationToken);
+                    await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond), cancellationToken);
                 }
             }
             catch (OperationCanceledException e)
@@ -94,7 +94,7 @@ namespace Crm.Seb2
                                                         TaskContinuationOptions.OnlyOnFaulted);
                     }
                     
-                    await Task.Delay(TimeSpan.FromMilliseconds(ss.GetTransactionsDetailDelayInMillisecond), cancellationToken);
+                    await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond), cancellationToken);
                 }
             }
             catch (OperationCanceledException e)

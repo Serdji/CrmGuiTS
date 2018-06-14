@@ -1,4 +1,6 @@
-﻿using System;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using MongoDB.Bson.Serialization.IdGenerators;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,11 +10,15 @@ namespace Crm.Seb2
 {
     class DateRange
     {
+        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+
         public DateTime DateStart;
         public DateTime DateEnd;
 
         public DateTime LastTryDT = DateTime.MinValue;
         public int TryCount = 0;
+
+        public bool InProcess = false;
 
         public DateRange()
         {
