@@ -9,10 +9,10 @@ namespace Crm.Seb.Models.Request
 {
     class GetTransactionsListReq: DateRange
     {
-        public GetTransactionsListReq(DateRange dateRange)
+        public GetTransactionsListReq(DateTime dateStart, DateTime dateEnd)
         {
-            DateStart = dateRange.DateStart;
-            DateEnd = dateRange.DateEnd;
+            DateStart = dateStart;
+            DateEnd = dateEnd;
         }
 
         public string ToUri()

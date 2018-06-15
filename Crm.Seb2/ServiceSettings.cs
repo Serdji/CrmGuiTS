@@ -11,6 +11,7 @@ namespace Crm.Seb2
     {
         private const string serviceSettingsLabel = "serviceSettings";
         private const string dateStartLabel = "dateStart";
+        private const string dateEndLabel = "dateEnd";
         private const string delayInMillisecondLabel = "delayInMillisecond";
 
         private const string mongoDBLabel = "mongoDB";
@@ -26,6 +27,9 @@ namespace Crm.Seb2
 
         [ConfigurationProperty(dateStartLabel)]
         public DateTime DateStart{ get { return (DateTime)this[dateStartLabel]; } }
+
+        [ConfigurationProperty(dateEndLabel)]
+        public DateTime DateEnd { get { return (DateTime)this[dateEndLabel]; } }
 
         [ConfigurationProperty(delayInMillisecondLabel)]
         public int DelayInMillisecond { get { return (int)this[delayInMillisecondLabel]; } }

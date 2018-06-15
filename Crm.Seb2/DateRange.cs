@@ -1,5 +1,4 @@
-﻿using MongoDB.Bson.Serialization.Attributes;
-using MongoDB.Bson.Serialization.IdGenerators;
+﻿using MongoDB.Bson;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,7 +9,7 @@ namespace Crm.Seb2
 {
     class DateRange
     {
-        [BsonId(IdGenerator = typeof(StringObjectIdGenerator))]
+        public ObjectId Id { get; set; }
 
         public DateTime DateStart;
         public DateTime DateEnd;

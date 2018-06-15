@@ -20,6 +20,8 @@ namespace Crm.Seb2
         
         private readonly Logger log = LogManager.GetCurrentClassLogger();
         private ServiceSettings ss = ServiceSettings.Instance;
+        public DateTime dateStart;
+        public DateTime dateEnd;
 
         private MongoClient mongoClient;
         private IMongoDatabase dbSeb;
@@ -28,6 +30,14 @@ namespace Crm.Seb2
         private IMongoCollection<Transaction> serviceTransactionsCollection;
 
         private SebGatewayClient sebGatewayClient;
+
+        public long RangesCount
+        {
+            get
+            {
+                return serviceRangesCollection.Count<DateRange>(r => true);
+            }
+        }
 
         public long RangesToProcessCount
         {
@@ -58,7 +68,6 @@ namespace Crm.Seb2
             get
             {
                 return serviceTransactionsCollection.Count<Transaction>(t => t.InProcess == true);
-
             }
         }
 
@@ -81,9 +90,10 @@ namespace Crm.Seb2
             serviceRangesCollection = dbSeb.GetCollection<DateRange>(string.Concat(ss.MongoDB.ServiceCollectionPrefix, "range"));
             serviceTransactionsCollection = dbSeb.GetCollection<Transaction>(string.Concat(ss.MongoDB.ServiceCollectionPrefix, "transaction"));
             InitServiceCollections();
+            InitIndexes();
+            InitDates();
 
             sebGatewayClient = new SebGatewayClient();
-
         }
 
         private void InitServiceCollections()
@@ -95,27 +105,92 @@ namespace Crm.Seb2
                                                 , update: Builders<Transaction>.Update.Set(t => t.InProcess, false));
         }
 
-        public async Task AddRangeToProcessAsync(DateRange range, CancellationToken cancellationToken)
+        private void InitIndexes()
+        {
+            serviceRangesCollection.Indexes.CreateOne(
+                        keys: Builders<DateRange>.IndexKeys.Ascending(r => r.DateStart).Ascending(r => r.DateEnd),
+                        options: new CreateIndexOptions { Sparse = false, Unique = true });
+        }
+
+        private void InitDates()
+        {
+            // Start
+            dateStart = ss.DateStart;
+            DateRange range = serviceRangesCollection.Find(r => true).SortByDescending(r => r.DateEnd).Limit(1).FirstOrDefault();
+            if (range != null)
+                dateStart = range.DateEnd;
+
+            // End
+            dateEnd = ss.DateEnd;
+        }
+
+        public async Task AddNextRangeToProcess(CancellationToken cancellationToken)
+        {
+            var range = new DateRange
+            {
+                DateStart = dateStart,
+                DateEnd = dateStart.AddMinutes(ss.SebGateway.RangeInMinutes)
+            };
+            dateStart = range.DateEnd;
+            await AddRangeToProcessAsync(range, cancellationToken);
+        }
+            
+        private async Task AddRangeToProcessAsync(DateRange range, CancellationToken cancellationToken)
         {
             if (range == null) return;
 
             range.InProcess = false;
-            await serviceRangesCollection.ReplaceOneAsync(filter: r => r.DateStart == range.DateStart
+            try
+            {
+                await serviceRangesCollection.InsertOneAsync(document: range
+                                                            , cancellationToken: cancellationToken);
+            }
+            catch (MongoWriteException e)
+            {
+                if (e.WriteError.Category != ServerErrorCategory.DuplicateKey)
+                    throw e;
+            }
+        }
+
+        private async Task ReturnRangeToProcessAsync(DateRange range, CancellationToken cancellationToken)
+        {
+            if (range == null) return;
+
+            await serviceRangesCollection.UpdateOneAsync(filter: r => r.DateStart == range.DateStart
                                                                 && r.DateEnd == range.DateEnd
-                                                        , replacement: range
+                                                        , update: Builders<DateRange>.Update.Set(r => r.InProcess, false)
                                                         , options: new UpdateOptions { IsUpsert = true }
                                                         , cancellationToken: cancellationToken);
         }
 
-        public async Task AddTransactionsToProcessAsync(IEnumerable<Transaction> transactions, CancellationToken cancellationToken)
+        private async Task AddTransactionsToProcessAsync(IEnumerable<Transaction> transactions, CancellationToken cancellationToken)
         {
             if (transactions == null) return;
 
             foreach (var transaction in transactions)
             {
                 transaction.InProcess = false;
-                await serviceTransactionsCollection.ReplaceOneAsync(filter: t => t.Id == transaction.Id
-                                                        , replacement: transaction
+                try
+                {
+                    await serviceTransactionsCollection.InsertOneAsync(document: transaction
+                                                            , cancellationToken: cancellationToken);
+                }
+                catch (MongoWriteException e)
+                {
+                    if (e.WriteError.Category != ServerErrorCategory.DuplicateKey)
+                        throw e;
+                }
+            }
+        }
+
+        private async Task ReturnTransactionsToProcessAsync(IEnumerable<Transaction> transactions, CancellationToken cancellationToken)
+        {
+            if (transactions == null) return;
+
+            foreach (var transaction in transactions)
+            {
+                await serviceTransactionsCollection.UpdateOneAsync(filter: t => t.Id == transaction.Id
+                                                        , update: Builders<Transaction>.Update.Set(t => t.InProcess, false)
                                                         , options: new UpdateOptions { IsUpsert = true }
                                                         , cancellationToken: cancellationToken);
             };
@@ -134,7 +209,7 @@ namespace Crm.Seb2
                                                             ReturnDocument = ReturnDocument.After
                                                             , Sort = Builders<DateRange>.Sort.Descending(r => r.LastTryDT)
                                                         }
-                                                        , cancellationToken: cancellationToken);
+                                                        , cancellationToken: cancellationToken);            
             return range;
         }
 
@@ -223,28 +298,39 @@ namespace Crm.Seb2
             data._id = _id;
 
             data.SebServiceInfo = new JObject() as dynamic;
-            data.SebServiceInfo.CreateDate = DateTime.Now;            
+            data.SebServiceInfo.CreateDate = DateTime.Now;
 
             string updatedJson = (data as JObject).ToString(Formatting.None);
             var bsonDocument = BsonDocument.Parse(updatedJson);
 
-            await mainCollection.ReplaceOneAsync(filter: new BsonDocument("_id", _id)
-                , replacement: bsonDocument
-                , options: new UpdateOptions { IsUpsert = true, BypassDocumentValidation = true }
-                , cancellationToken: cancellationToken);
-
+            try
+            {
+                await mainCollection.InsertOneAsync(document: bsonDocument
+                    , options: new InsertOneOptions { BypassDocumentValidation = true }
+                    , cancellationToken: cancellationToken);
+            }
+            catch (MongoWriteException e)
+            {
+                if (e.WriteError.Category == ServerErrorCategory.DuplicateKey)
+                    log.Warn("Transaction already exists in main. id = {0}", _id);
+                else
+                    throw e;
+            }
         }
 
         public async Task GetTransactionsListAsync(CancellationToken cancellationToken)
         {
-            DateRange range = await PrepareRangeToProcessAsync(cancellationToken);
+            DateRange range = await PrepareRangeToProcessAsync(cancellationToken);            
+
             if (range != null)
             {
+                DateTime _dateStart = range.DateStart;
+                DateTime _dateEnd = range.DateEnd.AddMinutes(-1);
                 try
                 {
-                    log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}", range.DateStart, range.DateEnd);
+                    log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}", _dateStart, _dateEnd);
 
-                    IEnumerable<Transaction> transactions = await sebGatewayClient.GetTransactionsListAsync(range, cancellationToken);
+                    IEnumerable<Transaction> transactions = await sebGatewayClient.GetTransactionsListAsync(_dateStart, _dateEnd, cancellationToken);
 
                     if (transactions != null)
                     {
@@ -252,23 +338,23 @@ namespace Crm.Seb2
                         await FinishRangeAsync(range, cancellationToken);
 
                         log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; received: {2}; ids: {3}"
-                                    , range.DateStart, range.DateEnd
+                                    , _dateStart, _dateEnd
                                     , transactions.ToList().Count, string.Join(",", transactions.Select(t => t.Id)));
                     } else
                     {
-                        await AddRangeToProcessAsync(range, cancellationToken);
+                        await ReturnRangeToProcessAsync(range, cancellationToken);
                     }
                 }
                 catch (OperationCanceledException e)
                 {
                     log.Info("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; {2}"
-                                , range.DateStart, range.DateEnd, e.Message);
+                                , _dateStart, _dateEnd, e.Message);
                 }
                 catch (Exception e)
                 {
                     log.Error("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; error: {2}"
-                                , range.DateStart, range.DateEnd, e.Message);
-                    await AddRangeToProcessAsync(range, cancellationToken);
+                                , _dateStart, _dateEnd, e.Message);
+                    await ReturnRangeToProcessAsync(range, cancellationToken);
                     throw e;
                 }
             }
@@ -288,7 +374,7 @@ namespace Crm.Seb2
                     if (transactionsDetail != null)
                     {
                         await FinishTransactionsAsync(transactionsDetail, cancellationToken);
-                        await AddTransactionsToProcessAsync(transactions.Where(t => !transactionsDetail.Any(td => td.Id == t.Id)), cancellationToken);
+                        await ReturnTransactionsToProcessAsync(transactions.Where(t => !transactionsDetail.Any(td => td.Id == t.Id)), cancellationToken);
 
                         log.Trace("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; received: {2}"
                                         , transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
@@ -299,7 +385,7 @@ namespace Crm.Seb2
                         log.Warn("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
                             , "Return transactions to list to process" );
 
-                        await AddTransactionsToProcessAsync(transactions, cancellationToken);
+                        await ReturnTransactionsToProcessAsync(transactions, cancellationToken);
                     }
                 }
                 catch (OperationCanceledException e)
@@ -309,7 +395,7 @@ namespace Crm.Seb2
                 }
                 catch (Exception e)
                 {
-                    await AddTransactionsToProcessAsync(transactions, cancellationToken);
+                    await ReturnTransactionsToProcessAsync(transactions, cancellationToken);
                     log.Error("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; error: {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
                         , e.Message);
                     throw e;

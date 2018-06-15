@@ -43,12 +43,10 @@ namespace Crm.Seb2
             httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         }
 
-        public async Task<IEnumerable<Transaction>> GetTransactionsListAsync(DateRange range, CancellationToken cancellationToken)
+        public async Task<IEnumerable<Transaction>> GetTransactionsListAsync(DateTime dateStart, DateTime dateEnd, CancellationToken cancellationToken)
         {
-            if (range == null) return null;
-
             GetTransactionsResp getTransactionsResp = null;
-            GetTransactionsListReq request = new GetTransactionsListReq(range);
+            GetTransactionsListReq request = new GetTransactionsListReq(dateStart, dateEnd);
             string uri = request.ToUri();
             log.Trace(uri);
 
