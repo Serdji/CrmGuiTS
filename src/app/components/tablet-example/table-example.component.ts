@@ -5,7 +5,7 @@ import {
   MatSort,
   MatTableDataSource,
 } from '@angular/material';
-import { DialogComponent } from '../dialog/dialog.component';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 
 @Component( {
