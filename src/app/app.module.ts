@@ -7,18 +7,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
-import { AuthService } from './services/auth.service';
-import { AuthGuard } from './auth.guard';
-import { ActivityUserService } from './services/activity-user.service';
+import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
-import { ProfileSearchComponent } from './components/profile-search/profile-search.component';
-import { ProfileSearchService } from './components/profile-search/profile-search.service';
-import { AuthInterceptor } from './services/auth-interceptor';
 import { SharedModule } from './shared/shared.module';
-import { TableAsyncComponent } from './shared/table-async/table-async.component';
 import { DialogComponent } from './shared/dialog/dialog.component';
 import { ComponentsModule } from './components/components.module';
+import { ServicesModule } from './services/services.module';
 
 
 if ( environment.production ) {
@@ -26,11 +20,7 @@ if ( environment.production ) {
 }
 
 @NgModule( {
-  declarations: [
-    AppComponent,
-    ProfileSearchComponent,
-    TableAsyncComponent,
-  ],
+  declarations: [ AppComponent ],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -38,23 +28,11 @@ if ( environment.production ) {
     BrowserAnimationsModule,
     HttpClientModule,
     ComponentsModule,
+    ServicesModule,
     MaterialModule,
     SharedModule.forRoot()
   ],
-  entryComponents: [
-    DialogComponent,
-  ],
-  providers: [
-    AuthService,
-    AuthGuard,
-    ActivityUserService,
-    ProfileSearchService,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AuthInterceptor,
-      multi: true
-    }
-  ],
+  entryComponents: [ DialogComponent ],
   bootstrap: [ AppComponent ],
 } )
 export class AppModule {
