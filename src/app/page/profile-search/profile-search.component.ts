@@ -8,7 +8,7 @@ import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
 import { Icount } from '../../interface/icount';
 import { Iprofile } from '../../interface/iprofile';
-import { TableAsyncService } from '../../shared/table-async/table-async.service';
+import { TableAsyncService } from '../../components/table-async/table-async.service';
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
 import { log } from 'util';

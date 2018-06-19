@@ -11,4 +11,4 @@ import { ProfileSearchModule } from './profile-search/profile-search.module';
   ],
   declarations: []
 })
-export class ComponentsModule { }
+export class PageModule { }

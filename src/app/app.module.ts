@@ -10,8 +10,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
-import { DialogComponent } from './shared/dialog/dialog.component';
-import { ComponentsModule } from './components/components.module';
+import { PageModule } from './page/page.module';
 import { ServicesModule } from './services/services.module';
 
 
@@ -27,12 +26,11 @@ if ( environment.production ) {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    ComponentsModule,
+    PageModule,
     ServicesModule,
     MaterialModule,
-    SharedModule.forRoot()
+    SharedModule,
   ],
-  entryComponents: [ DialogComponent ],
   bootstrap: [ AppComponent ],
 } )
 export class AppModule {
