@@ -1,6 +1,15 @@
 <mat-sidenav-container class="example-container unicorn-dark-theme" autosize>
   <mat-sidenav #sidenav class="example-sidenav mat-elevation-z8" opened="true" mode="side">
-    <a *ngFor="let link of links" mat-button routerLink="{{link.url}}"  routerLinkActive="sidenav__link-active">{{link.title}}</a>
+    <mat-accordion>
+      <mat-expansion-panel class="mat-elevation-z0" hideToggle="true" *ngFor="let accord of menu">
+        <mat-expansion-panel-header>
+          <mat-panel-title class="sidenav__panel-title">
+            {{ accord.name }}
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <a *ngFor="let link of accord.link" mat-button routerLink="{{link.url}}"  routerLinkActive="sidenav__link-active">{{link.title}}</a>
+      </mat-expansion-panel>
+    </mat-accordion>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav__content">
     <div class="example-sidenav-content">
