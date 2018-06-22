@@ -15,7 +15,7 @@ export class SidenavComponent implements OnInit {
   @ViewChild( 'sidenav' ) sidenav: MatSidenav;
 
   public links: IMenuLink[] = [
-    { url: '/profile/profilesearch', title: 'Поиск пассажира' },
+    { url: '/crm/profilesearch', title: 'Поиск пассажира' },
   ];
 
   constructor(
