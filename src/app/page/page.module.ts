@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { LoginModule } from './login/login.module';
 import { ProfileSearchModule } from './profile-search/profile-search.module';
+import { CompanyModule } from './company/company.module';
+import { UsersModule } from './users/users.module';
+import { UsersSearchModule } from './users-search/users-search.module';
 
 @NgModule({
   imports: [
-    CommonModule,
     LoginModule,
     ProfileSearchModule,
+    CompanyModule,
+    UsersModule,
+    UsersSearchModule
   ],
   declarations: []
 })

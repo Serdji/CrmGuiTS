@@ -12,7 +12,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
-import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -20,7 +20,8 @@ import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { SharedModule } from './shared/shared.module';
+
+import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 
 
 @NgModule( {
@@ -70,6 +71,7 @@ import { SharedModule } from './shared/shared.module';
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
+    { provide: MatPaginatorIntl, useClass: CustomMatPaginatorService }
   ],
 } )
 export class MaterialModule {

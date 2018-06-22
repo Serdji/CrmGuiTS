@@ -3,24 +3,18 @@ import { CommonModule } from '@angular/common';
 import { ProfileSearchComponent } from './profile-search.component';
 import { ProfileSearchService } from './profile-search.service';
 import { ReactiveFormsModule } from '@angular/forms';
-import { MaterialModule } from '../../material.module';
-import { TableAsyncComponent } from '../../components/table-async/table-async.component';
-import { TableAsyncService } from '../../components/table-async/table-async.service';
+import { SharedModule } from '../../shared/shared.module';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule( {
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    MaterialModule,
+    SharedModule,
+    ComponentsModule
   ],
-  declarations: [
-    ProfileSearchComponent,
-    TableAsyncComponent
-  ],
-  providers: [
-    ProfileSearchService,
-    TableAsyncService,
-  ]
+  declarations: [ProfileSearchComponent],
+  providers: [ ProfileSearchService ]
 } )
 export class ProfileSearchModule {
 }

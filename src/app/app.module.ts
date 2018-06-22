@@ -5,13 +5,13 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AppRoutingModule } from './app-routing.module';
 
 import { AppComponent } from './app.component';
-import { MaterialModule } from './material.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
 import { PageModule } from './page/page.module';
 import { ServicesModule } from './services/services.module';
+import { ComponentsModule } from './components/components.module';
 
 
 if ( environment.production ) {
@@ -28,8 +28,8 @@ if ( environment.production ) {
     HttpClientModule,
     PageModule,
     ServicesModule,
-    MaterialModule,
-    SharedModule,
+    SharedModule.forRoot(),
+    ComponentsModule.forRoot()
   ],
   bootstrap: [ AppComponent ],
 } )
