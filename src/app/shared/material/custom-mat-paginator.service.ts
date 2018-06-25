@@ -6,6 +6,8 @@ export class CustomMatPaginatorService extends MatPaginatorIntl {
   public itemsPerPageLabel: string = 'Количество на страницу';
   public nextPageLabel: string = 'Следующая';
   public previousPageLabel: string = 'Предыдущая';
+  public firstPageLabel: string = 'Первая страница';
+  public lastPageLabel: string = 'Последняя страница';
   public ofLabel: string = 'из';
 
   public getRangeLabel = (page: number, pageSize: number, length: number): string => {

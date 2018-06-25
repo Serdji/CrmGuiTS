@@ -1,4 +1,8 @@
 export interface IMenuLink {
-  url: string;
-  title: string;
+  name: string;
+  icon?: string;
+  link: {
+    url: string;
+    title: string;
+  }[];
 }
