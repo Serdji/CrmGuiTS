@@ -14,7 +14,7 @@ import { Router } from '@angular/router';
 export class SidenavComponent implements OnInit {
 
   @ViewChild( 'sidenav' ) sidenav: MatSidenav;
-  @ViewChild( 'accord' ) accord: nativeElement;
+  @ViewChild( 'accord' ) accord;
 
   public menu: IMenuLink[] = [
     {
