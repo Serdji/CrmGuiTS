@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from './users.service';
 import { takeWhile } from 'rxjs/operators';
-import { Iairlines } from '../../../../../Crm.GUI.Adm/src/app/interface/iairlines';
-import { emailValidator } from '../../../../../Crm.GUI.Adm/src/app/validators/emailValidator';
 import { MatDialog } from '@angular/material';
-import { DialogComponent } from '../../../../../Crm.GUI.Adm/src/app/shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
+import { Iairlines } from '../../interface/iairlines';
+import { emailValidator } from '../../validators/emailValidator';
+import { DialogComponent } from '../../shared/dialog/dialog.component';
 
 @Component( {
   selector: 'app-users',

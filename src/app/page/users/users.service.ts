@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-import { IcreateUser } from '../../../../../Crm.GUI.Adm/src/app/interface/icreate-user';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../../Crm.GUI.Adm/src/environments/environment';
+import { environment } from '../../../environments/environment';
+import { IcreateUser } from '../../interface/icreate-user';
 
 @Injectable()
 export class UsersService {
