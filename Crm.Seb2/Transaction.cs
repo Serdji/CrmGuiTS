@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using MongoDB.Bson.Serialization.Attributes;
+using System;
 
 namespace Crm.Seb2
 {
@@ -12,6 +9,7 @@ namespace Crm.Seb2
         public long Id;
         public string Recloc;
 
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
         public DateTime LastTryDT = DateTime.MinValue;
         public int TryCount = 0;
 

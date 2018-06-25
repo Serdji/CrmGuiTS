@@ -78,7 +78,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DateRange.cs" />
     <Compile Include="Models\Request\GetTransactionsListReq.cs" />
     <Compile Include="Models\Request\GetTransactionsDetailReq.cs" />
     <Compile Include="Models\Response\GetTransactionsResp.cs" />
@@ -108,8 +107,6 @@
     <None Include="Publish\serviceSettings.Debug.config" />
     <None Include="Publish\serviceSettings.Release.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Models\Settings\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

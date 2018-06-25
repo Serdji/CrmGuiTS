@@ -1,57 +1,39 @@
-﻿using Crm.Seb.Models.Response;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using NLog;
 using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using MongoDB.Driver;
 using Newtonsoft.Json.Linq;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Attributes;
 
 namespace Crm.Seb2
 {
     class SebManager
     {
         private int constErrorDelayInMinutes = 1;
-        
+
         private readonly Logger log = LogManager.GetCurrentClassLogger();
         private ServiceSettings ss = ServiceSettings.Instance;
-        public DateTime dateStart;
-        public DateTime dateEnd;
 
         private MongoClient mongoClient;
         private IMongoDatabase dbSeb;
         private IMongoCollection<BsonDocument> mainCollection;
-        private IMongoCollection<DateRange> serviceRangesCollection;
-        private IMongoCollection<Transaction> serviceTransactionsCollection;
+        private IMongoCollection<SebManagerConfig> configCollection;
+        private IMongoCollection<Transaction> transactionsCollection;
+
+        public DateTime dateStart;
 
         private SebGatewayClient sebGatewayClient;
 
-        public long RangesCount
+        public long TransactionsCount
         {
             get
             {
-                return serviceRangesCollection.Count<DateRange>(r => true);
-            }
-        }
-
-        public long RangesToProcessCount
-        {
-            get
-            {
-                return serviceRangesCollection.Count<DateRange>(r => r.InProcess == false);
-            }
-        }
-
-        public long RangesInProcessCount
-        {
-            get
-            {
-                return serviceRangesCollection.Count<DateRange>(r => r.InProcess == true);
+                return transactionsCollection.Count<Transaction>(t => true);
             }
         }
 
@@ -59,7 +41,7 @@ namespace Crm.Seb2
         {
             get
             {
-                return serviceTransactionsCollection.Count<Transaction>(t => t.InProcess == false);
+                return transactionsCollection.Count<Transaction>(t => t.InProcess == false);
             }
         }
 
@@ -67,7 +49,7 @@ namespace Crm.Seb2
         {
             get
             {
-                return serviceTransactionsCollection.Count<Transaction>(t => t.InProcess == true);
+                return transactionsCollection.Count<Transaction>(t => t.InProcess == true);
             }
         }
 
@@ -75,8 +57,8 @@ namespace Crm.Seb2
         {
             get
             {
-                return serviceTransactionsCollection.Count<Transaction>(t => t.InProcess == false
-                                                                        && t.LastTryDT > DateTime.Now.AddMinutes(-1 * constErrorDelayInMinutes));
+                return transactionsCollection.Count<Transaction>(t => t.InProcess == false
+                                                                        && t.LastTryDT > DateTime.Now.AddMinutes(-(constErrorDelayInMinutes)));
             }
         }
 
@@ -87,80 +69,41 @@ namespace Crm.Seb2
             dbSeb = mongoClient.GetDatabase(string.IsNullOrEmpty(databaseName) ? "seb" : databaseName);
 
             mainCollection = dbSeb.GetCollection<BsonDocument>(ss.MongoDB.MainCollectionName);
-            serviceRangesCollection = dbSeb.GetCollection<DateRange>(string.Concat(ss.MongoDB.ServiceCollectionPrefix, "range"));
-            serviceTransactionsCollection = dbSeb.GetCollection<Transaction>(string.Concat(ss.MongoDB.ServiceCollectionPrefix, "transaction"));
+            configCollection = dbSeb.GetCollection<SebManagerConfig>(string.Concat(ss.MongoDB.ServiceCollectionPrefix, "config"));
+            transactionsCollection = dbSeb.GetCollection<Transaction>(string.Concat(ss.MongoDB.ServiceCollectionPrefix, "transaction"));
             InitServiceCollections();
-            InitIndexes();
-            InitDates();
+            InitDateStart();
 
             sebGatewayClient = new SebGatewayClient();
         }
 
         private void InitServiceCollections()
         {
-            serviceRangesCollection.UpdateMany(filter: r => r.InProcess
-                                                , update: Builders<DateRange>.Update.Set(r => r.InProcess, false));
-
-            serviceTransactionsCollection.UpdateMany(filter: t => t.InProcess
+            transactionsCollection.UpdateMany(filter: t => t.InProcess
                                                 , update: Builders<Transaction>.Update.Set(t => t.InProcess, false));
         }
 
-        private void InitIndexes()
+        private void InitDateStart()
         {
-            serviceRangesCollection.Indexes.CreateOne(
-                        keys: Builders<DateRange>.IndexKeys.Ascending(r => r.DateStart).Ascending(r => r.DateEnd),
-                        options: new CreateIndexOptions { Sparse = false, Unique = true });
-        }
-
-        private void InitDates()
-        {
-            // Start
             dateStart = ss.DateStart;
-            DateRange range = serviceRangesCollection.Find(r => true).SortByDescending(r => r.DateEnd).Limit(1).FirstOrDefault();
-            if (range != null)
-                dateStart = range.DateEnd;
 
-            // End
-            dateEnd = ss.DateEnd;
+            SebManagerConfig config = configCollection.Find(d => true).FirstOrDefault();
+            if (config != null)
+                dateStart = config.dateStart;
+            log.Info("DateStart: {0}", dateStart);
         }
 
-        public async Task AddNextRangeToProcess(CancellationToken cancellationToken)
+        public async Task<DateTime> IncDateStart(CancellationToken cancellationToken)
         {
-            var range = new DateRange
-            {
-                DateStart = dateStart,
-                DateEnd = dateStart.AddMinutes(ss.SebGateway.RangeInMinutes)
-            };
-            dateStart = range.DateEnd;
-            await AddRangeToProcessAsync(range, cancellationToken);
-        }
-            
-        private async Task AddRangeToProcessAsync(DateRange range, CancellationToken cancellationToken)
-        {
-            if (range == null) return;
+            dateStart = dateStart.AddMinutes(ss.SebGateway.RangeInMinutes);
+            var config = new SebManagerConfig();
+            config.dateStart = dateStart;
 
-            range.InProcess = false;
-            try
-            {
-                await serviceRangesCollection.InsertOneAsync(document: range
-                                                            , cancellationToken: cancellationToken);
-            }
-            catch (MongoWriteException e)
-            {
-                if (e.WriteError.Category != ServerErrorCategory.DuplicateKey)
-                    throw e;
-            }
-        }
-
-        private async Task ReturnRangeToProcessAsync(DateRange range, CancellationToken cancellationToken)
-        {
-            if (range == null) return;
-
-            await serviceRangesCollection.UpdateOneAsync(filter: r => r.DateStart == range.DateStart
-                                                                && r.DateEnd == range.DateEnd
-                                                        , update: Builders<DateRange>.Update.Set(r => r.InProcess, false)
-                                                        , options: new UpdateOptions { IsUpsert = true }
-                                                        , cancellationToken: cancellationToken);
+            await configCollection.ReplaceOneAsync(filter: c => true
+                                                      , replacement: config
+                                                      , options: new UpdateOptions { IsUpsert = true }
+                                                      , cancellationToken: cancellationToken);
+            return dateStart;
         }
 
         private async Task AddTransactionsToProcessAsync(IEnumerable<Transaction> transactions, CancellationToken cancellationToken)
@@ -172,7 +115,7 @@ namespace Crm.Seb2
                 transaction.InProcess = false;
                 try
                 {
-                    await serviceTransactionsCollection.InsertOneAsync(document: transaction
+                    await transactionsCollection.InsertOneAsync(document: transaction
                                                             , cancellationToken: cancellationToken);
                 }
                 catch (MongoWriteException e)
@@ -189,28 +132,11 @@ namespace Crm.Seb2
 
             foreach (var transaction in transactions)
             {
-                await serviceTransactionsCollection.UpdateOneAsync(filter: t => t.Id == transaction.Id
+                await transactionsCollection.UpdateOneAsync(filter: t => t.Id == transaction.Id
                                                         , update: Builders<Transaction>.Update.Set(t => t.InProcess, false)
                                                         , options: new UpdateOptions { IsUpsert = true }
                                                         , cancellationToken: cancellationToken);
             };
-        }
-
-        private async Task<DateRange> PrepareRangeToProcessAsync(CancellationToken cancellationToken)
-        {
-            DateRange range = await serviceRangesCollection.FindOneAndUpdateAsync<DateRange>
-                                                        (filter: r => r.InProcess == false
-                                                                && r.LastTryDT <= DateTime.Now.AddMinutes(-1 * constErrorDelayInMinutes)
-                                                        , update: Builders<DateRange>.Update.Set(r => r.LastTryDT, DateTime.Now)
-                                                                                            .Inc(r => r.TryCount, 1)
-                                                                                            .Set(r => r.InProcess, true)
-                                                        , options: new FindOneAndUpdateOptions<DateRange>
-                                                        {
-                                                            ReturnDocument = ReturnDocument.After
-                                                            , Sort = Builders<DateRange>.Sort.Descending(r => r.LastTryDT)
-                                                        }
-                                                        , cancellationToken: cancellationToken);            
-            return range;
         }
 
         private async Task<IEnumerable<Transaction>> PrepareTransactionsToProcessAsync(int transactionInBatchLimit, CancellationToken cancellationToken)
@@ -220,16 +146,17 @@ namespace Crm.Seb2
 
             while (transactions.Count < transactionInBatchLimit)
             {
-                transaction = await serviceTransactionsCollection.FindOneAndUpdateAsync<Transaction>
+                transaction = await transactionsCollection.FindOneAndUpdateAsync<Transaction>
                                                         (filter: t => t.InProcess == false
-                                                                && t.LastTryDT <= DateTime.Now.AddMinutes(-1 * constErrorDelayInMinutes)
+                                                                && t.LastTryDT <= DateTime.Now.AddMinutes(-(constErrorDelayInMinutes))
                                                         , update: Builders<Transaction>.Update.Set(t => t.LastTryDT, DateTime.Now)
                                                                                             .Inc(t => t.TryCount, 1)
                                                                                             .Set(t => t.InProcess, true)
                                                         , options: new FindOneAndUpdateOptions<Transaction>
                                                         {
                                                             ReturnDocument = ReturnDocument.After
-                                                            , Sort = Builders<Transaction>.Sort.Descending(t => t.LastTryDT)
+                                                            ,
+                                                            Sort = Builders<Transaction>.Sort.Descending(t => t.LastTryDT)
                                                         }
                                                         , cancellationToken: cancellationToken);
                 if (transaction == null)
@@ -238,15 +165,6 @@ namespace Crm.Seb2
             };
 
             return transactions;
-        }
-
-        private async Task FinishRangeAsync(DateRange range, CancellationToken cancellationToken)
-        {
-            if (range == null) return;
-
-            await serviceRangesCollection.DeleteManyAsync(filter: r => r.DateStart == range.DateStart
-                                                                && r.DateEnd == range.DateEnd
-                                                          , cancellationToken: cancellationToken);
         }
 
         private async Task FinishTransactionsAsync(IEnumerable<TransactionDetail> transactionsDetail, CancellationToken cancellationToken)
@@ -258,13 +176,13 @@ namespace Crm.Seb2
                 await SaveTransactionsDetailAsync(transactionsDetail, cancellationToken);
 
                 foreach (var td in transactionsDetail)
-                    await serviceTransactionsCollection.DeleteOneAsync(filter: t => t.Id == td.Id
+                    await transactionsCollection.DeleteOneAsync(filter: t => t.Id == td.Id
                                                                     , cancellationToken: cancellationToken);
             }
             catch (Exception e)
             {
                 foreach (var td in transactionsDetail)
-                    await serviceTransactionsCollection.UpdateOneAsync(filter: t => t.Id == td.Id
+                    await transactionsCollection.UpdateOneAsync(filter: t => t.Id == td.Id
                                                         , update: Builders<Transaction>.Update.Set(t => t.InProcess, true)
                                                         , cancellationToken: cancellationToken);
 
@@ -318,45 +236,28 @@ namespace Crm.Seb2
             }
         }
 
-        public async Task GetTransactionsListAsync(CancellationToken cancellationToken)
+        public async Task GetNextTransactionsListAsync(DateTime _dateStart, DateTime _dateEnd, CancellationToken cancellationToken)
         {
-            DateRange range = await PrepareRangeToProcessAsync(cancellationToken);            
-
-            if (range != null)
+            try
             {
-                DateTime _dateStart = range.DateStart;
-                DateTime _dateEnd = range.DateEnd.AddMinutes(-1);
-                try
-                {
-                    log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}", _dateStart, _dateEnd);
+                log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}", _dateStart, _dateEnd);
 
-                    IEnumerable<Transaction> transactions = await sebGatewayClient.GetTransactionsListAsync(_dateStart, _dateEnd, cancellationToken);
+                IEnumerable<Transaction> transactions = await sebGatewayClient.GetTransactionsListAsync(_dateStart, _dateEnd, cancellationToken);
 
-                    if (transactions != null)
-                    {
-                        await AddTransactionsToProcessAsync(transactions, cancellationToken);
-                        await FinishRangeAsync(range, cancellationToken);
+                if (transactions != null)
+                {
+                    await AddTransactionsToProcessAsync(transactions, cancellationToken);
 
-                        log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; received: {2}; ids: {3}"
-                                    , _dateStart, _dateEnd
-                                    , transactions.ToList().Count, string.Join(",", transactions.Select(t => t.Id)));
-                    } else
-                    {
-                        await ReturnRangeToProcessAsync(range, cancellationToken);
-                    }
+                    log.Trace("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; received: {2}; ids: {3}"
+                                , _dateStart, _dateEnd
+                                , transactions.ToList().Count, string.Join(",", transactions.Select(t => t.Id)));
                 }
-                catch (OperationCanceledException e)
-                {
-                    log.Info("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; {2}"
-                                , _dateStart, _dateEnd, e.Message);
-                }
-                catch (Exception e)
-                {
-                    log.Error("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; error: {2}"
-                                , _dateStart, _dateEnd, e.Message);
-                    await ReturnRangeToProcessAsync(range, cancellationToken);
-                    throw e;
-                }
+            }
+            catch (Exception e)
+            {
+                log.Error("SebManager.GetTransactionsListAsync. date_start: {0}; date_end: {1}; error: {2}"
+                            , _dateStart, _dateEnd, e.Message);
+                throw e;
             }
         }
 
@@ -370,7 +271,7 @@ namespace Crm.Seb2
                 try
                 {
                     IEnumerable<TransactionDetail> transactionsDetail = await sebGatewayClient.GetTransactionsDetailAsync(transactions, cancellationToken);
-                     
+
                     if (transactionsDetail != null)
                     {
                         await FinishTransactionsAsync(transactionsDetail, cancellationToken);
@@ -383,15 +284,10 @@ namespace Crm.Seb2
                     else
                     {
                         log.Warn("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
-                            , "Return transactions to list to process" );
+                            , "Return transactions to list to process");
 
                         await ReturnTransactionsToProcessAsync(transactions, cancellationToken);
                     }
-                }
-                catch (OperationCanceledException e)
-                {
-                    log.Info("SebManager.GetTransactionsDetailAsync. requested: {0}; ids: {1}; {2}", transactions.Count(), string.Join(",", transactions.Select(t => t.Id))
-                        , e.Message);
                 }
                 catch (Exception e)
                 {
@@ -402,5 +298,13 @@ namespace Crm.Seb2
                 }
             }
         }
+    }
+
+    class SebManagerConfig
+    {
+        public int id = 0;
+
+        [BsonDateTimeOptions(Kind = DateTimeKind.Local)]
+        public DateTime dateStart;
     }
 }

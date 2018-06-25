@@ -4,7 +4,6 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
 using NLog;
 using Crm.Seb.Models.Response;
@@ -69,11 +68,6 @@ namespace Crm.Seb2
                 }
                 return getTransactionsResp.Transactions;
             }
-            catch (OperationCanceledException e)
-            {
-                log.Info("SebGatewayClient.GetTransactionsListAsync. uri: {0}; {1}", uri, e.Message);
-                return null;
-            }
             catch (Exception e)
             {
                 log.Error("SebGatewayClient.GetTransactionsListAsync. uri: {0}; error: {1}", uri, e.Message);
@@ -104,11 +98,6 @@ namespace Crm.Seb2
 
                 log.Debug("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; received: {1}", uri, transactionsDetail.Count);
                 return transactionsDetail;
-            }
-            catch (OperationCanceledException e)
-            {
-                log.Info("SebGatewayClient.GetTransactionsDetailAsync. uri: {0}; {1}", uri, e.Message);
-                return null;
             }
             catch (Exception e)
             {

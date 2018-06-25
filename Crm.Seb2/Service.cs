@@ -16,11 +16,12 @@ namespace Crm.Seb2
         private readonly Logger log = LogManager.GetCurrentClassLogger();
         private ServiceSettings ss = ServiceSettings.Instance;
 
-        private Task addRangeTask;
         private Task processRangeTask;
         private Task processTransactionsTask;
         private Task utilityTask;
         private CancellationTokenSource cancellationTokenSource;
+        private bool finishRange;
+        private bool finishTransactions;
 
         public Service()
         {
@@ -31,11 +32,13 @@ namespace Crm.Seb2
         public void Start()
         {
             log.Info("Started");
+
+            finishRange = false;
+            finishTransactions = false;
+
             var sebManager = new SebManager();
 
             cancellationTokenSource = new CancellationTokenSource();
-
-            addRangeTask = Task.Run(async () => await DoAddRangeAsync(sebManager, cancellationTokenSource.Token));
 
             processRangeTask = Task.Run(async () => await DoProcessRangeAsync(sebManager, cancellationTokenSource.Token));
 
@@ -44,57 +47,64 @@ namespace Crm.Seb2
             utilityTask = Task.Run(async () => await DoInfoAsync(sebManager, cancellationTokenSource.Token));
         }
 
-        private async Task DoAddRangeAsync(SebManager sebManager, CancellationToken cancellationToken)
-        {
-            try
-            {
-                while (true)
-                {
-                    cancellationToken.ThrowIfCancellationRequested();
-
-                    if ((sebManager.dateStart < DateTime.Now.AddMinutes(-1 * ss.SebGateway.RangeInMinutes))
-                        && (sebManager.RangesCount < 10))
-                    {
-                        Task task = Task.Run(() => sebManager.AddNextRangeToProcess(cancellationToken))
-                                                    .ContinueWith(t => { log.Error(t.Exception); },
-                                                        TaskContinuationOptions.OnlyOnFaulted);
-                    }
-
-                    await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond), cancellationToken);
-                }
-            }
-            catch (OperationCanceledException e)
-            {
-                log.Info("DoAddRangeAsync. {0}", e.Message);
-            }
-            catch (Exception e)
-            {
-                log.Error(e);
-            }
-        }
 
         private async Task DoProcessRangeAsync(SebManager sebManager, CancellationToken cancellationToken)
         {
             try
             {
+                int awaitingTransactionLimit = 1000;
+                DateTime dateStart = sebManager.dateStart;
+
                 while (true)
                 {
-                    cancellationToken.ThrowIfCancellationRequested();
-                    
-                    int awaitingTransactionLimit = ss.SebGateway.TransactionInBatchLimit * ss.SebGateway.ConnectionLimit * 2;
-                    if ((sebManager.RangesToProcessCount > 0) 
-                        && (sebManager.TransactionsToProcessCount < awaitingTransactionLimit)) {
-                        Task task = Task.Run(() => sebManager.GetTransactionsListAsync(cancellationToken))
-                                                    .ContinueWith(t => { log.Error(t.Exception); },
-                                                        TaskContinuationOptions.OnlyOnFaulted);
+                    try
+                    {
+                        cancellationToken.ThrowIfCancellationRequested();
+
+                        DateTime dateEnd = dateStart.AddMinutes(ss.SebGateway.RangeInMinutes).AddSeconds(-1);
+
+
+                        if (ss.DateEnd == null || ss.DateEnd == DateTime.MinValue)
+                        {
+                            // actual
+                            if (dateEnd < DateTime.Now
+                                && sebManager.TransactionsToProcessCount < awaitingTransactionLimit)
+                            {
+                                await sebManager.GetNextTransactionsListAsync(dateStart, dateEnd, cancellationToken);
+                                dateStart = await sebManager.IncDateStart(cancellationToken);
+                            }
+                        }
+                        else
+                        {
+                            // lost dates   
+                            if (dateStart >= ss.DateEnd)
+                            {
+                                log.Warn("Range processing. Done!!!");
+                                finishRange = true;
+                                break;
+                            }
+                            if (dateEnd > ss.DateEnd)
+                                dateEnd = (DateTime)ss.DateEnd;
+                            if (sebManager.TransactionsToProcessCount < awaitingTransactionLimit)
+                            {
+                                await sebManager.GetNextTransactionsListAsync(dateStart, dateEnd, cancellationToken);
+                                dateStart = await sebManager.IncDateStart(cancellationToken);
+                            }
+                        }
+
+
+                    }
+                    catch (OperationCanceledException e)
+                    {
+                        log.Info("DoProcessRangeAsync. {0}", e.Message);
+                    }
+                    catch (Exception e)
+                    {
+                        log.Error(e);
                     }
 
-                    await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond), cancellationToken);
+                    await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond));
                 }
-            }
-            catch (OperationCanceledException e)
-            {
-                log.Info("DoProcessRangeAsync. {0}", e.Message);
             }
             catch (Exception e)
             {
@@ -118,6 +128,14 @@ namespace Crm.Seb2
                                                         TaskContinuationOptions.OnlyOnFaulted);
                     }
                     
+                    // lost dates
+                    if (finishRange && sebManager.TransactionsCount == 0)
+                    {
+                        log.Warn("Transactions processing. Done!!!");
+                        finishTransactions = true;
+                        break;
+                    }
+
                     await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond), cancellationToken);
                 }
             }
@@ -139,13 +157,18 @@ namespace Crm.Seb2
                 {
                     cancellationToken.ThrowIfCancellationRequested();
 
-                    log.Info("ranges. ToProcess: {0}; InProcess: {1}; transactions. ToProcess: {2}; InProcess: {3}; Delayed: {4}"
-                            , sebManager.RangesToProcessCount
-                            , sebManager.RangesInProcessCount
+                    log.Info("transactions. ToProcess: {0}; InProcess: {1}; Delayed: {2}"
                             , sebManager.TransactionsToProcessCount
                             , sebManager.TransactionsInProcessCount
                             , sebManager.TransactionsDelayedCount);
-                    await Task.Delay(TimeSpan.FromSeconds(1), cancellationToken);
+
+                    // lost dates
+                    if (finishRange && finishTransactions)
+                    {
+                        break;
+                    }
+
+                    await Task.Delay(TimeSpan.FromSeconds(60), cancellationToken);
                 }
             }
             catch (OperationCanceledException e)
@@ -163,7 +186,6 @@ namespace Crm.Seb2
             cancellationTokenSource.Cancel();
             try
             {
-                addRangeTask.Wait();
                 processRangeTask.Wait();
                 processTransactionsTask.Wait();
                 utilityTask.Wait();

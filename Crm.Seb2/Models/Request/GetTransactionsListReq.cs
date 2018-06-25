@@ -1,14 +1,12 @@
-﻿using Crm.Seb2;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System;
 
 namespace Crm.Seb.Models.Request
 {
-    class GetTransactionsListReq: DateRange
+    class GetTransactionsListReq
     {
+        public DateTime DateStart;
+        public DateTime DateEnd;
+
         public GetTransactionsListReq(DateTime dateStart, DateTime dateEnd)
         {
             DateStart = dateStart;

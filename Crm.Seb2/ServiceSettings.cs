@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Configuration;
 
 namespace Crm.Seb2
@@ -29,7 +27,7 @@ namespace Crm.Seb2
         public DateTime DateStart{ get { return (DateTime)this[dateStartLabel]; } }
 
         [ConfigurationProperty(dateEndLabel)]
-        public DateTime DateEnd { get { return (DateTime)this[dateEndLabel]; } }
+        public DateTime? DateEnd { get { return (DateTime?)this[dateEndLabel]; } }
 
         [ConfigurationProperty(delayInMillisecondLabel)]
         public int DelayInMillisecond { get { return (int)this[delayInMillisecondLabel]; } }
