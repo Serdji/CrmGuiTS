@@ -2,9 +2,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../users/users.service';
 import { takeWhile } from 'rxjs/operators';
-import { Iairlines } from '../../../../../Crm.GUI.Adm/src/app/interface/iairlines';
-import { IuserSearch } from '../../../../../Crm.GUI.Adm/src/app/interface/iuser-search';
 import { UsersSearchService } from './users-search.service';
+import { Iairlines } from '../../interface/iairlines';
+import { IuserSearch } from '../../interface/iuser-search';
 
 
 @Component( {
