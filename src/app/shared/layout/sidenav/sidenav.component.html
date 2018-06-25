@@ -1,7 +1,7 @@
 <mat-sidenav-container class="example-container unicorn-dark-theme" autosize>
   <mat-sidenav #sidenav class="example-sidenav mat-elevation-z8" opened="true" mode="side">
-    <mat-accordion>
-      <mat-expansion-panel class="mat-elevation-z0" hideToggle="true" *ngFor="let accord of menu">
+    <mat-accordion #accord>
+      <mat-expansion-panel [expanded]="false" class="mat-elevation-z0" hideToggle="true" *ngFor="let accord of menu">
         <mat-expansion-panel-header>
           <mat-panel-title class="sidenav__panel-title">
             {{ accord.name }}

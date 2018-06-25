@@ -4,6 +4,7 @@ import { timer } from 'rxjs/observable/timer';
 import { IMenuLink } from '../../../interface/imenu-link';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from '../layout.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sidenav',
@@ -13,6 +14,7 @@ import { LayoutService } from '../layout.service';
 export class SidenavComponent implements OnInit {
 
   @ViewChild( 'sidenav' ) sidenav: MatSidenav;
+  @ViewChild( 'accord' ) accord: nativeElement;
 
   public menu: IMenuLink[] = [
     {
@@ -35,13 +37,29 @@ export class SidenavComponent implements OnInit {
 
   constructor(
     private activityUser: ActivityUserService,
-    private layoutService: LayoutService
+    private layoutService: LayoutService,
+    private router: Router,
     ) { }
 
   ngOnInit(): void {
     this.timeoutCloseNav();
     this.activityUser.idleLogout();
+    this.autoOpenAccord();
     this.layoutService.subjectToggle.subscribe( _ => this.sidenav.toggle() );
+  }
+
+  private autoOpenAccord() {
+    timer(0).subscribe( _ => {
+      const aElement = this.accord.nativeElement.querySelectorAll('a');
+      const href = '#' + this.router.url;
+      for ( const a of aElement ) {
+        if ( a.hash === href ) {
+          const matExpPanel = a.closest('mat-expansion-panel');
+          const matExpPanelHeader = matExpPanel.querySelector('mat-expansion-panel-header');
+          matExpPanelHeader.click();
+        }
+      }
+    });
   }
 
   private timeoutCloseNav() {
