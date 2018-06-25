@@ -17,6 +17,7 @@ export class SidenavComponent implements OnInit {
   public menu: IMenuLink[] = [
     {
       name: 'Пользователи',
+      icon: 'group',
       link: [
         { url: '/crm/users', title: 'Добавить пользователя' },
         { url: '/crm/usersearch', title: 'Поиск пользователей' },
@@ -25,6 +26,7 @@ export class SidenavComponent implements OnInit {
     },
     {
       name: 'Пассажиры',
+      icon: 'airplanemode_active',
       link: [
         { url: '/crm/profilesearch', title: 'Поиск пассажира' }
       ]
