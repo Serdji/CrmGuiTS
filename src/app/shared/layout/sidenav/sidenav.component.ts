@@ -51,7 +51,7 @@ export class SidenavComponent implements OnInit {
   private autoOpenAccord() {
     timer( 0 ).subscribe( _ => {
       const aElement = this.accord.nativeElement.querySelectorAll( 'a' );
-      const href = '#' + this.router.url;
+      const href = '#' + this.router.url.split('?')[0];
       for ( const a of aElement ) {
         if ( a.hash === href ) {
           const matExpPanel = a.closest( 'mat-expansion-panel' );
