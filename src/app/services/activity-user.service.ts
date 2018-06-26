@@ -12,7 +12,8 @@ export class ActivityUserService {
   ) { }
 
   logout() {
-    localStorage.clear();
+    localStorage.removeItem( 'paramsUser' );
+    localStorage.removeItem( 'paramsToken' );
     this.router.navigate( [ '' ] );
   }
 
