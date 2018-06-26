@@ -7,6 +7,7 @@ import { LayoutComponent } from './shared/layout/layout.component';
 import { CompanyComponent } from './page/company/company.component';
 import { UsersComponent } from './page/users/users.component';
 import { UsersSearchComponent } from './page/users-search/users-search.component';
+import { EntranceComponent } from './page/entrance/entrance.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -15,6 +16,7 @@ const routes: Routes = [
       component: LayoutComponent,
       canActivate: [ AuthGuard ],
       children: [
+        { path: 'entrance', component: EntranceComponent },
         { path: 'profilesearch', component: ProfileSearchComponent },
         { path: 'users', component: UsersComponent },
         { path: 'usersearch', component: UsersSearchComponent },
