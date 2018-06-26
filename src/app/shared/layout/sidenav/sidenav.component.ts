@@ -35,7 +35,6 @@ export class SidenavComponent implements OnInit {
   }
 
   private autoOpenSidena() {
-    this.open = true;
     this.sidenavService.subjectClosesAccord.subscribe( _ => {
       timer( 0 ).subscribe( _ => this.sidenav.close() );
     } );

@@ -19,7 +19,9 @@ export class AppComponent implements OnInit {
     if ( !token ) {
       this.router.navigate([ '/' ] );
     } else {
-      this.router.navigate([ 'crm' ] );
+      if ( this.location.path() === '' ) {
+        this.router.navigate([ 'crm' ] );
+      }
     }
   }
 
