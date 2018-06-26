@@ -1,4 +1,6 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component( {
   selector: 'app-layout',
@@ -6,8 +8,17 @@ import { Component, OnInit, ViewChild } from '@angular/core';
   styleUrls: [ './layout.component.styl' ],
 } )
 
-export class LayoutComponent {
+export class LayoutComponent implements OnInit {
 
-  constructor( ) { }
+  constructor(
+    private router: Router,
+    private location: Location,
+    ) { }
+
+  ngOnInit() {
+    if ( this.location.path() === '/crm' ) {
+      this.router.navigate( [ 'crm/entrance' ] );
+    }
+  }
 
 }

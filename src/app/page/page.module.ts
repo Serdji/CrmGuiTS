@@ -4,6 +4,7 @@ import { ProfileSearchModule } from './profile-search/profile-search.module';
 import { CompanyModule } from './company/company.module';
 import { UsersModule } from './users/users.module';
 import { UsersSearchModule } from './users-search/users-search.module';
+import { EntranceModule } from './entrance/entrance.module';
 
 @NgModule({
   imports: [
@@ -11,7 +12,8 @@ import { UsersSearchModule } from './users-search/users-search.module';
     ProfileSearchModule,
     CompanyModule,
     UsersModule,
-    UsersSearchModule
+    UsersSearchModule,
+    EntranceModule,
   ],
   declarations: []
 })

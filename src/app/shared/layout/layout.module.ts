@@ -6,6 +6,7 @@ import { LayoutComponent } from './layout.component';
 import { LayoutService } from './layout.service';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
+import { SidenavService } from './sidenav/sidenav.service';
 
 @NgModule({
   imports: [
@@ -18,6 +19,9 @@ import { RouterModule } from '@angular/router';
     ToolbarComponent,
     LayoutComponent
   ],
-  providers: [ LayoutService ]
+  providers: [
+    LayoutService,
+    SidenavService,
+  ]
 })
 export class LayoutModule { }

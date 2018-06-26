@@ -5,6 +5,7 @@ import { IMenuLink } from '../../../interface/imenu-link';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from '../layout.service';
 import { Router } from '@angular/router';
+import { SidenavService } from './sidenav.service';
 
 @Component( {
   selector: 'app-sidenav',
@@ -16,42 +17,38 @@ export class SidenavComponent implements OnInit {
   @ViewChild( 'sidenav' ) sidenav: MatSidenav;
   @ViewChild( 'accord' ) accord;
 
-  public menu: IMenuLink[] = [
-    {
-      name: 'Пользователи',
-      icon: 'group',
-      link: [
-        { url: '/crm/users', title: 'Добавить пользователя' },
-        { url: '/crm/usersearch', title: 'Поиск пользователей' },
-        { url: '/crm/company', title: 'Настройки' }
-      ]
-    },
-    {
-      name: 'Пассажиры',
-      icon: 'airplanemode_active',
-      link: [
-        { url: '/crm/profilesearch', title: 'Поиск пассажира' }
-      ]
-    }
-  ];
+  public menu: IMenuLink[];
 
   constructor(
     private activityUser: ActivityUserService,
     private layoutService: LayoutService,
     private router: Router,
+    private sidenavService: SidenavService,
   ) { }
 
   ngOnInit(): void {
-    this.timeoutCloseNav();
     this.activityUser.idleLogout();
     this.autoOpenAccord();
+    this.autoOpenSidena();
+    this.menu = this.sidenavService.menu;
     this.layoutService.subjectToggle.subscribe( _ => this.sidenav.toggle() );
+  }
+
+  private autoOpenSidena() {
+    this.sidenavService.subjectClosesAccord.subscribe( _ => {
+      timer( 0 ).subscribe( _ => this.sidenav.close() );
+    } );
+    this.sidenavService.subjectOpenAccord.subscribe( _ => {
+      this.autoOpenAccord();
+      timer( 0 ).subscribe( _ => this.sidenav.open() );
+    } );
+    timer( 0 ).subscribe( _ => this.sidenav.open() );
   }
 
   private autoOpenAccord() {
     timer( 0 ).subscribe( _ => {
       const aElement = this.accord.nativeElement.querySelectorAll( 'a' );
-      const href = '#' + this.router.url.split('?')[0];
+      const href = '#' + this.router.url.split( '?' )[ 0 ];
       for ( const a of aElement ) {
         if ( a.hash === href ) {
           const matExpPanel = a.closest( 'mat-expansion-panel' );
@@ -60,13 +57,5 @@ export class SidenavComponent implements OnInit {
         }
       }
     } );
-  }
-
-  private timeoutCloseNav() {
-    timer( this.getSeconds( 3 ) ).subscribe( _ => this.sidenav.close() );
-  }
-
-  private getSeconds( sec: number ): number {
-    return sec * 1000;
   }
 }

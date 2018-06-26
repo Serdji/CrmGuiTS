@@ -16,7 +16,13 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     const token = JSON.parse(localStorage.getItem('paramsToken'));
-    if ( !token ) this.router.navigate([ '/' ] );
+    if ( !token ) {
+      this.router.navigate([ '/' ] );
+    } else {
+      if ( this.location.path() === '' ) {
+        this.router.navigate([ 'crm' ] );
+      }
+    }
   }
 
 }
