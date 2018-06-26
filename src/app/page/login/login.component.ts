@@ -57,7 +57,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             localStorage.setItem( 'paramsUser', JSON.stringify( user ) );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
             if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) {
-              this.router.navigate( [ 'crm/entrance' ] );
+              this.router.navigate( [ 'crm' ] );
             }
           },
           _ => this.isErrorAuth = true

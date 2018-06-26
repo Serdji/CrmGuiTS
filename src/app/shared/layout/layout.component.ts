@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component( {
   selector: 'app-layout',
@@ -9,10 +10,15 @@ import { Router } from '@angular/router';
 
 export class LayoutComponent implements OnInit {
 
-  constructor( private router: Router ) { }
+  constructor(
+    private router: Router,
+    private location: Location,
+    ) { }
 
   ngOnInit() {
-    // this.router.navigate( [ 'crm/entrance' ] );
+    if ( this.location.path() === '/crm' ) {
+      this.router.navigate( [ 'crm/entrance' ] );
+    }
   }
 
 }
