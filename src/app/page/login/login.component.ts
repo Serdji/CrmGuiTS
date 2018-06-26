@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public isErrorAuth: boolean = false;
   public formLogin: FormGroup;
   private isActive: boolean = true;
+  private saveTableLogin: boolean;
 
   constructor(
     private fb: FormBuilder,
@@ -29,12 +30,14 @@ export class LoginComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initFormGroup();
     this.initVersion();
+    this.saveLogin();
   }
 
   private initFormGroup() {
     this.formLogin = this.fb.group( {
       username: [ '', [ Validators.required ] ],
       password: [ '', [ Validators.required ] ],
+      save: [ '' ],
     }, {
       updateOn: 'submit',
     } );
@@ -46,8 +49,30 @@ export class LoginComponent implements OnInit, OnDestroy {
       .subscribe( ( value: string ) => this.version = `2.0.0.${value}` );
   }
 
+  private saveLogin() {
+    this.formLogin.get( 'save' ).valueChanges.subscribe( value => {
+      this.saveTableLogin = value;
+      if ( !value ) {
+        localStorage.removeItem( 'saveTableLogin' );
+        for ( const formControlName in this.formLogin.value ) {
+          this.formLogin.get( `${ formControlName }` ).patchValue( '' );
+          this.formLogin.get( `${ formControlName }` ).setErrors( null );
+        }
+      }
+    } );
+    const tableLogin = localStorage.getItem('saveTableLogin');
+    if ( tableLogin ) {
+      this.formLogin.patchValue(JSON.parse(tableLogin));
+    }
+
+  }
+
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
+      console.log( this.saveTableLogin );
+      if ( this.saveTableLogin ) {
+        localStorage.setItem( 'saveTableLogin', JSON.stringify( this.formLogin.getRawValue() ) );
+      }
       this.auth.setToken( this.formLogin.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
