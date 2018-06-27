@@ -26,11 +26,12 @@ export class ProfileSearchService {
 
   getProfileSearchCount( params: string ): Observable<any> {
     this.params = params;
-    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch/count' + params );
+    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch/count', { params } );
   }
 
   getProfileSearch( count: string ): Observable<any> {
-    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch' + this.params + count );
+    Object.assign(this.params, count);
+    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch', { params: this.params } );
   }
 
 }

@@ -12,6 +12,7 @@ import { TableAsyncService } from '../../components/table-async/table-async.serv
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
 import { log } from 'util';
+import { IprofileSearch } from '../../interface/iprofile-search';
 
 @Component( {
   selector: 'app-profile-search',
@@ -30,7 +31,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
-  private paramsPaginatinDefault: string = `&sorttype=1&sortvalue=last_name`;
+  private paramsPaginatinDefault: any = { sorttype: 1, sortvalue: 'last_name' };
   private autDelay: number = 500;
   private autLength: number = 3;
   private isActive: boolean = true;
@@ -55,7 +56,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     if ( this.formProfileSearch.dirty ) {
       this.isTableCard = true;
       this.isLoader = true;
-      this.serializeForm();
+      this.creatingObjectForm();
     }
   }
 
@@ -73,7 +74,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initTableAsync() {
     this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
       const pageIndex = ( value.pageIndex + 1 ) * value.pageSize;
-      const paramsAndCount = `${ this.paramsPaginatinDefault }&from=${ pageIndex }&count=${ value.pageSize }`;
+      const paramsAndCount = Object.assign( this.paramsPaginatinDefault, { from: pageIndex, count: value.pageSize } );
       this.profileSearchService.getProfileSearch( paramsAndCount )
         .pipe(
           takeWhile( _ => this.isActive ),
@@ -169,9 +170,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private serializeForm() {
+  private creatingObjectForm() {
 
-    let params: string = '?';
+    const params: IprofileSearch = {};
+
     for ( const formControlName in this.formProfileSearch.value ) {
       if ( this.formProfileSearch.get( `${ formControlName }` ).value !== ''
         && formControlName !== 'cityfrom'
@@ -183,20 +185,25 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         && formControlName !== 'citydatefrom'
         && formControlName !== 'citydateto'
       ) {
-        params += `${ formControlName }=${this.formProfileSearch.get( formControlName ).value}&`;
+        params[ formControlName ] = `${this.formProfileSearch.get( formControlName ).value}`;
       }
     }
 
-    const cityIdFrom: string = this.getCityIdSerialize( 'cityfrom' );
-    const cityIdTo: string = this.getCityIdSerialize( 'cityto' );
-    const divisionId: string = this.getGroupAndDivisionidIdSerialize( 'divisionid', this.trees, 'ID' );
-    const groupTd: string = this.getGroupAndDivisionidIdSerialize( 'groupid', this.groups, 'Id' );
-    const flightDateFrom: string = this.dateFormatSerialize( 'flightdatefrom' );
-    const flightDateTo: string = this.dateFormatSerialize( 'flightdateto' );
-    const cityDateFrom: string = this.dateFormatSerialize( 'citydatefrom' );
-    const cityDateTo: string = this.dateFormatSerialize( 'citydateto' );
+    const cityIdFrom: string = this.getCityIdHighlight( 'cityfrom' );
+    const cityIdTo: string = this.getCityIdHighlight( 'cityto' );
+    const divisionId: string = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
+    const groupTd: string = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
+    const flightDateFrom: string = this.dateFormatHighlight( 'flightdatefrom' );
+    const flightDateTo: string = this.dateFormatHighlight( 'flightdateto' );
+    const cityDateFrom: string = this.dateFormatHighlight( 'citydatefrom' );
+    const cityDateTo: string = this.dateFormatHighlight( 'citydateto' );
 
-    params += `${cityIdFrom}${cityIdTo}${divisionId}${groupTd}${flightDateFrom}${flightDateTo}${cityDateFrom}${cityDateTo}`;
+    const serializeObj = { cityIdFrom, cityIdTo, divisionId, groupTd, flightDateFrom, flightDateTo, cityDateFrom, cityDateTo };
+
+    for ( const key in serializeObj ) {
+      if ( serializeObj[ key ] !== '' ) params[ key ] = serializeObj[ key ];
+    }
+
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
         takeWhile( _ => this.isActive ),
@@ -204,7 +211,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       )
       .subscribe( ( count ) => {
         this.tableAsyncService.countPage = +count;
-        this.profileSearchService.getProfileSearch( `${this.paramsPaginatinDefault}&from=0&count=10` )
+        Object.assign( this.paramsPaginatinDefault, { from: 0, count: 10 } );
+        this.profileSearchService.getProfileSearch( this.paramsPaginatinDefault )
           .pipe(
             takeWhile( _ => this.isActive ),
             map( ( val: any ) => val.Data )
@@ -219,35 +227,35 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private getCityIdSerialize( formControlName: string ): string {
+  private getCityIdHighlight( formControlName: string ): string {
     const cityValue = this.formProfileSearch.get( formControlName ).value;
     let cityId;
     if ( cityValue.length >= this.autLength ) {
       cityId = this.cities
         .filter( ( cities: Icity ) => cities.value === cityValue )
         .map( cities => cities.id );
-      return `${formControlName}=${cityId[ 0 ]}&`;
+      return cityId[ 0 ];
     }
     return '';
   }
 
-  private getGroupAndDivisionidIdSerialize( formControlName: string, params: any, keyId: string ): string {
+  private getGroupAndDivisionidIdHighlight( formControlName: string, params: any, keyId: string ): string {
     const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
     let id: number[];
     if ( formControlNameValue.length !== 0 ) {
       id = params
         .filter( ( value: any ) => value.Name === formControlNameValue )
         .map( value => value[ keyId ] );
-      return `${formControlName}=${id[ 0 ]}&`;
+      return id[ 0 ];
     }
     return '';
   }
 
-  private dateFormatSerialize( formControlName: string ) {
+  private dateFormatHighlight( formControlName: string ) {
     const formControlNameDate = this.formProfileSearch.get( formControlName ).value;
     if ( formControlNameDate.length !== 0 ) {
       const date = moment( formControlNameDate ).format( 'DD.MM.YYYY' );
-      return `${formControlName}=${date}&`;
+      return date;
     }
     return '';
   }
