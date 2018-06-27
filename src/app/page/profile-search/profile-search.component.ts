@@ -61,7 +61,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   clearForm(): void {
     this.resetForm();
-    this.router.navigate(['/crm/profilesearch'], { queryParams: {} } );
+    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
   }
 
   private resetForm() {
@@ -160,18 +160,43 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.switchCheckbox();
-    this.route.queryParams.subscribe( value => {
-      if ( Object.keys( value ).length !== 0 ) {
-        this.formProfileSearch.patchValue(value);
-        this.sendForm();
-      }
-    });
+    this.formFilling();
   }
 
   private switchCheckbox() {
     this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
       this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
       this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
+    } );
+  }
+
+  private formFilling() {
+    this.route.queryParams.subscribe( value => {
+      if ( Object.keys( value ).length !== 0 ) {
+
+        const newObjectForm = {};
+
+        for ( const key in value ) {
+          if ( key !== 'cityfrom'
+            && key !== 'cityto'
+            && key !== 'divisionid'
+            && key !== 'groupid'
+            && key !== 'flightdatefrom'
+            && key !== 'flightdateto'
+            && key !== 'citydatefrom'
+            && key !== 'citydateto'
+          ) {
+            newObjectForm[ key ] = value[ key ];
+          } else if ( key !== 'cityfrom'
+            && key !== 'cityto'
+            && key !== 'divisionid'
+            && key !== 'groupid' ) {
+            newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
+          }
+        }
+
+        this.formProfileSearch.patchValue( newObjectForm );
+      }
     } );
   }
 
@@ -203,13 +228,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const citydatefrom = this.dateFormatHighlight( 'citydatefrom' );
     const citydateto = this.dateFormatHighlight( 'citydateto' );
 
-    const serializeObj = { cityidfrom, cityidto, divisionid, groupid, flightdatefrom, flightdateto, citydatefrom, citydateto };
+    const highlightObj = { cityidfrom, cityidto, divisionid, groupid, flightdatefrom, flightdateto, citydatefrom, citydateto };
 
-    for ( const key in serializeObj ) {
-      if ( serializeObj[ key ] !== '' ) params[ key ] = serializeObj[ key ];
+    for ( const key in highlightObj ) {
+      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' ) params[ key ] = highlightObj[ key ];
     }
 
-    this.router.navigate(['/crm/profilesearch'], { queryParams: params } );
+    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
 
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
