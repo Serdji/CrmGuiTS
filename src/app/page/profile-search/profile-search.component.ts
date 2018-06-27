@@ -11,8 +11,6 @@ import { Iprofile } from '../../interface/iprofile';
 import { TableAsyncService } from '../../components/table-async/table-async.service';
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
-import { log } from 'util';
-import { IprofileSearch } from '../../interface/iprofile-search';
 
 @Component( {
   selector: 'app-profile-search',
@@ -172,7 +170,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private creatingObjectForm() {
 
-    const params: IprofileSearch = {};
+    const params = {};
 
     for ( const formControlName in this.formProfileSearch.value ) {
       if ( this.formProfileSearch.get( `${ formControlName }` ).value !== ''
@@ -189,14 +187,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
     }
 
-    const cityIdFrom: string = this.getCityIdHighlight( 'cityfrom' );
-    const cityIdTo: string = this.getCityIdHighlight( 'cityto' );
-    const divisionId: string = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
-    const groupTd: string = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
-    const flightDateFrom: string = this.dateFormatHighlight( 'flightdatefrom' );
-    const flightDateTo: string = this.dateFormatHighlight( 'flightdateto' );
-    const cityDateFrom: string = this.dateFormatHighlight( 'citydatefrom' );
-    const cityDateTo: string = this.dateFormatHighlight( 'citydateto' );
+    const cityIdFrom = this.getCityIdHighlight( 'cityfrom' );
+    const cityIdTo = this.getCityIdHighlight( 'cityto' );
+    const divisionId = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
+    const groupTd = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
+    const flightDateFrom = this.dateFormatHighlight( 'flightdatefrom' );
+    const flightDateTo = this.dateFormatHighlight( 'flightdateto' );
+    const cityDateFrom = this.dateFormatHighlight( 'citydatefrom' );
+    const cityDateTo = this.dateFormatHighlight( 'citydateto' );
 
     const serializeObj = { cityIdFrom, cityIdTo, divisionId, groupTd, flightDateFrom, flightDateTo, cityDateFrom, cityDateTo };
 
@@ -227,7 +225,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private getCityIdHighlight( formControlName: string ): string {
+  private getCityIdHighlight( formControlName: string ): any {
     const cityValue = this.formProfileSearch.get( formControlName ).value;
     let cityId;
     if ( cityValue.length >= this.autLength ) {
@@ -239,7 +237,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  private getGroupAndDivisionidIdHighlight( formControlName: string, params: any, keyId: string ): string {
+  private getGroupAndDivisionidIdHighlight( formControlName: string, params: any, keyId: string ): any {
     const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
     let id: number[];
     if ( formControlNameValue.length !== 0 ) {

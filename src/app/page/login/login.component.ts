@@ -69,7 +69,6 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
-      console.log( this.saveTableLogin );
       if ( this.saveTableLogin ) {
         localStorage.setItem( 'saveTableLogin', JSON.stringify( this.formLogin.getRawValue() ) );
       }
