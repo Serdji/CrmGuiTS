@@ -11,6 +11,7 @@ import { Iprofile } from '../../interface/iprofile';
 import { TableAsyncService } from '../../components/table-async/table-async.service';
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component( {
   selector: 'app-profile-search',
@@ -38,6 +39,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private profileSearchService: ProfileSearchService,
     private tableAsyncService: TableAsyncService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -51,15 +54,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
 
   sendForm(): void {
-    if ( this.formProfileSearch.dirty ) {
-      this.isTableCard = true;
-      this.isLoader = true;
-      this.creatingObjectForm();
-    }
+    this.isTableCard = true;
+    this.isLoader = true;
+    this.creatingObjectForm();
   }
 
   clearForm(): void {
     this.resetForm();
+    this.router.navigate(['/crm/profilesearch'], { queryParams: {} } );
   }
 
   private resetForm() {
@@ -152,16 +154,21 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       amountto: '',
       email: '',
       phone: '',
-      withoutcontact: false,
+      withoutcontact: '',
       id: '',
     }, {
       updateOn: 'submit',
     } );
-
-    this.switchСheckbox();
+    this.switchCheckbox();
+    this.route.queryParams.subscribe( value => {
+      if ( Object.keys( value ).length !== 0 ) {
+        this.formProfileSearch.patchValue(value);
+        this.sendForm();
+      }
+    });
   }
 
-  private switchСheckbox() {
+  private switchCheckbox() {
     this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
       this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
       this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
@@ -187,20 +194,22 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
     }
 
-    const cityIdFrom = this.getCityIdHighlight( 'cityfrom' );
-    const cityIdTo = this.getCityIdHighlight( 'cityto' );
-    const divisionId = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
-    const groupTd = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
-    const flightDateFrom = this.dateFormatHighlight( 'flightdatefrom' );
-    const flightDateTo = this.dateFormatHighlight( 'flightdateto' );
-    const cityDateFrom = this.dateFormatHighlight( 'citydatefrom' );
-    const cityDateTo = this.dateFormatHighlight( 'citydateto' );
+    const cityidfrom = this.getCityIdHighlight( 'cityfrom' );
+    const cityidto = this.getCityIdHighlight( 'cityto' );
+    const divisionid = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
+    const groupid = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
+    const flightdatefrom = this.dateFormatHighlight( 'flightdatefrom' );
+    const flightdateto = this.dateFormatHighlight( 'flightdateto' );
+    const citydatefrom = this.dateFormatHighlight( 'citydatefrom' );
+    const citydateto = this.dateFormatHighlight( 'citydateto' );
 
-    const serializeObj = { cityIdFrom, cityIdTo, divisionId, groupTd, flightDateFrom, flightDateTo, cityDateFrom, cityDateTo };
+    const serializeObj = { cityidfrom, cityidto, divisionid, groupid, flightdatefrom, flightdateto, citydatefrom, citydateto };
 
     for ( const key in serializeObj ) {
       if ( serializeObj[ key ] !== '' ) params[ key ] = serializeObj[ key ];
     }
+
+    this.router.navigate(['/crm/profilesearch'], { queryParams: params } );
 
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
