@@ -111,8 +111,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.cityFromOptions = this.autocomplete( 'cityfrom' );
-    this.cityToOptions = this.autocomplete( 'cityto' );
+    this.cityFromOptions = this.autocomplete( 'cityidfrom' );
+    this.cityToOptions = this.autocomplete( 'cityidto' );
   }
 
   private autocomplete( formControlName: string ): Observable<Icity[]> {
@@ -138,8 +138,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       flightnum: '',
       flightdatefrom: '',
       flightdateto: '',
-      cityfrom: '',
-      cityto: '',
+      cityidfrom: '',
+      cityidto: '',
       citydatefrom: '',
       citydateto: '',
       divisionid: '',
@@ -171,8 +171,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         const newObjectForm = {};
 
         for ( const key in value ) {
-          if ( key !== 'cityfrom'
-            && key !== 'cityto'
+          if ( key !== 'cityidfrom'
+            && key !== 'cityidto'
             && key !== 'divisionid'
             && key !== 'groupid'
             && key !== 'flightdatefrom'
@@ -181,14 +181,25 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
             && key !== 'citydateto'
           ) {
             newObjectForm[ key ] = value[ key ];
-          } else if ( key !== 'cityfrom'
-            && key !== 'cityto'
-            && key !== 'divisionid'
-            && key !== 'groupid'
+          }
+
+
+          if ( key === 'flightdatefrom'
+            || key === 'flightdateto'
+            || key === 'citydatefrom'
+            || key === 'citydateto'
           ) {
             newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
           }
+
+          if ( key === 'cityidfrom'
+            || key === 'cityidto'
+          ) {
+            newObjectForm[ key ] = this.cities.filter( city => city.id === +value[ key ])[ 0 ].value;
+          }
         }
+
+        console.log(newObjectForm);
         this.formProfileSearch.patchValue( newObjectForm );
         this.serverRequest( value );
       }
@@ -201,8 +212,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     for ( const formControlName in this.formProfileSearch.value ) {
       if ( this.formProfileSearch.get( `${ formControlName }` ).value !== ''
-        && formControlName !== 'cityfrom'
-        && formControlName !== 'cityto'
+        && formControlName !== 'cityidfrom'
+        && formControlName !== 'cityidto'
         && formControlName !== 'divisionid'
         && formControlName !== 'groupid'
         && formControlName !== 'flightdatefrom'
@@ -214,8 +225,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
     }
 
-    const cityidfrom = this.getCityId( 'cityfrom', this.cities );
-    const cityidto = this.getCityId( 'cityto', this.cities );
+    const cityidfrom = this.getCityId( 'cityidfrom', this.cities );
+    const cityidto = this.getCityId( 'cityidto', this.cities );
     const divisionid = this.getGroupAndDivisionidId( 'divisionid', this.trees, 'ID' );
     const groupid = this.getGroupAndDivisionidId( 'groupid', this.groups, 'Id' );
     const flightdatefrom = this.dateFormat( 'flightdatefrom' );

@@ -58,13 +58,13 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cityfrom" type="text" placeholder="Откуда" [matAutocomplete]="cityfrom">
+              <input matInput formControlName="cityidfrom" type="text" placeholder="Откуда" [matAutocomplete]="cityfrom">
               <mat-autocomplete #cityfrom="matAutocomplete">
                 <mat-option *ngFor="let city of cityFromOptions | async" [id]="city.id" [value]="city.value">{{ city.value }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cityto" type="text" placeholder="Куда" [matAutocomplete]="cityTo">
+              <input matInput formControlName="cityidto" type="text" placeholder="Куда" [matAutocomplete]="cityTo">
               <mat-autocomplete #cityTo="matAutocomplete">
                 <mat-option *ngFor="let city of cityToOptions | async" [id]="city.id" [value]="city.value">{{ city.value }}</mat-option>
               </mat-autocomplete>
