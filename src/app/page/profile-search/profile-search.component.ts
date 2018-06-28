@@ -12,6 +12,7 @@ import { TableAsyncService } from '../../components/table-async/table-async.serv
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IprofileSearch } from '../../interface/iprofile-search';
 
 @Component( {
   selector: 'app-profile-search',
@@ -54,8 +55,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
 
   sendForm(): void {
-    this.isTableCard = true;
-    this.isLoader = true;
     this.creatingObjectForm();
   }
 
@@ -116,7 +115,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.cityToOptions = this.autocomplete( 'cityto' );
   }
 
-  private autocomplete(formControlName: string): Observable<Icity[]> {
+  private autocomplete( formControlName: string ): Observable<Icity[]> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
@@ -185,12 +184,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           } else if ( key !== 'cityfrom'
             && key !== 'cityto'
             && key !== 'divisionid'
-            && key !== 'groupid' ) {
+            && key !== 'groupid'
+          ) {
             newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
           }
         }
-
         this.formProfileSearch.patchValue( newObjectForm );
+        this.serverRequest( value );
       }
     } );
   }
@@ -214,14 +214,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
     }
 
-    const cityidfrom = this.getCityIdHighlight( 'cityfrom', this.cities );
-    const cityidto = this.getCityIdHighlight( 'cityto', this.cities );
-    const divisionid = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
-    const groupid = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
-    const flightdatefrom = this.dateFormatHighlight( 'flightdatefrom' );
-    const flightdateto = this.dateFormatHighlight( 'flightdateto' );
-    const citydatefrom = this.dateFormatHighlight( 'citydatefrom' );
-    const citydateto = this.dateFormatHighlight( 'citydateto' );
+    const cityidfrom = this.getCityId( 'cityfrom', this.cities );
+    const cityidto = this.getCityId( 'cityto', this.cities );
+    const divisionid = this.getGroupAndDivisionidId( 'divisionid', this.trees, 'ID' );
+    const groupid = this.getGroupAndDivisionidId( 'groupid', this.groups, 'Id' );
+    const flightdatefrom = this.dateFormat( 'flightdatefrom' );
+    const flightdateto = this.dateFormat( 'flightdateto' );
+    const citydatefrom = this.dateFormat( 'citydatefrom' );
+    const citydateto = this.dateFormat( 'citydateto' );
 
     const highlightObj = { cityidfrom, cityidto, divisionid, groupid, flightdatefrom, flightdateto, citydatefrom, citydateto };
 
@@ -231,6 +231,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
 
+    this.serverRequest( params );
+
+  }
+
+  private serverRequest( params: IprofileSearch ) {
+    this.isTableCard = true;
+    this.isLoader = true;
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
         takeWhile( _ => this.isActive ),
@@ -254,7 +261,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private getCityIdHighlight( formControlName: string, params: Icity[] ): any {
+  private getCityId( formControlName: string, params: Icity[] ): any {
     const cityValue = this.formProfileSearch.get( formControlName ).value;
     let cityId;
     if ( cityValue.length >= this.autLength ) {
@@ -266,7 +273,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  private getGroupAndDivisionidIdHighlight( formControlName: string, params: any, keyId: string ): any {
+  private getGroupAndDivisionidId( formControlName: string, params: any, keyId: string ): any {
     const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
     let id: number[];
     if ( formControlNameValue.length !== 0 ) {
@@ -278,7 +285,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     return '';
   }
 
-  private dateFormatHighlight( formControlName: string ) {
+  private dateFormat( formControlName: string ) {
     const formControlNameDate = this.formProfileSearch.get( formControlName ).value;
     if ( formControlNameDate.length !== 0 ) {
       const date = moment( formControlNameDate ).format( 'DD.MM.YYYY' );
