@@ -4,4 +4,6 @@ export interface Igroups {
     Name: string;
   };
   ErrorDescSystem: string;
+  Id: number;
+  Name: string;
 }

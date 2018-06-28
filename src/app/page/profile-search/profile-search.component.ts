@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Icity } from '../../interface/icity';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
 import { Icount } from '../../interface/icount';
@@ -154,7 +154,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.switchCheckbox();
-    this.formFilling();
+    timer( 500 ).subscribe( _ => this.formFilling() );
   }
 
   private switchCheckbox() {
@@ -195,11 +195,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           if ( key === 'cityidfrom'
             || key === 'cityidto'
           ) {
-            newObjectForm[ key ] = this.cities.filter( city => city.id === +value[ key ])[ 0 ].value;
+            newObjectForm[ key ] = this.cities.filter( ( city: Icity ) => city.id === +value[ key ] )[ 0 ].value;
           }
+
+          if ( key === 'divisionid' ) newObjectForm[ key ] = this.trees.filter(( trees: Itree ) => trees.ID === +value[ key ] )[ 0 ].Name;
+          if ( key === 'groupid' ) newObjectForm[ key ] = this.groups.filter(( groups: Igroups ) => groups.Id === +value[ key ] )[ 0 ].Name;
         }
 
-        console.log(newObjectForm);
         this.formProfileSearch.patchValue( newObjectForm );
         this.serverRequest( value );
       }
