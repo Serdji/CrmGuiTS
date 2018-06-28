@@ -112,17 +112,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.cityFromOptions = this.formProfileSearch.get( 'cityfrom' ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          if ( val.length >= this.autLength ) {
-            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
-          }
-        } )
-      );
-    this.cityToOptions = this.formProfileSearch.get( 'cityto' ).valueChanges
+    this.cityFromOptions = this.autocomplete( 'cityfrom' );
+    this.cityToOptions = this.autocomplete( 'cityto' );
+  }
+
+  private autocomplete(formControlName: string): Observable<Icity[]> {
+    return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
@@ -219,8 +214,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
     }
 
-    const cityidfrom = this.getCityIdHighlight( 'cityfrom' );
-    const cityidto = this.getCityIdHighlight( 'cityto' );
+    const cityidfrom = this.getCityIdHighlight( 'cityfrom', this.cities );
+    const cityidto = this.getCityIdHighlight( 'cityto', this.cities );
     const divisionid = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
     const groupid = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
     const flightdatefrom = this.dateFormatHighlight( 'flightdatefrom' );
@@ -259,11 +254,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private getCityIdHighlight( formControlName: string ): any {
+  private getCityIdHighlight( formControlName: string, params: Icity[] ): any {
     const cityValue = this.formProfileSearch.get( formControlName ).value;
     let cityId;
     if ( cityValue.length >= this.autLength ) {
-      cityId = this.cities
+      cityId = params
         .filter( ( cities: Icity ) => cities.value === cityValue )
         .map( cities => cities.id );
       return cityId[ 0 ];
