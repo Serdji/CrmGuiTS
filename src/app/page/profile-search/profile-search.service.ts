@@ -31,8 +31,8 @@ export class ProfileSearchService {
   }
 
   getProfileSearch( count: IprofileSearch ): Observable<any> {
-    Object.assign(this.params, count);
-    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch', { params: this.params } );
+    const params = Object.assign({}, this.params, count);
+    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch', { params: params } );
   }
 
 }

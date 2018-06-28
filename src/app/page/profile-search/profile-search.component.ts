@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Icity } from '../../interface/icity';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
 import { Icount } from '../../interface/icount';
@@ -12,6 +12,7 @@ import { TableAsyncService } from '../../components/table-async/table-async.serv
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
+import { IprofileSearch } from '../../interface/iprofile-search';
 
 @Component( {
   selector: 'app-profile-search',
@@ -54,8 +55,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
 
   sendForm(): void {
-    this.isTableCard = true;
-    this.isLoader = true;
     this.creatingObjectForm();
   }
 
@@ -112,17 +111,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.cityFromOptions = this.formProfileSearch.get( 'cityfrom' ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          if ( val.length >= this.autLength ) {
-            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
-          }
-        } )
-      );
-    this.cityToOptions = this.formProfileSearch.get( 'cityto' ).valueChanges
+    this.cityFromOptions = this.autocomplete( 'cityidfrom' );
+    this.cityToOptions = this.autocomplete( 'cityidto' );
+  }
+
+  private autocomplete( formControlName: string ): Observable<Icity[]> {
+    return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
@@ -144,8 +138,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       flightnum: '',
       flightdatefrom: '',
       flightdateto: '',
-      cityfrom: '',
-      cityto: '',
+      cityidfrom: '',
+      cityidto: '',
       citydatefrom: '',
       citydateto: '',
       divisionid: '',
@@ -160,7 +154,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.switchCheckbox();
-    this.formFilling();
+    timer( 500 ).subscribe( _ => this.formFilling() );
   }
 
   private switchCheckbox() {
@@ -176,66 +170,48 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
         const newObjectForm = {};
 
-        for ( const key in value ) {
-          if ( key !== 'cityfrom'
-            && key !== 'cityto'
-            && key !== 'divisionid'
-            && key !== 'groupid'
-            && key !== 'flightdatefrom'
-            && key !== 'flightdateto'
-            && key !== 'citydatefrom'
-            && key !== 'citydateto'
-          ) {
-            newObjectForm[ key ] = value[ key ];
-          } else if ( key !== 'cityfrom'
-            && key !== 'cityto'
-            && key !== 'divisionid'
-            && key !== 'groupid' ) {
-            newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-          }
+        for ( const key of Object.keys( value ) ) {
+          if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
+          if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
+          if ( this.isKeys( key, 'city' ) ) newObjectForm[ key ] = this.cities.filter( ( city: Icity ) => city.id === +value[ key ] )[ 0 ].value;
+          if ( key === 'divisionid' ) newObjectForm[ key ] = this.trees.filter( ( trees: Itree ) => trees.ID === +value[ key ] )[ 0 ].Name;
+          if ( key === 'groupid' ) newObjectForm[ key ] = this.groups.filter( ( groups: Igroups ) => groups.Id === +value[ key ] )[ 0 ].Name;
         }
 
         this.formProfileSearch.patchValue( newObjectForm );
+        this.serverRequest( value );
       }
     } );
   }
 
   private creatingObjectForm() {
-
     const params = {};
+    const highlightObj = {};
+    const formValue = Object.keys( this.formProfileSearch.value );
 
-    for ( const formControlName in this.formProfileSearch.value ) {
-      if ( this.formProfileSearch.get( `${ formControlName }` ).value !== ''
-        && formControlName !== 'cityfrom'
-        && formControlName !== 'cityto'
-        && formControlName !== 'divisionid'
-        && formControlName !== 'groupid'
-        && formControlName !== 'flightdatefrom'
-        && formControlName !== 'flightdateto'
-        && formControlName !== 'citydatefrom'
-        && formControlName !== 'citydateto'
-      ) {
-        params[ formControlName ] = `${this.formProfileSearch.get( formControlName ).value}`;
-      }
+    for ( const key of formValue ) {
+      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value}`;
+      if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
+      if ( this.isKeys( key, 'city' ) ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
+        this.cities.filter( ( city: Icity ) => city.value === this.formProfileSearch.get( key ).value )[ 0 ].id : '';
+      if ( key === 'divisionid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
+        this.trees.filter( ( trees: Itree ) => trees.Name === this.formProfileSearch.get( key ).value )[ 0 ].ID : '';
+      if ( key === 'groupid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
+        this.groups.filter( ( groups: Igroups ) => groups.Name === this.formProfileSearch.get( key ).value )[ 0 ].Id : '';
     }
 
-    const cityidfrom = this.getCityIdHighlight( 'cityfrom' );
-    const cityidto = this.getCityIdHighlight( 'cityto' );
-    const divisionid = this.getGroupAndDivisionidIdHighlight( 'divisionid', this.trees, 'ID' );
-    const groupid = this.getGroupAndDivisionidIdHighlight( 'groupid', this.groups, 'Id' );
-    const flightdatefrom = this.dateFormatHighlight( 'flightdatefrom' );
-    const flightdateto = this.dateFormatHighlight( 'flightdateto' );
-    const citydatefrom = this.dateFormatHighlight( 'citydatefrom' );
-    const citydateto = this.dateFormatHighlight( 'citydateto' );
-
-    const highlightObj = { cityidfrom, cityidto, divisionid, groupid, flightdatefrom, flightdateto, citydatefrom, citydateto };
-
-    for ( const key in highlightObj ) {
-      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' ) params[ key ] = highlightObj[ key ];
+    for ( const key of Object.keys( highlightObj ) ) {
+      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) params[ key ] = highlightObj[ key ];
     }
 
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
 
+    this.serverRequest( params );
+  }
+
+  private serverRequest( params: IprofileSearch ) {
+    this.isTableCard = true;
+    this.isLoader = true;
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
         takeWhile( _ => this.isActive ),
@@ -258,40 +234,27 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
-
-  private getCityIdHighlight( formControlName: string ): any {
-    const cityValue = this.formProfileSearch.get( formControlName ).value;
-    let cityId;
-    if ( cityValue.length >= this.autLength ) {
-      cityId = this.cities
-        .filter( ( cities: Icity ) => cities.value === cityValue )
-        .map( cities => cities.id );
-      return cityId[ 0 ];
+  private isKeys( key: string, exception: string ): boolean {
+    switch ( exception ) {
+      case 'all':
+        return key !== 'cityidfrom'
+          && key !== 'cityidto'
+          && key !== 'divisionid'
+          && key !== 'groupid'
+          && key !== 'flightdatefrom'
+          && key !== 'flightdateto'
+          && key !== 'citydatefrom'
+          && key !== 'citydateto';
+      case 'data':
+        return key === 'flightdatefrom'
+          || key === 'flightdateto'
+          || key === 'citydatefrom'
+          || key === 'citydateto';
+      case 'city':
+        return key === 'cityidfrom'
+          || key === 'cityidto';
     }
-    return '';
   }
-
-  private getGroupAndDivisionidIdHighlight( formControlName: string, params: any, keyId: string ): any {
-    const formControlNameValue = this.formProfileSearch.get( formControlName ).value;
-    let id: number[];
-    if ( formControlNameValue.length !== 0 ) {
-      id = params
-        .filter( ( value: any ) => value.Name === formControlNameValue )
-        .map( value => value[ keyId ] );
-      return id[ 0 ];
-    }
-    return '';
-  }
-
-  private dateFormatHighlight( formControlName: string ) {
-    const formControlNameDate = this.formProfileSearch.get( formControlName ).value;
-    if ( formControlNameDate.length !== 0 ) {
-      const date = moment( formControlNameDate ).format( 'DD.MM.YYYY' );
-      return date;
-    }
-    return '';
-  }
-
 
   ngOnDestroy(): void {
     this.isActive = false;

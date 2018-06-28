@@ -14,4 +14,6 @@ export interface Itree {
     Type: string;
   };
   ErrorDescSystem: string;
+  ID: number;
+  Name: string;
 }
