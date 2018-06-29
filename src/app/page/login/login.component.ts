@@ -31,6 +31,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.initFormGroup();
     this.initVersion();
     this.saveLogin();
+    if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
   }
 
   private initFormGroup() {
@@ -52,26 +53,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   private saveLogin() {
     this.formLogin.get( 'save' ).valueChanges.subscribe( value => {
       this.saveTableLogin = value;
-      if ( !value ) {
-        localStorage.removeItem( 'saveTableLogin' );
-        for ( const formControlName in this.formLogin.value ) {
-          this.formLogin.get( `${ formControlName }` ).patchValue( '' );
-          this.formLogin.get( `${ formControlName }` ).setErrors( null );
-        }
-      }
+      if ( value ) localStorage.setItem( 'saveSeismic', JSON.stringify( this.saveTableLogin ) );
+      else localStorage.removeItem( 'saveSeismic' );
     } );
-    const tableLogin = localStorage.getItem('saveTableLogin');
-    if ( tableLogin ) {
-      this.formLogin.patchValue(JSON.parse(tableLogin));
-    }
-
   }
 
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
-      if ( this.saveTableLogin ) {
-        localStorage.setItem( 'saveTableLogin', JSON.stringify( this.formLogin.getRawValue() ) );
-      }
       this.auth.setToken( this.formLogin.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
@@ -80,9 +68,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             Object.assign( user, { grant_type: 'password' } );
             localStorage.setItem( 'paramsUser', JSON.stringify( user ) );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
-            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) {
-              this.router.navigate( [ 'crm' ] );
-            }
+            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
           },
           _ => this.isErrorAuth = true
         );

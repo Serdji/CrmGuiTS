@@ -88,11 +88,13 @@
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
               <mat-select formControlName="divisionid" placeholder="Название группы">
+                <mat-option></mat-option>
                 <mat-option *ngFor="let tree of trees" [value]="tree.Name" [id]="tree.ID" >{{ tree.Name }} | ID={{ tree.ID }}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <mat-select formControlName="groupid" placeholder="Название спец группы">
+                <mat-option></mat-option>
                 <mat-option *ngFor="let group of groups" [value]="group.Name" [id]="group.Id">{{ group.Name }}</mat-option>
               </mat-select>
             </mat-form-field>
