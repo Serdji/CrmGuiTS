@@ -1,19 +1,17 @@
 import { Injectable } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Router } from '@angular/router';
+import { takeWhile } from 'rxjs/operators';
 
 @Injectable()
 export class ActivityUserService {
-
-  private isActive: boolean = true;
 
   constructor(
     private router: Router,
   ) { }
 
   logout() {
-    localStorage.removeItem( 'paramsUser' );
-    localStorage.removeItem( 'paramsToken' );
+    localStorage.clear();
     this.router.navigate( [ '' ] );
   }
 
@@ -21,16 +19,17 @@ export class ActivityUserService {
     let t;
     const resetTimer = () => {
       clearTimeout( t );
-      t = setTimeout( _ => { this.logout(); }, this.getMinutes( 15 ) );  // time is in milliseconds
+      t = setTimeout( _ => {
+        if ( !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) this.logout();
+      }, this.getMinutes( 15 ) );  // time is in milliseconds
     };
 
-
-    fromEvent(document, 'load').subscribe( _ => resetTimer() );
-    fromEvent(document, 'mousemove').subscribe( _ => resetTimer() );
-    fromEvent(document, 'mousedown').subscribe( _ => resetTimer() );
-    fromEvent(document, 'click').subscribe( _ => resetTimer() );
-    fromEvent(document, 'scroll').subscribe( _ => resetTimer() );
-    fromEvent(document, 'keypress').subscribe( _ => resetTimer() );
+    fromEvent( document, 'load' ).pipe( takeWhile( _ => !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) ).subscribe( _ => resetTimer() );
+    fromEvent( document, 'mousemove' ).pipe( takeWhile( _ => !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) ).subscribe( _ => resetTimer() );
+    fromEvent( document, 'mousedown' ).pipe( takeWhile( _ => !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) ).subscribe( _ => resetTimer() );
+    fromEvent( document, 'click' ).pipe( takeWhile( _ => !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) ).subscribe( _ => resetTimer() );
+    fromEvent( document, 'scroll' ).pipe( takeWhile( _ => !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) ).subscribe( _ => resetTimer() );
+    fromEvent( document, 'keypress' ).pipe( takeWhile( _ => !JSON.parse( localStorage.getItem( 'saveSeismic' ) ) ) ).subscribe( _ => resetTimer() );
   }
 
 

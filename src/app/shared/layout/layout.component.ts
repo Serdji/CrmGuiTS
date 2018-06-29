@@ -16,9 +16,7 @@ export class LayoutComponent implements OnInit {
     ) { }
 
   ngOnInit() {
-    if ( this.location.path() === '/crm' ) {
-      this.router.navigate( [ 'crm/entrance' ] );
-    }
+    if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm/entrance' ] );
   }
 
 }
