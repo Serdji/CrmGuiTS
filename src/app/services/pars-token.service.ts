@@ -9,11 +9,16 @@ import { IparsToken } from '../interface/ipars-token';
 export class ParsTokenService {
 
   private helper = new JwtHelperService();
+  private decodeToken: IparsToken;
 
   constructor() { }
 
-  getParsToken( myRawToken: string ): IparsToken {
-    return this.helper.decodeToken( myRawToken );
+  set parsToken( myRawToken: any ) {
+    this.decodeToken = this.helper.decodeToken( myRawToken );
+  }
+
+  get parsToken(): any {
+    return this.decodeToken;
   }
 
 }

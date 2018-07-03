@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { environment } from '../../../environments/environment';
 import { LoginService } from './login.service';
+import { ParsTokenService } from '../../services/pars-token.service';
 
 @Component( {
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private auth: AuthService,
     private router: Router,
     private loginService: LoginService,
+    private parsTokenService: ParsTokenService,
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private initFormGroup() {
     this.formLogin = this.fb.group( {
-      username: [ '', [ Validators.required ] ],
+      login: [ '', [ Validators.required ] ],
       password: [ '', [ Validators.required ] ],
       save: [ '' ],
     }, {
@@ -60,13 +62,15 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
-      this.auth.setToken( this.formLogin.getRawValue() )
+      this.auth.getToken( this.formLogin.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
           ( value ) => {
             const user = this.formLogin.getRawValue();
-            Object.assign( user, { grant_type: 'password' } );
-            localStorage.setItem( 'paramsUser', JSON.stringify( user ) );
+            // Object.assign( user, { grant_type: 'password' } );
+            console.log(value);
+            this.parsTokenService.parsToken = value.accessToken;
+            console.log(this.parsTokenService.parsToken);
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
             if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
           },

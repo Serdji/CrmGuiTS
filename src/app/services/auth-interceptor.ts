@@ -14,28 +14,28 @@ import { Itoken } from '../interface/itoken';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor(  private auth: AuthService ) {}
+  constructor( private auth: AuthService ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
-    const idToken: Itoken = JSON.parse(localStorage.getItem('paramsToken'));
+    const idToken: Itoken = JSON.parse( localStorage.getItem( 'paramsToken' ) );
     if ( idToken ) {
-      const request = req.clone({
-        headers: req.headers.set('Authorization', `Bearer ${idToken.access_token}` )
-      });
-      return next.handle(request)
+      const request = req.clone( {
+        headers: req.headers.set( 'Authorization', `${idToken.accessToken}` )
+      } );
+      return next.handle( request )
         .pipe(
-          map(res => res),
-          catchError((err: HttpErrorResponse) => {
-            if (err.status === 401) {
-              localStorage.removeItem('paramsToken');
-              const user = JSON.parse(localStorage.getItem('paramsUser'));
-              this.auth.setToken(user).subscribe( (value: Itoken) => localStorage.setItem( 'paramsToken', JSON.stringify(value)) );
+          map( res => res ),
+          catchError( ( err: HttpErrorResponse ) => {
+            if ( err.status === 401 ) {
+              // localStorage.removeItem('paramsToken');
+              // const user = JSON.parse(localStorage.getItem('paramsUser'));
+              // this.auth.getToken(user).subscribe( (value: Itoken) => localStorage.setItem( 'paramsToken', JSON.stringify(value)) );
             }
-            return Observable.throw(err);
-          })
+            return Observable.throw( err );
+          } )
         );
     } else {
-      return next.handle(req);
+      return next.handle( req );
     }
   }
 }

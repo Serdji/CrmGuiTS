@@ -10,7 +10,7 @@
               <mat-error *ngIf="isErrorAuth"><b>Неверное имя пользователя или пароль</b></mat-error>
               <form class="login__form" [formGroup]="formLogin" (submit)="sendForm()">
                 <mat-form-field class="login__input">
-                  <input matInput formControlName="username" autocomplete="off" type="text" placeholder="Введите свой логин">
+                  <input matInput formControlName="login" autocomplete="off" type="text" placeholder="Введите свой логин">
                   <mat-error>Обязательное поле</mat-error>
                 </mat-form-field>
                 <mat-form-field class="login__input">
