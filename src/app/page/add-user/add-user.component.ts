@@ -16,7 +16,6 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
 export class AddUserComponent implements OnInit, OnDestroy {
 
   public formUser: FormGroup;
-  public airlines: any;
   private isActive: boolean = true;
 
   constructor(
@@ -27,25 +26,15 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-    this.initAirline();
   }
 
-  private initAirline() {
-    this.addUserService.getAirlines()
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( airlines: Iairlines ) => {
-        this.airlines = airlines.Data.Airlines;
-      } );
-  }
 
   private initForm() {
     this.formUser = this.fb.group( {
-      UserName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
+      Login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
       Password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
       Email: [ '', [ Validators.required, emailValidator ] ],
-      FirstName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-      LastName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-      AirlineCode: [ '', [ Validators.required ] ],
+      LoginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     }, {
       updateOn: 'submit',
     } );

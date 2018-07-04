@@ -5,5 +5,5 @@
 
 export const environment = {
   production: false,
-  crmApi: 'https://10.1.8.155:8080',
+  crmApi: 'https://10.1.8.155:8080/api2_dev',
 };

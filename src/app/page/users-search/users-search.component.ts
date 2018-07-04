@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddUserService } from '../add-user/add-user.service';
 import { takeWhile } from 'rxjs/operators';
 import { UsersSearchService } from './users-search.service';
-import { Iairlines } from '../../interface/iairlines';
 import { IuserSearch } from '../../interface/iuser-search';
 
 
@@ -15,7 +14,6 @@ import { IuserSearch } from '../../interface/iuser-search';
 export class UsersSearchComponent implements OnInit, OnDestroy {
 
   public users;
-  public airlines: any;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
   public formUserSearch: FormGroup;
@@ -31,15 +29,6 @@ export class UsersSearchComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initForm();
-    this.initAirline();
-  }
-
-  private initAirline() {
-    this.addUserService.getAirlines()
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( airlines: Iairlines ) => {
-        this.airlines = airlines.Data.Airlines;
-      } );
   }
 
   private initForm() {
@@ -48,7 +37,6 @@ export class UsersSearchComponent implements OnInit, OnDestroy {
       FirstName: [ '', [ Validators.minLength( 3 ) ] ],
       LastName: [ '', [ Validators.minLength( 3 ) ] ],
       Email: [ '', [] ],
-      AirlineCode: [ '', [ Validators.required ] ],
     }, {
       updateOn: 'submit',
     } );
