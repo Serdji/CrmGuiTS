@@ -22,7 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
     if ( idToken ) {
       const request = req.clone( {
         headers: req.headers
-          .set( 'Authorization', `${idToken.accessToken}` )
+          .set( 'Authorization', `Bearer ${idToken.accessToken}` )
           .set( 'AirlineCode', AirlineCode )
       } );
       return next.handle( request )
