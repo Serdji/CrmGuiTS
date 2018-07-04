@@ -33,7 +33,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.formUser = this.fb.group( {
       Login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
       Password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      Email: [ '', [ Validators.required, emailValidator ] ],
+      Email: [ '', [ emailValidator ] ],
       LoginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     }, {
       updateOn: 'submit',
