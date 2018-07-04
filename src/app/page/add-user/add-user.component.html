@@ -10,6 +10,9 @@
           <input matInput formControlName="Password" type="password" placeholder="Пароль">
         </mat-form-field>
         <mat-form-field class="user__input">
+          <input matInput formControlName="ConfirmPassword" type="password" appConfirmEqualValidator="Password" placeholder="Повторите пароль">
+        </mat-form-field>
+        <mat-form-field class="user__input">
           <input matInput formControlName="LoginName" placeholder="ФИО">
         </mat-form-field>
         <mat-form-field class="user__input">
