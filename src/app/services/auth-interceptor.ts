@@ -18,9 +18,12 @@ export class AuthInterceptor implements HttpInterceptor {
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     const idToken: Itoken = JSON.parse( localStorage.getItem( 'paramsToken' ) );
+    const AirlineCode = JSON.parse( localStorage.getItem( 'AirlineCode' ) );
     if ( idToken ) {
       const request = req.clone( {
-        headers: req.headers.set( 'Authorization', `${idToken.accessToken}` )
+        headers: req.headers
+          .set( 'Authorization', `${idToken.accessToken}` )
+          .set( 'AirlineCode', AirlineCode )
       } );
       return next.handle( request )
         .pipe(

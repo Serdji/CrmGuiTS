@@ -4,7 +4,7 @@
       <div class="login__card">
         <mat-card>
           <mat-card-title><h2>Авторизация</h2></mat-card-title>
-          <mat-card-subtitle>Интерфейс администратора авиакомпании {{airlineCode}}</mat-card-subtitle>
+          <mat-card-subtitle>Интерфейс администратора</mat-card-subtitle>
           <mat-card-content>
             <div class="example-container">
               <mat-error *ngIf="isErrorAuth"><b>Неверное имя пользователя или пароль</b></mat-error>
@@ -15,6 +15,10 @@
                 </mat-form-field>
                 <mat-form-field class="login__input">
                   <input matInput formControlName="password" autocomplete="off" type="password" placeholder="Введите свой пароль">
+                  <mat-error>Обязательное поле</mat-error>
+                </mat-form-field>
+                <mat-form-field class="login__input">
+                  <input matInput formControlName="AirlineCode" autocomplete="off" type="text" placeholder="Авиакомпания">
                   <mat-error>Обязательное поле</mat-error>
                 </mat-form-field>
                 <button mat-raised-button type="submit" color="primary" class="login__button">Авторизоваться</button>

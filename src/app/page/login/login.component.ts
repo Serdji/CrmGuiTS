@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
-import { environment } from '../../../environments/environment';
 import { LoginService } from './login.service';
 import { ParsTokenService } from '../../services/pars-token.service';
 
@@ -14,7 +13,6 @@ import { ParsTokenService } from '../../services/pars-token.service';
 } )
 export class LoginComponent implements OnInit, OnDestroy {
 
-  public airlineCode: string = environment.AirlineCode;
   public version: string;
   public isErrorAuth: boolean = false;
   public formLogin: FormGroup;
@@ -40,6 +38,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.formLogin = this.fb.group( {
       login: [ '', [ Validators.required ] ],
       password: [ '', [ Validators.required ] ],
+      AirlineCode: [ '', [ Validators.required ] ],
       save: [ '' ],
     }, {
       updateOn: 'submit',
@@ -62,6 +61,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
+      localStorage.setItem('AirlineCode', JSON.stringify(this.formLogin.get( 'AirlineCode' ).value));
       this.auth.getToken( this.formLogin.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
