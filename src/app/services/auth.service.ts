@@ -16,6 +16,6 @@ export class AuthService {
         'password': params.password,
       }
     };
-    return this.http.post( environment.crmApi + '/api2_dev/auth/sign-in', options.params, { headers: options.headers } );
+    return this.http.post( environment.crmApi + '/auth/sign-in', options.params, { headers: options.headers } );
   }
 }
