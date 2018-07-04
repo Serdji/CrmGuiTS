@@ -18,7 +18,7 @@ export class SidenavService {
         name: 'Пользователи',
         icon: 'group',
         link: [
-          { url: '/crm/add-user', title: 'Добавить пользователя' },
+          { url: '/crm/adduser', title: 'Добавить пользователя' },
           { url: '/crm/usersearch', title: 'Поиск пользователей' },
           { url: '/crm/company', title: 'Настройки' }
         ]
