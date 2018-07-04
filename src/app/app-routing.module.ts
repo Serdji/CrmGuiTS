@@ -18,7 +18,7 @@ const routes: Routes = [
       children: [
         { path: 'entrance', component: EntranceComponent },
         { path: 'profilesearch', component: ProfileSearchComponent },
-        { path: 'add-user', component: AddUserComponent },
+        { path: 'adduser', component: AddUserComponent },
         { path: 'usersearch', component: UsersSearchComponent },
         { path: 'company', component: CompanyComponent },
       ],
