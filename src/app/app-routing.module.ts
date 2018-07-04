@@ -5,7 +5,7 @@ import { AuthGuard } from './auth.guard';
 import { ProfileSearchComponent } from './page/profile-search/profile-search.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { CompanyComponent } from './page/company/company.component';
-import { UsersComponent } from './page/users/users.component';
+import { AddUserComponent } from './page/add-user/add-user.component';
 import { UsersSearchComponent } from './page/users-search/users-search.component';
 import { EntranceComponent } from './page/entrance/entrance.component';
 
@@ -18,7 +18,7 @@ const routes: Routes = [
       children: [
         { path: 'entrance', component: EntranceComponent },
         { path: 'profilesearch', component: ProfileSearchComponent },
-        { path: 'users', component: UsersComponent },
+        { path: 'add-user', component: AddUserComponent },
         { path: 'usersearch', component: UsersSearchComponent },
         { path: 'company', component: CompanyComponent },
       ],

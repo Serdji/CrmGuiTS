@@ -5,7 +5,7 @@ import { environment } from '../../../environments/environment';
 import { IcreateUser } from '../../interface/icreate-user';
 
 @Injectable()
-export class UsersService {
+export class AddUserService {
 
   constructor( private httpQuery: HttpClient ) { }
 

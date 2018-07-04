@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from '../users/users.service';
+import { AddUserService } from '../add-user/add-user.service';
 import { takeWhile } from 'rxjs/operators';
 import { UsersSearchService } from './users-search.service';
 import { Iairlines } from '../../interface/iairlines';
@@ -25,7 +25,7 @@ export class UsersSearchComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private usersService: UsersService,
+    private addUserService: AddUserService,
     private usersSearchService: UsersSearchService,
   ) { }
 
@@ -35,7 +35,7 @@ export class UsersSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAirline() {
-    this.usersService.getAirlines()
+    this.addUserService.getAirlines()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( airlines: Iairlines ) => {
         this.airlines = airlines.Data.Airlines;

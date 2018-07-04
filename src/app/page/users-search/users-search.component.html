@@ -34,7 +34,7 @@
 <mat-card *ngIf="isTableCard">
   <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
   <ng-template #loaserDisabled>
-    <mat-card-title>{{users.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+    <mat-card-title>{{add-user.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
     <app-table-example
       [tableHeader]="[
         ['AirlineCode', 'Код АК'],

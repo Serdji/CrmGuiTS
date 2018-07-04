@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsersService } from './users.service';
+import { AddUserService } from './add-user.service';
 import { takeWhile } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
@@ -10,10 +10,10 @@ import { DialogComponent } from '../../shared/dialog/dialog.component';
 
 @Component( {
   selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: [ './users.component.styl' ],
+  templateUrl: './add-user.component.html',
+  styleUrls: [ './add-user.component.styl' ],
 } )
-export class UsersComponent implements OnInit, OnDestroy {
+export class AddUserComponent implements OnInit, OnDestroy {
 
   public formUser: FormGroup;
   public airlines: any;
@@ -21,7 +21,7 @@ export class UsersComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private usersService: UsersService,
+    private addUserService: AddUserService,
     private dialog: MatDialog,
   ) {}
 
@@ -31,7 +31,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   }
 
   private initAirline() {
-    this.usersService.getAirlines()
+    this.addUserService.getAirlines()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( airlines: Iairlines ) => {
         this.airlines = airlines.Data.Airlines;
@@ -61,7 +61,7 @@ export class UsersComponent implements OnInit, OnDestroy {
   sendForm(): void {
 
     if ( !this.formUser.invalid ) {
-      this.usersService.createUser( this.formUser.getRawValue() )
+      this.addUserService.createUser( this.formUser.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
           ( value: any ) => {

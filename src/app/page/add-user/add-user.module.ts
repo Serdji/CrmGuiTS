@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsersComponent } from './users.component';
-import { UsersService } from './users.service';
+import { AddUserComponent } from './add-user.component';
+import { AddUserService } from './add-user.service';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule,
     SharedModule,
   ],
-  declarations: [UsersComponent],
-  providers: [UsersService]
+  declarations: [AddUserComponent],
+  providers: [ AddUserService]
 })
-export class UsersModule { }
+export class AddUserModule { }
