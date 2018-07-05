@@ -1,9 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { AddUserService } from '../add-user/add-user.service';
-import { takeWhile } from 'rxjs/operators';
 import { ListUsersService } from './list-users.service';
-import { IuserSearch } from '../../interface/iuser-search';
+import { takeWhile } from 'rxjs/operators';
+import { IlistUsers } from '../../interface/ilist-users';
 
 
 @Component( {
@@ -13,66 +11,26 @@ import { IuserSearch } from '../../interface/iuser-search';
 } )
 export class ListUsersComponent implements OnInit, OnDestroy {
 
-  public users;
-  public isTableCard: boolean = false;
+  public users: IlistUsers[];
   public isLoader: boolean = false;
-  public formUserSearch: FormGroup;
   private isActive: boolean = true;
 
 
 
-  constructor(
-    private fb: FormBuilder,
-    private addUserService: AddUserService,
-    private listUsersService: ListUsersService,
-  ) { }
+  constructor(private listUsersService: ListUsersService ) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this.initListUsers();
   }
 
-  private initForm() {
-    this.formUserSearch = this.fb.group( {
-      UserName: [ '', [ Validators.minLength( 3 ) ] ],
-      FirstName: [ '', [ Validators.minLength( 3 ) ] ],
-      LastName: [ '', [ Validators.minLength( 3 ) ] ],
-      Email: [ '', [] ],
-    }, {
-      updateOn: 'submit',
-    } );
-  }
-
-  resetForm() {
-    this.formUserSearch.reset();
-    for ( const formControlName in this.formUserSearch.value ) {
-      this.formUserSearch.get( `${ formControlName }` ).setErrors( null );
-    }
-  }
-
-  sendForm(): void {
-
-    this.isTableCard = true;
+  initListUsers() {
     this.isLoader = true;
-
-    if ( !this.formUserSearch.invalid ) {
-      let params = '?';
-      for ( const key in this.formUserSearch.value ) {
-        if ( this.formUserSearch.get( `${key}` ).value !== '' ) {
-          params += `${key}=${this.formUserSearch.get( key ).value}&`;
-        }
-      }
-
-      this.listUsersService.getUserSearch( params )
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( value: IuserSearch ) => {
-          this.users = value.Data.Users;
-          this.isLoader = false;
-        } );
-    }
-  }
-
-  clearForm(): void {
-    this.resetForm();
+    this.listUsersService.getListUsers()
+      .pipe( takeWhile( _ => this.isActive) )
+      .subscribe( value => {
+        this.users = value;
+        this.isLoader = false;
+      } );
   }
 
   ngOnDestroy() {
