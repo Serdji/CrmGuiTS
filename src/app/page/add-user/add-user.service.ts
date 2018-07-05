@@ -10,7 +10,7 @@ export class AddUserService {
   constructor( private httpQuery: HttpClient ) { }
 
   createUser( params: IcreateUser ): Observable<any> {
-    return this.httpQuery.post( environment.crmApi + '/admin/login', params );
+    return this.httpQuery.post( environment.crmApi + '/admin/user', params );
   }
 
 }
