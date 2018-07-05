@@ -9,7 +9,7 @@ export class ListUsersService {
 
   constructor( private http: HttpClient ) { }
 
-  getListUsers (): Observable<any> {
+  getListUsers(): Observable<any> {
     return this.http.get( `${environment.crmApi}/admin/login` );
   }
 

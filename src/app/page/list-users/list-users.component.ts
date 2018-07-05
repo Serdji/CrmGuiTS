@@ -16,8 +16,7 @@ export class ListUsersComponent implements OnInit, OnDestroy {
   private isActive: boolean = true;
 
 
-
-  constructor(private listUsersService: ListUsersService ) { }
+  constructor( private listUsersService: ListUsersService ) { }
 
   ngOnInit(): void {
     this.initListUsers();
@@ -26,7 +25,7 @@ export class ListUsersComponent implements OnInit, OnDestroy {
   initListUsers() {
     this.isLoader = true;
     this.listUsersService.getListUsers()
-      .pipe( takeWhile( _ => this.isActive) )
+      .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
         this.users = value;
         this.isLoader = false;

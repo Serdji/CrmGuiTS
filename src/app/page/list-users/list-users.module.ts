@@ -5,13 +5,14 @@ import { SharedModule } from '../../shared/shared.module';
 import { ListUsersService } from './list-users.service';
 import { ComponentsModule } from '../../components/components.module';
 
-@NgModule({
+@NgModule( {
   imports: [
     CommonModule,
     SharedModule,
     ComponentsModule
   ],
-  declarations: [ ListUsersComponent],
-  providers: [ ListUsersService]
-})
-export class ListUsersModule { }
+  declarations: [ ListUsersComponent ],
+  providers: [ ListUsersService ]
+} )
+export class ListUsersModule {
+}

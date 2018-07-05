@@ -70,7 +70,7 @@ export class TableExampleComponent implements OnInit {
     }
   }
 
-  applyFilter(filterValue: string): void {
+  applyFilter( filterValue: string ): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
