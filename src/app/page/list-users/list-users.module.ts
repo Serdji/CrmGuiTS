@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { UsersSearchComponent } from './users-search.component';
+import { ListUsersComponent } from './list-users.component';
 import { SharedModule } from '../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { UsersSearchService } from './users-search.service';
+import { ListUsersService } from './list-users.service';
 import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
@@ -13,7 +13,7 @@ import { ComponentsModule } from '../../components/components.module';
     SharedModule,
     ComponentsModule
   ],
-  declarations: [UsersSearchComponent],
-  providers: [UsersSearchService]
+  declarations: [ ListUsersComponent],
+  providers: [ ListUsersService]
 })
-export class UsersSearchModule { }
+export class ListUsersModule { }

@@ -6,8 +6,8 @@ import { ProfileSearchComponent } from './page/profile-search/profile-search.com
 import { LayoutComponent } from './shared/layout/layout.component';
 import { CompanyComponent } from './page/company/company.component';
 import { AddUserComponent } from './page/add-user/add-user.component';
-import { UsersSearchComponent } from './page/users-search/users-search.component';
 import { EntranceComponent } from './page/entrance/entrance.component';
+import { ListUsersComponent } from './page/list-users/list-users.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -19,7 +19,7 @@ const routes: Routes = [
         { path: 'entrance', component: EntranceComponent },
         { path: 'profilesearch', component: ProfileSearchComponent },
         { path: 'adduser', component: AddUserComponent },
-        { path: 'usersearch', component: UsersSearchComponent },
+        { path: 'listusers', component: ListUsersComponent },
         { path: 'company', component: CompanyComponent },
       ],
     },

@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 
 @Injectable()
-export class UsersSearchService {
+export class ListUsersService {
 
   constructor( private http: HttpClient ) { }
 

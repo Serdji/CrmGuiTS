@@ -2,16 +2,16 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddUserService } from '../add-user/add-user.service';
 import { takeWhile } from 'rxjs/operators';
-import { UsersSearchService } from './users-search.service';
+import { ListUsersService } from './list-users.service';
 import { IuserSearch } from '../../interface/iuser-search';
 
 
 @Component( {
   selector: 'app-users-search',
-  templateUrl: './users-search.component.html',
-  styleUrls: [ './users-search.component.styl' ],
+  templateUrl: './list-users.component.html',
+  styleUrls: [ './list-users.component.styl' ],
 } )
-export class UsersSearchComponent implements OnInit, OnDestroy {
+export class ListUsersComponent implements OnInit, OnDestroy {
 
   public users;
   public isTableCard: boolean = false;
@@ -24,7 +24,7 @@ export class UsersSearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private addUserService: AddUserService,
-    private usersSearchService: UsersSearchService,
+    private listUsersService: ListUsersService,
   ) { }
 
   ngOnInit(): void {
@@ -62,7 +62,7 @@ export class UsersSearchComponent implements OnInit, OnDestroy {
         }
       }
 
-      this.usersSearchService.getUserSearch( params )
+      this.listUsersService.getUserSearch( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( value: IuserSearch ) => {
           this.users = value.Data.Users;
