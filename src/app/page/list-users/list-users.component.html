@@ -1,0 +1,15 @@
+<mat-card>
+  <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+  <ng-template #loaserDisabled>
+    <mat-card-title>Список всех пользователей</mat-card-title>
+    <app-table-example
+      [tableHeader]="[
+        ['login', 'Логин'],
+        ['loginName', 'ФИО'],
+        ['email', 'email']
+      ]"
+      [tableDataSource]="users"
+    >
+    </app-table-example>
+  </ng-template>
+</mat-card>
