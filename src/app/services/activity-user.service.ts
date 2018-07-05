@@ -11,7 +11,8 @@ export class ActivityUserService {
   ) { }
 
   logout() {
-    localStorage.clear();
+    localStorage.removeItem('saveSeismic');
+    localStorage.removeItem('paramsToken');
     this.router.navigate( [ '' ] );
   }
 
