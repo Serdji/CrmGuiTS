@@ -8,8 +8,9 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import 'rxjs/add/observable/throw';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, delay, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
+import { timer } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -23,6 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
       const request = req.clone( {
         headers: req.headers
           .set( 'Authorization', `Bearer ${idToken.accessToken}` )
+          // .set( 'Authorization', `Bearer 13` )
           .set( 'AirlineCode', AirlineCode )
       } );
       return next.handle( request )
@@ -30,9 +32,13 @@ export class AuthInterceptor implements HttpInterceptor {
           map( res => res ),
           catchError( ( err: HttpErrorResponse ) => {
             if ( err.status === 401 ) {
-              // localStorage.removeItem('paramsToken');
-              // const user = JSON.parse(localStorage.getItem('paramsUser'));
-              // this.auth.getToken(user).subscribe( (value: Itoken) => localStorage.setItem( 'paramsToken', JSON.stringify(value)) );
+              const user = JSON.parse( localStorage.getItem( 'paramsToken' ) );
+              timer(1000).subscribe( _ => {
+                this.auth.refreshToken( user.refreshToken )
+                  .subscribe( ( value: Itoken ) => {
+                    localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
+                  } );
+              });
             }
             return Observable.throw( err );
           } )
