@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { IlistUsers } from '../../../interface/ilist-users';
+import { UserService } from './user.service';
 
 @Component( {
   selector: 'app-user',
@@ -8,12 +10,26 @@ import { ActivatedRoute } from '@angular/router';
 } )
 export class UserComponent implements OnInit {
 
-  public title: string;
+  public user: IlistUsers;
+  public progress: boolean;
 
-  constructor( private route: ActivatedRoute ) { }
+  constructor(
+    private route: ActivatedRoute,
+    private userService: UserService,
+  ) { }
 
   ngOnInit() {
-    this.route.params.subscribe( value => this.title = value.id);
+    this.initUser();
+  }
+
+  private initUser() {
+    this.progress = true;
+    this.route.params.subscribe( (params: string) => {
+      this.userService.getUser(params.id).subscribe( (user: IlistUsers) => {
+        this.user = user;
+        this.progress = false;
+      } );
+    });
   }
 
 }
