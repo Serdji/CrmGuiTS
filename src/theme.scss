@@ -9,7 +9,7 @@ body {
 }
 
 ._hidden {
-  display: none;
+  display: none !important;
 }
 
 // Define the default theme (same as the example above).
