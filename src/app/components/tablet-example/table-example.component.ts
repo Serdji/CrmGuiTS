@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -72,6 +72,10 @@ export class TableExampleComponent implements OnInit {
 
   applyFilter( filterValue: string ): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  redirectToUser(event: any): void {
+    const id = event.currentTarget.getAttribute('id');
   }
 
 }
