@@ -66,7 +66,7 @@ export class UserComponent implements OnInit {
     if ( !this.updateUser.invalid ) {
       const params = this.updateUser.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
-      this.userService.putUser( params ).subscribe( user => this.user = user );
+      this.userService.putUser( params ).subscribe( ( user: IlistUsers) => this.user = user );
     }
   }
 
