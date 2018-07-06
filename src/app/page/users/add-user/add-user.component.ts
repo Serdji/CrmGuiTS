@@ -4,9 +4,9 @@ import { AddUserService } from './add-user.service';
 import { takeWhile } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
-import { Iairlines } from '../../interface/iairlines';
-import { emailValidator } from '../../validators/emailValidator';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { Iairlines } from '../../../interface/iairlines';
+import { emailValidator } from '../../../validators/emailValidator';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component( {
   selector: 'app-users',

@@ -7,6 +7,7 @@ import {
 } from '@angular/material';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-table-example',
@@ -25,7 +26,10 @@ export class TableExampleComponent implements OnInit {
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
 
-  constructor( private dialog: MatDialog ) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.initDisplayedColumns();
@@ -74,8 +78,9 @@ export class TableExampleComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  redirectToUser(event: any): void {
-    const id = event.currentTarget.getAttribute('id');
+  redirectToUser( event: any ): void {
+    const id = event.currentTarget.getAttribute( 'id' );
+    this.router.navigate([`/crm/user/${id}`]);
   }
 
 }
