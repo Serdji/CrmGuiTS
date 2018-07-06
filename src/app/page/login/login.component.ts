@@ -43,6 +43,10 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, {
       updateOn: 'submit',
     } );
+    const AirlineCode = JSON.parse( localStorage.getItem( 'AirlineCode' ) );
+    if ( AirlineCode ) {
+      this.formLogin.get( 'AirlineCode' ).patchValue( AirlineCode );
+    }
   }
 
   private initVersion() {
@@ -61,7 +65,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
-      localStorage.setItem('AirlineCode', JSON.stringify(this.formLogin.get( 'AirlineCode' ).value));
+      localStorage.setItem( 'AirlineCode', JSON.stringify( this.formLogin.get( 'AirlineCode' ).value ) );
       this.auth.getToken( this.formLogin.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(

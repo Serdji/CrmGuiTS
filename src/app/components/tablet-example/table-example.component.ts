@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -7,6 +7,7 @@ import {
 } from '@angular/material';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-table-example',
@@ -25,7 +26,10 @@ export class TableExampleComponent implements OnInit {
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
 
-  constructor( private dialog: MatDialog ) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.initDisplayedColumns();
@@ -72,6 +76,11 @@ export class TableExampleComponent implements OnInit {
 
   applyFilter( filterValue: string ): void {
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  redirectToUser( event: any ): void {
+    const id = event.currentTarget.getAttribute( 'id' );
+    this.router.navigate([`/crm/user/${id}`]);
   }
 
 }

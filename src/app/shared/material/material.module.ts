@@ -16,11 +16,12 @@ import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginato
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { MAT_DATE_LOCALE,  MatNativeDateModule } from '@angular/material';
+import { MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 
@@ -47,7 +48,8 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTabsModule,
   ],
   exports: [
     MatToolbarModule,
@@ -70,7 +72,8 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatAutocompleteModule,
     MatCheckboxModule,
     MatProgressSpinnerModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatTabsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },

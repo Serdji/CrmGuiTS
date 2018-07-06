@@ -1,0 +1,68 @@
+<div class="user">
+  <mat-grid-list cols="2" rowHeight="300px">
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="user__card">
+        <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>
+        <div *ngIf="!progress">
+          <mat-card-header>
+            <h2 class="user__header">Пользователь</h2>
+          </mat-card-header>
+          <mat-card-content>
+            <div class="user__list">
+              <span><b>Логин: </b>{{user.login}}</span>
+            </div>
+            <div class="user__list">
+              <span><b>ФИО: </b>{{user.loginName}}</span>
+            </div>
+            <div class="user__list">
+              <span><b>email: </b>{{user.email}}</span>
+            </div>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+      <mat-card class="user__card">
+        <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>
+        <div *ngIf="!progress">
+          <mat-card-header>
+            <h2 class="user__header">Редактировать</h2>
+          </mat-card-header>
+          <mat-tab-group>
+            <mat-tab class="user__tab" label="Пользователя">
+              <form class="user__form" [formGroup]="updateUser">
+                <mat-form-field class="user__input">
+                  <input matInput formControlName="login" placeholder="Логин">
+                </mat-form-field>
+                <mat-form-field class="user__input">
+                  <input matInput formControlName="loginName" placeholder="ФИО">
+                </mat-form-field>
+                <mat-form-field class="user__input">
+                  <input matInput type="email" formControlName="email" placeholder="email">
+                </mat-form-field>
+                <div class="user__button-wrapper">
+                  <button class="user__button _left-button" mat-raised-button (click)="sendFormUser()" color="primary">Изменить</button>
+                </div>
+              </form>
+            </mat-tab>
+
+            <mat-tab class="user__tab" label="Пароль">
+              <form class="user__form" [formGroup]="updatePassword">
+                <mat-form-field class="user__input">
+                <input matInput formControlName="newPassword" type="password" placeholder="Пароль">
+                </mat-form-field>
+                <mat-form-field class="user__input">
+                <input matInput formControlName="confirmPassword" type="password" appConfirmEqualValidator="newPassword" placeholder="Повторите пароль">
+                </mat-form-field>
+                <div class="user__button-wrapper">
+                  <button class="user__button _left-button" mat-raised-button (click)="sendFormPassword()" color="primary">Изменить</button>
+                </div>
+              </form>
+            </mat-tab>
+          </mat-tab-group>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

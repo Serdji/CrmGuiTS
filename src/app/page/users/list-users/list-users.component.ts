@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ListUsersService } from './list-users.service';
 import { takeWhile } from 'rxjs/operators';
-import { IlistUsers } from '../../interface/ilist-users';
+import { IlistUsers } from '../../../interface/ilist-users';
 
 
 @Component( {
