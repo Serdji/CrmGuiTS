@@ -31,11 +31,11 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.formUser = this.fb.group( {
-      Login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-      Password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      ConfirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      Email: [ '', [ emailValidator ] ],
-      LoginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
+      login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
+      password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      email: [ '', [ emailValidator ] ],
+      loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     }, {
       updateOn: 'submit',
     } );

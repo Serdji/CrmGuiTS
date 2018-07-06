@@ -1,5 +1,5 @@
 export interface IlistUsers {
-  idLogin: number;
+  loginId: number;
   login: string;
   loginName: string;
   email?: string;

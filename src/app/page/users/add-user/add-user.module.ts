@@ -4,15 +4,17 @@ import { AddUserComponent } from './add-user.component';
 import { AddUserService } from './add-user.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
-import { ConfirmEqualValidatorDirective } from '../../../directive/confirm-equal-validator.directive';
+import { DirectiveModule } from '../../../directive/directive.module';
 
-@NgModule({
+@NgModule( {
   imports: [
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
+    DirectiveModule,
   ],
-  declarations: [AddUserComponent, ConfirmEqualValidatorDirective],
-  providers: [ AddUserService]
-})
-export class AddUserModule { }
+  declarations: [ AddUserComponent ],
+  providers: [ AddUserService ]
+} )
+export class AddUserModule {
+}
