@@ -23,5 +23,9 @@ export class UserService {
     return this.http.put( `${environment.crmApi}/admin/user/update-password`, params );
   }
 
+  updateClaimPermissions( params ): Observable<any> {
+    return this.http.post( `${environment.crmApi}/admin/user/update-claim-permissions`, params );
+  }
+
 
 }

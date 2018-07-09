@@ -51,7 +51,7 @@ export class UserComponent implements OnInit, OnDestroy {
           this.user = user;
           this.updateUser.patchValue( user );
           for ( const claimPermission of user.claimPermissions ) {
-            this.formPermission.patchValue({[claimPermission.id]: true});
+            this.formPermission.patchValue( { [ claimPermission.id ]: true } );
           }
           this.progress = false;
         } );
@@ -125,10 +125,13 @@ export class UserComponent implements OnInit, OnDestroy {
 
   sendFormPermission(): void {
     const progressArray = [];
-    for ( const key of Object.keys(this.formPermission.getRawValue()) ) {
+    for ( const key of Object.keys( this.formPermission.getRawValue() ) ) {
       if ( this.formPermission.get( key ).value ) progressArray.push( +key );
     }
-    console.log( progressArray );
+    const params = Object.assign( {}, { loginId: +this.loginId, ClaimPermissions: progressArray } );
+    this.userService.updateClaimPermissions( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.windowDialog( 'Права пользователя изменены', 'ok' ) );
   }
 
   toggleEdit(): void {
