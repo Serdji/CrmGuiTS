@@ -50,8 +50,10 @@ export class UserComponent implements OnInit, OnDestroy {
         this.userService.getUser( params.id ).subscribe( ( user: IlistUsers ) => {
           this.user = user;
           this.updateUser.patchValue( user );
-          for ( const claimPermission of user.claimPermissions ) {
-            this.formPermission.patchValue( { [ claimPermission.id ]: true } );
+          if ( user.claimPermissions ) {
+            for ( const claimPermission of user.claimPermissions ) {
+              this.formPermission.patchValue( { [ claimPermission.id ]: true } );
+            }
           }
           this.progress = false;
         } );
