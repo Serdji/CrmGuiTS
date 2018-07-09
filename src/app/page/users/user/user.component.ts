@@ -3,11 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
 import { emailValidator } from '../../../validators/emailValidator';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { takeWhile } from 'rxjs/operators';
+import { IclaimPermission } from '../../../interface/iclaim-permission';
 
 @Component( {
   selector: 'app-user',
@@ -20,10 +21,11 @@ export class UserComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public updateUser: FormGroup;
   public updatePassword: FormGroup;
-  public edit: boolean = false;
+  public formPermission: FormGroup;
+  public edit = false;
 
   private loginId: number;
-  private isActive: boolean = true;
+  private isActive = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +38,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
+    this.initFormPermission();
   }
 
   private initUser() {
@@ -47,6 +50,9 @@ export class UserComponent implements OnInit, OnDestroy {
         this.userService.getUser( params.id ).subscribe( ( user: IlistUsers ) => {
           this.user = user;
           this.updateUser.patchValue( user );
+          for ( const claimPermission of user.claimPermissions ) {
+            this.formPermission.patchValue({[claimPermission.id]: true});
+          }
           this.progress = false;
         } );
       } );
@@ -68,6 +74,14 @@ export class UserComponent implements OnInit, OnDestroy {
       confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
     }, {
       updateOn: 'submit',
+    } );
+  }
+
+  private initFormPermission() {
+    this.formPermission = this.fb.group( {
+      1: '',
+      2: '',
+      3: ''
     } );
   }
 
@@ -107,6 +121,14 @@ export class UserComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
     }
+  }
+
+  sendFormPermission(): void {
+    const progressArray = [];
+    for ( const key of Object.keys(this.formPermission.getRawValue()) ) {
+      if ( this.formPermission.get( key ).value ) progressArray.push( +key );
+    }
+    console.log( progressArray );
   }
 
   toggleEdit(): void {
