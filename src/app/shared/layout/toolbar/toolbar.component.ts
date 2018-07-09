@@ -9,12 +9,16 @@ import { LayoutService } from '../layout.service';
 })
 export class ToolbarComponent implements OnInit {
 
+  public login;
+
   constructor(
     private activityUser: ActivityUserService,
     private layoutService: LayoutService,
     ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.login = localStorage.getItem('login');
+  }
 
   goOut(): void {
     this.activityUser.logout();

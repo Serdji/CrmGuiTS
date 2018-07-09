@@ -70,9 +70,8 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
           ( value ) => {
-            const user = this.formLogin.getRawValue();
-            // Object.assign( user, { grant_type: 'password' } );
             this.parsTokenService.parsToken = value.accessToken;
+            localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
             if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
           },

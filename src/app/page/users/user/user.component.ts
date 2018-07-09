@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
@@ -7,13 +7,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-user',
   templateUrl: './user.component.html',
   styleUrls: [ './user.component.styl' ]
 } )
-export class UserComponent implements OnInit {
+export class UserComponent implements OnInit, OnDestroy {
 
   public user: IlistUsers;
   public progress: boolean;
@@ -22,6 +23,7 @@ export class UserComponent implements OnInit {
   public edit: boolean = false;
 
   private loginId: number;
+  private isActive: boolean = true;
 
   constructor(
     private route: ActivatedRoute,
@@ -38,14 +40,16 @@ export class UserComponent implements OnInit {
 
   private initUser() {
     this.progress = true;
-    this.route.params.subscribe( ( params ) => {
-      this.loginId = params.id;
-      this.userService.getUser( params.id ).subscribe( ( user: IlistUsers ) => {
-        this.user = user;
-        this.updateUser.patchValue( user );
-        this.progress = false;
+    this.route.params
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( params ) => {
+        this.loginId = params.id;
+        this.userService.getUser( params.id ).subscribe( ( user: IlistUsers ) => {
+          this.user = user;
+          this.updateUser.patchValue( user );
+          this.progress = false;
+        } );
       } );
-    } );
   }
 
   private initFormUser() {
@@ -74,20 +78,24 @@ export class UserComponent implements OnInit {
         status: paramss,
       },
     } );
-    timer( 1500 ).subscribe( _ => {
-      this.dialog.closeAll();
-      this.edit = false;
-    } );
+    timer( 1500 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.dialog.closeAll();
+        this.edit = false;
+      } );
   }
 
   sendFormUser(): void {
     if ( !this.updateUser.invalid ) {
       const params = this.updateUser.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
-      this.userService.putUser( params ).subscribe( ( user: IlistUsers ) => {
-        this.user = user;
-        this.windowDialog( 'Пользователь успешно изменен', 'ok' );
-      } );
+      this.userService.putUser( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( ( user: IlistUsers ) => {
+          this.user = user;
+          this.windowDialog( 'Пользователь успешно изменен', 'ok' );
+        } );
     }
   }
 
@@ -95,12 +103,18 @@ export class UserComponent implements OnInit {
     if ( !this.updatePassword.invalid ) {
       const params = this.updatePassword.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
-      this.userService.putPassword( params ).subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
+      this.userService.putPassword( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
     }
   }
 
   toggleEdit(): void {
     this.edit = !this.edit;
+  }
+
+  ngOnDestroy() {
+    this.isActive = false;
   }
 
 }
