@@ -71,7 +71,9 @@ export class AddUserComponent implements OnInit, OnDestroy {
               } );
               this.resetForm();
             }
-            timer( 1500 ).subscribe( _ => this.dialog.closeAll() );
+            timer( 1500 )
+              .pipe( takeWhile( _ => this.isActive ) )
+              .subscribe( _ => this.dialog.closeAll() );
           },
         );
     }

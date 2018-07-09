@@ -7,7 +7,7 @@
 
     <button class="toolbar__button-menu" mat-button [matMenuTriggerFor]="appMenu">
       <mat-icon>face</mat-icon>
-      <span>sadmin</span>
+      <span>{{login}}</span>
     </button>
     <mat-menu #appMenu="matMenu">
       <button mat-menu-item (click)="goOut()">Выйти</button>

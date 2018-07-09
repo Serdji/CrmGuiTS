@@ -62,5 +62,32 @@
       </mat-card>
     </mat-grid-tile>
 
+
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-card class="user__card">
+        <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>
+        <div *ngIf="!progress">
+          <mat-card-header>
+            <h2 class="user__header">Права</h2>
+          </mat-card-header>
+          <mat-card-content class="user__content">
+            <form class="user__form" [formGroup]="formPermission">
+              <div class="user__label">
+                <div class="user__label-title"><b>Пользователя</b></div>
+                <mat-checkbox class="user__checkbox" formControlName="1">Чтение</mat-checkbox>
+                <mat-checkbox class="user__checkbox" formControlName="2">Изменения</mat-checkbox>
+              </div>
+              <div class="user__label">
+                <div class="user__label-title"><b>Аналитики</b></div>
+                <mat-checkbox class="user__checkbox" formControlName="3">Чтение</mat-checkbox>
+              </div>
+              <div class="user__button-wrapper">
+                <button class="user__button _left-button" mat-raised-button (click)="sendFormPermission()" color="primary">Изменить</button>
+              </div>
+            </form>
+          </mat-card-content>
+        </div>
+      </mat-card>
+    </mat-grid-tile>
   </mat-grid-list>
 </div>

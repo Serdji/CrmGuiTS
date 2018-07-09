@@ -13,6 +13,7 @@ export class ActivityUserService {
   logout() {
     localStorage.removeItem('saveSeismic');
     localStorage.removeItem('paramsToken');
+    localStorage.removeItem('login');
     this.router.navigate( [ '' ] );
   }
 
