@@ -4,6 +4,9 @@ import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
 import { emailValidator } from '../../../validators/emailValidator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { timer } from 'rxjs/observable/timer';
 
 @Component( {
   selector: 'app-user',
@@ -16,6 +19,7 @@ export class UserComponent implements OnInit {
   public progress: boolean;
   public updateUser: FormGroup;
   public updatePassword: FormGroup;
+  public edit: boolean = false;
 
   private loginId: number;
 
@@ -23,6 +27,7 @@ export class UserComponent implements OnInit {
     private route: ActivatedRoute,
     private userService: UserService,
     private fb: FormBuilder,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit() {
@@ -62,11 +67,27 @@ export class UserComponent implements OnInit {
     } );
   }
 
+  private windowDialog( messDialog: string, paramss: string ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status: paramss,
+      },
+    } );
+    timer( 1500 ).subscribe( _ => {
+      this.dialog.closeAll();
+      this.edit = false;
+    } );
+  }
+
   sendFormUser(): void {
     if ( !this.updateUser.invalid ) {
       const params = this.updateUser.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
-      this.userService.putUser( params ).subscribe( ( user: IlistUsers) => this.user = user );
+      this.userService.putUser( params ).subscribe( ( user: IlistUsers ) => {
+        this.user = user;
+        this.windowDialog( 'Пользователь успешно изменен', 'ok' );
+      } );
     }
   }
 
@@ -74,8 +95,12 @@ export class UserComponent implements OnInit {
     if ( !this.updatePassword.invalid ) {
       const params = this.updatePassword.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
-      this.userService.putPassword( params ).subscribe();
+      this.userService.putPassword( params ).subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
     }
+  }
+
+  toggleEdit(): void {
+    this.edit = !this.edit;
   }
 
 }
