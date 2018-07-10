@@ -85,7 +85,7 @@ export class CompanyComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.isActive = false;
   }
 

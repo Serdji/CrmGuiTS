@@ -32,7 +32,7 @@ export class ListUsersComponent implements OnInit, OnDestroy {
       } );
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.isActive = false;
   }
 

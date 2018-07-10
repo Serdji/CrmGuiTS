@@ -63,7 +63,7 @@ export class TableExampleComponent implements OnInit {
   }
 
   openText( elem: HTMLElement ): void {
-    if ( this.isChildMore( elem ) ) {
+    if ( this.isCp ) {
       const text = elem.innerText;
       this.dialog.open( DialogComponent, {
         data: {
@@ -79,8 +79,9 @@ export class TableExampleComponent implements OnInit {
   }
 
   redirectToUser( event: any ): void {
+    if ( this.isCp ) return;
     const id = event.currentTarget.getAttribute( 'id' );
-    this.router.navigate([`/crm/user/${id}`]);
+    this.router.navigate( [ `/crm/user/${id}` ] );
   }
 
 }
