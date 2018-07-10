@@ -79,7 +79,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.isActive = false;
   }
 

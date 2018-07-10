@@ -3,12 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
 import { emailValidator } from '../../../validators/emailValidator';
-import { FormBuilder, FormControl, FormArray, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { takeWhile } from 'rxjs/operators';
-import { IclaimPermission } from '../../../interface/iclaim-permission';
 
 @Component( {
   selector: 'app-user',
@@ -87,19 +86,22 @@ export class UserComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private windowDialog( messDialog: string, paramss: string ) {
+  private windowDialog( messDialog: string, params: string, disableTimer: boolean = false ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
-        status: paramss,
+        status: params,
+        loginId: this.loginId,
       },
     } );
-    timer( 1500 )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        this.dialog.closeAll();
-        this.edit = false;
-      } );
+    if ( !disableTimer ) {
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialog.closeAll();
+          this.edit = false;
+        } );
+    }
   }
 
   sendFormUser(): void {
@@ -113,6 +115,10 @@ export class UserComponent implements OnInit, OnDestroy {
           this.windowDialog( 'Пользователь успешно изменен', 'ok' );
         } );
     }
+  }
+
+  deleteUser(): void {
+    this.windowDialog( `Вы действительно хотите удалить пользователя "${ this.user.login }" ?`, 'delete', true );
   }
 
   sendFormPassword(): void {
@@ -140,7 +146,7 @@ export class UserComponent implements OnInit, OnDestroy {
     this.edit = !this.edit;
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.isActive = false;
   }
 
