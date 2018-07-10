@@ -4,9 +4,10 @@ import { AddUserService } from './add-user.service';
 import { takeWhile } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
-import { Iairlines } from '../../interface/iairlines';
-import { emailValidator } from '../../validators/emailValidator';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { emailValidator } from '../../../validators/emailValidator';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { IlistUsers } from '../../../interface/ilist-users';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-users',
@@ -22,6 +23,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private addUserService: AddUserService,
     private dialog: MatDialog,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -31,11 +33,11 @@ export class AddUserComponent implements OnInit, OnDestroy {
 
   private initForm() {
     this.formUser = this.fb.group( {
-      Login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-      Password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      ConfirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      Email: [ '', [ emailValidator ] ],
-      LoginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
+      login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
+      password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      email: [ '', [ emailValidator ] ],
+      loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     }, {
       updateOn: 'submit',
     } );
@@ -54,24 +56,20 @@ export class AddUserComponent implements OnInit, OnDestroy {
       this.addUserService.createUser( this.formUser.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
-          ( value: any ) => {
-            if ( value.error ) {
-              this.dialog.open( DialogComponent, {
-                data: {
-                  message: value.error.Data.ErrorMsg,
-                  status: 'error',
-                },
+          ( user: IlistUsers ) => {
+            this.dialog.open( DialogComponent, {
+              data: {
+                message: 'Пользователь успешно добавлен',
+                status: 'ok',
+              },
+            } );
+            this.resetForm();
+            timer( 1500 )
+              .pipe( takeWhile( _ => this.isActive ) )
+              .subscribe( _ => {
+                this.router.navigate( [ `/crm/user/${user.loginId}` ] );
+                this.dialog.closeAll();
               } );
-            } else {
-              this.dialog.open( DialogComponent, {
-                data: {
-                  message: 'Пользователь успешно добавлен',
-                  status: 'ok',
-                },
-              } );
-              this.resetForm();
-            }
-            timer( 1500 ).subscribe( _ => this.dialog.closeAll() );
           },
         );
     }
@@ -81,7 +79,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.isActive = false;
   }
 

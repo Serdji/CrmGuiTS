@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../environments/environment';
-import { IcreateUser } from '../../interface/icreate-user';
+import { environment } from '../../../../environments/environment';
+import { IcreateUser } from '../../../interface/icreate-user';
 
 @Injectable()
 export class AddUserService {
