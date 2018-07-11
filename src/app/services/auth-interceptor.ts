@@ -37,7 +37,6 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError( ( err: HttpErrorResponse ) => {
             if ( err.status === 401 ) {
               ++this.counter;
-              console.log(this.counter);
               if ( this.counter >= 10 ) {
                 this.activityUser.logout();
                 this.counter = 0;
