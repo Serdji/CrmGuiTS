@@ -1,6 +1,7 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
+import { UserService } from '../../page/users/user/user.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -10,6 +11,7 @@ import { Router } from '@angular/router';
 export class DialogComponent implements OnInit {
 
   constructor(
+    private userService: UserService,
     private router: Router,
     public dialogRef: MatDialogRef<any>,
     @Inject( MAT_DIALOG_DATA ) public data: any
@@ -19,7 +21,7 @@ export class DialogComponent implements OnInit {
 
   onYesClick(): void {
     this.dialogRef.close();
-    console.log( this.data.loginId );
+    this.userService.deleteUser( this.data.loginId ).subscribe();
     this.router.navigate( [ '/crm/listusers/' ] );
   }
 

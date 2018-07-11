@@ -8,7 +8,7 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import 'rxjs/add/observable/throw';
-import { catchError, delay, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
 
@@ -37,7 +37,11 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError( ( err: HttpErrorResponse ) => {
             if ( err.status === 401 ) {
               ++this.counter;
-              if ( this.counter === 10 ) this.activityUser.logout();
+              console.log(this.counter);
+              if ( this.counter >= 10 ) {
+                this.activityUser.logout();
+                this.counter = 0;
+              }
               this.auth.refreshToken( idToken.refreshToken )
                 .subscribe( ( value: Itoken ) => {
                     localStorage.setItem( 'paramsToken', JSON.stringify( value ) );

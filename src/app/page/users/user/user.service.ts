@@ -20,6 +20,10 @@ export class UserService {
     return this.http.put( `${environment.crmApi}/admin/user`, params ).pipe( retry( 10 ) );
   }
 
+  deleteUser( id ): Observable<any> {
+    return this.http.delete( `${environment.crmApi}/admin/user/${id}` ).pipe( retry( 10 ) );
+  }
+
   putPassword( params ): Observable<any> {
     return this.http.put( `${environment.crmApi}/admin/user/update-password`, params ).pipe( retry( 10 ) );
   }
