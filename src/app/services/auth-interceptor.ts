@@ -10,12 +10,17 @@ import { AuthService } from './auth.service';
 import 'rxjs/add/observable/throw';
 import { catchError, delay, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
-import { timer } from 'rxjs';
+import { ActivityUserService } from './activity-user.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  constructor( private auth: AuthService ) {}
+  private counter: number = 0;
+
+  constructor(
+    private activityUser: ActivityUserService,
+    private auth: AuthService,
+  ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
     const idToken: Itoken = JSON.parse( localStorage.getItem( 'paramsToken' ) );
@@ -24,7 +29,6 @@ export class AuthInterceptor implements HttpInterceptor {
       const request = req.clone( {
         headers: req.headers
           .set( 'Authorization', `Bearer ${idToken.accessToken}` )
-          // .set( 'Authorization', `Bearer 13` )
           .set( 'AirlineCode', AirlineCode )
       } );
       return next.handle( request )
@@ -32,13 +36,14 @@ export class AuthInterceptor implements HttpInterceptor {
           map( res => res ),
           catchError( ( err: HttpErrorResponse ) => {
             if ( err.status === 401 ) {
-              const user = JSON.parse( localStorage.getItem( 'paramsToken' ) );
-              timer(1000).subscribe( _ => {
-                this.auth.refreshToken( user.refreshToken )
-                  .subscribe( ( value: Itoken ) => {
+              ++this.counter;
+              if ( this.counter === 10 ) this.activityUser.logout();
+              this.auth.refreshToken( idToken.refreshToken )
+                .subscribe( ( value: Itoken ) => {
                     localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
-                  } );
-              });
+                    this.counter = 0;
+                  }
+                );
             }
             return Observable.throw( err );
           } )
