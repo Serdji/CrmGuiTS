@@ -18,4 +18,13 @@ export class AuthService {
     };
     return this.http.post( environment.crmApi + '/auth/sign-in', options.params, { headers: options.headers } );
   }
+
+  refreshToken( refreshToken: string ): Observable<any> {
+    return this.http.post( environment.crmApi + '/auth/refresh-token', { refreshToken } );
+  }
+
+  revokeRefreshToken( revokeRefreshToken: string ): Observable<any> {
+    return this.http.post( environment.crmApi + '/auth/revoke-refreshtoken', { revokeRefreshToken } );
+  }
+
 }

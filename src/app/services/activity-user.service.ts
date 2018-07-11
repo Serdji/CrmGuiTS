@@ -2,18 +2,22 @@ import { Injectable } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
+import { AuthService } from './auth.service';
 
 @Injectable()
 export class ActivityUserService {
 
   constructor(
+    private auth: AuthService,
     private router: Router,
   ) { }
 
   logout() {
-    localStorage.removeItem('saveSeismic');
-    localStorage.removeItem('paramsToken');
-    localStorage.removeItem('login');
+    const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
+    this.auth.revokeRefreshToken( token.refreshToken ).subscribe();
+    localStorage.removeItem( 'saveSeismic' );
+    localStorage.removeItem( 'paramsToken' );
+    localStorage.removeItem( 'login' );
     this.router.navigate( [ '' ] );
   }
 
