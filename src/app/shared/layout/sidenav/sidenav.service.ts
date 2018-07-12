@@ -19,8 +19,7 @@ export class SidenavService {
         icon: 'group',
         link: [
           { url: '/crm/adduser', title: 'Добавить пользователя' },
-          { url: '/crm/listusers', title: 'Список пользователей' },
-          { url: '/crm/company', title: 'Настройки' }
+          { url: '/crm/listusers', title: 'Список пользователей' }
         ]
       },
       {
