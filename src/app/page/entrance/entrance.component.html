@@ -1,15 +1,23 @@
 <div class="entrance">
   <mat-grid-list cols="4" rowHeight="300px">
 
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
+
     <div *ngFor="let card of cards">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="entrance__card">
-          <mat-card-title class="entrance__title">
-            {{ card.name }}
-            <mat-icon class="entrance__icon">{{ card.icon }}</mat-icon>
-          </mat-card-title>
+        <mat-card class="entrance__card" (click)="openLink()" routerLink='{{ card.link[0].url }}'>
+          <mat-card-title class="entrance__title">{{ card.name }} </mat-card-title>
           <mat-card-actions class="entrance__actions">
-            <button class="entrance__button" mat-raised-button color="primary" (click)="openLink()" routerLink='{{ card.link[0].url }}'>Перейти</button>
+            <mat-icon class="entrance__icon">{{ card.icon }}</mat-icon>
           </mat-card-actions>
         </mat-card>
       </mat-grid-tile>
