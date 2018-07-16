@@ -67,7 +67,7 @@ namespace Crm.Seb2
                         if (ss.DateEnd == null || ss.DateEnd == DateTime.MinValue)
                         {
                             // actual
-                            if (dateEnd < DateTime.Now
+                            if (dateEnd < DateTime.Now.AddMinutes(-(ss.CurrTimeGapInMinutes))
                                 && sebManager.TransactionsToProcessCount < awaitingTransactionLimit)
                             {
                                 await sebManager.GetNextTransactionsListAsync(dateStart, dateEnd, cancellationToken);
@@ -97,10 +97,12 @@ namespace Crm.Seb2
                     catch (OperationCanceledException e)
                     {
                         log.Info("DoProcessRangeAsync. {0}", e.Message);
+                        return;
                     }
                     catch (Exception e)
                     {
                         log.Error(e);
+                        await Task.Delay(TimeSpan.FromMinutes(1));
                     }
 
                     await Task.Delay(TimeSpan.FromMilliseconds(ss.DelayInMillisecond));
@@ -142,6 +144,7 @@ namespace Crm.Seb2
             catch (OperationCanceledException e)
             {
                 log.Info("DoProcessTransactionsAsync. {0}", e.Message);
+                return;
             }
             catch (Exception e)
             {
@@ -174,6 +177,7 @@ namespace Crm.Seb2
             catch (OperationCanceledException e)
             {
                 log.Info("DoInfo. {0}", e.Message);
+                throw;
             }
             catch (Exception e)
             {

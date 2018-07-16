@@ -198,9 +198,10 @@ namespace Crm.Seb2
             foreach (var td in transactionsDetail)
             {
                 dynamic data = JObject.Parse(td.Data);
-                string airline = data.Reclocs.Airline[0];
+                //string airline = data.Reclocs.Airline[0];
+                string airline = data.Vairline;
 
-                // Filtering only necessary aircompanies.
+                // Filtering only necessary airlines.
                 var airlineSettings = ss.Airlines.FirstOrDefault(a => a.Code == airline);
                 if (airlineSettings != null)
                     await WriteToMongoAsync(td.Data, cancellationToken);
@@ -216,12 +217,17 @@ namespace Crm.Seb2
             data._id = _id;
 
             data.SebServiceInfo = new JObject() as dynamic;
-            data.SebServiceInfo.CreateDate = DateTime.Now;
+            data.SebServiceInfo.CreateDate = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ssZ");
 
             string updatedJson = (data as JObject).ToString(Formatting.None);
             var bsonDocument = BsonDocument.Parse(updatedJson);
 
-            try
+            await mainCollection.ReplaceOneAsync(filter: new BsonDocument("_id", _id)
+                , options: new UpdateOptions { IsUpsert = true
+                                               , BypassDocumentValidation = true }
+                , replacement: bsonDocument
+                , cancellationToken: cancellationToken);
+            /*try
             {
                 await mainCollection.InsertOneAsync(document: bsonDocument
                     , options: new InsertOneOptions { BypassDocumentValidation = true }
@@ -233,7 +239,7 @@ namespace Crm.Seb2
                     log.Warn("Transaction already exists in main. id = {0}", _id);
                 else
                     throw e;
-            }
+            }*/
         }
 
         public async Task GetNextTransactionsListAsync(DateTime _dateStart, DateTime _dateEnd, CancellationToken cancellationToken)

@@ -11,7 +11,8 @@ namespace Crm.Seb2
         private const string dateStartLabel = "dateStart";
         private const string dateEndLabel = "dateEnd";
         private const string delayInMillisecondLabel = "delayInMillisecond";
-
+        private const string currTimeGapInMinutesLabel = "currTimeGapInMinutes";
+        
         private const string mongoDBLabel = "mongoDB";
         private const string sebGatewayLabel = "sebGateway";
 
@@ -31,6 +32,9 @@ namespace Crm.Seb2
 
         [ConfigurationProperty(delayInMillisecondLabel)]
         public int DelayInMillisecond { get { return (int)this[delayInMillisecondLabel]; } }
+
+        [ConfigurationProperty(currTimeGapInMinutesLabel)]
+        public int CurrTimeGapInMinutes { get { return (int)this[currTimeGapInMinutesLabel]; } }
 
         [ConfigurationProperty(mongoDBLabel)]
         public MongoDBElement MongoDB

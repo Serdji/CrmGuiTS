@@ -97,16 +97,28 @@
     <None Include="NLog.xsd">
       <SubType>Designer</SubType>
     </None>
-    <None Include="ServiceSettings.config">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <None Include="ServiceSettings.config" />
     <None Include="App.config">
       <SubType>Designer</SubType>
     </None>
     <None Include="packages.config" />
-    <None Include="Publish\serviceSettings.Debug.config" />
-    <None Include="Publish\serviceSettings.Release.config" />
+    <None Include="Configs\serviceSettings.Debug.config" />
+    <None Include="Configs\serviceSettings.Release.config" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>if "Debug"=="$(ConfigurationName)" goto :debug
+if "Release"=="$(ConfigurationName)" goto :release
+
+:debug
+copy "$(ProjectDir)\Configs\serviceSettings.Debug.config" "$(TargetDir)\serviceSettings.config"
+goto :end
+
+:release
+copy "$(ProjectDir)\Configs\serviceSettings.Release.config" "$(TargetDir)\serviceSettings.config"
+goto :end
+
+:end</PostBuildEvent>
+  </PropertyGroup>
 </Project>
