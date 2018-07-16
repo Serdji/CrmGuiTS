@@ -27,7 +27,7 @@ export class ProfileSearchService {
 
   getProfileSearchCount( params: IprofileSearch ): Observable<any> {
     this.params = params;
-    return this.http.get( environment.crmApi + '/api/api/Customer/quicksearch/count', { params: this.params } );
+    return this.http.get( environment.crmApi + '/crm/customer/search', { params: this.params } );
   }
 
   getProfileSearch( count: IprofileSearch ): Observable<any> {

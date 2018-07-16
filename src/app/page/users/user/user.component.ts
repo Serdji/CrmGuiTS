@@ -82,7 +82,9 @@ export class UserComponent implements OnInit, OnDestroy {
     this.formPermission = this.fb.group( {
       1: '',
       2: '',
-      3: ''
+      3: '',
+      4: '',
+      5: '',
     } );
   }
 

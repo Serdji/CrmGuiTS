@@ -212,6 +212,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private serverRequest( params: IprofileSearch ) {
     this.isTableCard = true;
     this.isLoader = true;
+    Object.assign( params, this.paramsPaginatinDefault,{ from: 0, count: 10 } );
     this.profileSearchService.getProfileSearchCount( params )
       .pipe(
         takeWhile( _ => this.isActive ),
@@ -219,7 +220,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       )
       .subscribe( ( count ) => {
         this.tableAsyncService.countPage = +count;
-        Object.assign( this.paramsPaginatinDefault, { from: 0, count: 10 } );
         this.profileSearchService.getProfileSearch( this.paramsPaginatinDefault )
           .pipe(
             takeWhile( _ => this.isActive ),
