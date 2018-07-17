@@ -26,7 +26,7 @@ export class TableAsyncProfileComponent implements OnInit {
     'prefix',
     'gender',
     'dob',
-    'idCustomer'
+    'customerId'
   ];
 
 
@@ -34,7 +34,7 @@ export class TableAsyncProfileComponent implements OnInit {
   public isCp: boolean = false;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
-  public selection = new SelectionModel<PeriodicElement>(true, []);
+  public selection = new SelectionModel<any>(true, []);
 
   @Input() private tableDataSource: any;
 
@@ -47,7 +47,6 @@ export class TableAsyncProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.ititHeaderTable();
     this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
@@ -70,9 +69,7 @@ export class TableAsyncProfileComponent implements OnInit {
     }
   }
 
-  private ititHeaderTable() {
 
-  }
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncProfileService.countPage;
@@ -109,7 +106,7 @@ export class TableAsyncProfileComponent implements OnInit {
 
   }
 
-  isAllSelected(): void {
+  public isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
     return numSelected === numRows;
@@ -119,7 +116,16 @@ export class TableAsyncProfileComponent implements OnInit {
   masterToggle(): void {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
+      this.dataSource.data.forEach(row =>  this.selection.select(row));
+  }
+
+  deleteProfile(): void {
+    const checkboxs = document.querySelectorAll('mat-table input');
+    for ( const checkbox of checkboxs ) {
+      if (checkbox.checked) {
+        console.log(checkbox.id);
+      }
+    }
   }
 
 }

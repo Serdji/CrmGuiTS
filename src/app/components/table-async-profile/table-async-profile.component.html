@@ -14,10 +14,11 @@
                       [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
       </mat-header-cell>
-      <mat-cell *matCellDef="let row">
-        <mat-checkbox (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(row) : null"
-                      [checked]="selection.isSelected(row)">
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox [id]="element.customerId"
+                      (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(element) : null"
+                      [checked]="selection.isSelected(element)">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
@@ -64,10 +65,10 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="idCustomer" stickyEnd>
+    <ng-container  matColumnDef="customerId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon [id]="element.idCustomer">create</mat-icon>
+        <mat-icon [id]="element.customerId">create</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -82,3 +83,8 @@
                [pageSizeOptions]="[10, 20, 50, 100, 200]"
                [showFirstLastButtons]="true">
 </mat-paginator>
+
+<button class="user__button" mat-raised-button (click)="deleteProfile()" color="warn">
+  Удалить
+  <mat-icon>delete</mat-icon>
+</button>
