@@ -11,6 +11,8 @@ import 'rxjs/add/observable/throw';
 import { catchError, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
+import { MatDialog } from '@angular/material';
+import { DialogComponent } from '../shared/dialog/dialog.component';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,6 +22,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private activityUser: ActivityUserService,
     private auth: AuthService,
+    private dialog: MatDialog,
   ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
@@ -47,6 +50,14 @@ export class AuthInterceptor implements HttpInterceptor {
                     this.counter = 0;
                   }
                 );
+            }
+            if ( err.status === 403 ) {
+              this.dialog.open( DialogComponent, {
+                data: {
+                  message: 'У вас недостаточно прав на это действие',
+                  status: 'error',
+                },
+              } );
             }
             return Observable.throw( err );
           } )

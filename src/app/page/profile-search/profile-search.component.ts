@@ -178,7 +178,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         }
 
         this.formProfileSearch.patchValue( newObjectForm );
-        this.serverRequest( value );
+        this.serverRequest( newObjectForm );
       }
     } );
   }
