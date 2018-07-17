@@ -8,7 +8,7 @@ import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
 import { Icount } from '../../interface/icount';
 import { Iprofile } from '../../interface/iprofile';
-import { TableAsyncService } from '../../components/table-async/table-async.service';
+import { TableAsyncProfileService } from '../../components/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -39,7 +39,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private profileSearchService: ProfileSearchService,
-    private tableAsyncService: TableAsyncService,
+    private tableAsyncProfileService: TableAsyncProfileService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -71,14 +71,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initTableAsync() {
-    this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
+    this.tableAsyncProfileService.subjectPage.subscribe( ( value: IpagPage ) => {
       const pageIndex = value.pageIndex * value.pageSize;
       const paramsAndCount = Object.assign( this.sendProfileParams,{ sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
       this.profileSearchService.getProfileSearch( paramsAndCount )
         .pipe(
           takeWhile( _ => this.isActive )
         )
-        .subscribe( ( profile: Iprofile ) => this.tableAsyncService.setTableDataSource( profile.result ) );
+        .subscribe( ( profile: Iprofile ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
     } );
   }
 
@@ -218,7 +218,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         takeWhile( _ => this.isActive )
       )
       .subscribe( ( profile ) => {
-        this.tableAsyncService.countPage = +profile.totalRows;
+        this.tableAsyncProfileService.countPage = +profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
       } );

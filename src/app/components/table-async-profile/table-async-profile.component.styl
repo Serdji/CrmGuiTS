@@ -1,0 +1,84 @@
+select = 70px
+firstName = 330px
+lastName = 330px
+middleName = 330px
+prefix = 70px
+gender = 55px
+dob = 135px
+idCustomer = 30px
+
+.table
+
+  &__row
+    white-space: nowrap;
+
+  &__cell
+    text-overflow: ellipsis;
+    display: inline-block;
+    min-height auto;
+    &._cp
+      cursor: pointer
+      padding: 16px;
+      &:hover
+        background: rgba(63,81,181,.12)
+
+.example-loading-shade
+  position: absolute;
+  top: 123px;
+  left: 0;
+  bottom: 80px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+.example-container
+  overflow: auto;
+
+
+mat-table
+  display: table;
+
+mat-header-cell,
+mat-cell
+  padding: 0 16px;
+  width: auto
+  flex: none;
+  box-sizing: border-box;
+
+
+.mat-column-idCustomer
+  width: idCustomer;
+
+.mat-column-select
+  width: select;
+
+.mat-column-firstName
+  width: firstName;
+
+.mat-column-lastName
+  width: lastName;
+
+.mat-column-middleName
+  width: middleName;
+
+.mat-column-prefix
+  width: prefix;
+
+.mat-column-gender
+  width: gender;
+
+.mat-column-dob
+  width: dob;
+
+.mat-table-sticky:first-child
+  border-right: 1px solid #e0e0e0;
+
+
+.mat-table-sticky:last-child
+  border-left: 1px solid #e0e0e0;
+
+mat-icon
+  cursor: pointer
