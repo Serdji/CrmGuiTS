@@ -27,14 +27,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public cityToOptions: Observable<Icity[]>;
   public trees: Itree[];
   public groups: Igroups[];
-  public profiles: Iprofile[];
+  public profiles: Iprofile;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
-  private paramsPaginatinDefault: any = { sorttype: 1, sortvalue: 'last_name' };
   private autDelay: number = 500;
   private autLength: number = 3;
   private isActive: boolean = true;
+  private sendProfileParams: IprofileSearch;
 
   constructor(
     private fb: FormBuilder,
@@ -73,13 +73,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initTableAsync() {
     this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
       const pageIndex = ( value.pageIndex + 1 ) * value.pageSize;
-      const paramsAndCount = Object.assign( this.paramsPaginatinDefault, { from: pageIndex, count: value.pageSize } );
+      const paramsAndCount = Object.assign( this.sendProfileParams,{ sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
       this.profileSearchService.getProfileSearch( paramsAndCount )
         .pipe(
-          takeWhile( _ => this.isActive ),
-          map( ( val: any ) => val.Data )
+          takeWhile( _ => this.isActive )
         )
-        .subscribe( ( profile: Iprofile[] ) => this.tableAsyncService.setTableDataSource( profile ) );
+        .subscribe( ( profile: Iprofile ) => this.tableAsyncService.setTableDataSource( profile.result ) );
     } );
   }
 
@@ -212,25 +211,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private serverRequest( params: IprofileSearch ) {
     this.isTableCard = true;
     this.isLoader = true;
-    Object.assign( params, this.paramsPaginatinDefault,{ from: 0, count: 10 } );
-    this.profileSearchService.getProfileSearchCount( params )
+    this.sendProfileParams = params;
+    Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+    this.profileSearchService.getProfileSearch( params )
       .pipe(
-        takeWhile( _ => this.isActive ),
-        map( ( val: Icount ) => val.Data.Id )
+        takeWhile( _ => this.isActive )
       )
-      .subscribe( ( count ) => {
-        this.tableAsyncService.countPage = +count;
-        this.profileSearchService.getProfileSearch( this.paramsPaginatinDefault )
-          .pipe(
-            takeWhile( _ => this.isActive ),
-            map( ( val: any ) => val.Data )
-          )
-          .subscribe(
-            ( profile: Iprofile[] ) => {
-              this.profiles = profile;
-              this.isLoader = false;
-            },
-          );
+      .subscribe( ( profile ) => {
+        this.tableAsyncService.countPage = +profile.totalRows;
+        this.profiles = profile.result;
+        this.isLoader = false;
       } );
   }
 
