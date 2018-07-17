@@ -61,6 +61,7 @@ export class TableAsyncComponent implements OnInit {
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
     this.paginator.page.subscribe( ( value: IpagPage ) => {
+      console.log(value);
       this.tableAsyncService.setPagPage( value );
       this.isLoadingResults = true;
     } );

@@ -72,7 +72,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private initTableAsync() {
     this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
-      const pageIndex = ( value.pageIndex + 1 ) * value.pageSize;
+      const pageIndex = value.pageIndex * value.pageSize;
       const paramsAndCount = Object.assign( this.sendProfileParams,{ sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
       this.profileSearchService.getProfileSearch( paramsAndCount )
         .pipe(
