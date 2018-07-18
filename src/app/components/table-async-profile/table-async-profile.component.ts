@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -10,13 +10,14 @@ import { TableAsyncProfileService } from './table-async-profile.service';
 import { IpagPage } from '../../interface/ipag-page';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-table-async-profile',
   templateUrl: './table-async-profile.component.html',
   styleUrls: [ './table-async-profile.component.styl' ],
 } )
-export class TableAsyncProfileComponent implements OnInit {
+export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [
     'select',
@@ -36,6 +37,8 @@ export class TableAsyncProfileComponent implements OnInit {
   public isLoadingResults: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
 
+  private isActive: boolean = true;
+
   @Input() private tableDataSource: any;
 
   @ViewChild( MatSort ) sort: MatSort;
@@ -44,6 +47,7 @@ export class TableAsyncProfileComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private tableAsyncProfileService: TableAsyncProfileService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -60,12 +64,7 @@ export class TableAsyncProfileComponent implements OnInit {
   openText( elem: HTMLElement ): void {
     if ( this.isChildMore( elem ) ) {
       const text = elem.innerText;
-      this.dialog.open( DialogComponent, {
-        data: {
-          message: text,
-          status: 'text',
-        },
-      } );
+      this.windowDialog( text, 'text' );
     }
   }
 
@@ -97,11 +96,22 @@ export class TableAsyncProfileComponent implements OnInit {
     } );
   }
 
+  private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status,
+        params,
+        card,
+      },
+    } );
+  }
+
   private isChildMore( parentElement ): boolean {
     const getElemCss = getComputedStyle( parentElement );
-    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight + getElemCss.paddingLeft, 10 );
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10) - parseInt( getElemCss.paddingLeft, 10);
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
-    return childrenWidth > parentWidth;
+    return childrenWidth >= parentWidth;
 
   }
 
@@ -119,7 +129,7 @@ export class TableAsyncProfileComponent implements OnInit {
   }
 
   editCreate( id ): void {
-    console.log( id );
+    this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
   deleteProfile(): void {
@@ -131,7 +141,15 @@ export class TableAsyncProfileComponent implements OnInit {
         if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
       }
     } );
-    console.log( arrayId );
+
+    if ( arrayId.length !== 0 ) {
+      const params = Object.assign( {}, { ids: arrayId } );
+      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params,'profiles' );
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }

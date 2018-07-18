@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Icity } from '../../interface/icity';
+import { Icity } from '../../../interface/icity';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
-import { Itree } from '../../interface/itree';
-import { Igroups } from '../../interface/igroups';
-import { Iprofile } from '../../interface/iprofile';
-import { TableAsyncProfileService } from '../../components/table-async-profile/table-async-profile.service';
-import { IpagPage } from '../../interface/ipag-page';
+import { Itree } from '../../../interface/itree';
+import { Igroups } from '../../../interface/igroups';
+import { Iprofiles } from '../../../interface/Iprofiles';
+import { TableAsyncProfileService } from '../../../components/table-async-profile/table-async-profile.service';
+import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IprofileSearch } from '../../interface/iprofile-search';
+import { IprofileSearch } from '../../../interface/iprofile-search';
 
 @Component( {
   selector: 'app-profile-search',
@@ -26,7 +26,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public cityToOptions: Observable<Icity[]>;
   public trees: Itree[];
   public groups: Igroups[];
-  public profiles: Iprofile;
+  public profiles: Iprofiles;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
@@ -50,6 +50,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initTree();
     this.initGroups();
     this.initTableAsync();
+    this.profileSearchService.subjectDeleteProfile.subscribe( _=> this.serverRequest(this.sendProfileParams));
   }
 
 
@@ -77,7 +78,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         .pipe(
           takeWhile( _ => this.isActive )
         )
-        .subscribe( ( profile: Iprofile ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
+        .subscribe( ( profile: Iprofiles ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
     } );
   }
 
