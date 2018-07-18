@@ -8,6 +8,10 @@ dob = 135px
 customerId = 50px
 
 .table
+  mat-icon
+    cursor: pointer
+    color: #696969;
+    margin-left: auto
 
   &__row
     white-space: nowrap;
@@ -21,6 +25,12 @@ customerId = 50px
       padding: 16px;
       &:hover
         background: rgba(63,81,181,.12)
+
+  &__button
+    margin-left: auto;
+    &-wrapper
+      display: flex;
+      width: 100%;
 
 .example-loading-shade
   position: absolute;
@@ -50,29 +60,31 @@ mat-cell
   box-sizing: border-box;
 
 
-.mat-column-customerId
-  width: customerId;
+.mat-column
 
-.mat-column-select
-  width: select;
+  &-customerId
+    width: customerId;
 
-.mat-column-firstName
-  width: firstName;
+  &-select
+    width: select;
 
-.mat-column-lastName
-  width: lastName;
+  &-firstName
+    width: firstName;
 
-.mat-column-middleName
-  width: middleName;
+  &-lastName
+    width: lastName;
 
-.mat-column-prefix
-  width: prefix;
+  &-middleName
+    width: middleName;
 
-.mat-column-gender
-  width: gender;
+  &-prefix
+    width: prefix;
 
-.mat-column-dob
-  width: dob;
+  &-gender
+    width: gender;
+
+  &-dob
+    width: dob;
 
 .mat-table-sticky:first-child
   border-right: 1px solid #e0e0e0;
@@ -81,7 +93,3 @@ mat-cell
 .mat-table-sticky:last-child
   border-left: 1px solid #e0e0e0;
 
-mat-icon
-  cursor: pointer
-  color: #696969;
-  margin-left: auto

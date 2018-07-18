@@ -68,7 +68,7 @@
     <ng-container  matColumnDef="customerId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon [id]="element.customerId">create</mat-icon>
+        <mat-icon [id]="element.customerId" (click)="editCreate( element.customerId )">create</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -84,7 +84,9 @@
                [showFirstLastButtons]="true">
 </mat-paginator>
 
-<button class="user__button" mat-raised-button (click)="deleteProfile()" color="warn">
-  Удалить
-  <mat-icon>delete</mat-icon>
-</button>
+<div class="table__button-wrapper">
+  <button class="table__button" mat-raised-button (click)="deleteProfile()" color="warn">
+    Удалить
+    <mat-icon>delete</mat-icon>
+  </button>
+</div>

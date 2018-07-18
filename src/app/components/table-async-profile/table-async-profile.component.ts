@@ -26,7 +26,7 @@ export class TableAsyncProfileComponent implements OnInit {
     'prefix',
     'gender',
     'dob',
-    'customerId'
+    'customerId',
   ];
 
 
@@ -34,7 +34,7 @@ export class TableAsyncProfileComponent implements OnInit {
   public isCp: boolean = false;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
-  public selection = new SelectionModel<any>(true, []);
+  public selection = new SelectionModel<any>( true, [] );
 
   @Input() private tableDataSource: any;
 
@@ -70,7 +70,6 @@ export class TableAsyncProfileComponent implements OnInit {
   }
 
 
-
   private initPaginator() {
     this.resultsLength = this.tableAsyncProfileService.countPage;
     this.paginator.page.subscribe( ( value: IpagPage ) => {
@@ -100,7 +99,7 @@ export class TableAsyncProfileComponent implements OnInit {
 
   private isChildMore( parentElement ): boolean {
     const getElemCss = getComputedStyle( parentElement );
-    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight +  getElemCss.paddingLeft, 10 );
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight + getElemCss.paddingLeft, 10 );
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
     return childrenWidth > parentWidth;
 
@@ -112,20 +111,27 @@ export class TableAsyncProfileComponent implements OnInit {
     return numSelected === numRows;
   }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
+
   masterToggle(): void {
     this.isAllSelected() ?
       this.selection.clear() :
-      this.dataSource.data.forEach(row =>  this.selection.select(row));
+      this.dataSource.data.forEach( row => this.selection.select( row ) );
+  }
+
+  editCreate( id ): void {
+    console.log( id );
   }
 
   deleteProfile(): void {
-    const checkboxs = document.querySelectorAll('mat-table input');
-    for ( const checkbox of checkboxs ) {
-      if (checkbox.checked) {
-        console.log(checkbox.id);
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
       }
-    }
+    } );
+    console.log( arrayId );
   }
 
 }
