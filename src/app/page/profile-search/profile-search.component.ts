@@ -50,6 +50,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initTree();
     this.initGroups();
     this.initTableAsync();
+    this.profileSearchService.subjectDeleteProfile.subscribe( _=> this.serverRequest(this.sendProfileParams));
   }
 
 

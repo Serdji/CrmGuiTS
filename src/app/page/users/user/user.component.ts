@@ -88,12 +88,13 @@ export class UserComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private windowDialog( messDialog: string, params: string, disableTimer: boolean = false ) {
+  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
         status: params,
-        loginId: this.loginId,
+        params: this.loginId,
+        card,
       },
     } );
     if ( !disableTimer ) {
@@ -120,7 +121,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(): void {
-    this.windowDialog( `Вы действительно хотите удалить пользователя "${ this.user.login }" ?`, 'delete', true );
+    this.windowDialog( `Вы действительно хотите удалить пользователя "${ this.user.login }" ?`, 'delete', 'user', true );
   }
 
   sendFormPassword(): void {

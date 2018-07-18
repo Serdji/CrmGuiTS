@@ -1,7 +1,8 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserService } from '../../page/users/user/user.service';
+import { ProfileSearchService } from '../../page/profile-search/profile-search.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -12,6 +13,7 @@ export class DialogComponent implements OnInit {
 
   constructor(
     private userService: UserService,
+    private profileSearchService: ProfileSearchService,
     private router: Router,
     public dialogRef: MatDialogRef<any>,
     @Inject( MAT_DIALOG_DATA ) public data: any
@@ -20,9 +22,17 @@ export class DialogComponent implements OnInit {
   ngOnInit(): void {}
 
   onYesClick(): void {
-    this.dialogRef.close();
-    this.userService.deleteUser( this.data.loginId ).subscribe();
-    this.router.navigate( [ '/crm/listusers/' ] );
+    switch ( this.data.card ) {
+      case 'user':
+        this.dialogRef.close();
+        this.userService.deleteUser( this.data.params ).subscribe();
+        this.router.navigate( [ '/crm/listusers/' ] );
+        break;
+      case 'profile':
+        this.dialogRef.close();
+        this.profileSearchService.deleteProfiles( this.data.params ).subscribe();
+        break;
+    }
   }
 
   onNoClick(): void {
