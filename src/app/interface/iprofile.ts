@@ -1,7 +1,7 @@
 export interface Iprofile {
   totalRows: string;
   result: {
-      idCustomer: number;
+      customerId: number;
       gender: string;
       prefix: string;
       lastName: string;
@@ -10,7 +10,7 @@ export interface Iprofile {
       dob: string;
     }[];
   filter: {
-    idCustomer: number;
+    customerId: number;
     gender: string;
     prefix: string;
     lastName: string;

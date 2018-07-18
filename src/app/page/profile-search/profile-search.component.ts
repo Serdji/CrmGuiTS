@@ -216,8 +216,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive )
       )
-      .subscribe( ( profile ) => {
-        this.tableAsyncProfileService.countPage = +profile.totalRows;
+      .subscribe(  profile => {
+        this.tableAsyncProfileService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
       } );
