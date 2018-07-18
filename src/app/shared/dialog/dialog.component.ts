@@ -2,7 +2,7 @@ import { Component, Inject, Input, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserService } from '../../page/users/user/user.service';
-import { ProfileSearchService } from '../../page/profile-search/profile-search.service';
+import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
 
 @Component( {
   selector: 'app-dialog',

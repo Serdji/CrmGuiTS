@@ -10,7 +10,7 @@ import { TableAsyncProfileService } from './table-async-profile.service';
 import { IpagPage } from '../../interface/ipag-page';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ProfileSearchService } from '../../page/profile-search/profile-search.service';
+import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
 import { takeWhile } from 'rxjs/operators';
 
 @Component( {

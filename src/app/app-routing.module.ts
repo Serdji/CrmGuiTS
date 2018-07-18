@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { LoginComponent } from './page/login/login.component';
 import { AuthGuard } from './auth.guard';
-import { ProfileSearchComponent } from './page/profile-search/profile-search.component';
+import { ProfileSearchComponent } from './page/profiles/profile-search/profile-search.component';
 import { LayoutComponent } from './shared/layout/layout.component';
 import { AddUserComponent } from './page/users/add-user/add-user.component';
 import { EntranceComponent } from './page/entrance/entrance.component';

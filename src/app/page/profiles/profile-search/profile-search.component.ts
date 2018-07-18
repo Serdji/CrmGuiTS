@@ -1,17 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Icity } from '../../interface/icity';
+import { Icity } from '../../../interface/icity';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
-import { Itree } from '../../interface/itree';
-import { Igroups } from '../../interface/igroups';
-import { Iprofile } from '../../interface/iprofile';
-import { TableAsyncProfileService } from '../../components/table-async-profile/table-async-profile.service';
-import { IpagPage } from '../../interface/ipag-page';
+import { Itree } from '../../../interface/itree';
+import { Igroups } from '../../../interface/igroups';
+import { Iprofile } from '../../../interface/iprofile';
+import { TableAsyncProfileService } from '../../../components/table-async-profile/table-async-profile.service';
+import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
-import { IprofileSearch } from '../../interface/iprofile-search';
+import { IprofileSearch } from '../../../interface/iprofile-search';
 
 @Component( {
   selector: 'app-profile-search',
