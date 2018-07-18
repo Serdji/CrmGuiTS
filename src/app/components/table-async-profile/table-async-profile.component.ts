@@ -10,8 +10,7 @@ import { TableAsyncProfileService } from './table-async-profile.service';
 import { IpagPage } from '../../interface/ipag-page';
 import { DialogComponent } from '../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
-import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
-import { takeWhile } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-table-async-profile',
@@ -48,6 +47,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private tableAsyncProfileService: TableAsyncProfileService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -129,7 +129,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   }
 
   editCreate( id ): void {
-    console.log( id );
+    this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
   deleteProfile(): void {

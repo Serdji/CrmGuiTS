@@ -13,7 +13,7 @@ import { ComponentsModule } from '../../../components/components.module';
     SharedModule,
     ComponentsModule
   ],
-  declarations: [ProfileSearchComponent],
+  declarations: [ ProfileSearchComponent ],
   providers: [ ProfileSearchService ]
 } )
 export class ProfileSearchModule {
