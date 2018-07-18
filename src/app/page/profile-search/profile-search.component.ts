@@ -6,9 +6,8 @@ import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
 import { Itree } from '../../interface/itree';
 import { Igroups } from '../../interface/igroups';
-import { Icount } from '../../interface/icount';
 import { Iprofile } from '../../interface/iprofile';
-import { TableAsyncService } from '../../components/table-async/table-async.service';
+import { TableAsyncProfileService } from '../../components/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -27,19 +26,19 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public cityToOptions: Observable<Icity[]>;
   public trees: Itree[];
   public groups: Igroups[];
-  public profiles: Iprofile[];
+  public profiles: Iprofile;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
-  private paramsPaginatinDefault: any = { sorttype: 1, sortvalue: 'last_name' };
   private autDelay: number = 500;
   private autLength: number = 3;
   private isActive: boolean = true;
+  private sendProfileParams: IprofileSearch;
 
   constructor(
     private fb: FormBuilder,
     private profileSearchService: ProfileSearchService,
-    private tableAsyncService: TableAsyncService,
+    private tableAsyncProfileService: TableAsyncProfileService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -71,15 +70,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initTableAsync() {
-    this.tableAsyncService.subjectPage.subscribe( ( value: IpagPage ) => {
-      const pageIndex = ( value.pageIndex + 1 ) * value.pageSize;
-      const paramsAndCount = Object.assign( this.paramsPaginatinDefault, { from: pageIndex, count: value.pageSize } );
+    this.tableAsyncProfileService.subjectPage.subscribe( ( value: IpagPage ) => {
+      const pageIndex = value.pageIndex * value.pageSize;
+      const paramsAndCount = Object.assign( this.sendProfileParams,{ sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
       this.profileSearchService.getProfileSearch( paramsAndCount )
         .pipe(
-          takeWhile( _ => this.isActive ),
-          map( ( val: any ) => val.Data )
+          takeWhile( _ => this.isActive )
         )
-        .subscribe( ( profile: Iprofile[] ) => this.tableAsyncService.setTableDataSource( profile ) );
+        .subscribe( ( profile: Iprofile ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
     } );
   }
 
@@ -179,7 +177,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         }
 
         this.formProfileSearch.patchValue( newObjectForm );
-        this.serverRequest( value );
+        this.serverRequest( newObjectForm );
       }
     } );
   }
@@ -212,25 +210,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private serverRequest( params: IprofileSearch ) {
     this.isTableCard = true;
     this.isLoader = true;
-    this.profileSearchService.getProfileSearchCount( params )
+    this.sendProfileParams = params;
+    Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+    this.profileSearchService.getProfileSearch( params )
       .pipe(
-        takeWhile( _ => this.isActive ),
-        map( ( val: Icount ) => val.Data.Id )
+        takeWhile( _ => this.isActive )
       )
-      .subscribe( ( count ) => {
-        this.tableAsyncService.countPage = +count;
-        Object.assign( this.paramsPaginatinDefault, { from: 0, count: 10 } );
-        this.profileSearchService.getProfileSearch( this.paramsPaginatinDefault )
-          .pipe(
-            takeWhile( _ => this.isActive ),
-            map( ( val: any ) => val.Data )
-          )
-          .subscribe(
-            ( profile: Iprofile[] ) => {
-              this.profiles = profile;
-              this.isLoader = false;
-            },
-          );
+      .subscribe(  profile => {
+        this.tableAsyncProfileService.countPage = profile.totalRows;
+        this.profiles = profile.result;
+        this.isLoader = false;
       } );
   }
 

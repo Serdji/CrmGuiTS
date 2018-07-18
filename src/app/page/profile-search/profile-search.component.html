@@ -146,18 +146,10 @@
       <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaserDisabled>
         <mat-card-title>{{profiles.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
-          <app-table-async
-            [tableHeader]="[
-              ['FirstName', 'Имя'],
-              ['LastName', 'Фамилия'],
-              ['Dob', 'Дата рождения'],
-              ['Sex', 'Пол'],
-              ['SumAmount', 'Общая сумма'],
-              ['Id', 'ID']
-            ]"
+          <app-table-async-profile
             [tableDataSource]="profiles"
           >
-          </app-table-async>
+          </app-table-async-profile>
       </ng-template>
     </mat-card>
   </div>

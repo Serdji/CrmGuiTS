@@ -11,6 +11,7 @@ import 'rxjs/add/observable/throw';
 import { catchError, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
+import { MatDialog } from '@angular/material';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -20,6 +21,7 @@ export class AuthInterceptor implements HttpInterceptor {
   constructor(
     private activityUser: ActivityUserService,
     private auth: AuthService,
+    private dialog: MatDialog,
   ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {

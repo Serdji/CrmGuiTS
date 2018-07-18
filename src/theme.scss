@@ -36,3 +36,18 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   background: $background;
   height: calc(100% - 64px);
 }
+
+::-webkit-scrollbar {
+  width: 7px;
+  height: 7px
+}
+
+::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.3);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 4px rgba(0,0,0,0.5);
+}
