@@ -96,7 +96,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private windowDialog( messDialog: string, status: string, params: any = '', card: string = '', disableTimer: boolean = false ) {
+  private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
@@ -105,20 +105,13 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
         card,
       },
     } );
-    if ( !disableTimer ) {
-      timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => {
-          this.dialog.closeAll();
-        } );
-    }
   }
 
   private isChildMore( parentElement ): boolean {
     const getElemCss = getComputedStyle( parentElement );
-    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight + getElemCss.paddingLeft, 10 );
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10) - parseInt( getElemCss.paddingLeft, 10);
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
-    return childrenWidth > parentWidth;
+    return childrenWidth >= parentWidth;
 
   }
 
@@ -151,7 +144,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params,'profile', true );
+      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params,'profile' );
     }
   }
 
