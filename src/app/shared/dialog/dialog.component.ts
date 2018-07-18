@@ -28,7 +28,7 @@ export class DialogComponent implements OnInit {
         this.userService.deleteUser( this.data.params ).subscribe();
         this.router.navigate( [ '/crm/listusers/' ] );
         break;
-      case 'profile':
+      case 'profiles':
         this.dialogRef.close();
         this.profileSearchService.deleteProfiles( this.data.params ).subscribe();
         break;

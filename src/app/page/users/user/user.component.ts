@@ -24,7 +24,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public edit = false;
 
   private loginId: number;
-  private isActive = true;
+  private isActive: boolean = true;
 
   constructor(
     private route: ActivatedRoute,

@@ -6,7 +6,7 @@ import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
 import { Itree } from '../../../interface/itree';
 import { Igroups } from '../../../interface/igroups';
-import { Iprofile } from '../../../interface/iprofile';
+import { Iprofiles } from '../../../interface/Iprofiles';
 import { TableAsyncProfileService } from '../../../components/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
@@ -26,7 +26,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public cityToOptions: Observable<Icity[]>;
   public trees: Itree[];
   public groups: Igroups[];
-  public profiles: Iprofile;
+  public profiles: Iprofiles;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
 
@@ -78,7 +78,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         .pipe(
           takeWhile( _ => this.isActive )
         )
-        .subscribe( ( profile: Iprofile ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
+        .subscribe( ( profile: Iprofiles ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
     } );
   }
 
