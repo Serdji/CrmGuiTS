@@ -1,0 +1,39 @@
+<div class="add-profile">
+  <mat-grid-list mat-grid-list cols="1" rowHeight="550px">
+    <mat-grid-tile>
+      <mat-card class="add-profile__card">
+        <mat-card-title>Добавить пассажира</mat-card-title>
+        <form class="add-profile__form" [formGroup]="formProfile">
+          <mat-form-field class="add-profile__input">
+            <input matInput formControlName="firstName" placeholder="Имя">
+          </mat-form-field>
+          <mat-form-field class="add-profile__input">
+            <input matInput formControlName="lastName" placeholder="Фамилия">
+          </mat-form-field>
+          <mat-form-field class="add-profile__input">
+            <input matInput formControlName="middleName" placeholder="Второе имя">
+          </mat-form-field>
+          <mat-form-field class="add-profile__input">
+            <input matInput formControlName="prefix" placeholder="Префикс">
+          </mat-form-field>
+          <mat-form-field class="add-profile__input">
+            <mat-select formControlName="gender" placeholder="Пол">
+              <mat-option></mat-option>
+              <mat-option value="m">m</mat-option>
+              <mat-option value="f">f</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="add-profile__input">
+            <input matInput formControlName="dob" placeholder="дд.мм.гггг" [matDatepicker]="dob">
+            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dob></mat-datepicker>
+          </mat-form-field>
+          <div class="add-profile__button-wrapper">
+            <button class="add-profile__button _left-button" mat-raised-button (click)="sendForm()" color="primary">Добавить пользователя</button>
+            <button class="add-profile__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
+          </div>
+        </form>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+</div>

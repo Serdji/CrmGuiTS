@@ -33,7 +33,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initProfile();
-    this.initFormUser();
+    this.initFormProfile();
   }
 
   private initProfile() {
@@ -49,7 +49,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initFormUser() {
+  private initFormProfile() {
     this.updateProfileForm = this.fb.group( {
       gender: '',
       prefix: '',

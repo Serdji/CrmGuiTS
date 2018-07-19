@@ -8,10 +8,10 @@ import { retry } from 'rxjs/operators';
 @Injectable()
 export class AddUserService {
 
-  constructor( private httpQuery: HttpClient ) { }
+  constructor( private http: HttpClient ) { }
 
   createUser( params: IcreateUser ): Observable<any> {
-    return this.httpQuery.post( environment.crmApi + '/admin/user', params ).pipe( retry( 10 ) );
+    return this.http.post( environment.crmApi + '/admin/user', params ).pipe( retry( 10 ) );
   }
 
 }
