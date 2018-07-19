@@ -9,6 +9,7 @@ import { EntranceComponent } from './page/entrance/entrance.component';
 import { ListUsersComponent } from './page/users/list-users/list-users.component';
 import { UserComponent } from './page/users/user/user.component';
 import { ProfileComponent } from './page/profiles/profile/profile.component';
+import { AddProfileComponent } from './page/profiles/add-profile/add-profile.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -23,6 +24,7 @@ const routes: Routes = [
         { path: 'user/:id', component: UserComponent },
         { path: 'profilesearch', component: ProfileSearchComponent },
         { path: 'profile/:id', component: ProfileComponent },
+        { path: 'addprofile', component: AddProfileComponent },
       ],
     },
   ]
