@@ -85,7 +85,7 @@
 </mat-paginator>
 
 <div class="table__button-wrapper">
-  <button class="table__button" mat-raised-button (click)="deleteProfile()" [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
+  <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteProfile()" [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
     Удалить
     <mat-icon>delete</mat-icon>
   </button>

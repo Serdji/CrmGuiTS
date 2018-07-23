@@ -6,11 +6,13 @@ import { TableAsyncComponent } from './table-async/table-async.component';
 import { TableAsyncService } from './table-async/table-async.service';
 import { TableAsyncProfileComponent } from './table-async-profile/table-async-profile.component';
 import { TableAsyncProfileService } from './table-async-profile/table-async-profile.service';
+import { DirectivesModule } from '../directives/directives.module';
 
 @NgModule({
   imports: [
     CommonModule,
-    SharedModule
+    SharedModule,
+    DirectivesModule,
   ],
   declarations: [
     TableExampleComponent,
@@ -30,5 +32,4 @@ import { TableAsyncProfileService } from './table-async-profile/table-async-prof
 export class ComponentsModule {
   static forRoot(): ModuleWithProviders {
     return { ngModule: SharedModule };
-  }
-}
+  }}

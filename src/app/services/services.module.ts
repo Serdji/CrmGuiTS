@@ -4,7 +4,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ActivityUserService } from './activity-user.service';
 import { AuthInterceptor } from './auth-interceptor';
 import { AuthService } from './auth.service';
-import { AuthGuard } from '../auth.guard';
+import { AuthGuard } from '../guards/auth.guard';
 import { ParsTokenService } from './pars-token.service';
 
 @NgModule({
