@@ -25,7 +25,7 @@ export class AccessRightsProfileGuard implements CanActivate {
     this.parsTokenService.parsToken = this.token.accessToken;
     const claims = this.parsTokenService.parsToken.Claims;
     return new Promise( resolve => {
-      if ( claims.includes( 'profile:update' ) ) {
+      if ( claims.includes( 'customers:update' ) ) {
         resolve( true );
       } else {
         this.dialog.open( DialogComponent, {
