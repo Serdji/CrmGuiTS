@@ -1,6 +1,6 @@
 <mat-grid-list mat-grid-list cols="1" rowHeight="550px">
    <mat-grid-tile>
-    <mat-card class="add-user__card">
+    <mat-card appAccessRights="users:update" appAccessMessage="true" class="add-user__card">
       <mat-card-title>Добавить пользователя</mat-card-title>
       <form class="add-user__form" [formGroup]="formUser">
         <mat-form-field class="add-user__input">

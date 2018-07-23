@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card appAccessRights="users:read" appAccessMessage="true">
   <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
   <ng-template #loaserDisabled>
     <mat-card-title>Список всех пользователей</mat-card-title>

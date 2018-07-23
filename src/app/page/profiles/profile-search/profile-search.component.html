@@ -1,6 +1,6 @@
 <div class="profile-search">
   <form class="profile-search__form" [formGroup]="formProfileSearch">
-    <mat-grid-list appAccessRights="123" cols="4" rowHeight="300px">
+    <mat-grid-list cols="4" rowHeight="300px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
@@ -130,7 +130,7 @@
       </mat-grid-tile>
 
       <div class="profile-search__button-wrapper">
-        <button class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+        <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
           <mat-icon>search</mat-icon>
           Искать
         </button>
@@ -141,7 +141,7 @@
   </form>
 
   <div class="profile-search__table">
-    <mat-card *ngIf="isTableCard">
+    <mat-card appAccessRights="customers:read" appAccessMessage="true" *ngIf="isTableCard">
       <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaserDisabled>
         <mat-card-title>{{profiles.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>

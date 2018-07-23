@@ -1,7 +1,7 @@
 <div class="add-profile">
   <mat-grid-list mat-grid-list cols="1" rowHeight="550px">
     <mat-grid-tile>
-      <mat-card class="add-profile__card">
+      <mat-card appAccessRights="customers:update" appAccessMessage="true" class="add-profile__card">
         <mat-card-title>Добавить пассажира</mat-card-title>
         <form class="add-profile__form" [formGroup]="formProfile">
           <mat-form-field class="add-profile__input">
