@@ -8,6 +8,7 @@ import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { takeWhile } from 'rxjs/operators';
+import { ActivityUserService } from '../../../services/activity-user.service';
 
 @Component( {
   selector: 'app-user',
@@ -31,6 +32,7 @@ export class UserComponent implements OnInit, OnDestroy {
     private userService: UserService,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private activityUserService: ActivityUserService,
   ) { }
 
   ngOnInit() {
@@ -142,7 +144,20 @@ export class UserComponent implements OnInit, OnDestroy {
     const params = Object.assign( {}, { loginId: +this.loginId, ClaimPermissions: progressArray } );
     this.userService.updateClaimPermissions( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.windowDialog( 'Права пользователя изменены', 'ok' ) );
+      .subscribe( _ => {
+        if ( this.user.login === localStorage.getItem('login') ) {
+          this.windowDialog( 'Вы изменили права для своей учетной записи. Что бы права вступили в силу Вам нужно зайти в приложение зонного. Через несколько секунд Вы будите перекинуты на страницу авторизации!', 'error', '',true );
+          timer( 5000 )
+            .pipe( takeWhile( _ => this.isActive ) )
+            .subscribe( _ => {
+              this.dialog.closeAll();
+              this.activityUserService.logout();
+              this.edit = false;
+            } );
+        } else {
+          this.windowDialog( 'Права пользователя изменены', 'ok' );
+        }
+      } );
   }
 
   toggleEdit(): void {

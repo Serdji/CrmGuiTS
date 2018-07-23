@@ -71,7 +71,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId } );
       Object.assign( params, { dob: moment( this.updateProfileForm.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params ).subscribe( ( profile: Iprofile ) => {
-        this.windowDialog( 'Пользователь успешно изменен', 'ok' );
+        this.windowDialog( 'Пассажир успешно изменен', 'ok' );
         this.profile = profile;
       } );
     }

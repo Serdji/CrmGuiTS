@@ -5,13 +5,15 @@ import { ProfileSearchService } from './profile-search.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule( {
   imports: [
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
-    ComponentsModule
+    ComponentsModule,
+    DirectivesModule,
   ],
   declarations: [ ProfileSearchComponent ],
   providers: [ ProfileSearchService ]

@@ -36,6 +36,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   public resultsLength: number;
   public isLoadingResults: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
+  public isDisabled: boolean;
 
   private isActive: boolean = true;
 
@@ -109,7 +110,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   private isChildMore( parentElement ): boolean {
     const getElemCss = getComputedStyle( parentElement );
-    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10) - parseInt( getElemCss.paddingLeft, 10);
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 ) - parseInt( getElemCss.paddingLeft, 10 );
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
     return childrenWidth >= parentWidth;
 
@@ -144,8 +145,12 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params,'profiles' );
+      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params, 'profiles' );
     }
+  }
+
+  disabledCheckbox( eventData ): void {
+    this.isDisabled = eventData;
   }
 
   ngOnDestroy(): void {
