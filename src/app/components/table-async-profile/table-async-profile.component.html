@@ -9,13 +9,21 @@
 
     <ng-container matColumnDef="select" sticky>
       <mat-header-cell *matHeaderCellDef>
-        <mat-checkbox (change)="$event ? masterToggle() : null"
+        <mat-checkbox appAccessRights="customers:update"
+                      appAccessDisabled="true"
+                      [disabled]="isDisabled"
+                      (emitAccessDisabled)="disabledCheckbox($event)"
+                      (change)="$event ? masterToggle() : null"
                       [checked]="selection.hasValue() && isAllSelected()"
                       [indeterminate]="selection.hasValue() && !isAllSelected()">
         </mat-checkbox>
       </mat-header-cell>
       <mat-cell *matCellDef="let element">
-        <mat-checkbox [id]="element.customerId"
+        <mat-checkbox appAccessRights="customers:update"
+                      appAccessDisabled="true"
+                      (emitAccessDisabled)="disabledCheckbox($event)"
+                      [disabled]="isDisabled"
+                      [id]="element.customerId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
                       [checked]="selection.isSelected(element)">

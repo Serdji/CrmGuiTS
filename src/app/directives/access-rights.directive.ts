@@ -1,6 +1,7 @@
-import { Directive, ElementRef, Input, OnInit, Renderer2 } from '@angular/core';
+import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { ParsTokenService } from '../services/pars-token.service';
 import { Itoken } from '../interface/itoken';
+import { timer } from 'rxjs';
 
 @Directive( {
   selector: '[appAccessRights]'
@@ -9,6 +10,9 @@ export class AccessRightsDirective implements OnInit {
 
   @Input() appAccessRights: string;
   @Input() appAccessMessage: boolean;
+  @Input() appAccessDisabled: boolean;
+
+  @Output() emitAccessDisabled: EventEmitter<number> = new EventEmitter<number>();
 
   private token: Itoken = JSON.parse( localStorage.getItem( 'paramsToken' ) );
 
@@ -36,9 +40,13 @@ export class AccessRightsDirective implements OnInit {
           const div = this.renderer.createElement( 'div' );
           const text = this.renderer.createText( 'У Вас недостаточно прав на это действие!' );
 
-          this.renderer.setStyle(div, 'color', 'red');
+          this.renderer.setStyle( div, 'color', 'red' );
           this.renderer.appendChild( div, text );
           this.renderer.appendChild( this.elem.nativeElement, div );
+
+        } else if ( this.appAccessDisabled ) {
+          this.emitAccessDisabled.emit( true );
+
         } else {
           this.elem.nativeElement.remove();
         }
