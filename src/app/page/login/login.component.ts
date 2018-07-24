@@ -43,7 +43,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, {
       updateOn: 'submit',
     } );
-    const AirlineCode =  localStorage.getItem( 'AirlineCode' );
+    const AirlineCode = localStorage.getItem( 'AirlineCode' );
     if ( AirlineCode ) {
       this.formLogin.get( 'AirlineCode' ).patchValue( AirlineCode );
     }
@@ -63,6 +63,20 @@ export class LoginComponent implements OnInit, OnDestroy {
     } );
   }
 
+  private initFieldTable() {
+    if ( !localStorage.getItem( 'tableAsyncProfile' ) ) {
+      const defaultFieldTable: string[] = [
+        'firstName',
+        'lastName',
+        'middleName',
+        'prefix',
+        'gender',
+        'dob',
+      ];
+      localStorage.setItem( 'tableAsyncProfile', JSON.stringify( defaultFieldTable ) );
+    }
+  }
+
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
       localStorage.setItem( 'AirlineCode', this.formLogin.get( 'AirlineCode' ).value );
@@ -70,6 +84,7 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
           ( value ) => {
+            this.initFieldTable();
             this.parsTokenService.parsToken = value.accessToken;
             localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
