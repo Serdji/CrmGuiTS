@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { SettingsService } from './settings.service';
+import { Subscription } from 'rxjs';
 
 @Component( {
   selector: 'app-settings',
@@ -9,7 +9,11 @@ import { SettingsService } from './settings.service';
 } )
 export class SettingsComponent implements OnInit {
 
+  private subs = new Subscription();
+
+  public MANY_ITEMS: string = 'MANY_ITEMS';
   public formTableAsyncProfile: FormGroup;
+  public itemsTableAsyncProfile: string[] = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ));
 
   constructor(
     private fb: FormBuilder,
@@ -33,7 +37,7 @@ export class SettingsComponent implements OnInit {
   }
 
   private isParamsTableAsyncProfile() {
-    for ( const checkbox of JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) ) ) {
+    for ( const checkbox of this.itemsTableAsyncProfile ) {
       this.formTableAsyncProfile.patchValue( { [ checkbox ]: true } );
     }
   }

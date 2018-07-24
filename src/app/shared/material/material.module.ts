@@ -22,6 +22,8 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatListModule } from '@angular/material/list';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 
@@ -50,6 +52,8 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatTabsModule,
+    MatDividerModule,
+    MatListModule,
   ],
   exports: [
     MatToolbarModule,
@@ -74,6 +78,8 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatProgressSpinnerModule,
     MatExpansionModule,
     MatTabsModule,
+    MatDividerModule,
+    MatListModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
