@@ -12,7 +12,7 @@ export class AccessRightsDirective implements OnInit {
   @Input() appAccessMessage: boolean;
   @Input() appAccessDisabled: boolean;
 
-  @Output() emitAccessDisabled: EventEmitter<number> = new EventEmitter<number>();
+  @Output() emitAccessDisabled: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private token: Itoken = JSON.parse( localStorage.getItem( 'paramsToken' ) );
 
