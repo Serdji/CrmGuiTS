@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { LoginService } from './login.service';
 import { ParsTokenService } from '../../services/pars-token.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Component( {
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private loginService: LoginService,
     private parsTokenService: ParsTokenService,
+    private settingsService: SettingsService,
   ) { }
 
   ngOnInit(): void {
@@ -63,20 +65,6 @@ export class LoginComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private initFieldTable() {
-    if ( !localStorage.getItem( 'tableAsyncProfile' ) ) {
-      const defaultFieldTable: string[] = [
-        'firstName',
-        'lastName',
-        'middleName',
-        'prefix',
-        'gender',
-        'dob',
-      ];
-      localStorage.setItem( 'tableAsyncProfile', JSON.stringify( defaultFieldTable ) );
-    }
-  }
-
   sendForm(): void {
     if ( !this.formLogin.invalid ) {
       localStorage.setItem( 'AirlineCode', this.formLogin.get( 'AirlineCode' ).value );
@@ -84,10 +72,10 @@ export class LoginComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
           ( value ) => {
-            this.initFieldTable();
             this.parsTokenService.parsToken = value.accessToken;
             localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
+            if ( !localStorage.getItem( 'tableAsyncProfile' ) ) localStorage.setItem( 'tableAsyncProfile', JSON.stringify( this.settingsService.defaultFieldTable ) );
             if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
           },
           _ => this.isErrorAuth = true
