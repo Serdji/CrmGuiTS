@@ -8,12 +8,7 @@
         <div class="setting__content">
           <h3 class="setting__header">Отображение сталбцов</h3>
           <form class="setting__form" [formGroup]="formTableAsyncProfile">
-            <mat-checkbox class="setting__checkbox" formControlName="firstName">Имя</mat-checkbox>
-            <mat-checkbox class="setting__checkbox" formControlName="lastName">Фамилия</mat-checkbox>
-            <mat-checkbox class="setting__checkbox" formControlName="middleName">Второе имя</mat-checkbox>
-            <mat-checkbox class="setting__checkbox" formControlName="prefix">Префикс</mat-checkbox>
-            <mat-checkbox class="setting__checkbox" formControlName="gender">Пол</mat-checkbox>
-            <mat-checkbox class="setting__checkbox" formControlName="dob">Дата</mat-checkbox>
+            <mat-checkbox class="setting__checkbox" *ngFor='let text of defaultCheckbox' formControlName="{{text}}">{{text | fieldTranslation}}</mat-checkbox>
           </form>
         </div>
       </mat-grid-tile>

@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription, timer } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
 import { takeWhile } from 'rxjs/operators';
+import { SettingsService } from './settings.service';
 
 @Component( {
   selector: 'app-settings',
@@ -16,12 +17,14 @@ export class SettingsComponent implements OnInit, OnDestroy {
   public MANY_ITEMS: string = 'MANY_ITEMS';
   public formTableAsyncProfile: FormGroup;
   public itemsTableAsyncProfile: string[] = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) );
+  public defaultCheckbox: string[];
 
   private isActive: boolean = true;
 
   constructor(
     private fb: FormBuilder,
     private dragulaService: DragulaService,
+    private settingsService: SettingsService,
   ) {}
 
   ngOnInit(): void {
@@ -30,6 +33,7 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   private initFormTableAsyncProfile() {
+    this.defaultCheckbox = this.settingsService.defaultFieldTableAsyncProfiledTable;
     this.formTableAsyncProfile = this.fb.group( {
       'firstName': '',
       'lastName': '',
