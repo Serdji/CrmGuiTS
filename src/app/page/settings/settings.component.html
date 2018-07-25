@@ -6,7 +6,7 @@
     <mat-grid-list cols="2" rowHeight="350px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <div class="setting__content">
-          <h3 class="setting__header">Настройка сталбцов</h3>
+          <h3 class="setting__header">Отображение сталбцов</h3>
           <form class="setting__form" [formGroup]="formTableAsyncProfile">
             <mat-checkbox class="setting__checkbox" formControlName="firstName">Имя</mat-checkbox>
             <mat-checkbox class="setting__checkbox" formControlName="lastName">Фамилия</mat-checkbox>
@@ -20,7 +20,8 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <div class="setting__content">
           <h3 class="setting__header">Порядок сталбцов</h3>
-          <mat-list class='setting__container' [dragula]="MANY_ITEMS" [(dragulaModel)]='itemsTableAsyncProfile'>
+          <span>{{itemsTableAsyncProfile}}</span>
+          <mat-list class='setting__container' dragula="MANY_ITEMS" [(dragulaModel)]='itemsTableAsyncProfile'>
             <mat-list-item class='setting__item' *ngFor='let text of itemsTableAsyncProfile' [innerHtml]='text'></mat-list-item>
           </mat-list>
         </div>

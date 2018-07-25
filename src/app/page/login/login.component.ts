@@ -75,7 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.parsTokenService.parsToken = value.accessToken;
             localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
-            if ( !localStorage.getItem( 'tableAsyncProfile' ) ) localStorage.setItem( 'tableAsyncProfile', JSON.stringify( this.settingsService.defaultFieldTable ) );
+            if ( !localStorage.getItem( 'tableAsyncProfile' ) ) localStorage.setItem( 'tableAsyncProfile', JSON.stringify( this.settingsService.defaultFieldTableAsyncProfiledTable ) );
             if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
           },
           _ => this.isErrorAuth = true

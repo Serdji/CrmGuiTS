@@ -7,7 +7,7 @@ export class SettingsService {
 
   constructor() { }
 
-  get defaultFieldTable(): string[] {
+  get defaultFieldTableAsyncProfiledTable(): string[] {
     return [
       'firstName',
       'lastName',
