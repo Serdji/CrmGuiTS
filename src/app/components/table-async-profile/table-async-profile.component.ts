@@ -19,17 +19,7 @@ import { Router } from '@angular/router';
 } )
 export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
-  public displayedColumns: string[] = [
-    'select',
-    'firstName',
-    'lastName',
-    'middleName',
-    'prefix',
-    'gender',
-    'dob',
-    'customerId',
-  ];
-
+  public displayedColumns: string[];
 
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
@@ -55,6 +45,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
+    this.initDisplayedColumns();
   }
 
 
@@ -67,6 +58,12 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
       const text = elem.innerText;
       this.windowDialog( text, 'text' );
     }
+  }
+
+  private initDisplayedColumns() {
+    this.displayedColumns = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) );
+    this.displayedColumns.unshift( 'select' );
+    this.displayedColumns.push( 'customerId' );
   }
 
 

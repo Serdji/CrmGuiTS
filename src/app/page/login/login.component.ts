@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { LoginService } from './login.service';
 import { ParsTokenService } from '../../services/pars-token.service';
+import { SettingsService } from '../settings/settings.service';
 
 @Component( {
   selector: 'app-login',
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     private router: Router,
     private loginService: LoginService,
     private parsTokenService: ParsTokenService,
+    private settingsService: SettingsService,
   ) { }
 
   ngOnInit(): void {
@@ -43,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     }, {
       updateOn: 'submit',
     } );
-    const AirlineCode =  localStorage.getItem( 'AirlineCode' );
+    const AirlineCode = localStorage.getItem( 'AirlineCode' );
     if ( AirlineCode ) {
       this.formLogin.get( 'AirlineCode' ).patchValue( AirlineCode );
     }
@@ -73,6 +75,7 @@ export class LoginComponent implements OnInit, OnDestroy {
             this.parsTokenService.parsToken = value.accessToken;
             localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
+            if ( !localStorage.getItem( 'tableAsyncProfile' ) ) localStorage.setItem( 'tableAsyncProfile', JSON.stringify( this.settingsService.getDefaultFieldTableAsyncProfiledTable() ) );
             if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
           },
           _ => this.isErrorAuth = true
