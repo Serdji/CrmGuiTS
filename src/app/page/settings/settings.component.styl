@@ -22,6 +22,10 @@
   &__container
     padding-top: 0;
 
+    .setting__item-wrapper
+      position: static;
+      margin-top: 0
+
   &__checkbox
     margin-right: 20px;
     margin-bottom: 20px;
@@ -42,21 +46,36 @@
     display: block;
 
   &__item
-    display: flex !important;
+    cursor: pointer;
+    width: 100%;
+    display: flex;
     flex-direction: row;
     align-items: center;
-    box-sizing: border-box;
-    padding: 0 16px;
-    position: relative;
-    height: inherit;
-    cursor: pointer;
     border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+    .mat-icon
+      margin-left: auto
+      cursor: pointer;
+      color: #696969;
 
     &-wrapper
       width: 100%;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      position: absolute;
+      top: 50%;
+      margin-top: -12px
+
+      .mat-icon
+        margin-left: auto
+        cursor: pointer;
+        color: #696969;
+
 
 .gu-mirror
   border-top: 1px solid rgba(0, 0, 0, 0.12);
+
 
 figure
   align-items: start;
