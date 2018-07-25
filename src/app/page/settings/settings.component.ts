@@ -33,15 +33,8 @@ export class SettingsComponent implements OnInit, OnDestroy {
   }
 
   private initFormTableAsyncProfile() {
-    this.defaultCheckbox = this.settingsService.defaultFieldTableAsyncProfiledTable;
-    this.formTableAsyncProfile = this.fb.group( {
-      'firstName': '',
-      'lastName': '',
-      'middleName': '',
-      'prefix': '',
-      'gender': '',
-      'dob': '',
-    } );
+    this.defaultCheckbox = this.settingsService.getDefaultFieldTableAsyncProfiledTable( 'arr' );
+    this.formTableAsyncProfile = this.fb.group( this.settingsService.getDefaultFieldTableAsyncProfiledTable( 'obj' ) );
     this.isParamsTableAsyncProfile();
   }
 
@@ -73,9 +66,9 @@ export class SettingsComponent implements OnInit, OnDestroy {
       )
       .subscribe( ( { el, target, source, sourceModel } ) => {
         if ( this.itemsTableAsyncProfile.length !== sourceModel.length ) {
-          timer(1).subscribe( _ =>  this.itemsTableAsyncProfile = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) ));
+          timer( 1 ).subscribe( _ => this.itemsTableAsyncProfile = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) ) );
         } else {
-          this.itemsTableAsyncProfile = sourceModel;
+          this.itemsTableAsyncProfile = sourceModel.filter( m => m !== null );
           localStorage.setItem( 'tableAsyncProfile', JSON.stringify( sourceModel ) );
         }
       } )
