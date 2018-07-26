@@ -28,7 +28,7 @@ const routes: Routes = [
         { path: 'profilesearch', component: ProfileSearchComponent },
         { path: 'profile/:id', component: ProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
         { path: 'addprofile', component: AddProfileComponent },
-        { path: 'settings', component: FormTableAsyncProfileSettingsComponent },
+        { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
       ],
     },
   ]

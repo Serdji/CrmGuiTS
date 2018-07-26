@@ -1,5 +1,5 @@
 <div class="entrance">
-  <mat-grid-list cols="4" rowHeight="300px">
+  <mat-grid-list cols="5" rowHeight="300px">
 
     <mat-grid-tile [colspan]="1" [rowspan]="1">
     </mat-grid-tile>
@@ -12,6 +12,8 @@
     <mat-grid-tile [colspan]="1" [rowspan]="1">
     </mat-grid-tile>
 
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
     <div *ngFor="let card of cards">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="entrance__card" (click)="openLink()" routerLink='{{ card.link[0].url }}'>
@@ -22,6 +24,9 @@
         </mat-card>
       </mat-grid-tile>
     </div>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+    </mat-grid-tile>
+
 
   </mat-grid-list>
 </div>
