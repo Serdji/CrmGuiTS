@@ -3,14 +3,14 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subscription, timer } from 'rxjs';
 import { DragulaService } from 'ng2-dragula';
 import { takeWhile } from 'rxjs/operators';
-import { SettingsService } from './settings.service';
+import { SettingsService } from '../settings.service';
 
 @Component( {
-  selector: 'app-settings',
-  templateUrl: './settings.component.html',
-  styleUrls: [ './settings.component.styl' ]
+  selector: 'app-form-table-async-profile-settings',
+  templateUrl: './form-table-async-profile-settings.component.html',
+  styleUrls: [ './form-table-async-profile-settings.component.styl' ]
 } )
-export class SettingsComponent implements OnInit, OnDestroy {
+export class FormTableAsyncProfileSettingsComponent implements OnInit, OnDestroy {
 
   private subs = new Subscription();
 
