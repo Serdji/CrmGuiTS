@@ -12,7 +12,7 @@ import { ProfileComponent } from './page/profiles/profile/profile.component';
 import { AddProfileComponent } from './page/profiles/add-profile/add-profile.component';
 import { AccessRightsUserGuard } from './guards/access-rights-user.guard';
 import { AccessRightsProfileGuard } from './guards/access-rights-profile.guard';
-import { SettingsComponent } from './page/settings/settings.component';
+import { FormTableAsyncProfileSettingsComponent } from './page/settings/form-table-async-profile-settings/form-table-async-profile-settings.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -28,7 +28,7 @@ const routes: Routes = [
         { path: 'profilesearch', component: ProfileSearchComponent },
         { path: 'profile/:id', component: ProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
         { path: 'addprofile', component: AddProfileComponent },
-        { path: 'settings', component: SettingsComponent },
+        { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
       ],
     },
   ]

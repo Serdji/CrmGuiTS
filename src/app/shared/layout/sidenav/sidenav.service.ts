@@ -29,6 +29,13 @@ export class SidenavService {
           { url: '/crm/addprofile', title: 'Добавить пассажира' },
           { url: '/crm/profilesearch', title: 'Поиск пассажира' }
         ]
+      },
+      {
+        name: 'Настройки',
+        icon: 'settings',
+        link: [
+          { url: '/crm/form-table-async-profile-settings', title: 'Таблице пассажиров' },
+        ]
       }
     ];
   }
