@@ -34,7 +34,7 @@ export class SidenavService {
         name: 'Настройки',
         icon: 'settings',
         link: [
-          { url: '/crm/form-table-async-profile-settings', title: 'Таблице пассажиров' },
+          { url: '/crm/form-table-async-profile-settings', title: 'Таблицы пассажиров' },
         ]
       }
     ];
