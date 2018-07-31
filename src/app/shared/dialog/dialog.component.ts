@@ -3,7 +3,7 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Router } from '@angular/router';
 import { UserService } from '../../page/users/user/user.service';
 import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
-import { ProfileService } from '../../page/profiles/profile/profile/profile.service';
+import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile.service';
 
 @Component( {
   selector: 'app-dialog',

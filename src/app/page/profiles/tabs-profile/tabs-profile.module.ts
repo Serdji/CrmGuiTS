@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from '../../../shared/shared.module';
+import { TabsProfileComponent } from './tabs-profile.component';
 
 @NgModule( {
   imports: [
@@ -11,8 +12,8 @@ import { SharedModule } from '../../../shared/shared.module';
     SharedModule,
     ProfileModule
   ],
-  declarations: [ ],
+  declarations: [ TabsProfileComponent],
   providers: [ ]
 } )
-export class TabsModule {
+export class TabsProfileModule {
 }

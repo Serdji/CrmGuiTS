@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ProfileService } from '../profile/profile/profile.service';
 import { MatDialog } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
@@ -9,6 +8,7 @@ import { takeWhile } from 'rxjs/operators';
 import { Iprofile } from '../../../interface/iprofile';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { ProfileService } from '../tabs-profile/profile/profile.service';
 
 @Component( {
   selector: 'app-add-profile',
