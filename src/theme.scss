@@ -33,9 +33,12 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
 // `.unicorn-dark-theme` will be affected by this alternate dark theme instead of the default theme.
 .unicorn-dark-theme {
   @include mat-sidenav-theme($dark-theme);
-  @include mat-tabs-theme($dark-theme);
   background: $background;
   height: calc(100% - 64px);
+}
+
+.tabs-dark-theme {
+  @include mat-tabs-theme($dark-theme);
 }
 
 ::-webkit-scrollbar {

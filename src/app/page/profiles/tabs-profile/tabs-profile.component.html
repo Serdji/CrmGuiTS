@@ -1,12 +1,10 @@
-<div class="tabs-profile mat-elevation-z4">
+<div class="tabs-profile tabs-dark-theme mat-elevation-z4">
   <mat-tab-group backgroundColor="primary" color="accent">
     <mat-tab label="Профиль">
       <app-profile [id]="profileId"></app-profile>
     </mat-tab>
     <mat-tab label="Контакты">
-      <div class="example-large-box mat-elevation-z4">
-        Large content
-      </div>
+      <app-contact></app-contact>
     </mat-tab>
   </mat-tab-group>
 </div>
