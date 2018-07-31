@@ -8,7 +8,7 @@ import { AddUserComponent } from './page/users/add-user/add-user.component';
 import { EntranceComponent } from './page/entrance/entrance.component';
 import { ListUsersComponent } from './page/users/list-users/list-users.component';
 import { UserComponent } from './page/users/user/user.component';
-import { ProfileComponent } from './page/profiles/profile/profile.component';
+import { ProfileComponent } from './page/profiles/profile/profile/profile.component';
 import { AddProfileComponent } from './page/profiles/add-profile/add-profile.component';
 import { AccessRightsUserGuard } from './guards/access-rights-user.guard';
 import { AccessRightsProfileGuard } from './guards/access-rights-profile.guard';

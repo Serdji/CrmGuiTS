@@ -2,11 +2,11 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
-import { Iprofile } from '../../../interface/iprofile';
+import { Iprofile } from '../../../../interface/iprofile';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import { timer } from 'rxjs/observable/timer';
-import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { DialogComponent } from '../../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 
 
