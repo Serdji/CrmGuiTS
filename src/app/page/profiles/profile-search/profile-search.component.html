@@ -57,26 +57,26 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cityidfrom" type="text" placeholder="Откуда" [matAutocomplete]="cityfrom">
-              <mat-autocomplete #cityfrom="matAutocomplete">
-                <mat-option *ngFor="let city of cityFromOptions | async" [id]="city.id" [value]="city.value">{{ city.value }}</mat-option>
+              <input matInput formControlName="countryidfrom" type="text" placeholder="Откуда" [matAutocomplete]="countryfrom">
+              <mat-autocomplete #countryfrom="matAutocomplete">
+                <mat-option *ngFor="let country of countryFromOptions | async" [id]="country.idCountry" [value]="country.rName">{{ country.rName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cityidto" type="text" placeholder="Куда" [matAutocomplete]="cityTo">
-              <mat-autocomplete #cityTo="matAutocomplete">
-                <mat-option *ngFor="let city of cityToOptions | async" [id]="city.id" [value]="city.value">{{ city.value }}</mat-option>
+              <input matInput formControlName="countryidto" type="text" placeholder="Куда" [matAutocomplete]="countryTo">
+              <mat-autocomplete #countryTo="matAutocomplete">
+                <mat-option *ngFor="let country of countryToOptions | async" [id]="country.idCountry" [value]="country.rName">{{ country.rName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="citydatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="cityDateFrom">
-              <mat-datepicker-toggle matSuffix [for]="cityDateFrom"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #cityDateFrom></mat-datepicker>
+              <input matInput formControlName="countrydatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="countryDateFrom">
+              <mat-datepicker-toggle matSuffix [for]="countryDateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #countryDateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="citydateto" placeholder="dd.MM.yyyy" [matDatepicker]="cityDateTo">
-              <mat-datepicker-toggle matSuffix [for]="cityDateTo"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #cityDateTo></mat-datepicker>
+              <input matInput formControlName="countrydateto" placeholder="dd.MM.yyyy" [matDatepicker]="countryDateTo">
+              <mat-datepicker-toggle matSuffix [for]="countryDateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #countryDateTo></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>

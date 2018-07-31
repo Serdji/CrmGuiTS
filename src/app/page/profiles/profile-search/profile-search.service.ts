@@ -1,8 +1,6 @@
-import { originDestinationObj } from './origin-destination';
 import { Observable, of, Subject } from 'rxjs';
-import { Icity } from '../../../interface/icity';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
 import { IprofileSearch } from '../../../interface/iprofile-search';
 import { retry } from 'rxjs/operators';
@@ -15,8 +13,8 @@ export class ProfileSearchService {
 
   constructor( private http: HttpClient ) { }
 
-  getCity(): Observable<Icity[]> {
-    return of( originDestinationObj );
+  getCountry(): Observable<any> {
+    return this.http.get( environment.crmApi + '/crm/country' ).pipe( retry( 10 ) );
   }
 
   getTree(): Observable<any> {
@@ -35,10 +33,18 @@ export class ProfileSearchService {
   deleteProfiles( params ): Observable<any> {
     this.subjectDeleteProfile.next();
     const httpOptions = {
-      headers: new HttpHeaders({ 'Content-Type': 'application/json' }), body: params
+      headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete(environment.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( environment.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
   }
-
-
 }
+
+
+
+
+
+
+
+
+
+
