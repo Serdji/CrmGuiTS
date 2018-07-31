@@ -4,6 +4,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { TabsProfileComponent } from './tabs-profile.component';
+import { TabsProfileService } from './tabs-profile.service';
 
 @NgModule( {
   imports: [
@@ -12,8 +13,8 @@ import { TabsProfileComponent } from './tabs-profile.component';
     SharedModule,
     ProfileModule
   ],
-  declarations: [ TabsProfileComponent],
-  providers: [ ]
+  declarations: [ TabsProfileComponent ],
+  providers: [ TabsProfileService ]
 } )
 export class TabsProfileModule {
 }

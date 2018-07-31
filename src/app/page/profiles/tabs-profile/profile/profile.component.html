@@ -1,74 +1,72 @@
 <div class="profile">
-  <mat-grid-list cols="2" rowHeight="600px">
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-      <mat-card class="profile__card">
-        <mat-spinner class="profile__spinner" *ngIf="progress"></mat-spinner>
-        <div *ngIf="!progress && !edit">
-          <mat-card-header>
-            <h2 class="profile__header">Пассажир</h2>
-            <mat-icon (click)="toggleEdit()" >create</mat-icon>
-          </mat-card-header>
-          <mat-card-content class="profile__content">
-            <div class="profile__list">
-              <span><b>Имя: </b>{{profile.firstName}}</span>
-            </div>
-            <div class="profile__list">
-              <span><b>Фамилия: </b>{{profile.lastName}}</span>
-            </div>
-            <div class="profile__list">
-              <span><b>Второе имя: </b>{{profile.middleName}}</span>
-            </div>
-            <div class="profile__list">
-              <span><b>Префикс: </b>{{profile.prefix}}</span>
-            </div>
-            <div class="profile__list">
-              <span><b>Пол: </b>{{profile.gender}}</span>
-            </div>
-            <div class="profile__list">
-              <span><b>data: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
-            </div>
-          </mat-card-content>
+  <mat-card class="profile__card">
+    <mat-spinner class="profile__spinner" *ngIf="progress"></mat-spinner>
+    <div *ngIf="!progress && !edit">
+      <mat-card-header>
+        <h2 class="profile__header">Пассажир</h2>
+        <mat-icon (click)="toggleEdit()">create</mat-icon>
+      </mat-card-header>
+      <mat-card-content class="profile__content">
+        <div class="profile__list">
+          <span><b>Имя: </b>{{profile.firstName}}</span>
         </div>
+        <div class="profile__list">
+          <span><b>Фамилия: </b>{{profile.lastName}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>Второе имя: </b>{{profile.middleName}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>Префикс: </b>{{profile.prefix}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>Пол: </b>{{profile.gender}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>data: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
+        </div>
+      </mat-card-content>
+    </div>
 
-        <div *ngIf="edit">
-          <mat-card-header>
-            <h2 class="profile__header">Редактировать</h2>
-            <mat-icon (click)="toggleEdit()" >create</mat-icon>
-          </mat-card-header>
-          <form class="profile__form" [formGroup]="updateProfileForm">
-            <mat-form-field class="profile__input">
-              <input matInput formControlName="firstName" placeholder="Имя">
-            </mat-form-field>
-            <mat-form-field class="profile__input">
-              <input matInput formControlName="lastName" placeholder="Фамилия">
-            </mat-form-field>
-            <mat-form-field class="profile__input">
-              <input matInput formControlName="middleName" placeholder="Второе имя">
-            </mat-form-field>
-            <mat-form-field class="profile__input">
-              <input matInput formControlName="prefix" placeholder="Префикс">
-            </mat-form-field>
-            <mat-form-field class="profile__input">
-              <mat-select formControlName="gender" placeholder="Пол">
-                <mat-option value="m">m</mat-option>
-                <mat-option value="f">f</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="profile__input">
-              <input matInput formControlName="dob" placeholder="дд.мм.гггг" [matDatepicker]="dob">
-              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dob></mat-datepicker>
-            </mat-form-field>
-            <div class="profile__button-wrapper">
-              <button class="profile__button _left-button" mat-raised-button (click)="sendFormProfile()" color="primary">Изменить</button>
-              <button class="profile__button" mat-raised-button (click)="deleteProfile()" color="warn">
-                Удалить
-                <mat-icon>delete</mat-icon>
-              </button>
-            </div>
-          </form>
+    <div *ngIf="edit">
+      <mat-card-header>
+        <h2 class="profile__header">Редактировать</h2>
+        <mat-icon (click)="toggleEdit()">create</mat-icon>
+      </mat-card-header>
+      <form class="profile__form" [formGroup]="updateProfileForm">
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="firstName" placeholder="Имя">
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="lastName" placeholder="Фамилия">
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="middleName" placeholder="Второе имя">
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="prefix" placeholder="Префикс">
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <mat-select formControlName="gender" placeholder="Пол">
+            <mat-option value="m">m</mat-option>
+            <mat-option value="f">f</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="dob" placeholder="дд.мм.гггг" [matDatepicker]="dob">
+          <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #dob></mat-datepicker>
+        </mat-form-field>
+        <div class="profile__button-wrapper">
+          <button class="profile__button _left-button" mat-raised-button (click)="sendFormProfile()" color="primary">
+            Изменить
+          </button>
+          <button class="profile__button" mat-raised-button (click)="deleteProfile()" color="warn">
+            Удалить
+            <mat-icon>delete</mat-icon>
+          </button>
         </div>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+      </form>
+    </div>
+  </mat-card>
 </div>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
@@ -16,6 +16,8 @@ import { MatDialog } from '@angular/material';
   styleUrls: [ './profile.component.styl' ]
 } )
 export class ProfileComponent implements OnInit, OnDestroy {
+
+  @Input() id: number;
 
   public profile: Iprofile;
   public progress: boolean;
@@ -38,15 +40,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private initProfile() {
     this.progress = true;
-    this.route.params
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( params => {
-        this.profileService.getProfile( params.id ).subscribe( ( profile: Iprofile ) => {
-          this.updateProfileForm.patchValue( profile );
-          this.profile = profile;
-          this.progress = false;
-        } );
-      } );
+    this.profileService.getProfile( this.id ).subscribe( ( profile: Iprofile ) => {
+      this.updateProfileForm.patchValue( profile );
+      this.profile = profile;
+      this.progress = false;
+    } );
   }
 
   private initFormProfile() {
