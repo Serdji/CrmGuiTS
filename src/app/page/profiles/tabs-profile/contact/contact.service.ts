@@ -23,4 +23,19 @@ export class ContactService {
     return this.http.delete( `${environment.crmApi}/crm/contact/${contactId}` ).pipe( retry( 10 ) );
   }
 
+  getContactType(): Observable<any> {
+    return this.http.get( `${environment.crmApi}/crm/contactType` ).pipe( retry( 10 ) );
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
