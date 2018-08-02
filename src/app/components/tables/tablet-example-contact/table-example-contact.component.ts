@@ -104,21 +104,22 @@ export class TableExampleContactComponent implements OnInit {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  // deleteProfile(): void {
-  //   const arrayId = [];
-  //   const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
-  //   checkbox.forEach( ( el: HTMLInputElement ) => {
-  //     if ( el.checked ) {
-  //       const id = el.id.split( '-' );
-  //       if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
-  //     }
-  //   } );
-  //
-  //   if ( arrayId.length !== 0 ) {
-  //     const params = Object.assign( {}, { ids: arrayId } );
-  //     this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params, 'profiles' );
-  //   }
-  // }
+  deleteContact(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      const params = Object.assign( {}, { ids: arrayId } );
+      console.log(params);
+      // this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params, 'profiles' );
+    }
+  }
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;

@@ -4,10 +4,6 @@ contactId = 50px
 
 
 .table
-  mat-icon
-    cursor: pointer
-    color: #696969;
-    margin-left: auto
 
   &__row
     white-space: nowrap;
@@ -25,21 +21,31 @@ contactId = 50px
   &__input
     width: 100%;
 
+  &__button
+
+    &-wrapper
+      display: flex;
+      width: 100%;
+
 .mat-column
 
 
   &-select
     width: select;
 
-  &-contactId
-    width: contactId;
-    margin-left: auto;
+  &-contactText
+    flex: 1;
 
   &-contactTypeId
     flex: 1;
 
-  &-contactText
-    flex: 1;
+  &-contactId
+    width: contactId;
+    margin-left: auto;
+    mat-icon
+      cursor: pointer
+      color: #696969;
+      margin-left: auto
 
 
 
