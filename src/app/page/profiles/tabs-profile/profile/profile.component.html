@@ -4,7 +4,7 @@
     <div *ngIf="!progress && !edit">
       <mat-card-header>
         <h2 class="profile__header">Пассажир</h2>
-        <mat-icon (click)="toggleEdit()">create</mat-icon>
+        <mat-icon appAccessRights="customers:update" (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <mat-card-content class="profile__content">
         <div class="profile__list">

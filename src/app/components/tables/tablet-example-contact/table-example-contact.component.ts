@@ -94,7 +94,7 @@ export class TableExampleContactComponent implements OnInit {
   }
 
   editCreate( id ): void {
-    this.router.navigate( [ `/crm/profile/${id}` ] );
+    console.log( id );
   }
 
   public isAllSelected() {

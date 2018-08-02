@@ -12,12 +12,10 @@
       <mat-form-field class="contact__input">
         <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
       </mat-form-field>
-    </form>
-    <div class="contact__button-wrapper">
-      <button appAccessRights="customers:read" class="contact__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+      <button appAccessRights="customers:update" class="contact__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
         Добавать контакт
       </button>
-    </div>
+    </form>
     <div class="contact__table">
       <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaserDisabled>
