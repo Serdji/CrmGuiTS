@@ -39,7 +39,6 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.contactService.getContact( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: Icontact[] ) => {
-        console.log( value );
         this.contacts = value;
         this.isLoader = false;
       } );
