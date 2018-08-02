@@ -44,7 +44,7 @@ export class TableExampleContactComponent implements OnInit {
       'contactTypeId',
       'contactText',
       'contactId',
-    ]
+    ];
   }
 
   private initDataSource() {
@@ -56,6 +56,17 @@ export class TableExampleContactComponent implements OnInit {
     timer( 1 ).subscribe( _ => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
+    } );
+  }
+
+  private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status,
+        params,
+        card,
+      },
     } );
   }
 
@@ -74,12 +85,7 @@ export class TableExampleContactComponent implements OnInit {
   openText( elem: HTMLElement ): void {
     if ( this.isCp ) {
       const text = elem.innerText;
-      this.dialog.open( DialogComponent, {
-        data: {
-          message: text,
-          status: 'text',
-        },
-      } );
+      this.windowDialog( text, 'text' );
     }
   }
 
@@ -116,8 +122,8 @@ export class TableExampleContactComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      console.log(params);
-      // this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params, 'profiles' );
+      console.log( params );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'contacts' );
     }
   }
 

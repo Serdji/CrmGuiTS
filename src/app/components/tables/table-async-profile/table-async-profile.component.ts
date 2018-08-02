@@ -142,7 +142,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params, 'profiles' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот профиль' : 'эти профили' } ?`, 'delete', params, 'profiles' );
     }
   }
 

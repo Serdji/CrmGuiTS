@@ -39,6 +39,10 @@ export class DialogComponent implements OnInit {
         this.profileService.deleteProfile( this.data.params ).subscribe();
         this.router.navigate( [ '/crm/profilesearch' ] );
         break;
+      case 'contacts':
+        this.dialogRef.close();
+        // this.profileSearchService.deleteProfiles( this.data.params ).subscribe();
+        break;
     }
   }
 
