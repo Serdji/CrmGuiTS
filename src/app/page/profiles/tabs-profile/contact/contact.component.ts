@@ -20,6 +20,8 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   public formContact: FormGroup;
   public contactTypes: IcontactType[];
+  public contacts: Icontact[];
+  public isLoader: boolean = true;
 
   constructor(
     private contactService: ContactService,
@@ -38,6 +40,8 @@ export class ContactComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: Icontact[] ) => {
         console.log( value );
+        this.contacts = value;
+        this.isLoader = false;
       } );
   }
 

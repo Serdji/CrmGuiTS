@@ -18,5 +18,11 @@
         Добавать контакт
       </button>
     </div>
+    <div class="contact__table">
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-table-example-contact [tableDataSource]="contacts"></app-table-example-contact>
+      </ng-template>
+    </div>
   </mat-card>
 </div>
