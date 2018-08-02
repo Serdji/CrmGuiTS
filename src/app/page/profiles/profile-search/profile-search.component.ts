@@ -7,7 +7,7 @@ import { Observable, timer } from 'rxjs';
 import { Itree } from '../../../interface/itree';
 import { Igroups } from '../../../interface/igroups';
 import { Iprofiles } from '../../../interface/Iprofiles';
-import { TableAsyncProfileService } from '../../../components/table-async-profile/table-async-profile.service';
+import { TableAsyncProfileService } from '../../../components/tables/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';

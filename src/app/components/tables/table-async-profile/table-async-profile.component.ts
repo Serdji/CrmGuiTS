@@ -7,8 +7,8 @@ import {
 } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
 import { TableAsyncProfileService } from './table-async-profile.service';
-import { IpagPage } from '../../interface/ipag-page';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { IpagPage } from '../../../interface/ipag-page';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 
