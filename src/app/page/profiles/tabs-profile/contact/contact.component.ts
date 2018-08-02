@@ -83,6 +83,7 @@ export class ContactComponent implements OnInit, OnDestroy {
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialog.closeAll();
+            this.isLoader = true;
             this.initContact();
             this.resetForm();
           } );

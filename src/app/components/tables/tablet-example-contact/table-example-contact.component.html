@@ -27,8 +27,14 @@
     </mat-cell>
   </ng-container>
 
-  <ng-container  matColumnDef="contactText">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Имя </mat-header-cell>
+  <ng-container  matColumnDef="contactTypeId">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Тип </mat-header-cell>
+    <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+              (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>Телефон</span>
+    </mat-cell>
+
+  </ng-container><ng-container  matColumnDef="contactText">
+    <mat-header-cell *matHeaderCellDef mat-sort-header> Значение </mat-header-cell>
     <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
               (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactText}}</span>
     </mat-cell>

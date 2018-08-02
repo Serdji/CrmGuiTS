@@ -1,19 +1,64 @@
-.table
+select = 70px
 
-  &__input
-    width: 100%;
+contactId = 50px
+
+
+.table
+  mat-icon
+    cursor: pointer
+    color: #696969;
+    margin-left: auto
 
   &__row
     white-space: nowrap;
 
-
   &__cell
     text-overflow: ellipsis;
-    padding: 16px 16px 16px 0;
     display: inline-block;
     min-height auto;
-
     &._cp
       cursor: pointer
+      padding: 16px;
       &:hover
         background: rgba(63,81,181,.12)
+
+  &__input
+    width: 100%;
+
+.mat-column
+
+
+  &-select
+    width: select;
+
+  &-contactId
+    width: contactId;
+    margin-left: auto;
+
+  &-contactTypeId
+    flex: 1;
+
+  &-contactText
+    flex: 1;
+
+
+
+mat-table
+  display: table;
+  width: 100%;
+
+mat-header-cell,
+mat-cell
+  padding: 0 16px;
+  width: auto
+  flex: none;
+  box-sizing: border-box;
+
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}

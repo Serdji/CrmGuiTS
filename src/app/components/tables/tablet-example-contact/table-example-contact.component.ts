@@ -41,6 +41,7 @@ export class TableExampleContactComponent implements OnInit {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
+      'contactTypeId',
       'contactText',
       'contactId',
     ]
