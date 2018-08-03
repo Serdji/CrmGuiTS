@@ -16,7 +16,7 @@
         Добавать контакт
       </button>
     </form>
-    <div class="contact__table">
+    <div class="contact__table" *ngIf="contacts.length !== 0">
       <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaserDisabled>
         <app-table-example-contact [tableDataSource]="contacts"></app-table-example-contact>
