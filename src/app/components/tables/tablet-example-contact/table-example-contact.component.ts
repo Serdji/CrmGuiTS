@@ -93,8 +93,8 @@ export class TableExampleContactComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( id ): void {
-    console.log( id );
+  editCreate( typeId, id, text ): void {
+    this.windowDialog( ``, 'update', [ typeId, id, text ], 'contact' );
   }
 
   public isAllSelected() {
@@ -132,3 +132,15 @@ export class TableExampleContactComponent implements OnInit {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../page/users/user/user.service';
 import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
 import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component( {
   selector: 'app-dialog',
@@ -12,16 +13,30 @@ import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile
 } )
 export class DialogComponent implements OnInit {
 
+  public formUpdateContact: FormGroup;
+
   constructor(
     private userService: UserService,
     private profileSearchService: ProfileSearchService,
     private profileService: ProfileService,
+    private fb: FormBuilder,
     private router: Router,
     public dialogRef: MatDialogRef<any>,
     @Inject( MAT_DIALOG_DATA ) public data: any
   ) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.initForm();
+  }
+
+  private initForm() {
+    this.formUpdateContact = this.fb.group( {
+      contactText: '',
+    } );
+    if ( this.data.status === 'update' ) {
+      this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params[ 2 ] );
+    }
+  }
 
   onYesClick(): void {
     switch ( this.data.card ) {
@@ -43,6 +58,12 @@ export class DialogComponent implements OnInit {
         this.dialogRef.close();
         // this.profileSearchService.deleteProfiles( this.data.params ).subscribe();
         break;
+      case 'contact':
+        this.dialogRef.close();
+        console.log( this.formUpdateContact.get( 'contactText' ).value );
+        console.log(this.data.params[ 1 ]);
+        console.log(this.data.params[ 0 ]);
+        break;
     }
   }
 
@@ -50,3 +71,4 @@ export class DialogComponent implements OnInit {
     this.dialogRef.close();
   }
 }
+

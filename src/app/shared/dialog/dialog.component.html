@@ -1,10 +1,22 @@
-<h2 mat-dialog-title *ngIf="data.status === 'ok'" class="dialog__ok">{{ data.message }}</h2>
-<h2 mat-dialog-title *ngIf="data.status === 'error'" class="dialog__error">{{ data.message }}</h2>
-<h2 mat-dialog-title *ngIf="data.status === 'text'" class="dialog__text">{{ data.message }}</h2>
-<div *ngIf="data.status === 'delete'">
-  <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
-  <div class="dialog__button-wrapper">
-    <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">Да</button>
-    <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
+<div class="dialog">
+  <h2 mat-dialog-title *ngIf="data.status === 'ok'" class="dialog__ok">{{ data.message }}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'error'" class="dialog__error">{{ data.message }}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'text'" class="dialog__text">{{ data.message }}</h2>
+  <div *ngIf="data.status === 'delete'">
+    <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
+    <div class="dialog__button-wrapper">
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">Да</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
+    </div>
+  </div>
+  <div *ngIf="data.status === 'update'">
+    <form class="dialog__form" [formGroup]="formUpdateContact">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
   </div>
 </div>

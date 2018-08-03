@@ -44,7 +44,7 @@
     <ng-container  matColumnDef="contactId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon [id]="element.contactId" (click)="editCreate( element.contactId )">create</mat-icon>
+        <mat-icon [id]="element.contactId" (click)="editCreate( element.contactTypeId, element.contactId, element.contactText )">create</mat-icon>
       </mat-cell>
     </ng-container>
 
