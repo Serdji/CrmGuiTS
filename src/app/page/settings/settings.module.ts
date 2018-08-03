@@ -11,4 +11,5 @@ import { FormTableAsyncProfileSettingsModule } from './form-table-async-profile-
   providers: []
 } )
 export class SettingsModule {
+
 }

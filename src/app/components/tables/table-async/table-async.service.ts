@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IpagPage } from '../../interface/ipag-page';
+import { IpagPage } from '../../../interface/ipag-page';
 
 @Injectable()
-export class TableAsyncProfileService {
+export class TableAsyncService {
 
   public count: number;
   public subjectPage = new Subject();

@@ -7,8 +7,8 @@ import {
 } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
 import { TableAsyncProfileService } from './table-async-profile.service';
-import { IpagPage } from '../../interface/ipag-page';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { IpagPage } from '../../../interface/ipag-page';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 
@@ -142,7 +142,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль эти ${ arrayId.length === 1 ? 'профиль' : 'профили' } ?`, 'delete', params, 'profiles' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот профиль' : 'эти профили' } ?`, 'delete', params, 'profiles' );
     }
   }
 

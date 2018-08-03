@@ -1,0 +1,26 @@
+<div class="contact">
+  <mat-card>
+    <form class="contact__form" [formGroup]="formContact">
+      <mat-form-field class="contact__input">
+        <mat-select placeholder="Тип контакта" formControlName="contactTypeId">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let contactType of contactTypes; let i = index" [value]="i + 1">
+            {{ contactType.contactTypeCode }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="contact__input">
+        <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
+      </mat-form-field>
+      <button appAccessRights="customers:update" class="contact__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+        Добавать контакт
+      </button>
+    </form>
+    <div class="contact__table" *ngIf="contacts.length !== 0">
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-table-example-contact [tableDataSource]="contacts"></app-table-example-contact>
+      </ng-template>
+    </div>
+  </mat-card>
+</div>

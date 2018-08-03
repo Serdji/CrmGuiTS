@@ -7,8 +7,8 @@ import {
 } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
 import { TableAsyncService } from './table-async.service';
-import { IpagPage } from '../../interface/ipag-page';
-import { DialogComponent } from '../../shared/dialog/dialog.component';
+import { IpagPage } from '../../../interface/ipag-page';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component( {
   selector: 'app-table-async',

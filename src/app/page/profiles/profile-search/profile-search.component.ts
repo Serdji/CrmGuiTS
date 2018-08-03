@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Icity } from '../../../interface/icity';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Icountry } from '../../../interface/icountry';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
 import { Itree } from '../../../interface/itree';
 import { Igroups } from '../../../interface/igroups';
 import { Iprofiles } from '../../../interface/Iprofiles';
-import { TableAsyncProfileService } from '../../../components/table-async-profile/table-async-profile.service';
+import { TableAsyncProfileService } from '../../../components/tables/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -21,9 +21,9 @@ import { IprofileSearch } from '../../../interface/iprofile-search';
 export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
-  public cities: Icity[];
-  public cityFromOptions: Observable<Icity[]>;
-  public cityToOptions: Observable<Icity[]>;
+  public countrys: Icountry[];
+  public countryFromOptions: Observable<Icountry[]>;
+  public countryToOptions: Observable<Icountry[]>;
   public trees: Itree[];
   public groups: Igroups[];
   public profiles: Iprofiles;
@@ -44,7 +44,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initCity();
+    this.initCountry();
     this.initForm();
     this.initAutocomplete();
     this.initTree();
@@ -101,27 +101,27 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( ( value: Igroups[] ) => this.groups = value );
   }
 
-  private initCity() {
-    this.profileSearchService.getCity()
+  private initCountry() {
+    this.profileSearchService.getCountry()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Icity[] ) => {
-        this.cities = value;
+      .subscribe( ( value: Icountry[] ) => {
+        this.countrys = value;
       } );
   }
 
   private initAutocomplete() {
-    this.cityFromOptions = this.autocomplete( 'cityidfrom' );
-    this.cityToOptions = this.autocomplete( 'cityidto' );
+    this.countryFromOptions = this.autocomplete( 'countryidfrom' );
+    this.countryToOptions = this.autocomplete( 'countryidto' );
   }
 
-  private autocomplete( formControlName: string ): Observable<Icity[]> {
+  private autocomplete( formControlName: string ): Observable<Icountry[]> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
         map( val => {
           if ( val.length >= this.autLength ) {
-            return this.cities.filter( city => city.value.toLowerCase().includes( val.toLowerCase() ) );
+            return this.countrys.filter( country => country.rName.toLowerCase().includes( val.toLowerCase() ) );
           }
         } )
       );
@@ -137,10 +137,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       flightnum: '',
       flightdatefrom: '',
       flightdateto: '',
-      cityidfrom: '',
-      cityidto: '',
-      citydatefrom: '',
-      citydateto: '',
+      countryidfrom: '',
+      countryidto: '',
+      countrydatefrom: '',
+      countrydateto: '',
       divisionid: '',
       groupid: '',
       amountfrom: '',
@@ -172,7 +172,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         for ( const key of Object.keys( value ) ) {
           if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
           if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-          if ( this.isKeys( key, 'city' ) ) newObjectForm[ key ] = this.cities.filter( ( city: Icity ) => city.id === +value[ key ] )[ 0 ].value;
+          if ( this.isKeys( key, 'country' ) ) newObjectForm[ key ] = this.countrys.filter( ( country: Icountry ) => country.idCountry === +value[ key ] )[ 0 ].rName;
           if ( key === 'divisionid' ) newObjectForm[ key ] = this.trees.filter( ( trees: Itree ) => trees.ID === +value[ key ] )[ 0 ].Name;
           if ( key === 'groupid' ) newObjectForm[ key ] = this.groups.filter( ( groups: Igroups ) => groups.Id === +value[ key ] )[ 0 ].Name;
         }
@@ -191,8 +191,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value}`;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
-      if ( this.isKeys( key, 'city' ) ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
-        this.cities.filter( ( city: Icity ) => city.value === this.formProfileSearch.get( key ).value )[ 0 ].id : '';
+      if ( this.isKeys( key, 'country' ) ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
+        this.countrys.filter( ( country: Icountry ) => country.rName === this.formProfileSearch.get( key ).value )[ 0 ].idCountry : '';
       if ( key === 'divisionid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
         this.trees.filter( ( trees: Itree ) => trees.Name === this.formProfileSearch.get( key ).value )[ 0 ].ID : '';
       if ( key === 'groupid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
@@ -227,22 +227,22 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private isKeys( key: string, exception: string ): boolean {
     switch ( exception ) {
       case 'all':
-        return key !== 'cityidfrom'
-          && key !== 'cityidto'
+        return key !== 'countryidfrom'
+          && key !== 'countryidto'
           && key !== 'divisionid'
           && key !== 'groupid'
           && key !== 'flightdatefrom'
           && key !== 'flightdateto'
-          && key !== 'citydatefrom'
-          && key !== 'citydateto';
+          && key !== 'countrydatefrom'
+          && key !== 'countrydateto';
       case 'data':
         return key === 'flightdatefrom'
           || key === 'flightdateto'
-          || key === 'citydatefrom'
-          || key === 'citydateto';
-      case 'city':
-        return key === 'cityidfrom'
-          || key === 'cityidto';
+          || key === 'countrydatefrom'
+          || key === 'countrydateto';
+      case 'country':
+        return key === 'countryidfrom'
+          || key === 'countryidto';
     }
   }
 

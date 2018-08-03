@@ -6,6 +6,7 @@ import { DragulaModule } from 'ng2-dragula';
 import { SharedModule } from '../../../shared/shared.module';
 import { SettingsService } from '../settings.service';
 import { FormTableAsyncProfileSettingsComponent } from './form-table-async-profile-settings.component';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { FormTableAsyncProfileSettingsComponent } from './form-table-async-profi
     SharedModule,
     ReactiveFormsModule,
     PipesModule,
+    DirectivesModule,
     DragulaModule.forRoot(),
   ],
   declarations: [ FormTableAsyncProfileSettingsComponent ],

@@ -37,6 +37,10 @@ $dark-theme:   mat-dark-theme($dark-primary, $dark-accent, $dark-warn);
   height: calc(100% - 64px);
 }
 
+.tabs-dark-theme {
+  @include mat-tabs-theme($dark-theme);
+}
+
 ::-webkit-scrollbar {
   width: 7px;
   height: 7px

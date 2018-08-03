@@ -8,11 +8,11 @@ import { AddUserComponent } from './page/users/add-user/add-user.component';
 import { EntranceComponent } from './page/entrance/entrance.component';
 import { ListUsersComponent } from './page/users/list-users/list-users.component';
 import { UserComponent } from './page/users/user/user.component';
-import { ProfileComponent } from './page/profiles/profile/profile.component';
 import { AddProfileComponent } from './page/profiles/add-profile/add-profile.component';
 import { AccessRightsUserGuard } from './guards/access-rights-user.guard';
 import { AccessRightsProfileGuard } from './guards/access-rights-profile.guard';
 import { FormTableAsyncProfileSettingsComponent } from './page/settings/form-table-async-profile-settings/form-table-async-profile-settings.component';
+import { TabsProfileComponent } from './page/profiles/tabs-profile/tabs-profile.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -26,7 +26,7 @@ const routes: Routes = [
         { path: 'listusers', component: ListUsersComponent },
         { path: 'user/:id', component: UserComponent, canActivate: [ AccessRightsUserGuard ] },
         { path: 'profilesearch', component: ProfileSearchComponent },
-        { path: 'profile/:id', component: ProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
+        { path: 'profile/:id', component: TabsProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
         { path: 'addprofile', component: AddProfileComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
       ],
