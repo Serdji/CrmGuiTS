@@ -33,6 +33,8 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.initContact();
     this.initFormContact();
     this.initContactType();
+    this.contactService.subjectDeleteContact.subscribe( _ => this.refreshTable());
+    this.contactService.subjectPutContact.subscribe( _ => this.refreshTable());
   }
 
   private initContact() {
@@ -59,6 +61,13 @@ export class ContactComponent implements OnInit, OnDestroy {
     } );
   }
 
+  private refreshTable() {
+    timer(100).subscribe( _ => {
+      this.isLoader = true;
+      this.initContact();
+    });
+  }
+
   private  resetForm() {
     this.formContact.reset();
     for ( const formControlName in this.formContact.value ) {
@@ -82,8 +91,7 @@ export class ContactComponent implements OnInit, OnDestroy {
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialog.closeAll();
-            this.isLoader = true;
-            this.initContact();
+            this.refreshTable();
             this.resetForm();
           } );
       } );

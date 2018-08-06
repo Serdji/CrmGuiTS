@@ -31,7 +31,7 @@
     <ng-container  matColumnDef="contactTypeId">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Тип </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>Телефон</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactType.contactTypeCode}}</span>
       </mat-cell>
 
     </ng-container><ng-container  matColumnDef="contactText">
@@ -44,7 +44,13 @@
     <ng-container  matColumnDef="contactId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon [id]="element.contactId" (click)="editCreate( element.contactTypeId, element.contactId, element.contactText )">create</mat-icon>
+        <mat-icon [id]="element.contactId" (click)="editCreate(
+        element.contactType.contactTypeCode,
+        element.contactType.contactTypeId,
+        element.contactId,
+        element.customerId,
+        element.contactText
+        )">create</mat-icon>
       </mat-cell>
     </ng-container>
 

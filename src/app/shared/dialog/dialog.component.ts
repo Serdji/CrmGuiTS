@@ -5,6 +5,7 @@ import { UserService } from '../../page/users/user/user.service';
 import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
 import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ContactService } from '../../page/profiles/tabs-profile/contact/contact.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -19,6 +20,7 @@ export class DialogComponent implements OnInit {
     private userService: UserService,
     private profileSearchService: ProfileSearchService,
     private profileService: ProfileService,
+    private contactService: ContactService,
     private fb: FormBuilder,
     private router: Router,
     public dialogRef: MatDialogRef<any>,
@@ -34,7 +36,7 @@ export class DialogComponent implements OnInit {
       contactText: '',
     } );
     if ( this.data.status === 'update' ) {
-      this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params[ 2 ] );
+      this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
     }
   }
 
@@ -56,13 +58,17 @@ export class DialogComponent implements OnInit {
         break;
       case 'contacts':
         this.dialogRef.close();
-        // this.profileSearchService.deleteProfiles( this.data.params ).subscribe();
+        this.contactService.deleteContacts( this.data.params ).subscribe();
         break;
       case 'contact':
         this.dialogRef.close();
-        console.log( this.formUpdateContact.get( 'contactText' ).value );
-        console.log(this.data.params[ 1 ]);
-        console.log(this.data.params[ 0 ]);
+        const params = {
+          'ContactId': this.data.params.contactId,
+          'CustomerId': this.data.params.customerId,
+          'ContactTypeId': this.data.params.typeId,
+          'ContactText': this.formUpdateContact.get( 'contactText' ).value
+        };
+        this.contactService.putContact( params ).subscribe();
         break;
     }
   }

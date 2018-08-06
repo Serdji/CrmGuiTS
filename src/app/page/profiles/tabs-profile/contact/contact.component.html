@@ -4,7 +4,7 @@
       <mat-form-field class="contact__input">
         <mat-select placeholder="Тип контакта" formControlName="contactTypeId">
           <mat-option></mat-option>
-          <mat-option *ngFor="let contactType of contactTypes; let i = index" [value]="i + 1">
+          <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.contactTypeId">
             {{ contactType.contactTypeCode }}
           </mat-option>
         </mat-select>
@@ -16,11 +16,9 @@
         Добавать контакт
       </button>
     </form>
-    <div class="contact__table" *ngIf="contacts.length !== 0">
-      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-      <ng-template #loaserDisabled>
-        <app-table-example-contact [tableDataSource]="contacts"></app-table-example-contact>
-      </ng-template>
-    </div>
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <app-table-example-contact  *ngIf="contacts.length !== 0" [tableDataSource]="contacts"></app-table-example-contact>
+    </ng-template>
   </mat-card>
 </div>
