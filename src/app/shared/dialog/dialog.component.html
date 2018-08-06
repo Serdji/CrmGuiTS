@@ -12,7 +12,7 @@
   <div *ngIf="data.status === 'update'">
     <form class="dialog__form" [formGroup]="formUpdateContact">
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
+        <input matInput formControlName="contactText" [placeholder]="this.data.params.typeCode">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
         Изменить

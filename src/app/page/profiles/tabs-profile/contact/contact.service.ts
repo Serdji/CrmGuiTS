@@ -10,6 +10,7 @@ import { retry } from 'rxjs/operators';
 export class ContactService {
 
   public subjectDeleteContact = new Subject();
+  public subjectPutContact = new Subject();
 
   constructor( private http: HttpClient ) { }
 
@@ -31,6 +32,11 @@ export class ContactService {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
     return this.http.delete( `${environment.crmApi}/crm/contact/deleteContacts`, httpOptions ).pipe( retry( 10 ) );
+  }
+
+  putContact( params ): Observable<any>  {
+    this.subjectPutContact.next();
+    return this.http.put( `${environment.crmApi}/crm/contact`, params ).pipe( retry( 10 ) );
   }
 
   getContactType(): Observable<any> {

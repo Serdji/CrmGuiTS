@@ -36,7 +36,7 @@ export class DialogComponent implements OnInit {
       contactText: '',
     } );
     if ( this.data.status === 'update' ) {
-      this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params[ 2 ] );
+      this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
     }
   }
 
@@ -62,9 +62,13 @@ export class DialogComponent implements OnInit {
         break;
       case 'contact':
         this.dialogRef.close();
-        console.log( this.formUpdateContact.get( 'contactText' ).value );
-        console.log( this.data.params[ 1 ] );
-        console.log( this.data.params[ 0 ] );
+        const params = {
+          'ContactId': this.data.params.contactId,
+          'CustomerId': this.data.params.customerId,
+          'ContactTypeId': this.data.params.typeId,
+          'ContactText': this.formUpdateContact.get( 'contactText' ).value
+        };
+        this.contactService.putContact( params ).subscribe();
         break;
     }
   }
