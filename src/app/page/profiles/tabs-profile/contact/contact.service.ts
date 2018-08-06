@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { retry } from 'rxjs/operators';
 
@@ -8,6 +8,8 @@ import { retry } from 'rxjs/operators';
   providedIn: 'root'
 } )
 export class ContactService {
+
+  public subjectDeleteContact = new Subject();
 
   constructor( private http: HttpClient ) { }
 
@@ -21,6 +23,14 @@ export class ContactService {
 
   deleteContact( contactId: number ): Observable<any> {
     return this.http.delete( `${environment.crmApi}/crm/contact/${contactId}` ).pipe( retry( 10 ) );
+  }
+
+  deleteContacts( params ): Observable<any> {
+    this.subjectDeleteContact.next();
+    const httpOptions = {
+      headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
+    };
+    return this.http.delete( `${environment.crmApi}/crm/contact/deleteContacts`, httpOptions ).pipe( retry( 10 ) );
   }
 
   getContactType(): Observable<any> {

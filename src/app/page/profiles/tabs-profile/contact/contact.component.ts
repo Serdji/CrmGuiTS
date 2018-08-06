@@ -33,6 +33,10 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.initContact();
     this.initFormContact();
     this.initContactType();
+    this.contactService.subjectDeleteContact.subscribe( _ => {
+      this.isLoader = true;
+      this.initContact();
+    });
   }
 
   private initContact() {
