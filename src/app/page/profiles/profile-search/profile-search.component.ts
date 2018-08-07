@@ -189,7 +189,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const formValue = Object.keys( this.formProfileSearch.value );
 
     for ( const key of formValue ) {
-      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value}`;
+      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'country' ) ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
         this.countrys.filter( ( country: Icountry ) => country.rName === this.formProfileSearch.get( key ).value )[ 0 ].idCountry : '';
