@@ -93,7 +93,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     this.dataSourceFun( this.tableDataSource );
   }
 
-  private dataSourceFun( params ) {
+  private dataSourceFun( params: Iprofile[] ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 ).subscribe( _ => {
       this.dataSource.sort = this.sort;

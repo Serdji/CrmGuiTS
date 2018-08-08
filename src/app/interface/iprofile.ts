@@ -1,9 +1,10 @@
 export interface Iprofile {
   customerId: number;
+  customerNameId: number;
+  customerNameType: number;
   gender: string;
-  prefix: string;
   lastName: string;
   firstName: string;
-  middleName: string;
+  secondName: string;
   dob: string;
 }
