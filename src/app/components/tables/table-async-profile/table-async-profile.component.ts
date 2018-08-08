@@ -86,7 +86,8 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   private initDataSource() {
     this.tableDataSource = this.tableDataSource.map( value => {
-      value.customerNames = value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ];
+      Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+      delete value.customerNames;
       return value;
     });
     this.dataSourceFun( this.tableDataSource );
