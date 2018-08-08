@@ -23,7 +23,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public edit: boolean = false;
   public formUpdateProfile: FormGroup;
-  public formAdditionaProfile: FormGroup;
+  public formAdditionalProfile: FormGroup;
 
   private isActive: boolean = true;
 
@@ -37,7 +37,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initProfile();
     this.initFormProfile();
-    this.initFormAdditionaProfile();
+    this.initFormAdditionalProfile();
   }
 
   private initProfile() {
@@ -62,8 +62,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private initFormAdditionaProfile() {
-    this.formAdditionaProfile = this.fb.group( {
+  private initFormAdditionalProfile() {
+    this.formAdditionalProfile = this.fb.group( {
       lastName: '',
       firstName: '',
       secondName: '',
@@ -87,11 +87,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
     }
 
   }
-  sendFormAdditionaProfile(): void {
-    if ( !this.formAdditionaProfile.invalid ) {
+
+  sendformAdditionalProfile(): void {
+    if ( !this.formAdditionalProfile.invalid ) {
       const params = {};
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
-      Object.assign( params,  this.formAdditionaProfile.getRawValue() );
+      Object.assign( params,  this.formAdditionalProfile.getRawValue() );
       this.profileService.addAdditionaProfile( params ).subscribe();
     }
 
