@@ -3,7 +3,7 @@
     <mat-spinner class="profile__spinner" *ngIf="progress"></mat-spinner>
     <div *ngIf="!progress && !edit">
       <mat-card-header>
-        <h2 class="profile__header">Пассажир</h2>
+        <h2 class="profile__header">Пассажир основное ФИО</h2>
         <mat-icon appAccessRights="customers:update" (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <mat-card-content class="profile__content">
@@ -14,10 +14,7 @@
           <span><b>Фамилия: </b>{{profile.lastName}}</span>
         </div>
         <div class="profile__list">
-          <span><b>Второе имя: </b>{{profile.middleName}}</span>
-        </div>
-        <div class="profile__list">
-          <span><b>Префикс: </b>{{profile.prefix}}</span>
+          <span><b>Второе имя: </b>{{profile.secondName}}</span>
         </div>
         <div class="profile__list">
           <span><b>Пол: </b>{{profile.gender}}</span>
@@ -41,10 +38,7 @@
           <input matInput formControlName="lastName" placeholder="Фамилия">
         </mat-form-field>
         <mat-form-field class="profile__input">
-          <input matInput formControlName="middleName" placeholder="Второе имя">
-        </mat-form-field>
-        <mat-form-field class="profile__input">
-          <input matInput formControlName="prefix" placeholder="Префикс">
+          <input matInput formControlName="secondName" placeholder="Второе имя">
         </mat-form-field>
         <mat-form-field class="profile__input">
           <mat-select formControlName="gender" placeholder="Пол">

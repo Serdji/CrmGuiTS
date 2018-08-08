@@ -40,9 +40,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private initProfile() {
     this.progress = true;
-    this.profileService.getProfile( this.id ).subscribe( ( profile: Iprofile ) => {
-      this.updateProfileForm.patchValue( profile );
-      this.profile = profile;
+    this.profileService.getProfile( this.id ).subscribe( ( value ) => {
+      Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+      this.updateProfileForm.patchValue( value );
+      this.profile = value;
       this.progress = false;
     } );
   }
@@ -50,10 +51,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private initFormProfile() {
     this.updateProfileForm = this.fb.group( {
       gender: '',
-      prefix: '',
       lastName: '',
       firstName: '',
-      middleName: '',
+      secondName: '',
       dob: '',
     }, {
       updateOn: 'submit',
