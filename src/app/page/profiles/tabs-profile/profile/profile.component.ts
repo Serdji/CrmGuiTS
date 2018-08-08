@@ -22,7 +22,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public profile: Iprofile;
   public progress: boolean;
   public edit: boolean = false;
-  public updateProfileForm: FormGroup;
+  public formUpdateProfile: FormGroup;
+  public formAdditionaProfile: FormGroup;
 
   private isActive: boolean = true;
 
@@ -36,20 +37,21 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initProfile();
     this.initFormProfile();
+    this.initFormAdditionaProfile();
   }
 
   private initProfile() {
     this.progress = true;
     this.profileService.getProfile( this.id ).subscribe( ( value ) => {
       Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
-      this.updateProfileForm.patchValue( value );
+      this.formUpdateProfile.patchValue( value );
       this.profile = value;
       this.progress = false;
     } );
   }
 
   private initFormProfile() {
-    this.updateProfileForm = this.fb.group( {
+    this.formUpdateProfile = this.fb.group( {
       gender: '',
       lastName: '',
       firstName: '',
@@ -60,18 +62,37 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
+  private initFormAdditionaProfile() {
+    this.formAdditionaProfile = this.fb.group( {
+      lastName: '',
+      firstName: '',
+      secondName: '',
+    }, {
+      updateOn: 'submit',
+    } );
+  }
+
   sendFormProfile(): void {
-    if ( !this.updateProfileForm.invalid ) {
+    if ( !this.formUpdateProfile.invalid ) {
       const params = {};
-      for ( const key in this.updateProfileForm.getRawValue() ) {
-        if ( this.updateProfileForm.get( key ).value !== 'dob' ) params[ key ] = this.updateProfileForm.get( key ).value;
+      for ( const key in this.formUpdateProfile.getRawValue() ) {
+        if ( this.formUpdateProfile.get( key ).value !== 'dob' ) params[ key ] = this.formUpdateProfile.get( key ).value;
       }
       Object.assign( params, { customerId: this.profile.customerId } );
-      Object.assign( params, { dob: moment( this.updateProfileForm.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
+      Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params ).subscribe( ( profile: Iprofile ) => {
         this.windowDialog( 'Пассажир успешно изменен', 'ok' );
         this.profile = profile;
       } );
+    }
+
+  }
+  sendFormAdditionaProfile(): void {
+    if ( !this.formAdditionaProfile.invalid ) {
+      const params = {};
+      Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
+      Object.assign( params,  this.formAdditionaProfile.getRawValue() );
+      this.profileService.addAdditionaProfile( params ).subscribe();
     }
 
   }

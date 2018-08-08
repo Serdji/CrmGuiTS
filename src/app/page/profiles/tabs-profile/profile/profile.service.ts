@@ -23,4 +23,8 @@ export class ProfileService {
     return this.http.delete( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
   }
 
+  addAdditionaProfile( params ) {
+    return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
+  }
+
 }

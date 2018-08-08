@@ -30,7 +30,7 @@
         <h2 class="profile__header">Редактировать</h2>
         <mat-icon (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
-      <form class="profile__form" [formGroup]="updateProfileForm">
+      <form class="profile__form" [formGroup]="formUpdateProfile">
         <mat-form-field class="profile__input">
           <input matInput formControlName="firstName" placeholder="Имя">
         </mat-form-field>
@@ -62,5 +62,24 @@
         </div>
       </form>
     </div>
+
+    <form class="profile__form _additional" [formGroup]="formAdditionaProfile">
+
+      <mat-form-field class="profile__input">
+        <input matInput formControlName="firstName" placeholder="Имя">
+      </mat-form-field>
+
+      <mat-form-field class="profile__input">
+        <input matInput formControlName="lastName" placeholder="Фамилия">
+      </mat-form-field>
+
+      <mat-form-field class="profile__input">
+        <input matInput formControlName="secondName" placeholder="Второе имя">
+      </mat-form-field>
+      <button appAccessRights="customers:update" class="profile__button" mat-raised-button (click)="sendFormAdditionaProfile()" color="primary">
+        Добавать дополнительно ФИО
+      </button>
+    </form>
+
   </mat-card>
 </div>
