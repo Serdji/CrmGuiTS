@@ -34,30 +34,24 @@
     <ng-container  matColumnDef="firstName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Имя </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.customerNames.firstName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container  matColumnDef="lastName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> фамилия </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.customerNames.lastName}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="middleName">
+    <ng-container  matColumnDef="secondName">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Второе имя </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.middleName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.customerNames.secondName}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="prefix">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Префик </mat-header-cell>
-      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.prefix}}</span>
-      </mat-cell>
-    </ng-container>
 
     <ng-container  matColumnDef="gender">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Пол </mat-header-cell>

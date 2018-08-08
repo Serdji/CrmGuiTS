@@ -12,8 +12,7 @@ export class SettingsService {
     const defaultArr = [
         'firstName',
         'lastName',
-        'middleName',
-        'prefix',
+        'secondName',
         'gender',
         'dob',
       ];
