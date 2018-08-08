@@ -76,10 +76,15 @@
       <mat-form-field class="profile__input">
         <input matInput formControlName="secondName" placeholder="Второе имя">
       </mat-form-field>
-      <button appAccessRights="customers:update" class="profile__button" mat-raised-button (click)="sendformAdditionalProfile()" color="primary">
+      <button appAccessRights="customers:update" class="profile__button" mat-raised-button (click)="sendFormAdditionalProfile()" color="primary">
         Добавать дополнительно ФИО
       </button>
     </form>
+
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <app-tablet-example-profile-names  *ngIf="profileNames.length !== 0" [tableDataSource]="profileNames"></app-tablet-example-profile-names>
+    </ng-template>
 
   </mat-card>
 </div>

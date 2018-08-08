@@ -8,6 +8,7 @@ import { TableAsyncProfileComponent } from './table-async-profile/table-async-pr
 import { TableAsyncService } from './table-async/table-async.service';
 import { TableAsyncProfileService } from './table-async-profile/table-async-profile.service';
 import { TableExampleContactComponent } from './tablet-example-contact/table-example-contact.component';
+import { TabletExampleProfileNamesComponent } from './tablet-example-profile-names/tablet-example-profile-names.component';
 
 @NgModule({
   imports: [
@@ -20,12 +21,14 @@ import { TableExampleContactComponent } from './tablet-example-contact/table-exa
     TableAsyncComponent,
     TableAsyncProfileComponent,
     TableExampleContactComponent,
+    TabletExampleProfileNamesComponent,
   ],
   exports: [
     TableExampleComponent,
     TableAsyncComponent,
     TableAsyncProfileComponent,
     TableExampleContactComponent,
+    TabletExampleProfileNamesComponent,
   ],
   providers: [
     TableAsyncService,

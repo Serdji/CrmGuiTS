@@ -19,12 +19,16 @@ export class ProfileService {
     return this.http.put( `${environment.crmApi}/crm/customer`, params ).pipe( retry( 10 ) );
   }
 
-  deleteProfile( id: number ) {
+  deleteProfile( id: number ): Observable<any> {
     return this.http.delete( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
   }
 
-  addAdditionaProfile( params ) {
+  addAdditionaProfile( params ): Observable<any> {
     return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
+  }
+
+  getAllProfileNames( id: number ): Observable<any> {
+    return this.http.get( `${environment.crmApi}/crm/customer/${id}/customerName` ).pipe( retry( 10 ) );
   }
 
 }
