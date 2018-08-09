@@ -125,7 +125,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'profileNames' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'это фио' : 'эти фио' } ?`, 'delete', params, 'profileNames' );
     }
   }
 
