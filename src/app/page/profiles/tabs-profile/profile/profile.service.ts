@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Observable, Subject } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
 
@@ -8,6 +8,9 @@ import { environment } from '../../../../../environments/environment';
   providedIn: 'root'
 } )
 export class ProfileService {
+
+  public subjectDeleteProfileNames = new Subject();
+  public subjectAddProfileNames = new Subject();
 
   constructor( private http: HttpClient ) { }
 
@@ -23,12 +26,21 @@ export class ProfileService {
     return this.http.delete( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
   }
 
-  addAdditionaProfile( params ): Observable<any> {
+  addAdditionalProfile( params ): Observable<any> {
+    this.subjectAddProfileNames.next();
     return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 
   getAllProfileNames( id: number ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/customer/${id}/customerName` ).pipe( retry( 10 ) );
+  }
+
+  deleteProfileNames( params ): Observable<any> {
+    this.subjectDeleteProfileNames.next();
+    const httpOptions = {
+      headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
+    };
+    return this.http.delete( `${environment.crmApi}/crm/customerName/deleteCustomerNames`, httpOptions ).pipe( retry( 10 ) );
   }
 
 }

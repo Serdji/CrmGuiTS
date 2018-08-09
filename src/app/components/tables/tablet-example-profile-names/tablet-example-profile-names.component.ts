@@ -112,7 +112,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteContact(): void {
+  deleteCustomerNames(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -124,8 +124,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      console.log( params );
-      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'contacts' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'profileNames' );
     }
   }
 

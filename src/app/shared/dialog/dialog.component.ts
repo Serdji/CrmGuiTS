@@ -70,6 +70,10 @@ export class DialogComponent implements OnInit {
         };
         this.contactService.putContact( params ).subscribe();
         break;
+      case 'profileNames':
+        this.dialogRef.close();
+        this.profileService.deleteProfileNames( this.data.params ).subscribe();
+        break;
     }
   }
 

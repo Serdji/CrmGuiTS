@@ -20,7 +20,7 @@
                       appAccessDisabled="true"
                       (emitAccessDisabled)="disabledCheckbox($event)"
                       [disabled]="isDisabled"
-                      [id]="element.contactId"
+                      [id]="element.customerNameId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
                       [checked]="selection.isSelected(element)">
@@ -70,7 +70,7 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
   <div class="table__button-wrapper">
-    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteContact()"
+    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteCustomerNames()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
       Удалить
       <mat-icon>delete</mat-icon>

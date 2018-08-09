@@ -41,6 +41,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.initProfile();
     this.initFormProfile();
     this.initFormAdditionalProfile();
+    this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames());
+    this.profileService.subjectAddProfileNames.subscribe( _ => this.refreshTableProfileNames());
   }
 
   private initProfile() {
@@ -56,6 +58,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       } );
   }
 
+
   private initProfileNames( id: number ) {
     this.profileService.getAllProfileNames( id )
       .pipe( takeWhile( _ => this.isActive ) )
@@ -63,6 +66,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
         this.profileNames = value;
         this.isLoader = false;
       } );
+  }
+
+  private refreshTableProfileNames() {
+    timer( 100 ).subscribe( _ => {
+      this.isLoader = true;
+      this.initProfileNames( this.profile.customerId );
+    } );
   }
 
   private initFormProfile() {
@@ -110,9 +120,16 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const params = {};
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAdditionalProfile.getRawValue() );
-      this.profileService.addAdditionaProfile( params ).subscribe();
+      this.profileService.addAdditionalProfile( params ).subscribe( _ => this.resetForm() );
     }
 
+  }
+
+  resetForm() {
+    this.formAdditionalProfile.reset();
+    for ( const formControlName in this.formAdditionalProfile.value ) {
+      this.formAdditionalProfile.get( `${ formControlName }` ).setErrors( null );
+    }
   }
 
   deleteProfile(): void {
