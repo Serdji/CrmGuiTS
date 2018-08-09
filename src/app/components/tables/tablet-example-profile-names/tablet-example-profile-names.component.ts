@@ -97,7 +97,6 @@ export class TabletExampleProfileNamesComponent implements OnInit {
 
   editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
     const fioObj = { firstName, lastName, secondName };
-    console.log(customerId, customerNameId, customerNameType, fioObj);
     this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
   }
 

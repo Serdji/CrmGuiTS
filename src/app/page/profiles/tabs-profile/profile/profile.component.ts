@@ -43,6 +43,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.initFormAdditionalProfile();
     this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames());
     this.profileService.subjectAddProfileNames.subscribe( _ => this.refreshTableProfileNames());
+    this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames());
   }
 
   private initProfile() {

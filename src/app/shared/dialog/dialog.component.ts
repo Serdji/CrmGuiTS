@@ -71,13 +71,13 @@ export class DialogComponent implements OnInit {
         break;
       case 'contact':
         this.dialogRef.close();
-        const params = {
+        const paramsContact = {
           'ContactId': this.data.params.contactId,
           'CustomerId': this.data.params.customerId,
           'ContactTypeId': this.data.params.typeId,
           'ContactText': this.formUpdateContact.get( 'contactText' ).value
         };
-        this.contactService.putContact( params ).subscribe();
+        this.contactService.putContact( paramsContact ).subscribe();
         break;
       case 'profileNames':
         this.dialogRef.close();
@@ -85,7 +85,15 @@ export class DialogComponent implements OnInit {
         break;
       case 'profileName':
         this.dialogRef.close();
-        console.log(this.data.params);
+        const paramsProfileName = {
+          'customerId': this.data.params.customerId,
+          'customerNameId': this.data.params.customerNameId,
+          'customerNameType': this.data.params.customerNameType,
+          'firstName': this.formUpdateProfileName.get( 'firstName' ).value,
+          'lastName': this.formUpdateProfileName.get( 'lastName' ).value,
+          'secondName': this.formUpdateProfileName.get( 'secondName' ).value,
+        };
+        this.profileService.putProfileName( paramsProfileName ).subscribe();
         break;
     }
   }

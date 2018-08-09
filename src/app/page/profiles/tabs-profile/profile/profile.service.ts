@@ -11,6 +11,7 @@ export class ProfileService {
 
   public subjectDeleteProfileNames = new Subject();
   public subjectAddProfileNames = new Subject();
+  public subjectPutProfileNames = new Subject();
 
   constructor( private http: HttpClient ) { }
 
@@ -41,6 +42,11 @@ export class ProfileService {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
     return this.http.delete( `${environment.crmApi}/crm/customerName/deleteCustomerNames`, httpOptions ).pipe( retry( 10 ) );
+  }
+
+  putProfileName( params ): Observable<any> {
+    this.subjectPutProfileNames.next();
+    return this.http.put( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 
 }
