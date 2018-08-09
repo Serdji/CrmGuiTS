@@ -49,6 +49,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
   }
 
   private initDataSource() {
+    this.tableDataSource = this.tableDataSource.filter( value => value.customerNameType !== 1 );
     this.dataSourceFun( this.tableDataSource );
   }
 
