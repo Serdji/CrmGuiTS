@@ -28,7 +28,6 @@ export class ProfileService {
   }
 
   addAdditionalProfile( params ): Observable<any> {
-    this.subjectAddProfileNames.next();
     return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 
