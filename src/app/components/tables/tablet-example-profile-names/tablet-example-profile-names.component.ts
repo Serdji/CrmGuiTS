@@ -53,7 +53,6 @@ export class TabletExampleProfileNamesComponent implements OnInit {
   }
 
   private dataSourceFun( params ) {
-    console.log(params);
     this.dataSource = new MatTableDataSource( params );
     timer( 1 ).subscribe( _ => {
       this.dataSource.sort = this.sort;

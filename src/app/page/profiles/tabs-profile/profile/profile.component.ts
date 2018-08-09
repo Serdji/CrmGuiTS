@@ -62,7 +62,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .subscribe( value => {
         this.profileNames = value;
         this.isLoader = false;
-        console.log(this.profileNames);
       } );
   }
 
