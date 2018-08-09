@@ -9,10 +9,27 @@
       <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
     </div>
   </div>
-  <div *ngIf="data.status === 'update'">
+  <div *ngIf="data.status === 'updateContact'">
     <form class="dialog__form" [formGroup]="formUpdateContact">
       <mat-form-field class="dialog__input">
         <input matInput formControlName="contactText" [placeholder]="this.data.params.typeCode">
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="data.status === 'updateProfileName'">
+    <form class="dialog__form" [formGroup]="formUpdateProfileName">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="firstName" placeholder="Имя">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="lastName" placeholder="Фамилия">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="secondName" placeholder="Второе имя">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
         Изменить

@@ -15,6 +15,7 @@ import { ContactService } from '../../page/profiles/tabs-profile/contact/contact
 export class DialogComponent implements OnInit {
 
   public formUpdateContact: FormGroup;
+  public formUpdateProfileName: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -35,8 +36,16 @@ export class DialogComponent implements OnInit {
     this.formUpdateContact = this.fb.group( {
       contactText: '',
     } );
-    if ( this.data.status === 'update' ) {
+    this.formUpdateProfileName = this.fb.group( {
+      firstName: '',
+      lastName: '',
+      secondName: '',
+    } );
+    if ( this.data.status === 'updateContact' ) {
       this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
+    }
+    if ( this.data.status === 'updateProfileName' ) {
+      this.formUpdateProfileName.patchValue( this.data.params.fioObj );
     }
   }
 
@@ -73,6 +82,10 @@ export class DialogComponent implements OnInit {
       case 'profileNames':
         this.dialogRef.close();
         this.profileService.deleteProfileNames( this.data.params ).subscribe();
+        break;
+      case 'profileName':
+        this.dialogRef.close();
+        console.log(this.data.params);
         break;
     }
   }

@@ -89,8 +89,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private initFormAdditionalProfile() {
     this.formAdditionalProfile = this.fb.group( {
-      lastName: '',
       firstName: '',
+      lastName: '',
       secondName: '',
     }, {
       updateOn: 'submit',
@@ -120,7 +120,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const params = {};
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAdditionalProfile.getRawValue() );
-      this.profileService.addAdditionalProfile( params ).subscribe( _ => this.resetForm() );
+      this.profileService.addAdditionalProfile( params ).subscribe( _ => {
+        this.resetForm();
+        this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
+      } );
     }
 
   }

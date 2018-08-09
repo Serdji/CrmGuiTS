@@ -94,7 +94,7 @@ export class TableExampleContactComponent implements OnInit {
   }
 
   editCreate( typeCode, typeId, contactId, customerId, text ): void {
-    this.windowDialog( ``, 'update',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
+    this.windowDialog( ``, 'updateContact',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
   }
 
   public isAllSelected() {

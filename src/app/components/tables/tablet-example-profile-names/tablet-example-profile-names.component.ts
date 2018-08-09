@@ -95,9 +95,10 @@ export class TabletExampleProfileNamesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( customerId, customerNameId, customerNameType ): void {
-    console.log(customerId, customerNameId, customerNameType );
-    // this.windowDialog( ``, 'update',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
+  editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
+    const fioObj = { firstName, lastName, secondName };
+    console.log(customerId, customerNameId, customerNameType, fioObj);
+    this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
   }
 
   public isAllSelected() {
