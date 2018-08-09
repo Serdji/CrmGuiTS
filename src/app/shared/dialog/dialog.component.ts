@@ -15,6 +15,7 @@ import { ContactService } from '../../page/profiles/tabs-profile/contact/contact
 export class DialogComponent implements OnInit {
 
   public formUpdateContact: FormGroup;
+  public formUpdateProfileName: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -35,8 +36,16 @@ export class DialogComponent implements OnInit {
     this.formUpdateContact = this.fb.group( {
       contactText: '',
     } );
-    if ( this.data.status === 'update' ) {
+    this.formUpdateProfileName = this.fb.group( {
+      firstName: '',
+      lastName: '',
+      secondName: '',
+    } );
+    if ( this.data.status === 'updateContact' ) {
       this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
+    }
+    if ( this.data.status === 'updateProfileName' ) {
+      this.formUpdateProfileName.patchValue( this.data.params.fioObj );
     }
   }
 
@@ -62,13 +71,29 @@ export class DialogComponent implements OnInit {
         break;
       case 'contact':
         this.dialogRef.close();
-        const params = {
+        const paramsContact = {
           'ContactId': this.data.params.contactId,
           'CustomerId': this.data.params.customerId,
           'ContactTypeId': this.data.params.typeId,
           'ContactText': this.formUpdateContact.get( 'contactText' ).value
         };
-        this.contactService.putContact( params ).subscribe();
+        this.contactService.putContact( paramsContact ).subscribe();
+        break;
+      case 'profileNames':
+        this.dialogRef.close();
+        this.profileService.deleteProfileNames( this.data.params ).subscribe();
+        break;
+      case 'profileName':
+        this.dialogRef.close();
+        const paramsProfileName = {
+          'customerId': this.data.params.customerId,
+          'customerNameId': this.data.params.customerNameId,
+          'customerNameType': this.data.params.customerNameType,
+          'firstName': this.formUpdateProfileName.get( 'firstName' ).value,
+          'lastName': this.formUpdateProfileName.get( 'lastName' ).value,
+          'secondName': this.formUpdateProfileName.get( 'secondName' ).value,
+        };
+        this.profileService.putProfileName( paramsProfileName ).subscribe();
         break;
     }
   }

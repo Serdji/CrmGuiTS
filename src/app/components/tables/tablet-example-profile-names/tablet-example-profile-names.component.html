@@ -1,10 +1,7 @@
-<div class="example-loading-shade" *ngIf="isLoadingResults">
-  <mat-spinner *ngIf="isLoadingResults"></mat-spinner>
-</div>
-
-<div class="example-container">
-
-
+<div class="table">
+  <mat-form-field class="table__input">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
+  </mat-form-field>
   <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
 
     <ng-container matColumnDef="select" sticky>
@@ -23,7 +20,7 @@
                       appAccessDisabled="true"
                       (emitAccessDisabled)="disabledCheckbox($event)"
                       [disabled]="isDisabled"
-                      [id]="element.customerId"
+                      [id]="element.customerNameId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
                       [checked]="selection.isSelected(element)">
@@ -31,64 +28,55 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Имя </mat-header-cell>
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Имя</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> фамилия </mat-header-cell>
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Фамилия</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Второе имя </mat-header-cell>
+    <ng-container matColumnDef="secondName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Второе имя</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
       </mat-cell>
     </ng-container>
 
-
-    <ng-container  matColumnDef="gender">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Пол </mat-header-cell>
-      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.gender}}</span>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container  matColumnDef="dob">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Дата </mat-header-cell>
-      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dob | date:'dd.MM.yyyy' }}</span>
-      </mat-cell>
-    </ng-container>
-
-    <ng-container  matColumnDef="customerId" stickyEnd>
+    <ng-container matColumnDef="contactId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon [id]="element.customerId" (click)="editCreate( element.customerId )">create</mat-icon>
+      <mat-cell #matCell *matCellDef="let element">
+        <mat-icon [id]="element.contactId" (click)="editCreate(
+        element.customerId,
+        element.customerNameId,
+        element.customerNameType,
+        element.firstName,
+        element.lastName,
+        element.secondName
+        )">create
+        </mat-icon>
       </mat-cell>
     </ng-container>
-
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
   </mat-table>
-</div>
-<mat-paginator #paginator
-               [length]="resultsLength"
-               [pageSize]="10"
-               [pageSizeOptions]="[10, 20, 50, 100, 200]"
-               [showFirstLastButtons]="true">
-</mat-paginator>
-
-<div class="table__button-wrapper">
-  <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteProfile()" [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-    Удалить
-    <mat-icon>delete</mat-icon>
-  </button>
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 20, 50, 100]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
+  <div class="table__button-wrapper">
+    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteCustomerNames()"
+            [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
+      Удалить
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
 </div>

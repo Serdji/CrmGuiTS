@@ -1,14 +1,18 @@
 export interface Iprofiles {
   totalRows: string;
   result: {
+    customerId: number;
+    gender: string;
+    customerNames: {
+      customerNameId: number;
       customerId: number;
-      gender: string;
-      prefix: string;
-      lastName: string;
+      customerNameType: number;
       firstName: string;
-      middleName: string;
-      dob: string;
+      secondName: any;
+      lastName: string;
     }[];
+    dob: string;
+  }[];
   filter: {
     customerId: number;
     gender: string;

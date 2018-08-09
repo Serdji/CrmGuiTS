@@ -39,7 +39,6 @@ export class AddProfileComponent implements OnInit, OnDestroy {
   private initFormProfile() {
     this.formProfile = this.fb.group( {
       gender: '',
-      prefix: '',
       lastName: '',
       firstName: '',
       middleName: '',

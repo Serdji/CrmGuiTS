@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { IprofileNames } from '../../../../interface/iprofile-names';
 
 
 @Component( {
@@ -22,7 +23,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public profile: Iprofile;
   public progress: boolean;
   public edit: boolean = false;
-  public updateProfileForm: FormGroup;
+  public formUpdateProfile: FormGroup;
+  public formAdditionalProfile: FormGroup;
+  public profileNames: IprofileNames[];
+  public isLoader: boolean = true;
 
   private isActive: boolean = true;
 
@@ -36,44 +40,100 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initProfile();
     this.initFormProfile();
+    this.initFormAdditionalProfile();
+    this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames());
+    this.profileService.subjectAddProfileNames.subscribe( _ => this.refreshTableProfileNames());
+    this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames());
   }
 
   private initProfile() {
     this.progress = true;
-    this.profileService.getProfile( this.id ).subscribe( ( profile: Iprofile ) => {
-      this.updateProfileForm.patchValue( profile );
-      this.profile = profile;
-      this.progress = false;
+    this.profileService.getProfile( this.id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value ) => {
+        Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+        this.formUpdateProfile.patchValue( value );
+        this.profile = value;
+        this.progress = false;
+        this.initProfileNames( value.customerId );
+      } );
+  }
+
+
+  private initProfileNames( id: number ) {
+    this.profileService.getAllProfileNames( id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.profileNames = value;
+        this.isLoader = false;
+      } );
+  }
+
+  private refreshTableProfileNames() {
+    timer( 100 ).subscribe( _ => {
+      this.isLoader = true;
+      this.initProfileNames( this.profile.customerId );
     } );
   }
 
   private initFormProfile() {
-    this.updateProfileForm = this.fb.group( {
+    this.formUpdateProfile = this.fb.group( {
       gender: '',
-      prefix: '',
       lastName: '',
       firstName: '',
-      middleName: '',
+      secondName: '',
       dob: '',
     }, {
       updateOn: 'submit',
     } );
   }
 
+  private initFormAdditionalProfile() {
+    this.formAdditionalProfile = this.fb.group( {
+      firstName: '',
+      lastName: '',
+      secondName: '',
+    }, {
+      updateOn: 'submit',
+    } );
+  }
+
   sendFormProfile(): void {
-    if ( !this.updateProfileForm.invalid ) {
+    if ( !this.formUpdateProfile.invalid ) {
       const params = {};
-      for ( const key in this.updateProfileForm.getRawValue() ) {
-        if ( this.updateProfileForm.get( key ).value !== 'dob' ) params[ key ] = this.updateProfileForm.get( key ).value;
+      for ( const key in this.formUpdateProfile.getRawValue() ) {
+        if ( this.formUpdateProfile.get( key ).value !== 'dob' ) params[ key ] = this.formUpdateProfile.get( key ).value;
       }
       Object.assign( params, { customerId: this.profile.customerId } );
-      Object.assign( params, { dob: moment( this.updateProfileForm.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
-      this.profileService.putProfile( params ).subscribe( ( profile: Iprofile ) => {
-        this.windowDialog( 'Пассажир успешно изменен', 'ok' );
-        this.profile = profile;
+      Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
+      this.profileService.putProfile( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( ( profile: Iprofile ) => {
+          this.windowDialog( 'Пассажир успешно изменен', 'ok' );
+          this.profile = profile;
+        } );
+    }
+
+  }
+
+  sendFormAdditionalProfile(): void {
+    if ( !this.formAdditionalProfile.invalid ) {
+      const params = {};
+      Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
+      Object.assign( params, this.formAdditionalProfile.getRawValue() );
+      this.profileService.addAdditionalProfile( params ).subscribe( _ => {
+        this.resetForm();
+        this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
       } );
     }
 
+  }
+
+  resetForm() {
+    this.formAdditionalProfile.reset();
+    for ( const formControlName in this.formAdditionalProfile.value ) {
+      this.formAdditionalProfile.get( `${ formControlName }` ).setErrors( null );
+    }
   }
 
   deleteProfile(): void {

@@ -11,6 +11,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
+import { Iprofile } from '../../../interface/iprofile';
 
 @Component( {
   selector: 'app-table-async-profile',
@@ -84,10 +85,15 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   }
 
   private initDataSource() {
+    this.tableDataSource = this.tableDataSource.map( value => {
+      Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+      delete value.customerNames;
+      return value;
+    });
     this.dataSourceFun( this.tableDataSource );
   }
 
-  private dataSourceFun( params ) {
+  private dataSourceFun( params: Iprofile[] ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 ).subscribe( _ => {
       this.dataSource.sort = this.sort;

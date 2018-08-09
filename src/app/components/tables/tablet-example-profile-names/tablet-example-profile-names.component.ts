@@ -11,11 +11,11 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component( {
-  selector: 'app-table-example-contact',
-  templateUrl: './table-example-contact.component.html',
-  styleUrls: [ './table-example-contact.component.styl' ],
+  selector: 'app-tablet-example-profile-names',
+  templateUrl: './tablet-example-profile-names.component.html',
+  styleUrls: [ './tablet-example-profile-names.component.styl' ],
 } )
-export class TableExampleContactComponent implements OnInit {
+export class TabletExampleProfileNamesComponent implements OnInit {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -41,13 +41,15 @@ export class TableExampleContactComponent implements OnInit {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'contactTypeId',
-      'contactText',
+      'firstName',
+      'lastName',
+      'secondName',
       'contactId',
     ];
   }
 
   private initDataSource() {
+    this.tableDataSource = this.tableDataSource.filter( value => value.customerNameType !== 1 );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -93,8 +95,9 @@ export class TableExampleContactComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( typeCode, typeId, contactId, customerId, text ): void {
-    this.windowDialog( ``, 'updateContact',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
+  editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
+    const fioObj = { firstName, lastName, secondName };
+    this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
   }
 
   public isAllSelected() {
@@ -110,7 +113,7 @@ export class TableExampleContactComponent implements OnInit {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteContact(): void {
+  deleteCustomerNames(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -122,8 +125,7 @@ export class TableExampleContactComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      console.log( params );
-      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'contacts' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'profileNames' );
     }
   }
 
