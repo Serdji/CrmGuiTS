@@ -53,6 +53,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
   }
 
   private dataSourceFun( params ) {
+    console.log(params);
     this.dataSource = new MatTableDataSource( params );
     timer( 1 ).subscribe( _ => {
       this.dataSource.sort = this.sort;
@@ -94,8 +95,9 @@ export class TabletExampleProfileNamesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( typeCode, typeId, contactId, customerId, text ): void {
-    this.windowDialog( ``, 'update',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
+  editCreate( customerId, customerNameId, customerNameType ): void {
+    console.log(customerId, customerNameId, customerNameType );
+    // this.windowDialog( ``, 'update',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
   }
 
   public isAllSelected() {
