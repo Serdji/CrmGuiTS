@@ -18,6 +18,10 @@ export class DocumentService {
     return this.http.get( `${environment.crmApi}/crm/customer/${id}/document` ).pipe( retry( 10 ) );
   }
 
+  getDocumentTypes(): Observable<any> {
+    return this.http.get( `${environment.crmApi}/crm/documentType` ).pipe( retry( 10 ) );
+  }
+
   putDocument( params ): Observable<any> {
     this.subjectPutDocuments.next();
     return this.http.put( `${environment.crmApi}/crm/document`, params ).pipe( retry( 10 ) );
