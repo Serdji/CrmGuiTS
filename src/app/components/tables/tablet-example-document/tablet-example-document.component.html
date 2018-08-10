@@ -20,11 +20,25 @@
                       appAccessDisabled="true"
                       (emitAccessDisabled)="disabledCheckbox($event)"
                       [disabled]="isDisabled"
-                      [id]="element.customerNameId"
+                      [id]="element.documentId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
                       [checked]="selection.isSelected(element)">
         </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="documentType">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Тип документа</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.documentType}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="num">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Номер документа</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.num}}</span>
       </mat-cell>
     </ng-container>
 
@@ -49,17 +63,18 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="customerNameId" stickyEnd>
+    <ng-container  matColumnDef="expDate">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Дата </mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.expDate | date:'dd.MM.yyyy' }}</span>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="documentId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon [id]="element.customerNameId" (click)="editCreate(
-        element.customerId,
-        element.customerNameId,
-        element.customerNameType,
-        element.firstName,
-        element.lastName,
-        element.secondName
-        )">create
+        <mat-icon [id]="element.documentId" (click)="editCreate()">create
         </mat-icon>
       </mat-cell>
     </ng-container>
@@ -73,7 +88,7 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
   <div class="table__button-wrapper">
-    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteCustomerNames()"
+    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteDocuments()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
       Удалить
       <mat-icon>delete</mat-icon>

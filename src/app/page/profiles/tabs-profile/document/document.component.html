@@ -35,5 +35,10 @@
         </button>
       </div>
     </form>
+
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <app-tablet-example-document  *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-tablet-example-document>
+    </ng-template>
   </mat-card>
 </div>
