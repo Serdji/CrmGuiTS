@@ -103,13 +103,13 @@ export class ProfileComponent implements OnInit, OnDestroy {
       for ( const key in this.formUpdateProfile.getRawValue() ) {
         if ( this.formUpdateProfile.get( key ).value !== 'dob' ) params[ key ] = this.formUpdateProfile.get( key ).value;
       }
-      Object.assign( params, { customerId: this.profile.customerId, custonerNameId: this.profile.customerNameId } );
+      Object.assign( params, { customerId: this.profile.customerId, customerNameId: this.profile.customerNameId } );
       Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( profile: Iprofile ) => {
+        .subscribe(  profile  => {
+          Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
           this.windowDialog( 'Пассажир успешно изменен', 'ok' );
-          console.log(profile);
           this.profile = profile;
         } );
     }
