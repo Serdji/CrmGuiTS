@@ -17,7 +17,7 @@
           <span><b>Второе имя: </b>{{profile.secondName}}</span>
         </div>
         <div class="profile__list">
-          <span><b>Пол: </b>{{profile.gender}}</span>
+          <span><b>Пол: </b>{{profile.gender | fieldTranslation}}</span>
         </div>
         <div class="profile__list">
           <span><b>data: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
@@ -42,8 +42,8 @@
         </mat-form-field>
         <mat-form-field class="profile__input">
           <mat-select formControlName="gender" placeholder="Пол">
-            <mat-option value="m">m</mat-option>
-            <mat-option value="f">f</mat-option>
+            <mat-option value="m">М</mat-option>
+            <mat-option value="f">Ж</mat-option>
           </mat-select>
         </mat-form-field>
         <mat-form-field class="profile__input">
@@ -52,7 +52,7 @@
           <mat-datepicker touchUi="true" #dob></mat-datepicker>
         </mat-form-field>
         <div class="profile__button-wrapper">
-          <button class="profile__button _left-button" mat-raised-button (click)="sendFormProfile()" color="primary">
+          <button class="profile__button _left-button" mat-raised-button (click)="sendFormUpdateProfile()" color="primary">
             Изменить
           </button>
           <button class="profile__button" mat-raised-button (click)="deleteProfile()" color="warn">
@@ -65,7 +65,7 @@
 
     <hr>
 
-    <form class="profile__form _additional" [formGroup]="formAdditionalProfile">
+    <form class="profile__form _Add" [formGroup]="formAddProfile">
 
       <mat-form-field class="profile__input">
         <input matInput formControlName="firstName" placeholder="Имя">
@@ -78,15 +78,17 @@
       <mat-form-field class="profile__input">
         <input matInput formControlName="secondName" placeholder="Второе имя">
       </mat-form-field>
-      <button appAccessRights="customers:update" class="profile__button" mat-raised-button (click)="sendFormAdditionalProfile()" color="primary">
+      <button appAccessRights="customers:update" class="profile__button" mat-raised-button (click)="sendFormAddProfile()" color="primary">
         Добавать дополнительно ФИО
       </button>
     </form>
 
-    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaserDisabled>
-      <app-tablet-example-profile-names  *ngIf="profileNames.length !== 0" [tableDataSource]="profileNames"></app-tablet-example-profile-names>
-    </ng-template>
+    <div *ngIf="profileNames?.length > 1" >
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-tablet-example-profile-names  *ngIf="profileNames.length > 1" [tableDataSource]="profileNames"></app-tablet-example-profile-names>
+      </ng-template>
+    </div>
 
   </mat-card>
 </div>

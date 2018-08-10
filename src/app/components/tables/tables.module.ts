@@ -10,12 +10,14 @@ import { TableAsyncProfileService } from './table-async-profile/table-async-prof
 import { TableExampleContactComponent } from './tablet-example-contact/table-example-contact.component';
 import { TabletExampleProfileNamesComponent } from './tablet-example-profile-names/tablet-example-profile-names.component';
 import { TabletExampleDocumentComponent } from './tablet-example-document/tablet-example-document.component';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     DirectivesModule,
+    PipesModule,
   ],
   declarations: [
     TableExampleComponent,

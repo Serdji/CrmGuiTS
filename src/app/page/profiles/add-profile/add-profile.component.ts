@@ -41,7 +41,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
       gender: '',
       lastName: '',
       firstName: '',
-      middleName: '',
+      secondName: '',
       dob: '',
     }, {
       updateOn: 'submit',

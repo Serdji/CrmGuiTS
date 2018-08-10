@@ -26,8 +26,8 @@ export class SidenavService {
         name: 'Пассажиры',
         icon: 'airplanemode_active',
         link: [
-          { url: '/crm/addprofile', title: 'Добавить пассажира' },
-          { url: '/crm/profilesearch', title: 'Поиск пассажира' }
+          { url: '/crm/profilesearch', title: 'Поиск пассажира' },
+          { url: '/crm/addprofile', title: 'Добавить пассажира' }
         ]
       },
       {

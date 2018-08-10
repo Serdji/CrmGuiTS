@@ -39,13 +39,15 @@
         </button>
       </div>
     </form>
-    <hr>
-    <mat-card-header *ngIf="documents.length !== 0">
-      <h2 class="document__header">Документы пассажира</h2>
-    </mat-card-header>
-    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaserDisabled>
-      <app-tablet-example-document *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-tablet-example-document>
-    </ng-template>
+    <div *ngIf="documents?.length !== 0">
+      <hr>
+      <mat-card-header>
+        <h2 class="document__header">Документы пассажира</h2>
+      </mat-card-header>
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-tablet-example-document *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-tablet-example-document>
+      </ng-template>
+    </div>
   </mat-card>
 </div>
