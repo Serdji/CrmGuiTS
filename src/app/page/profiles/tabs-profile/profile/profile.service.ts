@@ -26,7 +26,7 @@ export class ProfileService {
     return this.http.delete( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
   }
 
-  addAdditionalProfile( params ): Observable<any> {
+  addAddProfile( params ): Observable<any> {
     return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 

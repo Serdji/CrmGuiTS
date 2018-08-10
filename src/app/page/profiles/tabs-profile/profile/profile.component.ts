@@ -24,7 +24,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public edit: boolean = false;
   public formUpdateProfile: FormGroup;
-  public formAdditionalProfile: FormGroup;
+  public formAddProfile: FormGroup;
   public profileNames: IprofileNames[];
   public isLoader: boolean = true;
 
@@ -40,7 +40,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initProfile();
     this.initFormProfile();
-    this.initFormAdditionalProfile();
+    this.initFormAddProfile();
     this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames() );
     this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames() );
   }
@@ -87,8 +87,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private initFormAdditionalProfile() {
-    this.formAdditionalProfile = this.fb.group( {
+  private initFormAddProfile() {
+    this.formAddProfile = this.fb.group( {
       firstName: '',
       lastName: '',
       secondName: '',
@@ -97,30 +97,31 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  sendFormProfile(): void {
+  sendFormUpdateProfile(): void {
     if ( !this.formUpdateProfile.invalid ) {
       const params = {};
       for ( const key in this.formUpdateProfile.getRawValue() ) {
         if ( this.formUpdateProfile.get( key ).value !== 'dob' ) params[ key ] = this.formUpdateProfile.get( key ).value;
       }
-      Object.assign( params, { customerId: this.profile.customerId } );
+      Object.assign( params, { customerId: this.profile.customerId, custonerNameId: this.profile.customerNameId } );
       Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( profile: Iprofile ) => {
           this.windowDialog( 'Пассажир успешно изменен', 'ok' );
+          console.log(profile);
           this.profile = profile;
         } );
     }
 
   }
 
-  sendFormAdditionalProfile(): void {
-    if ( !this.formAdditionalProfile.invalid ) {
+  sendFormAddProfile(): void {
+    if ( !this.formAddProfile.invalid ) {
       const params = {};
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
-      Object.assign( params, this.formAdditionalProfile.getRawValue() );
-      this.profileService.addAdditionalProfile( params ).subscribe( _ => {
+      Object.assign( params, this.formAddProfile.getRawValue() );
+      this.profileService.addAddProfile( params ).subscribe( _ => {
         this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
         timer( 1500 ).subscribe( _ => {
           this.refreshTableProfileNames();
@@ -132,9 +133,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   resetForm() {
-    this.formAdditionalProfile.reset();
-    for ( const formControlName in this.formAdditionalProfile.value ) {
-      this.formAdditionalProfile.get( `${ formControlName }` ).setErrors( null );
+    this.formAddProfile.reset();
+    for ( const formControlName in this.formAddProfile.value ) {
+      this.formAddProfile.get( `${ formControlName }` ).setErrors( null );
     }
   }
 
