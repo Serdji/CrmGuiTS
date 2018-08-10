@@ -36,6 +36,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.initFormDocument();
     this.initDocuments();
     this.documentService.subjectDeleteDocuments.subscribe( _ => this.refreshTable() );
+    this.documentService.subjectPutDocuments.subscribe( _ => this.refreshTable() );
   }
 
   private initDocumentTypes() {

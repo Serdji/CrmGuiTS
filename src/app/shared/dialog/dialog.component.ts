@@ -7,6 +7,7 @@ import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContactService } from '../../page/profiles/tabs-profile/contact/contact.service';
 import { DocumentService } from '../../page/profiles/tabs-profile/document/document.service';
+import * as moment from 'moment';
 
 @Component( {
   selector: 'app-dialog',
@@ -17,6 +18,7 @@ export class DialogComponent implements OnInit {
 
   public formUpdateContact: FormGroup;
   public formUpdateProfileName: FormGroup;
+  public formUpdateDocument: FormGroup;
 
   constructor(
     private userService: UserService,
@@ -43,11 +45,21 @@ export class DialogComponent implements OnInit {
       lastName: '',
       secondName: '',
     } );
+    this.formUpdateDocument = this.fb.group( {
+      num: '',
+      firstName: '',
+      lastName: '',
+      secondName: '',
+      expDate: '',
+    } );
     if ( this.data.status === 'updateContact' ) {
       this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
     }
     if ( this.data.status === 'updateProfileName' ) {
       this.formUpdateProfileName.patchValue( this.data.params.fioObj );
+    }
+    if ( this.data.status === 'updateDocument' ) {
+      this.formUpdateDocument.patchValue( this.data.params.fioObj );
     }
   }
 
@@ -100,6 +112,20 @@ export class DialogComponent implements OnInit {
       case 'documents':
         this.dialogRef.close();
         this.documentService.deleteDocuments( this.data.params ).subscribe();
+        break;
+      case 'document':
+        this.dialogRef.close();
+        const paramsDocument = {
+          'documentId': this.data.params.documentId,
+          'customerId': this.data.params.customerId,
+          'documentTypeId': this.data.params.documentTypeId,
+          'num': this.formUpdateDocument.get( 'num' ).value,
+          'firstName': this.formUpdateDocument.get( 'firstName' ).value,
+          'lastName': this.formUpdateDocument.get( 'lastName' ).value,
+          'secondName': this.formUpdateDocument.get( 'secondName' ).value,
+          'expDate':  moment( this.formUpdateDocument.get( 'expDate' ).value ).format( 'YYYY-MM-DD' ),
+        };
+        this.documentService.putDocument( paramsDocument ).subscribe();
         break;
     }
   }

@@ -97,10 +97,10 @@ export class TabletExampleDocumentComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  // editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
-  //   const fioObj = { firstName, lastName, secondName };
-  //   // this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
-  // }
+  editCreate( documentId, customerId, documentTypeId, num, firstName, lastName, secondName, expDate ): void {
+    const fioObj = { num, firstName, lastName, secondName, expDate };
+    this.windowDialog( ``, 'updateDocument',  { documentId, customerId, documentTypeId, fioObj } , 'document' );
+  }
 
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
