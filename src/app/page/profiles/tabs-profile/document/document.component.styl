@@ -5,25 +5,27 @@
 
   &__form
     margin-top: 20px
-    height: 440px;
     display: flex;
-    flex-direction: column;
-
-  &._additional
     justify-content: space-around;
     align-items: center
-    flex-direction: row;
+    flex-direction: column;
     height: auto;
 
-    .profile__input
-      width: 25%;
-
-    .profile__button
-      height: 36px;
-
+    &-wrapper
+      display: flex;
+      justify-content: space-between;
+      align-items: center
+      flex-direction: row;
+      height: auto;
+      width: 100%;
 
   &__input
+    width: 24%
     display: block
+
+    &._flex
+      flex: 1;
+      margin-left: 15px
 
   &__button
 
@@ -32,5 +34,6 @@
       margin-right: 5px
 
     &-wrapper
+      width: 100%;
       margin-top: auto;
       display: flex
