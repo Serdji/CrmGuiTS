@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { TabsProfileComponent } from './tabs-profile.component';
 import { TabsProfileService } from './tabs-profile.service';
 import { ContactModule } from './contact/contact.module';
+import { DocumentModule } from './document/document.module';
 
 @NgModule( {
   imports: [
@@ -14,6 +15,7 @@ import { ContactModule } from './contact/contact.module';
     SharedModule,
     ProfileModule,
     ContactModule,
+    DocumentModule,
   ],
   declarations: [ TabsProfileComponent ],
   providers: [ TabsProfileService ]

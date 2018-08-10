@@ -11,11 +11,11 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 
 @Component( {
-  selector: 'app-tablet-example-profile-names',
-  templateUrl: './tablet-example-profile-names.component.html',
-  styleUrls: [ './tablet-example-profile-names.component.styl' ],
+  selector: 'app-tablet-example-document',
+  templateUrl: './tablet-example-document.component.html',
+  styleUrls: [ './tablet-example-document.component.styl' ],
 } )
-export class TabletExampleProfileNamesComponent implements OnInit {
+export class TabletExampleDocumentComponent implements OnInit {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -41,15 +41,17 @@ export class TabletExampleProfileNamesComponent implements OnInit {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
+      'documentType',
+      'num',
       'firstName',
       'lastName',
       'secondName',
-      'customerNameId',
+      'expDate',
+      'documentId',
     ];
   }
 
   private initDataSource() {
-    this.tableDataSource = this.tableDataSource.filter( value => value.customerNameType !== 1 );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -95,9 +97,9 @@ export class TabletExampleProfileNamesComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
-    const fioObj = { firstName, lastName, secondName };
-    this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
+  editCreate( documentId, customerId, documentTypeId, num, firstName, lastName, secondName, expDate ): void {
+    const fioObj = { num, firstName, lastName, secondName, expDate };
+    this.windowDialog( ``, 'updateDocument',  { documentId, customerId, documentTypeId, fioObj } , 'document' );
   }
 
   public isAllSelected() {
@@ -113,7 +115,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteCustomerNames(): void {
+  deleteDocuments(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -125,7 +127,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'это фио' : 'эти фио' } ?`, 'delete', params, 'profileNames' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот документ' : 'эти докомунты' } ?`, 'delete', params, 'documents' );
     }
   }
 

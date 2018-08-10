@@ -1,6 +1,6 @@
 select = 70px
 
-customerNameId = 50px
+documentId = 50px
 
 
 .table
@@ -32,14 +32,16 @@ customerNameId = 50px
 
   &-select
     width: select;
-
+  &-documentType,
+  &-num,
   &-firstName,
   &-lastName,
-  &-secondName
+  &-secondName,
+  &-expDate
     flex: 1;
 
-  &-customerNameId
-    width: customerNameId;
+  &-documentId
+    width: documentId;
     margin-left: auto;
     mat-icon
       cursor: pointer

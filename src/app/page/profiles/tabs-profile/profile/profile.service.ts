@@ -10,7 +10,6 @@ import { environment } from '../../../../../environments/environment';
 export class ProfileService {
 
   public subjectDeleteProfileNames = new Subject();
-  public subjectAddProfileNames = new Subject();
   public subjectPutProfileNames = new Subject();
 
   constructor( private http: HttpClient ) { }
@@ -28,7 +27,6 @@ export class ProfileService {
   }
 
   addAdditionalProfile( params ): Observable<any> {
-    this.subjectAddProfileNames.next();
     return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 

@@ -41,9 +41,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.initProfile();
     this.initFormProfile();
     this.initFormAdditionalProfile();
-    this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames());
-    this.profileService.subjectAddProfileNames.subscribe( _ => this.refreshTableProfileNames());
-    this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames());
+    this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames() );
+    this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames() );
   }
 
   private initProfile() {
@@ -122,8 +121,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAdditionalProfile.getRawValue() );
       this.profileService.addAdditionalProfile( params ).subscribe( _ => {
-        this.resetForm();
         this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
+        timer( 1500 ).subscribe( _ => {
+          this.refreshTableProfileNames();
+          this.resetForm();
+        } );
       } );
     }
 

@@ -36,4 +36,29 @@
       </button>
     </form>
   </div>
+
+  <div *ngIf="data.status === 'updateDocument'">
+    <form class="dialog__form" [formGroup]="formUpdateDocument">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="num" placeholder="Номер документа">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="firstName" placeholder="Имя">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="lastName" placeholder="Фамилия">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="secondName" placeholder="Второе имя">
+      </mat-form-field>
+      <mat-form-field class="document__input">
+        <input matInput formControlName="expDate" placeholder="дд.мм.гггг" [matDatepicker]="expDate">
+        <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #expDate></mat-datepicker>
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
+  </div>
 </div>
