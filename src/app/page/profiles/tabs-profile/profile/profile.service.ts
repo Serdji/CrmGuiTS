@@ -10,7 +10,6 @@ import { environment } from '../../../../../environments/environment';
 export class ProfileService {
 
   public subjectDeleteProfileNames = new Subject();
-  public subjectAddProfileNames = new Subject();
   public subjectPutProfileNames = new Subject();
 
   constructor( private http: HttpClient ) { }
