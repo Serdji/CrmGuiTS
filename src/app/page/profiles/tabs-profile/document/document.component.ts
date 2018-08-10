@@ -35,6 +35,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.initDocumentTypes();
     this.initFormDocument();
     this.initDocuments();
+    this.documentService.subjectDeleteDocuments.subscribe( _ => this.refreshTable() );
   }
 
   private initDocumentTypes() {
@@ -50,7 +51,13 @@ export class DocumentComponent implements OnInit, OnDestroy {
         this.documents = value;
         this.isLoader = false;
       } );
+  }
 
+  private refreshTable() {
+    timer(100).subscribe( _ => {
+      this.isLoader = true;
+      this.initDocuments();
+    });
   }
 
   private initFormDocument() {
@@ -89,6 +96,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
         .subscribe( _ => {
           this.windowDialog( 'Документ успешно добавлен', 'ok' );
           this.resetForm();
+          this.refreshTable();
         } );
     }
   }

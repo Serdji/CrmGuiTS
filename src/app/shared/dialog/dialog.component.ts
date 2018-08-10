@@ -6,6 +6,7 @@ import { ProfileSearchService } from '../../page/profiles/profile-search/profile
 import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContactService } from '../../page/profiles/tabs-profile/contact/contact.service';
+import { DocumentService } from '../../page/profiles/tabs-profile/document/document.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -22,6 +23,7 @@ export class DialogComponent implements OnInit {
     private profileSearchService: ProfileSearchService,
     private profileService: ProfileService,
     private contactService: ContactService,
+    private documentService: DocumentService,
     private fb: FormBuilder,
     private router: Router,
     public dialogRef: MatDialogRef<any>,
@@ -94,6 +96,10 @@ export class DialogComponent implements OnInit {
           'secondName': this.formUpdateProfileName.get( 'secondName' ).value,
         };
         this.profileService.putProfileName( paramsProfileName ).subscribe();
+        break;
+      case 'documents':
+        this.dialogRef.close();
+        this.documentService.deleteDocuments( this.data.params ).subscribe();
         break;
     }
   }

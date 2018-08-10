@@ -41,8 +41,8 @@ export class TabletExampleDocumentComponent implements OnInit {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'num',
       'documentType',
+      'num',
       'firstName',
       'lastName',
       'secondName',
@@ -127,7 +127,7 @@ export class TabletExampleDocumentComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      // this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'это фио' : 'эти фио' } ?`, 'delete', params, 'profileNames' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот документ' : 'эти докомунты' } ?`, 'delete', params, 'documents' );
     }
   }
 
