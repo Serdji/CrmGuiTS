@@ -131,6 +131,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch = this.fb.group( {
       lastname: '',
       firstname: '',
+      dobfrominclude: '',
+      dobtoexclude: '',
       ticketnum: '',
       booknum: '',
       emdnum: '',
@@ -184,7 +186,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         }
 
         this.formProfileSearch.patchValue( newObjectForm );
-        this.serverRequest( newObjectForm );
+        this.creatingObjectForm();
       }
     } );
   }
@@ -208,6 +210,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     for ( const key of Object.keys( highlightObj ) ) {
       if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) params[ key ] = highlightObj[ key ];
     }
+
+    console.log(params);
 
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
 
@@ -240,12 +244,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'flightdatefrom'
           && key !== 'flightdateto'
           && key !== 'countrydatefrom'
-          && key !== 'countrydateto';
+          && key !== 'countrydateto'
+          && key !== 'dobfrominclude'
+          && key !== 'dobtoexclude';
       case 'data':
         return key === 'flightdatefrom'
           || key === 'flightdateto'
           || key === 'countrydatefrom'
-          || key === 'countrydateto';
+          || key === 'countrydateto'
+          || key === 'dobfrominclude'
+          || key === 'dobtoexclude';
       case 'country':
         return key === 'countryidfrom'
           || key === 'countryidto';

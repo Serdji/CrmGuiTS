@@ -1,6 +1,6 @@
 <div class="profile-search">
   <form class="profile-search__form" [formGroup]="formProfileSearch">
-    <mat-grid-list cols="4" rowHeight="300px">
+    <mat-grid-list cols="4" rowHeight="350px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
@@ -12,6 +12,16 @@
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="id" type="text" placeholder="Profile ID">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dobfrominclude" placeholder="dd.MM.yyyy" [matDatepicker]="DobFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DobFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DobFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dobtoexclude" placeholder="dd.MM.yyyy" [matDatepicker]="DobToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DobToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DobToExclude color="primary"></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
