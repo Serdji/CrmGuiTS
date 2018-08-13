@@ -127,6 +127,11 @@ export class DialogComponent implements OnInit {
         };
         this.documentService.putDocument( paramsDocument ).subscribe();
         break;
+      case 'restart':
+        this.dialogRef.close();
+        localStorage.clear();
+        this.router.navigate( [ '' ] );
+        break;
     }
   }
 
