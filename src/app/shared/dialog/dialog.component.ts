@@ -8,6 +8,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ContactService } from '../../page/profiles/tabs-profile/contact/contact.service';
 import { DocumentService } from '../../page/profiles/tabs-profile/document/document.service';
 import * as moment from 'moment';
+import { AuthService } from '../../services/auth.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -26,6 +27,7 @@ export class DialogComponent implements OnInit {
     private profileService: ProfileService,
     private contactService: ContactService,
     private documentService: DocumentService,
+    private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
     public dialogRef: MatDialogRef<any>,
@@ -129,6 +131,8 @@ export class DialogComponent implements OnInit {
         break;
       case 'restart':
         this.dialogRef.close();
+        const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
+        this.auth.revokeRefreshToken( token.refreshToken ).subscribe();
         localStorage.clear();
         this.router.navigate( [ '' ] );
         break;
