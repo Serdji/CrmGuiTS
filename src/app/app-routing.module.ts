@@ -13,6 +13,7 @@ import { AccessRightsUserGuard } from './guards/access-rights-user.guard';
 import { AccessRightsProfileGuard } from './guards/access-rights-profile.guard';
 import { FormTableAsyncProfileSettingsComponent } from './page/settings/form-table-async-profile-settings/form-table-async-profile-settings.component';
 import { TabsProfileComponent } from './page/profiles/tabs-profile/tabs-profile.component';
+import { RestartComponent } from './page/settings/restart/restart.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -29,6 +30,7 @@ const routes: Routes = [
         { path: 'profile/:id', component: TabsProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
         { path: 'addprofile', component: AddProfileComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
+        { path: 'restart', component: RestartComponent },
       ],
     },
   ]

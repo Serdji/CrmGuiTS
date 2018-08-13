@@ -19,7 +19,7 @@ export interface Iprofiles {
     prefix: string;
     lastName: string;
     firstName: string;
-    middleName: string;
+    secondName: string;
     dobFromInclude: string;
     dobToExclude: string;
   };
