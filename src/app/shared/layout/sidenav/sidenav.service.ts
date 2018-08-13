@@ -35,6 +35,7 @@ export class SidenavService {
         icon: 'settings',
         link: [
           { url: '/crm/form-table-async-profile-settings', title: 'Таблицы пассажиров' },
+          { url: '/crm/restart', title: 'Перезагрузка' },
         ]
       }
     ];
