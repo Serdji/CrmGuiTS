@@ -31,10 +31,10 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="ticketnum" type="text" placeholder="№ билета">
+              <input matInput formControlName="ticket" type="text" placeholder="№ билета">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="booknum" type="text" placeholder="№ брони">
+              <input matInput formControlName="recloc" type="text" placeholder="№ брони">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="emdnum" type="text" placeholder="№ EMD">
@@ -47,7 +47,7 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="flightnum" type="text" placeholder="№ рейса">
+              <input matInput formControlName="flight" type="text" placeholder="№ рейса">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="flightdatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="flightDateFrom">
@@ -79,14 +79,14 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="countrydatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="countryDateFrom">
-              <mat-datepicker-toggle matSuffix [for]="countryDateFrom"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #countryDateFrom></mat-datepicker>
+              <input matInput formControlName="deptimefrominclude" placeholder="dd.MM.yyyy" [matDatepicker]="DepTimeFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="countrydateto" placeholder="dd.MM.yyyy" [matDatepicker]="countryDateTo">
-              <mat-datepicker-toggle matSuffix [for]="countryDateTo"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #countryDateTo></mat-datepicker>
+              <input matInput formControlName="deptimetoexclude" placeholder="dd.MM.yyyy" [matDatepicker]="DepTimeToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeToExclude></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>

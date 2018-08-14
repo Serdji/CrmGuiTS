@@ -133,16 +133,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       firstname: '',
       dobfrominclude: '',
       dobtoexclude: '',
-      ticketnum: '',
-      booknum: '',
+      ticket: '',
+      recloc: '',
       emdnum: '',
-      flightnum: '',
+      flight: '',
       flightdatefrom: '',
       flightdateto: '',
       countryidfrom: '',
       countryidto: '',
-      countrydatefrom: '',
-      countrydateto: '',
+      deptimefrominclude: '',
+      deptimetoexclude: '',
       divisionid: '',
       groupid: '',
       cabinet: '',
@@ -243,15 +243,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'groupid'
           && key !== 'flightdatefrom'
           && key !== 'flightdateto'
-          && key !== 'countrydatefrom'
-          && key !== 'countrydateto'
+          && key !== 'deptimefrominclude'
+          && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
           && key !== 'dobtoexclude';
       case 'data':
         return key === 'flightdatefrom'
           || key === 'flightdateto'
-          || key === 'countrydatefrom'
-          || key === 'countrydateto'
+          || key === 'deptimefrominclude'
+          || key === 'deptimetoexclude'
           || key === 'dobfrominclude'
           || key === 'dobtoexclude';
       case 'country':
