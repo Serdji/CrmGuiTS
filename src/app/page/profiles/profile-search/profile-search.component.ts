@@ -12,6 +12,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IprofileSearch } from '../../../interface/iprofile-search';
+import { Ilocation } from '../../../interface/ilocation';
 
 @Component( {
   selector: 'app-profile-search',
@@ -22,8 +23,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
   public countrys: Icountry[];
-  public countryFromOptions: Observable<Icountry[]>;
-  public countryToOptions: Observable<Icountry[]>;
+  public locations: Ilocation[];
+  public locationFromOptions: Observable<Ilocation[]>;
+  public locationToOptions: Observable<Ilocation[]>;
   public trees: Itree[];
   public groups: Igroups[];
   public profiles: Iprofiles;
@@ -44,13 +46,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initCountry();
+    this.initLocation();
     this.initForm();
     this.initAutocomplete();
     this.initTree();
     this.initGroups();
     this.initTableAsync();
-    this.profileSearchService.subjectDeleteProfile.subscribe( _=> this.serverRequest(this.sendProfileParams));
+    this.profileSearchService.subjectDeleteProfile.subscribe( _ => this.serverRequest( this.sendProfileParams ) );
   }
 
 
@@ -73,7 +75,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initTableAsync() {
     this.tableAsyncProfileService.subjectPage.subscribe( ( value: IpagPage ) => {
       const pageIndex = value.pageIndex * value.pageSize;
-      const paramsAndCount = Object.assign( this.sendProfileParams,{ sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
+      const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
       this.profileSearchService.getProfileSearch( paramsAndCount )
         .pipe(
           takeWhile( _ => this.isActive )
@@ -101,28 +103,26 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( ( value: Igroups[] ) => this.groups = value );
   }
 
-  private initCountry() {
-    this.profileSearchService.getCountry()
+  private initLocation() {
+    this.profileSearchService.getLocation()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Icountry[] ) => {
-        this.countrys = value;
+      .subscribe( ( value: Ilocation[] ) => {
+        this.locations = value;
       } );
   }
 
   private initAutocomplete() {
-    this.countryFromOptions = this.autocomplete( 'countryidfrom' );
-    this.countryToOptions = this.autocomplete( 'countryidto' );
+    this.locationFromOptions = this.autocomplete( 'deppoint' );
+    this.locationToOptions = this.autocomplete( 'arrpoint' );
   }
 
-  private autocomplete( formControlName: string ): Observable<Icountry[]> {
+  private autocomplete( formControlName: string ): Observable<Ilocation[]> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
         map( val => {
-          if ( val.length >= this.autLength ) {
-            return this.countrys.filter( country => country.rName.toLowerCase().includes( val.toLowerCase() ) );
-          }
+          return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
         } )
       );
   }
@@ -133,16 +133,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       firstname: '',
       dobfrominclude: '',
       dobtoexclude: '',
-      ticketnum: '',
-      booknum: '',
+      ticket: '',
+      recloc: '',
       emdnum: '',
-      flightnum: '',
+      flight: '',
       flightdatefrom: '',
       flightdateto: '',
-      countryidfrom: '',
-      countryidto: '',
-      countrydatefrom: '',
-      countrydateto: '',
+      deppoint: '',
+      arrpoint: '',
+      deptimefrominclude: '',
+      deptimetoexclude: '',
       divisionid: '',
       groupid: '',
       cabinet: '',
@@ -180,7 +180,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         for ( const key of Object.keys( value ) ) {
           if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
           if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-          if ( this.isKeys( key, 'country' ) ) newObjectForm[ key ] = this.countrys.filter( ( country: Icountry ) => country.idCountry === +value[ key ] )[ 0 ].rName;
           if ( key === 'divisionid' ) newObjectForm[ key ] = this.trees.filter( ( trees: Itree ) => trees.ID === +value[ key ] )[ 0 ].Name;
           if ( key === 'groupid' ) newObjectForm[ key ] = this.groups.filter( ( groups: Igroups ) => groups.Id === +value[ key ] )[ 0 ].Name;
         }
@@ -199,8 +198,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
-      if ( this.isKeys( key, 'country' ) ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
-        this.countrys.filter( ( country: Icountry ) => country.rName === this.formProfileSearch.get( key ).value )[ 0 ].idCountry : '';
       if ( key === 'divisionid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
         this.trees.filter( ( trees: Itree ) => trees.Name === this.formProfileSearch.get( key ).value )[ 0 ].ID : '';
       if ( key === 'groupid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
@@ -211,7 +208,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) params[ key ] = highlightObj[ key ];
     }
 
-    console.log(params);
+    console.log( params );
 
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
 
@@ -227,7 +224,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive )
       )
-      .subscribe(  profile => {
+      .subscribe( profile => {
         this.tableAsyncProfileService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
@@ -237,26 +234,23 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private isKeys( key: string, exception: string ): boolean {
     switch ( exception ) {
       case 'all':
-        return key !== 'countryidfrom'
-          && key !== 'countryidto'
+        return key !== 'locationidfrom'
+          && key !== 'locationidto'
           && key !== 'divisionid'
           && key !== 'groupid'
           && key !== 'flightdatefrom'
           && key !== 'flightdateto'
-          && key !== 'countrydatefrom'
-          && key !== 'countrydateto'
+          && key !== 'deptimefrominclude'
+          && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
           && key !== 'dobtoexclude';
       case 'data':
         return key === 'flightdatefrom'
           || key === 'flightdateto'
-          || key === 'countrydatefrom'
-          || key === 'countrydateto'
+          || key === 'deptimefrominclude'
+          || key === 'deptimetoexclude'
           || key === 'dobfrominclude'
           || key === 'dobtoexclude';
-      case 'country':
-        return key === 'countryidfrom'
-          || key === 'countryidto';
     }
   }
 

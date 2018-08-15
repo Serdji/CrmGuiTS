@@ -16,6 +16,9 @@ export class ProfileSearchService {
   getCountry(): Observable<any> {
     return this.http.get( environment.crmApi + '/crm/country' ).pipe( retry( 10 ) );
   }
+  getLocation(): Observable<any> {
+    return this.http.get( environment.crmApi + '/crm/location' ).pipe( retry( 10 ) );
+  }
 
   getTree(): Observable<any> {
     return this.http.get( environment.crmApi + '/api/api/Segmentation/tree' );
