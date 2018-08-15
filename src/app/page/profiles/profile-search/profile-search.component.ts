@@ -12,6 +12,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IprofileSearch } from '../../../interface/iprofile-search';
+import { Ilocation } from '../../../interface/ilocation';
 
 @Component( {
   selector: 'app-profile-search',
@@ -22,8 +23,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
   public countrys: Icountry[];
-  public countryFromOptions: Observable<Icountry[]>;
-  public countryToOptions: Observable<Icountry[]>;
+  public locations: Ilocation[];
+  public locationFromOptions: Observable<Ilocation[]>;
+  public locationToOptions: Observable<Ilocation[]>;
   public trees: Itree[];
   public groups: Igroups[];
   public profiles: Iprofiles;
@@ -44,7 +46,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initCountry();
+    this.initLocation();
     this.initForm();
     this.initAutocomplete();
     this.initTree();
@@ -101,28 +103,26 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( ( value: Igroups[] ) => this.groups = value );
   }
 
-  private initCountry() {
-    this.profileSearchService.getCountry()
+  private initLocation() {
+    this.profileSearchService.getLocation()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Icountry[] ) => {
-        this.countrys = value;
+      .subscribe( ( value: Ilocation[] ) => {
+        this.locations = value;
       } );
   }
 
   private initAutocomplete() {
-    this.countryFromOptions = this.autocomplete( 'countryidfrom' );
-    this.countryToOptions = this.autocomplete( 'countryidto' );
+    this.locationFromOptions = this.autocomplete( 'locationidfrom' );
+    this.locationToOptions = this.autocomplete( 'locationidto' );
   }
 
-  private autocomplete( formControlName: string ): Observable<Icountry[]> {
+  private autocomplete( formControlName: string ): Observable<Ilocation[]> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
         map( val => {
-          if ( val.length >= this.autLength ) {
-            return this.countrys.filter( country => country.rName.toLowerCase().includes( val.toLowerCase() ) );
-          }
+          return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
         } )
       );
   }
@@ -139,8 +139,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
-      countryidfrom: '',
-      countryidto: '',
+      locationidfrom: '',
+      locationidto: '',
       deptimefrominclude: '',
       deptimetoexclude: '',
       divisionid: '',
@@ -237,8 +237,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private isKeys( key: string, exception: string ): boolean {
     switch ( exception ) {
       case 'all':
-        return key !== 'countryidfrom'
-          && key !== 'countryidto'
+        return key !== 'locationidfrom'
+          && key !== 'locationidto'
           && key !== 'divisionid'
           && key !== 'groupid'
           && key !== 'flightdatefrom'
@@ -255,8 +255,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'dobfrominclude'
           || key === 'dobtoexclude';
       case 'country':
-        return key === 'countryidfrom'
-          || key === 'countryidto';
+        return key === 'locationidfrom'
+          || key === 'locationidto';
     }
   }
 

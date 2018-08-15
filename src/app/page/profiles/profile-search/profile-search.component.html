@@ -67,15 +67,15 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="countryidfrom" type="text" placeholder="Откуда" [matAutocomplete]="countryfrom">
-              <mat-autocomplete #countryfrom="matAutocomplete">
-                <mat-option *ngFor="let country of countryFromOptions | async" [id]="country.idCountry" [value]="country.rName">{{ country.rName }}</mat-option>
+              <input matInput formControlName="locationidfrom" type="text" placeholder="Откуда" [matAutocomplete]="locationfrom">
+              <mat-autocomplete #locationfrom="matAutocomplete">
+                <mat-option *ngFor="let location of locationFromOptions | async" [id]="location.locationId" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="countryidto" type="text" placeholder="Куда" [matAutocomplete]="countryTo">
-              <mat-autocomplete #countryTo="matAutocomplete">
-                <mat-option *ngFor="let country of countryToOptions | async" [id]="country.idCountry" [value]="country.rName">{{ country.rName }}</mat-option>
+              <input matInput formControlName="locationidto" type="text" placeholder="Куда" [matAutocomplete]="locationTo">
+              <mat-autocomplete #locationTo="matAutocomplete">
+                <mat-option *ngFor="let location of locationToOptions | async" [id]="location.locationId" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
