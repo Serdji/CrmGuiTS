@@ -11,15 +11,15 @@
               <input matInput formControlName="firstname" type="text" placeholder="Имя">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="id" type="text" placeholder="Profile ID">
+              <input matInput formControlName="id" type="text" placeholder="№ пассажира">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dobfrominclude" placeholder="dd.MM.yyyy" [matDatepicker]="DobFromInclude">
+              <input matInput formControlName="dobfrominclude" placeholder="Дата рождения с" [matDatepicker]="DobFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DobFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dobtoexclude" placeholder="dd.MM.yyyy" [matDatepicker]="DobToExclude">
+              <input matInput formControlName="dobtoexclude" placeholder="Дата рождения по" [matDatepicker]="DobToExclude">
               <mat-datepicker-toggle matSuffix [for]="DobToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobToExclude color="primary"></mat-datepicker>
             </mat-form-field>
@@ -50,12 +50,12 @@
               <input matInput formControlName="flight" type="text" placeholder="№ рейса">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="flightdatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="flightDateFrom">
+              <input matInput formControlName="flightdatefrom" placeholder="Дата рейса с" [matDatepicker]="flightDateFrom">
               <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="flightdateto" placeholder="dd.MM.yyyy" [matDatepicker]="flightDateTo">
+              <input matInput formControlName="flightdateto" placeholder="Дата рейса по" [matDatepicker]="flightDateTo">
               <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #flightDateTo color="primary"></mat-datepicker>
             </mat-form-field>
@@ -79,12 +79,12 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deptimefrominclude" placeholder="dd.MM.yyyy" [matDatepicker]="DepTimeFromInclude">
+              <input matInput formControlName="deptimefrominclude" placeholder="Дата сегмента с" [matDatepicker]="DepTimeFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DepTimeFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deptimetoexclude" placeholder="dd.MM.yyyy" [matDatepicker]="DepTimeToExclude">
+              <input matInput formControlName="deptimetoexclude" placeholder="Дата сегмента по" [matDatepicker]="DepTimeToExclude">
               <mat-datepicker-toggle matSuffix [for]="DepTimeToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeToExclude></mat-datepicker>
             </mat-form-field>
@@ -101,12 +101,12 @@
                 <mat-option *ngFor="let tree of trees" [value]="tree.Name" [id]="tree.ID" >{{ tree.Name }} | ID={{ tree.ID }}</mat-option>
               </mat-select>
             </mat-form-field>
-            <mat-form-field class="profile-search__input">
-              <mat-select formControlName="groupid" placeholder="Название спец группы">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let group of groups" [value]="group.Name" [id]="group.Id">{{ group.Name }}</mat-option>
-              </mat-select>
-            </mat-form-field>
+            <!--<mat-form-field class="profile-search__input">-->
+              <!--<mat-select formControlName="groupid" placeholder="Название спец группы">-->
+                <!--<mat-option></mat-option>-->
+                <!--<mat-option *ngFor="let group of groups" [value]="group.Name" [id]="group.Id">{{ group.Name }}</mat-option>-->
+              <!--</mat-select>-->
+            <!--</mat-form-field>-->
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -115,10 +115,10 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cabinet" type="text" placeholder="Кабинет">
+              <input matInput formControlName="cabinet" type="text" placeholder="Кабина">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="rdb" type="text" placeholder="RDB">
+              <input matInput formControlName="rdb" type="text" placeholder="Класс бронирования">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="tariffcode" type="text" placeholder="Код тарифа">
@@ -140,12 +140,12 @@
               <input matInput formControlName="amountto" type="text" placeholder="Общая сумма до (RUB)">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="amountdatefrom" placeholder="dd.MM.yyyy" [matDatepicker]="amountDateFrom">
+              <input matInput formControlName="amountdatefrom" placeholder="Дата продажи с" [matDatepicker]="amountDateFrom">
               <mat-datepicker-toggle matSuffix [for]="amountDateFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #amountDateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="amountdateto" placeholder="dd.MM.yyyy" [matDatepicker]="amountDateTo">
+              <input matInput formControlName="amountdateto" placeholder="Дата продажи по" [matDatepicker]="amountDateTo">
               <mat-datepicker-toggle matSuffix [for]="amountDateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #amountDateTo></mat-datepicker>
             </mat-form-field>
@@ -157,7 +157,7 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="email" type="email" placeholder="Email">
+              <input matInput formControlName="email" type="email" placeholder="Электронная почта">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="phone" type="text" placeholder="Телефон">
