@@ -131,6 +131,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch = this.fb.group( {
       lastname: '',
       firstname: '',
+      gender: '',
       dobfrominclude: '',
       dobtoexclude: '',
       ticket: '',
@@ -208,10 +209,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) params[ key ] = highlightObj[ key ];
     }
 
-    console.log( params );
-
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
-
     this.serverRequest( params );
   }
 
