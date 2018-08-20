@@ -1,3 +1,16 @@
-<p>
-  order works!
-</p>
+<div class="order">
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let order of orders; let i = index" [expanded]="i === 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          № {{order}}
+        </mat-panel-title>
+        <mat-panel-description>
+          Type your name and age {{i}}
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+      <p> {{id}} </p>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+</div>
