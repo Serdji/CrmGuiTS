@@ -1,19 +1,34 @@
-.mat-tab-body-wrapper
-  margin-top: 30px;
+.mat-expansion-panel-header-description
+  flex-grow: 0;
+  margin-left: auto;
 
-.tabs-profile
+.order
 
   &__card
-    margin-bottom: 30px;
 
     &-grid
-      background: #f0f9ff;
+      background: #f9f9f9;
       border: 1px solid #dedede;
       position: absolute;
       top: 0;
-      left: 2px;
-      right: 2px;
-      bottom: 0;
+      left: 5px;
+      right: 5px;
+      bottom: 10px;
+      padding: 15px 10px;
+
+      &._back-none
+        background: none;
+        border: none;
+
+      &._ticket
+        background: #f0f9ff;
+
+  &__grid
+    flex: 1;
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
 
   &__content
     flex: 1;
@@ -24,12 +39,6 @@
     &-wrapper
       display: flex;
       flex-direction: row;
-
-    &-point
-      margin-bottom: 5px;
-
-      b
-        font-size: 14px;
 
     &-ticket
       margin-bottom: 20px;
