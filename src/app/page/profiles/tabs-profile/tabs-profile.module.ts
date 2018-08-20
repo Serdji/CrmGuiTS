@@ -8,6 +8,7 @@ import { TabsProfileService } from './tabs-profile.service';
 import { ContactModule } from './contact/contact.module';
 import { DocumentModule } from './document/document.module';
 import { OrderModule } from './order/order.module';
+import { PipesModule } from '../../../pipes/pipes.module';
 
 @NgModule( {
   imports: [
@@ -18,6 +19,7 @@ import { OrderModule } from './order/order.module';
     ContactModule,
     DocumentModule,
     OrderModule,
+    PipesModule,
   ],
   declarations: [ TabsProfileComponent ],
   providers: [ TabsProfileService ]
