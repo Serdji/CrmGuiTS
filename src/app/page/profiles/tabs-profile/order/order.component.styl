@@ -1,3 +1,37 @@
 .mat-expansion-panel-header-description
   flex-grow: 0;
   margin-left: auto;
+
+.order
+
+  &__card
+
+    &-grid
+      background: #f9f9f9;
+      border: 1px solid #dedede;
+      position: absolute;
+      top: 0;
+      left: 5px;
+      right: 5px;
+      bottom: 10px;
+
+      &._back-none
+        background: none;
+        border: none;
+
+      &._ticket
+        background: #f0f9ff;
+
+  &__grid
+    flex: 1;
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+
+  &__content
+    flex: 1;
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
