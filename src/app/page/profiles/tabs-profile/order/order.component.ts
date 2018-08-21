@@ -1,22 +1,35 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
+import { takeWhile } from 'rxjs/operators';
+import { IDocument } from '../../../../interface/idocument';
 
-@Component({
+@Component( {
   selector: 'app-order',
   templateUrl: './order.component.html',
-  styleUrls: ['./order.component.styl']
-})
+  styleUrls: [ './order.component.styl' ]
+} )
 export class OrderComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
 
-  public orders = [ '123', '456', '789' ];
+  public orders;
 
-  private isActive: boolean = true;
+  private isActive: boolean;
 
-  constructor( private orderService: OrderService) { }
+  constructor( private orderService: OrderService ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
+    this.initBooking();
+  }
+
+  private initBooking() {
+    this.orderService.getBooking( 211521 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe(  value  => {
+        console.log(value);
+        this.orders = value;
+      } );
   }
 
   ngOnDestroy(): void {
