@@ -18,18 +18,20 @@
       <ng-template matExpansionPanelContent>
         <div class="order__grid-wrapper">
           <div class="order__grid">
-            <mat-grid-list cols="1" rowHeight="149px">
+            <mat-grid-list *ngFor=" let pos of order.pos" cols="1" rowHeight="149px">
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content">
                       <div class="order__content-ticket"><b>Recloc GDS:</b></div>
-                      <div class="order__content-ticket"><b>POS ID:</b></div>
+                      <div class="order__content-ticket"><b>GDS:</b> {{pos.gds}}</div>
+                      <div class="order__content-ticket"><b>POS ID:</b> {{pos.posId}}</div>
                     </div>
 
                     <div class="order__content">
-                      <div class="order__content-ticket"><b>Агентство:</b></div>
-                      <div class="order__content-ticket"><b>Терминал:</b></div>
+                      <div class="order__content-ticket"><b>Агентство:</b> {{pos.agency}}</div>
+                      <div class="order__content-ticket"><b>Терминал:</b> {{pos.termId}}</div>
+                      <div class="order__content-ticket"><b>Страна:</b> {{pos.country}}</div>
                     </div>
                   </div>
                 </mat-card>
@@ -85,13 +87,13 @@
 
           <div class="order__grid">
             <mat-grid-list cols="1" rowHeight="224px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
+              <mat-grid-tile *ngFor=" let service of order.services" [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
                       <div class="order__content-point">
-                        <span class="order__content-text">Тип SVG:</span>
-                        <span><b> ...</b></span>
+                        <span class="order__content-text">Тип SVC:</span>
+                        <span><b> S или A</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт вылета:</span>
@@ -115,11 +117,11 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">SSR:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.ssr}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Название услуги:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.nos}}</b></span>
                       </div>
                     </div>
 
@@ -130,19 +132,19 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Rfisc:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.rfisc}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Тип EMD:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.emdType}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">EMD:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.emd.num}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Количество:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.qtty}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Концепт/мера:</span>
@@ -167,6 +169,18 @@
                   <div class="order__content-wrapper">
                     <div class="order__content">
                       <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
+
+                      <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
+                        <div *ngIf="MonetaryInfo.Code === 'T' && MonetaryInfo.ticket" class="tabs-profile__content-point">
+                          <span class="order__content-text">Всего по билету:</span>
+                          <span><b> {{ MonetaryInfo.Amount | currency:MonetaryInfo.LCode:'symbol':''}} {{ MonetaryInfo.LCode }}</b></span>
+                        </div>
+                        <div *ngIf="MonetaryInfo.Code === 'TB' && MonetaryInfo.ticket" class="tabs-profile__content-point">
+                          <span class="order__content-text">Такса и сборы:</span>
+                          <span><b> {{ MonetaryInfo.Amount }} {{ MonetaryInfo.LCode }}</b></span>
+                        </div>
+                      </div>
+
                     </div>
                     <div class="order__content">
                       <div class="order__content-ticket _sales"><b>Продан</b></div>

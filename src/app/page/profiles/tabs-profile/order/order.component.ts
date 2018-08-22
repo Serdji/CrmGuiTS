@@ -26,10 +26,11 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initBooking() {
-    this.orderService.getBooking( this.id )
+    this.orderService.getBooking( 1078067 )
       .pipe(
         takeWhile( _ => this.isActive ),
         map( orders => {
+          console.log( orders );
           for ( const order of orders ) {
             for ( const segment of order.segments ) {
               if ( order.tickets ) {
@@ -40,7 +41,27 @@ export class OrderComponent implements OnInit, OnDestroy {
                 }
               }
             }
+
+            if ( order.MonetaryInfo ) {
+              let T;
+              let B;
+              let TB;
+              for ( const MonetaryInfo of order.MonetaryInfo ) {
+                const { emd, ticket, Code, Amount, LCode } = MonetaryInfo;
+                if ( Code === 'T' || Code === 'B' ) {
+                  switch ( Code ) {
+                    case 'T': T = Amount; break;
+                    case 'B': B = Amount; break;
+                  }
+                  if ( T && B && ticket ) {
+                    TB = T - B;
+                    order.MonetaryInfo.push( { ticket, Code: 'TB', Amount: TB, LCode } );
+                  }
+                }
+              }
+            }
           }
+
           return orders;
         } )
       )
