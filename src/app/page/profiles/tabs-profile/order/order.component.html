@@ -1,5 +1,8 @@
 <div class="order">
-  <mat-accordion>
+  <mat-card *ngIf="progress">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
+  <mat-accordion *ngIf="!progress">
     <mat-expansion-panel *ngFor="let order of orders; let i = index" [expanded]="i === 0">
       <mat-expansion-panel-header>
         <mat-panel-title>
@@ -12,212 +15,217 @@
         </mat-panel-description>
       </mat-expansion-panel-header>
 
-      <div class="order__grid-wrapper">
-        <div class="order__grid">
-          <mat-grid-list cols="1" rowHeight="149px">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-card class="order__card-grid _ticket mat-elevation-z0">
-                <div class="order__content-wrapper">
-                  <div class="order__content">
-                    <div class="order__content-ticket"><b>Recloc GDS:</b></div>
-                    <div class="order__content-ticket"><b>POD ID:</b></div>
-                  </div>
-                  <div class="order__content">
-                    <div class="order__content-ticket"><b>Агенство:</b></div>
-                    <div class="order__content-ticket"><b>Терминал:</b></div>
-                  </div>
-                </div>
-              </mat-card>
-            </mat-grid-tile>
+      <ng-template matExpansionPanelContent>
+        <div class="order__grid-wrapper">
+          <div class="order__grid">
+            <mat-grid-list cols="1" rowHeight="149px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-card class="order__card-grid _ticket mat-elevation-z0">
+                  <div class="order__content-wrapper">
+                    <div class="order__content">
+                      <div class="order__content-ticket"><b>Recloc GDS:</b></div>
+                      <div class="order__content-ticket"><b>POD ID:</b></div>
+                    </div>
 
-            <mat-grid-tile *ngFor=" let segment of order.segments" [colspan]="1" [rowspan]="1">
-              <mat-card class="order__card-grid mat-elevation-z0">
-                <div class="order__content-wrapper">
-                  <div class="order__content">
-                    <div class="order__content-point">
-                      <span class="order__content-text">Аэропорт вылета:</span>
-                      <span><b> {{segment.arrPoint}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата / время вылета:</span>
-                      <span><b> {{segment.arrTime | date:'dd.MM.yyyy'}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Аэропорт приелта:</span>
-                      <span><b> {{segment.depPoint}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата / время прилета:</span>
-                      <span><b> {{segment.depTime | date:'dd.MM.yyyy'}}</b></span>
+                    <div class="order__content">
+                      <div class="order__content-ticket"><b>Агенство:</b></div>
+                      <div class="order__content-ticket"><b>Терминал:</b></div>
                     </div>
                   </div>
-                  <div class="order__content">
-                    <div class="order__content-point">
-                      <span class="order__content-text">№ рейса:</span>
-                      <span><b> {{segment.flight}}</b></span>
+                </mat-card>
+              </mat-grid-tile>
+
+
+              <mat-grid-tile *ngFor=" let segment of order.segments" [colspan]="1" [rowspan]="1">
+                <mat-card class="order__card-grid mat-elevation-z0">
+                  <div class="order__content-wrapper">
+                    <div class="order__content _right-width">
+                      <div class="order__content-point">
+                        <span class="order__content-text">Аэропорт вылета:</span>
+                        <span><b> {{segment.arrPoint}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата / время вылета:</span>
+                        <span><b> {{segment.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Аэропорт приелта:</span>
+                        <span><b> {{segment.depPoint}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата / время прилета:</span>
+                        <span><b> {{segment.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                      </div>
                     </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Кабина:</span>
-                      <span><b> {{segment.cabin}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">RBD:</span>
-                      <span><b> {{segment.rbd}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Статус сегмента:</span>
-                      <span><b> {{segment.status}}</b></span>
+
+                    <div class="order__content">
+                      <div class="order__content-point">
+                        <span class="order__content-text">№ рейса:</span>
+                        <span><b> {{segment.flight}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Кабина:</span>
+                        <span><b> {{segment.cabin}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">RBD:</span>
+                        <span><b> {{segment.rbd}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Статус сегмента:</span>
+                        <span><b> {{segment.status}}</b></span>
+                      </div>
                     </div>
                   </div>
-                </div>
-              </mat-card>
-            </mat-grid-tile>
-          </mat-grid-list>
+                </mat-card>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+
+
+          <div class="order__grid">
+            <mat-grid-list cols="1" rowHeight="224px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-card class="order__card-grid mat-elevation-z0">
+                  <div class="order__content-wrapper">
+                    <div class="order__content _right-width">
+                      <div class="order__content-point">
+                        <span class="order__content-text">Тип SVG:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Аэропорт вылета:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата / время вылета:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Аэропорт приелта:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата / время прилета:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">№ рейса:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">SSR:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Название услуги:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                    </div>
+
+                    <div class="order__content">
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Rfisc:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Тип EMD:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">EMD:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Количество:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Концепт/мера:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Стоимость:</span>
+                        <span><b> ...</b></span>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
+
+
+          <div class="order__grid">
+            <mat-grid-list cols="1" rowHeight="149px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1">
+                <mat-card class="order__card-grid _ticket mat-elevation-z0">
+                  <div class="order__content-wrapper">
+                    <div class="order__content">
+                      <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
+                    </div>
+                    <div class="order__content">
+                      <div class="order__content-ticket _sales"><b>Продан</b></div>
+                    </div>
+                  </div>
+                </mat-card>
+              </mat-grid-tile>
+
+              <mat-grid-tile *ngFor="let ticket of order.tickets" [colspan]="1" [rowspan]="1">
+                <mat-card class="order__card-grid mat-elevation-z0">
+                  <div class="order__content-wrapper">
+                    <div class="order__content _right-width">
+                      <div class="order__content-point">
+                        <span class="order__content-text">Номер билета:</span>
+                        <span><b> {{ticket.ticket}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Аэропорт вылета:</span>
+                        <span><b> {{ticket.arrPoint}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата / время вылета:</span>
+                        <span><b> {{ticket.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Аэропорт приелта:</span>
+                        <span><b> {{ticket.depPoint}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Дата / время прилета:</span>
+                        <span><b> {{ticket.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                      </div>
+                    </div>
+
+                    <div class="order__content">
+                      <div class="order__content-point">
+                        <span class="order__content-text">Номер купона:</span>
+                        <span><b> {{ticket.coupon}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">№ рейса:</span>
+                        <span><b> {{ticket.flight}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Fare basis:</span>
+                        <span><b> {{ticket.FareCode}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Статус:</span>
+                        <span><b> {{ticket.Status}}</b></span>
+                      </div>
+                    </div>
+                  </div>
+                </mat-card>
+              </mat-grid-tile>
+            </mat-grid-list>
+          </div>
         </div>
-
-
-        <div class="order__grid">
-          <mat-grid-list cols="1" rowHeight="224px">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-card class="order__card-grid mat-elevation-z0">
-                <div class="order__content-wrapper">
-                  <div class="order__content">
-                    <div class="order__content-point">
-                      <span class="order__content-text">Тип SVG:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Аэропорт вылета:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата / время вылета:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Аэропорт приелта:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата / время прилета:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">№ рейса:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">SSR:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Название услуги:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                  </div>
-
-                  <div class="order__content">
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Rfisc:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Тип EMD:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">EMD:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Количество:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Концепт/мера:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Стоимость:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                  </div>
-                </div>
-              </mat-card>
-            </mat-grid-tile>
-          </mat-grid-list>
-        </div>
-
-
-        <div class="order__grid">
-          <mat-grid-list cols="1" rowHeight="149px">
-            <mat-grid-tile [colspan]="1" [rowspan]="1">
-              <mat-card class="order__card-grid _ticket mat-elevation-z0">
-                <div class="order__content-wrapper">
-                  <div class="order__content">
-                    <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
-                  </div>
-                  <div class="order__content">
-                    <div class="order__content-ticket _sales"><b>Продан</b></div>
-                  </div>
-                </div>
-              </mat-card>
-            </mat-grid-tile>
-
-            <mat-grid-tile *ngFor="let ticket of order.tickets" [colspan]="1" [rowspan]="1">
-              <mat-card class="order__card-grid mat-elevation-z0">
-                <div class="order__content-wrapper">
-                  <div class="order__content">
-                    <div class="order__content-point">
-                      <span class="order__content-text">Номер билета:</span>
-                      <span><b> {{ticket.ticket}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Аэропорт вылета:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата / время вылета:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Аэропорт приелта:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Дата / время прилета:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                  </div>
-
-                  <div class="order__content">
-                    <div class="order__content-point">
-                      <span class="order__content-text">Номер купона:</span>
-                      <span><b> {{ticket.coupon}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">№ рейса:</span>
-                      <span><b> ...</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Fare basis:</span>
-                      <span><b> {{ticket.FareCode}}</b></span>
-                    </div>
-                    <div class="order__content-point">
-                      <span class="order__content-text">Статус:</span>
-                      <span><b> {{ticket.Status}}</b></span>
-                    </div>
-                  </div>
-                </div>
-              </mat-card>
-            </mat-grid-tile>
-          </mat-grid-list>
-        </div>
-      </div>
+      </ng-template>
     </mat-expansion-panel>
   </mat-accordion>
 </div>
