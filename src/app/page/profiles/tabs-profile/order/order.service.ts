@@ -22,14 +22,25 @@ export class OrderService {
               if ( order.tickets ) {
                 for ( const ticket of order.tickets ) {
                   if ( segment.segNum === ticket.segNum ) {
-                    Object.assign( ticket, segment );
+                    Object.assign( ticket, { segment } );
                   }
                 }
               }
               if ( order.services ) {
                 for ( const service of order.services ) {
                   if ( segment.segNum === service.segNum ) {
-                    Object.assign( service, segment );
+                    Object.assign( service, { segment } );
+                  }
+                }
+              }
+            }
+            if ( order.MonetaryInfo ) {
+              for ( const MonetaryInfo of order.MonetaryInfo ) {
+                if ( order.services ) {
+                  for ( const service of order.services ) {
+                    if ( MonetaryInfo.emd === service.emd.num ) {
+                      Object.assign( service, { MonetaryInfo } );
+                    }
                   }
                 }
               }
@@ -38,15 +49,22 @@ export class OrderService {
             if ( order.MonetaryInfo ) {
               let T;
               let B;
+              let E;
               let TB;
+              let TE;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
                 const { emd, ticket, Code, Amount, LCode } = MonetaryInfo;
-                if ( Code === 'T' || Code === 'B' ) {
+                if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
                   switch ( Code ) {
                     case 'T': T = Amount; break;
                     case 'B': B = Amount; break;
+                    case 'E': E = Amount; break;
                   }
-                  if ( T && B && ticket ) {
+                  if ( T && E && ticket ) {
+                    TE = T - E;
+                    order.MonetaryInfo.push( { ticket, Code: 'TE', Amount: TE, LCode } );
+                  }
+                  if ( T && B && !TE && ticket ) {
                     TB = T - B;
                     order.MonetaryInfo.push( { ticket, Code: 'TB', Amount: TB, LCode } );
                   }

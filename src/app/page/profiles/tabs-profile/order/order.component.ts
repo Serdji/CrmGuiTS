@@ -26,7 +26,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initBooking() {
-    this.orderService.getBooking( this.id )
+    this.orderService.getBooking( 1340325 )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( orders => {
         this.orders = orders;

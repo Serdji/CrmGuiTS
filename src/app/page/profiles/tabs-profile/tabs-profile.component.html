@@ -98,16 +98,24 @@
 
   <mat-tab-group backgroundColor="primary" color="accent">
     <!--<mat-tab label="Профиль">-->
-      <!--<app-profile [id]="profileId"></app-profile>-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-profile [id]="profileId"></app-profile>-->
+      <!--</ng-template>-->
     <!--</mat-tab>-->
     <!--<mat-tab label="Контакты">-->
-      <!--<app-contact [id]="profileId"></app-contact>-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-contact [id]="profileId"></app-contact>-->
+      <!--</ng-template>-->
     <!--</mat-tab>-->
     <!--<mat-tab label="Документы">-->
-      <!--<app-document [id]="profileId"></app-document>-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-document [id]="profileId"></app-document>-->
+      <!--</ng-template>-->
     <!--</mat-tab>-->
     <mat-tab label="Заказы">
-      <app-order [id]="profileId"></app-order>
+      <ng-template matTabContent>
+        <app-order [id]="profileId"></app-order>
+      </ng-template>
     </mat-tab>
   </mat-tab-group>
 </div>

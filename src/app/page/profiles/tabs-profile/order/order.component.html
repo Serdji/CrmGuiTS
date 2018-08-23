@@ -97,23 +97,23 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт вылета:</span>
-                        <span><b> {{service.arrPoint}}</b></span>
+                        <span><b> {{service.segment.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время вылета:</span>
-                        <span><b> {{service.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                        <span><b> {{service.segment.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт приелта:</span>
-                        <span><b> {{service.depPoint}}</b></span>
+                        <span><b> {{service.segment.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время прилета:</span>
-                        <span><b> {{service.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                        <span><b> {{service.segment.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">№ рейса:</span>
-                        <span><b> {{service.flight}}</b></span>
+                        <span><b> {{service.segment.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">SSR:</span>
@@ -150,9 +150,9 @@
                         <span class="order__content-text">Концепт/мера:</span>
                         <span><b> ...</b></span>
                       </div>
-                      <div class="order__content-point">
+                      <div *ngIf="service.MonetaryInfo.Code === 'T' && service.MonetaryInfo.emd" class="tabs-profile__content-point">
                         <span class="order__content-text">Стоимость:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{ service.MonetaryInfo.Amount | currency:'':''}} {{ service.MonetaryInfo.LCode }}</b></span>
                       </div>
                     </div>
                   </div>
@@ -175,7 +175,7 @@
                           <span class="order__content-text">Всего по билету:</span>
                           <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
-                        <div *ngIf="MonetaryInfo.Code === 'TB' && MonetaryInfo.ticket" class="tabs-profile__content-point">
+                        <div *ngIf="(MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB' ) && MonetaryInfo.ticket" class="tabs-profile__content-point">
                           <span class="order__content-text">Такса и сборы:</span>
                           <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
@@ -199,19 +199,19 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт вылета:</span>
-                        <span><b> {{ticket.arrPoint}}</b></span>
+                        <span><b> {{ticket.segment?.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время вылета:</span>
-                        <span><b> {{ticket.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                        <span><b> {{ticket.segment?.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт приелта:</span>
-                        <span><b> {{ticket.depPoint}}</b></span>
+                        <span><b> {{ticket.segment?.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время прилета:</span>
-                        <span><b> {{ticket.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                        <span><b> {{ticket.segment?.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                     </div>
 
@@ -222,7 +222,7 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">№ рейса:</span>
-                        <span><b> {{ticket.flight}}</b></span>
+                        <span><b> {{ticket.segment?.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Fare basis:</span>
