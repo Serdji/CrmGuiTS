@@ -47,11 +47,7 @@ export class OrderService {
             }
 
             if ( order.MonetaryInfo ) {
-              let T;
-              let B;
-              let E;
-              let TB;
-              let TE;
+              let T, B, E, TB, TE;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
                 const { emd, ticket, Code, Amount, LCode } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
