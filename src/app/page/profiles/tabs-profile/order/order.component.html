@@ -97,23 +97,23 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт вылета:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время вылета:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт приелта:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время прилета:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">№ рейса:</span>
-                        <span><b> ...</b></span>
+                        <span><b> {{service.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">SSR:</span>
@@ -173,11 +173,11 @@
                       <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
                         <div *ngIf="MonetaryInfo.Code === 'T' && MonetaryInfo.ticket" class="tabs-profile__content-point">
                           <span class="order__content-text">Всего по билету:</span>
-                          <span><b> {{ MonetaryInfo.Amount | currency:MonetaryInfo.LCode:'symbol':''}} {{ MonetaryInfo.LCode }}</b></span>
+                          <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
                         <div *ngIf="MonetaryInfo.Code === 'TB' && MonetaryInfo.ticket" class="tabs-profile__content-point">
                           <span class="order__content-text">Такса и сборы:</span>
-                          <span><b> {{ MonetaryInfo.Amount }} {{ MonetaryInfo.LCode }}</b></span>
+                          <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
                       </div>
 

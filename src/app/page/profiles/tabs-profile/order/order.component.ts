@@ -26,45 +26,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initBooking() {
-    this.orderService.getBooking( 1078067 )
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( orders => {
-          console.log( orders );
-          for ( const order of orders ) {
-            for ( const segment of order.segments ) {
-              if ( order.tickets ) {
-                for ( const ticket of order.tickets ) {
-                  if ( segment.segNum === ticket.segNum ) {
-                    Object.assign( ticket, segment );
-                  }
-                }
-              }
-            }
-
-            if ( order.MonetaryInfo ) {
-              let T;
-              let B;
-              let TB;
-              for ( const MonetaryInfo of order.MonetaryInfo ) {
-                const { emd, ticket, Code, Amount, LCode } = MonetaryInfo;
-                if ( Code === 'T' || Code === 'B' ) {
-                  switch ( Code ) {
-                    case 'T': T = Amount; break;
-                    case 'B': B = Amount; break;
-                  }
-                  if ( T && B && ticket ) {
-                    TB = T - B;
-                    order.MonetaryInfo.push( { ticket, Code: 'TB', Amount: TB, LCode } );
-                  }
-                }
-              }
-            }
-          }
-
-          return orders;
-        } )
-      )
+    this.orderService.getBooking( this.id )
+      .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( orders => {
         this.orders = orders;
         this.progress = false;
