@@ -171,12 +171,12 @@
                       <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
 
                       <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
-                        <div *ngIf="MonetaryInfo.Code === 'T' && MonetaryInfo.ticket" class="tabs-profile__content-point">
-                          <span class="order__content-text">Всего по билету:</span>
+                        <div *ngIf="MonetaryInfo.Code === 'TG'" class="tabs-profile__content-point">
+                          <span class="order__content-text">Всего по заказу:</span>
                           <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
-                        <div *ngIf="(MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB' ) && MonetaryInfo.ticket" class="tabs-profile__content-point">
-                          <span class="order__content-text">Такса и сборы:</span>
+                        <div *ngIf="MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB'" class="tabs-profile__content-point">
+                          <span class="order__content-text">Таксы и сборы:</span>
                           <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
                       </div>

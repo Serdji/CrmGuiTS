@@ -16,6 +16,7 @@ export class OrderService {
       .pipe(
         retry( 10 ),
         map( (orders: any) => {
+          console.log(orders);
           for ( const order of orders ) {
             for ( const segment of order.segments ) {
               if ( order.tickets ) {
@@ -46,24 +47,28 @@ export class OrderService {
             }
 
             if ( order.MonetaryInfo ) {
-              let T, B, E, TB, TE;
+              let T = 0, B = 0, E = 0, TB, TE, LCodeG;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
                 const { emd, ticket, Code, Amount, LCode } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
+                  LCodeG = LCode;
                   switch ( Code ) {
-                    case 'T': T = Amount; break;
-                    case 'B': B = Amount; break;
-                    case 'E': E = Amount; break;
-                  }
-                  if ( T && E && ticket ) {
-                    TE = T - E;
-                    order.MonetaryInfo.push( { ticket, Code: 'TE', Amount: TE, LCode } );
-                  }
-                  if ( T && B && !TE && ticket ) {
-                    TB = T - B;
-                    order.MonetaryInfo.push( { ticket, Code: 'TB', Amount: TB, LCode } );
+                    case 'T': T += Amount; break;
+                    case 'B': B += Amount; break;
+                    case 'E': E += Amount; break;
                   }
                 }
+              }
+              console.log(LCodeG);
+              if ( T && E ) {
+                TE = T - E;
+                order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
+                order.MonetaryInfo.push( { Code: 'TE', Amount: TE, LCode: LCodeG } );
+              }
+              if ( T && B && !TE) {
+                TB = T - B;
+                order.MonetaryInfo.push( {  Code: 'TG', Amount: T, LCode: LCodeG } );
+                order.MonetaryInfo.push( {  Code: 'TB', Amount: TB, LCode: LCodeG } );
               }
             }
           }
