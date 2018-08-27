@@ -16,34 +16,6 @@
       </mat-expansion-panel-header>
 
       <ng-template matExpansionPanelContent>
-        <mat-grid-list cols="1" rowHeight="149px">
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-            <mat-card class="order__card-grid _ticket mat-elevation-z0">
-              <div class="order__content-wrapper">
-                <div class="order__content">
-                  <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
-
-                  <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
-                    <div *ngIf="MonetaryInfo.Code === 'TG'" class="tabs-profile__content-point">
-                      <span class="order__content-text">Всего по заказу:</span>
-                      <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
-                    </div>
-                    <div *ngIf="MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB'" class="tabs-profile__content-point">
-                      <span class="order__content-text">Таксы и сборы:</span>
-                      <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
-                    </div>
-                  </div>
-
-                </div>
-                <div class="order__content">
-                  <div class="order__content-ticket _sales"><b>Продан</b></div>
-                </div>
-              </div>
-            </mat-card>
-          </mat-grid-tile>
-        </mat-grid-list>
-
-
         <div class="order__grid-wrapper">
           <div class="order__grid">
             <mat-grid-list *ngFor=" let pos of order.pos" cols="1" rowHeight="149px">

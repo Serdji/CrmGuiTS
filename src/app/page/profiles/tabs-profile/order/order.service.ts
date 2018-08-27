@@ -59,7 +59,7 @@ export class OrderService {
                   }
                 }
               }
-              console.log(LCodeG);
+
               if ( T && E ) {
                 TE = T - E;
                 order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
