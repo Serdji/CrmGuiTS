@@ -16,7 +16,6 @@ export class OrderService {
       .pipe(
         retry( 10 ),
         map( (orders: any) => {
-          console.log(orders);
           for ( const order of orders ) {
             for ( const segment of order.segments ) {
               if ( order.tickets ) {
