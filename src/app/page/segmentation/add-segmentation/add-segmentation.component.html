@@ -40,7 +40,14 @@
               <input matInput type="text" placeholder="Кол-во попутчиков">
             </mat-form-field>
             <mat-radio-group class="add-segmentation__input">
-              <mat-radio-button value="1">Летает с детьми</mat-radio-button>
+              <div class="add-segmentation__input-radio-wrapper">
+                <div class="add-segmentation__input-radio-group">
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Летает с детьми</mat-radio-button>
+                </div>
+                <div class="add-segmentation__input-radio-group _right">
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Летает без детей</mat-radio-button>
+                </div>
+              </div>
             </mat-radio-group>
           </mat-card-content>
         </mat-card>
@@ -49,9 +56,19 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
-            </mat-form-field>
+            <span class="add-segmentation__content-title">Текущий диапазон</span>
+            <mat-radio-group class="add-segmentation__input">
+              <div class="add-segmentation__input-radio-wrapper">
+                <div class="add-segmentation__input-radio-group">
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Месяц</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Квартал</mat-radio-button>
+                </div>
+                <div class="add-segmentation__input-radio-group _right">
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Полугодие</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Год</mat-radio-button>
+                </div>
+              </div>
+            </mat-radio-group>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
