@@ -13,7 +13,7 @@
     </mat-grid-list>
 
 
-    <mat-grid-list cols="4" rowHeight="200px">
+    <mat-grid-list cols="4" rowHeight="250px">
 
       <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-card class="add-segmentation__card">
@@ -96,8 +96,16 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Свободный диапазон</span>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
+              <input matInput placeholder="Свободный диапазон от" [matDatepicker]="dob3">
+              <mat-datepicker-toggle matSuffix [for]="dob3"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dob3></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput placeholder="Свободный диапазон до" [matDatepicker]="dob4">
+              <mat-datepicker-toggle matSuffix [for]="dob4"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dob4></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -106,8 +114,31 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Предмет анализа</span>
+            <mat-radio-group class="add-segmentation__input">
+              <div class="add-segmentation__input-radio-wrapper">
+                <div class="add-segmentation__input-radio-group">
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Количестно покупок</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio" value="1">Сумма покупок</mat-radio-button>
+                </div>
+              </div>
+            </mat-radio-group>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-segmentation__card">
+          <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Общая сумма по заказу удовлетворяющем условиям</span>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
+              <input matInput type="text" placeholder="От">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="До">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -119,21 +150,12 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Кол-во сегментов удовлетворяющее условиям</span>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
+              <input matInput type="text" placeholder="От">
             </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-      </mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
+              <input matInput type="text" placeholder="До">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
