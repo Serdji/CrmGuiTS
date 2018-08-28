@@ -160,6 +160,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch.get( 'contactsexist' ).valueChanges.subscribe( value => {
       this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
       this.formProfileSearch.get( 'contacttext' )[ value ? 'disable' : 'enable' ]();
+      if ( value ) {
+        this.formProfileSearch.get( 'contactemail' ).patchValue('');
+        this.formProfileSearch.get( 'contacttext' ).patchValue('');
+      }
     } );
   }
 
@@ -238,7 +242,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'dobfrominclude'
           || key === 'dobtoexclude';
       case 'checkbox':
-        return key == 'contactsexist';
+        return key === 'contactsexist';
     }
   }
 
