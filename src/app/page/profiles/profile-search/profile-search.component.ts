@@ -48,9 +48,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initLocation();
     this.initForm();
+    this.formDisable();
     this.initAutocomplete();
-    this.initTree();
-    this.initGroups();
     this.initTableAsync();
     this.profileSearchService.subjectDeleteProfile.subscribe( _ => this.serverRequest( this.sendProfileParams ) );
   }
@@ -85,24 +84,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private initTree() {
-    this.profileSearchService.getTree()
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( ( val: any ) => val.Data )
-      )
-      .subscribe( ( value: Itree[] ) => this.trees = value );
-  }
-
-  private initGroups() {
-    this.profileSearchService.getGroups()
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( ( val: any ) => val.Data )
-      )
-      .subscribe( ( value: Igroups[] ) => this.groups = value );
-  }
-
   private initLocation() {
     this.profileSearchService.getLocation()
       .pipe( takeWhile( _ => this.isActive ) )
@@ -131,12 +112,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch = this.fb.group( {
       lastname: '',
       firstname: '',
+      customerid: '',
       gender: '',
+      divisionid: '',
       dobfrominclude: '',
       dobtoexclude: '',
       ticket: '',
       recloc: '',
-      emdnum: '',
+      emd: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -144,9 +127,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       arrpoint: '',
       deptimefrominclude: '',
       deptimetoexclude: '',
-      divisionid: '',
-      groupid: '',
-      cabinet: '',
+      cab: '',
       rdb: '',
       tariffcode: '',
       servicecode: '',
@@ -154,9 +135,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       amountto: '',
       amountdatefrom: '',
       amountdateto: '',
-      email: '',
-      phone: '',
-      withoutcontact: '',
+      contactemail: '',
+      contacttext: '',
+      contactsexist: '',
       id: '',
     }, {
       updateOn: 'submit',
@@ -165,10 +146,24 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     timer( 500 ).subscribe( _ => this.formFilling() );
   }
 
+  private formDisable() {
+    this.formProfileSearch.get( 'divisionid' ).disable();
+    this.formProfileSearch.get( 'tariffcode' ).disable();
+    this.formProfileSearch.get( 'id' ).disable();
+    this.formProfileSearch.get( 'amountfrom' ).disable();
+    this.formProfileSearch.get( 'amountto' ).disable();
+    this.formProfileSearch.get( 'amountdatefrom' ).disable();
+    this.formProfileSearch.get( 'amountdateto' ).disable();
+  }
+
   private switchCheckbox() {
-    this.formProfileSearch.get( 'withoutcontact' ).valueChanges.subscribe( value => {
-      this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
-      this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
+    this.formProfileSearch.get( 'contactsexist' ).valueChanges.subscribe( value => {
+      this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
+      this.formProfileSearch.get( 'contacttext' )[ value ? 'disable' : 'enable' ]();
+      if ( value ) {
+        this.formProfileSearch.get( 'contactemail' ).patchValue('');
+        this.formProfileSearch.get( 'contacttext' ).patchValue('');
+      }
     } );
   }
 
@@ -177,12 +172,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       if ( Object.keys( value ).length !== 0 ) {
 
         const newObjectForm = {};
-
         for ( const key of Object.keys( value ) ) {
           if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
           if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-          if ( key === 'divisionid' ) newObjectForm[ key ] = this.trees.filter( ( trees: Itree ) => trees.ID === +value[ key ] )[ 0 ].Name;
-          if ( key === 'groupid' ) newObjectForm[ key ] = this.groups.filter( ( groups: Igroups ) => groups.Id === +value[ key ] )[ 0 ].Name;
+          if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
         }
 
         this.formProfileSearch.patchValue( newObjectForm );
@@ -199,10 +192,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
-      if ( key === 'divisionid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
-        this.trees.filter( ( trees: Itree ) => trees.Name === this.formProfileSearch.get( key ).value )[ 0 ].ID : '';
-      if ( key === 'groupid' ) highlightObj[ key ] = this.formProfileSearch.get( key ).value ?
-        this.groups.filter( ( groups: Igroups ) => groups.Name === this.formProfileSearch.get( key ).value )[ 0 ].Id : '';
+      if ( this.isKeys( key, 'checkbox' ) ) {
+        if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
+        else delete highlightObj[ key ];
+      }
     }
 
     for ( const key of Object.keys( highlightObj ) ) {
@@ -234,14 +227,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       case 'all':
         return key !== 'locationidfrom'
           && key !== 'locationidto'
-          && key !== 'divisionid'
-          && key !== 'groupid'
           && key !== 'flightdatefrom'
           && key !== 'flightdateto'
           && key !== 'deptimefrominclude'
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
-          && key !== 'dobtoexclude';
+          && key !== 'dobtoexclude'
+          && key !== 'contactsexist';
       case 'data':
         return key === 'flightdatefrom'
           || key === 'flightdateto'
@@ -249,6 +241,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'deptimetoexclude'
           || key === 'dobfrominclude'
           || key === 'dobtoexclude';
+      case 'checkbox':
+        return key === 'contactsexist';
     }
   }
 
