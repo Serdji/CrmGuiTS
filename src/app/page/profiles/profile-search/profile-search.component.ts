@@ -48,6 +48,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initLocation();
     this.initForm();
+    this.formDisable();
     this.initAutocomplete();
     this.initTableAsync();
     this.profileSearchService.subjectDeleteProfile.subscribe( _ => this.serverRequest( this.sendProfileParams ) );
@@ -118,7 +119,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       dobtoexclude: '',
       ticket: '',
       recloc: '',
-      emdnum: '',
+      emd: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -126,7 +127,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       arrpoint: '',
       deptimefrominclude: '',
       deptimetoexclude: '',
-      cabinet: '',
+      cab: '',
       rdb: '',
       tariffcode: '',
       servicecode: '',
@@ -134,8 +135,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       amountto: '',
       amountdatefrom: '',
       amountdateto: '',
-      email: '',
-      phone: '',
+      contactemail: '',
+      contacttext: '',
       contactsexist: '',
       id: '',
     }, {
@@ -145,10 +146,20 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     timer( 500 ).subscribe( _ => this.formFilling() );
   }
 
+  private formDisable() {
+    this.formProfileSearch.get( 'divisionid' ).disable();
+    this.formProfileSearch.get( 'tariffcode' ).disable();
+    this.formProfileSearch.get( 'id' ).disable();
+    this.formProfileSearch.get( 'amountfrom' ).disable();
+    this.formProfileSearch.get( 'amountto' ).disable();
+    this.formProfileSearch.get( 'amountdatefrom' ).disable();
+    this.formProfileSearch.get( 'amountdateto' ).disable();
+  }
+
   private switchCheckbox() {
     this.formProfileSearch.get( 'contactsexist' ).valueChanges.subscribe( value => {
-      this.formProfileSearch.get( 'email' )[ value ? 'disable' : 'enable' ]();
-      this.formProfileSearch.get( 'phone' )[ value ? 'disable' : 'enable' ]();
+      this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
+      this.formProfileSearch.get( 'contacttext' )[ value ? 'disable' : 'enable' ]();
     } );
   }
 

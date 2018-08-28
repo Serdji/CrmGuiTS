@@ -50,7 +50,7 @@
               <input matInput formControlName="recloc" type="text" placeholder="№ брони">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="emdnum" type="text" placeholder="Класс бронирования">
+              <input matInput formControlName="emd" type="text" placeholder="№ услуги">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -63,14 +63,14 @@
               <input matInput formControlName="flight" type="text" placeholder="№ рейса">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="flightdatefrom" placeholder="Дата рейса с" [matDatepicker]="flightDateFrom">
-              <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
+              <input matInput formControlName="deptimefrominclude" placeholder="Дата рейса с" [matDatepicker]="DepTimeFromIncludeFligth">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeFromIncludeFligth"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeFromIncludeFligth></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="flightdateto" placeholder="Дата рейса по" [matDatepicker]="flightDateTo">
-              <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #flightDateTo color="primary"></mat-datepicker>
+              <input matInput formControlName="deptimetoexclude" placeholder="Дата рейса по" [matDatepicker]="DepTimeToExcludeFligth">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeToExcludeFligth"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeToExcludeFligth></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -128,7 +128,7 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cabinet" type="text" placeholder="Кабина">
+              <input matInput formControlName="cab" type="text" placeholder="Кабина">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="rdb" type="text" placeholder="Класс бронирования">
@@ -170,10 +170,10 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="email" type="email" placeholder="Электронная почта">
+              <input matInput formControlName="contactemail" type="email" placeholder="Электронная почта">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="phone" type="text" placeholder="Телефон">
+              <input matInput formControlName="contacttext" type="text" placeholder="Телефон">
             </mat-form-field>
             <mat-checkbox  formControlName="contactsexist">Отсутствие контакта</mat-checkbox>
           </mat-card-content>
