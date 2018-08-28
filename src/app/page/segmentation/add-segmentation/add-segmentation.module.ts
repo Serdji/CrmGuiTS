@@ -9,12 +9,11 @@ import { AddSegmentationService } from './add-segmentation.service';
 @NgModule({
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    // ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
   ],
   declarations: [ AddSegmentationComponent ],
-  exports: [ AddSegmentationComponent ],
   providers: [ AddSegmentationService ],
 })
 export class AddSegmentationModule { }
