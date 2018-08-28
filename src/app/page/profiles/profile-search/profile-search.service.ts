@@ -20,14 +20,6 @@ export class ProfileSearchService {
     return this.http.get( environment.crmApi + '/crm/location' ).pipe( retry( 10 ) );
   }
 
-  getTree(): Observable<any> {
-    return this.http.get( environment.crmApi + '/api/api/Segmentation/tree' );
-  }
-
-  getGroups(): Observable<any> {
-    return this.http.get( environment.crmApi + '/api/api/CustomerGroup/groups' );
-  }
-
   getProfileSearch( params: IprofileSearch ): Observable<any> {
     this.params = params;
     return this.http.get( environment.crmApi + '/crm/customer/search', { params: this.params } ).pipe( retry( 10 ) );
