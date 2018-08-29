@@ -1,10 +1,11 @@
 <div class="tabs-profile tabs-dark-theme">
 
   <mat-card class="tabs-profile__card">
-    <mat-progress-bar *ngIf="progress" mode="buffer"></mat-progress-bar>
-    <div *ngIf="!progress">
-      <mat-grid-list cols="5" rowHeight="150px">
-        <mat-grid-tile [colspan]="2" [rowspan]="1">
+
+    <mat-grid-list cols="5" rowHeight="150px">
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-spinner class="tabs-profile__spinner" *ngIf="profileProgress"></mat-spinner>
+        <div *ngIf="!profileProgress">
           <mat-card class="tabs-profile__card-grid mat-elevation-z0">
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content _right-width">
@@ -34,51 +35,56 @@
               </div>
             </div>
           </mat-card>
-        </mat-grid-tile>
+        </div>
+      </mat-grid-tile>
 
 
-        <mat-grid-tile [colspan]="2" [rowspan]="1">
-          <mat-card class="tabs-profile__card-grid mat-elevation-z0">
-            <div class="tabs-profile__content-wrapper">
-              <div class="tabs-profile__content _right-width">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Группы:</span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <div> ...</div>
-                  <div> ...</div>
-                  <div> ...</div>
-                </div>
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+          <div class="tabs-profile__content-wrapper">
+            <div class="tabs-profile__content _right-width">
+              <div class="tabs-profile__content-point">
+                <span class="tabs-profile__content-text">Группы:</span>
               </div>
-
-              <div class="tabs-profile__content">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Спецгруппы:</span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <div> ...</div>
-                  <div> ...</div>
-                  <div> ...</div>
-                </div>
+              <div class="tabs-profile__content-point">
+                <div> ...</div>
+                <div> ...</div>
+                <div> ...</div>
               </div>
             </div>
-          </mat-card>
-        </mat-grid-tile>
+
+            <div class="tabs-profile__content">
+              <div class="tabs-profile__content-point">
+                <span class="tabs-profile__content-text">Спецгруппы:</span>
+              </div>
+              <div class="tabs-profile__content-point">
+                <div> ...</div>
+                <div> ...</div>
+                <div> ...</div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </mat-grid-tile>
 
 
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-spinner class="tabs-profile__spinner" *ngIf="ordersProgress"></mat-spinner>
+        <div *ngIf="!ordersProgress">
           <mat-card class="tabs-profile__card-grid mat-elevation-z0">
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Всего заказов</span>
+                  <span class="tabs-profile__content-text">Всего заказов:</span>
+                  <span><b> {{orders.length}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
                   <span><b> ...</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Всего услуг</span>
+                  <span class="tabs-profile__content-text">Всего платных услуг:</span>
+                  <span><b> {{orders[orders.length - 1].counterServicesIsEmd}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
@@ -91,9 +97,9 @@
               </div>
             </div>
           </mat-card>
-        </mat-grid-tile>
-      </mat-grid-list>
-    </div>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </mat-card>
 
   <mat-tab-group backgroundColor="primary" color="accent">

@@ -9,6 +9,7 @@ import { ContactModule } from './contact/contact.module';
 import { DocumentModule } from './document/document.module';
 import { OrderModule } from './order/order.module';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { OrderService } from './order/order.service';
 
 @NgModule( {
   imports: [
@@ -22,7 +23,10 @@ import { PipesModule } from '../../../pipes/pipes.module';
     PipesModule,
   ],
   declarations: [ TabsProfileComponent ],
-  providers: [ TabsProfileService ]
+  providers: [
+    TabsProfileService,
+    OrderService,
+  ]
 } )
 export class TabsProfileModule {
 }

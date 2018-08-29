@@ -15,7 +15,8 @@ export class OrderService {
     return this.http.get( `${environment.crmApi}/crm/customer/${id}/booking` )
       .pipe(
         retry( 10 ),
-        map( (orders: any) => {
+        map( ( orders: any ) => {
+          let counterServicesIsEmd = 0;
           for ( const order of orders ) {
             for ( const segment of order.segments ) {
               if ( order.tickets ) {
@@ -25,8 +26,16 @@ export class OrderService {
                   }
                 }
               }
+              if ( order.ssrs ) {
+                for ( const ssr of order.ssrs ) {
+                  if ( order.services ) {
+                    order.services.push( ssr );
+                  }
+                }
+              }
               if ( order.services ) {
                 for ( const service of order.services ) {
+                  if ( service.emd ) ++counterServicesIsEmd;
                   if ( segment.segNum === service.segNum ) {
                     Object.assign( service, { segment } );
                   }
@@ -37,8 +46,10 @@ export class OrderService {
               for ( const MonetaryInfo of order.MonetaryInfo ) {
                 if ( order.services ) {
                   for ( const service of order.services ) {
-                    if ( MonetaryInfo.emd === service.emd.num ) {
-                      Object.assign( service, { MonetaryInfo } );
+                    if ( service.emd ) {
+                      if ( MonetaryInfo.emd === service.emd.num ) {
+                        Object.assign( service, { MonetaryInfo } );
+                      }
                     }
                   }
                 }
@@ -52,9 +63,15 @@ export class OrderService {
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
                   LCodeG = LCode;
                   switch ( Code ) {
-                    case 'T': T += Amount; break;
-                    case 'B': B += Amount; break;
-                    case 'E': E += Amount; break;
+                    case 'T':
+                      T += Amount;
+                      break;
+                    case 'B':
+                      B += Amount;
+                      break;
+                    case 'E':
+                      E += Amount;
+                      break;
                   }
                 }
               }
@@ -64,16 +81,17 @@ export class OrderService {
                 order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
                 order.MonetaryInfo.push( { Code: 'TE', Amount: TE, LCode: LCodeG } );
               }
-              if ( T && B && !TE) {
+              if ( T && B && !TE ) {
                 TB = T - B;
-                order.MonetaryInfo.push( {  Code: 'TG', Amount: T, LCode: LCodeG } );
-                order.MonetaryInfo.push( {  Code: 'TB', Amount: TB, LCode: LCodeG } );
+                order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
+                order.MonetaryInfo.push( { Code: 'TB', Amount: TB, LCode: LCodeG } );
               }
             }
           }
+          orders.push( { counterServicesIsEmd: counterServicesIsEmd } );
           return orders;
         } )
-        );
+      );
   }
 
 }
