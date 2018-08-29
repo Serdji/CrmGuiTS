@@ -4,6 +4,7 @@ import { EntranceModule } from './entrance/entrance.module';
 import { UsersModule } from './users/users.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SettingsModule } from './settings/settings.module';
+import { SegmentationModule } from './segmentation/segmentation.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { SettingsModule } from './settings/settings.module';
     EntranceModule,
     UsersModule,
     SettingsModule,
+    SegmentationModule,
   ],
   declarations: []
 })

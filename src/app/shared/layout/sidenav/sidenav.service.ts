@@ -16,7 +16,7 @@ export class SidenavService {
     return [
       {
         name: 'Пользователи',
-        icon: 'group',
+        icon: 'person',
         link: [
           { url: '/crm/adduser', title: 'Добавить пользователя' },
           { url: '/crm/listusers', title: 'Список пользователей' }
@@ -24,10 +24,17 @@ export class SidenavService {
       },
       {
         name: 'Пассажиры',
-        icon: 'airplanemode_active',
+        icon: 'airline_seat_recline_extra',
         link: [
           { url: '/crm/profilesearch', title: 'Поиск пассажира' },
           { url: '/crm/addprofile', title: 'Добавить пассажира' }
+        ]
+      },
+      {
+        name: 'Сегментация',
+        icon: 'group',
+        link: [
+          { url: '/crm/addsegmentation', title: 'Создать' },
         ]
       },
       {
