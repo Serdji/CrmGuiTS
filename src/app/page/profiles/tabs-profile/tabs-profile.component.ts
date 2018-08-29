@@ -56,7 +56,6 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.orderService.getBooking( id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( orders => {
-        console.log(orders);
         this.orders = orders;
         this.ordersProgress = false;
       } );
