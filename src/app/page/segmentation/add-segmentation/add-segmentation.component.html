@@ -1,6 +1,6 @@
 <div class="add-segmentation">
   <form class="add-segmentation__form">
-    <mat-grid-list cols="1" rowHeight="120px">
+    <mat-grid-list cols="1" rowHeight="80px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
@@ -13,7 +13,7 @@
     </mat-grid-list>
 
 
-    <mat-grid-list cols="4" rowHeight="250px">
+    <mat-grid-list cols="4" rowHeight="170px">
 
       <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-card class="add-segmentation__card">
@@ -42,10 +42,10 @@
             <mat-radio-group class="add-segmentation__input">
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
-                  <mat-radio-button class="add-segmentation__input-radio" value="1">Летает с детьми</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="1">Летает с детьми</mat-radio-button>
                 </div>
                 <div class="add-segmentation__input-radio-group _right">
-                  <mat-radio-button class="add-segmentation__input-radio" value="2">Летает без детей</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="2">Летает без детей</mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>
@@ -61,11 +61,11 @@
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
                   <mat-radio-button class="add-segmentation__input-radio" value="1">Месяц</mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio" value="2">Квартал</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="2">Квартал</mat-radio-button>
                 </div>
                 <div class="add-segmentation__input-radio-group _right">
                   <mat-radio-button class="add-segmentation__input-radio" value="3">Полугодие</mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio" value="4">Год</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="4">Год</mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>
@@ -76,8 +76,48 @@
       <mat-grid-tile [colspan]="1" [rowspan]="5">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Билеты</span>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
+              <input matInput type="text" placeholder="Номер рейса">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Откуда">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Куда">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Кабина">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Класс бронирования">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код тарифа">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код услути">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код ГРС (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код страны (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код порта/города (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код ППР (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код Агенства (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Форма оплаты">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Валюта оплаты">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -86,8 +126,39 @@
       <mat-grid-tile [colspan]="1" [rowspan]="5">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Платные услуги</span>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Фамилия">
+              <input matInput type="text" placeholder="Номер рейса">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Откуда">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Куда">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код услути">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код ГРС (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код страны (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код порта/города (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код ППР (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Код Агенства (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Форма оплаты">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Валюта оплаты">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -119,7 +190,7 @@
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
                   <mat-radio-button class="add-segmentation__input-radio" value="1">Количестно покупок</mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio" value="1">Сумма покупок</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="1">Сумма покупок</mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>
@@ -133,7 +204,7 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
-            <span class="add-segmentation__content-title">Общая сумма по заказу удовлетворяющем условиям</span>
+            <span class="add-segmentation__content-title">Общая сумма по заказу</span>
             <mat-form-field class="add-segmentation__input">
               <input matInput type="text" placeholder="От">
             </mat-form-field>
@@ -150,7 +221,7 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
-            <span class="add-segmentation__content-title">Кол-во сегментов удовлетворяющее условиям</span>
+            <span class="add-segmentation__content-title">Кол-во сегментов</span>
             <mat-form-field class="add-segmentation__input">
               <input matInput type="text" placeholder="От">
             </mat-form-field>
@@ -163,6 +234,15 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
       </mat-grid-tile>
+
+      <div class="add-segmentation__button-wrapper">
+        <button appAccessRights="customers:read" class="add-segmentation__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button class="add-segmentation__button _left-button" mat-raised-button disabled>История</button>
+        <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
+      </div>
 
     </mat-grid-list>
   </form>
