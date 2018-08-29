@@ -136,7 +136,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       amountdatefrom: '',
       amountdateto: '',
       contactemail: '',
-      contacttext: '',
+      contactphone: '',
       contactsexist: '',
       id: '',
     }, {
@@ -159,10 +159,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private switchCheckbox() {
     this.formProfileSearch.get( 'contactsexist' ).valueChanges.subscribe( value => {
       this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
-      this.formProfileSearch.get( 'contacttext' )[ value ? 'disable' : 'enable' ]();
+      this.formProfileSearch.get( 'contactphone' )[ value ? 'disable' : 'enable' ]();
       if ( value ) {
         this.formProfileSearch.get( 'contactemail' ).patchValue('');
-        this.formProfileSearch.get( 'contacttext' ).patchValue('');
+        this.formProfileSearch.get( 'contactphone' ).patchValue('');
       }
     } );
   }
