@@ -198,6 +198,10 @@
                         <span><b> {{service.status}}</b></span>
                       </div>
                       <div class="order__content-point">
+                        <span class="order__content-text">SSR:</span>
+                        <span><b> {{service.ssr}}</b></span>
+                      </div>
+                      <div class="order__content-point">
                         <span class="order__content-text">{{ service.nos ? 'Название услуги:' : 'Комментарий:'}}</span>
                         <span><b> {{ service.nos || service.text }}</b></span>
                       </div>
@@ -209,16 +213,16 @@
                         <span><b> ...</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">SSR:</span>
-                        <span><b> {{service.ssr}}</b></span>
-                      </div>
-                      <div class="order__content-point">
                         <span class="order__content-text">Rfisc:</span>
                         <span><b> {{service.rfisc}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Тип EMD:</span>
                         <span><b> {{service.emdType}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">Номер купона:</span>
+                        <span><b> {{service.emd?.coupon}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">EMD:</span>
