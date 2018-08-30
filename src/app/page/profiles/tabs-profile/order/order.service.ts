@@ -18,6 +18,13 @@ export class OrderService {
         map( ( orders: any ) => {
           let counterServicesIsEmd = 0;
           for ( const order of orders ) {
+            if ( order.services ) {
+              for ( const service of order.services ) {
+                if ( service.emd ) ++counterServicesIsEmd;
+              }
+            }
+
+
             for ( const segment of order.segments ) {
               if ( order.tickets ) {
                 for ( const ticket of order.tickets ) {
@@ -26,6 +33,7 @@ export class OrderService {
                   }
                 }
               }
+
               if ( order.ssrs ) {
                 for ( const ssr of order.ssrs ) {
                   if ( order.services ) {
@@ -33,15 +41,17 @@ export class OrderService {
                   }
                 }
               }
+
               if ( order.services ) {
                 for ( const service of order.services ) {
-                  if ( service.emd ) ++counterServicesIsEmd;
                   if ( segment.segNum === service.segNum ) {
                     Object.assign( service, { segment } );
                   }
                 }
               }
             }
+
+
             if ( order.MonetaryInfo ) {
               for ( const MonetaryInfo of order.MonetaryInfo ) {
                 if ( order.services ) {
@@ -55,6 +65,7 @@ export class OrderService {
                 }
               }
             }
+
 
             if ( order.MonetaryInfo ) {
               let T = 0, B = 0, E = 0, TB, TE, LCodeG;
@@ -81,6 +92,7 @@ export class OrderService {
                 order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
                 order.MonetaryInfo.push( { Code: 'TE', Amount: TE, LCode: LCodeG } );
               }
+
               if ( T && B && !TE ) {
                 TB = T - B;
                 order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
@@ -88,6 +100,7 @@ export class OrderService {
               }
             }
           }
+
           orders.push( { counterServicesIsEmd: counterServicesIsEmd } );
           return orders;
         } )
