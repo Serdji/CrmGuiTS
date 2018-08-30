@@ -225,6 +225,10 @@
                         <span><b> {{service.emd?.coupon}}</b></span>
                       </div>
                       <div class="order__content-point">
+                        <span class="order__content-text">Статус:</span>
+                        <span><b> {{service.couponStatus}}</b></span>
+                      </div>
+                      <div class="order__content-point">
                         <span class="order__content-text">EMD:</span>
                         <span><b> {{service.emd?.num}}</b></span>
                       </div>
@@ -236,9 +240,9 @@
                         <span class="order__content-text">Концепт/мера:</span>
                         <span><b> ...</b></span>
                       </div>
-                      <div *ngIf="service.MonetaryInfo && service.MonetaryInfo.Code === 'T' && service.MonetaryInfo.emd" class="tabs-profile__content-point">
+                      <div class="tabs-profile__content-point">
                         <span class="order__content-text">Стоимость:</span>
-                        <span><b> {{ service.MonetaryInfo.Amount | currency:'':''}} {{ service.MonetaryInfo.LCode }}</b></span>
+                        <span><b> {{ service.emd?.amount | currency:'':''}}</b></span>
                       </div>
                     </div>
                   </div>

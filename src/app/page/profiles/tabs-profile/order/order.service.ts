@@ -52,19 +52,19 @@ export class OrderService {
             }
 
 
-            if ( order.MonetaryInfo ) {
-              for ( const MonetaryInfo of order.MonetaryInfo ) {
-                if ( order.services ) {
-                  for ( const service of order.services ) {
-                    if ( service.emd ) {
-                      if ( MonetaryInfo.emd === service.emd.num ) {
-                        Object.assign( service, { MonetaryInfo } );
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            // if ( order.MonetaryInfo ) {
+            //   for ( const MonetaryInfo of order.MonetaryInfo ) {
+            //     if ( order.services ) {
+            //       for ( const service of order.services ) {
+            //         if ( service.emd ) {
+            //           if ( MonetaryInfo.emd === service.emd.num ) {
+            //             Object.assign( service, { MonetaryInfo } );
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
 
 
             if ( order.MonetaryInfo ) {
