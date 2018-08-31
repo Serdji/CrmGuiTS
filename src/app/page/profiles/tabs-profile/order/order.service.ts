@@ -3,6 +3,7 @@ import { HttpClient } from '../../../../../../node_modules/@angular/common/http'
 import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { map, retry } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Injectable( {
   providedIn: 'root'
@@ -11,11 +12,14 @@ export class OrderService {
 
   constructor( private http: HttpClient ) { }
 
+
   getBooking( id: number ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/customer/${id}/booking` )
       .pipe(
         retry( 10 ),
         map( ( orders: any ) => {
+          orders = _.sortBy( orders, o => o.lut );
+          _.reverse( orders );
           let counterServicesIsEmd = 0;
           for ( const order of orders ) {
             if ( order.services ) {
@@ -29,7 +33,7 @@ export class OrderService {
               if ( order.tickets ) {
                 for ( const ticket of order.tickets ) {
                   if ( segment.segNum === ticket.segNum ) {
-                    Object.assign( ticket, { segment } );
+                    _.merge( ticket, { segment } );
                   }
                 }
               }
@@ -45,26 +49,26 @@ export class OrderService {
               if ( order.services ) {
                 for ( const service of order.services ) {
                   if ( segment.segNum === service.segNum ) {
-                    Object.assign( service, { segment } );
+                    _.merge( service, { segment } );
                   }
                 }
               }
             }
 
 
-            if ( order.MonetaryInfo ) {
-              for ( const MonetaryInfo of order.MonetaryInfo ) {
-                if ( order.services ) {
-                  for ( const service of order.services ) {
-                    if ( service.emd ) {
-                      if ( MonetaryInfo.emd === service.emd.num ) {
-                        Object.assign( service, { MonetaryInfo } );
-                      }
-                    }
-                  }
-                }
-              }
-            }
+            // if ( order.MonetaryInfo ) {
+            //   for ( const MonetaryInfo of order.MonetaryInfo ) {
+            //     if ( order.services ) {
+            //       for ( const service of order.services ) {
+            //         if ( service.emd ) {
+            //           if ( MonetaryInfo.emd === service.emd.num ) {
+            //             _.merge( service, { MonetaryInfo } );
+            //           }
+            //         }
+            //       }
+            //     }
+            //   }
+            // }
 
 
             if ( order.MonetaryInfo ) {
@@ -84,6 +88,7 @@ export class OrderService {
                       E += Amount;
                       break;
                   }
+                  ``;
                 }
               }
 
