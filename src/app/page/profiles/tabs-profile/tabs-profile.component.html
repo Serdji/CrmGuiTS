@@ -29,8 +29,8 @@
 
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">С нами</span>
-                  <span><b> ...</b></span>
+                  <span class="tabs-profile__content-text">С нами:</span>
+                  <span><b> {{profile.lut | date:'dd.MM.yyyy' }}</b></span>
                 </div>
               </div>
             </div>
@@ -103,21 +103,21 @@
   </mat-card>
 
   <mat-tab-group backgroundColor="primary" color="accent">
-    <mat-tab label="Профиль">
-      <ng-template matTabContent>
-        <app-profile [id]="profileId"></app-profile>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="Контакты">
-      <ng-template matTabContent>
-        <app-contact [id]="profileId"></app-contact>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="Документы">
-      <ng-template matTabContent>
-        <app-document [id]="profileId"></app-document>
-      </ng-template>
-    </mat-tab>
+    <!--<mat-tab label="Профиль">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-profile [id]="profileId"></app-profile>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
+    <!--<mat-tab label="Контакты">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-contact [id]="profileId"></app-contact>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
+    <!--<mat-tab label="Документы">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-document [id]="profileId"></app-document>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
     <mat-tab label="Заказы">
       <ng-template matTabContent>
         <app-order [id]="profileId"></app-order>

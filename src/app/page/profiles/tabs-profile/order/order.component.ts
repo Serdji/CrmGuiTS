@@ -2,6 +2,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { map, takeWhile } from 'rxjs/operators';
 import { IDocument } from '../../../../interface/idocument';
+import * as _ from 'lodash';
+
 
 @Component( {
   selector: 'app-order',
@@ -31,7 +33,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orderService.getBooking( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( orders => {
-        this.orders = orders;
+        this.orders = _.dropRight( orders );
         this.progress = false;
       } );
   }
