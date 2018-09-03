@@ -4,7 +4,6 @@ import { Observable } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { map, retry } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { isGeneratedFile } from '../../../../../../node_modules/@angular/compiler/src/aot/util';
 
 @Injectable( {
   providedIn: 'root'
@@ -21,7 +20,6 @@ export class OrderService {
         map( ( orders: any ) => {
           orders = _.sortBy( orders, o => o.lut );
           _.reverse( orders );
-          console.log( orders );
           let counterServicesIsEmd = 0;
 
           for ( const order of orders ) {
