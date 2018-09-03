@@ -19,7 +19,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public ordersProgress: boolean;
   public orders;
 
-  private isActive: boolean = true;
+  private isActive: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +28,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.route.params
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
