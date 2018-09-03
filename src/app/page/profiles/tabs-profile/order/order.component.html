@@ -90,15 +90,15 @@
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
-                    <div class="order__content">
+                    <div class="order__content _none-justify">
                       <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
 
                       <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
-                        <div *ngIf="MonetaryInfo.Code === 'TG'" class="tabs-profile__content-point">
+                        <div *ngIf="MonetaryInfo.Code === 'TG'" class="order__content-point">
                           <span class="order__content-text">Всего по заказу:</span>
                           <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
-                        <div *ngIf="MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB'" class="tabs-profile__content-point">
+                        <div *ngIf="MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB'" class="order__content-point">
                           <span class="order__content-text">Таксы и сборы:</span>
                           <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
                         </div>
@@ -240,7 +240,7 @@
                         <span class="order__content-text">Концепт/мера:</span>
                         <span><b> ...</b></span>
                       </div>
-                      <div class="tabs-profile__content-point">
+                      <div class="order__content-point">
                         <span class="order__content-text">Стоимость:</span>
                         <span><b> {{ service.emd?.amount | currency:'':''}}</b></span>
                       </div>
