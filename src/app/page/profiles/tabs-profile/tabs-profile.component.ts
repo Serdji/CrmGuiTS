@@ -19,7 +19,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public ordersProgress: boolean;
   public orders;
 
-  private isActive: boolean = true;
+  private isActive: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +28,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.route.params
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
@@ -51,7 +52,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
               return _.merge( profile, { lut } );
             } ) )
           .subscribe( ( profile ) => {
-            _.merge( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+            _.merge( profile, _.head( _.filter( profile.customerNames, { 'customerNameType': 1 } ) ) );
             this.profile = profile;
             this.profileProgress = false;
           } );

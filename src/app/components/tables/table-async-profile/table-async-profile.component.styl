@@ -62,29 +62,49 @@ mat-cell
 
 .mat-column
 
-  &-customerId
-    width: customerId;
+  //&-customerId
+  //  width: customerId;
+  //
+  //&-select
+  //  width: select;
+  //
+  //&-firstName
+  //  width: firstName;
+  //
+  //&-lastName
+  //  width: lastName;
+  //
+  //&-secondName
+  //  width: secondName;
+  //
+  //&-prefix
+  //  width: prefix;
+  //
+  //&-gender
+  //  width: gender;
+  //
+  //&-dob
+  //  width: dob;
+
 
   &-select
     width: select;
 
-  &-firstName
-    width: firstName;
-
-  &-lastName
-    width: lastName;
-
-  &-secondName
-    width: secondName;
-
-  &-prefix
-    width: prefix;
-
-  &-gender
-    width: gender;
-
+  &-firstName,
+  &-lastName,
+  &-secondName,
+  &-prefix,
+  &-gender,
   &-dob
-    width: dob;
+    flex: 1;
+
+  &-customerId
+    width: customerId;
+    margin-left: auto;
+    mat-icon
+      cursor: pointer
+      color: #696969;
+      margin-left: auto
 
 .mat-table-sticky:first-child
   border-right: 1px solid #e0e0e0;

@@ -21,7 +21,11 @@ export class OrderService {
           orders = _.sortBy( orders, o => o.lut );
           _.reverse( orders );
           let counterServicesIsEmd = 0;
+
           for ( const order of orders ) {
+            if ( order.distrRecloc ) _.merge( _.head( _.filter( order.pos ) ), { distrRecloc: _.head( _.filter( order.distrRecloc ) ) } );
+            if ( order.ssrs ) order.services.push(  _.head( _.filter( order.ssrs ) ) );
+
             if ( order.services ) {
               for ( const service of order.services ) {
                 if ( service.emd ) ++counterServicesIsEmd;
@@ -38,13 +42,6 @@ export class OrderService {
                 }
               }
 
-              if ( order.ssrs ) {
-                for ( const ssr of order.ssrs ) {
-                  if ( order.services ) {
-                    order.services.push( ssr );
-                  }
-                }
-              }
 
               if ( order.services ) {
                 for ( const service of order.services ) {
@@ -55,22 +52,6 @@ export class OrderService {
               }
             }
 
-
-            // if ( order.MonetaryInfo ) {
-            //   for ( const MonetaryInfo of order.MonetaryInfo ) {
-            //     if ( order.services ) {
-            //       for ( const service of order.services ) {
-            //         if ( service.emd ) {
-            //           if ( MonetaryInfo.emd === service.emd.num ) {
-            //             _.merge( service, { MonetaryInfo } );
-            //           }
-            //         }
-            //       }
-            //     }
-            //   }
-            // }
-
-
             if ( order.MonetaryInfo ) {
               let T = 0, B = 0, E = 0, TB, TE, LCodeG;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
@@ -78,17 +59,10 @@ export class OrderService {
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
                   LCodeG = LCode;
                   switch ( Code ) {
-                    case 'T':
-                      T += Amount;
-                      break;
-                    case 'B':
-                      B += Amount;
-                      break;
-                    case 'E':
-                      E += Amount;
-                      break;
+                    case 'T': T += Amount; break;
+                    case 'B': B += Amount; break;
+                    case 'E': E += Amount; break;
                   }
-                  ``;
                 }
               }
 

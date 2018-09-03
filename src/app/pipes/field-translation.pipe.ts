@@ -15,6 +15,8 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'dob': return 'Дата';
       case  'm': return 'M';
       case  'f': return 'Ж';
+      case  'M': return 'M';
+      case  'F': return 'Ж';
     }
   }
 }
