@@ -231,10 +231,13 @@
 
       <div class="add-segmentation__button-wrapper">
         <button appAccessRights="customers:read" class="add-segmentation__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
-          <mat-icon>search</mat-icon>
-          Искать
+          <mat-icon>save</mat-icon>
+          Сохранить
         </button>
-        <button class="add-segmentation__button _left-button" mat-raised-button disabled>История</button>
+        <button class="add-segmentation__button _left-button" mat-raised-button disabled>
+          <mat-icon>create</mat-icon>
+          Изменить
+        </button>
         <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
       </div>
 
