@@ -52,7 +52,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
               return _.merge( profile, { lut } );
             } ) )
           .subscribe( ( profile ) => {
-            _.merge( profile, _.head( _.filter( profile.customerNames, { 'customerNameType': 1 } ) ) );
+            _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
             this.profile = profile;
             this.profileProgress = false;
           } );

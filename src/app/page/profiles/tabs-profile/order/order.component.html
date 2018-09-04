@@ -175,23 +175,23 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт вылета:</span>
-                        <span><b> {{service.segment.depPoint}}</b></span>
+                        <span><b> {{service.segment?.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время вылета:</span>
-                        <span><b> {{service.segment.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                        <span><b> {{service.segment?.depTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Аэропорт приелета:</span>
-                        <span><b> {{service.segment.arrPoint}}</b></span>
+                        <span><b> {{service.segment?.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Дата / время прилета:</span>
-                        <span><b> {{service.segment.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
+                        <span><b> {{service.segment?.arrTime | date:'hh:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">№ рейса:</span>
-                        <span><b> {{service.segment.flight}}</b></span>
+                        <span><b> {{service.segment?.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Статус услуги:</span>
