@@ -18,13 +18,22 @@ export class OrderService {
       .pipe(
         retry( 10 ),
         map( ( orders: any ) => {
-          orders = _.sortBy( orders, o => o.lut );
-          _.reverse( orders );
+          orders = _.sortBy( orders, 'lut' );
           let counterServicesIsEmd = 0;
 
           for ( const order of orders ) {
-            if ( order.distrRecloc ) _.merge( _.head( _.filter( order.pos ) ), { distrRecloc: _.head( _.filter( order.distrRecloc ) ) } );
-            if ( order.ssrs ) order.services.push(  _.head( _.filter( order.ssrs ) ) );
+            if ( order.distrRecloc ) _.merge( _.find( order.pos ), { distrRecloc: _.find( order.distrRecloc ) } );
+            if ( order.ssrs ) {
+              if ( order.services ) {
+                for ( const ssr of order.ssrs ) {
+                  if ( ssr.segNum || ssr.passNum ) {
+                    order.services.push( ssr );
+                  }
+                }
+              } else {
+                _.set( order, 'services', _.filter( order.ssrs, ssr => ssr.segNum || ssr.passNum  ) );
+              }
+            }
 
             if ( order.services ) {
               for ( const service of order.services ) {
@@ -59,9 +68,15 @@ export class OrderService {
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
                   LCodeG = LCode;
                   switch ( Code ) {
-                    case 'T': T += Amount; break;
-                    case 'B': B += Amount; break;
-                    case 'E': E += Amount; break;
+                    case 'T':
+                      T += Amount;
+                      break;
+                    case 'B':
+                      B += Amount;
+                      break;
+                    case 'E':
+                      E += Amount;
+                      break;
                   }
                 }
               }
