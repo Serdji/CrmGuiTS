@@ -18,7 +18,7 @@ export class OrderService {
       .pipe(
         retry( 10 ),
         map( ( orders: any ) => {
-          orders = _.sortBy( orders, 'lut' );
+          orders = _( orders ).sortBy( 'lut' ).reverse().value();
           let counterServicesIsEmd = 0;
 
           for ( const order of orders ) {
@@ -31,7 +31,7 @@ export class OrderService {
                   }
                 }
               } else {
-                _.set( order, 'services', _.filter( order.ssrs, ssr => ssr.segNum || ssr.passNum  ) );
+                _.set( order, 'services', _.filter( order.ssrs, ssr => ssr.segNum || ssr.passNum ) );
               }
             }
 
