@@ -33,15 +33,14 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.initFormProfile();
-    this.oneRequired();
   }
 
 
   private initFormProfile() {
     this.formProfile = this.fb.group( {
       firstName: [ '', Validators.required ],
-      lastName: [ '', Validators.required ],
-      secondName: [ '', Validators.required ],
+      lastName: '',
+      secondName: '',
       gender: '',
       dob: [ '', Validators.required ],
     }, {
@@ -49,25 +48,25 @@ export class AddProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private oneRequired() {
-    const items = [ 'firstName', 'lastName', 'secondName' ];
-    for ( const item of items ) {
-      this.formProfile.get( item ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( value => {
-          if ( value.length > 0 ) {
-            for ( const item2 of items ) {
-              this.formProfile.get( item2 ).clearValidators();
-              this.formProfile.get( item2 ).setErrors( null );
-            }
-          } else {
-            for ( const item2 of items ) {
-              this.formProfile.get( item2 ).setErrors( { 'notEqual': true } );
-            }
-          }
-      } );
-    }
-  }
+  // private oneRequired() {
+  //   const items = [ 'firstName', 'lastName', 'secondName' ];
+  //   for ( const item of items ) {
+  //     this.formProfile.get( item ).valueChanges
+  //       .pipe( takeWhile( _ => this.isActive ) )
+  //       .subscribe( value => {
+  //         if ( value.length > 0 ) {
+  //           for ( const item2 of items ) {
+  //             this.formProfile.get( item2 ).clearValidators();
+  //             this.formProfile.get( item2 ).setErrors( null );
+  //           }
+  //         } else {
+  //           for ( const item2 of items ) {
+  //             this.formProfile.get( item2 ).setErrors( { 'notEqual': true } );
+  //           }
+  //         }
+  //     } );
+  //   }
+  // }
 
   sendForm(): void {
     if ( !this.formProfile.invalid ) {
