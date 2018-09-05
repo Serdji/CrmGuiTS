@@ -6,12 +6,15 @@
         <form class="add-profile__form" [formGroup]="formProfile">
           <mat-form-field class="add-profile__input">
             <input matInput formControlName="firstName" placeholder="Имя">
+            <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
             <input matInput formControlName="lastName" placeholder="Фамилия">
+            <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
             <input matInput formControlName="secondName" placeholder="Второе имя">
+            <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
             <mat-select formControlName="gender" placeholder="Пол">
@@ -24,6 +27,7 @@
             <input matInput formControlName="dob" placeholder="дд.мм.гггг" [matDatepicker]="dob">
             <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dob></mat-datepicker>
+            <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
           <div class="add-profile__button-wrapper">
             <button class="add-profile__button _left-button" mat-raised-button (click)="sendForm()" color="primary">Добавить пассажира</button>
