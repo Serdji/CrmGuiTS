@@ -31,10 +31,13 @@ export class OrderComponent implements OnInit, OnDestroy {
     // АМИНА АДИЛОВНА ЗАКАРЬЯЕВА
     this.orderService.getBooking( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( orders => {
-        this.orders = _.dropRight( orders );
-        this.progress = false;
-      } );
+      .subscribe(
+        orders => {
+          this.orders = _.dropRight( orders );
+          this.progress = false;
+        },
+          error =>  this.progress = false
+        );
   }
 
   ngOnDestroy(): void {
