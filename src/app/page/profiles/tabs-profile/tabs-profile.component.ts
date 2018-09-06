@@ -33,32 +33,43 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         this.profileId = params.id;
-        this.initProfile( this.profileId );
+        this.initOrder( this.profileId );
       } );
   }
 
 
-  private initProfile( id: number ) {
+  private initOrder( id: number ) {
     this.ordersProgress = true;
     this.profileProgress = true;
     this.orderService.getBooking( id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( orders => {
+      .subscribe(
+        orders => {
+          this.initProfile( id, orders );
+          this.orders = orders;
+          this.ordersProgress = false;
+        },
+          error => {
+            this.initProfile( id );
+            this.ordersProgress = false;
+          }
+        );
+  }
 
-        this.profileService.getProfile( id )
-          .pipe(
-            map( profile => {
-              const { lut } = _.minBy( orders, o => o.lut );
-              return _.merge( profile, { lut } );
-            } ) )
-          .subscribe( ( profile ) => {
-            _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
-            this.profile = profile;
-            this.profileProgress = false;
-          } );
-
-        this.orders = orders;
-        this.ordersProgress = false;
+  private initProfile( id: number, orders? ) {
+    this.profileService.getProfile( id )
+      .pipe(
+        map( profile => {
+          if ( orders ) {
+            const { lut } = _.minBy( orders, o => o.lut );
+            return _.merge( profile, { lut } );
+          }
+          return profile;
+        } ) )
+      .subscribe( ( profile ) => {
+        _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
+        this.profile = profile;
+        this.profileProgress = false;
       } );
   }
 
