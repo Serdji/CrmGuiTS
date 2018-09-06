@@ -33,6 +33,7 @@
       <form class="profile__form" [formGroup]="formUpdateProfile">
         <mat-form-field class="profile__input">
           <input matInput formControlName="firstName" placeholder="Имя">
+          <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <mat-form-field class="profile__input">
           <input matInput formControlName="lastName" placeholder="Фамилия">
@@ -52,7 +53,8 @@
           <mat-datepicker touchUi="true" #dob></mat-datepicker>
         </mat-form-field>
         <div class="profile__button-wrapper">
-          <button class="profile__button _left-button" mat-raised-button (click)="sendFormUpdateProfile()" color="primary">
+          <button class="profile__button _left-button" mat-raised-button (click)="sendFormUpdateProfile()"
+                  color="primary">
             Изменить
           </button>
           <button class="profile__button" mat-raised-button (click)="deleteProfile()" color="warn">
@@ -63,12 +65,19 @@
       </form>
     </div>
 
-    <hr>
+  </mat-card>
 
-    <form class="profile__form _Add" [formGroup]="formAddProfile">
+  <mat-card class="profile__card">
+    <div class="profile__show">
+      <span (click)="showHiden = !showHiden"> {{ showHiden ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden = !showHiden"> {{ showHiden ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+    </div>
+
+    <form *ngIf="showHiden" class="profile__form _Add" [formGroup]="formAddProfile">
 
       <mat-form-field class="profile__input">
         <input matInput formControlName="firstName" placeholder="Имя">
+        <mat-error>Обязательное поле</mat-error>
       </mat-form-field>
 
       <mat-form-field class="profile__input">
@@ -78,15 +87,17 @@
       <mat-form-field class="profile__input">
         <input matInput formControlName="secondName" placeholder="Второе имя">
       </mat-form-field>
-      <button appAccessRights="customers:update" class="profile__button" mat-raised-button (click)="sendFormAddProfile()" color="primary">
+      <button appAccessRights="customers:update" class="profile__button" mat-raised-button
+              (click)="sendFormAddProfile()" color="primary">
         Добавать дополнительно ФИО
       </button>
     </form>
 
-    <div *ngIf="profileNames?.length > 1" >
+    <div *ngIf="profileNames?.length > 1">
       <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaserDisabled>
-        <app-tablet-example-profile-names  *ngIf="profileNames.length > 1" [tableDataSource]="profileNames"></app-tablet-example-profile-names>
+        <app-tablet-example-profile-names *ngIf="profileNames.length > 1"
+                                          [tableDataSource]="profileNames"></app-tablet-example-profile-names>
       </ng-template>
     </div>
 

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { UserService } from '../../page/users/user/user.service';
 import { ProfileSearchService } from '../../page/profiles/profile-search/profile-search.service';
 import { ProfileService } from '../../page/profiles/tabs-profile/profile/profile.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ContactService } from '../../page/profiles/tabs-profile/contact/contact.service';
 import { DocumentService } from '../../page/profiles/tabs-profile/document/document.service';
 import * as moment from 'moment';
@@ -43,7 +43,7 @@ export class DialogComponent implements OnInit {
       contactText: '',
     } );
     this.formUpdateProfileName = this.fb.group( {
-      firstName: '',
+      firstName: [ '', Validators.required ],
       lastName: '',
       secondName: '',
     } );

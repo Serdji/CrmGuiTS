@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { Iprofile } from '../../../../interface/iprofile';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../../../../shared/dialog/dialog.component';
@@ -77,10 +77,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private initFormProfile() {
     this.formUpdateProfile = this.fb.group( {
-      gender: '',
+      firstName: [ '', Validators.required ],
       lastName: '',
-      firstName: '',
       secondName: '',
+      gender: '',
       dob: '',
     }, {
       updateOn: 'submit',
@@ -89,7 +89,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private initFormAddProfile() {
     this.formAddProfile = this.fb.group( {
-      firstName: '',
+      firstName: [ '', Validators.required ],
       lastName: '',
       secondName: '',
     }, {
