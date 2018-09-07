@@ -230,13 +230,17 @@
 
 
       <div class="add-segmentation__button-wrapper">
-        <button appAccessRights="customers:read" class="add-segmentation__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+        <button appAccessRights="customers:read" class="add-segmentation__button _left-button" mat-raised-button (click)="saveForm()" color="primary">
           <mat-icon>save</mat-icon>
           Сохранить
         </button>
-        <button class="add-segmentation__button _left-button" mat-raised-button disabled>
+        <button class="add-segmentation__button _left-button" mat-raised-button (click)="createForm()" disabled>
           <mat-icon>create</mat-icon>
           Изменить
+        </button>
+        <button appAccessRights="customers:read" class="add-segmentation__button _left-button" mat-raised-button (click)="searchForm()" color="primary" disabled>
+          <mat-icon>search</mat-icon>
+          Искать
         </button>
         <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
       </div>
