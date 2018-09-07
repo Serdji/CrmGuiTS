@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-add-segmentation',
@@ -14,6 +15,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public formProfileSearch: FormGroup;
 
   constructor(
+    private route: ActivatedRoute,
     private fb: FormBuilder,
   ) { }
 
