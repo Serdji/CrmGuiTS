@@ -96,11 +96,11 @@
                       <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
                         <div *ngIf="MonetaryInfo.Code === 'TG'" class="order__content-point">
                           <span class="order__content-text">Всего по заказу:</span>
-                          <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
+                          <span><b> {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}}</b></span>
                         </div>
                         <div *ngIf="MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB'" class="order__content-point">
                           <span class="order__content-text">Таксы и сборы:</span>
-                          <span><b> {{ MonetaryInfo.Amount | currency:'':''}} {{ MonetaryInfo.LCode }}</b></span>
+                          <span><b> {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}}</b></span>
                         </div>
                       </div>
 
@@ -242,7 +242,7 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Стоимость:</span>
-                        <span><b> {{ service.emd?.amount | currency:'':''}}</b></span>
+                        <span><b> {{ service.emd?.amount | currency:service.emd?.Currency:'symbol-narrow'}}</b></span>
                       </div>
                     </div>
                   </div>

@@ -1,8 +1,5 @@
 <div class="document">
   <mat-card class="document__card">
-    <mat-card-header>
-      <h2 class="document__header">Добавить документ пассажиру</h2>
-    </mat-card-header>
     <div class="document__show">
       <span (click)="showHiden = !showHiden"> {{ showHiden ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
       <mat-icon (click)="showHiden = !showHiden"> {{ showHiden ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
@@ -44,10 +41,6 @@
       </div>
     </form>
     <div *ngIf="documents?.length !== 0">
-      <hr>
-      <mat-card-header>
-        <h2 class="document__header">Документы пассажира</h2>
-      </mat-card-header>
       <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaserDisabled>
         <app-tablet-example-document *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-tablet-example-document>

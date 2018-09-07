@@ -62,11 +62,11 @@ export class OrderService {
             }
 
             if ( order.MonetaryInfo ) {
-              let T = 0, B = 0, E = 0, TB, TE, LCodeG;
+              let T = 0, B = 0, E = 0, TB, TE, CurrencyG;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
-                const { emd, ticket, Code, Amount, LCode } = MonetaryInfo;
+                const { emd, ticket, Code, Amount, Currency } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
-                  LCodeG = LCode;
+                  CurrencyG = Currency;
                   switch ( Code ) {
                     case 'T':
                       T += Amount;
@@ -83,19 +83,41 @@ export class OrderService {
 
               if ( T && E ) {
                 TE = T - E;
-                order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
-                order.MonetaryInfo.push( { Code: 'TE', Amount: TE, LCode: LCodeG } );
+                order.MonetaryInfo.push( { Code: 'TG', Amount: T, Currency: CurrencyG } );
+                order.MonetaryInfo.push( { Code: 'TE', Amount: TE, Currency: CurrencyG } );
               }
 
               if ( T && B && !TE ) {
                 TB = T - B;
-                order.MonetaryInfo.push( { Code: 'TG', Amount: T, LCode: LCodeG } );
-                order.MonetaryInfo.push( { Code: 'TB', Amount: TB, LCode: LCodeG } );
+                order.MonetaryInfo.push( { Code: 'TG', Amount: T, Currency: CurrencyG } );
+                order.MonetaryInfo.push( { Code: 'TB', Amount: TB, Currency: CurrencyG } );
               }
             }
           }
+          const ticket = _( orders )
+            .map( 'MonetaryInfo' )
+            .flattenDeep()
+            .filter( [ 'Code', 'T' ] )
+            .sumBy( 'AmountCur' );
 
-          orders.push( { counterServicesIsEmd: counterServicesIsEmd } );
+
+          const emd = _( orders )
+            .map( 'MonetaryInfo' )
+            .flattenDeep()
+            .filter( 'emd' )
+            .filter( [ 'Code', 'T' ] )
+            .sumBy( 'AmountCur' );
+
+          const { lut } = _.maxBy( orders, o => o.lut );
+
+          orders.push( {
+            counterServicesIsEmd,
+            lut,
+            totalAmount: {
+              ticket,
+              emd
+            }
+          } );
           return orders;
         } )
       );

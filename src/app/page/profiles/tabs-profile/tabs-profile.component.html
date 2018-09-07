@@ -80,7 +80,7 @@
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
-                  <span><b> ...</b></span>
+                  <span><b *ngIf="orders"> {{ orders[orders.length - 1].totalAmount.ticket | currency:'RUB':'symbol-narrow' }}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Всего платных услуг:</span>
@@ -88,11 +88,11 @@
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
-                  <span><b> ...</b></span>
+                  <span><b *ngIf="orders"> {{ orders[orders.length - 1].totalAmount.emd | currency:'RUB':'symbol-narrow' }}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Дата посленей активности:</span>
-                  <span><b> ...</b></span>
+                  <span><b *ngIf="orders"> {{orders[orders.length - 1].lut | date:'dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
             </div>
