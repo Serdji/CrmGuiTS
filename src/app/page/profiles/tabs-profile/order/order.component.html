@@ -105,7 +105,7 @@
                         <div *ngIf="MonetaryInfo.Code === 'TE' || MonetaryInfo.Code === 'TB'" class="order__content-point">
                           <span class="order__content-text">Таксы и сборы:</span>
                           <span><b>
-                            {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}}|
+                            {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountUsd | currency:'USD':'symbol-narrow'}}
                           </b></span>
