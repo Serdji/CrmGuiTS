@@ -15,4 +15,8 @@ export class AddSegmentationService {
     return this.http.get( `${environment.crmApi}/crm/segmentation/${id}/result`).pipe( retry( 10 ) );
   }
 
+  getSegmentationParams( id: number ): Observable<any> {
+    return this.http.get( `${environment.crmApi}/crm/segmentation/${id}/parameters`).pipe( retry( 10 ) );
+  }
+
 }
