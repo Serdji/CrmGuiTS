@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
+import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 
 @Component( {
   selector: 'app-add-segmentation',
@@ -17,6 +18,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public buttonSave: boolean;
   public buttonCreate: boolean;
   public buttonSearch: boolean;
+  public segmentationProfiles: ISegmentationProfile;
 
   private isActive: boolean;
   private profileId: number;
@@ -34,14 +36,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonSearch = true;
 
     this.initFormSegmentation();
-    this.formFilling();
+    this.initQueryParams();
   }
 
-  private initProfile() {
-
-  }
-
-  private formFilling() {
+  private initQueryParams() {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
@@ -49,30 +47,34 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.buttonSave = true;
           this.buttonCreate = false;
           this.buttonSearch = false;
-
           this.profileId = +params.id;
           console.log( this.profileId );
-          this.addSegmentationService.getProfiles( this.profileId ).subscribe( value => {
-            console.log( value );
-          } );
         }
       } );
   }
 
   private initFormSegmentation() {
     this.formSegmentation = this.fb.group( {
-      segmentationName: '',
-      123: ''
+      segmentationName: ''
     } );
   }
 
-  public saveForm(): void {
+  private initTableProfile( id: number ) {
+    this.addSegmentationService.getProfiles( id ).subscribe( value => {
+      console.log( value );
+    } );
+  }
+
+  saveForm(): void {
     const segmentationParameters = {
       segmentationName: this.formSegmentation.get( 'segmentationName' ).value
     };
 
     console.log( segmentationParameters );
+  }
 
+  searchForm(): void {
+    this.initTableProfile( this.profileId );
   }
 
   ngOnDestroy(): void {

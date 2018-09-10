@@ -1,19 +1,17 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import * as _ from 'lodash';
 import { ListSegmentationService } from './list-segmentation.service';
 import { takeWhile } from 'rxjs/operators';
 import { ISegmentation } from '../../../interface/isegmentation';
 
-@Component({
+@Component( {
   selector: 'app-list-segmentation',
   templateUrl: './list-segmentation.component.html',
-  styleUrls: ['./list-segmentation.component.styl']
-})
+  styleUrls: [ './list-segmentation.component.styl' ]
+} )
 export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   public segmentation: ISegmentation[];
   public isLoader: boolean;
-
   private isActive: boolean;
 
   constructor(
@@ -32,8 +30,8 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( segmentation => {
         this.segmentation = segmentation;
         this.isLoader = false;
-        console.log( segmentation ) ;
-      })
+        console.log( segmentation );
+      } );
   }
 
   ngOnDestroy(): void {
