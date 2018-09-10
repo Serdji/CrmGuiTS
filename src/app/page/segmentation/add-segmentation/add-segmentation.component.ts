@@ -60,6 +60,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formFilling( id ) {
     this.addSegmentationService.getSegmentationParams( id ).subscribe( segmentationParams => {
       console.log( segmentationParams );
+      this.formSegmentation.patchValue(segmentationParams);
     } );
   }
 
