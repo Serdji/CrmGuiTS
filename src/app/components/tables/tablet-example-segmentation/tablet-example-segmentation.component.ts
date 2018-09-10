@@ -41,9 +41,8 @@ export class TabletExampleSegmentationComponent implements OnInit {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'contactTypeId',
-      'contactText',
-      'contactId',
+      'title',
+      'segmentationId',
     ];
   }
 

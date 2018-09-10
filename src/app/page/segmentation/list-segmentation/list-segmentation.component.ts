@@ -12,6 +12,7 @@ import { ISegmentation } from '../../../interface/isegmentation';
 export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   public segmentation: ISegmentation[];
+  public isLoader: boolean;
 
   private isActive: boolean;
 
@@ -21,6 +22,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.isLoader = true;
     this.initSegmentation();
   }
 
@@ -29,6 +31,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentation => {
         this.segmentation = segmentation;
+        this.isLoader = false;
         console.log( segmentation ) ;
       })
   }
