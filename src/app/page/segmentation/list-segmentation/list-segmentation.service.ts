@@ -12,7 +12,7 @@ export class ListSegmentationService {
   constructor( private http: HttpClient) { }
 
   getSegmentation( ): Observable<any> {
-    return this.http.get( `${environment.crmApi}}/crm/segmentation`).pipe( retry( 10 ) );
+    return this.http.get( `${environment.crmApi}/crm/segmentation`).pipe( retry( 10 ) );
   }
 
 }
