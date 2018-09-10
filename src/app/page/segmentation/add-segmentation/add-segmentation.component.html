@@ -251,6 +251,12 @@
       </button>
       <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
     </div>
-
   </mat-grid-list>
+
+  <mat-card class="add-segmentation__table" *ngIf="isTable">
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <app-tablet-example-segmentation-profile  *ngIf="segmentationProfiles.customers.length !== 0" [tableDataSource]="segmentationProfiles.customers"></app-tablet-example-segmentation-profile>
+    </ng-template>
+  </mat-card>
 </div>

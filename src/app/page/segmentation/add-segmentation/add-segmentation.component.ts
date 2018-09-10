@@ -18,6 +18,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public buttonSave: boolean;
   public buttonCreate: boolean;
   public buttonSearch: boolean;
+  public isLoader: boolean;
+  public isTable: boolean;
   public segmentationProfiles: ISegmentationProfile;
 
   private isActive: boolean;
@@ -34,6 +36,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonSearch = true;
+    this.isLoader = true;
+    this.isTable = false;
 
     this.initFormSegmentation();
     this.initQueryParams();
@@ -48,7 +52,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.buttonCreate = false;
           this.buttonSearch = false;
           this.profileId = +params.id;
-          console.log( this.profileId );
         }
       } );
   }
@@ -60,8 +63,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initTableProfile( id: number ) {
-    this.addSegmentationService.getProfiles( id ).subscribe( value => {
-      console.log( value );
+    this.addSegmentationService.getProfiles( id ).subscribe( segmentationProfiles => {
+      this.segmentationProfiles = segmentationProfiles;
+      this.isLoader = false;
     } );
   }
 
@@ -74,6 +78,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   searchForm(): void {
+    this.isTable = true;
     this.initTableProfile( this.profileId );
   }
 
