@@ -38,7 +38,7 @@
     <ng-container matColumnDef="segmentationId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon [id]="element.segmentationId">remove_red_eye</mat-icon>
+        <mat-icon (click)="redirectToSegmentation(element.segmentationId)" >remove_red_eye</mat-icon>
       </mat-cell>
     </ng-container>
 

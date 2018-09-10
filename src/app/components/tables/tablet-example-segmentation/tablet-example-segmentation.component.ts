@@ -92,9 +92,6 @@ export class TabletExampleSegmentationComponent implements OnInit {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( typeCode, typeId, contactId, customerId, text ): void {
-    this.windowDialog( ``, 'updateContact',  { typeCode, typeId, contactId, customerId, text} , 'contact' );
-  }
 
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -123,6 +120,10 @@ export class TabletExampleSegmentationComponent implements OnInit {
       const params = Object.assign( {}, { ids: arrayId } );
       this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'contacts' );
     }
+  }
+
+  redirectToSegmentation(id: number): void {
+    this.router.navigate( [ `/crm/addsegmentation/`], { queryParams: { id } } );
   }
 
   disabledCheckbox( eventData ): void {
