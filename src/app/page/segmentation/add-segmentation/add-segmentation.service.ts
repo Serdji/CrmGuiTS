@@ -11,7 +11,7 @@ export class AddSegmentationService {
 
   constructor(  private http: HttpClient ) { }
 
-  getSegmentation( id: number ): Observable<any> {
+  getProfiles( id: number ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/segmentation/${id}/result`).pipe( retry( 10 ) );
   }
 

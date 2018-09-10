@@ -52,7 +52,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
           this.profileId = +params.id;
           console.log( this.profileId );
-          this.addSegmentationService.getSegmentation( this.profileId ).subscribe( value => {
+          this.addSegmentationService.getProfiles( this.profileId ).subscribe( value => {
             console.log( value );
           } );
         }

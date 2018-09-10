@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as _ from 'lodash';
+import { ListSegmentationService } from './list-segmentation.service';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-list-segmentation',
@@ -10,10 +12,19 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
 
-  constructor() { }
+  constructor(
+    private listSegmentationService: ListSegmentationService
+  ) { }
 
   ngOnInit(): void {
     this.isActive = true;
+    this.initSegmentation();
+  }
+
+  initSegmentation() {
+    this.listSegmentationService.getSegmentation()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( params => {})
   }
 
   ngOnDestroy(): void {
