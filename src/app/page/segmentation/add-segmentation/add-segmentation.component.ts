@@ -13,7 +13,7 @@ import { AddSegmentationService } from './add-segmentation.service';
 } )
 export class AddSegmentationComponent implements OnInit, OnDestroy {
 
-  public formProfileSearch: FormGroup;
+  public formSegmentation: FormGroup;
   public buttonSave: boolean;
   public buttonCreate: boolean;
   public buttonSearch: boolean;
@@ -33,7 +33,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonSearch = true;
 
-    this.formSegmentation();
+    this.initFormSegmentation();
     this.formFilling();
   }
 
@@ -59,8 +59,20 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private formSegmentation() {
-    // this.formSegmentation = this.fb.group( {} );
+  private initFormSegmentation() {
+    this.formSegmentation = this.fb.group( {
+      segmentationName: '',
+      123: ''
+    } );
+  }
+
+  public saveForm(): void {
+    const segmentationParameters = {
+      segmentationName: this.formSegmentation.get( 'segmentationName' ).value
+    };
+
+    console.log( segmentationParameters );
+
   }
 
   ngOnDestroy(): void {
