@@ -14,6 +14,7 @@ import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 } )
 export class AddSegmentationComponent implements OnInit, OnDestroy {
 
+  public formSegmentationNameGroup: FormGroup;
   public formSegmentation: FormGroup;
   public buttonSave: boolean;
   public buttonCreate: boolean;
@@ -39,6 +40,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.isTable = false;
 
+    this.initFormSegmentationNameGroup();
     this.initFormSegmentation();
     this.initQueryParams();
   }
@@ -60,13 +62,23 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formFilling( id ) {
     this.addSegmentationService.getSegmentationParams( id ).subscribe( segmentationParams => {
       console.log( segmentationParams );
-      this.formSegmentation.patchValue(segmentationParams);
+      this.formSegmentationNameGroup.patchValue( segmentationParams );
+      _.each( segmentationParams, ( value, key ) => {
+        this.formSegmentation.patchValue( value );
+      } );
+    } );
+  }
+
+  private initFormSegmentationNameGroup() {
+    this.formSegmentationNameGroup = this.fb.group( {
+      segmentationName: ''
     } );
   }
 
   private initFormSegmentation() {
     this.formSegmentation = this.fb.group( {
-      segmentationName: ''
+      bookingCreateDateFromInclude: '',
+      bookingCreateDateToExclude: '',
     } );
   }
 
@@ -79,7 +91,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   saveForm(): void {
     const segmentationParameters = {
-      segmentationName: this.formSegmentation.get( 'segmentationName' ).value
+      segmentationName: this.formSegmentationNameGroup.get( 'segmentationName' ).value,
+      booking: {
+        bookingCreateDateFromInclude: moment( this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value ).format( 'DD.MM.YYYY' ),
+        bookingCreateDateToExclude: moment( this.formSegmentation.get( 'bookingCreateDateToExclude' ).value ).format( 'DD.MM.YYYY' )
+      }
     };
 
     console.log( segmentationParameters );
