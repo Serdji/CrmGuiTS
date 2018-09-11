@@ -1,11 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import * as moment from 'moment';
-import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
+import * as moment from 'moment';
+import * as _ from 'lodash';
+
 
 @Component( {
   selector: 'app-add-segmentation',
@@ -63,7 +64,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.addSegmentationService.getSegmentationParams( id ).subscribe( segmentationParams => {
       console.log( segmentationParams );
       this.formSegmentationNameGroup.patchValue( segmentationParams );
-      _.each( segmentationParams, ( value, key ) => {
+      _.each( segmentationParams,  value => {
         this.formSegmentation.patchValue( value );
       } );
     } );
@@ -79,6 +80,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.formSegmentation = this.fb.group( {
       bookingCreateDateFromInclude: '',
       bookingCreateDateToExclude: '',
+      moneyAmountFromInclude: '',
+      moneyAmountToExclude: ''
     } );
   }
 
@@ -95,6 +98,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       booking: {
         bookingCreateDateFromInclude: moment( this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value ).format( 'DD.MM.YYYY' ),
         bookingCreateDateToExclude: moment( this.formSegmentation.get( 'bookingCreateDateToExclude' ).value ).format( 'DD.MM.YYYY' )
+      },
+      payment: {
+        moneyAmountFromInclude:  this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
+        moneyAmountToExclude:  this.formSegmentation.get( 'moneyAmountToExclude' ).value
       }
     };
 
