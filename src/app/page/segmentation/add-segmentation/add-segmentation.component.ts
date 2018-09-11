@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
@@ -29,6 +29,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder,
     private addSegmentationService: AddSegmentationService
   ) { }
@@ -44,6 +45,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initFormSegmentationNameGroup();
     this.initFormSegmentation();
     this.initQueryParams();
+    this.formInputDisable();
   }
 
   private initQueryParams() {
@@ -64,7 +66,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.addSegmentationService.getSegmentationParams( id ).subscribe( segmentationParams => {
       console.log( segmentationParams );
       this.formSegmentationNameGroup.patchValue( segmentationParams );
-      _.each( segmentationParams,  value => {
+      _( segmentationParams ).each( value => {
         this.formSegmentation.patchValue( value );
       } );
     } );
@@ -81,8 +83,30 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       bookingCreateDateFromInclude: '',
       bookingCreateDateToExclude: '',
       moneyAmountFromInclude: '',
-      moneyAmountToExclude: ''
+      moneyAmountToExclude: '',
+      food: ''
     } );
+    this.formInputDisable();
+  }
+
+  private formInputDisable() {
+    this.formSegmentation.get( 'food' ).valueChanges.subscribe( value => {
+      console.log( value );
+      this.formSegmentation.get( 'moneyAmountFromInclude' )[ value === '2' ? 'disable' : 'enable' ]();
+      this.formSegmentation.get( 'moneyAmountToExclude' )[ value === '2' ? 'disable' : 'enable' ]();
+    } );
+  }
+
+  private resetForm() {
+    this.formSegmentationNameGroup.get( 'segmentationName' ).patchValue( '' );
+    this.formSegmentationNameGroup.get( 'segmentationName' ).setErrors( null );
+    _( this.formSegmentation.value ).each( ( value, key ) => {
+      this.formSegmentation.get( key ).patchValue( '' );
+      this.formSegmentation.get( key ).setErrors( null );
+    } );
+    this.buttonSave = false;
+    this.buttonCreate = true;
+    this.buttonSearch = true;
   }
 
   private initTableProfile( id: number ) {
@@ -100,8 +124,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         bookingCreateDateToExclude: moment( this.formSegmentation.get( 'bookingCreateDateToExclude' ).value ).format( 'DD.MM.YYYY' )
       },
       payment: {
-        moneyAmountFromInclude:  this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
-        moneyAmountToExclude:  this.formSegmentation.get( 'moneyAmountToExclude' ).value
+        moneyAmountFromInclude: this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
+        moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value
       }
     };
 
@@ -111,6 +135,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   searchForm(): void {
     this.isTable = true;
     this.initTableProfile( this.profileId );
+  }
+
+  clearForm(): void {
+    this.resetForm();
+    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {

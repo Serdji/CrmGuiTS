@@ -14,7 +14,7 @@
   </form>
 
   <form class="add-segmentation__form" [formGroup]="formSegmentation">
-    <mat-grid-list cols="4" rowHeight="220px">
+    <mat-grid-list cols="4" rowHeight="250px">
 
       <!--<mat-grid-tile [colspan]="1" [rowspan]="2">-->
       <!--<mat-card class="add-segmentation__card">-->
@@ -58,7 +58,7 @@
         <mat-card class="add-segmentation__card">
           <span class="add-segmentation__content-title">Предмет анализа</span>
           <mat-card-content class="add-segmentation__content">
-            <mat-radio-group class="add-segmentation__input">
+            <mat-radio-group class="add-segmentation__input"  formControlName="food">
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
                   <mat-radio-button class="add-segmentation__input-radio" value="1">Количество сегментов
