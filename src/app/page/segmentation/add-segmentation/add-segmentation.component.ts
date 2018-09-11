@@ -84,7 +84,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       bookingCreateDateToExclude: '',
       moneyAmountFromInclude: '',
       moneyAmountToExclude: '',
-      food: ''
+      food: '',
+      currentRange: ''
     } );
     this.formInputDisable();
   }
@@ -94,6 +95,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       console.log( value );
       this.formSegmentation.get( 'moneyAmountFromInclude' )[ value === '2' ? 'disable' : 'enable' ]();
       this.formSegmentation.get( 'moneyAmountToExclude' )[ value === '2' ? 'disable' : 'enable' ]();
+    } );
+    this.formSegmentation.get( 'currentRange' ).valueChanges.subscribe( value => {
+      this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ value ? 'disable' : 'enable' ]();
+      this.formSegmentation.get( 'bookingCreateDateToExclude' )[ value ? 'disable' : 'enable' ]();
+      if ( value ) {
+        this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue('');
+        this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue('');
+      }
     } );
   }
 

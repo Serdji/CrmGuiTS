@@ -76,16 +76,15 @@
         <mat-card class="add-segmentation__card">
           <span class="add-segmentation__content-title">Текущий диапазон</span>
           <mat-card-content class="add-segmentation__content">
-            <mat-radio-group class="add-segmentation__input">
+            <mat-radio-group class="add-segmentation__input" formControlName="currentRange">
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
-                  <mat-radio-button class="add-segmentation__input-radio" value="1">Месяц</mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="2">Квартал
-                  </mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio" value="month">Месяц</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="quarter">Квартал</mat-radio-button>
                 </div>
                 <div class="add-segmentation__input-radio-group _right">
-                  <mat-radio-button class="add-segmentation__input-radio" value="3">Полугодие</mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="4">Год</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio" value="halfyear">Полугодие</mat-radio-button>
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="year">Год</mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>
