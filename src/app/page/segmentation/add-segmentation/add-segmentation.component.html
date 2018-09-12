@@ -56,7 +56,10 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Предмет анализа</span>
+          <div class="add-segmentation__content-title-wrapper">
+            <span class="add-segmentation__content-title">Предмет анализа</span>
+            <mat-icon *ngIf="resetRadioButtonFood" matTooltip="Сбросить настройки предмета анализа" (click)="resetRadioButton('food')">remove_circle_outline</mat-icon>
+          </div>
           <mat-card-content class="add-segmentation__content">
             <mat-radio-group class="add-segmentation__input"  formControlName="food">
               <div class="add-segmentation__input-radio-wrapper">
@@ -74,7 +77,10 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Текущий диапазон</span>
+          <div class="add-segmentation__content-title-wrapper">
+            <span class="add-segmentation__content-title">Текущий диапазон</span>
+            <mat-icon *ngIf="resetRadioButtonCurrentRange" matTooltip="Сбросить настройки текущий диапазон" (click)="resetRadioButton('currentRange')">remove_circle_outline</mat-icon>
+          </div>
           <mat-card-content class="add-segmentation__content">
             <mat-radio-group class="add-segmentation__input" formControlName="currentRange">
               <div class="add-segmentation__input-radio-wrapper">

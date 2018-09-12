@@ -17,12 +17,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   public formSegmentationNameGroup: FormGroup;
   public formSegmentation: FormGroup;
+  public segmentationProfiles: ISegmentationProfile;
   public buttonSave: boolean;
   public buttonCreate: boolean;
   public buttonSearch: boolean;
   public isLoader: boolean;
   public isTable: boolean;
-  public segmentationProfiles: ISegmentationProfile;
+  public resetRadioButtonFood: boolean;
+  public resetRadioButtonCurrentRange: boolean;
 
   private isActive: boolean;
   private profileId: number;
@@ -40,7 +42,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonSearch = true;
     this.isLoader = true;
-    this.isTable = false;
+    this.resetRadioButtonFood = false;
+    this.resetRadioButtonCurrentRange = false;
 
     this.initFormSegmentationNameGroup();
     this.initFormSegmentation();
@@ -92,16 +95,18 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private formInputDisable() {
     this.formSegmentation.get( 'food' ).valueChanges.subscribe( value => {
-      console.log( value );
       this.formSegmentation.get( 'moneyAmountFromInclude' )[ value === '2' ? 'disable' : 'enable' ]();
       this.formSegmentation.get( 'moneyAmountToExclude' )[ value === '2' ? 'disable' : 'enable' ]();
+      this.resetRadioButtonFood = !!value;
     } );
+
     this.formSegmentation.get( 'currentRange' ).valueChanges.subscribe( value => {
       this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ value ? 'disable' : 'enable' ]();
       this.formSegmentation.get( 'bookingCreateDateToExclude' )[ value ? 'disable' : 'enable' ]();
+      this.resetRadioButtonCurrentRange = !!value;
       if ( value ) {
-        this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue('');
-        this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue('');
+        this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue( '' );
+        this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue( '' );
       }
     } );
   }
@@ -123,6 +128,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       this.segmentationProfiles = segmentationProfiles;
       this.isLoader = false;
     } );
+  }
+
+  resetRadioButton( formControlName: string ): void {
+    this.formSegmentation.get( formControlName ).patchValue( '' );
   }
 
   saveForm(): void {
