@@ -33,7 +33,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe(
         orders => {
-          this.orders = _.dropRight( orders );
+          this.orders = _.initial( orders );
           this.progress = false;
         },
           error =>  this.progress = false
