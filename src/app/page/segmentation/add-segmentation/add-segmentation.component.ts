@@ -66,18 +66,20 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( id ) {
-    this.addSegmentationService.getSegmentationParams( id ).subscribe( segmentationParams => {
-      console.log( segmentationParams );
-      this.formSegmentationNameGroup.patchValue( segmentationParams );
-      _( segmentationParams ).each( value => {
-        this.formSegmentation.patchValue( value );
+    this.addSegmentationService.getSegmentationParams( id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( segmentationParams => {
+        console.log( segmentationParams );
+        this.formSegmentationNameGroup.patchValue( segmentationParams );
+        _( segmentationParams ).each( value => {
+          this.formSegmentation.patchValue( value );
+        } );
       } );
-    } );
   }
 
   private initFormSegmentationNameGroup() {
     this.formSegmentationNameGroup = this.fb.group( {
-      segmentationName: ''
+      segmentationTitle: ''
     } );
   }
 
@@ -112,8 +114,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
-    this.formSegmentationNameGroup.get( 'segmentationName' ).patchValue( '' );
-    this.formSegmentationNameGroup.get( 'segmentationName' ).setErrors( null );
+    this.formSegmentationNameGroup.get( 'segmentationTitle' ).patchValue( '' );
+    this.formSegmentationNameGroup.get( 'segmentationTitle' ).setErrors( null );
     _( this.formSegmentation.value ).each( ( value, key ) => {
       this.formSegmentation.get( key ).patchValue( '' );
       this.formSegmentation.get( key ).setErrors( null );
@@ -136,18 +138,20 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   saveForm(): void {
     const segmentationParameters = {
-      segmentationName: this.formSegmentationNameGroup.get( 'segmentationName' ).value,
+      segmentationTitle: this.formSegmentationNameGroup.get( 'segmentationTitle' ).value,
       booking: {
-        bookingCreateDateFromInclude: moment( this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value ).format( 'DD.MM.YYYY' ),
-        bookingCreateDateToExclude: moment( this.formSegmentation.get( 'bookingCreateDateToExclude' ).value ).format( 'DD.MM.YYYY' )
+        bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value,
+        bookingCreateDateToExclude: this.formSegmentation.get( 'bookingCreateDateToExclude' ).value
       },
       payment: {
         moneyAmountFromInclude: this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
         moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value
       }
     };
-
     console.log( segmentationParameters );
+    this.addSegmentationService.saveSegmentation( segmentationParameters )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe();
   }
 
   searchForm(): void {
