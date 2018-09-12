@@ -6,6 +6,9 @@ import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as moment from 'moment';
 import * as _ from 'lodash';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { timer } from '../../../../../node_modules/rxjs/observable/timer';
+import { MatDialog } from '@angular/material';
 
 
 @Component( {
@@ -20,6 +23,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public segmentationProfiles: ISegmentationProfile;
   public buttonSave: boolean;
   public buttonCreate: boolean;
+  public buttonDelete: boolean;
   public buttonSearch: boolean;
   public isLoader: boolean;
   public isTable: boolean;
@@ -27,19 +31,21 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public resetRadioButtonCurrentRange: boolean;
 
   private isActive: boolean;
-  private profileId: number;
+  private segmentationId: number;
 
   constructor(
     private route: ActivatedRoute,
     private router: Router,
     private fb: FormBuilder,
-    private addSegmentationService: AddSegmentationService
+    private addSegmentationService: AddSegmentationService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.buttonSave = false;
     this.buttonCreate = true;
+    this.buttonDelete = true;
     this.buttonSearch = true;
     this.isLoader = true;
     this.resetRadioButtonFood = false;
@@ -58,9 +64,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         if ( params.id ) {
           this.buttonSave = true;
           this.buttonCreate = false;
+          this.buttonDelete = false;
           this.buttonSearch = false;
-          this.profileId = +params.id;
-          this.formFilling( this.profileId );
+          this.segmentationId = +params.id;
+          this.formFilling( this.segmentationId );
         }
       } );
   }
@@ -132,6 +139,24 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     } );
   }
 
+  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status: params,
+        params: this.segmentationId,
+        card,
+      },
+    } );
+    if ( !disableTimer ) {
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialog.closeAll();
+        } );
+    }
+  }
+
   resetRadioButton( formControlName: string ): void {
     this.formSegmentation.get( formControlName ).patchValue( '' );
   }
@@ -156,7 +181,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   searchForm(): void {
     this.isTable = true;
-    this.initTableProfile( this.profileId );
+    this.initTableProfile( this.segmentationId );
+  }
+
+  deleteSegmentation(): void {
+    this.windowDialog( `Вы действительно хотите удалить эту сегментацию ?`, 'delete', 'segmentation', true );
   }
 
   clearForm(): void {

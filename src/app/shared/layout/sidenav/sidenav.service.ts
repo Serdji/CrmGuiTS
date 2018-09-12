@@ -34,7 +34,7 @@ export class SidenavService {
         name: 'Сегментация',
         icon: 'group',
         link: [
-          { url: '/crm/listsegmentation', title: 'Список сегментацию' },
+          { url: '/crm/listsegmentation', title: 'Список сегментаций' },
           { url: '/crm/addsegmentation', title: 'Добавить сегментацию' }
         ]
       },

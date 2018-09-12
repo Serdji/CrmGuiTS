@@ -23,4 +23,8 @@ export class AddSegmentationService {
     return this.http.post( environment.crmApi + '/crm/segmentation', params ).pipe( retry( 10 ) );
   }
 
+  deleteSegmentation( id: number ): Observable<any> {
+    return this.http.delete( `${environment.crmApi}/crm/segmentation/${id}` ).pipe( retry( 10 ) );
+  }
+
 }
