@@ -32,6 +32,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
   private segmentationId: number;
+  private segmentationParams: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -77,6 +78,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentationParams => {
         console.log( segmentationParams );
+        this.segmentationParams = segmentationParams;
         this.formSegmentationNameGroup.patchValue( segmentationParams );
         _( segmentationParams ).each( value => {
           this.formSegmentation.patchValue( value );
@@ -185,7 +187,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   deleteSegmentation(): void {
-    this.windowDialog( `Вы действительно хотите удалить эту сегментацию ?`, 'delete', 'segmentation', true );
+    this.windowDialog( `Вы действительно хотите удалить сегментацию  "${ this.segmentationParams.segmentationTitle }" ?`, 'delete', 'segmentation', true );
   }
 
   clearForm(): void {

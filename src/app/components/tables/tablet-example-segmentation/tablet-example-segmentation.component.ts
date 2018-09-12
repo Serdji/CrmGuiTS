@@ -118,7 +118,7 @@ export class TabletExampleSegmentationComponent implements OnInit {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'contacts' );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'этот сегмент' : 'эти сегменты' } ?`, 'delete', params, 'segmentations' );
     }
   }
 
