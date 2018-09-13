@@ -7,8 +7,8 @@ import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as moment from 'moment';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { timer } from '../../../../../node_modules/rxjs/observable/timer';
 import { MatDialog } from '@angular/material';
+import { timer } from 'rxjs';
 
 
 @Component( {
@@ -132,6 +132,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonSearch = true;
+    this.buttonDelete = true;
   }
 
   private initTableProfile( id: number ) {
