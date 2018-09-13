@@ -132,6 +132,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonSearch = true;
+    this.buttonDelete = true;
   }
 
   private initTableProfile( id: number ) {
