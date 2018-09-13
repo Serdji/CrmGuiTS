@@ -1,4 +1,4 @@
-<div class="add-segmentation" appAccessRights="analytics:update" appAccessMessage="true">
+<div class="add-segmentation">
   <form class="add-segmentation__form" [formGroup]="formSegmentationNameGroup">
     <mat-grid-list cols="1" rowHeight="80px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -259,7 +259,7 @@
 
 
       <div class="add-segmentation__button-wrapper">
-        <button appAccessRights="analytics:read" class="add-segmentation__button" mat-raised-button
+        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
                 (click)="saveForm()" color="primary" [disabled]="buttonSave">
           <mat-icon>save</mat-icon>
           Сохранить
@@ -269,7 +269,7 @@
           <mat-icon>search</mat-icon>
           Искать
         </button>
-        <button class="add-segmentation__button" mat-raised-button (click)="createForm()" [disabled]="buttonCreate">
+        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button (click)="createForm()" [disabled]="buttonCreate">
           <mat-icon>create</mat-icon>
           Изменить
         </button>

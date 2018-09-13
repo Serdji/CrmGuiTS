@@ -155,13 +155,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
           this.dialog.closeAll();
-          this.resetForm();
         } );
     }
   }
 
   private segmentationParameters() {
     return {
+      segmentationId: this.segmentationId,
       segmentationTitle: this.formSegmentationNameGroup.get( 'segmentationTitle' ).value,
       booking: {
         bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value,
@@ -184,6 +184,15 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+        this.resetForm();
+      } );
+  }
+
+  createForm(): void {
+    this.addSegmentationService.updateSegmentation( this.segmentationParameters() )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.windowDialog( `Сегментация успешно изменена`, 'ok' );
       } );
   }
 
