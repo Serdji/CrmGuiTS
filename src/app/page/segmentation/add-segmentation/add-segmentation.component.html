@@ -275,10 +275,13 @@
         </button>
         <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
                 (click)="deleteSegmentation()" color="warn" [disabled]="buttonDelete">
-          Удалить
           <mat-icon>delete</mat-icon>
+          Удалить
         </button>
-        <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
+        <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">
+          <mat-icon>clear</mat-icon>
+          Очистить форму
+        </button>
       </div>
     </mat-grid-list>
   </form>

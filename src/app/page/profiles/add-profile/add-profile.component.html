@@ -30,8 +30,14 @@
             <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
           <div class="add-profile__button-wrapper">
-            <button class="add-profile__button _left-button" mat-raised-button (click)="sendForm()" color="primary">Добавить пассажира</button>
-            <button class="add-profile__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
+            <button class="add-profile__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+              <mat-icon>person_add</mat-icon>
+              Добавить пассажира
+            </button>
+            <button class="add-profile__button" mat-raised-button (click)="clearForm()">
+              <mat-icon>clear</mat-icon>
+              Очистить форму
+            </button>
           </div>
         </form>
       </mat-card>
