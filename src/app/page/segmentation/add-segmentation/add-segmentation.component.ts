@@ -155,6 +155,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
           this.dialog.closeAll();
+          this.resetForm();
         } );
     }
   }
@@ -178,7 +179,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     console.log( segmentationParameters );
     this.addSegmentationService.saveSegmentation( segmentationParameters )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe();
+      .subscribe( _ => {
+        this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+      } );
   }
 
   searchForm(): void {
