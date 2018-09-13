@@ -160,12 +160,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     }
   }
 
-  resetRadioButton( formControlName: string ): void {
-    this.formSegmentation.get( formControlName ).patchValue( '' );
-  }
-
-  saveForm(): void {
-    const segmentationParameters = {
+  private segmentationParameters() {
+    return {
       segmentationTitle: this.formSegmentationNameGroup.get( 'segmentationTitle' ).value,
       booking: {
         bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value,
@@ -176,8 +172,15 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value
       }
     };
-    console.log( segmentationParameters );
-    this.addSegmentationService.saveSegmentation( segmentationParameters )
+  }
+
+  resetRadioButton( formControlName: string ): void {
+    this.formSegmentation.get( formControlName ).patchValue( '' );
+  }
+
+  saveForm(): void {
+    console.log( this.segmentationParameters() );
+    this.addSegmentationService.saveSegmentation( this.segmentationParameters() )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
