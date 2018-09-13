@@ -18,8 +18,8 @@ export class SidenavService {
         name: 'Пользователи',
         icon: 'person',
         link: [
-          { url: '/crm/adduser', title: 'Добавить пользователя' },
-          { url: '/crm/listusers', title: 'Список пользователей' }
+          { url: '/crm/listusers', title: 'Список пользователей' },
+          { url: '/crm/adduser', title: 'Добавить пользователя' }
         ]
       },
       {
@@ -34,7 +34,8 @@ export class SidenavService {
         name: 'Сегментация',
         icon: 'group',
         link: [
-          { url: '/crm/addsegmentation', title: 'Создать' },
+          { url: '/crm/listsegmentation', title: 'Список сегментаций' },
+          { url: '/crm/addsegmentation', title: 'Добавить сегментацию' }
         ]
       },
       {

@@ -1,12 +1,12 @@
 <div class="setting">
   <mat-card appAccessRights="customers:update" appAccessMessage="true" class="setting__card">
     <mat-card-header>
-      <h2 class="setting__header">Настройка таблице пассажиров</h2>
+      <h2 class="setting__header">Настройка таблицы пассажиров</h2>
     </mat-card-header>
     <mat-grid-list cols="2" rowHeight="350px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <div class="setting__content">
-          <h3 class="setting__header">Отображение сталбцов</h3>
+          <h3 class="setting__header">Отображение столбцов</h3>
           <form class="setting__form" [formGroup]="formTableAsyncProfile">
             <mat-checkbox class="setting__checkbox" *ngFor='let text of defaultCheckbox' formControlName="{{text}}">{{text | fieldTranslation}}</mat-checkbox>
           </form>
@@ -14,7 +14,7 @@
       </mat-grid-tile>
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <div class="setting__content">
-          <h3 class="setting__header">Порядок сталбцов</h3>
+          <h3 class="setting__header">Порядок столбцов</h3>
           <mat-list class='setting__container' dragula="MANY_ITEMS" [(dragulaModel)]='itemsTableAsyncProfile'>
             <mat-list-item class='setting__item' *ngFor='let text of itemsTableAsyncProfile'>
               <div class="setting__item-wrapper">

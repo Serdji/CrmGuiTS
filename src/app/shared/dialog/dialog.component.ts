@@ -9,6 +9,8 @@ import { ContactService } from '../../page/profiles/tabs-profile/contact/contact
 import { DocumentService } from '../../page/profiles/tabs-profile/document/document.service';
 import * as moment from 'moment';
 import { AuthService } from '../../services/auth.service';
+import { AddSegmentationService } from '../../page/segmentation/add-segmentation/add-segmentation.service';
+import { ListSegmentationService } from '../../page/segmentation/list-segmentation/list-segmentation.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -27,6 +29,8 @@ export class DialogComponent implements OnInit {
     private profileService: ProfileService,
     private contactService: ContactService,
     private documentService: DocumentService,
+    private addSegmentationService: AddSegmentationService,
+    private listSegmentationService: ListSegmentationService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -128,6 +132,15 @@ export class DialogComponent implements OnInit {
           'expDate':  moment( this.formUpdateDocument.get( 'expDate' ).value ).format( 'YYYY-MM-DD' ),
         };
         this.documentService.putDocument( paramsDocument ).subscribe();
+        break;
+      case 'segmentation':
+        this.dialogRef.close();
+        this.addSegmentationService.deleteSegmentation( this.data.params ).subscribe();
+        this.router.navigate( [ '/crm/listsegmentation' ] );
+        break;
+      case 'segmentations':
+        this.dialogRef.close();
+        this.listSegmentationService.deleteSegmentations( this.data.params ).subscribe();
         break;
       case 'restart':
         this.dialogRef.close();

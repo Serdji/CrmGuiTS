@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { AddSegmentationService } from './add-segmentation.service';
+import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { AddSegmentationService } from './add-segmentation.service';
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
+    ComponentsModule,
   ],
   declarations: [ AddSegmentationComponent ],
   providers: [ AddSegmentationService ],

@@ -11,6 +11,8 @@ import { TableExampleContactComponent } from './tablet-example-contact/table-exa
 import { TabletExampleProfileNamesComponent } from './tablet-example-profile-names/tablet-example-profile-names.component';
 import { TabletExampleDocumentComponent } from './tablet-example-document/tablet-example-document.component';
 import { PipesModule } from '../../pipes/pipes.module';
+import { TabletExampleSegmentationComponent } from './tablet-example-segmentation/tablet-example-segmentation.component';
+import { TabletExampleSegmentationProfileComponent } from './tablet-example-segmentation-profile/tablet-example-segmentation-profile.component';
 
 @NgModule({
   imports: [
@@ -26,6 +28,8 @@ import { PipesModule } from '../../pipes/pipes.module';
     TableExampleContactComponent,
     TabletExampleProfileNamesComponent,
     TabletExampleDocumentComponent,
+    TabletExampleSegmentationComponent,
+    TabletExampleSegmentationProfileComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -34,6 +38,8 @@ import { PipesModule } from '../../pipes/pipes.module';
     TableExampleContactComponent,
     TabletExampleProfileNamesComponent,
     TabletExampleDocumentComponent,
+    TabletExampleSegmentationComponent,
+    TabletExampleSegmentationProfileComponent,
   ],
   providers: [
     TableAsyncService,
