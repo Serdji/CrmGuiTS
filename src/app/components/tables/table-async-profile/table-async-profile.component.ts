@@ -12,6 +12,7 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { Iprofile } from '../../../interface/iprofile';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-table-async-profile',
@@ -70,18 +71,22 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncProfileService.countPage;
-    this.paginator.page.subscribe( ( value: IpagPage ) => {
-      this.tableAsyncProfileService.setPagPage( value );
-      this.isLoadingResults = true;
-    } );
+    this.paginator.page
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        this.tableAsyncProfileService.setPagPage( value );
+        this.isLoadingResults = true;
+      } );
   }
 
 
   private initDataSourceAsync() {
-    this.tableAsyncProfileService.subjectTableDataSource.subscribe( ( value: any ) => {
-      this.dataSourceFun( value );
-      this.isLoadingResults = false;
-    } );
+    this.tableAsyncProfileService.subjectTableDataSource
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: any ) => {
+        this.dataSourceFun( value );
+        this.isLoadingResults = false;
+      } );
   }
 
   private initDataSource() {
@@ -89,14 +94,16 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   }
 
   private dataSourceFun( params: Iprofile[] ) {
-    params = params.map( (value: any) => {
+    params = params.map( ( value: any ) => {
       Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
       return value;
-    });
-    this.dataSource = new MatTableDataSource( params );
-    timer( 1 ).subscribe( _ => {
-      this.dataSource.sort = this.sort;
     } );
+    this.dataSource = new MatTableDataSource( params );
+    timer( 1 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.dataSource.sort = this.sort;
+      } );
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {

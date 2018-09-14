@@ -35,8 +35,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.initDocumentTypes();
     this.initFormDocument();
     this.initDocuments();
-    this.documentService.subjectDeleteDocuments.subscribe( _ => this.refreshTable() );
-    this.documentService.subjectPutDocuments.subscribe( _ => this.refreshTable() );
+    this.documentService.subjectDeleteDocuments
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshTable() );
+    this.documentService.subjectPutDocuments
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshTable() );
   }
 
   private initDocumentTypes() {
@@ -55,10 +59,12 @@ export class DocumentComponent implements OnInit, OnDestroy {
   }
 
   private refreshTable() {
-    timer(100).subscribe( _ => {
-      this.isLoader = true;
-      this.initDocuments();
-    });
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoader = true;
+        this.initDocuments();
+      } );
   }
 
   private initFormDocument() {

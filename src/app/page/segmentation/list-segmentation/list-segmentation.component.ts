@@ -14,6 +14,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
   public segmentation: ISegmentation[];
   public isLoader: boolean;
   private isActive: boolean;
+
   constructor(
     private listSegmentationService: ListSegmentationService
   ) { }
@@ -22,14 +23,18 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.isLoader = true;
     this.initSegmentation();
-    this.listSegmentationService.subjectSegmentations.subscribe( _ => this.refreshSegmentation() );
+    this.listSegmentationService.subjectSegmentations
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshSegmentation() );
   }
 
   private refreshSegmentation() {
-    timer( 100 ).subscribe( _ => {
-      this.isLoader = true;
-      this.initSegmentation();
-    } );
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoader = true;
+        this.initSegmentation();
+      } );
   }
 
   initSegmentation() {

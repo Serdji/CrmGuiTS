@@ -49,28 +49,28 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.orders = orders;
           this.ordersProgress = false;
         },
-          error => {
-            this.initProfile( id );
-            this.ordersProgress = false;
-          }
-        );
+        error => {
+          this.initProfile( id );
+          this.ordersProgress = false;
+        }
+      );
   }
 
   private initProfile( id: number, orders? ) {
     this.profileService.getProfile( id )
       .pipe(
+        takeWhile( _ => this.isActive ),
         map( profile => {
           if ( orders ) {
             const { lut } = _.minBy( orders, o => o.lut );
             return _.merge( profile, { lut } );
           }
           return profile;
-        } ) )
-      .subscribe( ( profile ) => {
-        _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
-        this.profile = profile;
-        this.profileProgress = false;
-      } );
+        } ) ).subscribe( ( profile ) => {
+      _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
+      this.profile = profile;
+      this.profileProgress = false;
+    } );
   }
 
   ngOnDestroy(): void {

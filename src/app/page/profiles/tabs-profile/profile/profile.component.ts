@@ -41,7 +41,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.initProfile();
     this.initFormProfile();
     this.initFormAddProfile();
-    this.profileService.subjectDeleteProfileNames.subscribe( _ => this.refreshTableProfileNames() );
+    this.profileService.subjectDeleteProfileNames
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshTableProfileNames() );
     this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames() );
   }
 
@@ -69,10 +71,12 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   private refreshTableProfileNames() {
-    timer( 100 ).subscribe( _ => {
-      this.isLoader = true;
-      this.initProfileNames( this.profile.customerId );
-    } );
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoader = true;
+        this.initProfileNames( this.profile.customerId );
+      } );
   }
 
   private initFormProfile() {
@@ -107,7 +111,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe(  profile  => {
+        .subscribe( profile => {
           Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
           this.windowDialog( 'Пассажир успешно изменен', 'ok' );
           this.profile = profile;
@@ -121,13 +125,17 @@ export class ProfileComponent implements OnInit, OnDestroy {
       const params = {};
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAddProfile.getRawValue() );
-      this.profileService.addAddProfile( params ).subscribe( _ => {
-        this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
-        timer( 1500 ).subscribe( _ => {
-          this.refreshTableProfileNames();
-          this.resetForm();
+      this.profileService.addAddProfile( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
+          timer( 1500 )
+            .pipe( takeWhile( _ => this.isActive ) )
+            .subscribe( _ => {
+              this.refreshTableProfileNames();
+              this.resetForm();
+            } );
         } );
-      } );
     }
 
   }

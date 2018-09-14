@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -9,19 +9,22 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-tablet-example-segmentation-profile',
   templateUrl: './tablet-example-segmentation-profile.component.html',
   styleUrls: [ './tablet-example-segmentation-profile.component.styl' ],
 } )
-export class TabletExampleSegmentationProfileComponent implements OnInit {
+export class TabletExampleSegmentationProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+
+  private isActive: boolean;
 
   @Input() private tableDataSource: any;
 
@@ -34,6 +37,7 @@ export class TabletExampleSegmentationProfileComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.initDataSource();
     this.initDisplayedColumns();
   }
@@ -53,10 +57,12 @@ export class TabletExampleSegmentationProfileComponent implements OnInit {
 
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
-    timer( 1 ).subscribe( _ => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    } );
+    timer( 1 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      } );
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
@@ -107,12 +113,16 @@ export class TabletExampleSegmentationProfileComponent implements OnInit {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToProfile(id: number): void {
+  redirectToProfile( id: number ): void {
     this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }

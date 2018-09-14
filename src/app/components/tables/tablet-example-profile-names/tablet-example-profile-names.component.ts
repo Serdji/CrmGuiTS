@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -9,19 +9,22 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-tablet-example-profile-names',
   templateUrl: './tablet-example-profile-names.component.html',
   styleUrls: [ './tablet-example-profile-names.component.styl' ],
 } )
-export class TabletExampleProfileNamesComponent implements OnInit {
+export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+
+  private isActive: boolean;
 
   @Input() private tableDataSource: any;
 
@@ -34,6 +37,7 @@ export class TabletExampleProfileNamesComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.initDataSource();
     this.initDisplayedColumns();
   }
@@ -55,7 +59,9 @@ export class TabletExampleProfileNamesComponent implements OnInit {
 
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
-    timer( 1 ).subscribe( _ => {
+    timer( 1 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     } );
@@ -131,6 +137,10 @@ export class TabletExampleProfileNamesComponent implements OnInit {
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }

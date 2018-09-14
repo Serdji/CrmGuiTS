@@ -1,20 +1,26 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy, OnInit } from '@angular/core';
 import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AuthService } from './auth.service';
 
 @Injectable()
-export class ActivityUserService {
+export class ActivityUserService implements OnInit, OnDestroy {
+
+  private isActive: boolean;
 
   constructor(
     private auth: AuthService,
     private router: Router,
   ) { }
 
+  ngOnInit(): void {
+    this.isActive = true;
+  }
+
   logout() {
     const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
-    this.auth.revokeRefreshToken( token.refreshToken ).subscribe();
+    this.auth.revokeRefreshToken( token.refreshToken ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
     localStorage.removeItem( 'saveSeismic' );
     localStorage.removeItem( 'paramsToken' );
     localStorage.removeItem( 'login' );
@@ -41,6 +47,10 @@ export class ActivityUserService {
 
   private getMinutes( min: number ): number {
     return min * ( 60 * 1000 );
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }
