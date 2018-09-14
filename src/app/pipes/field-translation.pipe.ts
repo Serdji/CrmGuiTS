@@ -13,6 +13,8 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'prefix': return 'Префикс';
       case  'gender': return 'Пол';
       case  'dob': return 'Дата';
+      case  'Active': return 'Оформлен';
+      case  'Cancelled': return 'Аннулирован';
       case  'm': return 'M';
       case  'f': return 'Ж';
       case  'M': return 'M';
