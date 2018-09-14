@@ -58,11 +58,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
   private saveLogin() {
-    this.formLogin.get( 'save' ).valueChanges.subscribe( value => {
-      this.saveTableLogin = value;
-      if ( value ) localStorage.setItem( 'saveSeismic', JSON.stringify( this.saveTableLogin ) );
-      else localStorage.removeItem( 'saveSeismic' );
-    } );
+    this.formLogin.get( 'save' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.saveTableLogin = value;
+        if ( value ) localStorage.setItem( 'saveSeismic', JSON.stringify( this.saveTableLogin ) );
+        else localStorage.removeItem( 'saveSeismic' );
+      } );
   }
 
   sendForm(): void {

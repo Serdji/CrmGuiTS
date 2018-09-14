@@ -19,8 +19,14 @@
           <input matInput type="email" formControlName="email" placeholder="email">
         </mat-form-field>
         <div class="add-user__button-wrapper">
-          <button class="add-user__button _left-button" mat-raised-button (click)="sendForm()" color="primary">Добавить пользователя</button>
-          <button class="add-user__button" mat-raised-button (click)="clearForm()">Очистить форму</button>
+          <button class="add-user__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+            <mat-icon>person_add</mat-icon>
+            Добавить пользователя
+          </button>
+          <button class="add-user__button" mat-raised-button (click)="clearForm()">
+            <mat-icon>clear</mat-icon>
+            Очистить форму
+          </button>
         </div>
       </form>
     </mat-card>

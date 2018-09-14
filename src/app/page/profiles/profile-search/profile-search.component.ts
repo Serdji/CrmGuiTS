@@ -51,7 +51,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formDisable();
     this.initAutocomplete();
     this.initTableAsync();
-    this.profileSearchService.subjectDeleteProfile.subscribe( _ => this.serverRequest( this.sendProfileParams ) );
+    this.profileSearchService.subjectDeleteProfile
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
   }
 
 
@@ -72,15 +74,17 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initTableAsync() {
-    this.tableAsyncProfileService.subjectPage.subscribe( ( value: IpagPage ) => {
-      const pageIndex = value.pageIndex * value.pageSize;
-      const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
-      this.profileSearchService.getProfileSearch( paramsAndCount )
-        .pipe(
-          takeWhile( _ => this.isActive )
-        )
-        .subscribe( ( profile: Iprofiles ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
-    } );
+    this.tableAsyncProfileService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
+        this.profileSearchService.getProfileSearch( paramsAndCount )
+          .pipe(
+            takeWhile( _ => this.isActive )
+          )
+          .subscribe( ( profile: Iprofiles ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
+      } );
   }
 
 
@@ -143,7 +147,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.switchCheckbox();
-    timer( 500 ).subscribe( _ => this.formFilling() );
+    timer( 500 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.formFilling() );
   }
 
   private formDisable() {
@@ -157,31 +163,35 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private switchCheckbox() {
-    this.formProfileSearch.get( 'contactsexist' ).valueChanges.subscribe( value => {
-      this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
-      this.formProfileSearch.get( 'contactphone' )[ value ? 'disable' : 'enable' ]();
-      if ( value ) {
-        this.formProfileSearch.get( 'contactemail' ).patchValue('');
-        this.formProfileSearch.get( 'contactphone' ).patchValue('');
-      }
-    } );
+    this.formProfileSearch.get( 'contactsexist' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
+        this.formProfileSearch.get( 'contactphone' )[ value ? 'disable' : 'enable' ]();
+        if ( value ) {
+          this.formProfileSearch.get( 'contactemail' ).patchValue( '' );
+          this.formProfileSearch.get( 'contactphone' ).patchValue( '' );
+        }
+      } );
   }
 
   private formFilling() {
-    this.route.queryParams.subscribe( value => {
-      if ( Object.keys( value ).length !== 0 ) {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        if ( Object.keys( value ).length !== 0 ) {
 
-        const newObjectForm = {};
-        for ( const key of Object.keys( value ) ) {
-          if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
-          if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-          if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
+          const newObjectForm = {};
+          for ( const key of Object.keys( value ) ) {
+            if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
+            if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
+            if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
+          }
+
+          this.formProfileSearch.patchValue( newObjectForm );
+          this.creatingObjectForm();
         }
-
-        this.formProfileSearch.patchValue( newObjectForm );
-        this.creatingObjectForm();
-      }
-    } );
+      } );
   }
 
   private creatingObjectForm() {

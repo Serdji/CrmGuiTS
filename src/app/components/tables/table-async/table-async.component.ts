@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -9,19 +9,22 @@ import { timer } from 'rxjs/observable/timer';
 import { TableAsyncService } from './table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-table-async',
   templateUrl: './table-async.component.html',
   styleUrls: [ './table-async.component.styl' ],
 } )
-export class TableAsyncComponent implements OnInit {
+export class TableAsyncComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
+
+  private isActive: boolean;
 
   @Input() public tableHeader: string[];
   @Input() private tableDataSource: any;
@@ -35,6 +38,7 @@ export class TableAsyncComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.initDisplayedColumns();
     this.initDataSource();
     this.initDataSourceAsync();
@@ -60,10 +64,12 @@ export class TableAsyncComponent implements OnInit {
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
-    this.paginator.page.subscribe( ( value: IpagPage ) => {
-      this.tableAsyncService.setPagPage( value );
-      this.isLoadingResults = true;
-    } );
+    this.paginator.page
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        this.tableAsyncService.setPagPage( value );
+        this.isLoadingResults = true;
+      } );
   }
 
   private initDisplayedColumns() {
@@ -73,10 +79,12 @@ export class TableAsyncComponent implements OnInit {
   }
 
   private initDataSourceAsync() {
-    this.tableAsyncService.subjectTableDataSource.subscribe( ( value: any ) => {
-      this.dataSourceFun( value );
-      this.isLoadingResults = false;
-    } );
+    this.tableAsyncService.subjectTableDataSource
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: any ) => {
+        this.dataSourceFun( value );
+        this.isLoadingResults = false;
+      } );
   }
 
   private initDataSource() {
@@ -85,9 +93,11 @@ export class TableAsyncComponent implements OnInit {
 
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
-    timer( 1 ).subscribe( _ => {
-      this.dataSource.sort = this.sort;
-    } );
+    timer( 1 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.dataSource.sort = this.sort;
+      } );
   }
 
   private isChildMore( parentElement ): boolean {
@@ -96,6 +106,10 @@ export class TableAsyncComponent implements OnInit {
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
     return childrenWidth > parentWidth;
 
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }

@@ -105,21 +105,25 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private formInputDisable() {
-    this.formSegmentation.get( 'food' ).valueChanges.subscribe( value => {
-      this.formSegmentation.get( 'moneyAmountFromInclude' )[ value === '2' ? 'disable' : 'enable' ]();
-      this.formSegmentation.get( 'moneyAmountToExclude' )[ value === '2' ? 'disable' : 'enable' ]();
-      this.resetRadioButtonFood = !!value;
-    } );
+    this.formSegmentation.get( 'food' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formSegmentation.get( 'moneyAmountFromInclude' )[ value === '2' ? 'disable' : 'enable' ]();
+        this.formSegmentation.get( 'moneyAmountToExclude' )[ value === '2' ? 'disable' : 'enable' ]();
+        this.resetRadioButtonFood = !!value;
+      } );
 
-    this.formSegmentation.get( 'currentRange' ).valueChanges.subscribe( value => {
-      this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ value ? 'disable' : 'enable' ]();
-      this.formSegmentation.get( 'bookingCreateDateToExclude' )[ value ? 'disable' : 'enable' ]();
-      this.resetRadioButtonCurrentRange = !!value;
-      if ( value ) {
-        this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue( '' );
-        this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue( '' );
-      }
-    } );
+    this.formSegmentation.get( 'currentRange' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ value ? 'disable' : 'enable' ]();
+        this.formSegmentation.get( 'bookingCreateDateToExclude' )[ value ? 'disable' : 'enable' ]();
+        this.resetRadioButtonCurrentRange = !!value;
+        if ( value ) {
+          this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue( '' );
+          this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue( '' );
+        }
+      } );
   }
 
   private resetForm() {
@@ -136,10 +140,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initTableProfile( id: number ) {
-    this.addSegmentationService.getProfiles( id ).subscribe( segmentationProfiles => {
-      this.segmentationProfiles = segmentationProfiles;
-      this.isLoader = false;
-    } );
+    this.addSegmentationService.getProfiles( id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( segmentationProfiles => {
+        this.segmentationProfiles = segmentationProfiles;
+        this.isLoader = false;
+      } );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {

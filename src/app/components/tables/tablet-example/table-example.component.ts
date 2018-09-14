@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -8,17 +8,20 @@ import {
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-table-example',
   templateUrl: './table-example.component.html',
   styleUrls: [ './table-example.component.styl' ],
 } )
-export class TableExampleComponent implements OnInit {
+export class TableExampleComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
+
+  private isActive: boolean;
 
   @Input() public tableHeader: string[];
   @Input() private tableDataSource: any;
@@ -32,6 +35,7 @@ export class TableExampleComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.isActive = true;
     this.initDisplayedColumns();
     this.initDataSource();
   }
@@ -44,7 +48,9 @@ export class TableExampleComponent implements OnInit {
 
   private initDataSource() {
     this.dataSource = new MatTableDataSource( this.tableDataSource );
-    timer( 1 ).subscribe( _ => {
+    timer( 1 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
     } );
@@ -82,6 +88,10 @@ export class TableExampleComponent implements OnInit {
     if ( this.isCp ) return;
     const id = event.currentTarget.getAttribute( 'id' );
     this.router.navigate( [ `/crm/user/${id}` ] );
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }
