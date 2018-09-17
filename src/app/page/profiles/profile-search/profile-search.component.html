@@ -21,10 +21,10 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <mat-select formControlName="divisionid" placeholder="Название группы">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let tree of trees" [value]="tree.Name" [id]="tree.ID" >{{ tree.Name }} | ID={{ tree.ID }}</mat-option>
-              </mat-select>
+              <input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации" [matAutocomplete]="segmentation">
+              <mat-autocomplete #segmentation="matAutocomplete">
+                <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="dobfrominclude" placeholder="Дата рождения с" [matDatepicker]="DobFromInclude">

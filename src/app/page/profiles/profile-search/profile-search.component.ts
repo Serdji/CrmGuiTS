@@ -13,6 +13,9 @@ import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IprofileSearch } from '../../../interface/iprofile-search';
 import { Ilocation } from '../../../interface/ilocation';
+import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
+import { ISegmentation } from '../../../interface/isegmentation';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-profile-search',
@@ -26,11 +29,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public locations: Ilocation[];
   public locationFromOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
+  public segmentationOptions: Observable<ISegmentation[]>;
   public trees: Itree[];
   public groups: Igroups[];
   public profiles: Iprofiles;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
+  public segmentation: ISegmentation[];
 
   private autDelay: number = 500;
   private autLength: number = 3;
@@ -41,6 +46,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private profileSearchService: ProfileSearchService,
     private tableAsyncProfileService: TableAsyncProfileService,
+    private listSegmentationService: ListSegmentationService,
     private router: Router,
     private route: ActivatedRoute,
   ) { }
@@ -51,6 +57,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formDisable();
     this.initAutocomplete();
     this.initTableAsync();
+    this.initSegmentation();
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
@@ -96,18 +103,31 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initAutocomplete() {
-    this.locationFromOptions = this.autocomplete( 'deppoint' );
-    this.locationToOptions = this.autocomplete( 'arrpoint' );
+  private initSegmentation() {
+    this.listSegmentationService.getSegmentation()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: ISegmentation[] ) => {
+        this.segmentation = value;
+      } );
   }
 
-  private autocomplete( formControlName: string ): Observable<Ilocation[]> {
+  private initAutocomplete() {
+    this.locationFromOptions = this.autocomplete( 'deppoint', 'location' );
+    this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
+    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
+  }
+
+  private autocomplete( formControlName: string, options: string ): Observable<any> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
         map( val => {
-          return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+          switch ( options ) {
+            case 'location': return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'segmentation': return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() )
+            );
+          }
         } )
       );
   }
@@ -118,7 +138,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       firstname: '',
       customerid: '',
       gender: '',
-      divisionid: '',
+      segmentation: '',
       dobfrominclude: '',
       dobtoexclude: '',
       ticket: '',
@@ -153,7 +173,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private formDisable() {
-    this.formProfileSearch.get( 'divisionid' ).disable();
     this.formProfileSearch.get( 'tariffcode' ).disable();
     this.formProfileSearch.get( 'id' ).disable();
     this.formProfileSearch.get( 'amountfrom' ).disable();
@@ -184,6 +203,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           const newObjectForm = {};
           for ( const key of Object.keys( value ) ) {
             if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
+            // if ( this.isKeys( key, 'segmentation' ) ) newObjectForm[ key ] = value[ key ];
             if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
             if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
           }
@@ -200,6 +220,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const formValue = Object.keys( this.formProfileSearch.value );
 
     for ( const key of formValue ) {
+      console.log(this.segmentation, this.formProfileSearch.get( key ).value);
+      console.log( _.chain(this.segmentation).find({'title': this.formProfileSearch.get( key ).value}).result('segmentationId').value());
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
@@ -243,6 +265,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
           && key !== 'dobtoexclude'
+          && key !== 'segmentation'
           && key !== 'contactsexist';
       case 'data':
         return key === 'flightdatefrom'
@@ -253,6 +276,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'dobtoexclude';
       case 'checkbox':
         return key === 'contactsexist';
+      case 'segmentation':
+        return key === 'segmentation';
     }
   }
 
