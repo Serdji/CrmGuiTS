@@ -76,22 +76,34 @@ export class DialogComponent implements OnInit, OnDestroy {
   onYesClick(): void {
     switch ( this.data.card ) {
       case 'user':
-        this.userService.deleteUser( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
-        this.router.navigate( [ '/crm/listusers/' ] );
+        this.userService.deleteUser( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.router.navigate( [ '/crm/listusers/' ] );
+          } );
         break;
       case 'profiles':
-        this.profileSearchService.deleteProfiles( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.profileSearchService.deleteProfiles( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'profile':
-        this.profileService.deleteProfile( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
-        this.router.navigate( [ '/crm/profilesearch' ] );
+        this.profileService.deleteProfile( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.router.navigate( [ '/crm/profilesearch' ] );
+          } );
         break;
       case 'contacts':
-        this.dialogRef.close();
-        this.contactService.deleteContacts( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
+        this.contactService.deleteContacts( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'contact':
         const paramsContact = {
@@ -100,12 +112,18 @@ export class DialogComponent implements OnInit, OnDestroy {
           'ContactTypeId': this.data.params.typeId,
           'ContactText': this.formUpdateContact.get( 'contactText' ).value
         };
-        this.contactService.putContact( paramsContact ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.contactService.putContact( paramsContact )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'profileNames':
-        this.profileService.deleteProfileNames( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.profileService.deleteProfileNames( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'profileName':
         const paramsProfileName = {
@@ -116,12 +134,18 @@ export class DialogComponent implements OnInit, OnDestroy {
           'lastName': this.formUpdateProfileName.get( 'lastName' ).value,
           'secondName': this.formUpdateProfileName.get( 'secondName' ).value,
         };
-        this.profileService.putProfileName( paramsProfileName ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.profileService.putProfileName( paramsProfileName )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'documents':
-        this.documentService.deleteDocuments( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.documentService.deleteDocuments( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'document':
         const paramsDocument = {
@@ -134,24 +158,36 @@ export class DialogComponent implements OnInit, OnDestroy {
           'secondName': this.formUpdateDocument.get( 'secondName' ).value,
           'expDate': moment( this.formUpdateDocument.get( 'expDate' ).value ).format( 'YYYY-MM-DD' ),
         };
-        this.documentService.putDocument( paramsDocument ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.documentService.putDocument( paramsDocument )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'segmentation':
-        this.addSegmentationService.deleteSegmentation( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
-        this.router.navigate( [ '/crm/listsegmentation' ] );
+        this.addSegmentationService.deleteSegmentation( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.router.navigate( [ '/crm/listsegmentation' ] );
+          } );
         break;
       case 'segmentations':
-        this.listSegmentationService.deleteSegmentations( this.data.params ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        this.dialogRef.close();
+        this.listSegmentationService.deleteSegmentations( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'restart':
         const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
-        this.auth.revokeRefreshToken( token.refreshToken ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
-        localStorage.clear();
-        this.dialogRef.close();
-        this.router.navigate( [ '' ] );
+        this.auth.revokeRefreshToken( token.refreshToken )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            localStorage.clear();
+            this.dialogRef.close();
+            this.router.navigate( [ '' ] );
+          } );
         break;
     }
   }
