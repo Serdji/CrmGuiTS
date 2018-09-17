@@ -125,7 +125,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'location': return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-            case 'segmentation': return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() )
+            case 'segmentation': return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase()  )
             );
           }
         } )
@@ -203,7 +203,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           const newObjectForm = {};
           for ( const key of Object.keys( value ) ) {
             if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
-            // if ( this.isKeys( key, 'segmentation' ) ) newObjectForm[ key ] = value[ key ];
+            if ( this.isKeys( key, 'segmentation' ) ) newObjectForm[ key ] = _.chain(this.segmentation).find({'segmentationId': +value[key]}).result('title').value();
             if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
             if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
           }
@@ -220,9 +220,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const formValue = Object.keys( this.formProfileSearch.value );
 
     for ( const key of formValue ) {
-      console.log(this.segmentation, this.formProfileSearch.get( key ).value);
-      console.log( _.chain(this.segmentation).find({'title': this.formProfileSearch.get( key ).value}).result('segmentationId').value());
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
+      if ( this.isKeys( key, 'segmentation' ) ) highlightObj[ key ] = _.chain(this.segmentation).find({'title': this.formProfileSearch.get( key ).value}).result('segmentationId').value();
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
         if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
