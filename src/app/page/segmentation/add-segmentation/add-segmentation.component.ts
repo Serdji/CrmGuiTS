@@ -101,6 +101,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       moneyAmountFromInclude: '',
       moneyAmountToExclude: '',
       eDocTypeP: [ '', Validators.required ],
+      fromInclude: '',
+      toExclude: '',
       eDocTypeS: [ '', Validators.required ],
       currentRange: '',
       flightTicket: '',
@@ -112,10 +114,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formInputDisable() {
 
     _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
-      if( key !== 'subjectAnalysis' && key !== 'currentRange' && key !== 'bookingCreateDateFromInclude' && key !== 'bookingCreateDateToExclude' ) {
+      if ( key !== 'subjectAnalysis' && key !== 'currentRange' && key !== 'bookingCreateDateFromInclude' && key !== 'bookingCreateDateToExclude' ) {
         this.formSegmentation.get( key ).disable();
       }
-    });
+    } );
 
     this.formSegmentation.get( 'subjectAnalysis' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
@@ -123,6 +125,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
           if ( key === 'moneyAmountFromInclude' || key === 'moneyAmountToExclude' || key === 'eDocTypeP' ) {
             this.formSegmentation.get( key )[ params !== 'payment' ? 'disable' : 'enable' ]();
+            this.formSegmentation.get( key ).patchValue( '' );
+          }
+          if (  key === 'fromInclude' ||  key === 'toExclude' || key === 'eDocTypeS' ) {
+            this.formSegmentation.get( key )[ params !== 'segment' ? 'disable' : 'enable' ]();
             this.formSegmentation.get( key ).patchValue( '' );
           }
         } );
