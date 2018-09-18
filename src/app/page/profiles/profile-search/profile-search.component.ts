@@ -163,8 +163,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch.get( formControlName ).setValue( null );
   }
 
-  remove( textChip: string, arryChips: string[] ): void {
-    const index = arryChips.indexOf( textChip );
+  remove( textChip: string, arrayChips: string[] ): void {
+    const index = arrayChips.indexOf( textChip );
 
     if ( index >= 0 ) {
       this.segmentationChips.splice( index, 1 );
