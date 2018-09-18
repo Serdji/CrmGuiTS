@@ -24,8 +24,7 @@
             <mat-form-field class="profile-search__input">
               <mat-chip-list #chipListSegmentatio>
                 <mat-chip
-                  color="primary"
-                  selected
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
                   *ngFor="let segmentationChip of segmentationChips"
                   [selectable]="segmentationSelectable"
                   [removable]="segmentationRemovable"
