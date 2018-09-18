@@ -28,7 +28,7 @@
                   *ngFor="let segmentationChip of segmentationChips"
                   [selectable]="segmentationSelectable"
                   [removable]="segmentationRemovable"
-                  (removed)="remove(segmentationChip)">
+                  (removed)="remove(segmentationChip, segmentationChips)">
                   {{segmentationChip}}
                   <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
                 </mat-chip>

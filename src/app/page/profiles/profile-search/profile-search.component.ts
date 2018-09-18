@@ -99,9 +99,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
         this.profileSearchService.getProfileSearch( paramsAndCount )
-          .pipe(
-            takeWhile( _ => this.isActive )
-          )
+          .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( ( profile: Iprofiles ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
       } );
   }
@@ -165,8 +163,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch.get( formControlName ).setValue( null );
   }
 
-  remove( fruit: string ): void {
-    const index = this.segmentationChips.indexOf( fruit );
+  remove( textChip: string, arryChips: string[] ): void {
+    const index = arryChips.indexOf( textChip );
 
     if ( index >= 0 ) {
       this.segmentationChips.splice( index, 1 );
@@ -246,26 +244,26 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
-        if ( Object.keys( value ).length !== 0 ) {
+          if ( Object.keys( value ).length !== 0 ) {
 
-          const newObjectForm = {};
-          const segmentationTitles = [];
+            const newObjectForm = {};
+            const segmentationTitles = [];
 
-          for ( const segmentation of value.segmentation ) {
-            segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentation } ).result( 'title' ).value() );
+            for ( const segmentation of value.segmentation ) {
+              segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentation } ).result( 'title' ).value() );
+            }
+
+            this.segmentationChips = segmentationTitles;
+
+            for ( const key of Object.keys( value ) ) {
+              if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
+              if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
+              if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
+            }
+
+            this.formProfileSearch.patchValue( newObjectForm );
+            this.creatingObjectForm();
           }
-
-          this.segmentationChips = segmentationTitles;
-
-          for ( const key of Object.keys( value ) ) {
-            if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
-            if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-            if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
-          }
-
-          this.formProfileSearch.patchValue( newObjectForm );
-          this.creatingObjectForm();
-        }
         }
       );
   }
@@ -304,9 +302,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.sendProfileParams = params;
     Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
     this.profileSearchService.getProfileSearch( params )
-      .pipe(
-        takeWhile( _ => this.isActive )
-      )
+      .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profile => {
         this.tableAsyncProfileService.countPage = profile.totalRows;
         this.profiles = profile.result;
