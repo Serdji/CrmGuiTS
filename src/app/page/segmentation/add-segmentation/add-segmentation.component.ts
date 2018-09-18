@@ -110,12 +110,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private formInputDisable() {
-    this.formSegmentation.get( 'moneyAmountFromInclude' ).disable();
-    this.formSegmentation.get( 'moneyAmountToExclude' ).disable();
-    this.formSegmentation.get( 'eDocTypeP' ).disable();
 
-    this.formSegmentation.get( 'flightTicket' ).disable();
-    this.formSegmentation.get( 'flightEmd' ).disable();
+    _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
+      if( key !== 'subjectAnalysis' && key !== 'currentRange' ) {
+        this.formSegmentation.get( key ).disable();
+      }
+    });
 
     this.formSegmentation.get( 'subjectAnalysis' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
