@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
@@ -95,13 +95,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initFormSegmentation() {
     this.formSegmentation = this.fb.group( {
+      subjectAnalysis: '',
       bookingCreateDateFromInclude: '',
       bookingCreateDateToExclude: '',
       moneyAmountFromInclude: '',
       moneyAmountToExclude: '',
-      eDocTypeP: '',
-      eDocTypeS: '',
-      subjectAnalysis: '',
+      eDocTypeP: [ '', Validators.required ],
+      eDocTypeS: [ '', Validators.required ],
       currentRange: '',
       flightTicket: '',
       flightEmd: '',
@@ -112,7 +112,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formInputDisable() {
 
     _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
-      if( key !== 'subjectAnalysis' && key !== 'currentRange' ) {
+      if( key !== 'subjectAnalysis' && key !== 'currentRange' && key !== 'bookingCreateDateFromInclude' && key !== 'bookingCreateDateToExclude' ) {
         this.formSegmentation.get( key ).disable();
       }
     });
