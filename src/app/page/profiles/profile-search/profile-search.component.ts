@@ -1,11 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Icountry } from '../../../interface/icountry';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
-import { Itree } from '../../../interface/itree';
-import { Igroups } from '../../../interface/igroups';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { TableAsyncProfileService } from '../../../components/tables/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -27,19 +24,15 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/materi
 export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
-  public countrys: Icountry[];
   public locations: Ilocation[];
   public locationFromOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
-  public trees: Itree[];
-  public groups: Igroups[];
   public profiles: Iprofiles;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
   public segmentation: ISegmentation[];
 
-  public visible = true;
   public segmentationSelectable = true;
   public segmentationRemovable = true;
   public addSegmentationOnBlur = false;
@@ -47,7 +40,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public segmentationChips: string[] = [];
 
   private autDelay: number = 500;
-  private autLength: number = 3;
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
 
