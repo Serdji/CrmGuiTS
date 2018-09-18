@@ -20,16 +20,12 @@
                 <mat-option value="f" >Ж</mat-option>
               </mat-select>
             </mat-form-field>
-            <!--<mat-form-field class="profile-search__input">-->
-              <!--<input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации" [matAutocomplete]="segmentation">-->
-              <!--<mat-autocomplete #segmentation="matAutocomplete" multiple>-->
-                <!--<mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>-->
-              <!--</mat-autocomplete>-->
-            <!--</mat-form-field>-->
 
             <mat-form-field class="profile-search__input">
               <mat-chip-list #chipListSegmentatio>
                 <mat-chip
+                  color="primary"
+                  selected
                   *ngFor="let segmentationChip of segmentationChips"
                   [selectable]="segmentationSelectable"
                   [removable]="segmentationRemovable"
@@ -138,7 +134,7 @@
               <input matInput formControlName="cab" type="text" placeholder="Кабина">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="rdb" type="text" placeholder="Класс бронирования">
+              <input matInput formControlName="rbd" type="text" placeholder="Класс бронирования">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="tariffcode" type="text" placeholder="Код тарифа">

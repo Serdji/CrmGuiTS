@@ -85,6 +85,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
+    this.segmentationChips = [];
     for ( const formControlName in this.formProfileSearch.value ) {
       this.formProfileSearch.get( `${ formControlName }` ).patchValue( '' );
       this.formProfileSearch.get( `${ formControlName }` ).setErrors( null );
@@ -135,11 +136,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
-            case 'location': return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-            case 'segmentation': return this.segmentation.filter( segmentation => {
-              if( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase()  );
-              }
-            );
+            case 'location':
+              return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'segmentation':
+              return this.segmentation.filter( segmentation => {
+                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
           }
         } )
       );
@@ -197,7 +200,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       deptimefrominclude: '',
       deptimetoexclude: '',
       cab: '',
-      rdb: '',
+      rbd: '',
       tariffcode: '',
       servicecode: '',
       amountfrom: '',
@@ -246,9 +249,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         if ( Object.keys( value ).length !== 0 ) {
 
           const newObjectForm = {};
+          const segmentationTitles = [];
+
+          for ( const segmentation of value.segmentation ) {
+            segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentation } ).result( 'title' ).value() );
+          }
+
+          this.segmentationChips = segmentationTitles;
+
           for ( const key of Object.keys( value ) ) {
             if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
-            // if ( this.isKeys( key, 'segmentation' ) ) newObjectForm[ key ] = _.chain(this.segmentation).find({'segmentationId': +value[key]}).result('title').value();
             if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
             if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
           }
@@ -256,19 +266,23 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           this.formProfileSearch.patchValue( newObjectForm );
           this.creatingObjectForm();
         }
-      } );
+        }
+      );
   }
 
   private creatingObjectForm() {
     const params = {};
     const highlightObj = {};
     const formValue = Object.keys( this.formProfileSearch.value );
+    const segmentationIds = [];
 
-    console.log(this.segmentationChips);
+    for ( const segmentationChip of this.segmentationChips ) {
+      segmentationIds.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).result( 'segmentationId' ).value() );
+    }
 
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
-      // if ( this.isKeys( key, 'segmentation' ) ) highlightObj[ key ] = _.chain(this.segmentation).find({'title': this.formProfileSearch.get( key ).value}).result('segmentationId').value();
+      if ( this.isKeys( key, 'segmentation' ) ) highlightObj[ key ] = segmentationIds;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
         if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
