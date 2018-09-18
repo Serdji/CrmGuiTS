@@ -20,12 +20,38 @@
                 <mat-option value="f" >Ж</mat-option>
               </mat-select>
             </mat-form-field>
+            <!--<mat-form-field class="profile-search__input">-->
+              <!--<input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации" [matAutocomplete]="segmentation">-->
+              <!--<mat-autocomplete #segmentation="matAutocomplete" multiple>-->
+                <!--<mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>-->
+              <!--</mat-autocomplete>-->
+            <!--</mat-form-field>-->
+
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации" [matAutocomplete]="segmentation">
-              <mat-autocomplete #segmentation="matAutocomplete" multiple>
+              <mat-chip-list #chipListSegmentatio>
+                <mat-chip
+                  *ngFor="let segmentationChip of segmentationChips"
+                  [selectable]="segmentationSelectable"
+                  [removable]="segmentationRemovable"
+                  (removed)="remove(segmentationChip)">
+                  {{segmentationChip}}
+                  <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы сегментации"
+                  #segmentationChipInput
+                  formControlName="segmentation"
+                  [matAutocomplete]="segmentation"
+                  [matChipInputFor]="chipListSegmentatio"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addSegmentationOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'segmentation')">
+              </mat-chip-list>
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation')">
                 <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
+
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="dobfrominclude" placeholder="Дата рождения с" [matDatepicker]="DobFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DobFromInclude"></mat-datepicker-toggle>

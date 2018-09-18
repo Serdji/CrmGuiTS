@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Icountry } from '../../../interface/icountry';
 import { ProfileSearchService } from './profile-search.service';
@@ -16,6 +16,8 @@ import { Ilocation } from '../../../interface/ilocation';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
 
 @Component( {
   selector: 'app-profile-search',
@@ -37,10 +39,19 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public isLoader: boolean = false;
   public segmentation: ISegmentation[];
 
+  public visible = true;
+  public segmentationSelectable = true;
+  public segmentationRemovable = true;
+  public addSegmentationOnBlur = false;
+  public separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  public segmentationChips: string[] = [];
+
   private autDelay: number = 500;
   private autLength: number = 3;
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
+
+  @ViewChild( 'segmentationChipInput' ) fruitInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -125,12 +136,46 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'location': return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-            case 'segmentation': return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase()  )
+            case 'segmentation': return this.segmentation.filter( segmentation => {
+              if( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase()  );
+              }
             );
           }
         } )
       );
   }
+
+  add( event: MatChipInputEvent, formControlName: string ): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ( ( value || '' ).trim() ) {
+      this.segmentationChips.push( value.trim() );
+    }
+
+    // Reset the input value
+    if ( input ) {
+      input.value = '';
+    }
+
+    this.formProfileSearch.get( formControlName ).setValue( null );
+  }
+
+  remove( fruit: string ): void {
+    const index = this.segmentationChips.indexOf( fruit );
+
+    if ( index >= 0 ) {
+      this.segmentationChips.splice( index, 1 );
+    }
+  }
+
+  selected( event: MatAutocompleteSelectedEvent, formControlName: string ): void {
+    this.segmentationChips.push( event.option.viewValue );
+    this.fruitInput.nativeElement.value = '';
+    this.formProfileSearch.get( formControlName ).setValue( null );
+  }
+
 
   private initForm() {
     this.formProfileSearch = this.fb.group( {
@@ -203,7 +248,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           const newObjectForm = {};
           for ( const key of Object.keys( value ) ) {
             if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
-            if ( this.isKeys( key, 'segmentation' ) ) newObjectForm[ key ] = _.chain(this.segmentation).find({'segmentationId': +value[key]}).result('title').value();
+            // if ( this.isKeys( key, 'segmentation' ) ) newObjectForm[ key ] = _.chain(this.segmentation).find({'segmentationId': +value[key]}).result('title').value();
             if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
             if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
           }
@@ -219,9 +264,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const highlightObj = {};
     const formValue = Object.keys( this.formProfileSearch.value );
 
+    console.log(this.segmentationChips);
+
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
-      if ( this.isKeys( key, 'segmentation' ) ) highlightObj[ key ] = _.chain(this.segmentation).find({'title': this.formProfileSearch.get( key ).value}).result('segmentationId').value();
+      // if ( this.isKeys( key, 'segmentation' ) ) highlightObj[ key ] = _.chain(this.segmentation).find({'title': this.formProfileSearch.get( key ).value}).result('segmentationId').value();
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
         if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
