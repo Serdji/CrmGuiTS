@@ -102,7 +102,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       eDocTypeP: '',
       eDocTypeS: '',
       subjectAnalysis: '',
-      currentRange: ''
+      currentRange: '',
+      flightTicket: '',
+      flightEmd: '',
     } );
     this.formInputDisable();
   }
@@ -112,26 +114,45 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.formSegmentation.get( 'moneyAmountToExclude' ).disable();
     this.formSegmentation.get( 'eDocTypeP' ).disable();
 
+    this.formSegmentation.get( 'flightTicket' ).disable();
+    this.formSegmentation.get( 'flightEmd' ).disable();
+
     this.formSegmentation.get( 'subjectAnalysis' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formSegmentation.get( 'moneyAmountFromInclude' )[ value !== 'payment' ? 'disable' : 'enable' ]();
-        this.formSegmentation.get( 'moneyAmountToExclude' )[ value !== 'payment' ? 'disable' : 'enable' ]();
-        this.formSegmentation.get( 'eDocTypeP' )[ value !== 'payment' ? 'disable' : 'enable' ]();
-        this.resetRadioButtonFood = !!value;
+      .subscribe( params => {
+        _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
+          if ( key === 'moneyAmountFromInclude' || key === 'moneyAmountToExclude' || key === 'eDocTypeP' ) {
+            this.formSegmentation.get( key )[ params !== 'payment' ? 'disable' : 'enable' ]();
+            this.formSegmentation.get( key ).patchValue( '' );
+          }
+        } );
+        this.resetRadioButtonFood = !!params;
       } );
 
     this.formSegmentation.get( 'currentRange' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ value ? 'disable' : 'enable' ]();
-        this.formSegmentation.get( 'bookingCreateDateToExclude' )[ value ? 'disable' : 'enable' ]();
-        this.resetRadioButtonCurrentRange = !!value;
-        if ( value ) {
+      .subscribe( params => {
+        this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ params ? 'disable' : 'enable' ]();
+        this.formSegmentation.get( 'bookingCreateDateToExclude' )[ params ? 'disable' : 'enable' ]();
+        this.resetRadioButtonCurrentRange = !!params;
+        if ( params ) {
           this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue( '' );
           this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue( '' );
         }
       } );
+
+    _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
+      if ( key === 'eDocTypeP' || key === 'eDocTypeS' ) {
+        this.formSegmentation.get( key ).valueChanges
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( params => {
+            this.formSegmentation.get( 'flightTicket' )[ params !== 'T' ? 'disable' : 'enable' ]();
+
+            this.formSegmentation.get( 'flightEmd' )[ params !== 'E' ? 'disable' : 'enable' ]();
+          } );
+      }
+    } );
+
   }
 
   private resetForm() {
