@@ -80,7 +80,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         console.log( segmentationParams );
         this.segmentationParams = segmentationParams;
         this.formSegmentationNameGroup.patchValue( segmentationParams );
-        _( segmentationParams ).each( value => {
+        _( segmentationParams ).each( ( value, key ) => {
+          if ( key === 'payment' || key === 'segment' ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
           this.formSegmentation.patchValue( value );
         } );
       } );
@@ -98,18 +99,25 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       bookingCreateDateToExclude: '',
       moneyAmountFromInclude: '',
       moneyAmountToExclude: '',
-      food: '',
+      eDocTypeP: '',
+      eDocTypeS: '',
+      subjectAnalysis: '',
       currentRange: ''
     } );
     this.formInputDisable();
   }
 
   private formInputDisable() {
-    this.formSegmentation.get( 'food' ).valueChanges
+    this.formSegmentation.get( 'moneyAmountFromInclude' ).disable();
+    this.formSegmentation.get( 'moneyAmountToExclude' ).disable();
+    this.formSegmentation.get( 'eDocTypeP' ).disable();
+
+    this.formSegmentation.get( 'subjectAnalysis' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
-        this.formSegmentation.get( 'moneyAmountFromInclude' )[ value === '2' ? 'disable' : 'enable' ]();
-        this.formSegmentation.get( 'moneyAmountToExclude' )[ value === '2' ? 'disable' : 'enable' ]();
+        this.formSegmentation.get( 'moneyAmountFromInclude' )[ value !== 'payment' ? 'disable' : 'enable' ]();
+        this.formSegmentation.get( 'moneyAmountToExclude' )[ value !== 'payment' ? 'disable' : 'enable' ]();
+        this.formSegmentation.get( 'eDocTypeP' )[ value !== 'payment' ? 'disable' : 'enable' ]();
         this.resetRadioButtonFood = !!value;
       } );
 
@@ -176,7 +184,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       },
       payment: {
         moneyAmountFromInclude: this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
-        moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value
+        moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value,
+        eDocTypeP: this.formSegmentation.get( 'eDocTypeP' ).value
       }
     };
   }
