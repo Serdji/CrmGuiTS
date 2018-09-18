@@ -25,6 +25,7 @@ import { MatTabsModule } from '@angular/material/tabs';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatChipsModule } from '@angular/material/chips';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 
@@ -57,6 +58,7 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatListModule,
     MatRadioModule,
     MatTooltipModule,
+    MatChipsModule,
   ],
   exports: [
     MatToolbarModule,
@@ -85,6 +87,7 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatListModule,
     MatRadioModule,
     MatTooltipModule,
+    MatChipsModule,
   ],
   providers: [
     { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
