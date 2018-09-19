@@ -80,8 +80,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.segmentationParams = segmentationParams;
         this.formSegmentationNameGroup.patchValue( segmentationParams );
         _( segmentationParams ).each( ( value, key ) => {
-          if ( key === 'payment' || key === 'segment' ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
-          this.formSegmentation.patchValue( value );
+          if ( !_.isNull( value ) ) {
+            if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
+            this.formSegmentation.patchValue( value );
+          }
         } );
       } );
   }
@@ -126,7 +128,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             this.formSegmentation.get( key )[ params !== 'payment' ? 'disable' : 'enable' ]();
             this.formSegmentation.get( key ).patchValue( '' );
           }
-          if (  key === 'segmentsCountFromInclude' ||  key === 'segmentsCountToExclude' || key === 'eDocTypeS' ) {
+          if ( key === 'segmentsCountFromInclude' || key === 'segmentsCountToExclude' || key === 'eDocTypeS' ) {
             this.formSegmentation.get( key )[ params !== 'segment' ? 'disable' : 'enable' ]();
             this.formSegmentation.get( key ).patchValue( '' );
           }
@@ -189,7 +191,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private segmentationParameters() {
-    return {
+
+    const segmentationParameters = {
       segmentationId: this.segmentationId,
       segmentationTitle: this.formSegmentationNameGroup.get( 'segmentationTitle' ).value,
       booking: {
@@ -205,8 +208,26 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         segmentsCountFromInclude: this.formSegmentation.get( 'segmentsCountFromInclude' ).value,
         segmentsCountToExclude: this.formSegmentation.get( 'segmentsCountToExclude' ).value,
         eDocTypeS: this.formSegmentation.get( 'eDocTypeS' ).value
-      }
+      },
+      ticket: {
+        flightNoT: this.formSegmentation.get( 'flightNoT' ).value
+      },
+      emd: {
+        flightNoE: this.formSegmentation.get( 'flightNoE' ).value
+      },
     };
+
+    const newSegmentationParameters = {};
+
+    _.each( segmentationParameters, ( parentValue, parentKey ) => {
+      _.each( parentValue, childrenValue => {
+        if ( !!childrenValue ) {
+          _.set( newSegmentationParameters, parentKey, parentValue );
+        }
+      } );
+    } );
+
+    return newSegmentationParameters;
   }
 
   resetRadioButton( formControlName: string ): void {
