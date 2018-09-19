@@ -135,18 +135,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.resetRadioButtonFood = !!params;
       } );
 
-    this.formSegmentation.get( 'currentRange' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( params => {
-        this.formSegmentation.get( 'bookingCreateDateFromInclude' )[ params ? 'disable' : 'enable' ]();
-        this.formSegmentation.get( 'bookingCreateDateToExclude' )[ params ? 'disable' : 'enable' ]();
-        this.resetRadioButtonCurrentRange = !!params;
-        if ( params ) {
-          this.formSegmentation.get( 'bookingCreateDateFromInclude' ).patchValue( '' );
-          this.formSegmentation.get( 'bookingCreateDateToExclude' ).patchValue( '' );
-        }
-      } );
-
     _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
       if ( key === 'eDocTypeP' || key === 'eDocTypeS' ) {
         this.formSegmentation.get( key ).valueChanges
