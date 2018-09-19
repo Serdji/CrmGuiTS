@@ -4,7 +4,6 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
-import * as moment from 'moment';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
@@ -101,12 +100,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       moneyAmountFromInclude: '',
       moneyAmountToExclude: '',
       eDocTypeP: [ '', Validators.required ],
-      fromInclude: '',
-      toExclude: '',
+      segmentsCountFromInclude: '',
+      segmentsCountToExclude: '',
       eDocTypeS: [ '', Validators.required ],
       currentRange: '',
-      flightTicket: '',
-      flightEmd: '',
+      flightNoT: '',
+      flightNoE: '',
     } );
     this.formInputDisable();
   }
@@ -127,7 +126,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             this.formSegmentation.get( key )[ params !== 'payment' ? 'disable' : 'enable' ]();
             this.formSegmentation.get( key ).patchValue( '' );
           }
-          if (  key === 'fromInclude' ||  key === 'toExclude' || key === 'eDocTypeS' ) {
+          if (  key === 'segmentsCountFromInclude' ||  key === 'segmentsCountToExclude' || key === 'eDocTypeS' ) {
             this.formSegmentation.get( key )[ params !== 'segment' ? 'disable' : 'enable' ]();
             this.formSegmentation.get( key ).patchValue( '' );
           }
@@ -140,9 +139,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.formSegmentation.get( key ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( params => {
-            this.formSegmentation.get( 'flightTicket' )[ params !== 'T' ? 'disable' : 'enable' ]();
+            this.formSegmentation.get( 'flightNoT' )[ params !== 'T' ? 'disable' : 'enable' ]();
 
-            this.formSegmentation.get( 'flightEmd' )[ params !== 'E' ? 'disable' : 'enable' ]();
+            this.formSegmentation.get( 'flightNoE' )[ params !== 'E' ? 'disable' : 'enable' ]();
           } );
       }
     } );
@@ -201,6 +200,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         moneyAmountFromInclude: this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
         moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value,
         eDocTypeP: this.formSegmentation.get( 'eDocTypeP' ).value
+      },
+      segment: {
+        segmentsCountFromInclude: this.formSegmentation.get( 'segmentsCountFromInclude' ).value,
+        segmentsCountToExclude: this.formSegmentation.get( 'segmentsCountToExclude' ).value,
+        eDocTypeS: this.formSegmentation.get( 'eDocTypeS' ).value
       }
     };
   }

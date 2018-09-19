@@ -83,15 +83,15 @@
           <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
               <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
-                     [matDatepicker]="dob3">
-              <mat-datepicker-toggle matSuffix [for]="dob3"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dob3></mat-datepicker>
+                     [matDatepicker]="bookingCreateDateFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
-                     [matDatepicker]="dob4">
-              <mat-datepicker-toggle matSuffix [for]="dob4"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dob4></mat-datepicker>
+                     [matDatepicker]="bookingCreateDateToExclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -129,7 +129,7 @@
           <span class="add-segmentation__content-title">Билеты</span>
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Номер рейса" formControlName="flightTicket">
+              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
             </mat-form-field>
             <!--<mat-form-field class="add-segmentation__input">-->
             <!--<input matInput type="text" placeholder="Откуда">-->
@@ -179,7 +179,7 @@
           <span class="add-segmentation__content-title">Платные услуги</span>
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Номер рейса" formControlName="flightEmd">
+              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
             </mat-form-field>
             <!--<mat-form-field class="add-segmentation__input">-->
             <!--<input matInput type="text" placeholder="Откуда">-->
@@ -244,10 +244,10 @@
           <span class="add-segmentation__content-title">Количество сегментов</span>
           <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="fromInclude" matInput type="text" placeholder="От">
+              <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="toExclude" matInput type="text" placeholder="До">
+              <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <mat-select formControlName="eDocTypeS">
