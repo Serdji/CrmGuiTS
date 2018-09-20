@@ -215,8 +215,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
     const filterSegmentationParameters = {};
 
-    _.each( segmentationParameters, ( parentValue, parentKey ) => {
-      _.each( parentValue, childrenValue => {
+    _( segmentationParameters ).each( ( parentValue, parentKey ) => {
+      _( parentValue ).each( childrenValue => {
         if ( !!childrenValue ) {
           _.set( filterSegmentationParameters, parentKey, parentValue );
         }
@@ -232,7 +232,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   saveForm(): void {
     if ( !this.formSegmentation.invalid ) {
-      _.assign( this.saveSegmentationParams, this.segmentationParameters() );
+      _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
       console.log( this.saveSegmentationParams );
       this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
         .pipe( takeWhile( _ => this.isActive ) )
