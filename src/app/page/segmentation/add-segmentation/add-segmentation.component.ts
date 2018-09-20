@@ -32,6 +32,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   private segmentationId: number;
   private segmentationParams: any;
+  private saveSegmentationParams: any = {};
+  private createSegmentationParams: any = {};
 
   constructor(
     private route: ActivatedRoute,
@@ -90,7 +92,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initFormSegmentationNameGroup() {
     this.formSegmentationNameGroup = this.fb.group( {
-      segmentationTitle: ''
+      segmentationTitle: [ '', Validators.required ]
+    }, {
+      updateOn: 'submit',
     } );
   }
 
@@ -108,6 +112,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       currentRange: '',
       flightNoT: '',
       flightNoE: '',
+    }, {
+      updateOn: 'submit',
     } );
     this.formInputDisable();
   }
@@ -193,7 +199,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private segmentationParameters() {
 
     const segmentationParameters = {
-      segmentationId: this.segmentationId,
       segmentationTitle: this.formSegmentationNameGroup.get( 'segmentationTitle' ).value,
       booking: {
         bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value,
@@ -217,17 +222,17 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       },
     };
 
-    const newSegmentationParameters = {};
+    const filterSegmentationParameters = {};
 
     _.each( segmentationParameters, ( parentValue, parentKey ) => {
       _.each( parentValue, childrenValue => {
         if ( !!childrenValue ) {
-          _.set( newSegmentationParameters, parentKey, parentValue );
+          _.set( filterSegmentationParameters, parentKey, parentValue );
         }
       } );
     } );
 
-    return newSegmentationParameters;
+    return filterSegmentationParameters;
   }
 
   resetRadioButton( formControlName: string ): void {
@@ -235,21 +240,31 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
-    console.log( this.segmentationParameters() );
-    this.addSegmentationService.saveSegmentation( this.segmentationParameters() )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
-        this.resetForm();
-      } );
+    if ( !this.formSegmentationNameGroup.invalid && !this.formSegmentation.invalid ) {
+      _.assign( this.saveSegmentationParams, this.segmentationParameters() );
+      console.log( this.saveSegmentationParams );
+      this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+          this.resetForm();
+        } );
+    }
   }
 
   createForm(): void {
-    this.addSegmentationService.updateSegmentation( this.segmentationParameters() )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        this.windowDialog( `Сегментация успешно изменена`, 'ok' );
-      } );
+    if ( !this.formSegmentationNameGroup.invalid && !this.formSegmentation.invalid ) {
+      _( this.createSegmentationParams )
+        .assign( this.segmentationParameters() )
+        .set( 'segmentationId', this.segmentationId )
+        .value();
+      console.log( this.createSegmentationParams );
+      this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.windowDialog( `Сегментация успешно изменена`, 'ok' );
+        } );
+    }
   }
 
   searchForm(): void {
