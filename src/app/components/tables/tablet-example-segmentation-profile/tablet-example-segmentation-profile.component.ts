@@ -45,9 +45,9 @@ export class TabletExampleSegmentationProfileComponent implements OnInit, OnDest
   ngOnInit(): void {
     this.isActive = true;
     this.initDataSource();
-    this.initDisplayedColumns();
-    this.initPaginator();
     this.initDataSourceAsync();
+    this.initPaginator();
+    this.initDisplayedColumns();
   }
 
   private initDisplayedColumns() {
@@ -88,7 +88,6 @@ export class TabletExampleSegmentationProfileComponent implements OnInit, OnDest
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       } );
   }
 
@@ -120,10 +119,6 @@ export class TabletExampleSegmentationProfileComponent implements OnInit, OnDest
       const text = elem.innerText;
       this.windowDialog( text, 'text' );
     }
-  }
-
-  applyFilter( filterValue: string ): void {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
 

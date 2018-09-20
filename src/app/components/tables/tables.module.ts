@@ -13,6 +13,7 @@ import { TabletExampleDocumentComponent } from './tablet-example-document/tablet
 import { PipesModule } from '../../pipes/pipes.module';
 import { TabletExampleSegmentationComponent } from './tablet-example-segmentation/tablet-example-segmentation.component';
 import { TabletExampleSegmentationProfileComponent } from './tablet-example-segmentation-profile/tablet-example-segmentation-profile.component';
+import { TabletExampleSegmentationProfileService } from './tablet-example-segmentation-profile/tablet-example-segmentation-profile.service';
 
 @NgModule({
   imports: [
@@ -44,6 +45,7 @@ import { TabletExampleSegmentationProfileComponent } from './tablet-example-segm
   providers: [
     TableAsyncService,
     TableAsyncProfileService,
+    TabletExampleSegmentationProfileService
   ]
 })
 export class TablesModule { }

@@ -8,6 +8,9 @@ import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs';
+import { TabletExampleSegmentationProfileService } from '../../../components/tables/tablet-example-segmentation-profile/tablet-example-segmentation-profile.service';
+import { IpagPage } from '../../../interface/ipag-page';
+import { Iprofiles } from '../../../interface/iprofiles';
 
 
 @Component( {
@@ -17,7 +20,6 @@ import { timer } from 'rxjs';
 } )
 export class AddSegmentationComponent implements OnInit, OnDestroy {
 
-  public formSegmentationNameGroup: FormGroup;
   public formSegmentation: FormGroup;
   public segmentationProfiles: ISegmentationProfile;
   public buttonSave: boolean;
@@ -41,6 +43,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private addSegmentationService: AddSegmentationService,
     private dialog: MatDialog,
+    private tabletExampleSegmentationProfileService: TabletExampleSegmentationProfileService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initFormSegmentation();
     this.initQueryParams();
     this.formInputDisable();
+    this.initTableProfilePagination();
   }
 
   private initQueryParams() {
@@ -78,7 +82,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentationParams => {
         this.segmentationParams = segmentationParams;
-        this.formSegmentation.get('segmentationTitle').patchValue( segmentationParams.segmentationTitle || '' );
+        this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
         _( segmentationParams ).each( ( value, key ) => {
           if ( !_.isNull( value ) ) {
             if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
@@ -161,10 +165,32 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonDelete = true;
   }
 
-  private initTableProfile( id: number ) {
-    this.addSegmentationService.getProfiles( id )
+  private initTableProfilePagination() {
+    this.tabletExampleSegmentationProfileService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( segmentationProfiles => {
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          'segmentationId': this.segmentationId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.addSegmentationService.getProfiles( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tabletExampleSegmentationProfileService.setTableDataSource( segmentationProfiles.customers ) );
+      } );
+  }
+
+  private initTableProfile( id: number ) {
+    const params = {
+      segmentationId: id,
+      from: 0,
+      count: 10
+    };
+    this.addSegmentationService.getProfiles( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
+        this.tabletExampleSegmentationProfileService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
         this.isLoader = false;
       } );
