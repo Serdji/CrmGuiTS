@@ -1,5 +1,5 @@
 <div class="add-segmentation">
-  <form class="add-segmentation__form" [formGroup]="formSegmentationNameGroup">
+  <form class="add-segmentation__form" [formGroup]="formSegmentation">
     <mat-grid-list cols="1" rowHeight="80px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
@@ -12,9 +12,8 @@
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
-  </form>
 
-  <form class="add-segmentation__form" [formGroup]="formSegmentation">
+
     <mat-grid-list cols="4" rowHeight="250px">
 
       <!--<mat-grid-tile [colspan]="1" [rowspan]="2">-->

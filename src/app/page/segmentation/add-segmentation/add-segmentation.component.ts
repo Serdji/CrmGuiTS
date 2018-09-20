@@ -53,7 +53,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.resetRadioButtonFood = false;
     this.resetRadioButtonCurrentRange = false;
 
-    this.initFormSegmentationNameGroup();
     this.initFormSegmentation();
     this.initQueryParams();
     this.formInputDisable();
@@ -90,16 +89,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initFormSegmentationNameGroup() {
-    this.formSegmentationNameGroup = this.fb.group( {
-      segmentationTitle: [ '', Validators.required ]
-    }, {
-      updateOn: 'submit',
-    } );
-  }
 
   private initFormSegmentation() {
     this.formSegmentation = this.fb.group( {
+      segmentationTitle: [ '', Validators.required ],
       subjectAnalysis: '',
       bookingCreateDateFromInclude: '',
       bookingCreateDateToExclude: '',
@@ -121,7 +114,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formInputDisable() {
 
     _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
-      if ( key !== 'subjectAnalysis' && key !== 'currentRange' && key !== 'bookingCreateDateFromInclude' && key !== 'bookingCreateDateToExclude' ) {
+      if ( key !== 'subjectAnalysis' && key !== 'currentRange' && key !== 'bookingCreateDateFromInclude' && key !== 'bookingCreateDateToExclude' && key !== 'segmentationTitle' ) {
         this.formSegmentation.get( key ).disable();
       }
     } );
@@ -157,8 +150,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
-    this.formSegmentationNameGroup.get( 'segmentationTitle' ).patchValue( '' );
-    this.formSegmentationNameGroup.get( 'segmentationTitle' ).setErrors( null );
     _( this.formSegmentation.value ).each( ( value, key ) => {
       this.formSegmentation.get( key ).patchValue( '' );
       this.formSegmentation.get( key ).setErrors( null );
@@ -199,7 +190,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private segmentationParameters() {
 
     const segmentationParameters = {
-      segmentationTitle: this.formSegmentationNameGroup.get( 'segmentationTitle' ).value,
+      segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
       booking: {
         bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value,
         bookingCreateDateToExclude: this.formSegmentation.get( 'bookingCreateDateToExclude' ).value
@@ -240,7 +231,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
-    if ( !this.formSegmentationNameGroup.invalid && !this.formSegmentation.invalid ) {
+    if ( !this.formSegmentation.invalid ) {
       _.assign( this.saveSegmentationParams, this.segmentationParameters() );
       console.log( this.saveSegmentationParams );
       this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
