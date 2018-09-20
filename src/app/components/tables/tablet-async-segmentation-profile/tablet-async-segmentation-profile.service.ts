@@ -5,7 +5,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 @Injectable({
   providedIn: 'root'
 })
-export class TabletExampleSegmentationProfileService {
+export class TabletAsyncSegmentationProfileService {
 
   public count: number;
   public subjectPage = new Subject();

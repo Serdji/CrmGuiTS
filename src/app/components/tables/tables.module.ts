@@ -12,8 +12,8 @@ import { TabletExampleProfileNamesComponent } from './tablet-example-profile-nam
 import { TabletExampleDocumentComponent } from './tablet-example-document/tablet-example-document.component';
 import { PipesModule } from '../../pipes/pipes.module';
 import { TabletExampleSegmentationComponent } from './tablet-example-segmentation/tablet-example-segmentation.component';
-import { TabletExampleSegmentationProfileComponent } from './tablet-example-segmentation-profile/tablet-example-segmentation-profile.component';
-import { TabletExampleSegmentationProfileService } from './tablet-example-segmentation-profile/tablet-example-segmentation-profile.service';
+import { TabletAsyncSegmentationProfileComponent } from './tablet-async-segmentation-profile/tablet-async-segmentation-profile.component';
+import { TabletAsyncSegmentationProfileService } from './tablet-async-segmentation-profile/tablet-async-segmentation-profile.service';
 
 @NgModule({
   imports: [
@@ -30,7 +30,7 @@ import { TabletExampleSegmentationProfileService } from './tablet-example-segmen
     TabletExampleProfileNamesComponent,
     TabletExampleDocumentComponent,
     TabletExampleSegmentationComponent,
-    TabletExampleSegmentationProfileComponent,
+    TabletAsyncSegmentationProfileComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -40,12 +40,12 @@ import { TabletExampleSegmentationProfileService } from './tablet-example-segmen
     TabletExampleProfileNamesComponent,
     TabletExampleDocumentComponent,
     TabletExampleSegmentationComponent,
-    TabletExampleSegmentationProfileComponent,
+    TabletAsyncSegmentationProfileComponent,
   ],
   providers: [
     TableAsyncService,
     TableAsyncProfileService,
-    TabletExampleSegmentationProfileService
+    TabletAsyncSegmentationProfileService
   ]
 })
 export class TablesModule { }

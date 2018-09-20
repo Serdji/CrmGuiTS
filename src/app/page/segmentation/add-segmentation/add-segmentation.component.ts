@@ -8,9 +8,8 @@ import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs';
-import { TabletExampleSegmentationProfileService } from '../../../components/tables/tablet-example-segmentation-profile/tablet-example-segmentation-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
-import { Iprofiles } from '../../../interface/iprofiles';
+import { TabletAsyncSegmentationProfileService } from '../../../components/tables/tablet-async-segmentation-profile/tablet-async-segmentation-profile.service';
 
 
 @Component( {
@@ -43,7 +42,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private addSegmentationService: AddSegmentationService,
     private dialog: MatDialog,
-    private tabletExampleSegmentationProfileService: TabletExampleSegmentationProfileService
+    private tabletAsyncSegmentationProfileService: TabletAsyncSegmentationProfileService
   ) { }
 
   ngOnInit(): void {
@@ -166,7 +165,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initTableProfilePagination() {
-    this.tabletExampleSegmentationProfileService.subjectPage
+    this.tabletAsyncSegmentationProfileService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
@@ -177,7 +176,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tabletExampleSegmentationProfileService.setTableDataSource( segmentationProfiles.customers ) );
+          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tabletAsyncSegmentationProfileService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
 
@@ -190,7 +189,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.addSegmentationService.getProfiles( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
-        this.tabletExampleSegmentationProfileService.countPage = segmentationProfiles.totalCount;
+        this.tabletAsyncSegmentationProfileService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
         this.isLoader = false;
       } );

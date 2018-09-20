@@ -10,15 +10,15 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import { TabletExampleSegmentationProfileService } from './tablet-example-segmentation-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
+import { TabletAsyncSegmentationProfileService } from './tablet-async-segmentation-profile.service';
 
 @Component( {
-  selector: 'app-tablet-example-segmentation-profile',
-  templateUrl: './tablet-example-segmentation-profile.component.html',
-  styleUrls: [ './tablet-example-segmentation-profile.component.styl' ],
+  selector: 'app-tablet-async-segmentation-profile',
+  templateUrl: './tablet-async-segmentation-profile.component.html',
+  styleUrls: [ './tablet-async-segmentation-profile.component.styl' ],
 } )
-export class TabletExampleSegmentationProfileComponent implements OnInit, OnDestroy {
+export class TabletAsyncSegmentationProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -39,7 +39,7 @@ export class TabletExampleSegmentationProfileComponent implements OnInit, OnDest
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private tabletExampleSegmentationProfileService: TabletExampleSegmentationProfileService
+    private tabletAsyncSegmentationProfileService: TabletAsyncSegmentationProfileService
   ) { }
 
   ngOnInit(): void {
@@ -64,17 +64,17 @@ export class TabletExampleSegmentationProfileComponent implements OnInit, OnDest
   }
 
   private initPaginator() {
-    this.resultsLength = this.tabletExampleSegmentationProfileService.countPage;
+    this.resultsLength = this.tabletAsyncSegmentationProfileService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
-        this.tabletExampleSegmentationProfileService.setPagPage( value );
+        this.tabletAsyncSegmentationProfileService.setPagPage( value );
         this.isLoadingResults = true;
       } );
   }
 
   private initDataSourceAsync() {
-    this.tabletExampleSegmentationProfileService.subjectTableDataSource
+    this.tabletAsyncSegmentationProfileService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );
