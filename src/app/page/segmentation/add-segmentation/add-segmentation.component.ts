@@ -77,9 +77,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.addSegmentationService.getSegmentationParams( id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentationParams => {
-        console.log( segmentationParams );
         this.segmentationParams = segmentationParams;
-        this.formSegmentationNameGroup.patchValue( segmentationParams );
+        this.formSegmentation.get('segmentationTitle').patchValue( segmentationParams.segmentationTitle || '' );
         _( segmentationParams ).each( ( value, key ) => {
           if ( !_.isNull( value ) ) {
             if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
@@ -141,8 +140,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( params => {
             this.formSegmentation.get( 'flightNoT' )[ params !== 'T' ? 'disable' : 'enable' ]();
+            this.formSegmentation.get( 'flightNoT' ).patchValue( '' );
 
             this.formSegmentation.get( 'flightNoE' )[ params !== 'E' ? 'disable' : 'enable' ]();
+            this.formSegmentation.get( 'flightNoE' ).patchValue( '' );
           } );
       }
     } );
@@ -233,7 +234,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   saveForm(): void {
     if ( !this.formSegmentation.invalid ) {
       _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
-      console.log( this.saveSegmentationParams );
       this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
@@ -244,12 +244,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   createForm(): void {
-    if ( !this.formSegmentationNameGroup.invalid && !this.formSegmentation.invalid ) {
+    if ( !this.formSegmentation.invalid ) {
       _( this.createSegmentationParams )
         .assign( this.segmentationParameters() )
         .set( 'segmentationId', this.segmentationId )
         .value();
-      console.log( this.createSegmentationParams );
       this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
