@@ -4,5 +4,6 @@ export interface ISegmentationProfile {
       'firstName': string,
       'secondName': string,
       'lastName': string,
-    }[];
+    }[],
+  totalCount: number;
 }

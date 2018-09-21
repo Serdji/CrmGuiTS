@@ -241,8 +241,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
             const newObjectForm = {};
             const segmentationTitles = [];
 
-            for ( const segmentation of value.segmentation ) {
-              segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentation } ).result( 'title' ).value() );
+            if ( value.segmentation ) {
+              for ( const segmentation of value.segmentation ) {
+                segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentation } ).result( 'title' ).value() );
+              }
             }
 
             this.segmentationChips = segmentationTitles;

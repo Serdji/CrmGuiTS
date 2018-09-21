@@ -1,19 +1,19 @@
 <div class="add-segmentation">
-  <form class="add-segmentation__form" [formGroup]="formSegmentationNameGroup">
+  <form class="add-segmentation__form" [formGroup]="formSegmentation">
     <mat-grid-list cols="1" rowHeight="80px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
               <input matInput formControlName="segmentationTitle" type="text" placeholder="Имя группы">
+              <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>
-  </form>
 
-  <form class="add-segmentation__form" [formGroup]="formSegmentation">
+
     <mat-grid-list cols="4" rowHeight="250px">
 
       <!--<mat-grid-tile [colspan]="1" [rowspan]="2">-->
@@ -292,10 +292,10 @@
   <mat-card class="add-segmentation__table" *ngIf="isTable">
     <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaserDisabled>
-      <app-tablet-example-segmentation-profile
+      <app-tablet-async-segmentation-profile
         *ngIf="segmentationProfiles.customers.length !== 0"
         [tableDataSource]="segmentationProfiles.customers">
-      </app-tablet-example-segmentation-profile>
+      </app-tablet-async-segmentation-profile>
     </ng-template>
   </mat-card>
 </div>

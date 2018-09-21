@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ListSegmentationService } from './list-segmentation.service';
 import { takeWhile } from 'rxjs/operators';
 import { ISegmentation } from '../../../interface/isegmentation';
-import { timer } from '../../../../../node_modules/rxjs/observable/timer';
+import { timer } from 'rxjs/observable/timer';
 
 @Component( {
   selector: 'app-list-segmentation',
@@ -43,7 +43,6 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( segmentation => {
         this.segmentation = segmentation;
         this.isLoader = false;
-        console.log( segmentation );
       } );
   }
 
