@@ -193,8 +193,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       rbd: '',
       tariffcode: '',
       servicecode: '',
-      amountfrom: '',
-      amountto: '',
+      moneyamountfrominclude: '',
+      moneyamounttoinclude: '',
       amountdatefrom: '',
       amountdateto: '',
       contactemail: '',
@@ -213,8 +213,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private formDisable() {
     this.formProfileSearch.get( 'tariffcode' ).disable();
     this.formProfileSearch.get( 'id' ).disable();
-    this.formProfileSearch.get( 'amountfrom' ).disable();
-    this.formProfileSearch.get( 'amountto' ).disable();
     this.formProfileSearch.get( 'amountdatefrom' ).disable();
     this.formProfileSearch.get( 'amountdateto' ).disable();
   }
