@@ -10,6 +10,7 @@ import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TabletAsyncSegmentationProfileService } from '../../../components/tables/tablet-async-segmentation-profile/tablet-async-segmentation-profile.service';
+import * as moment from 'moment';
 
 
 @Component( {
@@ -88,6 +89,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             this.formSegmentation.patchValue( value );
           }
         } );
+        this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1 );
       } );
   }
 
@@ -218,17 +220,17 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const segmentationParameters = {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
       booking: {
-        bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value,
-        bookingCreateDateToExclude: this.formSegmentation.get( 'bookingCreateDateToExclude' ).value
+        bookingCreateDateFromInclude: moment( this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00',
+        bookingCreateDateToExclude: moment( this.formSegmentation.get( 'bookingCreateDateToExclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00'
       },
       payment: {
-        moneyAmountFromInclude: this.formSegmentation.get( 'moneyAmountFromInclude' ).value,
-        moneyAmountToExclude: this.formSegmentation.get( 'moneyAmountToExclude' ).value,
+        moneyAmountFromInclude: _.parseInt( this.formSegmentation.get( 'moneyAmountFromInclude' ).value ),
+        moneyAmountToExclude: _.parseInt( this.formSegmentation.get( 'moneyAmountToExclude' ).value ),
         eDocTypeP: this.formSegmentation.get( 'eDocTypeP' ).value
       },
       segment: {
-        segmentsCountFromInclude: this.formSegmentation.get( 'segmentsCountFromInclude' ).value,
-        segmentsCountToExclude: this.formSegmentation.get( 'segmentsCountToExclude' ).value,
+        segmentsCountFromInclude: _.parseInt( this.formSegmentation.get( 'segmentsCountFromInclude' ).value ),
+        segmentsCountToExclude: _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) + 1,
         eDocTypeS: this.formSegmentation.get( 'eDocTypeS' ).value
       },
       ticket: {
@@ -249,6 +251,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
     } );
 
+
     return filterSegmentationParameters;
   }
 
@@ -259,6 +262,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   saveForm(): void {
     if ( !this.formSegmentation.invalid ) {
       _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
+      console.log( this.saveSegmentationParams );
       this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
