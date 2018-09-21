@@ -68,7 +68,8 @@
                 <div class="add-segmentation__input-radio-group">
                   <mat-radio-button class="add-segmentation__input-radio" value="payment">Сумма покупок
                   </mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="segment">Количество сегментов
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="segment">Количество
+                    сегментов
                   </mat-radio-button>
                 </div>
               </div>
@@ -98,30 +99,30 @@
       </mat-grid-tile>
 
       <!--<mat-grid-tile [colspan]="1" [rowspan]="1">-->
-        <!--<mat-card class="add-segmentation__card">-->
-          <!--<div class="add-segmentation__content-title-wrapper">-->
-            <!--<span class="add-segmentation__content-title">Текущий диапазон</span>-->
-            <!--<mat-icon *ngIf="resetRadioButtonCurrentRange" matTooltip="Сбросить настройки текущий диапазон"-->
-                      <!--(click)="resetRadioButton('currentRange')">remove_circle_outline-->
-            <!--</mat-icon>-->
-          <!--</div>-->
-          <!--<mat-card-content class="add-segmentation__content">-->
-            <!--<mat-radio-group class="add-segmentation__input" formControlName="currentRange">-->
-              <!--<div class="add-segmentation__input-radio-wrapper">-->
-                <!--<div class="add-segmentation__input-radio-group">-->
-                  <!--<mat-radio-button class="add-segmentation__input-radio" value="month">Месяц</mat-radio-button>-->
-                  <!--<mat-radio-button class="add-segmentation__input-radio _margin-none" value="quarter">Квартал-->
-                  <!--</mat-radio-button>-->
-                <!--</div>-->
-                <!--<div class="add-segmentation__input-radio-group _right">-->
-                  <!--<mat-radio-button class="add-segmentation__input-radio" value="halfyear">Полугодие</mat-radio-button>-->
-                  <!--<mat-radio-button class="add-segmentation__input-radio _margin-none" value="year">Год-->
-                  <!--</mat-radio-button>-->
-                <!--</div>-->
-              <!--</div>-->
-            <!--</mat-radio-group>-->
-          <!--</mat-card-content>-->
-        <!--</mat-card>-->
+      <!--<mat-card class="add-segmentation__card">-->
+      <!--<div class="add-segmentation__content-title-wrapper">-->
+      <!--<span class="add-segmentation__content-title">Текущий диапазон</span>-->
+      <!--<mat-icon *ngIf="resetRadioButtonCurrentRange" matTooltip="Сбросить настройки текущий диапазон"-->
+      <!--(click)="resetRadioButton('currentRange')">remove_circle_outline-->
+      <!--</mat-icon>-->
+      <!--</div>-->
+      <!--<mat-card-content class="add-segmentation__content">-->
+      <!--<mat-radio-group class="add-segmentation__input" formControlName="currentRange">-->
+      <!--<div class="add-segmentation__input-radio-wrapper">-->
+      <!--<div class="add-segmentation__input-radio-group">-->
+      <!--<mat-radio-button class="add-segmentation__input-radio" value="month">Месяц</mat-radio-button>-->
+      <!--<mat-radio-button class="add-segmentation__input-radio _margin-none" value="quarter">Квартал-->
+      <!--</mat-radio-button>-->
+      <!--</div>-->
+      <!--<div class="add-segmentation__input-radio-group _right">-->
+      <!--<mat-radio-button class="add-segmentation__input-radio" value="halfyear">Полугодие</mat-radio-button>-->
+      <!--<mat-radio-button class="add-segmentation__input-radio _margin-none" value="year">Год-->
+      <!--</mat-radio-button>-->
+      <!--</div>-->
+      <!--</div>-->
+      <!--</mat-radio-group>-->
+      <!--</mat-card-content>-->
+      <!--</mat-card>-->
       <!--</mat-grid-tile>-->
 
       <mat-grid-tile [colspan]="1" [rowspan]="2">
@@ -130,6 +131,18 @@
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
               <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDFromIncludeT" matInput placeholder="Диапазон даты вылета с"
+                     [matDatepicker]="arrivalDFromIncludeT">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeT"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDFromIncludeT></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDToExcludeT" matInput placeholder="Диапазон даты вылета по"
+                     [matDatepicker]="arrivalDToExcludeT">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeT"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
             </mat-form-field>
             <!--<mat-form-field class="add-segmentation__input">-->
             <!--<input matInput type="text" placeholder="Откуда">-->
@@ -180,6 +193,18 @@
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
               <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDFromIncludeE" matInput placeholder="Диапазон даты вылета с"
+                     [matDatepicker]="arrivalDFromIncludeE">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeE"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDFromIncludeE></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDToExcludeE" matInput placeholder="Диапазон даты вылета по"
+                     [matDatepicker]="arrivalDToExcludeE">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeE"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
             </mat-form-field>
             <!--<mat-form-field class="add-segmentation__input">-->
             <!--<input matInput type="text" placeholder="Откуда">-->
@@ -272,7 +297,8 @@
           <mat-icon>search</mat-icon>
           Искать
         </button>
-        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button (click)="createForm()" [disabled]="buttonCreate">
+        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                (click)="createForm()" [disabled]="buttonCreate">
           <mat-icon>create</mat-icon>
           Изменить
         </button>
