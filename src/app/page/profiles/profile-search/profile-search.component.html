@@ -35,14 +35,14 @@
                 <input
                   placeholder="Группы сегментации"
                   #segmentationChipInput
-                  formControlName="segmentationIds"
+                  formControlName="segmentation"
                   [matAutocomplete]="segmentation"
                   [matChipInputFor]="chipListSegmentatio"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addSegmentationOnBlur"
-                  (matChipInputTokenEnd)="add($event, 'segmentationIds')">
+                  (matChipInputTokenEnd)="add($event, 'segmentation')">
               </mat-chip-list>
-              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentationIds')">
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation')">
                 <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
