@@ -84,12 +84,15 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.segmentationParams = segmentationParams;
         this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
         _( segmentationParams ).each( ( value, key ) => {
-          if ( !_.isNull( value ) ) {
+          if ( !_.isNull( value ) && !_.isNaN( value ) ) {
             if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
             this.formSegmentation.patchValue( value );
           }
         } );
-        this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1 );
+        const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
+        if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) {
+          this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
+        }
       } );
   }
 
@@ -121,7 +124,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private formInputDisable() {
 
-    _( [ 'currentRange', 'bookingCreateDateFromInclude', 'bookingCreateDateToExclude', 'segmentationTitle' ] )
+    _( [
+      'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP',
+      'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS'
+    ] )
       .each( values => this.formSegmentation.get( values ).disable() );
 
     this.formSegmentation.get( 'subjectAnalysis' ).valueChanges
