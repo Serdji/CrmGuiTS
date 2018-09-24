@@ -116,7 +116,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initAutocomplete() {
     this.locationFromOptions = this.autocomplete( 'deppoint', 'location' );
     this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
-    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
+    this.segmentationOptions = this.autocomplete( 'segmentationIds', 'segmentation' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -176,7 +176,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       firstname: '',
       customerid: '',
       gender: '',
-      segmentation: '',
+      segmentationIds: '',
       dobfrominclude: '',
       dobtoexclude: '',
       ticket: '',
@@ -272,7 +272,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
-      if ( this.isKeys( key, 'segmentation' ) ) highlightObj[ key ] = segmentationIds;
+      if ( this.isKeys( key, 'segmentationIds' ) ) highlightObj[ key ] = segmentationIds;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
         if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
@@ -313,7 +313,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
           && key !== 'dobtoexclude'
-          && key !== 'segmentation'
+          && key !== 'segmentationIds'
           && key !== 'contactsexist';
       case 'data':
         return key === 'flightdatefrom'
@@ -324,8 +324,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'dobtoexclude';
       case 'checkbox':
         return key === 'contactsexist';
-      case 'segmentation':
-        return key === 'segmentation';
+      case 'segmentationIds':
+        return key === 'segmentationIds';
     }
   }
 
