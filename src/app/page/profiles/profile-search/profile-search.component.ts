@@ -57,7 +57,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.initLocation();
     this.initForm();
-    this.formDisable();
     this.initAutocomplete();
     this.initTableAsync();
     this.initSegmentation();
@@ -191,12 +190,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       deptimetoexclude: '',
       cab: '',
       rbd: '',
-      tariffcode: '',
+      farecode: '',
       servicecode: '',
       moneyamountfrominclude: '',
       moneyamounttoinclude: '',
-      amountdatefrom: '',
-      amountdateto: '',
+      bookingcreatedatefrominclude: '',
+      bookingcreatedatetoexclude: '',
       contactemail: '',
       contactphone: '',
       contactsexist: '',
@@ -208,13 +207,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     timer( 500 )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.formFilling() );
-  }
-
-  private formDisable() {
-    this.formProfileSearch.get( 'tariffcode' ).disable();
-    this.formProfileSearch.get( 'id' ).disable();
-    this.formProfileSearch.get( 'amountdatefrom' ).disable();
-    this.formProfileSearch.get( 'amountdateto' ).disable();
   }
 
   private switchCheckbox() {
@@ -241,7 +233,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
             if ( value.segmentationIds ) {
               const segmentationIds = !_.isArray( value.segmentationIds ) ? _.castArray( value.segmentationIds ) : value.segmentationIds;
-              for ( const segmentationId of segmentationIds  ) {
+              for ( const segmentationId of segmentationIds ) {
                 if ( segmentationId ) {
                   segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentationId } ).result( 'title' ).value() );
                 }
@@ -322,6 +314,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
           && key !== 'dobtoexclude'
+          && key !== 'dobtoexclude'
+          && key !== 'bookingcreatedatefrominclude'
+          && key !== 'bookingcreatedatetoexclude'
           && key !== 'contactsexist';
       case 'data':
         return key === 'flightdatefrom'
@@ -329,7 +324,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'deptimefrominclude'
           || key === 'deptimetoexclude'
           || key === 'dobfrominclude'
-          || key === 'dobtoexclude';
+          || key === 'dobtoexclude'
+          || key === 'bookingcreatedatefrominclude'
+          || key === 'bookingcreatedatetoexclude';
       case 'checkbox':
         return key === 'contactsexist';
     }
