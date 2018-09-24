@@ -136,10 +136,10 @@
               <input matInput formControlName="rbd" type="text" placeholder="Класс бронирования">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="tariffcode" type="text" placeholder="Код тарифа">
+              <input matInput formControlName="farecode" type="text" placeholder="Код тарифа">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="id" type="servicecode" placeholder="Код услуги">
+              <input matInput formControlName="servicecode" type="text" placeholder="Код услуги">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -155,14 +155,14 @@
               <input matInput formControlName="moneyamounttoinclude" type="text" placeholder="Общая сумма до (RUB)">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="amountdatefrom" placeholder="Дата продажи с" [matDatepicker]="amountDateFrom">
-              <mat-datepicker-toggle matSuffix [for]="amountDateFrom"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #amountDateFrom></mat-datepicker>
+              <input matInput formControlName="bookingcreatedatefrominclude" placeholder="Дата продажи с" [matDatepicker]="bookingcreatedatefrominclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingcreatedatefrominclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingcreatedatefrominclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="amountdateto" placeholder="Дата продажи по" [matDatepicker]="amountDateTo">
-              <mat-datepicker-toggle matSuffix [for]="amountDateTo"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #amountDateTo></mat-datepicker>
+              <input matInput formControlName="bookingcreatedatetoexclude" placeholder="Дата продажи по" [matDatepicker]="bookingcreatedatetoexclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingcreatedatetoexclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingcreatedatetoexclude></mat-datepicker>
             </mat-form-field>
           </mat-card-content>
         </mat-card>

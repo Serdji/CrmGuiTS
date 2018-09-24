@@ -17,7 +17,7 @@
         <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
       </mat-form-field>
       <button appAccessRights="customers:update" class="contact__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
-        Добавать контакт
+        Добавить контакт
       </button>
     </form>
     <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
