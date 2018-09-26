@@ -9,7 +9,7 @@ export class FieldTranslationPipe implements PipeTransform {
     switch ( value ) {
       case  'firstName': return 'Имя';
       case  'lastName': return 'Фамилия';
-      case  'secondName': return 'Второе имя';
+      case  'secondName': return 'Отчество';
       case  'prefix': return 'Префикс';
       case  'gender': return 'Пол';
       case  'dob': return 'Дата';

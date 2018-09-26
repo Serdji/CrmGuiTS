@@ -14,13 +14,13 @@
           <span><b>Фамилия: </b>{{profile.lastName}}</span>
         </div>
         <div class="profile__list">
-          <span><b>Второе имя: </b>{{profile.secondName}}</span>
+          <span><b>Отчество: </b>{{profile.secondName}}</span>
         </div>
         <div class="profile__list">
           <span><b>Пол: </b>{{profile.gender | fieldTranslation}}</span>
         </div>
         <div class="profile__list">
-          <span><b>data: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
+          <span><b>Дата: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
         </div>
       </mat-card-content>
     </div>
@@ -39,7 +39,7 @@
           <input matInput formControlName="lastName" placeholder="Фамилия">
         </mat-form-field>
         <mat-form-field class="profile__input">
-          <input matInput formControlName="secondName" placeholder="Второе имя">
+          <input matInput formControlName="secondName" placeholder="Отчество">
         </mat-form-field>
         <mat-form-field class="profile__input">
           <mat-select formControlName="gender" placeholder="Пол">
@@ -85,7 +85,7 @@
       </mat-form-field>
 
       <mat-form-field class="profile__input">
-        <input matInput formControlName="secondName" placeholder="Второе имя">
+        <input matInput formControlName="secondName" placeholder="Отчество">
       </mat-form-field>
       <button appAccessRights="customers:update" class="profile__button" mat-raised-button
               (click)="sendFormAddProfile()" color="primary">
