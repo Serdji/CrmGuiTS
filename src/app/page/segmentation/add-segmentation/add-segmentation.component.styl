@@ -1,0 +1,83 @@
+.add-segmentation
+  margin: -17px 20px 0 20px;
+
+  &__card
+    position: absolute;
+    top: 5px;
+    left: 5px;
+    right: 5px;
+    bottom: 5px;
+
+    &._pos-bottom
+      bottom: auto
+
+
+  &__content
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+
+    &._none-justify
+      justify-content: normal;
+
+    &-title
+      font-weight: bold;
+      font-size: 14px;
+
+      &-wrapper
+        display: flex;
+        flex-direction row;
+        align-items: center;
+        height: 24px;
+
+        mat-icon
+          margin-left: auto;
+          cursor: pointer;
+          color: #ff4081;
+
+
+    &._input-row
+      flex-direction: row;
+      align-items: center;
+
+      .profile-search__input
+        width: 40%;
+
+  &__input
+    width: 100%
+
+    &-radio
+      margin-bottom: 30px;
+
+      &._margin-none
+        margin: 0;
+
+
+      &-wrapper
+        display: flex;
+        width: 100%;
+
+      &-group
+        display: flex;
+        flex-direction: column;
+        padding-top: 10px;
+
+        &._right
+          margin-left: auto;
+
+  &__button
+
+    margin-right: 15px;
+
+    &-wrapper
+      position: absolute;
+      bottom: -66px;
+      right: 15px;
+      left: 15px;
+      text-align right;
+      margin-bottom: 20px;
+
+  &__table
+    margin: 100px 5px 5px 5px;
+    padding: 30px;

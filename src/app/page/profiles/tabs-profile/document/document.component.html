@@ -1,0 +1,50 @@
+<div class="document">
+  <mat-card class="document__card">
+    <div class="document__show">
+      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+    </div>
+    <form *ngIf="showHide" class="document__form _additional" [formGroup]="formDocument">
+      <div class="document__form-wrapper">
+        <mat-form-field class="document__input">
+          <mat-select placeholder="Тип документа" formControlName="documentTypeId">
+            <mat-option></mat-option>
+            <mat-option *ngFor="let documentType of documentTypes" [value]="documentType.documentTypeId">
+              {{ documentType.documentTypeCode }}
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="document__input _flex">
+          <input matInput formControlName="num" placeholder="Номер документа">
+        </mat-form-field>
+      </div>
+      <div class="document__form-wrapper">
+        <mat-form-field class="document__input">
+          <input matInput formControlName="firstName" placeholder="Имя">
+        </mat-form-field>
+        <mat-form-field class="document__input">
+          <input matInput formControlName="lastName" placeholder="Фамилия">
+        </mat-form-field>
+        <mat-form-field class="document__input">
+          <input matInput formControlName="secondName" placeholder="Второе имя">
+        </mat-form-field>
+        <mat-form-field class="document__input">
+          <input matInput formControlName="expDate" placeholder="дд.мм.гггг" [matDatepicker]="expDate">
+          <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #expDate></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="document__button-wrapper">
+        <button class="document__button _left-button" mat-raised-button (click)="sendFormDocument()" color="primary">
+          Добавить
+        </button>
+      </div>
+    </form>
+    <div *ngIf="documents?.length !== 0">
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-tablet-example-document *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-tablet-example-document>
+      </ng-template>
+    </div>
+  </mat-card>
+</div>

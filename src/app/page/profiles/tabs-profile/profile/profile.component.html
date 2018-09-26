@@ -1,0 +1,105 @@
+<div class="profile">
+  <mat-card class="profile__card">
+    <mat-spinner class="profile__spinner" *ngIf="progress"></mat-spinner>
+    <div *ngIf="!progress && !edit">
+      <mat-card-header>
+        <h2 class="profile__header">Пассажир основное ФИО</h2>
+        <mat-icon appAccessRights="customers:update" (click)="toggleEdit()">create</mat-icon>
+      </mat-card-header>
+      <mat-card-content class="profile__content">
+        <div class="profile__list">
+          <span><b>Имя: </b>{{profile.firstName}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>Фамилия: </b>{{profile.lastName}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>Второе имя: </b>{{profile.secondName}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>Пол: </b>{{profile.gender | fieldTranslation}}</span>
+        </div>
+        <div class="profile__list">
+          <span><b>data: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
+        </div>
+      </mat-card-content>
+    </div>
+
+    <div *ngIf="edit">
+      <mat-card-header>
+        <h2 class="profile__header">Редактировать</h2>
+        <mat-icon (click)="toggleEdit()">create</mat-icon>
+      </mat-card-header>
+      <form class="profile__form" [formGroup]="formUpdateProfile">
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="firstName" placeholder="Имя">
+          <mat-error>Обязательное поле</mat-error>
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="lastName" placeholder="Фамилия">
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="secondName" placeholder="Второе имя">
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <mat-select formControlName="gender" placeholder="Пол">
+            <mat-option value="M">М</mat-option>
+            <mat-option value="F">Ж</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="profile__input">
+          <input matInput formControlName="dob" placeholder="дд.мм.гггг" [matDatepicker]="dob">
+          <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #dob></mat-datepicker>
+        </mat-form-field>
+        <div class="profile__button-wrapper">
+          <button class="profile__button _left-button" mat-raised-button (click)="sendFormUpdateProfile()"
+                  color="primary">
+            Изменить
+          </button>
+          <button class="profile__button" mat-raised-button (click)="deleteProfile()" color="warn">
+            Удалить
+            <mat-icon>delete</mat-icon>
+          </button>
+        </div>
+      </form>
+    </div>
+
+  </mat-card>
+
+  <mat-card class="profile__card">
+    <div class="profile__show">
+      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+    </div>
+
+    <form *ngIf="showHide" class="profile__form _Add" [formGroup]="formAddProfile">
+
+      <mat-form-field class="profile__input">
+        <input matInput formControlName="firstName" placeholder="Имя">
+        <mat-error>Обязательное поле</mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="profile__input">
+        <input matInput formControlName="lastName" placeholder="Фамилия">
+      </mat-form-field>
+
+      <mat-form-field class="profile__input">
+        <input matInput formControlName="secondName" placeholder="Второе имя">
+      </mat-form-field>
+      <button appAccessRights="customers:update" class="profile__button" mat-raised-button
+              (click)="sendFormAddProfile()" color="primary">
+        Добавить дополнительно ФИО
+      </button>
+    </form>
+
+    <div *ngIf="profileNames?.length > 1">
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-tablet-example-profile-names *ngIf="profileNames.length > 1"
+                                          [tableDataSource]="profileNames"></app-tablet-example-profile-names>
+      </ng-template>
+    </div>
+
+  </mat-card>
+</div>

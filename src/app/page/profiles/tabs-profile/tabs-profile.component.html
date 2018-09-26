@@ -1,0 +1,135 @@
+<div class="tabs-profile tabs-dark-theme">
+
+  <mat-card class="tabs-profile__card">
+
+    <mat-grid-list cols="5" rowHeight="150px">
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-spinner class="tabs-profile__spinner" *ngIf="profileProgress"></mat-spinner>
+        <div *ngIf="!profileProgress">
+          <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+            <div class="tabs-profile__content-wrapper">
+              <div class="tabs-profile__content _right-width">
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">№ профиля</span>
+                  <span><b> {{profile.customerId}}</b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">Профиль</span>
+                  <span><b> {{profile.firstName}} {{profile.lastName}} {{profile.secondName}}</b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">Дата рождения:</span>
+                  <span><b> {{profile.dob | date:'dd.MM.yyyy' }}</b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">Пол:</span>
+                  <span><b> {{profile.gender | fieldTranslation}}</b></span>
+                </div>
+              </div>
+
+              <div class="tabs-profile__content">
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">С нами:</span>
+                  <span><b> {{profile.lut | date:'dd.MM.yyyy' }}</b></span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+          <div class="tabs-profile__content-wrapper">
+            <div class="tabs-profile__content _right-width">
+              <div class="tabs-profile__content-point">
+                <span class="tabs-profile__content-text">Группы:</span>
+              </div>
+              <div class="tabs-profile__content-point">
+                <div> ...</div>
+                <div> ...</div>
+                <div> ...</div>
+              </div>
+            </div>
+
+            <div class="tabs-profile__content">
+              <div class="tabs-profile__content-point">
+                <span class="tabs-profile__content-text">Спецгруппы:</span>
+              </div>
+              <div class="tabs-profile__content-point">
+                <div> ...</div>
+                <div> ...</div>
+                <div> ...</div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-spinner class="tabs-profile__spinner" *ngIf="ordersProgress"></mat-spinner>
+        <div *ngIf="!ordersProgress">
+          <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+            <div class="tabs-profile__content-wrapper">
+              <div class="tabs-profile__content">
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">Всего заказов:</span>
+                  <span><b *ngIf="orders" > {{orders.length - 1}}</b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">На сумму:</span>
+                  <span><b *ngIf="orders">
+                    {{ orders[orders.length - 1].totalAmount.ticket.ticketCur | currency:'RUB':'symbol-narrow' }} |
+                    {{ orders[orders.length - 1].totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
+                    {{ orders[orders.length - 1].totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
+                  </b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">Всего платных услуг:</span>
+                  <span><b *ngIf="orders" > {{orders[orders.length - 1].counterServicesIsEmd}}</b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">На сумму:</span>
+                  <span><b *ngIf="orders">
+                    {{ orders[orders.length - 1].totalAmount.emd.emdCur | currency:'RUB':'symbol-narrow' }} |
+                    {{ orders[orders.length - 1].totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
+                    {{ orders[orders.length - 1].totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
+                  </b></span>
+                </div>
+                <div class="tabs-profile__content-point">
+                  <span class="tabs-profile__content-text">Дата последней активности:</span>
+                  <span><b *ngIf="orders"> {{orders[orders.length - 1].lut | date:'dd.MM.yyyy'}}</b></span>
+                </div>
+              </div>
+            </div>
+          </mat-card>
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </mat-card>
+
+  <mat-tab-group backgroundColor="primary" color="accent">
+    <mat-tab label="Профиль">
+      <ng-template matTabContent>
+        <app-profile [id]="profileId"></app-profile>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Контакты">
+      <ng-template matTabContent>
+        <app-contact [id]="profileId"></app-contact>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Документы">
+      <ng-template matTabContent>
+        <app-document [id]="profileId"></app-document>
+      </ng-template>
+    </mat-tab>
+    <mat-tab label="Заказы">
+      <ng-template matTabContent>
+        <app-order [id]="profileId"></app-order>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+</div>

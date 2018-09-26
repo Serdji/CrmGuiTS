@@ -1,0 +1,17 @@
+<mat-toolbar color="primary">
+  <mat-toolbar-row>
+    <button class="toolbar__button-nav" type="button" mat-button (click)="sidenavToggle()">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span>LEONARDO CRM</span>
+
+    <button class="toolbar__button-menu" mat-button [matMenuTriggerFor]="appMenu">
+      <mat-icon>face</mat-icon>
+      <span>{{login}}</span>
+    </button>
+    <mat-menu #appMenu="matMenu">
+      <button mat-menu-item (click)="goOut()">Выйти</button>
+    </mat-menu>
+
+  </mat-toolbar-row>
+</mat-toolbar>

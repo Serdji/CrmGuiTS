@@ -1,0 +1,28 @@
+<div class="contact">
+  <mat-card>
+    <div class="contact__show">
+      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+    </div>
+    <form *ngIf="showHide" class="contact__form" [formGroup]="formContact">
+      <mat-form-field class="contact__input">
+        <mat-select placeholder="Тип контакта" formControlName="contactTypeId">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.contactTypeId">
+            {{ contactType.contactTypeCode }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+      <mat-form-field class="contact__input">
+        <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
+      </mat-form-field>
+      <button appAccessRights="customers:update" class="contact__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+        Добавить контакт
+      </button>
+    </form>
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <app-table-example-contact  *ngIf="contacts.length !== 0" [tableDataSource]="contacts"></app-table-example-contact>
+    </ng-template>
+  </mat-card>
+</div>

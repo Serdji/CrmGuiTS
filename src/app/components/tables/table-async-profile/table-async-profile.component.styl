@@ -1,0 +1,115 @@
+select = 70px
+firstName = 330px
+lastName = 330px
+secondName = 330px
+prefix = 70px
+gender = 55px
+dob = 135px
+customerId = 50px
+
+.table
+  mat-icon
+    cursor: pointer
+    color: #696969;
+    margin-left: auto
+
+  &__row
+    white-space: nowrap;
+
+  &__cell
+    text-overflow: ellipsis;
+    display: inline-block;
+    min-height auto;
+    &._cp
+      cursor: pointer
+      padding: 16px;
+      &:hover
+        background: rgba(63,81,181,.12)
+
+  &__button
+
+    &-wrapper
+      display: flex;
+      width: 100%;
+
+.example-loading-shade
+  position: absolute;
+  top: 123px;
+  left: 0;
+  bottom: 117px;
+  right: 0;
+  background: rgba(0, 0, 0, 0.15);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+.example-container
+  overflow: auto;
+
+
+mat-table
+  display: table;
+  width: 100%;
+
+mat-header-cell,
+mat-cell
+  padding: 0 16px;
+  width: auto
+  flex: none;
+  box-sizing: border-box;
+
+
+.mat-column
+
+  //&-customerId
+  //  width: customerId;
+  //
+  //&-select
+  //  width: select;
+  //
+  //&-firstName
+  //  width: firstName;
+  //
+  //&-lastName
+  //  width: lastName;
+  //
+  //&-secondName
+  //  width: secondName;
+  //
+  //&-prefix
+  //  width: prefix;
+  //
+  //&-gender
+  //  width: gender;
+  //
+  //&-dob
+  //  width: dob;
+
+
+  &-select
+    width: select;
+
+  &-firstName,
+  &-lastName,
+  &-secondName,
+  &-prefix,
+  &-gender,
+  &-dob
+    flex: 1;
+
+  &-customerId
+    width: customerId;
+    margin-left: auto;
+    mat-icon
+      cursor: pointer
+      color: #696969;
+      margin-left: auto
+
+.mat-table-sticky:first-child
+  border-right: 1px solid #e0e0e0;
+
+
+.mat-table-sticky:last-child
+  border-left: 1px solid #e0e0e0;
+

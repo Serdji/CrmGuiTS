@@ -1,0 +1,92 @@
+.profile
+
+  &__header,
+  &__list,
+  &__label
+    color: #424242
+
+  &__list,
+  &__label
+    font-size: 16px;
+    margin-bottom: 50px
+
+  &__label
+    &-title
+      margin-bottom: 20px;
+
+  &__card
+    margin-bottom: 20px;
+
+  &__content
+    margin-top: 30px;
+
+  &__checkbox
+    margin-right: 20px;
+
+  &__spinner
+    position: absolute;
+    left: calc(50% - 50px);
+    top: calc(50% - 50px);
+
+  &__form
+    margin-top: 20px
+    height: 440px;
+    display: flex;
+    flex-direction: column;
+
+    &._Add
+      justify-content: space-around;
+      align-items: center
+      flex-direction: row;
+      height: auto;
+
+      .profile__input
+        width: 25%;
+
+      .profile__button
+        height: 36px;
+
+
+  &__input
+    display: block
+
+  &__button
+
+    &._left-button
+      margin-left: auto
+      margin-right: 5px
+
+    &-wrapper
+      margin-top: auto;
+      display: flex
+
+  &__show
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    span
+      margin-left: auto;
+      margin-right: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      color: #424242;
+      font-size: 14px;
+
+    mat-icon
+      width: 34px;
+      height: 34px;
+      font-size: 34px;
+      cursor: pointer;
+      color: #696969;
+
+
+
+.mat-card-header
+  align-items: center;
+
+  .mat-icon
+    margin-left: auto
+    cursor: pointer;
+    color: #696969;

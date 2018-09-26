@@ -1,0 +1,211 @@
+<div class="profile-search">
+  <form class="profile-search__form" [formGroup]="formProfileSearch">
+    <mat-grid-list cols="4" rowHeight="280px">
+      <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="lastname" type="text" placeholder="Фамилия">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="firstname" type="text" placeholder="Имя">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="customerid" type="text" placeholder="№ профиля">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <mat-select formControlName="gender" placeholder="Пол">
+                <mat-option></mat-option>
+                <mat-option value="m" >М</mat-option>
+                <mat-option value="f" >Ж</mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field class="profile-search__input">
+              <mat-chip-list #chipListSegmentatio>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let segmentationChip of segmentationChips"
+                  [selectable]="segmentationSelectable"
+                  [removable]="segmentationRemovable"
+                  (removed)="remove(segmentationChip, segmentationChips)">
+                  {{segmentationChip}}
+                  <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы сегментации"
+                  #segmentationChipInput
+                  formControlName="segmentation"
+                  [matAutocomplete]="segmentation"
+                  [matChipInputFor]="chipListSegmentatio"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addSegmentationOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'segmentation')">
+              </mat-chip-list>
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation')">
+                <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dobfrominclude" placeholder="Дата рождения с" [matDatepicker]="DobFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DobFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DobFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dobtoexclude" placeholder="Дата рождения по" [matDatepicker]="DobToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DobToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DobToExclude color="primary"></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="ticket" type="text" placeholder="№ билета">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="recloc" type="text" placeholder="№ брони">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="emd" type="text" placeholder="№ услуги">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="flight" type="text" placeholder="№ рейса">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="deptimefrominclude" placeholder="Дата рейса с" [matDatepicker]="DepTimeFromIncludeFligth">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeFromIncludeFligth"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeFromIncludeFligth></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="deptimetoexclude" placeholder="Дата рейса по" [matDatepicker]="DepTimeToExcludeFligth">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeToExcludeFligth"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeToExcludeFligth></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="deppoint" type="text" placeholder="Откуда" [matAutocomplete]="locationfrom">
+              <mat-autocomplete #locationfrom="matAutocomplete">
+                <mat-option *ngFor="let location of locationFromOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="arrpoint" type="text" placeholder="Куда" [matAutocomplete]="locationTo">
+              <mat-autocomplete #locationTo="matAutocomplete">
+                <mat-option *ngFor="let location of locationToOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="deptimefrominclude" placeholder="Дата сегмента с" [matDatepicker]="DepTimeFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="deptimetoexclude" placeholder="Дата сегмента по" [matDatepicker]="DepTimeToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DepTimeToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DepTimeToExclude></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="cab" type="text" placeholder="Кабина">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="rbd" type="text" placeholder="Класс бронирования">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="farecode" type="text" placeholder="Код тарифа">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="servicecode" type="text" placeholder="Код услуги">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="moneyamountfrominclude" type="text" placeholder="Общая сумма от (RUB)">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="moneyamounttoinclude" type="text" placeholder="Общая сумма до (RUB)">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="bookingcreatedatefrominclude" placeholder="Дата продажи с" [matDatepicker]="bookingcreatedatefrominclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingcreatedatefrominclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingcreatedatefrominclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="bookingcreatedatetoexclude" placeholder="Дата продажи по" [matDatepicker]="bookingcreatedatetoexclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingcreatedatetoexclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingcreatedatetoexclude></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="contactemail" type="email" placeholder="Электронная почта">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="contactphone" type="text" placeholder="Телефон">
+            </mat-form-field>
+            <mat-checkbox  formControlName="contactsexist">Отсутствие контакта</mat-checkbox>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <div class="profile-search__button-wrapper">
+        <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button class="profile-search__button" mat-raised-button (click)="clearForm()">
+          <mat-icon>clear</mat-icon>
+          Очистить форму
+        </button>
+      </div>
+
+    </mat-grid-list>
+  </form>
+
+  <div class="profile-search__table">
+    <mat-card appAccessRights="customers:read" appAccessMessage="true" *ngIf="isTableCard">
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <mat-card-title>{{profiles.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+          <app-table-async-profile
+            [tableDataSource]="profiles"
+          >
+          </app-table-async-profile>
+      </ng-template>
+    </mat-card>
+  </div>
+</div>

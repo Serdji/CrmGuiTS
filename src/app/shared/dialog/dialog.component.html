@@ -1,0 +1,65 @@
+<div class="dialog">
+  <h2 mat-dialog-title *ngIf="data.status === 'ok'" class="dialog__ok">{{ data.message }}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'error'" class="dialog__error">{{ data.message }}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'text'" class="dialog__text">{{ data.message }}</h2>
+  <div *ngIf="data.status === 'delete'">
+    <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
+    <div class="dialog__button-wrapper">
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">Да</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
+    </div>
+  </div>
+  <div *ngIf="data.status === 'updateContact'">
+    <form class="dialog__form" [formGroup]="formUpdateContact">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="contactText" [placeholder]="this.data.params.typeCode">
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="data.status === 'updateProfileName'">
+    <form class="dialog__form" [formGroup]="formUpdateProfileName">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="firstName" placeholder="Имя">
+        <mat-error>Обязательное поле</mat-error>
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="lastName" placeholder="Фамилия">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="secondName" placeholder="Второе имя">
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="data.status === 'updateDocument'">
+    <form class="dialog__form" [formGroup]="formUpdateDocument">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="num" placeholder="Номер документа">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="firstName" placeholder="Имя">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="lastName" placeholder="Фамилия">
+      </mat-form-field>
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="secondName" placeholder="Второе имя">
+      </mat-form-field>
+      <mat-form-field class="document__input">
+        <input matInput formControlName="expDate" placeholder="дд.мм.гггг" [matDatepicker]="expDate">
+        <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
+        <mat-datepicker touchUi="true" #expDate></mat-datepicker>
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
+  </div>
+</div>
