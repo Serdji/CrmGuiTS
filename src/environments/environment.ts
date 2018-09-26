@@ -1,3 +1,5 @@
+import { config } from 'assets/config';
+
 // The file contents for the current environment will overwrite these during build.
 // The build system defaults to the dev environment which uses `environment.ts`, but if you do
 // `ng build --env=prod` then `environment.prod.ts` will be used instead.
@@ -5,5 +7,5 @@
 
 export const environment = {
   production: false,
-  crmApi: 'https://10.1.8.155:8080/api2_dev',
+  crmApi: config.crmApi,
 };
