@@ -69,11 +69,11 @@
 
   <mat-card class="profile__card">
     <div class="profile__show">
-      <span (click)="showHiden = !showHiden"> {{ showHiden ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
-      <mat-icon (click)="showHiden = !showHiden"> {{ showHiden ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
     </div>
 
-    <form *ngIf="showHiden" class="profile__form _Add" [formGroup]="formAddProfile">
+    <form *ngIf="showHide" class="profile__form _Add" [formGroup]="formAddProfile">
 
       <mat-form-field class="profile__input">
         <input matInput formControlName="firstName" placeholder="Имя">

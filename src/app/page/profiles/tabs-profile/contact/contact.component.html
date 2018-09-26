@@ -1,10 +1,10 @@
 <div class="contact">
   <mat-card>
     <div class="contact__show">
-      <span (click)="showHiden = !showHiden"> {{ showHiden ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
-      <mat-icon (click)="showHiden = !showHiden"> {{ showHiden ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
     </div>
-    <form *ngIf="showHiden" class="contact__form" [formGroup]="formContact">
+    <form *ngIf="showHide" class="contact__form" [formGroup]="formContact">
       <mat-form-field class="contact__input">
         <mat-select placeholder="Тип контакта" formControlName="contactTypeId">
           <mat-option></mat-option>

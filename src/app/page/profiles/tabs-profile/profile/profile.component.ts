@@ -27,6 +27,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public formAddProfile: FormGroup;
   public profileNames: IprofileNames[];
   public isLoader: boolean = true;
+  public showHide: boolean;
 
   private isActive: boolean = true;
 
@@ -176,6 +177,10 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isActive = false;
+  }
+
+  showHiden(): void {
+    this.showHide = !this.showHide;
   }
 
 }
