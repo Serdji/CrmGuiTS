@@ -8,6 +8,8 @@ export class AuthService {
 
   constructor( private http: HttpClient ) { }
 
+  private AirlineCode = localStorage.getItem( 'AirlineCode' );
+
   getToken( params ): Observable<any> {
     const options = {
       headers: new HttpHeaders().set( 'AirlineCode', params.AirlineCode ),
@@ -20,11 +22,17 @@ export class AuthService {
   }
 
   refreshToken( refreshToken: string ): Observable<any> {
-    return this.http.post( environment.crmApi + '/auth/refresh-token', { refreshToken } );
+    const options = {
+      headers: new HttpHeaders().set( 'AirlineCode', this.AirlineCode ),
+    };
+    return this.http.post( environment.crmApi + '/auth/refresh-token', { refreshToken }, { headers: options.headers } );
   }
 
   revokeRefreshToken( refreshToken: string ): Observable<any> {
-    return this.http.post( environment.crmApi + '/auth/revoke-refreshtoken', { refreshToken } );
+    const options = {
+      headers: new HttpHeaders().set( 'AirlineCode', this.AirlineCode )
+    };
+    return this.http.post( environment.crmApi + '/auth/revoke-refreshtoken', { refreshToken }, { headers: options.headers } );
   }
 
 }
