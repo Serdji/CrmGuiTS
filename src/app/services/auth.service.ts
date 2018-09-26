@@ -2,11 +2,19 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs/Observable';
+import { LoginService } from '../page/login/login.service';
+import { delay, take } from 'rxjs/operators';
 
 @Injectable()
 export class AuthService {
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private loginService: LoginService
+  ) {
+    console.log(1);
+    this.loginService.getUrlApi().pipe(delay(20)).subscribe( value => console.log( value ) );
+  }
 
   private AirlineCode = localStorage.getItem( 'AirlineCode' );
 

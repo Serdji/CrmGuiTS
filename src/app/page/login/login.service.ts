@@ -7,7 +7,10 @@ export class LoginService {
 
   constructor(private http: HttpClient) { }
 
-  getVersion(): Observable<string> {
+  getUrlApi(): Observable<string> {
+    return this.http.get('assets/urlApi.txt', { responseType: 'text' });
+
+  } getVersion(): Observable<string> {
     return this.http.get('assets/version.txt', { responseType: 'text' });
   }
 }
