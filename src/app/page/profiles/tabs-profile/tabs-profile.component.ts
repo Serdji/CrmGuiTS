@@ -5,6 +5,8 @@ import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -27,6 +29,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private profileService: ProfileService,
     private orderService: OrderService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -87,7 +90,19 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       isPointer: _.size( segmentationTitle ) > _.size( _.take( this.profileSegmentation, 3 ) )
     };
     this.profileSegmentationProgress = false;
-    console.log( this.profileSegmentation );
+  }
+
+  private windowDialog( status: string, params: any = '' ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        status,
+        params,
+      },
+    } );
+  }
+
+  openList(): void {
+    this.windowDialog('list', this.profileSegmentation );
   }
 
   ngOnDestroy(): void {

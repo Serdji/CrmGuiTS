@@ -62,4 +62,11 @@
       </button>
     </form>
   </div>
+
+  <div *ngIf="data.status === 'list'" >
+    <mat-list role="listitem" *ngFor="let title of data.params.title; let i = index" [ngStyle]="{'width': '100vh'}">
+      <h2 mat-line [ngStyle]="{'color': '#424242'}">{{title}}</h2>
+      <mat-divider *ngIf="data.params.title.length - 1 !== i"></mat-divider>
+    </mat-list>
+  </div>
 </div>

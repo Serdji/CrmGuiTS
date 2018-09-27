@@ -57,7 +57,8 @@
                   *ngIf="this.profileSegmentation.isPointer"
                   class="_pointer"
                   matTooltip="Показать все группы"
-                >remove_red_eye</mat-icon>
+                  (click)="openList()"
+                >aspect_ratio</mat-icon>
               </div>
 
               <div class="tabs-profile__content">
