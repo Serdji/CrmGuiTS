@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { retry } from 'rxjs/operators';
+import { ConfigService } from '../../../services/config-service.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +12,10 @@ export class ListSegmentationService {
 
   public subjectSegmentations = new Subject();
 
-  constructor( private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
   getSegmentation( ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/segmentation`).pipe( retry( 10 ) );

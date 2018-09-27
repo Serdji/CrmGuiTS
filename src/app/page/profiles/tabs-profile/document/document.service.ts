@@ -3,6 +3,7 @@ import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../../../environments/environment';
 import { retry } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConfigService } from '../../../../services/config-service.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class DocumentService {
   public subjectDeleteDocuments = new Subject();
   public subjectPutDocuments = new Subject();
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
   getDocuments( id: number ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/customer/${id}/document` ).pipe( retry( 10 ) );

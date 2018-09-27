@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { retry } from 'rxjs/operators';
 import { environment } from '../../../../../environments/environment';
+import { ConfigService } from '../../../../services/config-service.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -12,7 +13,10 @@ export class ProfileService {
   public subjectDeleteProfileNames = new Subject();
   public subjectPutProfileNames = new Subject();
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
   getProfile( id: number ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );

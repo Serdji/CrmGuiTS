@@ -3,13 +3,17 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { retry } from 'rxjs/operators';
+import { ConfigService } from '../../../services/config-service.service';
 
 @Injectable( {
   providedIn: 'root'
 } )
 export class AddSegmentationService {
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
   getProfiles( params ): Observable<any> {
     return this.http.get( `${environment.crmApi}/crm/segmentation/result`, { params } ).pipe( retry( 10 ) );

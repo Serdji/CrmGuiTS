@@ -4,13 +4,17 @@ import { Observable } from 'rxjs/Observable';
 import { environment } from '../../../../environments/environment';
 import { IclaimPermission } from '../../../interface/iclaim-permission';
 import { retry } from 'rxjs/operators';
+import { ConfigService } from '../../../services/config-service.service';
 
 @Injectable( {
   providedIn: 'root'
 } )
 export class UserService {
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
   getUser( id ): Observable<any> {
     return this.http.get( `${environment.crmApi}/admin/user/${id}` ).pipe( retry( 10 ) );

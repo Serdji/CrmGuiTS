@@ -6,7 +6,6 @@ import { ConfigService } from './config-service.service';
 @Injectable()
 export class AuthService {
 
-
   constructor(
     private http: HttpClient,
     private configService: ConfigService

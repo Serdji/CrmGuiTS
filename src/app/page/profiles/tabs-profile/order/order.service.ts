@@ -4,13 +4,17 @@ import { environment } from '../../../../../environments/environment';
 import { map, retry } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { HttpClient } from '@angular/common/http';
+import { ConfigService } from '../../../../services/config-service.service';
 
 @Injectable( {
   providedIn: 'root'
 } )
 export class OrderService {
 
-  constructor( private http: HttpClient ) { }
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService
+  ) { }
 
 
   getBooking( id: number ): Observable<any> {
