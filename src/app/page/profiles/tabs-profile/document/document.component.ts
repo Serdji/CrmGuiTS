@@ -22,6 +22,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   public documentTypes: IDocumentType[];
   public documents: IDocument[];
   public isLoader: boolean = true;
+  public showHide: boolean;
 
   private isActive: boolean = true;
 
@@ -124,6 +125,10 @@ export class DocumentComponent implements OnInit, OnDestroy {
           this.dialog.closeAll();
         } );
     }
+  }
+
+  showHiden(): void {
+    this.showHide = !this.showHide;
   }
 
   ngOnDestroy(): void {

@@ -22,6 +22,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   public contactTypes: IcontactType[];
   public contacts: Icontact[];
   public isLoader: boolean = true;
+  public showHide: boolean;
 
   constructor(
     private contactService: ContactService,
@@ -101,6 +102,10 @@ export class ContactComponent implements OnInit, OnDestroy {
             this.resetForm();
           } );
       } );
+  }
+
+  showHiden(): void {
+    this.showHide = !this.showHide;
   }
 
   ngOnDestroy(): void {

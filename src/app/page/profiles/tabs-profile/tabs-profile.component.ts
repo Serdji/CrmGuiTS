@@ -5,6 +5,8 @@ import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -16,8 +18,10 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public profileId: number;
   public profile: Iprofile;
   public profileProgress: boolean;
+  public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
   public orders;
+  public profileSegmentation;
 
   private isActive: boolean;
 
@@ -25,6 +29,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private profileService: ProfileService,
     private orderService: OrderService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +46,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   private initOrder( id: number ) {
     this.ordersProgress = true;
     this.profileProgress = true;
+    this.profileSegmentationProgress = true;
     this.orderService.getBooking( id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe(
@@ -66,11 +72,37 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
             return _.merge( profile, { lut } );
           }
           return profile;
-        } ) ).subscribe( ( profile ) => {
-      _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
-      this.profile = profile;
-      this.profileProgress = false;
+        } ) )
+      .subscribe( ( profile ) => {
+        this.initProfileSegmentation( profile );
+        _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
+        this.profile = profile;
+        this.profileProgress = false;
+      } );
+  }
+
+  private initProfileSegmentation( profile: Iprofile ) {
+
+    const segmentationTitle = _.map( profile.segmentations, 'title' );
+    this.profileSegmentation = {
+      takeTitle: _.take( segmentationTitle, 3 ),
+      title: segmentationTitle,
+      isPointer: _.size( segmentationTitle ) > _.size( _.take( this.profileSegmentation, 3 ) )
+    };
+    this.profileSegmentationProgress = false;
+  }
+
+  private windowDialog( status: string, params: any = '' ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        status,
+        params,
+      },
     } );
+  }
+
+  openList(): void {
+    this.windowDialog('list', this.profileSegmentation );
   }
 
   ngOnDestroy(): void {

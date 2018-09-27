@@ -1,10 +1,10 @@
 <div class="document">
   <mat-card class="document__card">
     <div class="document__show">
-      <span (click)="showHiden = !showHiden"> {{ showHiden ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
-      <mat-icon (click)="showHiden = !showHiden"> {{ showHiden ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
+      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
     </div>
-    <form *ngIf="showHiden" class="document__form _additional" [formGroup]="formDocument">
+    <form *ngIf="showHide" class="document__form _additional" [formGroup]="formDocument">
       <div class="document__form-wrapper">
         <mat-form-field class="document__input">
           <mat-select placeholder="Тип документа" formControlName="documentTypeId">
@@ -26,7 +26,7 @@
           <input matInput formControlName="lastName" placeholder="Фамилия">
         </mat-form-field>
         <mat-form-field class="document__input">
-          <input matInput formControlName="secondName" placeholder="Второе имя">
+          <input matInput formControlName="secondName" placeholder="Отчество">
         </mat-form-field>
         <mat-form-field class="document__input">
           <input matInput formControlName="expDate" placeholder="дд.мм.гггг" [matDatepicker]="expDate">

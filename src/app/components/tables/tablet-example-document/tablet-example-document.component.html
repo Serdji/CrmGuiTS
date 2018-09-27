@@ -57,7 +57,7 @@
     </ng-container>
 
     <ng-container matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Второе имя</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Отчество</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
       </mat-cell>
