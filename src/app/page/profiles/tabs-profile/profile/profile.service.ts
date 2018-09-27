@@ -19,23 +19,23 @@ export class ProfileService {
   ) { }
 
   getProfile( id: number ): Observable<any> {
-    return this.http.get( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
   }
 
   putProfile( params ): Observable<any> {
-    return this.http.put( `${environment.crmApi}/crm/customer`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/crm/customer`, params ).pipe( retry( 10 ) );
   }
 
   deleteProfile( id: number ): Observable<any> {
-    return this.http.delete( `${environment.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
   }
 
   addAddProfile( params ): Observable<any> {
-    return this.http.post( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
+    return this.http.post( `${this.configService.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 
   getAllProfileNames( id: number ): Observable<any> {
-    return this.http.get( `${environment.crmApi}/crm/customer/${id}/customerName` ).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/customerName` ).pipe( retry( 10 ) );
   }
 
   deleteProfileNames( params ): Observable<any> {
@@ -43,12 +43,12 @@ export class ProfileService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${environment.crmApi}/crm/customerName/deleteCustomerNames`, httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/customerName/deleteCustomerNames`, httpOptions ).pipe( retry( 10 ) );
   }
 
   putProfileName( params ): Observable<any> {
     this.subjectPutProfileNames.next();
-    return this.http.put( `${environment.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
   }
 
 }

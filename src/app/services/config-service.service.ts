@@ -24,6 +24,6 @@ export class ConfigService {
   }
 
   get crmApi(): string {
-    return !environment.production ? this.config.crmApi : environment.crmApi;
+    return environment.production ? this.config.crmApi : environment.crmApi;
   }
 }

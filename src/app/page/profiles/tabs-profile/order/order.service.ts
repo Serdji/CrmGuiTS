@@ -18,7 +18,7 @@ export class OrderService {
 
 
   getBooking( id: number ): Observable<any> {
-    return this.http.get( `${environment.crmApi}/crm/customer/${id}/booking` )
+    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/booking` )
       .pipe(
         retry( 10 ),
         map( ( orders: any ) => {
