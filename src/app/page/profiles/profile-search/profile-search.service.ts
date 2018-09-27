@@ -18,15 +18,15 @@ export class ProfileSearchService {
   ) { }
 
   getCountry(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/country' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/country' ).pipe( retry( 5 ) );
   }
   getLocation(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/location' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/location' ).pipe( retry( 5 ) );
   }
 
   getProfileSearch( params: IprofileSearch ): Observable<any> {
     this.params = params;
-    return this.http.get( this.configService.crmApi + '/crm/customer/search', { params: this.params } ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/customer/search', { params: this.params } ).pipe( retry( 5 ) );
   }
 
   deleteProfiles( params ): Observable<any> {
@@ -34,7 +34,7 @@ export class ProfileSearchService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 5 ) );
   }
 }
 

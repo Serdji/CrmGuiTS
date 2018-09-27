@@ -17,23 +17,23 @@ export class UserService {
   ) { }
 
   getUser( id ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/admin/user/${id}` ).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/admin/user/${id}` ).pipe( retry( 5 ) );
   }
 
   putUser( params ): Observable<any> {
-    return this.http.put( `${this.configService.crmApi}/admin/user`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/admin/user`, params ).pipe( retry( 5 ) );
   }
 
   deleteUser( id ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/admin/user/${id}` ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/admin/user/${id}` ).pipe( retry( 5 ) );
   }
 
   putPassword( params ): Observable<any> {
-    return this.http.put( `${this.configService.crmApi}/admin/user/update-password`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/admin/user/update-password`, params ).pipe( retry( 5 ) );
   }
 
   updateClaimPermissions( params ): Observable<any> {
-    return this.http.post( `${this.configService.crmApi}/admin/user/update-claim-permissions`, params ).pipe( retry( 10 ) );
+    return this.http.post( `${this.configService.crmApi}/admin/user/update-claim-permissions`, params ).pipe( retry( 5 ) );
   }
 
 

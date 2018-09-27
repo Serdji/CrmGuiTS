@@ -49,16 +49,18 @@
                   <span class="tabs-profile__content-text">Группы:</span>
                 </div>
                 <div
-                *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
-                class="tabs-profile__content-point">
-                <div routerLink="/crm/addsegmentation" [queryParams]="{id: takeSegmentation.segmentationId}" [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}</div>
+                  *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
+                  class="tabs-profile__content-point">
+                  <b routerLink="/crm/addsegmentation" [queryParams]="{id: takeSegmentation.segmentationId}"
+                     [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}</b>
                 </div>
                 <mat-icon
                   *ngIf="this.profileSegmentation.isPointer"
                   class="_pointer"
                   matTooltip="Показать все группы"
                   (click)="openList()"
-                >aspect_ratio</mat-icon>
+                >aspect_ratio
+                </mat-icon>
               </div>
 
               <div class="tabs-profile__content">
