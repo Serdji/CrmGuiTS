@@ -20,7 +20,7 @@ export class OrderService {
   getBooking( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/booking` )
       .pipe(
-        retry( 1 ),
+        retry( 5 ),
         map( ( orders: any ) => {
           orders = _( orders ).sortBy( 'lut' ).reverse().value();
           let counterServicesIsEmd = 0;

@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
-import { environment } from '../../../../environments/environment';
 import { retry } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
 
@@ -18,7 +17,7 @@ export class ListSegmentationService {
   ) { }
 
   getSegmentation( ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/segmentation`).pipe( retry( 1 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/segmentation`).pipe( retry( 5 ) );
   }
 
   deleteSegmentations( params ): Observable<any> {
@@ -26,7 +25,7 @@ export class ListSegmentationService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${this.configService.crmApi}/crm/segmentation/deleteSegmentations`, httpOptions ).pipe( retry( 1 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/segmentation/deleteSegmentations`, httpOptions ).pipe( retry( 5 ) );
   }
 
 }

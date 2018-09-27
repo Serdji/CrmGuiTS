@@ -19,15 +19,15 @@ export class ContactService {
   ) { }
 
   addContact( params ): Observable<any> {
-    return this.http.post( this.configService.crmApi + '/crm/contact', params ).pipe( retry( 1 ) );
+    return this.http.post( this.configService.crmApi + '/crm/contact', params ).pipe( retry( 5 ) );
   }
 
   getContact( id: number ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/contact` ).pipe( retry( 1 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/contact` ).pipe( retry( 5 ) );
   }
 
   deleteContact( contactId: number ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/crm/contact/${contactId}` ).pipe( retry( 1 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/contact/${contactId}` ).pipe( retry( 5 ) );
   }
 
   deleteContacts( params ): Observable<any> {
@@ -35,16 +35,16 @@ export class ContactService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${this.configService.crmApi}/crm/contact/deleteContacts`, httpOptions ).pipe( retry( 1 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/contact/deleteContacts`, httpOptions ).pipe( retry( 5 ) );
   }
 
   putContact( params ): Observable<any>  {
     this.subjectPutContact.next();
-    return this.http.put( `${this.configService.crmApi}/crm/contact`, params ).pipe( retry( 1 ) );
+    return this.http.put( `${this.configService.crmApi}/crm/contact`, params ).pipe( retry( 5 ) );
   }
 
   getContactType(): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/contactType` ).pipe( retry( 1 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/contactType` ).pipe( retry( 5 ) );
   }
 
 }

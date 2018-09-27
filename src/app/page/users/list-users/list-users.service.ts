@@ -14,7 +14,7 @@ export class ListUsersService {
   ) { }
 
   getListUsers(): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/admin/user` ).pipe( retry( 1 ) );
+    return this.http.get( `${this.configService.crmApi}/admin/user` ).pipe( retry( 5 ) );
   }
 
 }

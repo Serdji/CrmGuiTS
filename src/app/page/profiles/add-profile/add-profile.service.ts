@@ -16,6 +16,6 @@ export class AddProfileService {
   ) { }
 
   addProfile( params ): Observable<any> {
-    return this.http.post( this.configService.crmApi + '/crm/customer', params ).pipe( retry( 1 ) );
+    return this.http.post( this.configService.crmApi + '/crm/customer', params ).pipe( retry( 5 ) );
   }
 }
