@@ -1,3 +1,5 @@
+import { ISegmentation } from './isegmentation';
+
 export interface Iprofile {
   customerId: number;
   customerNameId: number;
@@ -7,4 +9,5 @@ export interface Iprofile {
   firstName: string;
   secondName: string;
   dob: string;
+  segmentations: ISegmentation[];
 }
