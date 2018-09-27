@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { map, takeWhile } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
@@ -83,11 +83,10 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   private initProfileSegmentation( profile: Iprofile ) {
 
-    const segmentationTitle = _.map( profile.segmentations, 'title' );
     this.profileSegmentation = {
-      takeTitle: _.take( segmentationTitle, 3 ),
-      title: segmentationTitle,
-      isPointer: _.size( segmentationTitle ) > _.size( _.take( this.profileSegmentation, 3 ) )
+      takeSegmentation: _.take( profile.segmentations, 3 ),
+      segmentation: profile.segmentations,
+      isPointer: _.size( profile.segmentations ) > 3
     };
     this.profileSegmentationProgress = false;
   }

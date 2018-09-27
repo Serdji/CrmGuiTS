@@ -2,7 +2,7 @@
 
   <mat-card class="tabs-profile__card">
 
-    <mat-grid-list cols="5" rowHeight="150px">
+    <mat-grid-list cols="7" rowHeight="150px">
       <mat-grid-tile [colspan]="2" [rowspan]="1">
         <mat-spinner class="tabs-profile__spinner" *ngIf="profileProgress"></mat-spinner>
         <div *ngIf="!profileProgress">
@@ -39,7 +39,7 @@
       </mat-grid-tile>
 
 
-      <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
         <mat-spinner class="tabs-profile__spinner" *ngIf="profileSegmentationProgress"></mat-spinner>
         <div *ngIf="!profileSegmentationProgress">
           <mat-card class="tabs-profile__card-grid mat-elevation-z0">
@@ -49,9 +49,9 @@
                   <span class="tabs-profile__content-text">Группы:</span>
                 </div>
                 <div
-                *ngFor="let takeTitle of this.profileSegmentation.takeTitle"
+                *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
                 class="tabs-profile__content-point">
-                <div> {{takeTitle}}</div>
+                <div routerLink="/crm/addsegmentation" [queryParams]="{id: takeSegmentation.segmentationId}" [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}</div>
                 </div>
                 <mat-icon
                   *ngIf="this.profileSegmentation.isPointer"
@@ -78,7 +78,7 @@
       </mat-grid-tile>
 
 
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
         <mat-spinner class="tabs-profile__spinner" *ngIf="ordersProgress"></mat-spinner>
         <div *ngIf="!ordersProgress">
           <mat-card class="tabs-profile__card-grid mat-elevation-z0">

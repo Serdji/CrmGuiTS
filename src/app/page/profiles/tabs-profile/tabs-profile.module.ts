@@ -10,6 +10,7 @@ import { DocumentModule } from './document/document.module';
 import { OrderModule } from './order/order.module';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { OrderService } from './order/order.service';
+import { RouterModule } from '@angular/router';
 
 @NgModule( {
   imports: [
@@ -21,6 +22,7 @@ import { OrderService } from './order/order.service';
     DocumentModule,
     OrderModule,
     PipesModule,
+    RouterModule,
   ],
   declarations: [ TabsProfileComponent ],
   providers: [

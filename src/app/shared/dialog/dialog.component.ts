@@ -192,6 +192,11 @@ export class DialogComponent implements OnInit, OnDestroy {
     }
   }
 
+  openSegmentation( id ): void {
+    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { id } } );
+    this.dialogRef.close();
+  }
+
   onNoClick(): void {
     this.dialogRef.close();
   }
