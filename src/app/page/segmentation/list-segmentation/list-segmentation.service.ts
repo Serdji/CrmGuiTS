@@ -18,7 +18,7 @@ export class ListSegmentationService {
   ) { }
 
   getSegmentation( ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/segmentation`).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/segmentation`).pipe( retry( 1 ) );
   }
 
   deleteSegmentations( params ): Observable<any> {
@@ -26,7 +26,7 @@ export class ListSegmentationService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${this.configService.crmApi}/crm/segmentation/deleteSegmentations`, httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/segmentation/deleteSegmentations`, httpOptions ).pipe( retry( 1 ) );
   }
 
 }
