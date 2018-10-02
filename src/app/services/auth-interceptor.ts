@@ -16,7 +16,6 @@ import { MatDialog } from '@angular/material';
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
-  private counter: number = 0;
   private isRefreshingToken: boolean = false;
 
   constructor(
