@@ -17,6 +17,7 @@ import { MatDialog } from '@angular/material';
 export class AuthInterceptor implements HttpInterceptor {
 
   private counter: number = 0;
+  private isRefreshingToken: boolean = false;
 
   constructor(
     private activityUser: ActivityUserService,
@@ -37,19 +38,7 @@ export class AuthInterceptor implements HttpInterceptor {
         .pipe(
           map( res => res ),
           catchError( ( err: HttpErrorResponse ) => {
-            if ( err.status === 401 ) {
-              ++this.counter;
-              if ( this.counter >= 5 ) {
-                this.activityUser.logout();
-                this.counter = 0;
-              }
-              this.auth.refreshToken( idToken.refreshToken )
-                .subscribe( ( value: Itoken ) => {
-                    localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
-                    this.counter = 0;
-                  }
-                );
-            }
+            if ( err.status === 401 )  this.refreshToken( idToken.refreshToken );
             return Observable.throw( err );
           } )
         );
@@ -57,4 +46,19 @@ export class AuthInterceptor implements HttpInterceptor {
       return next.handle( req );
     }
   }
+
+  private refreshToken( refreshToken ) {
+    if ( !this.isRefreshingToken ) {
+      this.isRefreshingToken = true;
+      this.auth.refreshToken( refreshToken )
+        .subscribe(
+          data => {
+            localStorage.setItem( 'paramsToken', JSON.stringify( data ) );
+          }, err => {
+            if ( err.status === 401 ) this.activityUser.logout();
+          }
+        );
+    }
+  }
+
 }
