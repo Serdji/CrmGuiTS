@@ -288,9 +288,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
       this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => {
+        .subscribe( value => {
           this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
-          this.resetForm();
+          this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id: value.segmentationId }});
         } );
     }
   }
