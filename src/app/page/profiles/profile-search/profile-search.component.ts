@@ -42,6 +42,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private autDelay: number = 500;
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
+  private _window: Window;
 
   @ViewChild( 'segmentationChipInput' ) fruitInput: ElementRef<HTMLInputElement>;
 
@@ -73,6 +74,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   clearForm(): void {
     this.resetForm();
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
+  }
+
+  downloadSvc(): void {
+    this.profileSearchService.downloadSvc()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( data => {
+        const url = window.URL.createObjectURL( data );
+        window.open( url );
+        console.log( 'download result ', data );
+      } );
   }
 
   private resetForm() {

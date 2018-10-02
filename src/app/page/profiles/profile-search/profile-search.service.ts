@@ -36,6 +36,11 @@ export class ProfileSearchService {
     };
     return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
   }
+
+  downloadSvc( ): Observable<any> {
+    return this.http.get( this.configService.crmApi + 'crm/customer/searchCsv',{ responseType: 'blob' }).pipe( retry( 10 ) );
+  }
+
 }
 
 
