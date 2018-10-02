@@ -8,10 +8,11 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import 'rxjs/add/observable/throw';
-import { catchError, map } from 'rxjs/operators';
+import { catchError, delay, finalize, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
 import { MatDialog } from '@angular/material';
+import { timer } from 'rxjs';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -37,7 +38,7 @@ export class AuthInterceptor implements HttpInterceptor {
         .pipe(
           map( res => res ),
           catchError( ( err: HttpErrorResponse ) => {
-            if ( err.status === 401 )  this.refreshToken( idToken.refreshToken );
+            if ( err.status === 401 ) this.refreshToken( idToken.refreshToken );
             return Observable.throw( err );
           } )
         );
@@ -53,6 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
         .subscribe(
           data => {
             localStorage.setItem( 'paramsToken', JSON.stringify( data ) );
+            timer( 500 ).subscribe( _=> this.isRefreshingToken = false );
           }, err => {
             if ( err.status === 401 ) this.activityUser.logout();
           }
