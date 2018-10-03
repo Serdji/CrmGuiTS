@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
@@ -53,6 +53,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private router: Router,
     private route: ActivatedRoute,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
@@ -76,13 +77,17 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
   }
 
-  downloadSvc(): void {
-    this.profileSearchService.downloadSvc()
+  downloadCsv(): void {
+    this.profileSearchService.downloadCsv()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( data => {
-        const url = window.URL.createObjectURL( data );
-        window.open( url );
-        console.log( 'download result ', data );
+      .subscribe( resp => {
+        const link = this.renderer.createElement( 'a' );
+        const filename = resp.headers.get( 'content-disposition' ).split(';')[1].split('=')[1];
+        console.log( resp.headers.get( 'content-disposition' ) );
+        this.renderer.setAttribute( link, 'href', window.URL.createObjectURL( resp.body ) );
+        this.renderer.setAttribute( link, 'download', filename );
+        this.renderer.setStyle( link, 'display', 'none' );
+        link.click();
       } );
   }
 

@@ -1,9 +1,8 @@
 import { Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { IprofileSearch } from '../../../interface/iprofile-search';
-import { retry } from 'rxjs/operators';
+import { map, retry } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
 
 @Injectable()
@@ -20,6 +19,7 @@ export class ProfileSearchService {
   getCountry(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/country' ).pipe( retry( 10 ) );
   }
+
   getLocation(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/location' ).pipe( retry( 10 ) );
   }
@@ -37,8 +37,8 @@ export class ProfileSearchService {
     return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
   }
 
-  downloadSvc( ): Observable<any> {
-    return this.http.get( this.configService.crmApi + 'crm/customer/searchCsv',{ responseType: 'blob' }).pipe( retry( 10 ) );
+  downloadCsv(): Observable<any> {
+    return this.http.get( this.configService.crmApi + 'crm/customer/searchCsv', { responseType: 'blob', observe: 'response' } ).pipe(retry( 10 ));
   }
 
 }
