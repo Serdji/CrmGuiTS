@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
@@ -15,6 +15,7 @@ import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { HttpResponse } from '@angular/common/http';
 
 @Component( {
   selector: 'app-profile-search',
@@ -38,11 +39,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public addSegmentationOnBlur = false;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public segmentationChips: string[] = [];
+  public fileSvc: HttpResponse<any>;
 
   private autDelay: number = 500;
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
-  private _window: Window;
 
   @ViewChild( 'segmentationChipInput' ) fruitInput: ElementRef<HTMLInputElement>;
 
@@ -53,7 +54,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private router: Router,
     private route: ActivatedRoute,
-    private renderer: Renderer2
   ) { }
 
   ngOnInit(): void {
@@ -80,15 +80,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   downloadCsv(): void {
     this.profileSearchService.downloadCsv()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( resp => {
-        const link = this.renderer.createElement( 'a' );
-        const filename = resp.headers.get( 'content-disposition' ).split(';')[1].split('=')[1];
-        console.log( resp.headers.get( 'content-disposition' ) );
-        this.renderer.setAttribute( link, 'href', window.URL.createObjectURL( resp.body ) );
-        this.renderer.setAttribute( link, 'download', filename );
-        this.renderer.setStyle( link, 'display', 'none' );
-        link.click();
-      } );
+      .subscribe( resp => this.fileSvc = resp );
   }
 
   private resetForm() {

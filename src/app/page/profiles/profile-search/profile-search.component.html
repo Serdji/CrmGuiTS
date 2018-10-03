@@ -188,8 +188,9 @@
           Искать
         </button>
         <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="downloadCsv()" color="accent">
-          <mat-icon>file_copy</mat-icon>
+          <mat-icon>insert_drive_file</mat-icon>
           CSV
+          <span *appDownloadFile="fileSvc"></span>
         </button>
         <button class="profile-search__button" mat-raised-button (click)="clearForm()">
           <mat-icon>clear</mat-icon>
