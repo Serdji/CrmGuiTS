@@ -187,7 +187,7 @@
           <mat-icon>search</mat-icon>
           Искать
         </button>
-        <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="downloadCsv()" color="accent">
+        <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button matTooltip="Вагрузка SVG файла с учетом поискового запроса" (click)="downloadCsv()" color="accent">
           <mat-icon>insert_drive_file</mat-icon>
           CSV
           <span *appDownloadFile="fileSvc"></span>
