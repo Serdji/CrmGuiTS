@@ -54,7 +54,7 @@ export class AuthInterceptor implements HttpInterceptor {
         .subscribe(
           data => {
             localStorage.setItem( 'paramsToken', JSON.stringify( data ) );
-            timer( 500 ).subscribe( _=> this.isRefreshingToken = false );
+            timer( 1000 ).subscribe( _=> this.isRefreshingToken = false );
           }, err => {
             if ( err.status === 401 ) this.activityUser.logout();
           }

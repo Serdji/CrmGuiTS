@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ConfirmEqualValidatorDirective } from './confirm-equal-validator.directive';
 import { AccessRightsDirective } from './access-rights.directive';
 import { OneRequiredDirective } from './one-required.directive';
+import { DownloadFileDirective } from './download-file.directive';
 
 @NgModule( {
   imports: [
@@ -12,11 +13,13 @@ import { OneRequiredDirective } from './one-required.directive';
     ConfirmEqualValidatorDirective,
     AccessRightsDirective,
     OneRequiredDirective,
+    DownloadFileDirective,
   ],
   exports: [
     ConfirmEqualValidatorDirective,
     AccessRightsDirective,
     OneRequiredDirective,
+    DownloadFileDirective,
   ]
 } )
 export class DirectivesModule {

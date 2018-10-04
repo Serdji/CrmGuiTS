@@ -1,7 +1,6 @@
 import { Directive, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { ParsTokenService } from '../services/pars-token.service';
 import { Itoken } from '../interface/itoken';
-import { timer } from 'rxjs';
 
 @Directive( {
   selector: '[appAccessRights]'

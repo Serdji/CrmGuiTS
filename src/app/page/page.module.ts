@@ -5,6 +5,7 @@ import { UsersModule } from './users/users.module';
 import { ProfilesModule } from './profiles/profiles.module';
 import { SettingsModule } from './settings/settings.module';
 import { SegmentationModule } from './segmentation/segmentation.module';
+import { SpecialGroupsModule } from './special-groups/special-groups.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { SegmentationModule } from './segmentation/segmentation.module';
     UsersModule,
     SettingsModule,
     SegmentationModule,
+    SpecialGroupsModule,
   ],
   declarations: []
 })
