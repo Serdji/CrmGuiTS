@@ -22,4 +22,8 @@ export class ProfileGroupService {
     return this.http.post( `${this.configService.crmApi}/crm/customerGroup`,  params  ).pipe( retry( 10 ) );
   }
 
+  addProfileGroupRelation( params ): Observable<any> {
+    return this.http.post( `${this.configService.crmApi}/crm/customerGroupRelation`,  params  ).pipe( retry( 10 ) );
+  }
+
 }

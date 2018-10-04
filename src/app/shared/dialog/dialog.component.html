@@ -63,7 +63,7 @@
     </form>
   </div>
 
-  <div *ngIf="data.status === 'list'" [ngStyle]="{'width': '1000px'}">
+  <div *ngIf="data.status === 'listSegmentation'" [ngStyle]="{'width': '1000px'}">
     <mat-list role="listitem" *ngFor="let segmentation of data.params.segmentation; let i = index">
       <div class="dialog__wrapper">
         <h3>{{segmentation.title}}</h3>
@@ -72,4 +72,10 @@
       <mat-divider *ngIf="data.params.segmentation.length - 1 !== i"></mat-divider>
     </mat-list>
   </div>
+
+  <div *ngIf="data.status === 'addProfileGroup'" [ngStyle]="{'width': '1000px'}">
+
+  </div>
+
+
 </div>

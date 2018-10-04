@@ -58,7 +58,7 @@
                   *ngIf="this.profileSegmentation.isPointer"
                   class="_pointer"
                   matTooltip="Показать все группы"
-                  (click)="openList()"
+                  (click)="openListSegmentation()"
                 >aspect_ratio
                 </mat-icon>
               </div>
@@ -67,12 +67,15 @@
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Спецгруппы:</span>
                 </div>
-                <div class="tabs-profile__content-point">
-                  <div> ...</div>
-                  <div> ...</div>
-                  <div> ...</div>
-                  <div> ...</div>
+                <div *ngFor="let takeGroup of profileGroup.takeGroup" class="tabs-profile__content-point">
+                  <b>{{takeGroup.customerGroup.customerGroupName}}</b>
                 </div>
+                <mat-icon
+                  class="_pointer"
+                  matTooltip="Добавить спецгруппу"
+                  (click)="addProfileGroup()"
+                >add
+                </mat-icon>
               </div>
             </div>
           </mat-card>

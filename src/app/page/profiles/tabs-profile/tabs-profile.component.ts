@@ -7,6 +7,7 @@ import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { ISegmentation } from '../../../interface/isegmentation';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -21,7 +22,8 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
   public orders;
-  public profileSegmentation;
+  public profileSegmentation: any;
+  public profileGroup: any;
 
   private isActive: boolean;
 
@@ -75,6 +77,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         } ) )
       .subscribe( ( profile ) => {
         this.initProfileSegmentation( profile );
+        this.initProfileGroup( profile );
         _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
         this.profile = profile;
         this.profileProgress = false;
@@ -91,6 +94,14 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.profileSegmentationProgress = false;
   }
 
+  private initProfileGroup( profile: Iprofile ) {
+    this.profileGroup = {
+      takeGroup: _.take( profile.customerGroupRelations, 3 ),
+      group: profile.customerGroupRelations,
+      isPointer: _.size( profile.customerGroupRelations ) > 3
+    };
+  }
+
   private windowDialog( status: string, params: any = '' ) {
     this.dialog.open( DialogComponent, {
       data: {
@@ -100,8 +111,12 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  openList(): void {
-    this.windowDialog('list', this.profileSegmentation );
+  openListSegmentation(): void {
+    this.windowDialog( 'listSegmentation', this.profileSegmentation );
+  }
+
+  addProfileGroup(): void {
+    this.windowDialog( 'addProfileGroup' );
   }
 
   ngOnDestroy(): void {
