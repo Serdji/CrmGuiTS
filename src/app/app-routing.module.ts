@@ -16,6 +16,7 @@ import { TabsProfileComponent } from './page/profiles/tabs-profile/tabs-profile.
 import { RestartComponent } from './page/settings/restart/restart.component';
 import { AddSegmentationComponent } from './page/segmentation/add-segmentation/add-segmentation.component';
 import { ListSegmentationComponent } from './page/segmentation/list-segmentation/list-segmentation.component';
+import { ProfileGroupComponent } from './page/profile-group/profile-group.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -33,6 +34,7 @@ const routes: Routes = [
         { path: 'addprofile', component: AddProfileComponent },
         { path: 'listsegmentation', component: ListSegmentationComponent },
         { path: 'addsegmentation', component: AddSegmentationComponent },
+        { path: 'profilegroup', component: ProfileGroupComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
       ],

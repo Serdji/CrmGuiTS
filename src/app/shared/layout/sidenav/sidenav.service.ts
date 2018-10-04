@@ -39,6 +39,13 @@ export class SidenavService {
         ]
       },
       {
+        name: 'Программы лояльности',
+        icon: 'group_add',
+        link: [
+          { url: '/crm/profilegroup', title: 'Список' },
+        ]
+      },
+      {
         name: 'Настройки',
         icon: 'settings',
         link: [
