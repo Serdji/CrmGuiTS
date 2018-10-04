@@ -14,6 +14,7 @@ import { ListSegmentationService } from '../../page/segmentation/list-segmentati
 import { map, takeWhile } from 'rxjs/operators';
 import { ProfileGroupService } from '../../page/special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../interface/icustomer-group';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-dialog',
@@ -108,12 +109,18 @@ export class DialogComponent implements OnInit, OnDestroy {
           .subscribe( value => {
             this.paramsProfileGroup = value;
             this.isLoader = false;
-          } );
 
-        this.profileGroupService.getProfileGroup()
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( value => {
-            this.profileGroups = value;
+            this.profileGroupService.getProfileGroup()
+              .pipe( takeWhile( _ => this.isActive ) )
+              .subscribe( profileGroups => {
+
+                _.each( this.paramsProfileGroup, el => {
+                  console.log(el.customerGroupId);
+                  console.log(_.filter( profileGroups, profileGroup => profileGroup.customerGroupId !== el.customerGroupId));
+                } );
+
+                this.profileGroups = profileGroups;
+              } );
           } );
         break;
     }

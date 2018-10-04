@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map, takeWhile } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
@@ -7,7 +7,6 @@ import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
-import { ISegmentation } from '../../../interface/isegmentation';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 
 @Component( {
