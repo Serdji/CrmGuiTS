@@ -89,7 +89,7 @@
       <mat-list role="listitem" *ngFor="let profileGroup of paramsProfileGroup let i = index">
         <div class="dialog__wrapper">
           <h3>{{profileGroup.customerGroup.customerGroupName}}</h3>
-          <mat-icon mat-list-icon (click)="deleteProfileGroup(profileGroup.customerGroupRelationId)">remove</mat-icon>
+          <mat-icon mat-list-icon (click)="deleteProfileGroup(profileGroup.customerGroupRelationId)">clear</mat-icon>
         </div>
         <mat-divider *ngIf="paramsProfileGroup.length - 1 !== i"></mat-divider>
       </mat-list>

@@ -76,24 +76,32 @@ export class DialogComponent implements OnInit, OnDestroy {
       customerGroupId: '',
     } );
     switch ( this.data.status ) {
-      case 'updateContact': this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text ); break;
-      case 'updateProfileName': this.formUpdateProfileName.patchValue( this.data.params.fioObj ); break;
-      case 'updateDocument': this.formUpdateDocument.patchValue( this.data.params.fioObj ); break;
+      case 'updateContact':
+        this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
+        break;
+      case 'updateProfileName':
+        this.formUpdateProfileName.patchValue( this.data.params.fioObj );
+        break;
+      case 'updateDocument':
+        this.formUpdateDocument.patchValue( this.data.params.fioObj );
+        break;
       case 'addProfileGroup':
         this.formProfileGroups.get( 'customerGroupId' ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( id => {
-            const params = {
-              customerGroupId: +id,
-              customerId: this.data.params.profileId
-            };
-            this.profileGroupService.addProfileGroupRelation( params )
-              .pipe( takeWhile( _ => this.isActive ) )
-              .subscribe( _ => {
-                this.initGetAway();
-              });
+            if( +id !== 0 ){
+              const params = {
+                customerGroupId: +id,
+                customerId: this.data.params.profileId
+              };
+              this.profileGroupService.addProfileGroupRelation( params )
+                .pipe( takeWhile( _ => this.isActive ) )
+                .subscribe( _ => {
+                  this.initGetAway();
+                } );
+            }
           } );
-      break;
+        break;
     }
   }
 
@@ -111,14 +119,13 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.isLoader = false;
 
             this.profileGroupService.getProfileGroup()
-              .pipe( takeWhile( _ => this.isActive ) )
-              .subscribe( profileGroups => {
-
-                _.each( this.paramsProfileGroup, el => {
-                  console.log(el.customerGroupId);
-                  console.log(_.filter( profileGroups, profileGroup => profileGroup.customerGroupId !== el.customerGroupId));
-                } );
-
+              .pipe(
+                takeWhile( _ => this.isActive ),
+                map( resp => _.differenceBy( resp, this.paramsProfileGroup, 'customerGroupId' ) )
+              )
+              .subscribe( ( profileGroups: any ) => {
+                this.formProfileGroups.get( 'customerGroupId' ).patchValue( '' );
+                this.formProfileGroups.get( 'customerGroupId' ).setErrors( null );
                 this.profileGroups = profileGroups;
               } );
           } );
@@ -250,7 +257,7 @@ export class DialogComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.initGetAway();
-      });
+      } );
   }
 
   openSegmentation( id ): void {
