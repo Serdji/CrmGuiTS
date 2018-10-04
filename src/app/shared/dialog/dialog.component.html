@@ -74,7 +74,26 @@
   </div>
 
   <div *ngIf="data.status === 'addProfileGroup'" [ngStyle]="{'width': '1000px'}">
-
+    <form class="dialog__form" [formGroup]="formProfileGroups">
+      <mat-form-field class="dialog__input _cost-input">
+        <mat-select formControlName="customerGroupId" placeholder="Имя спецгруппы">
+          <mat-option></mat-option>
+          <mat-option *ngFor="let profileGroup of profileGroups" value="{{profileGroup.customerGroupId}}">
+            {{profileGroup.customerGroupName}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+    </form>
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <mat-list role="listitem" *ngFor="let profileGroup of paramsProfileGroup let i = index">
+        <div class="dialog__wrapper">
+          <h3>{{profileGroup.customerGroup.customerGroupName}}</h3>
+          <mat-icon mat-list-icon (click)="deleteProfileGroup(profileGroup.customerGroupRelationId)">remove</mat-icon>
+        </div>
+        <mat-divider *ngIf="paramsProfileGroup.length - 1 !== i"></mat-divider>
+      </mat-list>
+    </ng-template>
   </div>
 
 

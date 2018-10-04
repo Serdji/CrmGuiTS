@@ -11,7 +11,9 @@ import * as moment from 'moment';
 import { AuthService } from '../../services/auth.service';
 import { AddSegmentationService } from '../../page/segmentation/add-segmentation/add-segmentation.service';
 import { ListSegmentationService } from '../../page/segmentation/list-segmentation/list-segmentation.service';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
+import { ProfileGroupService } from '../../page/special-groups/profile-group/profile-group.service';
+import { IcustomerGroup } from '../../interface/icustomer-group';
 
 @Component( {
   selector: 'app-dialog',
@@ -23,6 +25,10 @@ export class DialogComponent implements OnInit, OnDestroy {
   public formUpdateContact: FormGroup;
   public formUpdateProfileName: FormGroup;
   public formUpdateDocument: FormGroup;
+  public formProfileGroups: FormGroup;
+  public profileGroups: IcustomerGroup[];
+  public isLoader: boolean;
+  public paramsProfileGroup: any;
 
   private isActive: boolean;
 
@@ -34,6 +40,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private documentService: DocumentService,
     private addSegmentationService: AddSegmentationService,
     private listSegmentationService: ListSegmentationService,
+    private profileGroupService: ProfileGroupService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -43,7 +50,9 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.isLoader = true;
     this.initForm();
+    this.initGetAway();
   }
 
   private initForm() {
@@ -62,14 +71,52 @@ export class DialogComponent implements OnInit, OnDestroy {
       secondName: '',
       expDate: '',
     } );
-    if ( this.data.status === 'updateContact' ) {
-      this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
+    this.formProfileGroups = this.fb.group( {
+      customerGroupId: '',
+    } );
+    switch ( this.data.status ) {
+      case 'updateContact': this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text ); break;
+      case 'updateProfileName': this.formUpdateProfileName.patchValue( this.data.params.fioObj ); break;
+      case 'updateDocument': this.formUpdateDocument.patchValue( this.data.params.fioObj ); break;
+      case 'addProfileGroup':
+        this.formProfileGroups.get( 'customerGroupId' ).valueChanges
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( id => {
+            console.log(id);
+            const params = {
+              customerGroupId: +id,
+              customerId: this.data.params.profileId
+            };
+            this.profileGroupService.addProfileGroupRelation( params )
+              .pipe( takeWhile( _ => this.isActive ) )
+              .subscribe( _ => {
+                this.initGetAway();
+              });
+          } );
+      break;
     }
-    if ( this.data.status === 'updateProfileName' ) {
-      this.formUpdateProfileName.patchValue( this.data.params.fioObj );
-    }
-    if ( this.data.status === 'updateDocument' ) {
-      this.formUpdateDocument.patchValue( this.data.params.fioObj );
+  }
+
+  private initGetAway() {
+    switch ( this.data.status ) {
+      case 'addProfileGroup':
+        this.isLoader = true;
+        this.profileService.getProfile( this.data.params.profileId )
+          .pipe(
+            takeWhile( _ => this.isActive ),
+            map( resp => resp.customerGroupRelations )
+          )
+          .subscribe( value => {
+            this.paramsProfileGroup = value;
+            this.isLoader = false;
+          } );
+
+        this.profileGroupService.getProfileGroup()
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( value => {
+            this.profileGroups = value;
+          } );
+        break;
     }
   }
 
@@ -190,6 +237,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
     }
+  }
+
+  deleteProfileGroup( id ): void {
+    this.profileGroupService.deleteProfileGroupRelation( id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.initGetAway();
+      });
   }
 
   openSegmentation( id ): void {

@@ -8,6 +8,7 @@ import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { ISegmentation } from '../../../interface/isegmentation';
+import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -32,6 +33,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private orderService: OrderService,
     private dialog: MatDialog,
+    private profileGroupService: ProfileGroupService
   ) { }
 
   ngOnInit(): void {
@@ -41,6 +43,11 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         this.profileId = params.id;
         this.initOrder( this.profileId );
+        this.profileGroupService.subjectProfileGroup
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.initOrder( this.profileId );
+          } );
       } );
   }
 
@@ -96,17 +103,19 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   private initProfileGroup( profile: Iprofile ) {
     this.profileGroup = {
-      takeGroup: _.take( profile.customerGroupRelations, 3 ),
-      group: profile.customerGroupRelations,
-      isPointer: _.size( profile.customerGroupRelations ) > 3
+      takeProfileGroup: _.take( profile.customerGroupRelations, 3 ),
+      profileGroup: profile.customerGroupRelations,
+      isPointer: _.size( profile.customerGroupRelations ) > 3,
+      profileId: this.profileId
     };
   }
 
-  private windowDialog( status: string, params: any = '' ) {
+  private windowDialog( status: string, params: any = '', card: string = '' ) {
     this.dialog.open( DialogComponent, {
       data: {
         status,
         params,
+        card,
       },
     } );
   }
@@ -116,7 +125,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   }
 
   addProfileGroup(): void {
-    this.windowDialog( 'addProfileGroup' );
+    this.windowDialog( 'addProfileGroup', this.profileGroup );
   }
 
   ngOnDestroy(): void {
