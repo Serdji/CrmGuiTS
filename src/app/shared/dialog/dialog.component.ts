@@ -82,7 +82,6 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.formProfileGroups.get( 'customerGroupId' ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( id => {
-            console.log(id);
             const params = {
               customerGroupId: +id,
               customerId: this.data.params.profileId
