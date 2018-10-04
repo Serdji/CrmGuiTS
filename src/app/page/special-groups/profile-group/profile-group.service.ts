@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { ConfigService } from '../../services/config-service.service';
+import { ConfigService } from '../../../services/config-service.service';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 

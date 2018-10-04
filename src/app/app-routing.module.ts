@@ -16,7 +16,7 @@ import { TabsProfileComponent } from './page/profiles/tabs-profile/tabs-profile.
 import { RestartComponent } from './page/settings/restart/restart.component';
 import { AddSegmentationComponent } from './page/segmentation/add-segmentation/add-segmentation.component';
 import { ListSegmentationComponent } from './page/segmentation/list-segmentation/list-segmentation.component';
-import { ProfileGroupComponent } from './page/profile-group/profile-group.component';
+import { ProfileGroupComponent } from './page/special-groups/profile-group/profile-group.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },

@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileGroupService } from './profile-group.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
-import { IprofileGroup } from '../../interface/iprofile-group';
+import { IprofileGroup } from '../../../interface/iprofile-group';
 
 @Component( {
   selector: 'app-profile-group',
