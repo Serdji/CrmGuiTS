@@ -1,3 +1,21 @@
-<p>
-  profile-group works!
-</p>
+<div class="profile-group">
+  <form class="profile-group__form" [formGroup]="formNameProfileGroup">
+    <mat-grid-list cols="1" rowHeight="80px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="profile-group__card">
+          <mat-card-content class="profile-group__content">
+            <mat-form-field class="profile-group__input">
+              <input matInput formControlName="CustomerGroupName" type="text" placeholder="Имя спец группы">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                    (click)="saveForm()" color="primary" [disabled]="buttonSave">
+              <mat-icon>save</mat-icon>
+              Сохранить
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>
