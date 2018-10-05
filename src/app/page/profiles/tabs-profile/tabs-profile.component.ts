@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { map, takeWhile } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
@@ -7,6 +7,7 @@ import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
+import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -21,7 +22,8 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
   public orders;
-  public profileSegmentation;
+  public profileSegmentation: any;
+  public profileGroup: any;
 
   private isActive: boolean;
 
@@ -30,6 +32,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private orderService: OrderService,
     private dialog: MatDialog,
+    private profileGroupService: ProfileGroupService
   ) { }
 
   ngOnInit(): void {
@@ -39,6 +42,11 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         this.profileId = params.id;
         this.initOrder( this.profileId );
+        this.profileGroupService.subjectProfileGroup
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.initProfile( this.profileId, this.orders );
+          } );
       } );
   }
 
@@ -75,6 +83,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         } ) )
       .subscribe( ( profile ) => {
         this.initProfileSegmentation( profile );
+        this.initProfileGroup( profile );
         _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
         this.profile = profile;
         this.profileProgress = false;
@@ -91,17 +100,31 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.profileSegmentationProgress = false;
   }
 
-  private windowDialog( status: string, params: any = '' ) {
+  private initProfileGroup( profile: Iprofile ) {
+    this.profileGroup = {
+      takeProfileGroup: _.take( profile.customerGroupRelations, 3 ),
+      profileGroup: profile.customerGroupRelations,
+      isPointer: _.size( profile.customerGroupRelations ) > 3,
+      profileId: this.profileId
+    };
+  }
+
+  private windowDialog( status: string, params: any = '', card: string = '' ) {
     this.dialog.open( DialogComponent, {
       data: {
         status,
         params,
+        card,
       },
     } );
   }
 
-  openList(): void {
-    this.windowDialog('list', this.profileSegmentation );
+  openListSegmentation(): void {
+    this.windowDialog( 'listSegmentation', this.profileSegmentation );
+  }
+
+  addProfileGroup(): void {
+    this.windowDialog( 'addProfileGroup', this.profileGroup );
   }
 
   ngOnDestroy(): void {

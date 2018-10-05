@@ -1,4 +1,5 @@
 import { ISegmentation } from './isegmentation';
+import { IcustomerGroupRelations } from './icustomer-group-relations';
 
 export interface Iprofile {
   customerId: number;
@@ -10,4 +11,5 @@ export interface Iprofile {
   secondName: string;
   dob: string;
   segmentations: ISegmentation[];
+  customerGroupRelations: IcustomerGroupRelations[];
 }
