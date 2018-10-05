@@ -15,7 +15,7 @@ import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
-import { HttpResponse } from '@angular/common/http';
+import { saveAs } from 'file-saver';
 
 @Component( {
   selector: 'app-profile-search',
@@ -39,7 +39,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public addSegmentationOnBlur = false;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public segmentationChips: string[] = [];
-  public fileSvc: HttpResponse<any>;
 
   private autDelay: number = 500;
   private isActive: boolean = true;
@@ -80,7 +79,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   downloadCsv(): void {
     this.profileSearchService.downloadCsv()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( resp => this.fileSvc = resp );
+      .subscribe( resp => {
+        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
+        saveAs( resp.body, filename );
+      } );
   }
 
   private resetForm() {

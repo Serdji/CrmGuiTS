@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { IMenuLink } from '../../../interface/imenu-link';
 import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable( {
   providedIn: 'root'
@@ -10,7 +12,7 @@ export class SidenavService {
   public subjectOpenAccord = new Subject();
   public subjectClosesAccord = new Subject();
 
-  constructor() { }
+  constructor( private http: HttpClient ) { }
 
   get menu(): IMenuLink[] {
     return [
@@ -54,6 +56,10 @@ export class SidenavService {
         ]
       }
     ];
+  }
+
+  getVersion(): Observable<string> {
+    return this.http.get( 'assets/version.txt', { responseType: 'text' } );
   }
 
   openAccord() {
