@@ -19,6 +19,7 @@ import { Router } from '@angular/router';
 export class AuthInterceptor implements HttpInterceptor {
 
   private isRefreshingToken: boolean = false;
+  private delay: number = 3000;
 
   constructor(
     private activityUser: ActivityUserService,
@@ -42,7 +43,7 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError( ( err: HttpErrorResponse ) => {
             switch ( err.status ) {
               case 401: this.refreshToken( idToken.refreshToken ); break;
-              case 404: this.router.navigate(['crm/404']); break;
+              case 404: this.router.navigate( [ 'crm/404' ] ); break;
             }
             return Observable.throw( err );
           } )
@@ -59,9 +60,12 @@ export class AuthInterceptor implements HttpInterceptor {
         .subscribe(
           data => {
             localStorage.setItem( 'paramsToken', JSON.stringify( data ) );
-            timer( 1000 ).subscribe( _=> this.isRefreshingToken = false );
+            timer( this.delay ).subscribe( _ => this.isRefreshingToken = false);
           }, err => {
-            if ( err.status === 401 ) this.activityUser.logout();
+            if ( err.status === 401 ) {
+              this.activityUser.logout();
+              timer( this.delay ).subscribe( _ => this.isRefreshingToken = false);
+            }
           }
         );
     }
