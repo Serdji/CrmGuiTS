@@ -38,10 +38,10 @@ const routes: Routes = [
         { path: 'profilegroup', component: ProfileGroupComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
-        { path: '404', component: ErrorPageComponent },
-        { path: '**', redirectTo: '404', pathMatch: 'full' }
       ],
     },
+  { path: '404', component: ErrorPageComponent },
+  { path: '**', redirectTo: '404', pathMatch: 'full' }
   ]
 ;
 
