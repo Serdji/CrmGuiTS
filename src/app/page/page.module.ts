@@ -6,6 +6,7 @@ import { ProfilesModule } from './profiles/profiles.module';
 import { SettingsModule } from './settings/settings.module';
 import { SegmentationModule } from './segmentation/segmentation.module';
 import { SpecialGroupsModule } from './special-groups/special-groups.module';
+import { ErrorPageModule } from './error-page/error-page.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { SpecialGroupsModule } from './special-groups/special-groups.module';
     SettingsModule,
     SegmentationModule,
     SpecialGroupsModule,
+    ErrorPageModule,
   ],
   declarations: []
 })

@@ -17,6 +17,7 @@ import { RestartComponent } from './page/settings/restart/restart.component';
 import { AddSegmentationComponent } from './page/segmentation/add-segmentation/add-segmentation.component';
 import { ListSegmentationComponent } from './page/segmentation/list-segmentation/list-segmentation.component';
 import { ProfileGroupComponent } from './page/special-groups/profile-group/profile-group.component';
+import { ErrorPageComponent } from './page/error-page/error-page.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -37,6 +38,8 @@ const routes: Routes = [
         { path: 'profilegroup', component: ProfileGroupComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
+        { path: '404', component: ErrorPageComponent },
+        { path: '**', redirectTo: '404', pathMatch: 'full' }
       ],
     },
   ]
