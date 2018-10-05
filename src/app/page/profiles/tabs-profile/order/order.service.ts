@@ -66,9 +66,9 @@ export class OrderService {
             }
 
             if ( order.MonetaryInfo ) {
-              let T = 0, Teur = 0, Tusd = 0, B = 0, Beur = 0, Busd = 0, E = 0, Eeur = 0, Eusd = 0, TE, CurrencyG;
+              let T = 0, Teur = 0, Tusd = 0, Tcur = 0, B = 0, Beur = 0, Busd = 0, Bcur = 0, E = 0, Eeur = 0, Eusd = 0, Ecur = 0, TE, CurrencyG;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
-                const { Code, Amount, AmountEur, AmountUsd, Currency } = MonetaryInfo;
+                const { Code, Amount, AmountEur, AmountUsd, AmountCur, Currency } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
                   CurrencyG = Currency;
                   switch ( Code ) {
@@ -76,16 +76,19 @@ export class OrderService {
                       T += Amount;
                       Teur += AmountEur;
                       Tusd += AmountUsd;
+                      Tcur += AmountCur;
                       break;
                     case 'B':
                       B += Amount;
                       Beur += AmountEur;
                       Busd += AmountUsd;
+                      Bcur += AmountCur;
                       break;
                     case 'E':
                       E += Amount;
                       Eeur += AmountEur;
                       Eusd += AmountUsd;
+                      Ecur += AmountCur;
                       break;
                   }
                 }
@@ -94,15 +97,15 @@ export class OrderService {
               if ( T && E ) {
                 TE = T - E;
                 order.MonetaryInfo.push(
-                  { Code: 'TG', Amount: T, AmountEur: Teur, AmountUsd: Tusd, Currency: CurrencyG },
-                  { Code: 'TE', Amount: TE, AmountEur: Teur - Eeur, AmountUsd: Tusd - Eusd, Currency: CurrencyG }
+                  { Code: 'TG', Amount: T, AmountEur: Teur, AmountUsd: Tusd, AmountCur: Tcur, Currency: CurrencyG },
+                  { Code: 'TE', Amount: TE, AmountEur: Teur - Eeur, AmountUsd: Tusd - Eusd, AmountCur: Tcur - Ecur, Currency: CurrencyG }
                 );
               }
 
               if ( T && B && !TE ) {
                 order.MonetaryInfo.push(
-                  { Code: 'TG', Amount: T, AmountEur: Teur, AmountUsd: Tusd, Currency: CurrencyG },
-                  { Code: 'TB', Amount: T - B, AmountEur: Teur - Beur, AmountUsd: Tusd - Busd, Currency: CurrencyG }
+                  { Code: 'TG', Amount: T, AmountEur: Teur, AmountUsd: Tusd, AmountCur: Tcur, Currency: CurrencyG },
+                  { Code: 'TB', Amount: T - B, AmountEur: Teur - Beur, AmountUsd: Tusd - Busd, AmountCur: Tcur - Bcur, Currency: CurrencyG }
                 );
               }
             }

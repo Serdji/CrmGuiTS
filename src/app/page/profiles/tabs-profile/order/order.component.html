@@ -102,6 +102,7 @@
                           <span class="order__content-text">Всего по заказу:</span>
                           <span><b>
                             {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}} |
+                            {{ MonetaryInfo.AmountCur | currency:'RUB':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountUsd | currency:'USD':'symbol-narrow'}}
                           </b></span>
@@ -110,6 +111,7 @@
                           <span class="order__content-text">Таксы и сборы:</span>
                           <span><b>
                             {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}} |
+                            {{ MonetaryInfo.AmountCur | currency:'RUB':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountUsd | currency:'USD':'symbol-narrow'}}
                           </b></span>
@@ -206,8 +208,11 @@
                         <span><b> {{service.status}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">SSR:</span>
-                        <span><b> {{service.ssr}}</b></span>
+                        <span class="order__content-text">Стоимость:</span>
+                        <span><b>
+                          {{ service.emd?.amount | currency:service.emd?.Currency:'symbol-narrow'}} |
+                          {{ service.emd?.AmountCur | currency:'RUB':'symbol-narrow'}}
+                        </b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">{{ service.nos ? 'Название услуги:' : 'Комментарий:'}}</span>
@@ -223,6 +228,10 @@
                       <div class="order__content-point">
                         <span class="order__content-text">Rfisc:</span>
                         <span><b> {{service.rfisc}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">SSR:</span>
+                        <span><b> {{service.ssr}}</b></span>
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">Тип EMD:</span>
@@ -247,10 +256,6 @@
                       <div class="order__content-point">
                         <span class="order__content-text">Концепт/мера:</span>
                         <span><b> ...</b></span>
-                      </div>
-                      <div class="order__content-point">
-                        <span class="order__content-text">Стоимость:</span>
-                        <span><b> {{ service.emd?.amount | currency:service.emd?.Currency:'symbol-narrow'}}</b></span>
                       </div>
                     </div>
                   </div>
