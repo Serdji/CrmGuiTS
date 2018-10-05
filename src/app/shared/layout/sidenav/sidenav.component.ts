@@ -19,6 +19,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @ViewChild( 'accord' ) accord;
 
   public menu: IMenuLink[];
+  public version: string;
 
   private isActive: boolean;
 
@@ -36,6 +37,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.autoOpenSidena();
     this.menu = this.sidenavService.menu;
     this.layoutService.subjectToggle.pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.toggle() );
+    this.sidenavService.getVersion().pipe( takeWhile( _ => this.isActive ) ).subscribe( value => this.version = `2.0.0.${value}` );
   }
 
   private autoOpenSidena() {
