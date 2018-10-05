@@ -13,6 +13,7 @@ import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -23,6 +24,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private activityUser: ActivityUserService,
     private auth: AuthService,
     private dialog: MatDialog,
+    private router: Router,
   ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
@@ -38,7 +40,10 @@ export class AuthInterceptor implements HttpInterceptor {
         .pipe(
           map( res => res ),
           catchError( ( err: HttpErrorResponse ) => {
-            if ( err.status === 401 ) this.refreshToken( idToken.refreshToken );
+            switch ( err.status ) {
+              case 401: this.refreshToken( idToken.refreshToken ); break;
+              case 404: this.router.navigate(['crm/404']); break;
+            }
             return Observable.throw( err );
           } )
         );
