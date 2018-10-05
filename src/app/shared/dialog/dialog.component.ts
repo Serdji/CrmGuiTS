@@ -89,7 +89,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.formProfileGroups.get( 'customerGroupId' ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( id => {
-            if( +id !== 0 ){
+            if( +id !== 0 ) {
               const params = {
                 customerGroupId: +id,
                 customerId: this.data.params.profileId
@@ -127,6 +127,7 @@ export class DialogComponent implements OnInit, OnDestroy {
                 this.formProfileGroups.get( 'customerGroupId' ).patchValue( '' );
                 this.formProfileGroups.get( 'customerGroupId' ).setErrors( null );
                 this.profileGroups = profileGroups;
+                this.profileGroupService.subjectProfileGroup.next();
               } );
           } );
         break;
@@ -257,6 +258,7 @@ export class DialogComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.initGetAway();
+        this.profileGroupService.subjectProfileGroup.next();
       } );
   }
 

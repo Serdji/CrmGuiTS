@@ -45,7 +45,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         this.profileGroupService.subjectProfileGroup
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
-            this.initOrder( this.profileId );
+            this.initProfile( this.profileId, this.orders );
           } );
       } );
   }

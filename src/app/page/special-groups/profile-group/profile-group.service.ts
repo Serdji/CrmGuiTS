@@ -25,12 +25,10 @@ export class ProfileGroupService {
   }
 
   addProfileGroupRelation( params ): Observable<any> {
-    this.subjectProfileGroup.next();
     return this.http.post( `${this.configService.crmApi}/crm/customerGroupRelation`,  params  ).pipe( retry( 10 ) );
   }
 
   deleteProfileGroupRelation( id: number ): Observable<any> {
-    this.subjectProfileGroup.next();
     return this.http.delete( `${this.configService.crmApi}/crm/customerGroupRelation/${id}` ).pipe( retry( 10 ) );
   }
 

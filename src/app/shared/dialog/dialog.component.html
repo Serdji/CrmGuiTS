@@ -77,7 +77,7 @@
     <form class="dialog__form" [formGroup]="formProfileGroups">
       <mat-form-field class="dialog__input _cost-input">
         <mat-select formControlName="customerGroupId" placeholder="Имя спецгруппы">
-          <mat-option></mat-option>
+          <mat-option value="0"></mat-option>
           <mat-option *ngFor="let profileGroup of profileGroups" value="{{profileGroup.customerGroupId}}">
             {{profileGroup.customerGroupName}}
           </mat-option>
