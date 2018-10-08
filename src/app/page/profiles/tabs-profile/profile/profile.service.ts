@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { Observable, Subject, throwError } from 'rxjs';
+import { catchError, retry } from 'rxjs/operators';
 import { ConfigService } from '../../../../services/config-service.service';
+import { Router } from '@angular/router';
 
 @Injectable( {
   providedIn: 'root'
@@ -14,11 +15,21 @@ export class ProfileService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private router: Router,
   ) { }
 
   getProfile( id: number ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}` )
+      .pipe(
+        retry( 10 ),
+        catchError( (err: any) => {
+          switch ( err.status ) {
+            case 404: this.router.navigate( [ 'crm/404' ] ); break;
+          }
+          return throwError(err);
+        } )
+      );
   }
 
   putProfile( params ): Observable<any> {

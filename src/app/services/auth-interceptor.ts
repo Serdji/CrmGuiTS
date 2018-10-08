@@ -8,17 +8,19 @@ import {
 import { Observable } from 'rxjs/Observable';
 import { AuthService } from './auth.service';
 import 'rxjs/add/observable/throw';
-import { catchError, delay, finalize, map } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
 import { MatDialog } from '@angular/material';
-import { timer } from 'rxjs';
+import { throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
+import { DialogComponent } from '../shared/dialog/dialog.component';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
 
   private isRefreshingToken: boolean = false;
+  private isError500: boolean = false;
   private delay: number = 3000;
 
   constructor(
@@ -43,9 +45,10 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError( ( err: HttpErrorResponse ) => {
             switch ( err.status ) {
               case 401: this.refreshToken( idToken.refreshToken ); break;
-              case 404: this.router.navigate( [ 'crm/404' ] ); break;
+              // case 404: this.router.navigate( [ 'crm/404' ] ); break;
+              case 500: this.windowDialog( `В данный момент сервер не отвечает. Попробуйте повторить попытку чуть позже или обратитесь в службу технической поддержки.`, 'error' ); break;
             }
-            return Observable.throw( err );
+            return throwError( err );
           } )
         );
     } else {
@@ -60,15 +63,27 @@ export class AuthInterceptor implements HttpInterceptor {
         .subscribe(
           data => {
             localStorage.setItem( 'paramsToken', JSON.stringify( data ) );
-            timer( this.delay ).subscribe( _ => this.isRefreshingToken = false);
+            timer( this.delay ).subscribe( _ => this.isRefreshingToken = false );
           }, err => {
             if ( err.status === 401 ) {
               this.activityUser.logout();
-              timer( this.delay ).subscribe( _ => this.isRefreshingToken = false);
+              timer( this.delay ).subscribe( _ => this.isRefreshingToken = false );
             }
           }
         );
     }
   }
 
+  private windowDialog( messDialog: string, params: string ) {
+    if ( !this.isError500 ) {
+      this.dialog.open( DialogComponent, {
+        data: {
+          message: messDialog,
+          status: params,
+        },
+      } );
+      this.isError500 = true;
+      timer( this.delay ).subscribe( _ => this.isError500 = false );
+    }
+  }
 }
