@@ -1,16 +1,18 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { takeWhile } from 'rxjs/operators';
+import { delay, map, takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
-import { timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TabletAsyncSegmentationProfileService } from '../../../components/tables/tablet-async-segmentation-profile/tablet-async-segmentation-profile.service';
 import * as moment from 'moment';
+import { Ilocation } from '../../../interface/ilocation';
+import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 
 
 @Component( {
@@ -30,12 +32,16 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public isTable: boolean;
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
+  public locations: Ilocation[];
+  public locationFromOptions: Observable<Ilocation[]>;
+  public locationToOptions: Observable<Ilocation[]>;
 
   private isActive: boolean;
   private segmentationId: number;
   private segmentationParams: any;
   private saveSegmentationParams: any = {};
   private createSegmentationParams: any = {};
+  private autDelay: number = 500;
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +49,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private addSegmentationService: AddSegmentationService,
     private dialog: MatDialog,
-    private tabletAsyncSegmentationProfileService: TabletAsyncSegmentationProfileService
+    private tabletAsyncSegmentationProfileService: TabletAsyncSegmentationProfileService,
+    private profileSearchService: ProfileSearchService,
   ) { }
 
   ngOnInit(): void {
@@ -60,6 +67,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.formInputDisable();
     this.initTableProfilePagination();
+    this.initLocation();
+    this.initAutocomplete();
   }
 
   private initQueryParams() {
@@ -76,6 +85,29 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         }
       } );
   }
+
+  private initLocation() {
+    this.profileSearchService.getLocation()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: Ilocation[] ) => {
+        this.locations = value;
+      } );
+  }
+
+  private initAutocomplete() {
+    this.locationFromOptions = this.autocomplete( 'deppoint' );
+    this.locationToOptions = this.autocomplete( 'arrpoint' );
+  }
+
+  private autocomplete( formControlName: string ): Observable<any> {
+    return this.formSegmentation.get( formControlName ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( this.autDelay ),
+        map( val => this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) ) )
+      );
+  }
+
 
   private formFilling( id ) {
     this.addSegmentationService.getSegmentationParams( id )
@@ -113,6 +145,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       flightNoT: '',
       arrivalDFromIncludeT: '',
       arrivalDToExcludeT: '',
+      deppoint: '',
+      arrpoint: '',
       flightNoE: '',
       arrivalDFromIncludeE: '',
       arrivalDToExcludeE: '',
@@ -290,7 +324,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => {
           this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
-          this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id: value.segmentationId }});
+          this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id: value.segmentationId } } );
         } );
     }
   }
