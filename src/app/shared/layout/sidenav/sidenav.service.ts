@@ -41,10 +41,10 @@ export class SidenavService {
         ]
       },
       {
-        name: 'Программы лояльности',
+        name: 'Группы пользователей',
         icon: 'group_add',
         link: [
-          { url: '/crm/profilegroup', title: 'Список' },
+          { url: '/crm/profilegroup', title: 'Список групп' },
         ]
       },
       {

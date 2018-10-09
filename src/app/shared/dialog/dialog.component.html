@@ -76,7 +76,7 @@
   <div *ngIf="data.status === 'addProfileGroup'" [ngStyle]="{'width': '1000px'}">
     <form class="dialog__form" [formGroup]="formProfileGroups">
       <mat-form-field class="dialog__input _cost-input">
-        <mat-select formControlName="customerGroupId" placeholder="Имя спецгруппы">
+        <mat-select formControlName="customerGroupId" placeholder="Группа пользователей">
           <mat-option value="0"></mat-option>
           <mat-option *ngFor="let profileGroup of profileGroups" value="{{profileGroup.customerGroupId}}">
             {{profileGroup.customerGroupName}}

@@ -29,7 +29,7 @@
     </ng-container>
 
     <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Название группы</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Группа сегментации</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.title}}</span>
       </mat-cell>

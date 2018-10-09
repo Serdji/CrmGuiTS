@@ -350,7 +350,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   deleteSegmentation(): void {
-    this.windowDialog( `Вы действительно хотите удалить сегментацию  "${ this.segmentationParams.segmentationTitle }" ?`, 'delete', 'segmentation', true );
+    this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${ this.segmentationParams.segmentationTitle }" ?`, 'delete', 'segmentation', true );
   }
 
   clearForm(): void {
