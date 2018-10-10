@@ -197,16 +197,13 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Сумма по заказу</span>
+          <span class="add-segmentation__content-title">Количество сегментов</span>
           <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="moneyAmountFromInclude" matInput type="number" placeholder="От">
+              <input formControlName="segmentsCountFromInclude" matInput type="number" placeholder="От">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="moneyAmountToExclude" matInput type="number" placeholder="До">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
+              <input formControlName="segmentsCountToExclude" matInput type="number" placeholder="До">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <mat-select formControlName="eDocTypeS">
