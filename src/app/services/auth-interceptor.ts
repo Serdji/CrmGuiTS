@@ -46,7 +46,7 @@ export class AuthInterceptor implements HttpInterceptor {
             switch ( err.status ) {
               case 401: this.refreshToken( idToken.refreshToken ); break;
               // case 404: this.router.navigate( [ 'crm/404' ] ); break;
-              case 500: this.windowDialog( `В данный момент сервер не отвечает. Попробуйте повторить попытку чуть позже или обратитесь в службу технической поддержки.`, 'error' ); break;
+              case 500: this.windowDialog( `В данный момент сервер не отвечает. Попробуйте перезагрузить приложение и повторить попытку чуть позже или обратитесь в службу технической поддержки.`, 'error' ); break;
             }
             return throwError( err );
           } )
@@ -83,7 +83,7 @@ export class AuthInterceptor implements HttpInterceptor {
         },
       } );
       this.isError500 = true;
-      timer( this.delay ).subscribe( _ => this.isError500 = false );
+      // timer( this.delay ).subscribe( _ => this.isError500 = false );
     }
   }
 }

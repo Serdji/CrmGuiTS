@@ -1,5 +1,6 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import {
+  MatDialog,
   MatPaginator,
   MatSort,
   MatTableDataSource,
@@ -7,6 +8,7 @@ import {
 import { timer } from 'rxjs/observable/timer';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component( {
   selector: 'app-tablet-example-profile-group',
@@ -19,13 +21,14 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
   public dataSource: MatTableDataSource<any>;
   public selection = new SelectionModel<any>( true, [] );
   private isActive: boolean;
+  public isDisabled: boolean;
 
   @Input() private tableDataSource: any;
 
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
 
-  constructor() { }
+  constructor( private dialog: MatDialog ) { }
 
   ngOnInit(): void {
     this.isActive = true;
@@ -35,6 +38,7 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
 
   private initDisplayedColumns() {
     this.displayedColumns = [
+      'select',
       'customerGroupName',
     ];
   }
@@ -51,6 +55,50 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
       } );
+  }
+
+  private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status,
+        params,
+        card,
+      },
+    } );
+  }
+
+  public isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+
+  masterToggle(): void {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach( row => this.selection.select( row ) );
+  }
+
+  deleteProfileGroups(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      const params = Object.assign( {}, { ids: arrayId } );
+      this.windowDialog( `Вы действительно хотите удаль ${ arrayId.length === 1 ? 'группу пассажиров' : 'группы пассажиров' } ?`, 'delete', params, 'deleteProfileGroups' );
+    }
+  }
+
+  disabledCheckbox( eventData ): void {
+    this.isDisabled = eventData;
   }
 
   ngOnDestroy(): void {

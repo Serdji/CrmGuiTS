@@ -91,7 +91,7 @@
           <span class="add-segmentation__content-title">Билеты</span>
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
+              <input matInput type="number" placeholder="Номер рейса" formControlName="flightNoT">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="arrivalDFromIncludeT" matInput placeholder="Диапазон даты вылета с"
@@ -153,7 +153,7 @@
           <span class="add-segmentation__content-title">Платные услуги</span>
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
+              <input matInput type="number" placeholder="Номер рейса" formControlName="flightNoE">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="arrivalDFromIncludeE" matInput placeholder="Диапазон даты вылета с"
@@ -195,13 +195,15 @@
         </mat-card>
       </mat-grid-tile>
 
-
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Количество сегментов</span>
+          <span class="add-segmentation__content-title">Сумма по заказу</span>
           <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
+              <input formControlName="moneyAmountFromInclude" matInput type="number" placeholder="От">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="moneyAmountToExclude" matInput type="number" placeholder="До">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
