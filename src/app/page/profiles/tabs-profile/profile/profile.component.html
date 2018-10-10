@@ -7,20 +7,27 @@
         <mat-icon appAccessRights="customers:update" (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <mat-card-content class="profile__content">
-        <div class="profile__list">
-          <span><b>Имя: </b>{{profile.firstName}}</span>
+        <div class="profile__box _m-r">
+          <div class="profile__list">
+            <span><b>Имя: </b>{{profile.firstName}}</span>
+          </div>
+          <div class="profile__list">
+            <span><b>Фамилия: </b>{{profile.lastName}}</span>
+          </div>
+          <div class="profile__list">
+            <span><b>Отчество: </b>{{profile.secondName}}</span>
+          </div>
+          <div class="profile__list">
+            <span><b>Пол: </b>{{profile.gender | fieldTranslation}}</span>
+          </div>
+          <div class="profile__list">
+            <span><b>Дата рождения: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
+          </div>
         </div>
-        <div class="profile__list">
-          <span><b>Фамилия: </b>{{profile.lastName}}</span>
-        </div>
-        <div class="profile__list">
-          <span><b>Отчество: </b>{{profile.secondName}}</span>
-        </div>
-        <div class="profile__list">
-          <span><b>Пол: </b>{{profile.gender | fieldTranslation}}</span>
-        </div>
-        <div class="profile__list">
-          <span><b>Дата рождения: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
+        <div class="profile__box">
+          <div class="profile__list">
+            <span><b>Заметки: </b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </span>
+          </div>
         </div>
       </mat-card-content>
     </div>
@@ -31,27 +38,36 @@
         <mat-icon (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <form class="profile__form" [formGroup]="formUpdateProfile">
-        <mat-form-field class="profile__input">
-          <input matInput formControlName="firstName" placeholder="Имя">
-          <mat-error>Обязательное поле</mat-error>
-        </mat-form-field>
-        <mat-form-field class="profile__input">
-          <input matInput formControlName="lastName" placeholder="Фамилия">
-        </mat-form-field>
-        <mat-form-field class="profile__input">
-          <input matInput formControlName="secondName" placeholder="Отчество">
-        </mat-form-field>
-        <mat-form-field class="profile__input">
-          <mat-select formControlName="gender" placeholder="Пол">
-            <mat-option value="M">М</mat-option>
-            <mat-option value="F">Ж</mat-option>
-          </mat-select>
-        </mat-form-field>
-        <mat-form-field class="profile__input">
-          <input matInput formControlName="dob" placeholder="Дата рождения" [matDatepicker]="dob">
-          <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-          <mat-datepicker touchUi="true" #dob></mat-datepicker>
-        </mat-form-field>
+        <div class="profile__content">
+          <div class="profile__box _m-r">
+            <mat-form-field class="profile__input">
+              <input matInput formControlName="firstName" placeholder="Имя">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <mat-form-field class="profile__input">
+              <input matInput formControlName="lastName" placeholder="Фамилия">
+            </mat-form-field>
+            <mat-form-field class="profile__input">
+              <input matInput formControlName="secondName" placeholder="Отчество">
+            </mat-form-field>
+            <mat-form-field class="profile__input">
+              <mat-select formControlName="gender" placeholder="Пол">
+                <mat-option value="M">М</mat-option>
+                <mat-option value="F">Ж</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="profile__input">
+              <input matInput formControlName="dob" placeholder="Дата рождения" [matDatepicker]="dob">
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dob></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="profile__box">
+            <mat-form-field class="profile__input">
+              <textarea rows="15" matInput placeholder="Заметки"></textarea>
+            </mat-form-field>
+          </div>
+        </div>
         <div class="profile__button-wrapper">
           <button class="profile__button _left-button" mat-raised-button (click)="sendFormUpdateProfile()"
                   color="primary">
