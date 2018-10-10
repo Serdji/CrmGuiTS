@@ -26,7 +26,7 @@
         </div>
         <div class="profile__box">
           <div class="profile__list">
-            <span><b>Заметки: </b> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. </span>
+            <span><b>Заметки: </b> {{profile.comment}} </span>
           </div>
         </div>
       </mat-card-content>
@@ -52,8 +52,8 @@
             </mat-form-field>
             <mat-form-field class="profile__input">
               <mat-select formControlName="gender" placeholder="Пол">
-                <mat-option value="M">М</mat-option>
-                <mat-option value="F">Ж</mat-option>
+                <mat-option value="m">М</mat-option>
+                <mat-option value="f">Ж</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="profile__input">
@@ -64,7 +64,7 @@
           </div>
           <div class="profile__box">
             <mat-form-field class="profile__input">
-              <textarea rows="15" matInput placeholder="Заметки"></textarea>
+              <textarea rows="15" maxlength="1024" formControlName="comment" matInput placeholder="Заметки"></textarea>
             </mat-form-field>
           </div>
         </div>
