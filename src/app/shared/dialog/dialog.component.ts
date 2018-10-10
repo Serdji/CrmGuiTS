@@ -250,6 +250,12 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.router.navigate( [ '' ] );
           } );
         break;
+      case 'deleteProfileGroups':
+        this.profileGroupService.deleteCustomerGroups( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
     }
   }
 

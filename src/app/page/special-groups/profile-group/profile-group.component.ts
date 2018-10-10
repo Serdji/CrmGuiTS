@@ -4,6 +4,7 @@ import { ProfileGroupService } from './profile-group.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-profile-group',
@@ -28,12 +29,24 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.initForm();
     this.initTable();
+    this.profileGroupService.subjectDeleteProfileGroups
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshTable() );
   }
 
   private initForm() {
     this.formNameProfileGroup = this.fb.group( {
       'CustomerGroupName': ''
     } );
+  }
+
+  private refreshTable() {
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoader = true;
+        this.initTable();
+      } );
   }
 
   private initTable() {
