@@ -91,7 +91,7 @@
           <span class="add-segmentation__content-title">Билеты</span>
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="number" placeholder="Номер рейса" formControlName="flightNoT">
+              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="arrivalDFromIncludeT" matInput placeholder="Диапазон даты вылета с"
@@ -153,7 +153,7 @@
           <span class="add-segmentation__content-title">Платные услуги</span>
           <mat-card-content class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="number" placeholder="Номер рейса" formControlName="flightNoE">
+              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="arrivalDFromIncludeE" matInput placeholder="Диапазон даты вылета с"
@@ -200,10 +200,10 @@
           <span class="add-segmentation__content-title">Количество сегментов</span>
           <mat-card-content class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountFromInclude" matInput type="number" placeholder="От">
+              <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountToExclude" matInput type="number" placeholder="До">
+              <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <mat-select formControlName="eDocTypeS">
