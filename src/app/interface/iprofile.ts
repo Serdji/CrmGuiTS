@@ -10,6 +10,7 @@ export interface Iprofile {
   firstName: string;
   secondName: string;
   dob: string;
+  comment: string;
   segmentations: ISegmentation[];
   customerGroupRelations: IcustomerGroupRelations[];
 }

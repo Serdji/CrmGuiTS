@@ -116,13 +116,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.segmentationParams = segmentationParams;
         this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
         _( segmentationParams ).each( ( value, key ) => {
-          if ( !_.isNull( value ) && !_.isNaN( value ) ) {
+          if ( !_.isNull( value ) ) {
             if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
             this.formSegmentation.patchValue( value );
           }
         } );
         const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
-        if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) {
+        if ( !_.isNull( segmentsCountToExclude ) ) {
           this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
         }
       } );

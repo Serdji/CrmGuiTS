@@ -19,6 +19,15 @@
 
   &__content
     margin-top: 30px;
+    display: flex;
+    flex-direction: row;
+
+  &__box
+    flex: 1;
+    line-height: 1.5;
+
+    &._m-r
+      margin-right: 30px;
 
   &__checkbox
     margin-right: 20px;
@@ -49,6 +58,10 @@
 
   &__input
     display: block
+
+    textarea
+      height: 280px;
+      resize: none;
 
   &__button
 

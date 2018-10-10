@@ -87,6 +87,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       secondName: '',
       gender: '',
       dob: '',
+      comment: '',
     }, {
       updateOn: 'submit',
     } );

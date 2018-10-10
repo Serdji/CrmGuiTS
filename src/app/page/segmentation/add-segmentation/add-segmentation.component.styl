@@ -11,12 +11,14 @@
     &._pos-bottom
       bottom: auto
 
-
   &__content
     height: 100%;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+
+    &._row
+      flex-direction: row;
 
     &._none-justify
       justify-content: normal;
@@ -36,7 +38,6 @@
           cursor: pointer;
           color: #ff4081;
 
-
     &._input-row
       flex-direction: row;
       align-items: center;
@@ -53,7 +54,6 @@
       &._margin-none
         margin: 0;
 
-
       &-wrapper
         display: flex;
         width: 100%;
@@ -65,6 +65,12 @@
 
         &._right
           margin-left: auto;
+
+    &-group
+      flex: 1;
+
+      &._m-r
+        margin-right: 20px;
 
   &__button
 
