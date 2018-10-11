@@ -14,8 +14,8 @@ import { timer } from 'rxjs';
 export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
-  private isLoader: boolean;
 
+  public isLoader: boolean;
   public formNameProfileGroup: FormGroup;
   public profileGroup: IcustomerGroup[];
 
