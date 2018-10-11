@@ -33,8 +33,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
   public locations: Ilocation[];
-  public locationFromOptions: Observable<Ilocation[]>;
-  public locationToOptions: Observable<Ilocation[]>;
+  public locationFromOptionsT: Observable<Ilocation[]>;
+  public locationToOptionsT: Observable<Ilocation[]>;
+  public locationFromOptionsE: Observable<Ilocation[]>;
+  public locationToOptionsE: Observable<Ilocation[]>;
 
   private isActive: boolean;
   private segmentationId: number;
@@ -95,8 +97,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.locationFromOptions = this.autocomplete( 'deppoint' );
-    this.locationToOptions = this.autocomplete( 'arrpoint' );
+    this.locationFromOptionsT = this.autocomplete( 'departureLocationCodeT' );
+    this.locationToOptionsT = this.autocomplete( 'arrivalLocationCodeT' );
+    this.locationFromOptionsE = this.autocomplete( 'departureLocationCodeE' );
+    this.locationToOptionsE = this.autocomplete( 'arrivalLocationCodeE' );
   }
 
   private autocomplete( formControlName: string ): Observable<any> {
@@ -116,13 +120,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.segmentationParams = segmentationParams;
         this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
         _( segmentationParams ).each( ( value, key ) => {
-          if ( !_.isNull( value ) ) {
+          if ( !_.isNull( value ) && !_.isNaN( value ) ) {
             if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
             this.formSegmentation.patchValue( value );
           }
         } );
         const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
-        if ( !_.isNull( segmentsCountToExclude ) ) {
+        if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) {
           this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
         }
       } );
@@ -132,24 +136,42 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private initFormSegmentation() {
     this.formSegmentation = this.fb.group( {
       segmentationTitle: [ '', Validators.required ],
+      dobFromInclude: '',
+      dobToExclude: '',
+      withChild: '',
+      gender: '',
       subjectAnalysis: '',
       bookingCreateDateFromInclude: '',
       bookingCreateDateToExclude: '',
-      moneyAmountFromInclude: '',
-      moneyAmountToExclude: '',
+      moneyAmountFromInclude: [ '', Validators.required ],
+      moneyAmountToExclude: [ '', Validators.required ],
+      currency: '',
       eDocTypeP: [ '', Validators.required ],
-      segmentsCountFromInclude: '',
-      segmentsCountToExclude: '',
+      segmentsCountFromInclude: [ '', Validators.required ],
+      segmentsCountToExclude: [ '', Validators.required ],
       eDocTypeS: [ '', Validators.required ],
       currentRange: '',
       flightNoT: '',
       arrivalDFromIncludeT: '',
       arrivalDToExcludeT: '',
-      deppoint: '',
-      arrpoint: '',
+      departureLocationCodeT: '',
+      arrivalLocationCodeT: '',
+      cabinT: '',
+      rbdT: '',
+      fareCodeT: '',
+      serviceCodeT: '',
+      posGdsT: '',
+      posIdT: '',
+      posAgencyT: '',
       flightNoE: '',
       arrivalDFromIncludeE: '',
       arrivalDToExcludeE: '',
+      departureLocationCodeE: '',
+      arrivalLocationCodeE: '',
+      serviceCodeE: '',
+      posGdsE: '',
+      posIdE: '',
+      posAgencyE: ''
     }, {
       updateOn: 'submit',
     } );
@@ -159,7 +181,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formInputDisable() {
 
     _( [
-      'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP',
+      'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP', 'currency',
       'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS'
     ] )
       .each( values => this.formSegmentation.get( values ).disable() );
@@ -168,7 +190,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         _( this.formSegmentation.getRawValue() ).each( () => {
-          _( [ 'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP' ] )
+          _( [ 'moneyAmountFromInclude', 'moneyAmountToExclude', 'currency', 'eDocTypeP' ] )
             .each( value => {
               this.formSegmentation.get( value )[ params !== 'payment' ? 'disable' : 'enable' ]();
               this.formSegmentation.get( value ).patchValue( '' );
@@ -187,12 +209,20 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.formSegmentation.get( key ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( params => {
-            _( [ 'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT' ] )
+            _( [
+              'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
+              'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
+              'rbdT', 'fareCodeT', 'serviceCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
+            ] )
               .each( formControlName => {
                 this.formSegmentation.get( formControlName )[ params !== 'T' ? 'disable' : 'enable' ]();
                 this.formSegmentation.get( formControlName ).patchValue( '' );
               } );
-            _( [ 'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE' ] )
+            _( [
+              'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
+              'departureLocationCodeE', 'arrivalLocationCodeE',
+              'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE'
+            ] )
               .each( formControlName => {
                 this.formSegmentation.get( formControlName )[ params !== 'E' ? 'disable' : 'enable' ]();
                 this.formSegmentation.get( formControlName ).patchValue( '' );
@@ -267,6 +297,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
     const segmentationParameters = {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
+      customer: {
+        dobFromInclude: this.formSegmentation.get( 'dobFromInclude' ).value ?
+          moment( this.formSegmentation.get( 'dobFromInclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+        dobToExclude: this.formSegmentation.get( 'dobToExclude' ).value ?
+          moment( this.formSegmentation.get( 'dobToExclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+        withChild: this.formSegmentation.get( 'withChild' ).value,
+        gender: this.formSegmentation.get( 'gender' ).value,
+      },
       booking: {
         bookingCreateDateFromInclude: this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value ?
           moment( this.formSegmentation.get( 'bookingCreateDateFromInclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
@@ -276,6 +314,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       payment: {
         moneyAmountFromInclude: _.parseInt( this.formSegmentation.get( 'moneyAmountFromInclude' ).value ),
         moneyAmountToExclude: _.parseInt( this.formSegmentation.get( 'moneyAmountToExclude' ).value ),
+        currency: this.formSegmentation.get( 'currency' ).value,
         eDocTypeP: this.formSegmentation.get( 'eDocTypeP' ).value
       },
       segment: {
@@ -288,14 +327,29 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           moment( this.formSegmentation.get( 'arrivalDFromIncludeT' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeT: this.formSegmentation.get( 'arrivalDToExcludeT' ).value ?
           moment( this.formSegmentation.get( 'arrivalDToExcludeT' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
-        flightNoT: this.formSegmentation.get( 'flightNoT' ).value
+        flightNoT: this.formSegmentation.get( 'flightNoT' ).value,
+        departureLocationCodeT: this.formSegmentation.get( 'departureLocationCodeT' ).value,
+        arrivalLocationCodeT: this.formSegmentation.get( 'arrivalLocationCodeT' ).value,
+        cabinT: this.formSegmentation.get( 'cabinT' ).value,
+        rbdT: this.formSegmentation.get( 'rbdT' ).value,
+        fareCodeT: this.formSegmentation.get( 'fareCodeT' ).value,
+        serviceCodeT: this.formSegmentation.get( 'serviceCodeT' ).value,
+        posGdsT: this.formSegmentation.get( 'posGdsT' ).value,
+        posIdT: this.formSegmentation.get( 'posIdT' ).value,
+        posAgencyT: this.formSegmentation.get( 'posAgencyT' ).value,
       },
       emd: {
         arrivalDFromIncludeE: this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ?
           moment( this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeE: this.formSegmentation.get( 'arrivalDToExcludeE' ).value ?
           moment( this.formSegmentation.get( 'arrivalDToExcludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
-        flightNoE: this.formSegmentation.get( 'flightNoE' ).value
+        flightNoE: this.formSegmentation.get( 'flightNoE' ).value,
+        departureLocationCodeE: this.formSegmentation.get( 'departureLocationCodeE' ).value,
+        arrivalLocationCodeE: this.formSegmentation.get( 'arrivalLocationCodeE' ).value,
+        serviceCodeE: this.formSegmentation.get( 'serviceCodeE' ).value,
+        posGdsE: this.formSegmentation.get( 'posGdsE' ).value,
+        posIdE: this.formSegmentation.get( 'posIdE' ).value,
+        posAgencyE: this.formSegmentation.get( 'posAgencyE' ).value
       },
     };
 
@@ -308,7 +362,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         }
       } );
     } );
-
 
     return filterSegmentationParameters;
   }
