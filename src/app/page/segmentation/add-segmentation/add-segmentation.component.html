@@ -18,6 +18,27 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
+          <span class="add-segmentation__content-title">Диапазон дат бронирования</span>
+          <mat-card-content class="add-segmentation__content">
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
+                     [matDatepicker]="bookingCreateDateFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
+                     [matDatepicker]="bookingCreateDateToExclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-segmentation__card">
           <div class="add-segmentation__content-title-wrapper">
             <span class="add-segmentation__content-title">Предмет анализа</span>
             <mat-icon *ngIf="resetRadioButtonFood" matTooltip="Сбросить настройки предмета анализа"
@@ -39,25 +60,6 @@
         </mat-card>
       </mat-grid-tile>
 
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Диапазон дат бронирования</span>
-          <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
-                     [matDatepicker]="bookingCreateDateFromInclude">
-              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
-                     [matDatepicker]="bookingCreateDateToExclude">
-              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
 
       <!--<mat-grid-tile [colspan]="1" [rowspan]="1">-->
       <!--<mat-card class="add-segmentation__card">-->
@@ -203,30 +205,6 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Количество сегментов</span>
-          <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <mat-select formControlName="eDocTypeS">
-                <mat-option value="T">Билеты</mat-option>
-                <mat-option value="E">Услуги</mat-option>
-              </mat-select>
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
           <mat-card-content class="add-segmentation__content">
             <span class="add-segmentation__content-title">Детали профиля</span>
             <mat-form-field class="add-segmentation__input">
@@ -262,6 +240,31 @@
         </mat-card>
       </mat-grid-tile>
 
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-segmentation__card">
+          <span class="add-segmentation__content-title">Количество сегментов</span>
+          <mat-card-content class="add-segmentation__content">
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <mat-select formControlName="eDocTypeS">
+                <mat-option value="T">Билеты</mat-option>
+                <mat-option value="E">Услуги</mat-option>
+              </mat-select>
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+      </mat-grid-tile>
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">

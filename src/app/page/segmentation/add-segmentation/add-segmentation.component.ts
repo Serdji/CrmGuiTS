@@ -363,8 +363,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
     } );
 
-    console.log( filterSegmentationParameters );
-
     return filterSegmentationParameters;
   }
 
