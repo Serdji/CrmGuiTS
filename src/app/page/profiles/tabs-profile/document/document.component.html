@@ -30,6 +30,7 @@
         </mat-form-field>
         <mat-form-field class="document__input">
           <input matInput formControlName="expDate" placeholder="дд.мм.гггг" [matDatepicker]="expDate">
+          <mat-error>Обязательное поле</mat-error>
           <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #expDate></mat-datepicker>
         </mat-form-field>

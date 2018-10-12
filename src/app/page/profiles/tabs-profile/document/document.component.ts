@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DocumentService } from './document.service';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
@@ -75,7 +75,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       lastName: '',
       firstName: '',
       secondName: '',
-      expDate: '',
+      expDate: [ '', Validators.required ],
     }, {
       updateOn: 'submit',
     } );
