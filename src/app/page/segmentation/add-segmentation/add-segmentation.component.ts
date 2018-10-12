@@ -159,7 +159,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       cabinT: '',
       rbdT: '',
       fareCodeT: '',
-      serviceCodeT: '',
       posGdsT: '',
       posIdT: '',
       posAgencyT: '',
@@ -212,7 +211,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             _( [
               'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
               'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
-              'rbdT', 'fareCodeT', 'serviceCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
+              'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
             ] )
               .each( formControlName => {
                 this.formSegmentation.get( formControlName )[ params !== 'T' ? 'disable' : 'enable' ]();
@@ -333,7 +332,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         cabinT: this.formSegmentation.get( 'cabinT' ).value,
         rbdT: this.formSegmentation.get( 'rbdT' ).value,
         fareCodeT: this.formSegmentation.get( 'fareCodeT' ).value,
-        serviceCodeT: this.formSegmentation.get( 'serviceCodeT' ).value,
         posGdsT: this.formSegmentation.get( 'posGdsT' ).value,
         posIdT: this.formSegmentation.get( 'posIdT' ).value,
         posAgencyT: this.formSegmentation.get( 'posAgencyT' ).value,
