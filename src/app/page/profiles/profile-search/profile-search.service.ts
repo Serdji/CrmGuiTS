@@ -2,7 +2,7 @@ import { Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { IprofileSearch } from '../../../interface/iprofile-search';
-import { map, retry } from 'rxjs/operators';
+import { retry } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
 
 @Injectable()
@@ -37,8 +37,8 @@ export class ProfileSearchService {
     return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
   }
 
-  downloadCsv(): Observable<any> {
-    return this.http.get( this.configService.crmApi + 'crm/customer/searchCsv', { responseType: 'blob', observe: 'response' } ).pipe(retry( 10 ));
+  downloadCsv( params ): Observable<any> {
+    return this.http.get( this.configService.crmApi + 'crm/customer/searchCsv', { params, responseType: 'blob', observe: 'response' } ).pipe(retry( 10 ));
   }
 
 }

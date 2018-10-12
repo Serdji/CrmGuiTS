@@ -13,29 +13,7 @@
       </mat-grid-tile>
     </mat-grid-list>
 
-
     <mat-grid-list cols="4" rowHeight="300px">
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Диапазон дат бронирования</span>
-          <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
-                     [matDatepicker]="bookingCreateDateFromInclude">
-              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
-                     [matDatepicker]="bookingCreateDateToExclude">
-              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
@@ -60,33 +38,6 @@
         </mat-card>
       </mat-grid-tile>
 
-
-      <!--<mat-grid-tile [colspan]="1" [rowspan]="1">-->
-      <!--<mat-card class="add-segmentation__card">-->
-      <!--<div class="add-segmentation__content-title-wrapper">-->
-      <!--<span class="add-segmentation__content-title">Текущий диапазон</span>-->
-      <!--<mat-icon *ngIf="resetRadioButtonCurrentRange" matTooltip="Сбросить настройки текущий диапазон"-->
-      <!--(click)="resetRadioButton('currentRange')">remove_circle_outline-->
-      <!--</mat-icon>-->
-      <!--</div>-->
-      <!--<mat-card-content class="add-segmentation__content">-->
-      <!--<mat-radio-group class="add-segmentation__input" formControlName="currentRange">-->
-      <!--<div class="add-segmentation__input-radio-wrapper">-->
-      <!--<div class="add-segmentation__input-radio-group">-->
-      <!--<mat-radio-button class="add-segmentation__input-radio" value="month">Месяц</mat-radio-button>-->
-      <!--<mat-radio-button class="add-segmentation__input-radio _margin-none" value="quarter">Квартал-->
-      <!--</mat-radio-button>-->
-      <!--</div>-->
-      <!--<div class="add-segmentation__input-radio-group _right">-->
-      <!--<mat-radio-button class="add-segmentation__input-radio" value="halfyear">Полугодие</mat-radio-button>-->
-      <!--<mat-radio-button class="add-segmentation__input-radio _margin-none" value="year">Год-->
-      <!--</mat-radio-button>-->
-      <!--</div>-->
-      <!--</div>-->
-      <!--</mat-radio-group>-->
-      <!--</mat-card-content>-->
-      <!--</mat-card>-->
-      <!--</mat-grid-tile>-->
 
       <mat-grid-tile [colspan]="1" [rowspan]="3">
         <mat-card class="add-segmentation__card">
@@ -129,11 +80,11 @@
               <input matInput formControlName="fareCodeT" type="text" placeholder="Код тарифа">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
               <input matInput formControlName="posGdsT" type="text" placeholder="Код ГРС (точка продажи)">
             </mat-form-field>
+            <!--<mat-form-field class="add-segmentation__input">-->
+              <!--<input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">-->
+            <!--</mat-form-field>-->
             <!--<mat-form-field class="add-segmentation__input">-->
               <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
             <!--</mat-form-field>-->
@@ -205,37 +156,20 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">
+          <span class="add-segmentation__content-title">Диапазон дат бронирования</span>
           <mat-card-content class="add-segmentation__content">
-            <span class="add-segmentation__content-title">Детали профиля</span>
             <mat-form-field class="add-segmentation__input">
-              <mat-select formControlName="gender" placeholder="Пол">
-                <mat-option></mat-option>
-                <mat-option value="M">М</mat-option>
-                <mat-option value="F">Ж</mat-option>
-              </mat-select>
+              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
+                     [matDatepicker]="bookingCreateDateFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="dobFromInclude" placeholder="Дата рождения от" [matDatepicker]="dobFromInclude">
-              <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
+              <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
+                     [matDatepicker]="bookingCreateDateToExclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="dobToExclude" placeholder="Дата рождения до" [matDatepicker]="dobToExclude">
-              <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
-            </mat-form-field>
-            <mat-radio-group formControlName="withChild" class="add-segmentation__input">
-              <div class="add-segmentation__input-radio-wrapper">
-                <div class="add-segmentation__input-radio-group">
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="true">Летает с детьми
-                  </mat-radio-button>
-                </div>
-                <div class="add-segmentation__input-radio-group _right">
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="false">Летает без детей
-                  </mat-radio-button>
-                </div>
-              </div>
-            </mat-radio-group>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -264,7 +198,42 @@
       </mat-grid-tile>
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-segmentation__card">
+          <mat-card-content class="add-segmentation__content">
+            <span class="add-segmentation__content-title">Детали профиля</span>
+            <mat-form-field class="add-segmentation__input">
+              <mat-select formControlName="gender" placeholder="Пол">
+                <mat-option></mat-option>
+                <mat-option value="M">М</mat-option>
+                <mat-option value="F">Ж</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dobFromInclude" placeholder="Дата рождения от" [matDatepicker]="dobFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dobToExclude" placeholder="Дата рождения до" [matDatepicker]="dobToExclude">
+              <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
+            </mat-form-field>
+            <mat-radio-group formControlName="withChild" class="add-segmentation__input">
+              <div class="add-segmentation__input-radio-wrapper">
+                <div class="add-segmentation__input-radio-group">
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="true">Летает с детьми
+                  </mat-radio-button>
+                </div>
+                <div class="add-segmentation__input-radio-group _right">
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="false">Летает без детей
+                  </mat-radio-button>
+                </div>
+              </div>
+            </mat-radio-group>
+          </mat-card-content>
+        </mat-card>
       </mat-grid-tile>
+
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-segmentation__card">

@@ -77,7 +77,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   downloadCsv(): void {
-    this.profileSearchService.downloadCsv()
+    this.profileSearchService.downloadCsv( this.sendProfileParams )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( resp => {
         const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
