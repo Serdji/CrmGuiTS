@@ -46,7 +46,7 @@
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content _right-width">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Группы:</span>
+                  <span class="tabs-profile__content-text">Группы сегментации:</span>
                 </div>
                 <div
                   *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
@@ -65,7 +65,7 @@
 
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Спецгруппы:</span>
+                  <span class="tabs-profile__content-text">Группы пассажиров:</span>
                 </div>
                 <div *ngFor="let takeProfileGroup of profileGroup.takeProfileGroup" class="tabs-profile__content-point">
                   <b>{{takeProfileGroup.customerGroup.customerGroupName}}</b>
