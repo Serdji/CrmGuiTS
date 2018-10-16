@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\page",
+    "\\src\\app\\page\\profiles",
+    "\\src\\app\\page\\profiles\\tabs-profile",
+    "\\src\\app\\page\\profiles\\tabs-profile\\order",
+    "\\src\\app\\page\\segmentation\\add-segmentation",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\material"
+  ],
+  "SelectedNode": "\\src\\app\\page\\profiles\\tabs-profile\\order\\order.component.html",
+  "PreviewInSolutionExplorer": false
+}
