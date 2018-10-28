@@ -102,3 +102,8 @@ input[type="number"]:hover,
 input[type="number"]:focus {
   -moz-appearance: number-input;
 }
+
+.mat-drawer-inner-container {
+   display: flex;
+   flex-direction: column;
+ }
