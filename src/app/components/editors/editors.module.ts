@@ -1,21 +1,33 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ServicesModule } from '../../services/services.module';
 import { NgxWigModule } from 'ngx-wig';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EditorComponent } from './editor/editor.component';
 import { EditorService } from './editor/editor.service';
+import { DialogEditorComponent } from './dialog-editor/dialog-editor.component';
+import { ButtonEditorComponent } from './button-editor/button-editor.component';
+import { SharedModule } from '../../shared/shared.module';
 
-@NgModule({
+@NgModule( {
   imports: [
     CommonModule,
-    ServicesModule,
     NgxWigModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SharedModule,
   ],
-  declarations: [ EditorComponent ],
-  exports: [ EditorComponent ],
+  declarations: [
+    EditorComponent,
+    DialogEditorComponent,
+    ButtonEditorComponent,
+  ],
+  exports: [
+    EditorComponent,
+    DialogEditorComponent,
+    ButtonEditorComponent,
+  ],
+  entryComponents: [ DialogEditorComponent ],
   providers: [ EditorService ]
-})
-export class EditorsModule { }
+} )
+export class EditorsModule {
+}

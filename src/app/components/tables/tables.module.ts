@@ -15,6 +15,7 @@ import { TabletExampleSegmentationComponent } from './tablet-example-segmentatio
 import { TabletAsyncSegmentationProfileComponent } from './tablet-async-segmentation-profile/tablet-async-segmentation-profile.component';
 import { TabletAsyncSegmentationProfileService } from './tablet-async-segmentation-profile/tablet-async-segmentation-profile.service';
 import { TabletExampleProfileGroupComponent } from './tablet-example-profile-group/tablet-example-profile-group.component';
+import { EditorsModule } from '../editors/editors.module';
 
 @NgModule({
   imports: [
@@ -22,6 +23,7 @@ import { TabletExampleProfileGroupComponent } from './tablet-example-profile-gro
     SharedModule,
     DirectivesModule,
     PipesModule,
+    EditorsModule
   ],
   declarations: [
     TableExampleComponent,
