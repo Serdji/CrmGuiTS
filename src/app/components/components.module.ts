@@ -1,17 +1,17 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 import { TablesModule } from './tables/tables.module';
 import { CommonModule } from '@angular/common';
-import { EditorModule } from './editor/editor.module';
+import { EditorsModule } from './editors/editors.module';
 
 @NgModule({
   imports: [
     CommonModule,
     TablesModule,
-    EditorModule,
+    EditorsModule,
   ],
   exports: [
     TablesModule,
-    EditorModule,
+    EditorsModule,
   ],
 })
 export class ComponentsModule {
