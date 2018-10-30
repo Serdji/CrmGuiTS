@@ -28,6 +28,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
   openDialog(): void {
     if ( _.isArray( this.ids ) && _.size( this.ids ) > 0 ) {
       this.dialog.open( DialogEditorComponent, {
+        width: '80vw',
         data: {
           params: { ids: this.ids }
         }
@@ -37,6 +38,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => {
           this.dialog.open( DialogEditorComponent, {
+            width: '80vw',
             data: {
               params: value
             }

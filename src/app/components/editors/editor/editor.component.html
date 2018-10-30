@@ -1,15 +1,33 @@
 <div class="editor">
   <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet" />
   <form class="editor__form" [formGroup]="distribution">
-    <mat-form-field class="editor__input">
-      <input matInput formControlName="subject" type="text" placeholder="Тема">
-      <mat-error>Обязательное поле</mat-error>
-    </mat-form-field>
-    <ngx-wig formControlName="text" [placeholder]="'Текст'"></ngx-wig>
-    <mat-form-field class="editor__input">
-      <input matInput formControlName="footer" type="text" placeholder="Подпись">
-      <mat-error>Обязательное поле</mat-error>
-    </mat-form-field>
+    <mat-grid-list cols="5" rowHeight="500px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <div class="editor__box">
+
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <div class="editor__box">
+          <mat-form-field class="editor__input">
+            <input matInput formControlName="subject" type="text" placeholder="Тема">
+            <mat-error>Обязательное поле</mat-error>
+          </mat-form-field>
+          <ngx-wig formControlName="text" [placeholder]="'Текст'"></ngx-wig>
+          <mat-form-field class="editor__input">
+            <input matInput formControlName="footer" type="text" placeholder="Подпись">
+            <mat-error>Обязательное поле</mat-error>
+          </mat-form-field>
+        </div>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <div class="editor__box">
+
+        </div>
+      </mat-grid-tile>
+    </mat-grid-list>
   </form>
   <button class="editor__button" mat-raised-button color="primary" (click)="sendDistribution()">Отправить сообщение</button>
 </div>
