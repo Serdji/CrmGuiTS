@@ -1,15 +1,18 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogEditorComponent } from '../dialog-editor/dialog-editor.component';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-button-editor',
   templateUrl: './button-editor.component.html',
   styleUrls: [ './button-editor.component.styl' ]
 } )
-export class ButtonEditorComponent implements OnInit, OnDestroy {
+export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
+
+  @Input() ids: number[];
 
   private isActive: boolean;
 
@@ -23,15 +26,23 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
   }
 
   openDialog(): void {
-    this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.dialog.open( DialogEditorComponent, {
-          data: {
-            params: value
-          }
-        } );
+    if ( _.isArray( this.ids ) && _.size( this.ids ) > 0 ) {
+      this.dialog.open( DialogEditorComponent, {
+        data: {
+          params: { ids: this.ids }
+        }
       } );
+    } else {
+      this.route.queryParams
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => {
+          this.dialog.open( DialogEditorComponent, {
+            data: {
+              params: value
+            }
+          } );
+        } );
+    }
   }
 
   ngOnDestroy(): void {

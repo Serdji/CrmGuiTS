@@ -26,6 +26,7 @@
                       [id]="element.customerId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
+                      (change)="isIds()"
                       [checked]="selection.isSelected(element)">
         </mat-checkbox>
       </mat-cell>
@@ -91,5 +92,5 @@
     Удалить
     <mat-icon>delete</mat-icon>
   </button>
-  <app-button-editor></app-button-editor>
+  <app-button-editor [ids]="ids"></app-button-editor>
 </div>
