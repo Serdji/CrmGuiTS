@@ -51,6 +51,39 @@ export class EditorComponent implements OnInit, OnDestroy {
       } );
   }
 
+  senVarPlaceholder( params: string ): void {
+    const val = ` {{ ${params} }} `;
+    let sel, range;
+
+    if ( window.getSelection ) {
+      sel = window.getSelection();
+
+      if ( sel.getRangeAt && sel.rangeCount ) {
+        range = sel.getRangeAt( 0 );
+        range.deleteContents();
+
+        // append the content in a temporary div
+        const el = document.createElement( 'div' );
+        el.innerHTML = val;
+        const frag = document.createDocumentFragment();
+        let node, lastNode;
+        while ( ( node = el.firstChild ) ) {
+          lastNode = frag.appendChild( node );
+        }
+        range.insertNode( frag );
+
+        // Preserve the selection
+        if ( lastNode ) {
+          range = range.cloneRange();
+          range.setStartAfter( lastNode );
+          range.collapse( true );
+          sel.removeAllRanges();
+          sel.addRange( range );
+        }
+      }
+    }
+  }
+
 
   sendDistribution(): void {
     const newParams = _( this.distribution.getRawValue() ).merge( this.params ).set( 'templateId', 3 ).value();
