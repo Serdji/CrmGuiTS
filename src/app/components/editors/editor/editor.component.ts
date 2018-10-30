@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxWigToolbarService } from 'ngx-wig';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { EditorService } from './editor.service';
 
 @Component( {
   selector: 'app-editor',
@@ -21,6 +22,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   constructor(
     private ngxWigToolbarService: NgxWigToolbarService,
     private fb: FormBuilder,
+    private editorService: EditorService
   ) {
   }
 
@@ -43,7 +45,9 @@ export class EditorComponent implements OnInit, OnDestroy {
   sendDistribution(): void {
     let newParams;
     newParams = _.merge( this.distribution.getRawValue(), this.params );
-    console.log(newParams);
+    this.editorService.setDistribution( newParams )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => console.log( value ) );
   }
 
   ngOnDestroy(): void {
