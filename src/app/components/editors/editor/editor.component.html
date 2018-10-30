@@ -1,4 +1,15 @@
-<div class="mat-app-background basic-container">
+<div class="editor">
   <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet" />
-  <ngx-wig [formControl]="nameControl"></ngx-wig>
+  <form class="editor__form" [formGroup]="distribution">
+    <mat-form-field class="editor__input">
+      <input matInput formControlName="subject" type="text" placeholder="Тема">
+      <mat-error>Обязательное поле</mat-error>
+    </mat-form-field>
+    <ngx-wig formControlName="text" [placeholder]="'Текст'"></ngx-wig>
+    <mat-form-field class="editor__input">
+      <input matInput formControlName="footer" type="text" placeholder="Подпись">
+      <mat-error>Обязательное поле</mat-error>
+    </mat-form-field>
+  </form>
+  <button class="editor__button" mat-raised-button color="primary" (click)="sendDistribution()">Отправить сообщение</button>
 </div>
