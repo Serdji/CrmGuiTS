@@ -4,6 +4,7 @@ import { NgxWigToolbarService } from 'ngx-wig';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { EditorService } from './editor.service';
+import { IDistributionPlaceholder } from '../../../interface/idistribution-placeholder';
 
 @Component( {
   selector: 'app-editor',
@@ -15,6 +16,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   @Input() params: any;
 
   public distribution: FormGroup;
+  public distributionPlaceholders: IDistributionPlaceholder[];
 
   private isActive: boolean;
 
@@ -23,13 +25,12 @@ export class EditorComponent implements OnInit, OnDestroy {
     private ngxWigToolbarService: NgxWigToolbarService,
     private fb: FormBuilder,
     private editorService: EditorService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.isActive = true;
     this.initForm();
-
+    this.initDistributionPlaceholder();
   }
 
   private initForm() {
@@ -41,6 +42,15 @@ export class EditorComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
   }
+
+  private initDistributionPlaceholder() {
+    this.editorService.getDistributionPlaceholder()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.distributionPlaceholders = value;
+      } );
+  }
+
 
   sendDistribution(): void {
     const newParams = _( this.distribution.getRawValue() ).merge( this.params ).set( 'templateId', 3 ).value();

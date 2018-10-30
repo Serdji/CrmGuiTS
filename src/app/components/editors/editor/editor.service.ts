@@ -5,9 +5,9 @@ import { IprofileSearch } from '../../../interface/iprofile-search';
 import { Observable } from 'rxjs';
 import { retry } from 'rxjs/operators';
 
-@Injectable({
+@Injectable( {
   providedIn: 'root'
-})
+} )
 export class EditorService {
 
   private params: any;
@@ -20,6 +20,10 @@ export class EditorService {
   setDistribution( params: IprofileSearch ): Observable<any> {
     this.params = params;
     return this.http.get( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', { params: this.params } ).pipe( retry( 10 ) );
+  }
+
+  getDistributionPlaceholder(): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholder' ).pipe( retry( 10 ) );
   }
 
 }

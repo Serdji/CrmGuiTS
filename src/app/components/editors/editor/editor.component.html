@@ -5,7 +5,9 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="editor__box mat-elevation-z0">
           <mat-card-title>Переменные рассылок</mat-card-title>
-
+          <mat-action-list *ngFor=" let distributionPlaceholder of distributionPlaceholders ">
+            <button matRipple mat-list-item  matTooltip="Пример: {{distributionPlaceholder.example}} ">{{ distributionPlaceholder.description }}</button>
+          </mat-action-list>
         </mat-card>
       </mat-grid-tile>
 
