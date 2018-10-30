@@ -43,11 +43,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   sendDistribution(): void {
-    let newParams;
-    newParams = _.merge( this.distribution.getRawValue(), this.params );
+    const newParams = _( this.distribution.getRawValue() ).merge( this.params ).set( 'templateId', 3 ).value();
     this.editorService.setDistribution( newParams )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => console.log( value ) );
+      .subscribe();
   }
 
   ngOnDestroy(): void {
