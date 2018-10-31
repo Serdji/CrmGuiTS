@@ -51,8 +51,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       } );
   }
 
-  senVarPlaceholder( params: string ): void {
-    const val = ` {{ ${params} }} `;
+  sendVarPlaceholder( params: string ): void {
+    const val = `{{ ${params} }}`;
     let sel, range;
 
     if ( window.getSelection ) {
