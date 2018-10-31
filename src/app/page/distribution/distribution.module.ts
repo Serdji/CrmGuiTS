@@ -5,7 +5,7 @@ import { ListDistributionModule } from './list-distribution/list-distribution.mo
 @NgModule({
   imports: [
     CommonModule,
-    ListDistributionModule,
+    ListDistributionModule
   ],
   declarations: []
 })
