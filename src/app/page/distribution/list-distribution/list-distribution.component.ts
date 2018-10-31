@@ -1,15 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Idistribution } from '../../../interface/idistribution';
 
-@Component({
+@Component( {
   selector: 'app-list-distribution',
   templateUrl: './list-distribution.component.html',
-  styleUrls: ['./list-distribution.component.styl']
-})
-export class ListDistributionComponent implements OnInit {
+  styleUrls: [ './list-distribution.component.styl' ]
+} )
+export class ListDistributionComponent implements OnInit, OnDestroy {
+
+  public distribution: Idistribution[];
+  public isLoader: boolean;
+
+  private isActive: boolean;
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
+    this.isActive = true;
   }
 
+  ngOnDestroy(): void {
+    this.isActive = false;
+  }
 }
