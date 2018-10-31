@@ -37,12 +37,21 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
       this.route.queryParams
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => {
-          this.dialog.open( DialogEditorComponent, {
-            width: '80vw',
-            data: {
-              params: value
-            }
-          } );
+          if ( _.has( value, 'segmentationId' ) ) {
+            this.dialog.open( DialogEditorComponent, {
+              width: '80vw',
+              data: {
+                params: { 'segmentationIds': [ value.segmentationId ] }
+              }
+            } );
+          } else {
+            this.dialog.open( DialogEditorComponent, {
+              width: '80vw',
+              data: {
+                params: value
+              }
+            } );
+          }
         } );
     }
   }
