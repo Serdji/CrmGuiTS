@@ -48,6 +48,13 @@ export class SidenavService {
         ]
       },
       {
+        name: 'Рассылки',
+        icon: 'email',
+        link: [
+          { url: '/crm/list-distribution', title: 'Список рассылок' },
+        ]
+      },
+      {
         name: 'Настройки',
         icon: 'settings',
         link: [
