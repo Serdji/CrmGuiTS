@@ -1,0 +1,81 @@
+<div class="table">
+  <mat-form-field class="table__input">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
+  </mat-form-field>
+  <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
+
+    <ng-container matColumnDef="select" sticky>
+      <mat-header-cell *matHeaderCellDef>
+        <mat-checkbox appAccessRights="analytics:update"
+                      appAccessDisabled="true"
+                      [disabled]="isDisabled"
+                      (emitAccessDisabled)="disabledCheckbox($event)"
+                      (change)="$event ? masterToggle() : null"
+                      [checked]="selection.hasValue() && isAllSelected()"
+                      [indeterminate]="selection.hasValue() && !isAllSelected()">
+        </mat-checkbox>
+      </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <mat-checkbox appAccessRights="analytics:update"
+                      appAccessDisabled="true"
+                      (emitAccessDisabled)="disabledCheckbox($event)"
+                      [disabled]="isDisabled"
+                      [id]="element.distributionId"
+                      (click)="$event.stopPropagation()"
+                      (change)="$event ? selection.toggle(element) : null"
+                      [checked]="selection.isSelected(element)">
+        </mat-checkbox>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="subject">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Тема</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.subject}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="status">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Статус</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.status.statusNameRus}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateFrom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата от</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="dateTo">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата до</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="distributionId" stickyEnd>
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element">
+        <mat-icon (click)="redirectToDistribution(element.distributionId)" >remove_red_eye</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 20, 50, 100]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
+  <div class="table__button-wrapper">
+    <button appAccessRights="analytics:update" class="table__button" mat-raised-button (click)="deleteContact()"
+            [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
+      Удалить
+      <mat-icon>delete</mat-icon>
+    </button>
+  </div>
+</div>

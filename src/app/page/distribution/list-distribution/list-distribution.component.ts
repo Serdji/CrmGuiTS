@@ -19,6 +19,7 @@ export class ListDistributionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.isLoader = true;
     this.initDistribution();
   }
 

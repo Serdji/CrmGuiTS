@@ -1,3 +1,11 @@
 <div class="list-distribution">
+  <div class="list-distribution">
+    <mat-card>
+      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaserDisabled>
+        <app-tablet-example-distribution  *ngIf="distribution.length !== 0" [tableDataSource]="distribution"></app-tablet-example-distribution>
+      </ng-template>
+    </mat-card>
+  </div>
 
 </div>
