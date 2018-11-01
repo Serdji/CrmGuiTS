@@ -17,6 +17,8 @@ import { TabletAsyncSegmentationProfileService } from './tablet-async-segmentati
 import { TabletExampleProfileGroupComponent } from './tablet-example-profile-group/tablet-example-profile-group.component';
 import { EditorsModule } from '../editors/editors.module';
 import { TabletExampleDistributionComponent } from './tablet-example-distribution/tablet-example-distribution.component';
+import { TabletAsyncDistributionProfileComponent } from './tablet-async-distribution-profile/tablet-async-distribution-profile.component';
+import { TabletAsyncDistributionProfileService } from './tablet-async-distribution-profile/tablet-async-distribution-profile.service';
 
 @NgModule({
   imports: [
@@ -37,6 +39,7 @@ import { TabletExampleDistributionComponent } from './tablet-example-distributio
     TabletAsyncSegmentationProfileComponent,
     TabletExampleProfileGroupComponent,
     TabletExampleDistributionComponent,
+    TabletAsyncDistributionProfileComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -49,11 +52,13 @@ import { TabletExampleDistributionComponent } from './tablet-example-distributio
     TabletAsyncSegmentationProfileComponent,
     TabletExampleProfileGroupComponent,
     TabletExampleDistributionComponent,
+    TabletAsyncDistributionProfileComponent,
   ],
   providers: [
     TableAsyncService,
     TableAsyncProfileService,
-    TabletAsyncSegmentationProfileService
+    TabletAsyncSegmentationProfileService,
+    TabletAsyncDistributionProfileService,
   ]
 })
 export class TablesModule { }
