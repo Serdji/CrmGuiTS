@@ -72,7 +72,7 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
   <div class="table__button-wrapper">
-    <button appAccessRights="analytics:update" class="table__button" mat-raised-button (click)="deleteContact()"
+    <button appAccessRights="analytics:update" class="table__button" mat-raised-button (click)="deleteDisplayed()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
       Удалить
       <mat-icon>delete</mat-icon>

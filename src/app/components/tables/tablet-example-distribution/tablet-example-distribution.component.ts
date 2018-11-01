@@ -115,24 +115,24 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteContact(): void {
-    const arrayId = [];
-    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
-    checkbox.forEach( ( el: HTMLInputElement ) => {
-      if ( el.checked ) {
-        const id = el.id.split( '-' );
-        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
-      }
-    } );
-
-    if ( arrayId.length !== 0 ) {
-      const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'segmentations' );
-    }
+  deleteDisplayed(): void {
+    // const arrayId = [];
+    // const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    // checkbox.forEach( ( el: HTMLInputElement ) => {
+    //   if ( el.checked ) {
+    //     const id = el.id.split( '-' );
+    //     if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+    //   }
+    // } );
+    //
+    // if ( arrayId.length !== 0 ) {
+    //   const params = Object.assign( {}, { ids: arrayId } );
+    //   this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'segmentations' );
+    // }
   }
 
   redirectToDistribution( id: number ): void {
-    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id } } );
+    // this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id } } );
   }
 
   disabledCheckbox( eventData ): void {
