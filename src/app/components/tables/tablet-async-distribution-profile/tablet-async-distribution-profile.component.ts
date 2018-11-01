@@ -55,7 +55,8 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       'firstName',
       'lastName',
       'secondName',
-      'customerId',
+      'distributionCustomerStatus',
+      'distributionCustomerId',
     ];
   }
 
@@ -135,7 +136,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToProfile( id: number ): void {
+  redirectToDisplayed( id: number ): void {
     // this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 

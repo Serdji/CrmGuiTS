@@ -38,10 +38,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         if ( params.id ) {
-          console.log(params.id);
           this.distributionProfileId = +params.id;
           this.initTableProfile( this.distributionProfileId  );
-          this.isLoader = false;
         }
       } );
   }
