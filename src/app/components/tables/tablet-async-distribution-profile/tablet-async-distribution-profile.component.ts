@@ -136,7 +136,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
   }
 
   redirectToProfile( id: number ): void {
-    this.router.navigate( [ `/crm/profile/${id}` ] );
+    // this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {
