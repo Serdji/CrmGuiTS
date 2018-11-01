@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProfileDistributionService } from './profile-distribution.service';
 import { takeWhile } from 'rxjs/operators';
+import { IdistributionProfile } from '../../../interface/idistribution-profile';
 
 @Component({
   selector: 'app-profile-distribution',
@@ -11,10 +12,10 @@ import { takeWhile } from 'rxjs/operators';
 export class ProfileDistributionComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
-  public profileDistribution: any;
+  public distributionProfile: IdistributionProfile;
 
   private isActive: boolean;
-  private profileDistributionId: number;
+  private distributionProfileId: number;
 
   constructor(
     private route: ActivatedRoute,
@@ -33,8 +34,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         if ( params.id ) {
           console.log(params.id);
-          this.profileDistributionId = +params.id;
-          this.initTableProfile( this.profileDistributionId  );
+          this.distributionProfileId = +params.id;
+          this.initTableProfile( this.distributionProfileId  );
         }
       } );
   }
@@ -48,8 +49,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     };
     this.profileDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( profileDistribution ) => {
-        this.profileDistribution = profileDistribution;
+      .subscribe( ( distributionProfile: IdistributionProfile ) => {
+        this.distributionProfile = distributionProfile;
         this.isLoader = false;
       } );
   }
