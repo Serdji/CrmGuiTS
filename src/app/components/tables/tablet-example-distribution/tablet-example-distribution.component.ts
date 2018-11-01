@@ -132,7 +132,7 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
   }
 
   redirectToDistribution( id: number ): void {
-    // this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id } } );
+    this.router.navigate( [ `/crm/profile-distribution/${1}` ] );
   }
 
   disabledCheckbox( eventData ): void {

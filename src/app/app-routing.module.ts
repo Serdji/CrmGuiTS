@@ -19,6 +19,7 @@ import { ListSegmentationComponent } from './page/segmentation/list-segmentation
 import { ProfileGroupComponent } from './page/special-groups/profile-group/profile-group.component';
 import { ErrorPageComponent } from './page/error-page/error-page.component';
 import { ListDistributionComponent } from './page/distribution/list-distribution/list-distribution.component';
+import { ProfileDistributionComponent } from './page/distribution/profile-distribution/profile-distribution.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -38,6 +39,7 @@ const routes: Routes = [
         { path: 'addsegmentation', component: AddSegmentationComponent },
         { path: 'profilegroup', component: ProfileGroupComponent },
         { path: 'list-distribution', component: ListDistributionComponent },
+        { path: 'profile-distribution/:id', component: ProfileDistributionComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
       ],
