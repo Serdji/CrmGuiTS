@@ -37,7 +37,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-  initSegmentation() {
+  private initSegmentation() {
     this.listSegmentationService.getSegmentation()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentation => {

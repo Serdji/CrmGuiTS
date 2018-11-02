@@ -76,8 +76,8 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         takeWhile( _ => this.isActive ),
         map( profile => {
           if ( orders ) {
-            const { lut } = _.minBy( orders, o => o.lut );
-            return _.merge( profile, { lut } );
+            const { createDate } = _.minBy( orders, o => o.createDate );
+            return _.merge( profile, { createDate } );
           }
           return profile;
         } ) )

@@ -1,0 +1,12 @@
+<div class="profile-distribution">
+  <mat-card class="profile-distribution__table">
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
+      <app-tablet-async-distribution-profile
+        *ngIf="distributionProfile.customers.length !== 0"
+        [tableDataSource]="distributionProfile.customers">
+      </app-tablet-async-distribution-profile>
+    </ng-template>
+  </mat-card>
+
+</div>
