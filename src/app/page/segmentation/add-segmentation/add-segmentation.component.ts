@@ -77,12 +77,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
-        if ( params.id ) {
+        if ( params.segmentationId ) {
           this.buttonSave = true;
           this.buttonCreate = false;
           this.buttonDelete = false;
           this.buttonSearch = false;
-          this.segmentationId = +params.id;
+          this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
         }
       } );

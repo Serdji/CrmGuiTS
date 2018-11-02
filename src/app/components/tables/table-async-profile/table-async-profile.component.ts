@@ -29,6 +29,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   public isLoadingResults: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+  public ids: number[];
 
   private isActive: boolean = true;
 
@@ -160,6 +161,23 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  isIds(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      } else {
+        this.ids = [];
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      this.ids = arrayId;
+    }
   }
 
   ngOnDestroy(): void {

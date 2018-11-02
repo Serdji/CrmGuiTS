@@ -128,8 +128,8 @@ export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
     }
   }
 
-  redirectToSegmentation( id: number ): void {
-    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id } } );
+  redirectToSegmentation( segmentationId: number ): void {
+    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId } } );
   }
 
   disabledCheckbox( eventData ): void {
