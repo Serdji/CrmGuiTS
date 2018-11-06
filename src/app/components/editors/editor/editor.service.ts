@@ -20,7 +20,7 @@ export class EditorService {
   }
 
   getDistributionPlaceholders(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholders' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholder' ).pipe( retry( 10 ) );
   }
 
   getTemplates(): Observable<any> {

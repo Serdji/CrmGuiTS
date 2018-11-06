@@ -111,15 +111,18 @@ export class EditorComponent implements OnInit, OnDestroy {
         while ( ( node = el.firstChild ) ) {
           lastNode = frag.appendChild( node );
         }
-        range.insertNode( frag );
 
-        // Preserve the selection
-        if ( lastNode ) {
-          range = range.cloneRange();
-          range.setStartAfter( lastNode );
-          range.collapse( true );
-          sel.removeAllRanges();
-          sel.addRange( range );
+        if ( range.startContainer.parentNode.closest( '.nw-editor' ) ) {
+          range.insertNode( frag );
+
+          // Preserve the selection
+          if ( lastNode ) {
+            range = range.cloneRange();
+            range.setStartAfter( lastNode );
+            range.collapse( true );
+            sel.removeAllRanges();
+            sel.addRange( range );
+          }
         }
       }
     }
