@@ -7,6 +7,9 @@ import { EditorService } from './editor.service';
 import { IDistributionPlaceholder } from '../../../interface/idistribution-placeholder';
 import { ITemplates } from '../../../interface/itemplates';
 import { ITemplate } from '../../../interface/itemplate';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-editor',
@@ -17,7 +20,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   @Input() params: any;
 
-  public distribution: FormGroup;
+  public formDistribution: FormGroup;
   public distributionPlaceholders: IDistributionPlaceholder[];
   public templates: ITemplates[];
   public template: ITemplate;
@@ -28,7 +31,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   constructor(
     private ngxWigToolbarService: NgxWigToolbarService,
     private fb: FormBuilder,
-    private editorService: EditorService
+    private editorService: EditorService,
+    private dialog: MatDialog,
   ) {}
 
   ngOnInit(): void {
@@ -40,7 +44,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   private initForm() {
-    this.distribution = this.fb.group( {
+    this.formDistribution = this.fb.group( {
       subject: [ '', [ Validators.required ] ],
       text: '',
       footer: [ '', [ Validators.required ] ],
@@ -50,16 +54,23 @@ export class EditorComponent implements OnInit, OnDestroy {
     } );
   }
 
+  private resetForm() {
+    this.formDistribution.reset();
+    for ( const formControlName in this.formDistribution.value ) {
+      this.formDistribution.get( `${ formControlName }` ).setErrors( null );
+    }
+  }
+
   private insertTemplate() {
-    this.distribution.get( 'templateId' ).valueChanges
+    this.formDistribution.get( 'templateId' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
-        this.distribution.get( 'text' ).patchValue( '' );
+        this.formDistribution.get( 'text' ).patchValue( '' );
         if ( value ) {
           this.editorService.getTemplate( value )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( ( template: ITemplate ) => {
-              this.distribution.get( 'text' ).patchValue( template.htmlBody );
+              this.formDistribution.get( 'text' ).patchValue( template.htmlBody );
             } );
         }
       } );
@@ -116,10 +127,43 @@ export class EditorComponent implements OnInit, OnDestroy {
 
 
   sendDistribution(): void {
-    const newParams = _( this.distribution.getRawValue() ).merge( this.params ).value();
-    this.editorService.setDistribution( newParams )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe();
+    const newParams = _( this.formDistribution.getRawValue() ).merge( this.params ).value();
+    if ( !newParams.templateId ) _.set( newParams, 'templateId', 3 );
+    if ( !this.formDistribution.invalid ) {
+      this.editorService.setDistribution( newParams )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe(
+          _ => {
+            this.dialog.open( DialogComponent, {
+              data: {
+                message: 'Сообщение отправлено',
+                status: 'ok',
+              },
+            } );
+            this.resetForm();
+            timer( 1500 )
+              .pipe( takeWhile( _ => this.isActive ) )
+              .subscribe( _ => {
+                this.dialog.closeAll();
+              } );
+          },
+          _ => {
+            this.dialog.open( DialogComponent, {
+              data: {
+                message: 'Ошибка при отправки',
+                status: 'error',
+              },
+            } );
+          }
+        );
+    } else {
+      this.dialog.open( DialogComponent, {
+        data: {
+          message: 'Не все поля заполнены',
+          status: 'error',
+        },
+      } );
+    }
   }
 
   ngOnDestroy(): void {
