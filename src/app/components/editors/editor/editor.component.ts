@@ -38,7 +38,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.initForm();
-    this.initDistributionPlaceholder();
+    this.initDistributionPlaceholders();
     this.initTemplates();
     this.insertTemplate();
   }
@@ -84,8 +84,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initDistributionPlaceholder() {
-    this.editorService.getDistributionPlaceholder()
+  private initDistributionPlaceholders() {
+    this.editorService.getDistributionPlaceholders()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
         this.distributionPlaceholders = value;

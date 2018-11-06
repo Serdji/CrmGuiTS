@@ -19,8 +19,8 @@ export class EditorService {
     return this.http.post( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', params ).pipe( retry( 10 ) );
   }
 
-  getDistributionPlaceholder(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholder' ).pipe( retry( 10 ) );
+  getDistributionPlaceholders(): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholders' ).pipe( retry( 10 ) );
   }
 
   getTemplates(): Observable<any> {
