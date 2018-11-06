@@ -125,6 +125,22 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
+  private windowDialog( messDialog: string, status: string ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status,
+      },
+    } );
+    if ( status === 'ok' ) {
+      this.resetForm();
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialog.closeAll();
+        } );
+    }
+  }
 
   sendDistribution(): void {
     const newParams = _( this.formDistribution.getRawValue() ).merge( this.params ).value();
@@ -133,36 +149,11 @@ export class EditorComponent implements OnInit, OnDestroy {
       this.editorService.setDistribution( newParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
-          _ => {
-            this.dialog.open( DialogComponent, {
-              data: {
-                message: 'Сообщение отправлено',
-                status: 'ok',
-              },
-            } );
-            this.resetForm();
-            timer( 1500 )
-              .pipe( takeWhile( _ => this.isActive ) )
-              .subscribe( _ => {
-                this.dialog.closeAll();
-              } );
-          },
-          _ => {
-            this.dialog.open( DialogComponent, {
-              data: {
-                message: 'Ошибка при отправки',
-                status: 'error',
-              },
-            } );
-          }
+          _ => this.windowDialog( 'Сообщение отправлено', 'ok' ),
+          _ => this.windowDialog( 'Ошибка при отправки', 'error' )
         );
     } else {
-      this.dialog.open( DialogComponent, {
-        data: {
-          message: 'Не все поля заполнены',
-          status: 'error',
-        },
-      } );
+      this.windowDialog( 'Не все поля заполнены', 'error' );
     }
   }
 

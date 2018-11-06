@@ -10,16 +10,13 @@ import { retry } from 'rxjs/operators';
 } )
 export class EditorService {
 
-  private params: any;
-
   constructor(
     private http: HttpClient,
     private configService: ConfigService
   ) { }
 
   setDistribution( params: IprofileSearch ): Observable<any> {
-    this.params = params;
-    return this.http.get( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', { params: this.params } ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', params ).pipe( retry( 10 ) );
   }
 
   getDistributionPlaceholder(): Observable<any> {
