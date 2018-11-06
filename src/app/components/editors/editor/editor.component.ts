@@ -5,6 +5,8 @@ import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { EditorService } from './editor.service';
 import { IDistributionPlaceholder } from '../../../interface/idistribution-placeholder';
+import { ITemplates } from '../../../interface/itemplates';
+import { ITemplate } from '../../../interface/itemplate';
 
 @Component( {
   selector: 'app-editor',
@@ -17,6 +19,8 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   public distribution: FormGroup;
   public distributionPlaceholders: IDistributionPlaceholder[];
+  public templates: ITemplates[];
+  public template: ITemplate;
 
   private isActive: boolean;
 
@@ -31,6 +35,8 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.initForm();
     this.initDistributionPlaceholder();
+    this.initTemplates();
+    this.insertTemplate();
   }
 
   private initForm() {
@@ -38,9 +44,33 @@ export class EditorComponent implements OnInit, OnDestroy {
       subject: [ '', [ Validators.required ] ],
       text: '',
       footer: [ '', [ Validators.required ] ],
+      templateId: '',
     }, {
       updateOn: 'submit',
     } );
+  }
+
+  private insertTemplate() {
+    this.distribution.get( 'templateId' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.distribution.get( 'text' ).patchValue( '' );
+        if ( value ) {
+          this.editorService.getTemplate( value )
+            .pipe( takeWhile( _ => this.isActive ) )
+            .subscribe( ( template: ITemplate ) => {
+              this.distribution.get( 'text' ).patchValue( template.htmlBody );
+            } );
+        }
+      } );
+  }
+
+  private initTemplates() {
+    this.editorService.getTemplates()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( templates: ITemplates[] ) => {
+        this.templates = templates;
+      } );
   }
 
   private initDistributionPlaceholder() {
@@ -86,7 +116,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
 
   sendDistribution(): void {
-    const newParams = _( this.distribution.getRawValue() ).merge( this.params ).set( 'templateId', 3 ).value();
+    const newParams = _( this.distribution.getRawValue() ).merge( this.params ).value();
     this.editorService.setDistribution( newParams )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe();

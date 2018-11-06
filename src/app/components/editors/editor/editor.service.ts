@@ -26,4 +26,12 @@ export class EditorService {
     return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholder' ).pipe( retry( 10 ) );
   }
 
+  getTemplates(): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/crm/distribution/templates' ).pipe( retry( 10 ) );
+  }
+
+  getTemplate( id: number ): Observable<any> {
+    return this.http.get( this.configService.crmApi + `/crm/distribution/templates/${id}` ).pipe( retry( 10 ) );
+  }
+
 }
