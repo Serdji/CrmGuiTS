@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 } )
 export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
 
-  @Input() customerIds: number[];
+  @Input() ids: number[];
 
   private isActive: boolean;
 
@@ -26,11 +26,11 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
   }
 
   openDialog(): void {
-    if ( _.isArray( this.customerIds ) && _.size( this.customerIds ) > 0 ) {
+    if ( _.isArray( this.ids ) && _.size( this.ids ) > 0 ) {
       this.dialog.open( DialogEditorComponent, {
         width: '80vw',
         data: {
-          params: { customerIds: this.customerIds }
+          params: { customerIds: this.ids }
         }
       } );
     } else {
