@@ -26,11 +26,14 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
   }
 
   openDialog(): void {
-    if ( _.isArray( this.ids ) && _.size( this.ids ) > 0 ) {
+    if (
+      _.has( this.ids, 'customerIds' ) ||
+      _.has( this.ids, 'profileGroupIds' )
+    ) {
       this.dialog.open( DialogEditorComponent, {
         width: '80vw',
         data: {
-          params: { customerIds: this.ids }
+          params: this.ids
         }
       } );
     } else {
