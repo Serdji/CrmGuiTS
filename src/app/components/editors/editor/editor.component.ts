@@ -28,6 +28,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   public template: ITemplate;
   public buttonSave: boolean;
   public buttonSend: boolean;
+  public emailLimits: number;
 
   private distributionId: number;
   private isActive: boolean;
@@ -47,6 +48,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
+    this.initEmailLimits();
     this.insertTemplate();
   }
 
@@ -62,6 +64,30 @@ export class EditorComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.formFilling();
+  }
+
+  private initTemplates() {
+    this.editorService.getTemplates()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( templates: ITemplates[] ) => {
+        this.templates = templates;
+      } );
+  }
+
+  private initDistributionPlaceholders() {
+    this.editorService.getDistributionPlaceholders()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.distributionPlaceholders = value;
+      } );
+  }
+
+  private initEmailLimits() {
+    this.editorService.getEmailLimits()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( emailLimits => {
+        this.emailLimits = emailLimits;
+      } );
   }
 
   private resetForm() {
@@ -88,22 +114,6 @@ export class EditorComponent implements OnInit, OnDestroy {
               this.formDistribution.get( 'text' ).patchValue( template.htmlBody );
             } );
         }
-      } );
-  }
-
-  private initTemplates() {
-    this.editorService.getTemplates()
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( templates: ITemplates[] ) => {
-        this.templates = templates;
-      } );
-  }
-
-  private initDistributionPlaceholders() {
-    this.editorService.getDistributionPlaceholders()
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.distributionPlaceholders = value;
       } );
   }
 
@@ -186,7 +196,12 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   sendDistribution(): void {
-    this.windowDialog( `Вы действительно хотите отправить сообщения в количестве ${this.totalCount} ?`, 'sendDistribution', this.distributionId );
+    this.windowDialog(
+      `По результатам реализации данной отправки лимит сообщений ${ this.emailLimits - this.totalCount }. ` +
+      `Подтвердите активацию сохраненной рассылки в количестве ${ this.totalCount } писем ?`,
+      'sendDistribution',
+      this.distributionId
+    );
   }
 
   ngOnDestroy(): void {
