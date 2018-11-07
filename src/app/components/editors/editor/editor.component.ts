@@ -139,6 +139,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       data: {
         message: messDialog,
         status,
+        card: status,
         params
       },
     } );
@@ -172,7 +173,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   sendDistribution(): void {
-
+    this.windowDialog( `Вы действительно хотите отправить сообщения в количестве ${this.totalCount} ?`, 'sendDistribution' , this.distributionId );
   }
 
   ngOnDestroy(): void {
@@ -180,3 +181,15 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
