@@ -12,7 +12,7 @@ import * as _ from 'lodash';
 } )
 export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
 
-  @Input() ids: number[];
+  @Input() ids: any;
   @Input() disabled: boolean;
   @Input() totalCount: number;
 
