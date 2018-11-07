@@ -14,6 +14,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
 
   @Input() ids: number[];
   @Input() disabled: boolean;
+  @Input() totalCount: number;
 
   private isActive: boolean;
 
@@ -34,7 +35,8 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
       this.dialog.open( DialogEditorComponent, {
         width: '80vw',
         data: {
-          params: this.ids
+          params: this.ids,
+          totalCount: _.size( this.ids.customerIds || this.ids.profileGroupIds)
         }
       } );
     } else {
@@ -45,14 +47,16 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
             this.dialog.open( DialogEditorComponent, {
               width: '80vw',
               data: {
-                params: { 'segmentationIds': [ value.segmentationId ] }
+                params: { 'segmentationIds': [ value.segmentationId ] },
+                totalCount: this.totalCount
               }
             } );
           } else {
             this.dialog.open( DialogEditorComponent, {
               width: '80vw',
               data: {
-                params: value
+                params: value,
+                totalCount: this.totalCount
               }
             } );
           }

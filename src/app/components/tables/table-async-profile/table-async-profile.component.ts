@@ -30,6 +30,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
   public ids: any;
+  public totalCount: number;
 
   private isActive: boolean = true;
 
@@ -72,6 +73,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncProfileService.countPage;
+    this.totalCount = this.tableAsyncProfileService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {

@@ -19,6 +19,7 @@ import { timer } from 'rxjs';
 export class EditorComponent implements OnInit, OnDestroy {
 
   @Input() params: any;
+  @Input() totalCount: number;
 
   public formDistribution: FormGroup;
   public distributionPlaceholders: IDistributionPlaceholder[];
