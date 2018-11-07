@@ -36,16 +36,16 @@
             <input matInput type="text" placeholder="Лимит">
           </mat-form-field>
           <mat-form-field class="editor__input">
-            <input matInput placeholder="Дата отправки от"
-                   [matDatepicker]="picker">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #picker></mat-datepicker>
+            <input matInput formControlName="dataFrom" placeholder="Дата отправки от"
+                   [matDatepicker]="dataFrom">
+            <mat-datepicker-toggle matSuffix [for]="dataFrom"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dataFrom></mat-datepicker>
           </mat-form-field>
           <mat-form-field class="editor__input">
-            <input matInput placeholder="Дата отправки до"
-                   [matDatepicker]="picker2">
-            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #picker2></mat-datepicker>
+            <input matInput formControlName="dataTo" placeholder="Дата отправки до"
+                   [matDatepicker]="dataTo">
+            <mat-datepicker-toggle matSuffix [for]="dataTo"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dataTo></mat-datepicker>
           </mat-form-field>
           <mat-form-field class="editor__input">
             <mat-select formControlName="templateId" placeholder="Шаблон">

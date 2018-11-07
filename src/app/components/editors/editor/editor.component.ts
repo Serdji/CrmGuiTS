@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxWigToolbarService } from 'ngx-wig';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { EditorService } from './editor.service';
 import { IDistributionPlaceholder } from '../../../interface/idistribution-placeholder';
 import { ITemplates } from '../../../interface/itemplates';
@@ -55,9 +56,12 @@ export class EditorComponent implements OnInit, OnDestroy {
       text: '',
       footer: [ '', [ Validators.required ] ],
       templateId: '',
+      dataFrom: '',
+      dataTo: '',
     }, {
       updateOn: 'submit',
     } );
+    this.formFilling();
   }
 
   private resetForm() {
@@ -65,6 +69,11 @@ export class EditorComponent implements OnInit, OnDestroy {
     for ( const formControlName in this.formDistribution.value ) {
       this.formDistribution.get( `${ formControlName }` ).setErrors( null );
     }
+  }
+
+  private formFilling() {
+    this.formDistribution.get( 'dataFrom' ).patchValue( moment().format() );
+    this.formDistribution.get( 'dataTo' ).patchValue( moment().format() );
   }
 
   private insertTemplate() {
@@ -154,8 +163,12 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   saveDistribution(): void {
-    const newParams = _( this.formDistribution.getRawValue() ).merge( this.params ).value();
-    if ( !newParams.templateId ) _.set( newParams, 'templateId', 3 );
+    const newParams = _( this.formDistribution.getRawValue() )
+      .merge( this.params )
+      .omit( [ 'templateId' ] )
+      .set( 'dataFrom', this.formDistribution.get( 'dataFrom' ).value ? moment( this.formDistribution.get( 'dataFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+      .set( 'dataTo', this.formDistribution.get( 'dataTo' ).value ? moment( this.formDistribution.get( 'dataTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+      .value();
     if ( !this.formDistribution.invalid ) {
       this.editorService.saveDistribution( newParams )
         .pipe( takeWhile( _ => this.isActive ) )
@@ -173,7 +186,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   sendDistribution(): void {
-    this.windowDialog( `Вы действительно хотите отправить сообщения в количестве ${this.totalCount} ?`, 'sendDistribution' , this.distributionId );
+    this.windowDialog( `Вы действительно хотите отправить сообщения в количестве ${this.totalCount} ?`, 'sendDistribution', this.distributionId );
   }
 
   ngOnDestroy(): void {
