@@ -24,7 +24,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   public distributionPlaceholders: IDistributionPlaceholder[];
   public templates: ITemplates[];
   public template: ITemplate;
+  public buttonSave: boolean;
+  public buttonSend: boolean;
 
+  private distributionId: number;
   private isActive: boolean;
 
 
@@ -37,6 +40,8 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.buttonSave = false;
+    this.buttonSend = true;
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
@@ -128,11 +133,12 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  private windowDialog( messDialog: string, status: string ) {
+  private windowDialog( messDialog: string, status: string, params: any = '' ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
         status,
+        params
       },
     } );
     if ( status === 'ok' ) {
@@ -145,19 +151,27 @@ export class EditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendDistribution(): void {
+  saveDistribution(): void {
     const newParams = _( this.formDistribution.getRawValue() ).merge( this.params ).value();
     if ( !newParams.templateId ) _.set( newParams, 'templateId', 3 );
     if ( !this.formDistribution.invalid ) {
-      this.editorService.setDistribution( newParams )
+      this.editorService.saveDistribution( newParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
-          _ => this.windowDialog( 'Сообщение отправлено', 'ok' ),
+          value => {
+            this.distributionId = value.distributionId;
+            this.buttonSave = true;
+            this.buttonSend = false;
+          },
           _ => this.windowDialog( 'Ошибка при отправки', 'error' )
         );
     } else {
       this.windowDialog( 'Не все поля заполнены', 'error' );
     }
+  }
+
+  sendDistribution(): void {
+
   }
 
   ngOnDestroy(): void {

@@ -36,10 +36,16 @@
             <input matInput type="text" placeholder="Лимит">
           </mat-form-field>
           <mat-form-field class="editor__input">
-            <input matInput placeholder="Дата отправки"
+            <input matInput placeholder="Дата отправки от"
                    [matDatepicker]="picker">
             <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #picker></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="editor__input">
+            <input matInput placeholder="Дата отправки до"
+                   [matDatepicker]="picker2">
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #picker2></mat-datepicker>
           </mat-form-field>
           <mat-form-field class="editor__input">
             <mat-select formControlName="templateId" placeholder="Шаблон">
@@ -51,5 +57,28 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <button class="editor__button" mat-raised-button color="primary" (click)="sendDistribution()">Отправить сообщение</button>
+  <button class="editor__button" mat-raised-button color="primary" (click)="saveDistribution()" [disabled]="buttonSave"><mat-icon>save</mat-icon>Сохранить</button>
+  <button class="editor__button" mat-raised-button color="primary" (click)="sendDistribution()" [disabled]="buttonSend"><mat-icon>send</mat-icon>Отправить рассылку</button>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
