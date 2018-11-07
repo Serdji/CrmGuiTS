@@ -36,7 +36,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
         width: '80vw',
         data: {
           params: this.ids,
-          totalCount: _.size( this.ids.customerIds || this.ids.profileGroupIds)
+          totalCount: _.size( this.ids.customerIds || this.ids.profileGroupIds )
         }
       } );
     } else {
