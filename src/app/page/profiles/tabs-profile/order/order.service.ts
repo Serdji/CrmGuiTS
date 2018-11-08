@@ -39,6 +39,7 @@ export class OrderService {
               }
             }
 
+
             if ( order.services ) {
               for ( const service of order.services ) {
                 if ( service.emd ) ++counterServicesIsEmd;
@@ -46,27 +47,30 @@ export class OrderService {
             }
 
 
-            for ( const segment of order.segments ) {
-              if ( order.tickets ) {
-                for ( const ticket of order.tickets ) {
-                  if ( segment.segNum === ticket.segNum ) {
-                    _.merge( ticket, { segment } );
+            if ( order.segments ) {
+              for ( const segment of order.segments ) {
+                if ( order.tickets ) {
+                  for ( const ticket of order.tickets ) {
+                    if ( segment.segNum === ticket.segNum ) {
+                      _.merge( ticket, { segment } );
+                    }
                   }
                 }
-              }
 
 
-              if ( order.services ) {
-                for ( const service of order.services ) {
-                  if ( segment.segNum === service.segNum ) {
-                    _.merge( service, { segment } );
+                if ( order.services ) {
+                  for ( const service of order.services ) {
+                    if ( segment.segNum === service.segNum ) {
+                      _.merge( service, { segment } );
+                    }
                   }
                 }
               }
             }
 
             if ( order.MonetaryInfo ) {
-              let T = 0, Teur = 0, Tusd = 0, Tcur = 0, B = 0, Beur = 0, Busd = 0, Bcur = 0, E = 0, Eeur = 0, Eusd = 0, Ecur = 0, TE, CurrencyG;
+              let T = 0, Teur = 0, Tusd = 0, Tcur = 0, B = 0, Beur = 0, Busd = 0, Bcur = 0, E = 0, Eeur = 0, Eusd = 0, Ecur = 0, TE,
+                CurrencyG;
               for ( const MonetaryInfo of order.MonetaryInfo ) {
                 const { Code, Amount, AmountEur, AmountUsd, AmountCur, Currency } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
