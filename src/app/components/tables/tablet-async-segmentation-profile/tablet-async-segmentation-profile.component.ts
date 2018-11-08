@@ -27,6 +27,7 @@ export class TabletAsyncSegmentationProfileComponent implements OnInit, OnDestro
   public isDisabled: boolean;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
+  public totalCount: number;
 
   private isActive: boolean;
 
@@ -65,6 +66,7 @@ export class TabletAsyncSegmentationProfileComponent implements OnInit, OnDestro
 
   private initPaginator() {
     this.resultsLength = this.tabletAsyncSegmentationProfileService.countPage;
+    this.totalCount = this.tabletAsyncSegmentationProfileService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {

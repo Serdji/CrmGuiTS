@@ -12,7 +12,9 @@ import * as _ from 'lodash';
 } )
 export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
 
-  @Input() customerIds: number[];
+  @Input() ids: any;
+  @Input() disabled: boolean;
+  @Input() totalCount: number;
 
   private isActive: boolean;
 
@@ -26,11 +28,15 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
   }
 
   openDialog(): void {
-    if ( _.isArray( this.customerIds ) && _.size( this.customerIds ) > 0 ) {
+    if (
+      _.has( this.ids, 'customerIds' ) ||
+      _.has( this.ids, 'profileGroupIds' )
+    ) {
       this.dialog.open( DialogEditorComponent, {
         width: '80vw',
         data: {
-          params: { customerIds: this.customerIds }
+          params: this.ids,
+          totalCount: _.size( this.ids.customerIds || this.ids.profileGroupIds )
         }
       } );
     } else {
@@ -41,14 +47,16 @@ export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
             this.dialog.open( DialogEditorComponent, {
               width: '80vw',
               data: {
-                params: { 'segmentationIds': [ value.segmentationId ] }
+                params: { 'segmentationIds': [ value.segmentationId ] },
+                totalCount: this.totalCount
               }
             } );
           } else {
             this.dialog.open( DialogEditorComponent, {
               width: '80vw',
               data: {
-                params: value
+                params: value,
+                totalCount: this.totalCount
               }
             } );
           }
