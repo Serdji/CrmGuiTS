@@ -28,10 +28,10 @@ export class EditorComponent implements OnInit, OnDestroy {
   public template: ITemplate;
   public buttonSave: boolean;
   public buttonSend: boolean;
-  public emailLimits: number;
 
   private distributionId: number;
   private isActive: boolean;
+  private emailLimits: number;
 
 
   constructor(
@@ -48,7 +48,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
-    this.initEmailLimits();
     this.insertTemplate();
   }
 
@@ -60,6 +59,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       templateId: '',
       dataFrom: '',
       dataTo: '',
+      totalCount: '',
+      emailLimits: '',
     }, {
       updateOn: 'submit',
     } );
@@ -82,14 +83,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initEmailLimits() {
-    this.editorService.getEmailLimits()
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( emailLimits => {
-        this.emailLimits = emailLimits;
-      } );
-  }
-
   private resetForm() {
     this.formDistribution.reset();
     for ( const formControlName in this.formDistribution.value ) {
@@ -100,6 +93,15 @@ export class EditorComponent implements OnInit, OnDestroy {
   private formFilling() {
     this.formDistribution.get( 'dataFrom' ).patchValue( moment().format() );
     this.formDistribution.get( 'dataTo' ).patchValue( moment().format() );
+    this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
+    this.formDistribution.get( 'totalCount' ).disable();
+    this.editorService.getEmailLimits()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( emailLimits => {
+        this.emailLimits = emailLimits;
+        this.formDistribution.get( 'emailLimits' ).patchValue( emailLimits );
+        this.formDistribution.get( 'emailLimits' ).disable();
+      } );
   }
 
   private insertTemplate() {
@@ -175,7 +177,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   saveDistribution(): void {
     const newParams = _( this.formDistribution.getRawValue() )
       .merge( this.params )
-      .omit( [ 'templateId' ] )
+      .omit( [ 'templateId', 'totalCount', 'emailLimits' ] )
       .set( 'dataFrom', this.formDistribution.get( 'dataFrom' ).value ? moment( this.formDistribution.get( 'dataFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
       .set( 'dataTo', this.formDistribution.get( 'dataTo' ).value ? moment( this.formDistribution.get( 'dataTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
       .value();

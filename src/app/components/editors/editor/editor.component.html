@@ -30,10 +30,10 @@
         <mat-card class="editor__box mat-elevation-z0">
           <mat-card-title>Параметры рассылок</mat-card-title>
           <mat-form-field class="editor__input">
-            <input matInput class="editor__input-informational" type="text" placeholder="Количество" disabled [value]="totalCount || ''">
+            <input matInput formControlName="totalCount" class="editor__input-informational" type="text" placeholder="Количество">
           </mat-form-field>
           <mat-form-field class="editor__input">
-            <input matInput class="editor__input-informational" type="text" placeholder="Лимит" disabled [value]="emailLimits || ''">
+            <input matInput formControlName="emailLimits" class="editor__input-informational" type="text" placeholder="Лимит">
           </mat-form-field>
           <mat-form-field class="editor__input">
             <input matInput formControlName="dataFrom" placeholder="Дата отправки от"
