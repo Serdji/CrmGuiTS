@@ -47,12 +47,12 @@
             <mat-datepicker-toggle matSuffix [for]="dataTo"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dataTo></mat-datepicker>
           </mat-form-field>
-          <mat-form-field class="editor__input">
-            <mat-select formControlName="templateId" placeholder="Шаблон">
-              <mat-option></mat-option>
-              <mat-option *ngFor="let template of templates" [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
-            </mat-select>
-          </mat-form-field>
+          <!--<mat-form-field class="editor__input">-->
+            <!--<mat-select formControlName="templateId" placeholder="Шаблон">-->
+              <!--<mat-option></mat-option>-->
+              <!--<mat-option *ngFor="let template of templates" [value]="template.distributionTemplateId"> {{template.title}} </mat-option>-->
+            <!--</mat-select>-->
+          <!--</mat-form-field>-->
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>

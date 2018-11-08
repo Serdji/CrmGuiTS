@@ -211,15 +211,3 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
