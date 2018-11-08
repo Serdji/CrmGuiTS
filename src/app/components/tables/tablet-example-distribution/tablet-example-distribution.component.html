@@ -45,14 +45,14 @@
     <ng-container matColumnDef="dateFrom">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Дата от</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dateTo">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Дата до</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 

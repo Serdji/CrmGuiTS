@@ -22,6 +22,7 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   private isActive: boolean;
   public isDisabled: boolean;
+  public ids: any;
 
   @Input() private tableDataSource: any;
 
@@ -99,6 +100,23 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  isIds(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      } else {
+        this.ids = {};
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      this.ids = { profileGroupIds: arrayId };
+    }
   }
 
   ngOnDestroy(): void {

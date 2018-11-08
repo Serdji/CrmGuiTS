@@ -15,6 +15,7 @@ import { map, takeWhile } from 'rxjs/operators';
 import { ProfileGroupService } from '../../page/special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../interface/icustomer-group';
 import * as _ from 'lodash';
+import { EditorService } from '../../components/editors/editor/editor.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -42,6 +43,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private addSegmentationService: AddSegmentationService,
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
+    private editorService: EditorService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -256,6 +258,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           .subscribe( _ => {
             this.dialogRef.close();
           } );
+        break;
+      case 'sendDistribution':
+        this.editorService.sendDistribution( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
+        break;
     }
   }
 

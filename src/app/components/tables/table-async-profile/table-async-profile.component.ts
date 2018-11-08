@@ -29,7 +29,8 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   public isLoadingResults: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
-  public ids: number[];
+  public ids: any;
+  public totalCount: number;
 
   private isActive: boolean = true;
 
@@ -72,6 +73,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncProfileService.countPage;
+    this.totalCount = this.tableAsyncProfileService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
@@ -171,12 +173,12 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
         const id = el.id.split( '-' );
         if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
       } else {
-        this.ids = [];
+        this.ids = {};
       }
     } );
 
     if ( arrayId.length !== 0 ) {
-      this.ids = arrayId;
+      this.ids = { customerIds: arrayId };
     }
   }
 
