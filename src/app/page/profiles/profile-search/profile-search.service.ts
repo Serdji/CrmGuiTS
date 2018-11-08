@@ -38,7 +38,7 @@ export class ProfileSearchService {
   }
 
   downloadCsv( params ): Observable<any> {
-    return this.http.get( this.configService.crmApi + 'crm/customer/searchCsv', { params, responseType: 'blob', observe: 'response' } ).pipe(retry( 10 ));
+    return this.http.get( this.configService.crmApi + '/crm/customer/searchCsv', { params, responseType: 'blob', observe: 'response' } ).pipe(retry( 10 ));
   }
 
 }

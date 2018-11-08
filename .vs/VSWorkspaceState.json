@@ -1,0 +1,17 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\src",
+    "\\src\\app",
+    "\\src\\app\\interface",
+    "\\src\\app\\page",
+    "\\src\\app\\page\\profiles",
+    "\\src\\app\\page\\profiles\\add-profile",
+    "\\src\\app\\page\\profiles\\tabs-profile",
+    "\\src\\app\\page\\segmentation",
+    "\\src\\app\\page\\segmentation\\add-segmentation",
+    "\\src\\app\\shared",
+    "\\src\\app\\shared\\dialog"
+  ],
+  "PreviewInSolutionExplorer": false
+}
