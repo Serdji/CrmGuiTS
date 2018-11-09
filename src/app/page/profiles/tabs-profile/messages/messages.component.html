@@ -18,7 +18,8 @@
 
       <ng-template matExpansionPanelContent>
         <mat-card class="messages__card mat-elevation-z0">
-          <div [innerHtml]="test" ></div>
+
+          <div [innerHtml]="message.parsedText" > </div>
         </mat-card>
       </ng-template>
     </mat-expansion-panel>
