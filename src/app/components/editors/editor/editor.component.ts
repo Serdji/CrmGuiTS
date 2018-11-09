@@ -57,8 +57,8 @@ export class EditorComponent implements OnInit, OnDestroy {
       text: '',
       footer: [ '', [ Validators.required ] ],
       templateId: '',
-      dataFrom: '',
-      dataTo: '',
+      dateFrom: '',
+      dateTo: '',
       totalCount: '',
       emailLimits: '',
     }, {
@@ -91,8 +91,8 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   private formFilling() {
-    this.formDistribution.get( 'dataFrom' ).patchValue( moment().format() );
-    this.formDistribution.get( 'dataTo' ).patchValue( moment().format() );
+    this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
+    this.formDistribution.get( 'dateTo' ).patchValue( moment().format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
     this.formDistribution.get( 'totalCount' ).disable();
     this.editorService.getEmailLimits()
@@ -178,16 +178,16 @@ export class EditorComponent implements OnInit, OnDestroy {
     const newParams = _( this.formDistribution.getRawValue() )
       .merge( this.params )
       .omit( [ 'templateId', 'totalCount', 'emailLimits' ] )
-      .set( 'dataFrom', this.formDistribution.get( 'dataFrom' ).value ? moment( this.formDistribution.get( 'dataFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
-      .set( 'dataTo', this.formDistribution.get( 'dataTo' ).value ? moment( this.formDistribution.get( 'dataTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+      .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+      .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
       .value();
     if ( !this.formDistribution.invalid ) {
+      this.buttonSave = true;
       this.editorService.saveDistribution( newParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe(
           value => {
             this.distributionId = value.distributionId;
-            this.buttonSave = true;
             this.buttonSend = false;
           },
           _ => this.windowDialog( 'Ошибка при отправки', 'error' )
