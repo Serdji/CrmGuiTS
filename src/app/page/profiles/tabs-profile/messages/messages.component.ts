@@ -13,20 +13,19 @@ export class MessagesComponent implements OnInit, OnDestroy {
   @Input() id: number;
 
   public messages: IMessages[];
-  public test: string;
+  public progress: boolean;
 
   private isActive: boolean;
-  private progress: boolean;
 
   constructor( private messagesService: MessagesService ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.progress = true;
-    this.intiMessagesService();
+    this.intiMessages();
   }
 
-  private intiMessagesService() {
+  private intiMessages() {
     this.messagesService.getMessages( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( messages: IMessages[] ) => {
@@ -34,7 +33,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
         this.progress = false;
       } );
   }
-
 
   ngOnDestroy(): void {
     this.isActive = false;
