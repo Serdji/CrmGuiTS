@@ -56,6 +56,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       'lastName',
       'secondName',
       'distributionCustomerStatus',
+      'errorMessage',
       'distributionCustomerId',
     ];
   }
