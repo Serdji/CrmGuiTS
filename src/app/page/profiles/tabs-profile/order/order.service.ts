@@ -25,49 +25,39 @@ export class OrderService {
           orders = _( orders ).sortBy( 'lut' ).reverse().value();
           let counterServicesIsEmd = 0;
 
-          for ( const order of orders ) {
+          _.each( orders, order => {
             if ( order.distrRecloc ) _.merge( _.find( order.pos ), { distrRecloc: _.find( order.distrRecloc ) } );
             if ( order.ssrs ) {
               if ( order.services ) {
-                for ( const ssr of order.ssrs ) {
+                _.each( order.ssrs, ssr => {
                   if ( ssr.segNum || ssr.passNum ) {
                     order.services.push( ssr );
                   }
-                }
+                } );
               } else {
                 _.set( order, 'services', _.filter( order.ssrs, ssr => ssr.segNum || ssr.passNum ) );
               }
             }
 
-            if ( order.services ) {
-              for ( const service of order.services ) {
-                if ( service.emd ) ++counterServicesIsEmd;
-              }
-            }
 
+            _.each( order.services, service => {
+              if ( service.emd ) ++counterServicesIsEmd;
+            } );
 
-            for ( const segment of order.segments ) {
-              if ( order.tickets ) {
-                for ( const ticket of order.tickets ) {
-                  if ( segment.segNum === ticket.segNum ) {
-                    _.merge( ticket, { segment } );
-                  }
-                }
-              }
+            _.each( order.segments, segment => {
+              _.each( order.tickets, ticket => {
+                if ( segment.segNum === ticket.segNum ) _.merge( ticket, { segment } );
+              } );
 
+              _.each( order.services, service => {
+                if ( segment.segNum === service.segNum ) _.merge( service, { segment } );
+              } );
+            } );
 
-              if ( order.services ) {
-                for ( const service of order.services ) {
-                  if ( segment.segNum === service.segNum ) {
-                    _.merge( service, { segment } );
-                  }
-                }
-              }
-            }
 
             if ( order.MonetaryInfo ) {
               let T = 0, Teur = 0, Tusd = 0, Tcur = 0, B = 0, Beur = 0, Busd = 0, Bcur = 0, E = 0, Eeur = 0, Eusd = 0, Ecur = 0, TE, CurrencyG;
-              for ( const MonetaryInfo of order.MonetaryInfo ) {
+              _.each( order.MonetaryInfo, MonetaryInfo => {
                 const { Code, Amount, AmountEur, AmountUsd, AmountCur, Currency } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
                   CurrencyG = Currency;
@@ -92,7 +82,7 @@ export class OrderService {
                       break;
                   }
                 }
-              }
+              } );
 
               if ( T && E ) {
                 TE = T - E;
@@ -109,7 +99,7 @@ export class OrderService {
                 );
               }
             }
-          }
+          } );
 
           const ticketCur = _( orders )
             .map( 'MonetaryInfo' )

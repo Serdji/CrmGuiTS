@@ -183,7 +183,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.formProfileSearch = this.fb.group( {
       lastname: '',
       firstname: '',
-      customerid: '',
+      customerids: '',
       gender: '',
       segmentation: '',
       dobfrominclude: '',
