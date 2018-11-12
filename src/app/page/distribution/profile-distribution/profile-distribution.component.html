@@ -1,4 +1,18 @@
 <div class="profile-distribution">
+
+  <mat-card class="profile-distribution__email">
+    <mat-progress-bar *ngIf="isLoader; else loaserEmail" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserEmail>
+      <mat-card-header>
+        <mat-card-title>{{ distributionProfile.subject }}</mat-card-title>
+      </mat-card-header>
+      <mat-card-content class="profile-distribution__content">
+        <div [innerHtml]="distributionProfile.text | safeHtml"></div>
+      </mat-card-content>
+      <mat-card-actions> {{ distributionProfile.footer }}</mat-card-actions>
+    </ng-template>
+  </mat-card>
+
   <mat-card class="profile-distribution__table">
     <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaserDisabled>

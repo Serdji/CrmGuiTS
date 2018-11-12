@@ -5,7 +5,6 @@ import { takeWhile } from 'rxjs/operators';
 import { IdistributionProfile } from '../../../interface/idistribution-profile';
 import { TabletAsyncDistributionProfileService } from '../../../components/tables/tablet-async-distribution-profile/tablet-async-distribution-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
-import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 
 @Component({
   selector: 'app-profile-distribution',
