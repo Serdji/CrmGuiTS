@@ -13,6 +13,10 @@
           <span>Текущий статус: </span>
           <span><b>{{message.distributionCustomerStatus.statusNameRus}}</b></span>
         </mat-panel-description>
+        <mat-panel-description>
+          <span>Дата и время рассылки: </span>
+          <span><b>{{message.lastTryDT | date: 'dd.MM.yyyy, h:mm a'}}</b></span>
+        </mat-panel-description>
       </mat-expansion-panel-header>
 
 

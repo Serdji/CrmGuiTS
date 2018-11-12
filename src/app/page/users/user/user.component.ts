@@ -88,6 +88,8 @@ export class UserComponent implements OnInit, OnDestroy {
       4: '',
       5: '',
       6: '',
+      7: '',
+      8: '',
     } );
   }
 

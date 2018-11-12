@@ -24,6 +24,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public orders;
   public profileSegmentation: any;
   public profileGroup: any;
+  public accessDisabled: boolean;
 
   private isActive: boolean;
 
@@ -126,6 +127,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   addProfileGroup(): void {
     this.windowDialog( 'addProfileGroup', this.profileGroup );
   }
+
 
   ngOnDestroy(): void {
     this.isActive = false;

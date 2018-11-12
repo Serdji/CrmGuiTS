@@ -12,6 +12,7 @@ import { PipesModule } from '../../../pipes/pipes.module';
 import { OrderService } from './order/order.service';
 import { RouterModule } from '@angular/router';
 import { MessagesModule } from './messages/messages.module';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule( {
   imports: [
@@ -25,6 +26,7 @@ import { MessagesModule } from './messages/messages.module';
     MessagesModule,
     PipesModule,
     RouterModule,
+    DirectivesModule,
   ],
   declarations: [ TabsProfileComponent ],
   providers: [
