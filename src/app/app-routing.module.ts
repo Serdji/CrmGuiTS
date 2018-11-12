@@ -20,6 +20,7 @@ import { ProfileGroupComponent } from './page/special-groups/profile-group/profi
 import { ErrorPageComponent } from './page/error-page/error-page.component';
 import { ListDistributionComponent } from './page/distribution/list-distribution/list-distribution.component';
 import { ProfileDistributionComponent } from './page/distribution/profile-distribution/profile-distribution.component';
+import { AccessRightsDistributionGuard } from './guards/access-rights-distribution.guard';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -39,7 +40,7 @@ const routes: Routes = [
         { path: 'addsegmentation', component: AddSegmentationComponent },
         { path: 'profilegroup', component: ProfileGroupComponent },
         { path: 'list-distribution', component: ListDistributionComponent },
-        { path: 'profile-distribution/:id', component: ProfileDistributionComponent },
+        { path: 'profile-distribution/:id', component: ProfileDistributionComponent, canActivate: [ AccessRightsDistributionGuard ] },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
       ],

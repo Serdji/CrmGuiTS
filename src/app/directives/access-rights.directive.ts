@@ -44,7 +44,7 @@ export class AccessRightsDirective implements OnInit {
           this.renderer.appendChild( this.elem.nativeElement, div );
 
         } else if ( this.appAccessDisabled ) {
-          this.emitAccessDisabled.emit( true );
+          Promise.resolve(null).then(() => this.emitAccessDisabled.emit( true ));
 
         } else {
           this.elem.nativeElement.remove();

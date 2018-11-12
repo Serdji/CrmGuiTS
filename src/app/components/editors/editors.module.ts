@@ -7,6 +7,7 @@ import { EditorService } from './editor/editor.service';
 import { DialogEditorComponent } from './dialog-editor/dialog-editor.component';
 import { ButtonEditorComponent } from './button-editor/button-editor.component';
 import { SharedModule } from '../../shared/shared.module';
+import { DirectivesModule } from '../../directives/directives.module';
 
 @NgModule( {
   imports: [
@@ -15,6 +16,7 @@ import { SharedModule } from '../../shared/shared.module';
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    DirectivesModule,
   ],
   declarations: [
     EditorComponent,
