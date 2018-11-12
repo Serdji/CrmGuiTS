@@ -32,7 +32,7 @@ export class AccessRightsDistributionGuard implements CanActivate, OnInit, OnDes
     this.parsTokenService.parsToken = this.token.accessToken;
     const claims = this.parsTokenService.parsToken.Claims;
     return new Promise( resolve => {
-      if ( claims.includes( 'distributions:update' ) ) {
+      if ( claims.includes( 'distributions:read' ) ) {
         resolve( true );
       } else {
         this.dialog.open( DialogComponent, {
