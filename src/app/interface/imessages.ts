@@ -5,6 +5,7 @@ export interface IMessages {
   'parsedSubject': string;
   'parsedText': string;
   'parsedFooter': string;
+  'lastTryDT': string;
   'distributionCustomerStatus': {
     'distributionCustomerStatusId': number;
     'statusNameRus': string;
