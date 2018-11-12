@@ -15,6 +15,7 @@
         <span *ngIf="distributionProfile.footer">Подпись: <b>{{ distributionProfile.footer }}</b></span>
         <span>Даты рассылок: <b> от {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, до {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
         <span>Дата и время смены статуса: <b> {{ distributionProfile.lastTryDT | date: 'dd.MM.yyyy, h:mm a' }} </b>  </span>
+        <span>Статус: <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
         <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">Сообщение об ошибки: <b> {{ distributionProfile.errorMessage }} </b>  </span>
       </mat-card-actions>
     </ng-template>
