@@ -2,7 +2,7 @@ export interface IDocument {
   documentId: number;
   customerId: number;
   num: string;
-  documentType:  {
+  documentType?:  {
     documentTypeId: number;
     documentTypeCode: string;
     documentTypeName: any;
