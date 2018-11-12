@@ -4,12 +4,15 @@
     <mat-progress-bar *ngIf="isLoader; else loaserEmail" mode="buffer"></mat-progress-bar>
     <ng-template #loaserEmail>
       <mat-card-header>
-        <mat-card-title>{{ distributionProfile.subject }}</mat-card-title>
+        <mat-card-title>Тема письма: <b>{{ distributionProfile.subject }}</b></mat-card-title>
       </mat-card-header>
       <mat-card-content class="profile-distribution__content">
         <div [innerHtml]="distributionProfile.text | safeHtml"></div>
       </mat-card-content>
-      <mat-card-actions> {{ distributionProfile.footer }}</mat-card-actions>
+      <mat-card-actions class="profile-distribution__action">
+        <span *ngIf="distributionProfile.footer">Подпись: <b>{{ distributionProfile.footer }}</b></span>
+        <span>Даты рассылок: <b> от {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, до {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
+      </mat-card-actions>
     </ng-template>
   </mat-card>
 
