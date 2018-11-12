@@ -116,19 +116,19 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
   }
 
   deleteDisplayed(): void {
-    // const arrayId = [];
-    // const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
-    // checkbox.forEach( ( el: HTMLInputElement ) => {
-    //   if ( el.checked ) {
-    //     const id = el.id.split( '-' );
-    //     if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
-    //   }
-    // } );
-    //
-    // if ( arrayId.length !== 0 ) {
-    //   const params = Object.assign( {}, { ids: arrayId } );
-    //   this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'segmentations' );
-    // }
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      const params = Object.assign( {}, { ids: arrayId } );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'рассылку' : 'рассылки' } ?`, 'delete', params, 'displayeds' );
+    }
   }
 
   redirectToDistribution( id: number ): void {

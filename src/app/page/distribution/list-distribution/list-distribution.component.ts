@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Idistribution } from '../../../interface/idistribution';
 import { takeWhile } from 'rxjs/operators';
 import { ListDistributionService } from './list-distribution.service';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-list-distribution',
@@ -21,6 +22,18 @@ export class ListDistributionComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.isLoader = true;
     this.initDistribution();
+    this.listDistributionService.subjectDistributionDelete
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshDistribution() );
+  }
+
+  private refreshDistribution() {
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoader = true;
+        this.initDistribution();
+      } );
   }
 
   private initDistribution() {

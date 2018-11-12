@@ -1,0 +1,26 @@
+<div class="messages">
+  <mat-card *ngIf="progress">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
+  <mat-accordion *ngIf="!progress" multi="true">
+    <mat-expansion-panel *ngFor="let message of messages; let i = index" [expanded]="i === 0">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          <span>Тема письма: </span>
+          <span><b>{{message.parsedSubject}}</b></span>
+        </mat-panel-title>
+        <mat-panel-description>
+          <span>Текущий статус: </span>
+          <span><b>{{message.distributionCustomerStatus.statusNameRus}}</b></span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-card class="messages__card mat-elevation-z0">
+          <div [innerHtml]="message.parsedText | safeHtml" > </div>
+        </mat-card>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

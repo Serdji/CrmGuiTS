@@ -36,23 +36,23 @@
             <input matInput formControlName="emailLimits" class="editor__input-informational" type="text" placeholder="Лимит">
           </mat-form-field>
           <mat-form-field class="editor__input">
-            <input matInput formControlName="dataFrom" placeholder="Дата отправки от"
-                   [matDatepicker]="dataFrom">
-            <mat-datepicker-toggle matSuffix [for]="dataFrom"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #dataFrom></mat-datepicker>
+            <input matInput formControlName="dateFrom" placeholder="Дата отправки от"
+                   [matDatepicker]="dateFrom">
+            <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
           </mat-form-field>
           <mat-form-field class="editor__input">
-            <input matInput formControlName="dataTo" placeholder="Дата отправки до"
-                   [matDatepicker]="dataTo">
-            <mat-datepicker-toggle matSuffix [for]="dataTo"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #dataTo></mat-datepicker>
+            <input matInput formControlName="dateTo" placeholder="Дата отправки до"
+                   [matDatepicker]="dateTo">
+            <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
           </mat-form-field>
-          <!--<mat-form-field class="editor__input">-->
-            <!--<mat-select formControlName="templateId" placeholder="Шаблон">-->
-              <!--<mat-option></mat-option>-->
-              <!--<mat-option *ngFor="let template of templates" [value]="template.distributionTemplateId"> {{template.title}} </mat-option>-->
-            <!--</mat-select>-->
-          <!--</mat-form-field>-->
+          <mat-form-field class="editor__input">
+            <mat-select formControlName="templateId" placeholder="Шаблон">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let template of templates" [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
+            </mat-select>
+          </mat-form-field>
         </mat-card>
       </mat-grid-tile>
     </mat-grid-list>

@@ -11,6 +11,7 @@ import { OrderModule } from './order/order.module';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { OrderService } from './order/order.service';
 import { RouterModule } from '@angular/router';
+import { MessagesModule } from './messages/messages.module';
 
 @NgModule( {
   imports: [
@@ -21,6 +22,7 @@ import { RouterModule } from '@angular/router';
     ContactModule,
     DocumentModule,
     OrderModule,
+    MessagesModule,
     PipesModule,
     RouterModule,
   ],
