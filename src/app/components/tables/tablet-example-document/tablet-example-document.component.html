@@ -31,7 +31,7 @@
     <ng-container matColumnDef="documentType">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Тип документа</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.documentType.documentTypeCode}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.documentType?.documentTypeCode}}</span>
       </mat-cell>
     </ng-container>
 
@@ -77,7 +77,7 @@
         <mat-icon [id]="element.documentId" (click)="editCreate(
           element.documentId,
           element.customerId,
-          element.documentType.documentTypeId,
+          element.documentType?.documentTypeId,
           element.num,
           element.firstName,
           element.lastName,
