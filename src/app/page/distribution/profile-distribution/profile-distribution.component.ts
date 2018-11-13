@@ -40,6 +40,9 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableProfilePagination();
     this.initEmailLimits();
+    this.profileDistributionService.profileDistributionSubject
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.initTableProfile( this.distributionProfileId ));
   }
 
   private initQueryParams() {
@@ -87,6 +90,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       } );
   }
 
+
   private initEmailLimits() {
     this.editorService.getEmailLimits()
       .pipe( takeWhile( _ => this.isActive ) )
@@ -95,7 +99,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private disabledButton( distributionProfile ) {
+  private disabledButton( distributionProfile: IdistributionProfile ) {
 
     switch ( distributionProfile.status.distributionStatusId ) {
       case 1:
@@ -135,8 +139,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     this.windowDialog(
       `По результатам реализации данной отправки лимит сообщений ${ this.emailLimits - this.distributionProfile.totalCount }. ` +
       `Подтвердите активацию сохраненной рассылки в количестве ${ this.distributionProfile.totalCount } писем ?`,
-      'sendDistribution',
-      'sendDistribution',
+      'startDistribution',
+      'startDistribution',
       this.distributionProfile.distributionId
     );
     this.startButtonDisabled = true;
@@ -144,11 +148,12 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
   }
 
   stopDistribution(): void {
-    this.editorService.stopDistribution( this.distributionProfile.distributionId )
+    this.profileDistributionService.stopDistribution( this.distributionProfile.distributionId )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
         this.windowDialog( 'Рассылка остановлена', 'ok' );
+        this.profileDistributionService.profileDistributionSubject.next();
       } );
   }
 

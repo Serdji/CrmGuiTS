@@ -17,6 +17,7 @@ import { IcustomerGroup } from '../../interface/icustomer-group';
 import * as _ from 'lodash';
 import { EditorService } from '../../components/editors/editor/editor.service';
 import { ListDistributionService } from '../../page/distribution/list-distribution/list-distribution.service';
+import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -46,6 +47,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private profileGroupService: ProfileGroupService,
     private editorService: EditorService,
     private listDistributionService: ListDistributionService,
+    private profileDistributionService: ProfileDistributionService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -261,10 +263,11 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.dialogRef.close();
           } );
         break;
-      case 'sendDistribution':
-        this.editorService.sendDistribution( this.data.params )
+      case 'startDistribution':
+        this.profileDistributionService.startDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
+            this.profileDistributionService.profileDistributionSubject.next();
             this.dialogRef.close();
           } );
         break;
