@@ -115,7 +115,7 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
     } );
 
     if ( arrayId.length !== 0 ) {
-      this.ids = { profileGroupIds: arrayId };
+      this.ids = { customerGroupIds: arrayId };
     }
   }
 
