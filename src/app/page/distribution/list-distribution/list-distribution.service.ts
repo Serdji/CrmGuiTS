@@ -28,4 +28,8 @@ export class ListDistributionService {
     return this.http.delete( `${this.configService.crmApi}/crm/distributions/deleteDistributions`, httpOptions ).pipe( retry( 10 ) );
   }
 
+  deleteDistribution( id: number ): Observable<any> {
+    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}`).pipe( retry( 10 ) );
+  }
+
 }

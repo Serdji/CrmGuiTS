@@ -17,6 +17,40 @@
         <span>Дата и время смены статуса: <b> {{ distributionProfile.lastTryDT | date: 'dd.MM.yyyy, h:mm a' }} </b>  </span>
         <span>Статус: <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
         <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">Сообщение об ошибки: <b> {{ distributionProfile.errorMessage }} </b>  </span>
+        <div class="profile-distribution__button-wrapper">
+          <button
+            class="profile-distribution__button"
+            mat-raised-button
+            color="primary"
+            (click)="startDistribution()"
+            [disabled]="startButtonDisabled"
+            appAccessRights="distributions:update"
+          >
+            <mat-icon>send</mat-icon>
+            Отправить рассылку
+          </button>
+          <button
+            class="profile-distribution__button"
+            mat-raised-button
+            color="accent"
+            (click)="stopDistribution()"
+            [disabled]="stopButtonDisabled"
+            appAccessRights="distributions:update"
+          >
+            <mat-icon>cancel</mat-icon>
+            Отмена рассылку
+          </button>
+          <button
+            class="profile-distribution__button"
+            color="warn"
+            mat-raised-button
+            (click)="deleteDistribution()"
+            appAccessRights="distributions:update"
+          >
+            <mat-icon>delete</mat-icon>
+            Удалить
+          </button>
+        </div>
       </mat-card-actions>
     </ng-template>
   </mat-card>

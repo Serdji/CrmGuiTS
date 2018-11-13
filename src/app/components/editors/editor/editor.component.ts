@@ -9,8 +9,9 @@ import { IDistributionPlaceholder } from '../../../interface/idistribution-place
 import { ITemplates } from '../../../interface/itemplates';
 import { ITemplate } from '../../../interface/itemplate';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs';
+import { MatDialog } from '@angular/material';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-editor',
@@ -27,7 +28,6 @@ export class EditorComponent implements OnInit, OnDestroy {
   public templates: ITemplates[];
   public template: ITemplate;
   public buttonSave: boolean;
-  public buttonSend: boolean;
 
   private distributionId: number;
   private isActive: boolean;
@@ -37,14 +37,14 @@ export class EditorComponent implements OnInit, OnDestroy {
   constructor(
     private ngxWigToolbarService: NgxWigToolbarService,
     private fb: FormBuilder,
-    private editorService: EditorService,
     private dialog: MatDialog,
+    private editorService: EditorService,
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
     this.isActive = true;
     this.buttonSave = false;
-    this.buttonSend = true;
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
@@ -188,22 +188,14 @@ export class EditorComponent implements OnInit, OnDestroy {
         .subscribe(
           value => {
             this.distributionId = value.distributionId;
-            this.buttonSend = false;
+            this.dialog.closeAll();
+            this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
           },
           _ => this.windowDialog( 'Ошибка при отправки', 'error' )
         );
     } else {
       this.windowDialog( 'Не все поля заполнены', 'error' );
     }
-  }
-
-  sendDistribution(): void {
-    this.windowDialog(
-      `По результатам реализации данной отправки лимит сообщений ${ this.emailLimits - this.totalCount }. ` +
-      `Подтвердите активацию сохраненной рассылки в количестве ${ this.totalCount } писем ?`,
-      'sendDistribution',
-      this.distributionId
-    );
   }
 
   ngOnDestroy(): void {
