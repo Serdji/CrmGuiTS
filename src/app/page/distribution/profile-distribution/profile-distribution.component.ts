@@ -145,6 +145,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
+    this.isActive = true;
+    this.isLoader = true;
   }
 
   stopDistribution(): void {
@@ -154,6 +156,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         this.stopButtonDisabled = true;
         this.windowDialog( 'Рассылка остановлена', 'ok' );
         this.profileDistributionService.profileDistributionSubject.next();
+        this.isActive = true;
+        this.isLoader = true;
       } );
   }
 
