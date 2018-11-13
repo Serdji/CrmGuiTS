@@ -19,8 +19,10 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
   public distributionProfile: IdistributionProfile;
-  private emailLimits: number;
+  public startButtonDisabled: boolean;
+  public stopButtonDisabled: boolean;
 
+  private emailLimits: number;
   private isActive: boolean;
   private distributionProfileId: number;
 
@@ -81,6 +83,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         this.tabletAsyncDistributionProfileService.countPage = distributionProfile.totalCount;
         this.distributionProfile = distributionProfile;
         this.isLoader = false;
+        this.disabledButton( distributionProfile );
       } );
   }
 
@@ -90,6 +93,24 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       .subscribe( emailLimits => {
         this.emailLimits = emailLimits;
       } );
+  }
+
+  private disabledButton( distributionProfile ) {
+
+    switch ( distributionProfile.status.distributionStatusId ) {
+      case 1:
+        this.startButtonDisabled = false;
+        this.stopButtonDisabled = true;
+        break;
+      case 2 || 3 || 5:
+        this.startButtonDisabled = true;
+        this.stopButtonDisabled = false;
+        break;
+      default:
+        this.startButtonDisabled = true;
+        this.stopButtonDisabled = true;
+        break;
+    }
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '' ) {
@@ -110,13 +131,24 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     }
   }
 
-  sendDistribution(): void {
+  startDistribution(): void {
     this.windowDialog(
       `По результатам реализации данной отправки лимит сообщений ${ this.emailLimits - this.distributionProfile.totalCount }. ` +
       `Подтвердите активацию сохраненной рассылки в количестве ${ this.distributionProfile.totalCount } писем ?`,
       'sendDistribution',
       this.distributionProfile.distributionId
     );
+    this.startButtonDisabled = true;
+    this.stopButtonDisabled = false;
+  }
+
+  stopDistribution(): void {
+    this.editorService.stopDistribution( this.distributionProfile.distributionId )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.stopButtonDisabled = true;
+        this.windowDialog( 'Рассылка остановлена', 'ok' );
+      } );
   }
 
   ngOnDestroy(): void {

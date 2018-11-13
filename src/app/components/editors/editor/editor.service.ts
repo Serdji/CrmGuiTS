@@ -23,6 +23,10 @@ export class EditorService {
     return this.http.get( this.configService.crmApi + `/crm/distribution/${id}/Start` ).pipe( retry( 10 ) );
   }
 
+  stopDistribution( id: number ): Observable<any> {
+    return this.http.get( this.configService.crmApi + `/crm/distribution/${id}/Cancel` ).pipe( retry( 10 ) );
+  }
+
   getDistributionPlaceholders(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholders' ).pipe( retry( 10 ) );
   }
