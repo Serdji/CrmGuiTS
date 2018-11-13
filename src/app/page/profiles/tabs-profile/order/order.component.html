@@ -3,7 +3,7 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
-    <mat-expansion-panel *ngFor="let order of orders; let i = index" [expanded]="i === 0">
+    <mat-expansion-panel *ngFor="let order of orders">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span>Заказ №&nbsp;</span>

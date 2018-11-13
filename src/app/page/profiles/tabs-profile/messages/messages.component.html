@@ -3,7 +3,7 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
-    <mat-expansion-panel *ngFor="let message of messages; let i = index" [expanded]="i === 0">
+    <mat-expansion-panel *ngFor="let message of messages;">
       <mat-expansion-panel-header>
         <mat-panel-title>
           <span>Тема письма: </span>

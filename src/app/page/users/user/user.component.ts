@@ -56,6 +56,7 @@ export class UserComponent implements OnInit, OnDestroy {
               this.formPermission.patchValue( { [ claimPermission.id ]: true } );
             }
           }
+          this.checkboxDisabled();
           this.progress = false;
         } );
       } );
@@ -91,6 +92,40 @@ export class UserComponent implements OnInit, OnDestroy {
       7: '',
       8: '',
     } );
+  }
+
+  private checkboxDisabled() {
+    this.formPermission.get( '2' )[ this.formPermission.get( '1' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '1' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formPermission.get( '2' )[ value ? 'enable' : 'disable' ]();
+        this.formPermission.get( '2' ).patchValue( '' );
+      } );
+
+    this.formPermission.get( '6' )[ this.formPermission.get( '3' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '3' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formPermission.get( '6' )[ value ? 'enable' : 'disable' ]();
+        this.formPermission.get( '6' ).patchValue( '' );
+      } );
+
+    this.formPermission.get( '5' )[ this.formPermission.get( '4' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '4' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formPermission.get( '5' )[ value ? 'enable' : 'disable' ]();
+        this.formPermission.get( '5' ).patchValue( '' );
+      } );
+
+    this.formPermission.get( '8' )[ this.formPermission.get( '7' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '7' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formPermission.get( '8' )[ value ? 'enable' : 'disable' ]();
+        this.formPermission.get( '8' ).patchValue( '' );
+      } );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
@@ -148,8 +183,8 @@ export class UserComponent implements OnInit, OnDestroy {
     this.userService.updateClaimPermissions( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
-        if ( this.user.login === localStorage.getItem('login') ) {
-          this.windowDialog( 'Вы изменили права для своей учетной записи. Что бы права вступили в силу Вам нужно зайти в приложение зонного. Через несколько секунд Вы будите перенаправлены на страницу авторизации!', 'error', '',true );
+        if ( this.user.login === localStorage.getItem( 'login' ) ) {
+          this.windowDialog( 'Вы изменили права для своей учетной записи. Что бы права вступили в силу Вам нужно зайти в приложение зонного. Через несколько секунд Вы будите перенаправлены на страницу авторизации!', 'error', '', true );
           timer( 5000 )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( _ => {
