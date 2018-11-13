@@ -113,12 +113,12 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     }
   }
 
-  private windowDialog( messDialog: string, status: string, params: any = '' ) {
+  private windowDialog( messDialog: string, status: string, card: string = '', params: any = '' ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
         status,
-        card: status,
+        card,
         params
       },
     } );
@@ -136,6 +136,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       `По результатам реализации данной отправки лимит сообщений ${ this.emailLimits - this.distributionProfile.totalCount }. ` +
       `Подтвердите активацию сохраненной рассылки в количестве ${ this.distributionProfile.totalCount } писем ?`,
       'sendDistribution',
+      'sendDistribution',
       this.distributionProfile.distributionId
     );
     this.startButtonDisabled = true;
@@ -149,6 +150,10 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         this.stopButtonDisabled = true;
         this.windowDialog( 'Рассылка остановлена', 'ok' );
       } );
+  }
+
+  deleteDistribution(): void {
+    this.windowDialog( 'Вы действительно хотиту удальть эту рассылку ?', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {
