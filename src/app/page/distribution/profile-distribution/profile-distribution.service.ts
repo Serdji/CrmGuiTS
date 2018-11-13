@@ -21,11 +21,11 @@ export class ProfileDistributionService {
   }
 
   startDistribution( id: number ): Observable<any> {
-    return this.http.get( this.configService.crmApi + `/crm/distribution/${id}/Start` ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Start`, { id } ).pipe( retry( 10 ) );
   }
 
   stopDistribution( id: number ): Observable<any> {
-    return this.http.get( this.configService.crmApi + `/crm/distribution/${id}/Cancel` ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Cancel`, { id } ).pipe( retry( 10 ) );
   }
 
 
