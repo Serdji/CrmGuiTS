@@ -42,7 +42,11 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     this.initEmailLimits();
     this.profileDistributionService.profileDistributionSubject
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.initTableProfile( this.distributionProfileId ));
+      .subscribe( _ => {
+        this.isActive = true;
+        this.isLoader = true;
+        this.initTableProfile( this.distributionProfileId )
+      });
   }
 
   private initQueryParams() {
@@ -145,8 +149,6 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
-    this.isActive = true;
-    this.isLoader = true;
   }
 
   stopDistribution(): void {

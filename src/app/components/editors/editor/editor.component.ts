@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxWigToolbarService } from 'ngx-wig';
 import { takeWhile } from 'rxjs/operators';
@@ -40,6 +40,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private editorService: EditorService,
     private router: Router,
+    private elRef: ElementRef,
   ) {}
 
   ngOnInit(): void {
@@ -120,7 +121,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   sendVarPlaceholder( params: string ): void {
-    const val = `{{ ${params} }}`;
+    const val = `{{${params}}}`;
     let sel, range;
 
     if ( window.getSelection ) {
@@ -175,12 +176,17 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   saveDistribution(): void {
+
+    const editorRes = this.elRef.nativeElement.querySelector('.nw-editor__res');
+
     const newParams = _( this.formDistribution.getRawValue() )
       .merge( this.params )
       .omit( [ 'templateId', 'totalCount', 'emailLimits' ] )
       .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
       .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+      .set( 'text', editorRes.innerHTML )
       .value();
+
     if ( !this.formDistribution.invalid ) {
       this.buttonSave = true;
       this.editorService.saveDistribution( newParams )
