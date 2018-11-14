@@ -22,13 +22,13 @@
             </mat-form-field>
 
             <mat-form-field class="profile-search__input">
-              <mat-chip-list #chipListSegmentatio>
+              <mat-chip-list #chipListSegmentation>
                 <mat-chip
                   [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
                   *ngFor="let segmentationChip of segmentationChips"
                   [selectable]="segmentationSelectable"
                   [removable]="segmentationRemovable"
-                  (removed)="remove(segmentationChip, segmentationChips)">
+                  (removed)="remove(segmentationChip, segmentationChips, 'segmentationChips')">
                   {{segmentationChip}}
                   <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
                 </mat-chip>
@@ -37,13 +37,40 @@
                   #segmentationChipInput
                   formControlName="segmentation"
                   [matAutocomplete]="segmentation"
-                  [matChipInputFor]="chipListSegmentatio"
+                  [matChipInputFor]="chipListSegmentation"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addSegmentationOnBlur"
-                  (matChipInputTokenEnd)="add($event, 'segmentation')">
+                  (matChipInputTokenEnd)="add($event, 'segmentation', 'segmentationChips')">
               </mat-chip-list>
-              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation')">
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation', 'segmentationChips', 'segmentationFruitInput')">
                 <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="profile-search__input">
+              <mat-chip-list #chipListCustomerGroup>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let customerGroupChip of customerGroupChips"
+                  [selectable]="customerGroupSelectable"
+                  [removable]="customerGroupRemovable"
+                  (removed)="remove(customerGroupChip, customerGroupChips, 'customerGroupChips')">
+                  {{customerGroupChip}}
+                  <mat-icon matChipRemove *ngIf="customerGroupRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы пассажиров"
+                  #customerGroupChipInput
+                  formControlName="customerGroup"
+                  [matAutocomplete]="customerGroup"
+                  [matChipInputFor]="chipListCustomerGroup"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addCustomerGroupOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'customerGroup', 'customerGroupChips')">
+              </mat-chip-list>
+              <mat-autocomplete #customerGroup="matAutocomplete" (optionSelected)="selected($event, 'customerGroup', 'customerGroupChips', 'customerGroupFruitInput')">
+                <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
 
