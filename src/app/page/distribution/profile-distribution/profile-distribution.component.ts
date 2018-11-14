@@ -119,7 +119,6 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       default:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = true;
-        break;
     }
   }
 
