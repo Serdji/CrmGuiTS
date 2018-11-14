@@ -69,7 +69,6 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     this.displayedColumns = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) );
     this.displayedColumns.unshift( 'select' );
     this.displayedColumns.push( 'customerId' );
-    console.log(this.displayedColumns);
   }
 
 
