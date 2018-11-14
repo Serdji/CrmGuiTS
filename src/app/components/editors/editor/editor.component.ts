@@ -93,7 +93,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   private formFilling() {
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
-    this.formDistribution.get( 'dateTo' ).patchValue( moment().format() );
+    this.formDistribution.get( 'dateTo' ).patchValue( moment().add(1, 'days').format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
     this.formDistribution.get( 'totalCount' ).disable();
     this.editorService.getEmailLimits()
@@ -121,7 +121,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   sendVarPlaceholder( params: string ): void {
-    const val = `{{${params}}}`;
+    const val = `{{ ${params} }}`;
     let sel, range;
 
     if ( window.getSelection ) {
