@@ -15,6 +15,7 @@ export class SettingsService {
         'secondName',
         'gender',
         'dob',
+        'customerIds',
       ];
     for ( const key of defaultArr ) {
       defaultObj[key] = '';

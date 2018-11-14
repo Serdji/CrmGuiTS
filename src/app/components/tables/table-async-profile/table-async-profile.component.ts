@@ -13,6 +13,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { Iprofile } from '../../../interface/iprofile';
 import { takeWhile } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-table-async-profile',
@@ -93,6 +94,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   }
 
   private initDataSource() {
+    _.each(this.tableDataSource, tableDataSource => _.set(tableDataSource, 'customerIds', tableDataSource.customerId) );
     this.dataSourceFun( this.tableDataSource );
   }
 
