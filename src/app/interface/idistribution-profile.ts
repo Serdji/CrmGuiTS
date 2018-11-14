@@ -1,20 +1,40 @@
 export interface IdistributionProfile {
   'customers': {
-      'customerId': number;
-      'distributionCustomerId': number;
-      'firstName': string;
-      'secondName': string;
-      'lastName': string;
-      'gender': string;
-      'dob': string;
-      'comment': string;
-      'subject': string;
-      'text': string;
-      'footer': string;
-      'distributionCustomerStatus': {
-        'distributionCustomerStatusId': number;
-        'statusNameRus': string
-      }
+    'customerId': number;
+    'distributionCustomerId': number;
+    'firstName': string;
+    'secondName': string;
+    'lastName': string;
+    'gender': string;
+    'dob': string;
+    'comment': string;
+    'subject': string;
+    'text': string;
+    'footer': string;
+    'distributionCustomerStatus': {
+      'distributionCustomerStatusId': number;
+      'statusNameRus': string
+    }
+    distributionStatuses: {
+      'bouncedCount': number
+      'bouncedNameRus': string;
+      'clickedCount': number
+      'clickedNameRus': string;
+      'deliveredCount': number
+      'deliveredNameRus': string;
+      'errorCount': number
+      'errorNameRus': string;
+      'notSentCount': number
+      'notSentNameRus': string;
+      'readCount': number
+      'readNameRus': string;
+      'rejectedCount': number
+      'rejectedNameRus': string;
+      'sendToCustomerCount': number
+      'sendToCustomerNameRus': string;
+      'sentToGatewayCount': number
+      'sentToGatewayNameRus': string;
+    };
   }[];
   'distributionId': number;
   'status': {
