@@ -5,15 +5,15 @@
   <mat-accordion *ngIf="!progress" multi="true">
     <mat-expansion-panel *ngFor="let message of messages;">
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title class="messages__title">
           <span>Тема письма: </span>
           <span><b>{{message.parsedSubject}}</b></span>
         </mat-panel-title>
-        <mat-panel-description>
+        <mat-panel-description class="messages__title">
           <span>Текущий статус: </span>
           <span><b>{{message.distributionCustomerStatus.statusNameRus}}</b></span>
         </mat-panel-description>
-        <mat-panel-description>
+        <mat-panel-description class="messages__title">
           <span>Дата и время рассылки: </span>
           <span><b>{{message.lastTryDT | date: 'dd.MM.yyyy, h:mm a'}}</b></span>
         </mat-panel-description>
