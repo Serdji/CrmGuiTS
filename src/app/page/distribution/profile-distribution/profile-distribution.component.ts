@@ -45,8 +45,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       .subscribe( _ => {
         this.isActive = true;
         this.isLoader = true;
-        this.initTableProfile( this.distributionProfileId )
-      });
+        this.initTableProfile( this.distributionProfileId );
+      } );
   }
 
   private initQueryParams() {
@@ -110,14 +110,15 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         this.startButtonDisabled = false;
         this.stopButtonDisabled = true;
         break;
-      case 2 || 3 || 5:
+      case 2:
+      case 3:
+      case 5:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = false;
         break;
       default:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = true;
-        break;
     }
   }
 

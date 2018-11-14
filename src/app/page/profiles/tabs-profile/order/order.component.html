@@ -5,11 +5,11 @@
   <mat-accordion *ngIf="!progress" multi="true">
     <mat-expansion-panel *ngFor="let order of orders">
       <mat-expansion-panel-header>
-        <mat-panel-title>
+        <mat-panel-title class="order__accordion-title">
           <span>Заказ №&nbsp;</span>
           <span><b>{{order.recloc}}</b></span>
         </mat-panel-title>
-        <mat-panel-description>
+        <mat-panel-description class="order__accordion-title">
           <span>Статус заказа:&nbsp;</span>
           <span><b>{{order.BookingStatus | fieldTranslation}}</b></span>
         </mat-panel-description>
