@@ -254,6 +254,7 @@ export class DialogComponent implements OnInit, OnDestroy {
             localStorage.clear();
             this.dialogRef.close();
             this.router.navigate( [ '' ] );
+            location.reload();
           } );
         break;
       case 'deleteProfileGroups':
