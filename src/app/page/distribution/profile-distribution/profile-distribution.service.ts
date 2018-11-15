@@ -24,7 +24,7 @@ export class ProfileDistributionService {
       retry( 10 ),
       map( ( distributionProfile: IdistributionProfile ) => {
         if ( _.has( distributionProfile, 'lastTryDT' ) ) {
-          return _.set( distributionProfile, 'lastTryDT', moment( moment.utc( distributionProfile.lastTryDT ).toDate() ).format( 'YYYY-MM-DD HH:mm' ) );
+          return _.set( distributionProfile, 'lastTryDT', moment( moment.utc( distributionProfile.lastTryDT ).toDate() ).format( 'DD.MM.YYYY HH:mm' ) );
         }
       } )
     );

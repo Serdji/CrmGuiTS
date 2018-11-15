@@ -25,7 +25,7 @@ export class ListDistributionService {
       map( ( distributions: Idistribution[] ) => {
         _.each( distributions, distribution => {
           if ( _.has( distribution, 'lastTryDT' ) ) {
-            _.set( distribution, 'lastTryDT', moment( moment.utc( distribution.lastTryDT ).toDate() ).format( 'YYYY-MM-DD HH:mm' ) );
+            _.set( distribution, 'lastTryDT', moment( moment.utc( distribution.lastTryDT ).toDate() ).format( 'DD.MM.YYYY HH:mm' ) );
           }
         } );
         return distributions;
