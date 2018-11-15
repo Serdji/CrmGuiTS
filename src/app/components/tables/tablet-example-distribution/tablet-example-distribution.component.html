@@ -56,6 +56,13 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="lastTryDT">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата создания рассылки</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastTryDT | date:'dd.MM.yyyy, hh:mm'}}</span>
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="distributionId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">

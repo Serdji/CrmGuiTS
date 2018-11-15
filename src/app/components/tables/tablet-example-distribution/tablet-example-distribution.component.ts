@@ -49,6 +49,7 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
       'status',
       'dateFrom',
       'dateTo',
+      'lastTryDT',
       'distributionId',
     ];
   }
