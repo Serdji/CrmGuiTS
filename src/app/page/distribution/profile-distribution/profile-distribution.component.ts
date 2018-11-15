@@ -90,6 +90,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         this.tabletAsyncDistributionProfileService.countPage = distributionProfile.totalCount;
         this.distributionProfile = distributionProfile;
         this.isLoader = false;
+        console.log(this.distributionProfile);
         this.disabledButton( distributionProfile );
       } );
   }
