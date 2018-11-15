@@ -39,7 +39,7 @@ export class ListDistributionComponent implements OnInit, OnDestroy {
   private initDistribution() {
     this.listDistributionService.getDistribution()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( distribution => {
+      .subscribe( ( distribution: Idistribution[]) => {
         this.distribution = distribution;
         this.isLoader = false;
       } );

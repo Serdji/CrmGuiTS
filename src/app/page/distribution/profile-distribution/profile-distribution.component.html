@@ -17,26 +17,26 @@
             <div class="profile-distribution__grid">
               <span *ngIf="distributionProfile.footer">Подпись: <b>{{ distributionProfile.footer }}</b></span>
               <span>Даты рассылок: <b> от {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, до {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
-              <span>Дата и время смены статуса: <b> {{ distributionProfile.lastTryDT | date: 'dd.MM.yyyy, hh:mm' }} </b>  </span>
+              <span>Дата и время создания рассылки: <b> {{ distributionProfile.lastTryDT }} </b>  </span>
               <span>Статус: <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
               <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">Сообщение об ошибки: <b> {{ distributionProfile.errorMessage }} </b>  </span>
             </div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="1">
             <div class="profile-distribution__grid">
-              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.bouncedNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.clickedNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.deliveredNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.errorNameRus}}</span>
               <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.notSentNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.sentToGatewayNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.sendToCustomerNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.errorNameRus}}</span>
             </div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="1">
             <div class="profile-distribution__grid">
+              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.deliveredNameRus}}</span>
               <span [matBadge]="distributionProfile.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.readNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.clickedNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.bouncedNameRus}}</span>
               <span [matBadge]="distributionProfile.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.rejectedNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.sendToCustomerNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.sentToGatewayNameRus}}</span>
             </div>
           </mat-grid-tile>
         </mat-grid-list>
