@@ -68,6 +68,7 @@
             color="warn"
             mat-raised-button
             (click)="deleteDistribution()"
+            [disabled]="deliteButtonDisabled"
             appAccessRights="distributions:update"
           >
             <mat-icon>delete</mat-icon>
