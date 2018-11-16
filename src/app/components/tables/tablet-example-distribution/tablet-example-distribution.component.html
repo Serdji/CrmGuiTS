@@ -19,11 +19,11 @@
         <mat-checkbox appAccessRights="distributions:update"
                       appAccessDisabled="true"
                       (emitAccessDisabled)="disabledCheckbox($event)"
-                      [disabled]="isDisabled"
+                      [disabled]="isDisabled || element.status.distributionStatusId !== 1"
                       [id]="element.distributionId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
-                      [checked]="selection.isSelected(element)">
+                      [checked]="element.status.distributionStatusId === 1 ? selection.isSelected(element) : null">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
