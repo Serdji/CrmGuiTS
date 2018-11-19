@@ -16,23 +16,23 @@ export class EditorService {
   ) { }
 
   saveDistribution( params: IprofileSearch ): Observable<any> {
-    return this.http.post( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', params ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', params ).pipe( this.retryRequestService.retry() );
   }
 
   getDistributionPlaceholders(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholders' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholders' ).pipe( this.retryRequestService.retry() );
   }
 
   getTemplates(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/distribution/templates' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/distribution/templates' ).pipe( this.retryRequestService.retry() );
   }
 
   getEmailLimits(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/distributions/emailLimits' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/distributions/emailLimits' ).pipe( this.retryRequestService.retry() );
   }
 
   getTemplate( id: number ): Observable<any> {
-    return this.http.get( this.configService.crmApi + `/crm/distribution/templates/${id}` ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + `/crm/distribution/templates/${id}` ).pipe( this.retryRequestService.retry() );
   }
 
 }

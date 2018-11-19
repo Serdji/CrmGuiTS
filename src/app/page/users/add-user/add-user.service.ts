@@ -15,7 +15,7 @@ export class AddUserService {
   ) { }
 
   createUser( params: IcreateUser ): Observable<any> {
-    return this.http.post( this.configService.crmApi + '/admin/user', params ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + '/admin/user', params ).pipe( this.retryRequestService.retry() );
   }
 
 }

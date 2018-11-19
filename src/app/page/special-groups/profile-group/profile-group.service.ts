@@ -18,19 +18,19 @@ export class ProfileGroupService {
   ) { }
 
   getProfileGroup( ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/customerGroup` ).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/customerGroup` ).pipe( this.retryRequestService.retry() );
   }
 
   addProfileGroup( params ): Observable<any> {
-    return this.http.post( `${this.configService.crmApi}/crm/customerGroup`,  params  ).pipe( retry( 10 ) );
+    return this.http.post( `${this.configService.crmApi}/crm/customerGroup`,  params  ).pipe( this.retryRequestService.retry() );
   }
 
   addProfileGroupRelation( params ): Observable<any> {
-    return this.http.post( `${this.configService.crmApi}/crm/customerGroupRelation`,  params  ).pipe( retry( 10 ) );
+    return this.http.post( `${this.configService.crmApi}/crm/customerGroupRelation`,  params  ).pipe( this.retryRequestService.retry() );
   }
 
   deleteProfileGroupRelation( id: number ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/crm/customerGroupRelation/${id}` ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/customerGroupRelation/${id}` ).pipe( this.retryRequestService.retry() );
   }
 
   deleteCustomerGroups( params ): Observable<any> {
@@ -38,7 +38,7 @@ export class ProfileGroupService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${this.configService.crmApi}/crm/customerGroup/deleteCustomerGroups`, httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/customerGroup/deleteCustomerGroups`, httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
 }

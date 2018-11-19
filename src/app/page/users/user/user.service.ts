@@ -20,7 +20,7 @@ export class UserService {
   getUser( id ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/admin/user/${id}` )
       .pipe(
-        retry( 10 ),
+        this.retryRequestService.retry(),
         catchError( ( err: any ) => {
           switch ( err.status ) {
             case 404:
@@ -33,19 +33,19 @@ export class UserService {
   }
 
   putUser( params ): Observable<any> {
-    return this.http.put( `${this.configService.crmApi}/admin/user`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/admin/user`, params ).pipe( this.retryRequestService.retry() );
   }
 
   deleteUser( id ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/admin/user/${id}` ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/admin/user/${id}` ).pipe( this.retryRequestService.retry() );
   }
 
   putPassword( params ): Observable<any> {
-    return this.http.put( `${this.configService.crmApi}/admin/user/update-password`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/admin/user/update-password`, params ).pipe( this.retryRequestService.retry() );
   }
 
   updateClaimPermissions( params ): Observable<any> {
-    return this.http.post( `${this.configService.crmApi}/admin/user/update-claim-permissions`, params ).pipe( retry( 10 ) );
+    return this.http.post( `${this.configService.crmApi}/admin/user/update-claim-permissions`, params ).pipe( this.retryRequestService.retry() );
   }
 
 

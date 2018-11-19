@@ -21,7 +21,7 @@ export class ListDistributionService {
 
   getDistribution(): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/distribution` ).pipe(
-      retry( 10 ),
+      this.retryRequestService.retry(),
       map( ( distributions: Idistribution[] ) => {
         _.each( distributions, distribution => {
           if ( _.has( distribution, 'lastTryDT' ) ) {
@@ -38,11 +38,11 @@ export class ListDistributionService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${this.configService.crmApi}/crm/distributions/deleteDistributions`, httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/distributions/deleteDistributions`, httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
   deleteDistribution( id: number ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe(retry( 10 ));
+    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe(this.retryRequestService.retry());
   }
 
 }

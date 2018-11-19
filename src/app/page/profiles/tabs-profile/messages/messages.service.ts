@@ -19,7 +19,7 @@ export class MessagesService {
   getMessages( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/distributions/customerEmails/${id}` )
       .pipe(
-        retry( 10 ),
+        this.retryRequestService.retry(),
         map( ( messages: IMessages[] ) => _( messages ).sortBy( 'lastTryDT' ).reverse().value() )
       );
   }

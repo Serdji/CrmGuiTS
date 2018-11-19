@@ -21,7 +21,7 @@ export class ProfileDistributionService {
 
   getProfileDistribution( params: any ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/distribution/search`, { params } ).pipe(
-      retry( 10 ),
+      this.retryRequestService.retry(),
       map( ( distributionProfile: IdistributionProfile ) => {
         if ( _.has( distributionProfile, 'lastTryDT' ) ) {
           return _.set( distributionProfile, 'lastTryDT', moment( moment.utc( distributionProfile.lastTryDT ).toDate() ).format( 'DD.MM.YYYY HH:mm' ) );
@@ -31,11 +31,11 @@ export class ProfileDistributionService {
   }
 
   startDistribution( id: number ): Observable<any> {
-    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Start`, { id } ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Start`, { id } ).pipe( this.retryRequestService.retry() );
   }
 
   stopDistribution( id: number ): Observable<any> {
-    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Cancel`, { id } ).pipe( retry( 10 ) );
+    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Cancel`, { id } ).pipe( this.retryRequestService.retry() );
   }
 
 
