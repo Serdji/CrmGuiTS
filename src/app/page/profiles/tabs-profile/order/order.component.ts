@@ -36,8 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy {
           this.orders = _.initial( orders );
           this.progress = false;
         },
-        error => this.progress = false,
-        () => this.progress = false
+        error => this.progress = false
       );
   }
 

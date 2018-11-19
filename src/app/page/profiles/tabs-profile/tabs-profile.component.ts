@@ -67,10 +67,6 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         error => {
           this.initProfile( id );
           this.ordersProgress = false;
-        },
-        () => {
-          this.initProfile( id );
-          this.ordersProgress = false;
         }
       );
   }
