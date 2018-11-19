@@ -7,6 +7,7 @@ import { AuthService } from './auth.service';
 import { AuthGuard } from '../guards/auth.guard';
 import { ParsTokenService } from './pars-token.service';
 import { ConfigService } from './config-service.service';
+import { RetryRequestService } from './retry-request.service';
 
 const appInitializerFn = ( appConfig: ConfigService ) => {
   return () => {
@@ -23,6 +24,7 @@ const appInitializerFn = ( appConfig: ConfigService ) => {
     AuthService,
     AuthGuard,
     ActivityUserService,
+    RetryRequestService,
     ParsTokenService,
     {
       provide: HTTP_INTERCEPTORS,
