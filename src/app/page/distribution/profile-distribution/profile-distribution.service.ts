@@ -2,10 +2,11 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { Observable, Subject } from 'rxjs';
-import { map, retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { IdistributionProfile } from '../../../interface/idistribution-profile';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -16,7 +17,8 @@ export class ProfileDistributionService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
   getProfileDistribution( params: any ): Observable<any> {

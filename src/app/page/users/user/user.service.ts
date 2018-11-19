@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
 import { throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -14,6 +15,7 @@ export class UserService {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
+    private retryRequestService: RetryRequestService,
     private router: Router,
   ) { }
 

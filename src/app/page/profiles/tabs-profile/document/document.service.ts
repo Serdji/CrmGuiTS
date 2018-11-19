@@ -1,9 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { environment } from '../../../../../environments/environment';
-import { retry } from 'rxjs/operators';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../../services/config-service.service';
+import { RetryRequestService } from '../../../../services/retry-request.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -15,7 +14,8 @@ export class DocumentService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
   getDocuments( id: number ): Observable<any> {

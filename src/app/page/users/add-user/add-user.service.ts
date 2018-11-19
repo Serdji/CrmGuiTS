@@ -1,17 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpClient } from '@angular/common/http';
-import { environment } from '../../../../environments/environment';
 import { IcreateUser } from '../../../interface/icreate-user';
-import { retry } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
+import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable()
 export class AddUserService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
   createUser( params: IcreateUser ): Observable<any> {

@@ -1,9 +1,9 @@
 import { Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IprofileSearch } from '../../../interface/iprofile-search';
-import { retry } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
+import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable()
 export class ProfileSearchService {
@@ -13,7 +13,8 @@ export class ProfileSearchService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
   getCountry(): Observable<any> {

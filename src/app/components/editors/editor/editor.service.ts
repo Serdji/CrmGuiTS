@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { IprofileSearch } from '../../../interface/iprofile-search';
 import { Observable } from 'rxjs';
-import { retry } from 'rxjs/operators';
+import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -12,7 +12,8 @@ export class EditorService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
   saveDistribution( params: IprofileSearch ): Observable<any> {
