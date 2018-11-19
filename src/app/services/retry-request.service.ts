@@ -18,8 +18,7 @@ export class RetryRequestService {
             } else {
               throw err;
             }
-          } ),
-          takeWhile( err => err )
+          } )
         );
     } );
   }
