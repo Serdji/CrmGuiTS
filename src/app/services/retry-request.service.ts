@@ -12,14 +12,14 @@ export class RetryRequestService {
     return retryWhen( errors => {
       return errors
         .pipe(
-          map( value => {
-            if ( value.status === 401 ) {
-              return value;
+          map( err => {
+            if ( err.status === 401 ) {
+              return err;
             } else {
               return null;
             }
           } ),
-          takeWhile( value => value )
+          takeWhile( err => err )
         );
     } );
   }
