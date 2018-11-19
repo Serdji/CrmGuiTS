@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { map, retryWhen, takeWhile, tap } from 'rxjs/operators';
+import { retryWhen, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
