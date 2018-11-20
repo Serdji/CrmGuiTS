@@ -286,6 +286,15 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/list-distribution' ] );
           } );
+        break;
+      case 'stopDistribution':
+        this.profileDistributionService.stopDistribution( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.profileDistributionService.profileDistributionSubject.next();
+          } );
+        break;
     }
   }
 

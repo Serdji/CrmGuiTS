@@ -44,6 +44,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     this.profileDistributionService.profileDistributionSubject
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
+        this.stopButtonDisabled = true;
         this.isActive = true;
         this.isLoader = true;
         this.initTableProfile( this.distributionProfileId );
@@ -114,9 +115,13 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         break;
       case 2:
       case 3:
-      case 5:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = false;
+        this.deliteButtonDisabled = true;
+        break;
+      case 5:
+        this.startButtonDisabled = true;
+        this.stopButtonDisabled = true;
         this.deliteButtonDisabled = true;
         break;
       default:
@@ -157,15 +162,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
   }
 
   stopDistribution(): void {
-    this.profileDistributionService.stopDistribution( this.distributionProfile.distributionId )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        this.stopButtonDisabled = true;
-        this.windowDialog( 'Рассылка остановлена', 'ok' );
-        this.profileDistributionService.profileDistributionSubject.next();
-        this.isActive = true;
-        this.isLoader = true;
-      } );
+    this.windowDialog( 'Вы действительно хотиту отменить эту рассылку ?', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
   }
 
   deleteDistribution(): void {
