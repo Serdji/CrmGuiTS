@@ -25,6 +25,7 @@ export class ActivityUserService implements OnInit, OnDestroy {
     localStorage.removeItem( 'paramsToken' );
     localStorage.removeItem( 'login' );
     this.router.navigate( [ '' ] );
+    location.reload();
   }
 
   idleLogout() {
