@@ -25,7 +25,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public edit = false;
 
   private loginId: number;
-  private isActive: boolean = true;
+  private isActive: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +36,7 @@ export class UserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.isActive = true;
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
