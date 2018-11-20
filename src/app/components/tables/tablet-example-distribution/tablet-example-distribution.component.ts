@@ -137,7 +137,6 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
   }
 
   disabledCheckbox( eventData ): void {
-    console.log( eventData );
     this.isDisabled = eventData;
   }
 
