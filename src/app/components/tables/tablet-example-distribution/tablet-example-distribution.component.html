@@ -19,11 +19,11 @@
         <mat-checkbox appAccessRights="distributions:update"
                       appAccessDisabled="true"
                       (emitAccessDisabled)="disabledCheckbox($event)"
-                      [disabled]="isDisabled || element.status.distributionStatusId !== 1"
+                      [disabled]="isDisabled || element.distributionStatusId !== 1"
                       [id]="element.distributionId"
                       (click)="$event.stopPropagation()"
                       (change)="$event ? selection.toggle(element) : null"
-                      [checked]="element.status.distributionStatusId === 1 ? selection.isSelected(element) : null">
+                      [checked]="element.distributionStatusId === 1 ? selection.isSelected(element) : null">
         </mat-checkbox>
       </mat-cell>
     </ng-container>
@@ -35,10 +35,10 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="status">
+    <ng-container matColumnDef="statusNameRus">
       <mat-header-cell *matHeaderCellDef mat-sort-header>Статус</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.status.statusNameRus}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.statusNameRus}}</span>
       </mat-cell>
     </ng-container>
 
