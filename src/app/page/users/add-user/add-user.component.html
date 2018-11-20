@@ -5,18 +5,22 @@
       <form class="add-user__form" [formGroup]="formUser">
         <mat-form-field class="add-user__input">
           <input matInput formControlName="login" placeholder="Логин">
+          <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="password" type="password" placeholder="Пароль">
+          <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="confirmPassword" type="password" appConfirmEqualValidator="password" placeholder="Повторите пароль">
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="loginName" placeholder="ФИО">
+          <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput type="email" formControlName="email" placeholder="email">
+          <mat-error>Некорректно введен email</mat-error>
         </mat-form-field>
         <div class="add-user__button-wrapper">
           <button class="add-user__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
