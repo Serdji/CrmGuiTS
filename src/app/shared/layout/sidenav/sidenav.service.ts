@@ -55,6 +55,7 @@ export class SidenavService {
       {
         name: 'Группы пассажиров',
         icon: 'group_add',
+        claims: 'analytics:read',
         link: [
           { url: '/crm/profilegroup', title: 'Список групп' },
         ]

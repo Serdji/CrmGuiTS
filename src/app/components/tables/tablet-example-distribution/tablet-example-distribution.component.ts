@@ -10,6 +10,7 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-tablet-example-distribution',
@@ -46,7 +47,7 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
     this.displayedColumns = [
       'select',
       'subject',
-      'status',
+      'statusNameRus',
       'dateFrom',
       'dateTo',
       'lastTryDT',
@@ -55,6 +56,7 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
   }
 
   private initDataSource() {
+    _.each( this.tableDataSource, value => _.set( value, 'statusNameRus', value.status.statusNameRus ) );
     this.dataSourceFun( this.tableDataSource );
   }
 
