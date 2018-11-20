@@ -15,7 +15,6 @@
         <mat-grid-list cols="5" rowHeight="200px">
           <mat-grid-tile [colspan]="2" [rowspan]="1">
             <div class="profile-distribution__grid">
-              <span *ngIf="distributionProfile.footer">Подпись: <b>{{ distributionProfile.footer }}</b></span>
               <span>Даты рассылок: <b> от {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, до {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
               <span>Дата и время создания рассылки: <b> {{ distributionProfile.lastTryDT }} </b>  </span>
               <span>Статус: <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>

@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map, retry } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../../services/config-service.service';
+import { RetryRequestService } from '../../../../services/retry-request.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -12,14 +13,15 @@ export class OrderService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
 
   getBooking( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/booking` )
       .pipe(
-        retry( 10 ),
+        this.retryRequestService.retry(),
         map( ( orders: any ) => {
           orders = _( orders ).sortBy( 'lut' ).reverse().value();
           let counterServicesIsEmd = 0;

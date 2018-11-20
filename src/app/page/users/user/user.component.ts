@@ -25,7 +25,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public edit = false;
 
   private loginId: number;
-  private isActive: boolean = true;
+  private isActive: boolean;
 
   constructor(
     private route: ActivatedRoute,
@@ -36,6 +36,7 @@ export class UserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
+    this.isActive = true;
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
@@ -103,20 +104,20 @@ export class UserComponent implements OnInit, OnDestroy {
         this.formPermission.get( '2' ).patchValue( '' );
       } );
 
-    this.formPermission.get( '6' )[ this.formPermission.get( '3' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '4' )[ this.formPermission.get( '3' ).value ? 'enable' : 'disable' ]();
     this.formPermission.get( '3' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formPermission.get( '4' )[ value ? 'enable' : 'disable' ]();
+        this.formPermission.get( '4' ).patchValue( '' );
+      } );
+
+    this.formPermission.get( '6' )[ this.formPermission.get( '5' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '5' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
         this.formPermission.get( '6' )[ value ? 'enable' : 'disable' ]();
         this.formPermission.get( '6' ).patchValue( '' );
-      } );
-
-    this.formPermission.get( '5' )[ this.formPermission.get( '4' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '4' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '5' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '5' ).patchValue( '' );
       } );
 
     this.formPermission.get( '8' )[ this.formPermission.get( '7' ).value ? 'enable' : 'disable' ]();

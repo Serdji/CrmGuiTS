@@ -1,9 +1,9 @@
 import { Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IprofileSearch } from '../../../interface/iprofile-search';
-import { retry } from 'rxjs/operators';
 import { ConfigService } from '../../../services/config-service.service';
+import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable()
 export class ProfileSearchService {
@@ -13,20 +13,21 @@ export class ProfileSearchService {
 
   constructor(
     private http: HttpClient,
-    private configService: ConfigService
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
   ) { }
 
   getCountry(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/country' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/country' ).pipe( this.retryRequestService.retry() );
   }
 
   getLocation(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/location' ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/location' ).pipe( this.retryRequestService.retry() );
   }
 
   getProfileSearch( params: IprofileSearch ): Observable<any> {
     this.params = params;
-    return this.http.get( this.configService.crmApi + '/crm/customer/search', { params: this.params } ).pipe( retry( 10 ) );
+    return this.http.get( this.configService.crmApi + '/crm/customer/search', { params: this.params } ).pipe( this.retryRequestService.retry() );
   }
 
   deleteProfiles( params ): Observable<any> {
@@ -34,11 +35,11 @@ export class ProfileSearchService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( this.configService.crmApi + '/crm/customer/deleteCustomers', httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
   downloadCsv( params ): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/customer/searchCsv', { params, responseType: 'blob', observe: 'response' } ).pipe(retry( 10 ));
+    return this.http.get( this.configService.crmApi + '/crm/customer/searchCsv', { params, responseType: 'blob', observe: 'response' } ).pipe(this.retryRequestService.retry());
   }
 
 }

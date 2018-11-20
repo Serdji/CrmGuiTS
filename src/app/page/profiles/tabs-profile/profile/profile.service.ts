@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, Subject, throwError } from 'rxjs';
-import { catchError, retry } from 'rxjs/operators';
+import { catchError } from 'rxjs/operators';
 import { ConfigService } from '../../../../services/config-service.service';
 import { Router } from '@angular/router';
+import { RetryRequestService } from '../../../../services/retry-request.service';
 
 @Injectable( {
   providedIn: 'root'
@@ -16,13 +17,14 @@ export class ProfileService {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
+    private retryRequestService: RetryRequestService,
     private router: Router,
   ) { }
 
   getProfile( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/customer/${id}` )
       .pipe(
-        retry( 10 ),
+        this.retryRequestService.retry(),
         catchError( (err: any) => {
           switch ( err.status ) {
             case 404: this.router.navigate( [ 'crm/404' ] ); break;
@@ -33,19 +35,19 @@ export class ProfileService {
   }
 
   putProfile( params ): Observable<any> {
-    return this.http.put( `${this.configService.crmApi}/crm/customer`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/crm/customer`, params ).pipe( this.retryRequestService.retry() );
   }
 
   deleteProfile( id: number ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/crm/customer/${id}` ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/customer/${id}` ).pipe( this.retryRequestService.retry() );
   }
 
   addAddProfile( params ): Observable<any> {
-    return this.http.post( `${this.configService.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
+    return this.http.post( `${this.configService.crmApi}/crm/customerName`, params ).pipe( this.retryRequestService.retry() );
   }
 
   getAllProfileNames( id: number ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/customerName` ).pipe( retry( 10 ) );
+    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/customerName` ).pipe( this.retryRequestService.retry() );
   }
 
   deleteProfileNames( params ): Observable<any> {
@@ -53,12 +55,12 @@ export class ProfileService {
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };
-    return this.http.delete( `${this.configService.crmApi}/crm/customerName/deleteCustomerNames`, httpOptions ).pipe( retry( 10 ) );
+    return this.http.delete( `${this.configService.crmApi}/crm/customerName/deleteCustomerNames`, httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
   putProfileName( params ): Observable<any> {
     this.subjectPutProfileNames.next();
-    return this.http.put( `${this.configService.crmApi}/crm/customerName`, params ).pipe( retry( 10 ) );
+    return this.http.put( `${this.configService.crmApi}/crm/customerName`, params ).pipe( this.retryRequestService.retry() );
   }
 
 }

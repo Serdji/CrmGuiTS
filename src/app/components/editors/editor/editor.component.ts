@@ -56,7 +56,6 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.formDistribution = this.fb.group( {
       subject: [ '', [ Validators.required ] ],
       text: '',
-      footer: [ '', [ Validators.required ] ],
       templateId: '',
       dateFrom: '',
       dateTo: '',
