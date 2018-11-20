@@ -56,7 +56,12 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
   }
 
   private initDataSource() {
-    _.each( this.tableDataSource, value => _.set( value, 'statusNameRus', value.status.statusNameRus ) );
+    _.each( this.tableDataSource, value => {
+      _( value )
+        .set( 'statusNameRus', value.status.statusNameRus )
+        .set( 'distributionStatusId', value.status.distributionStatusId )
+        .value();
+    } );
     this.dataSourceFun( this.tableDataSource );
   }
 
