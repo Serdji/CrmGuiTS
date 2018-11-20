@@ -44,6 +44,7 @@ export class AuthInterceptor implements HttpInterceptor {
           map( res => res ),
           catchError( ( err: HttpErrorResponse ) => {
             switch ( err.status ) {
+              case 400: this.windowDialog( `Данные введены некорректно!`, 'error' ); break;
               case 401: this.refreshToken( idToken.refreshToken ); break;
               case 403: this.windowDialog( `У Вас недостаточно прав на это действие!`, 'error' ); break;
               // case 404: this.router.navigate( [ 'crm/404' ] ); break;
