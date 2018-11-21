@@ -89,10 +89,12 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     this.profileDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( distributionProfile: IdistributionProfile ) => {
-        this.tabletAsyncDistributionProfileService.countPage = distributionProfile.totalCount;
-        this.distributionProfile = distributionProfile;
-        this.isLoader = false;
-        this.disabledButton( distributionProfile );
+        if ( distributionProfile ) {
+          this.tabletAsyncDistributionProfileService.countPage = distributionProfile.totalCount;
+          this.distributionProfile = distributionProfile;
+          this.isLoader = false;
+          this.disabledButton( distributionProfile );
+        }
       } );
   }
 
@@ -151,8 +153,8 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
 
   startDistribution(): void {
     this.windowDialog(
-      `По результатам реализации данной отправки лимит сообщений ${ this.emailLimits - this.distributionProfile.totalCount }. ` +
-      `Подтвердите активацию сохраненной рассылки в количестве ${ this.distributionProfile.totalCount } писем ?`,
+      `По результатам реализации данной отправки лимит сообщений ${this.emailLimits - this.distributionProfile.totalCount}. ` +
+      `Подтвердите активацию сохраненной рассылки в количестве ${this.distributionProfile.totalCount} писем ?`,
       'startDistribution',
       'startDistribution',
       this.distributionProfile.distributionId
