@@ -1,6 +1,6 @@
 <div class="breadcrumbs" *ngIf="breadcrumbs">
   <span class="breadcrumbs__link" *ngFor=" let breadcrumb of breadcrumbs ">
     <mat-icon>chevron_right</mat-icon>
-    <a href="#{{breadcrumb.url}}">{{ breadcrumb.title }}</a>
+    <a href="#{{breadcrumb.url}}" (click)="breadcrumbTake(breadcrumb.title)">{{ breadcrumb.title }}</a>
   </span>
 </div>

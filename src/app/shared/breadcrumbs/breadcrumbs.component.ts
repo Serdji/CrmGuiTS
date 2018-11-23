@@ -12,10 +12,12 @@ import { IMenuLink } from '../../interface/imenu-link';
 } )
 export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
+  public breadcrumbs: IMenuLink[] = [];
+
   private isActive: boolean;
   private currentUrl: string;
-  private breadcrumbs: IMenuLink[] = [];
   private menuLink: IMenuLink[];
+  private caunter: number;
 
   constructor(
     private router: Router,
@@ -26,6 +28,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.menuLink = this.sidenavService.menuLink;
+    this.caunter = 0;
     this.setMenuLink();
     this.initCurrentUrl();
     this.getBreadcrumbs();
@@ -50,7 +53,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     if ( _.size( _.chain( currentUrl ).split( '/' ).value() ) === 4 ) {
       _.each( this.menuLink, link => {
         if ( link.url === _.chain( currentUrl ).split( '/' ).take( 3 ).join( '/' ).value() ) {
-          this.breadcrumbs = _.take( this.breadcrumbs, 3 );
+          // this.breadcrumbs = _.take( this.breadcrumbs, 3 );
           this.breadcrumbs.push(
             {
               url: currentUrl,
@@ -62,7 +65,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     } else if ( _.size( _.chain( currentUrl ).split( '?' ).value() ) === 2 ) {
       _.each( this.menuLink, link => {
         if ( link.url === _.chain( currentUrl ).split( '?' ).take( 1 ).join( '/' ).value() ) {
-          this.breadcrumbs = _.take( this.breadcrumbs, 1 );
+          // this.breadcrumbs = _.take( this.breadcrumbs, 1 );
           this.breadcrumbs.push(
             {
               url: currentUrl,
@@ -74,7 +77,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     } else {
       _.each( this.menuLink, link => {
         if ( link.url === currentUrl ) {
-          this.breadcrumbs = _.take( this.breadcrumbs, 1 );
+          // this.breadcrumbs = _.take( this.breadcrumbs, 1 );
           this.breadcrumbs.push(
             {
               url: currentUrl,
@@ -111,6 +114,16 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
         this.currentUrl = this.router.url;
         this.initBreadcrumbs( this.currentUrl );
       } );
+  }
+
+  breadcrumbTake( title: string ): void {
+    _.each( this.breadcrumbs, breadcrumbs => {
+      this.caunter++;
+      if ( breadcrumbs.title === title ) {
+        this.breadcrumbs = _.take( this.breadcrumbs, this.caunter );
+      }
+    } );
+    this.caunter = 0;
   }
 
   ngOnDestroy(): void {
