@@ -65,9 +65,8 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
             this.breadcrumbs = _.take( this.breadcrumbs, 1 );
             this.breadcrumbs.push(
               {
-                url: _.chain( currentUrl ).split( '?' ).head().value(),
+                url: currentUrl,
                 title: link.title,
-                queryParams: _.chain( currentUrl ).split( '?' ).last().value()
               }
             );
           }
@@ -86,7 +85,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
         } );
       }
     } );
-    console.log( this.breadcrumbs );
+    this.breadcrumbs = _.uniqBy( this.breadcrumbs, 'title' );
     localStorage.setItem( 'breadcrumbs', JSON.stringify( this.breadcrumbs ) );
   }
 
