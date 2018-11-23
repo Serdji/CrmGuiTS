@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from '../../shared/layout/sidenav/sidenav.service';
-import { IMenuLink } from '../../interface/imenu-link';
+import { IMenu } from '../../interface/imenu';
 
 @Component( {
   selector: 'app-entrance',
@@ -9,7 +9,7 @@ import { IMenuLink } from '../../interface/imenu-link';
 } )
 export class EntranceComponent implements OnInit {
 
-  public cards: IMenuLink[];
+  public cards: IMenu[];
 
   constructor( private sidenavService: SidenavService ) { }
 

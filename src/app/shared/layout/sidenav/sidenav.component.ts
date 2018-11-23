@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivityUserService } from '../../../services/activity-user.service';
 import { timer } from 'rxjs/observable/timer';
-import { IMenuLink } from '../../../interface/imenu-link';
+import { IMenu } from '../../../interface/imenu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from '../layout.service';
 import { Router } from '@angular/router';
@@ -18,7 +18,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   @ViewChild( 'sidenav' ) sidenav: MatSidenav;
   @ViewChild( 'accord' ) accord;
 
-  public menu: IMenuLink[];
+  public menu: IMenu[];
   public version: string;
   public AirlineCode: string;
 
