@@ -7,12 +7,14 @@ import { LayoutService } from './layout.service';
 import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 import { SidenavService } from './sidenav/sidenav.service';
+import { BreadcrumbsModule } from '../breadcrumbs/breadcrumbs.module';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
-    RouterModule
+    RouterModule,
+    BreadcrumbsModule
   ],
   declarations: [
     SidenavComponent,

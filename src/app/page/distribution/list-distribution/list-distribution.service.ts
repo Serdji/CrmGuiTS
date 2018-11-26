@@ -2,10 +2,6 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { Observable, Subject } from 'rxjs';
-import { map } from 'rxjs/operators';
-import * as _ from 'lodash';
-import * as moment from 'moment';
-import { Idistribution } from '../../../interface/idistribution';
 import { RetryRequestService } from '../../../services/retry-request.service';
 
 @Injectable( {
@@ -22,17 +18,7 @@ export class ListDistributionService {
   ) { }
 
   getDistribution(): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/distribution` ).pipe(
-      this.retryRequestService.retry(),
-      map( ( distributions: Idistribution[] ) => {
-        _.each( distributions, distribution => {
-          if ( _.has( distribution, 'lastTryDT' ) ) {
-            _.set( distribution, 'lastTryDT', moment( moment.utc( distribution.lastTryDT ).toDate() ).format( 'DD.MM.YYYY HH:mm' ) );
-          }
-        } );
-        return distributions;
-      } )
-    );
+    return this.http.get( `${this.configService.crmApi}/crm/distribution` ).pipe( this.retryRequestService.retry() );
   }
 
   deleteDistributions( params ): Observable<any> {
@@ -44,7 +30,7 @@ export class ListDistributionService {
   }
 
   deleteDistribution( id: number ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe(this.retryRequestService.retry());
+    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe( this.retryRequestService.retry() );
   }
 
 }

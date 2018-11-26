@@ -16,7 +16,7 @@
           <mat-grid-tile [colspan]="2" [rowspan]="1">
             <div class="profile-distribution__grid">
               <span>Даты рассылок: <b> от {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, до {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
-              <span>Дата и время создания рассылки: <b> {{ distributionProfile.lastTryDT }} </b>  </span>
+              <span>Дата и время создания рассылки: <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>
               <span>Статус: <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
               <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">Сообщение об ошибки: <b> {{ distributionProfile.errorMessage }} </b>  </span>
             </div>

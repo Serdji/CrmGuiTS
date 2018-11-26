@@ -24,6 +24,7 @@ export class ActivityUserService implements OnInit, OnDestroy {
     localStorage.removeItem( 'saveSeismic' );
     localStorage.removeItem( 'paramsToken' );
     localStorage.removeItem( 'login' );
+    localStorage.removeItem( 'breadcrumbs' );
     this.router.navigate( [ '' ] );
     location.reload();
   }

@@ -1,11 +1,12 @@
 import { Injectable } from '@angular/core';
-import { IMenuLink } from '../../../interface/imenu-link';
+import { IMenu } from '../../../interface/imenu';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ParsTokenService } from '../../../services/pars-token.service';
 import { Itoken } from '../../../interface/itoken';
 import * as _ from 'lodash';
+import { IMenuLink } from '../../../interface/imenu-link';
 
 @Injectable( {
   providedIn: 'root'
@@ -20,9 +21,9 @@ export class SidenavService {
   constructor(
     private http: HttpClient,
     private parsTokenService: ParsTokenService
-    ) { }
+  ) { }
 
-  get menu(): IMenuLink[] {
+  get menu(): IMenu[] {
 
     let menu = [
       {
@@ -83,11 +84,20 @@ export class SidenavService {
     if ( this.parsTokenService.parsToken.Claims ) {
       const claims = this.parsTokenService.parsToken.Claims;
       _.each( menu, value => {
-        if ( !_.includes( claims, value.claims) ) menu = _.reject( menu, { claims: value.claims } );
+        if ( !_.includes( claims, value.claims ) ) menu = _.reject( menu, { claims: value.claims } );
       } );
     }
 
     return menu;
+  }
+
+  get menuLink(): IMenuLink[] {
+    const menuLink = [];
+
+    _.each( this.menu, menu => {
+      _.each( menu.link, link => menuLink.push( link ) );
+    } );
+    return menuLink;
   }
 
   getVersion(): Observable<string> {
