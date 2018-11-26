@@ -75,6 +75,7 @@ export class SidenavService {
         claims: 'promotions:read',
         link: [
           { url: '/crm/add-promotions', title: 'Добавить промоакцию' },
+          { url: '/crm/add-promotions-cods', title: 'Добавить промокод' },
         ]
       },
       {

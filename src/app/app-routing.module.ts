@@ -22,6 +22,7 @@ import { ListDistributionComponent } from './page/distribution/list-distribution
 import { ProfileDistributionComponent } from './page/distribution/profile-distribution/profile-distribution.component';
 import { AccessRightsDistributionGuard } from './guards/access-rights-distribution.guard';
 import { AddPromotionsComponent } from './page/promotions/add-promotions/add-promotions.component';
+import { AddPromotionsCodsComponent } from './page/promotions/add-promotions-cods/add-promotions-cods.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -43,6 +44,7 @@ const routes: Routes = [
         { path: 'list-distribution', component: ListDistributionComponent },
         { path: 'profile-distribution/:id', component: ProfileDistributionComponent, canActivate: [ AccessRightsDistributionGuard ] },
         { path: 'add-promotions', component: AddPromotionsComponent, },
+        { path: 'add-promotions-cods', component: AddPromotionsCodsComponent },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
       ],
