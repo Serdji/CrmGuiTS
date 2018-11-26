@@ -1,3 +1,56 @@
-<p>
-  add-promotions-cods works!
-</p>
+<div class="add-promotions-cods">
+  <form class="add-promotions-cods__form">
+
+    <mat-grid-list cols="3" rowHeight="100px">
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-promotions-cods__card">
+          <mat-card-content class="add-promotions-cods__content">
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Группа сегментации">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <mat-card class="add-promotions-cods__card">
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <mat-card class="add-promotions-cods__card">
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <mat-card class="add-promotions-cods__card">
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-card class="add-promotions-cods__card">
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <div class="add-promotions-cods__button-wrapper">
+        <button appAccessRights="promotions:update" class="add-promotions-cods__button" mat-raised-button
+                (click)="saveForm()" color="primary">
+          <mat-icon>save</mat-icon>
+          Сохранить
+        </button>
+        <button class="add-promotions-cods__button" mat-raised-button (click)="clearForm()">
+          <mat-icon>clear</mat-icon>
+          Очистить форму
+        </button>
+      </div>
+    </mat-grid-list>
+
+  </form>
+</div>
