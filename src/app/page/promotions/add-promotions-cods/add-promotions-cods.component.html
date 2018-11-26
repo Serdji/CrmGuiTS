@@ -1,7 +1,7 @@
 <div class="add-promotions-cods">
   <form class="add-promotions-cods__form">
 
-    <mat-grid-list cols="3" rowHeight="100px">
+    <mat-grid-list cols="3" rowHeight="90px">
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-promotions-cods__card">
@@ -15,45 +15,55 @@
       </mat-grid-tile>
 
 
-      <mat-grid-tile [colspan]="1" [rowspan]="3">
+      <mat-grid-tile [colspan]="1" [rowspan]="4">
         <mat-card class="add-promotions-cods__card">
-          <mat-form-field class="add-promotions-cods__input">
-            <input matInput type="text" placeholder="Откуда">
-          </mat-form-field>
-          <mat-form-field class="add-promotions-cods__input">
-            <input matInput type="text" placeholder="Куда">
-          </mat-form-field>
-          <mat-form-field class="add-promotions-cods__input">
-            <input matInput type="text" placeholder="Номер рейса">
-          </mat-form-field>
-          <mat-form-field class="add-promotions-cods__input">
-            <input matInput placeholder="Период реализации" [matDatepicker]="dob">
-            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #dob></mat-datepicker>
-          </mat-form-field>
-          <mat-form-field class="add-promotions-cods__input">
-            <input matInput type="text" placeholder="Бренды">
-          </mat-form-field>
-          <mat-form-field class="add-promotions-cods__input">
-            <input matInput type="text" placeholder="RBD">
-          </mat-form-field>
+          <mat-card-content class="add-promotions-cods__content">
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Откуда">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Куда">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Номер рейса">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput placeholder="Период реализации" [matDatepicker]="dob">
+              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dob></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Бренды">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="RBD">
+            </mat-form-field>
+          </mat-card-content>
         </mat-card>
       </mat-grid-tile>
 
 
-      <mat-grid-tile [colspan]="1" [rowspan]="3">
+      <mat-grid-tile [colspan]="1" [rowspan]="4">
+        <mat-card class="add-promotions-cods__card">
+          <mat-card-content class="add-promotions-cods__content">
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Персональная кастность использования">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Бренды">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="5">
         <mat-card class="add-promotions-cods__card">
         </mat-card>
       </mat-grid-tile>
 
 
-      <mat-grid-tile [colspan]="1" [rowspan]="3">
-        <mat-card class="add-promotions-cods__card">
-        </mat-card>
-      </mat-grid-tile>
-
-
-      <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <mat-grid-tile [colspan]="2" [rowspan]="2">
         <mat-card class="add-promotions-cods__card">
         </mat-card>
       </mat-grid-tile>
