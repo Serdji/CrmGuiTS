@@ -17,6 +17,26 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="3">
         <mat-card class="add-promotions-cods__card">
+          <mat-form-field class="add-promotions-cods__input">
+            <input matInput type="text" placeholder="Откуда">
+          </mat-form-field>
+          <mat-form-field class="add-promotions-cods__input">
+            <input matInput type="text" placeholder="Куда">
+          </mat-form-field>
+          <mat-form-field class="add-promotions-cods__input">
+            <input matInput type="text" placeholder="Номер рейса">
+          </mat-form-field>
+          <mat-form-field class="add-promotions-cods__input">
+            <input matInput placeholder="Период реализации" [matDatepicker]="dob">
+            <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dob></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="add-promotions-cods__input">
+            <input matInput type="text" placeholder="Бренды">
+          </mat-form-field>
+          <mat-form-field class="add-promotions-cods__input">
+            <input matInput type="text" placeholder="RBD">
+          </mat-form-field>
         </mat-card>
       </mat-grid-tile>
 
