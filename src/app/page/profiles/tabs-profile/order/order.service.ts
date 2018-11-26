@@ -55,9 +55,25 @@ export class OrderService {
               } );
             } );
 
+            // 1332765
 
             if ( order.MonetaryInfo ) {
-              let T = 0, Teur = 0, Tusd = 0, Tcur = 0, B = 0, Beur = 0, Busd = 0, Bcur = 0, E = 0, Eeur = 0, Eusd = 0, Ecur = 0, TE, CurrencyG;
+              let T = 0, TT = 0, Teur = 0, Tusd = 0, Tcur = 0, B = 0, TTB = 0, Beur = 0, Busd = 0, Bcur = 0, E = 0, Eeur = 0, Eusd = 0, Ecur = 0, TE = 0, CurrencyG;
+
+              TT = _( orders )
+                .map( 'MonetaryInfo' )
+                .flattenDeep()
+                .filter( 'ticket' )
+                .filter( [ 'Code', 'T' ] )
+                .sumBy( 'Amount' );
+
+              TTB = _( orders )
+                .map( 'MonetaryInfo' )
+                .flattenDeep()
+                .filter( 'ticket' )
+                .filter( [ 'Code', 'B' ] )
+                .sumBy( 'Amount' );
+
               _.each( order.MonetaryInfo, MonetaryInfo => {
                 const { Code, Amount, AmountEur, AmountUsd, AmountCur, Currency } = MonetaryInfo;
                 if ( Code === 'T' || Code === 'B' || Code === 'E' ) {
@@ -99,8 +115,17 @@ export class OrderService {
                   { Code: 'TB', Amount: T - B, AmountEur: Teur - Beur, AmountUsd: Tusd - Busd, AmountCur: Tcur - Bcur, Currency: CurrencyG }
                 );
               }
+
+              if ( TT && TTB ) {
+                order.MonetaryInfo.push(
+                  { Code: 'TTB', Amount: TT - TTB, AmountEur: Teur - Beur, AmountUsd: Tusd - Busd, AmountCur: Tcur - Bcur, Currency: CurrencyG }
+                );
+              }
+
             }
           } );
+
+
 
           const ticketCur = _( orders )
             .map( 'MonetaryInfo' )
@@ -156,6 +181,7 @@ export class OrderService {
               }
             }
           } );
+          console.log(orders);
           return orders;
         } )
       );
