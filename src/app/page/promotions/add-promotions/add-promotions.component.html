@@ -1,3 +1,21 @@
-<p>
-  add-promotions works!
-</p>
+<div class="add-promotions">
+  <form class="add-promotions__form">
+    <mat-grid-list cols="1" rowHeight="80px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-promotions__card">
+          <mat-card-content class="add-promotions__content">
+            <mat-form-field class="add-promotions__input">
+              <input matInput type="text" placeholder="Группа пассажиров">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <button appAccessRights="analytics:update" class="add-promotions__button" mat-raised-button
+                    (click)="saveForm()" color="primary">
+              <mat-icon>save</mat-icon>
+              Сохранить
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+</div>

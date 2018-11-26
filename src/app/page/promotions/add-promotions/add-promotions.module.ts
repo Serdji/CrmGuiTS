@@ -8,7 +8,7 @@ import { AddPromotionsComponent } from './add-promotions.component';
 @NgModule( {
   imports: [
     CommonModule,
-    ReactiveFormsModule,
+    // ReactiveFormsModule,
     SharedModule,
   ],
   declarations: [ AddPromotionsComponent ],
