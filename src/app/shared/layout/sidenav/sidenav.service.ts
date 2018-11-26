@@ -70,6 +70,14 @@ export class SidenavService {
         ]
       },
       {
+        name: 'Промокоды',
+        icon: 'receipt',
+        claims: 'promotions:read',
+        link: [
+          { url: '/crm/add-promotions', title: 'Добавить промоакцию' },
+        ]
+      },
+      {
         name: 'Настройки',
         icon: 'settings',
         link: [

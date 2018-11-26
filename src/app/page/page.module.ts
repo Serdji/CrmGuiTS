@@ -8,6 +8,7 @@ import { SegmentationModule } from './segmentation/segmentation.module';
 import { SpecialGroupsModule } from './special-groups/special-groups.module';
 import { ErrorPageModule } from './error-page/error-page.module';
 import { DistributionModule } from './distribution/distribution.module';
+import { PromotionsModule } from './promotions/promotions.module';
 
 @NgModule({
   imports: [
@@ -20,6 +21,7 @@ import { DistributionModule } from './distribution/distribution.module';
     SpecialGroupsModule,
     ErrorPageModule,
     DistributionModule,
+    PromotionsModule,
   ],
   declarations: []
 })

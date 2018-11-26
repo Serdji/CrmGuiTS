@@ -21,6 +21,7 @@ import { ErrorPageComponent } from './page/error-page/error-page.component';
 import { ListDistributionComponent } from './page/distribution/list-distribution/list-distribution.component';
 import { ProfileDistributionComponent } from './page/distribution/profile-distribution/profile-distribution.component';
 import { AccessRightsDistributionGuard } from './guards/access-rights-distribution.guard';
+import { AddPromotionsComponent } from './page/promotions/add-promotions/add-promotions.component';
 
 const routes: Routes = [
     { path: '', component: LoginComponent },
@@ -41,6 +42,7 @@ const routes: Routes = [
         { path: 'profilegroup', component: ProfileGroupComponent },
         { path: 'list-distribution', component: ListDistributionComponent },
         { path: 'profile-distribution/:id', component: ProfileDistributionComponent, canActivate: [ AccessRightsDistributionGuard ] },
+        { path: 'add-promotions', component: AddPromotionsComponent, },
         { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         { path: 'restart', component: RestartComponent },
       ],
