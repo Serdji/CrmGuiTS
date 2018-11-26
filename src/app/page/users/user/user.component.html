@@ -1,5 +1,5 @@
 <div class="user">
-  <mat-grid-list cols="2" rowHeight="700px">
+  <mat-grid-list cols="2" rowHeight="800px">
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <mat-card class="user__card">
         <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>
@@ -95,6 +95,11 @@
                 <div class="user__label-title"><b>Рассылка</b></div>
                 <mat-checkbox class="user__checkbox" formControlName="7">Чтение</mat-checkbox>
                 <mat-checkbox class="user__checkbox" formControlName="8">Изменения</mat-checkbox>
+              </div>
+              <div class="user__label">
+                <div class="user__label-title"><b>Промокоды</b></div>
+                <mat-checkbox class="user__checkbox" formControlName="9">Чтение</mat-checkbox>
+                <mat-checkbox class="user__checkbox" formControlName="10">Изменения</mat-checkbox>
               </div>
               <div class="user__button-wrapper">
                 <button class="user__button _left-button" mat-raised-button (click)="sendFormPermission()" color="primary">Изменить</button>
