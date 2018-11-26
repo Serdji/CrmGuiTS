@@ -18,6 +18,8 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.isLoader = true;
   }
 
+  saveForm(): void {}
+
   ngOnDestroy(): void {
     this.isActive = false;
   }
