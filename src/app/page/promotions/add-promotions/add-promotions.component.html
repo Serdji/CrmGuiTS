@@ -5,10 +5,10 @@
         <mat-card class="add-promotions__card">
           <mat-card-content class="add-promotions__content">
             <mat-form-field class="add-promotions__input">
-              <input matInput type="text" placeholder="Группа пассажиров">
+              <input matInput type="text" placeholder="Промоакция">
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
-            <button appAccessRights="analytics:update" class="add-promotions__button" mat-raised-button
+            <button appAccessRights="promotions:update" class="add-promotions__button" mat-raised-button
                     (click)="saveForm()" color="primary">
               <mat-icon>save</mat-icon>
               Сохранить
