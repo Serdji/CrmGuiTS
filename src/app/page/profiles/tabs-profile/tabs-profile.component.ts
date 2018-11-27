@@ -8,6 +8,8 @@ import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
+import { CurrencyDefaultService } from '../../../services/currency-default.service';
+import { ISettings } from '../../../interface/isettings';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -25,6 +27,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public profileSegmentation: any;
   public profileGroup: any;
   public accessDisabled: boolean;
+  public currencyDefault: string;
 
   private isActive: boolean;
 
@@ -33,7 +36,8 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private orderService: OrderService,
     private dialog: MatDialog,
-    private profileGroupService: ProfileGroupService
+    private profileGroupService: ProfileGroupService,
+    private currencyDefaultService: CurrencyDefaultService
   ) { }
 
   ngOnInit(): void {
@@ -49,8 +53,14 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
             this.initProfile( this.profileId, this.orders );
           } );
       } );
+    this.initCurrencyDefault();
   }
 
+  private initCurrencyDefault() {
+    this.currencyDefaultService.getCurrencyDefault()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
+  }
 
   private initOrder( id: number ) {
     this.ordersProgress = true;

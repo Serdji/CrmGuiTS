@@ -17,7 +17,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   private currentUrl: string;
   private menuLink: IMenuLink[];
-  private caunter: number;
+  private counter: number;
 
   constructor(
     private router: Router,
@@ -28,7 +28,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.menuLink = this.sidenavService.menuLink;
-    this.caunter = 0;
+    this.counter = 0;
     this.setMenuLink();
     this.initCurrentUrl();
     this.getBreadcrumbs();
@@ -118,12 +118,12 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   breadcrumbTake( title: string ): void {
     _.each( this.breadcrumbs, breadcrumbs => {
-      this.caunter++;
+      this.counter++;
       if ( breadcrumbs.title === title ) {
-        this.breadcrumbs = _.take( this.breadcrumbs, this.caunter );
+        this.breadcrumbs = _.take( this.breadcrumbs, this.counter );
       }
     } );
-    this.caunter = 0;
+    this.counter = 0;
   }
 
   ngOnDestroy(): void {
