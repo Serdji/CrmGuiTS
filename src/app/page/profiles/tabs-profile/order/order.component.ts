@@ -2,6 +2,8 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { CurrencyDefaultService } from '../../../../services/currency-default.service';
+import { ISettings } from '../../../../interface/isettings';
 
 
 @Component( {
@@ -15,15 +17,26 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   public orders;
   public progress: boolean;
+  public currencyDefault: string;
 
   private isActive: boolean;
 
-  constructor( private orderService: OrderService ) { }
+  constructor(
+    private orderService: OrderService,
+    private currencyDefaultService: CurrencyDefaultService
+  ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.progress = true;
     this.initBooking();
+    this.initCurrencyDefault();
+  }
+
+  private initCurrencyDefault() {
+    this.currencyDefaultService.getCurrencyDefault()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
   private initBooking() {
