@@ -197,7 +197,7 @@ export class OrderService {
               order.MonetaryInfo.push(
                 { Code: 'TG', AmountEur: sumEurT, AmountUsd: sumUsdT, AmountCur: SumCurT },
                 { Code: 'TS', AmountEur: sumEur, AmountUsd: sumUsd, AmountCur: SumCur },
-                { Code: 'TT', Amount: ticketAmoT, AmountEur: sumEur, AmountUsd: sumUsd, AmountCur: SumCur, Currency: currency }
+                { Code: 'TT', Amount: ticketAmoT, AmountEur: ticketEurT, AmountUsd: ticketUsdT, AmountCur: ticketCurT, Currency: currency }
               );
             }
           } );
