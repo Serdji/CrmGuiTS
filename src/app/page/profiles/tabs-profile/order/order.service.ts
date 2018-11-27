@@ -55,8 +55,7 @@ export class OrderService {
               } );
             } );
 
-            // 1332765
-
+// ------------------------------------------ Пересчет валют в заказе ------------------------------------------
             if ( order.MonetaryInfo ) {
 
               const currency = _.chain( order.MonetaryInfo )
@@ -65,15 +64,11 @@ export class OrderService {
                 .get('Currency')
                 .value();
 
+    // ------------------------- Сумма по каждой из валют в ticket --------------------------
               const ticketAmoT = _( order.MonetaryInfo )
                 .filter( 'ticket' )
                 .filter( [ 'Code', 'T' ] )
                 .sumBy( 'Amount' );
-
-
-
-      //-------------------------sum ticket---------------------------
-
               const ticketEurT = _( order.MonetaryInfo )
                 .filter( 'ticket' )
                 .filter( [ 'Code', 'T' ] )
@@ -114,12 +109,10 @@ export class OrderService {
                 .sumBy( 'AmountCur' );
 
               let subtractTicketEur, subtractTicketUsd, subtractTicketCur;
+    // --------------------------------------------------------------------------------------
 
-      //--------------------------------------------------------------
 
-
-      //-------------------------sum enmd-----------------------------
-
+    // ------------------------- Сумма по каждой из валют в emd -----------------------------
               const emdEurT = _( order.MonetaryInfo )
                 .filter( 'emd' )
                 .filter( [ 'Code', 'T' ] )
@@ -160,12 +153,12 @@ export class OrderService {
                 .sumBy( 'AmountCur' );
 
               let subtractEmdEur, subtractEmdUsd, subtractEmdCur;
-
-      //---------------------------------------------------------------
+     // --------------------------------------------------------------------------------------
 
               let sumEur, sumUsd, SumCur;
               let sumEurT, sumUsdT, SumCurT;
 
+              // -------- Если в ticket есть хоть один элемент Code: E то вычитаем ticketT из ticketE, иначе из ticketB --------
               if ( _( order.MonetaryInfo ).filter( 'ticket' ).filter( [ 'Code', 'E' ] ).size() !== 0 ) {
                 subtractTicketEur = ticketEurT - ticketEurE;
                 subtractTicketUsd = ticketUsdT - ticketUsdE;
@@ -175,7 +168,10 @@ export class OrderService {
                 subtractTicketUsd = ticketUsdT - ticketUsdB;
                 subtractTicketCur = ticketCurT - ticketCurB;
               }
+              // ---------------------------------------------------------------------------------------------------------------
 
+
+              // -------------- Если в emd есть хоть один элемент Code: E то вычитаем emdT из emdE, иначе из emdB --------------
               if ( _( order.MonetaryInfo ).filter( 'emd' ).filter( [ 'Code', 'E' ] ).size() !== 0 ) {
                 subtractEmdEur = emdEurT - emdEurE;
                 subtractEmdUsd = emdUsdT - emdUsdE;
@@ -185,22 +181,30 @@ export class OrderService {
                 subtractEmdUsd = emdUsdT - emdUsdB;
                 subtractEmdCur = emdCurT - emdCurB;
               }
+              // ---------------------------------------------------------------------------------------------------------------
 
+              // ---- Сложение валют по ticket и emd с учетом таксы ----
               sumEur = subtractTicketEur + subtractEmdEur;
               sumUsd = subtractTicketUsd + subtractEmdUsd;
               SumCur = subtractTicketCur + subtractEmdCur;
+              // -------------------------------------------------------
 
+              // --- Сложение валют по ticket и emd без учетом таксы ---
               sumEurT = ticketEurT + emdEurT;
               sumUsdT = ticketUsdT + emdUsdT;
               SumCurT = ticketCurT + emdCurT;
+              // -------------------------------------------------------
 
+              // --- Пересчитанные валюты добавляем в коннец массива ---
               order.MonetaryInfo.push(
-                { Code: 'TG', AmountEur: sumEurT, AmountUsd: sumUsdT, AmountCur: SumCurT },
-                { Code: 'TS', AmountEur: sumEur, AmountUsd: sumUsd, AmountCur: SumCur },
-                { Code: 'TT', Amount: ticketAmoT, AmountEur: ticketEurT, AmountUsd: ticketUsdT, AmountCur: ticketCurT, Currency: currency }
+                { Code: 'TG', AmountEur: sumEurT, AmountUsd: sumUsdT, AmountCur: SumCurT }, // Всего по заказу
+                { Code: 'TS', AmountEur: sumEur, AmountUsd: sumUsd, AmountCur: SumCur }, // Таксы и сборы
+                { Code: 'TT', Amount: ticketAmoT, AmountEur: ticketEurT, AmountUsd: ticketUsdT, AmountCur: ticketCurT, Currency: currency } // Общие суммы вылют только по ticket
               );
+              // -------------------------------------------------------
             }
           } );
+// -------------------------------------------------------------------------------------------------------------
 
           const ticketCur = _( orders )
             .map( 'MonetaryInfo' )
