@@ -101,7 +101,7 @@
                         <div *ngIf="MonetaryInfo.Code === 'TG'" class="order__content-point">
                           <span class="order__content-text">Всего по заказу:</span>
                           <span><b>
-                            {{ MonetaryInfo.AmountCur | currency:'RUB':'symbol-narrow'}} |
+                            {{ MonetaryInfo.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountUsd | currency:'USD':'symbol-narrow'}}
                           </b></span>
@@ -109,7 +109,7 @@
                         <div *ngIf="MonetaryInfo.Code === 'TS'" class="order__content-point">
                           <span class="order__content-text">Таксы и сборы:</span>
                           <span><b>
-                            {{ MonetaryInfo.AmountCur | currency:'RUB':'symbol-narrow'}} |
+                            {{ MonetaryInfo.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountUsd | currency:'USD':'symbol-narrow'}}
                           </b></span>
@@ -118,7 +118,7 @@
                           <span class="order__content-text">По билетам:</span>
                           <span><b>
                             {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}} |
-                            {{ MonetaryInfo.AmountCur | currency:'RUB':'symbol-narrow'}} |
+                            {{ MonetaryInfo.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountUsd | currency:'USD':'symbol-narrow'}}
                           </b></span>
@@ -218,7 +218,7 @@
                         <span class="order__content-text">Стоимость:</span>
                         <span><b>
                           {{ service.emd?.amount | currency:service.emd?.Currency:'symbol-narrow'}} |
-                          {{ service.emd?.AmountCur | currency:'RUB':'symbol-narrow'}}
+                          {{ service.emd?.AmountCur | currency:currencyDefault:'symbol-narrow'}}
                         </b></span>
                       </div>
                       <div class="order__content-point">

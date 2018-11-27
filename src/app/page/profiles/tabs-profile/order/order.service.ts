@@ -256,7 +256,6 @@ export class OrderService {
               }
             }
           } );
-          console.log(orders);
           return orders;
         } )
       );
