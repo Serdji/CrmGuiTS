@@ -1,11 +1,11 @@
 <div class="add-promotions">
-  <form class="add-promotions__form">
+  <form class="add-promotions__form" [formGroup]="formPromotions">
     <mat-grid-list cols="1" rowHeight="80px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-promotions__card">
           <mat-card-content class="add-promotions__content">
             <mat-form-field class="add-promotions__input">
-              <input matInput type="text" placeholder="Промоакция">
+              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция">
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
             <button appAccessRights="promotions:update" class="add-promotions__button" mat-raised-button
