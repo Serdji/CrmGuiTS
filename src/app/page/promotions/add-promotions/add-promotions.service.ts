@@ -15,11 +15,11 @@ export class AddPromotionsService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  saveSegmentation( params ): Observable<any> {
+  savePromotions( params ): Observable<any> {
     return this.http.post( this.configService.crmApi + '/crm/promotions', params ).pipe( this.retryRequestService.retry() );
   }
 
-  getAllSegmentation( params ): Observable<any> {
+  getAllPromotions( params ): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/promotions', { params } ).pipe( this.retryRequestService.retry() );
   }
 

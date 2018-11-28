@@ -84,8 +84,8 @@
         </mat-select>
       </mat-form-field>
     </form>
-    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaserDisabled>
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
       <mat-list role="listitem" *ngFor="let profileGroup of paramsProfileGroup let i = index">
         <div class="dialog__wrapper">
           <h3>{{profileGroup.customerGroup.customerGroupName}}</h3>

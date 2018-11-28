@@ -6,10 +6,10 @@
   <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
 
 
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Имя</mat-header-cell>
+    <ng-container matColumnDef="promotionName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Промоакция</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.promotionName}}</span>
       </mat-cell>
     </ng-container>
 
@@ -27,10 +27,10 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="customerId" stickyEnd>
+    <ng-container matColumnDef="promotionId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon (click)="redirectToProfile(element.customerId)" >remove_red_eye</mat-icon>
+        <mat-icon (click)="redirectToProfile(element.promotionId)" >remove_red_eye</mat-icon>
       </mat-cell>
     </ng-container>
 

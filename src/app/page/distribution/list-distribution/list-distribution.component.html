@@ -1,8 +1,8 @@
 <div class="list-distribution" appAccessRights="distributions:read" appAccessMessage="true">
   <div class="list-distribution">
     <mat-card>
-      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-      <ng-template #loaserDisabled>
+      <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
         <app-tablet-example-distribution  *ngIf="distribution.length !== 0" [tableDataSource]="distribution"></app-tablet-example-distribution>
       </ng-template>
     </mat-card>

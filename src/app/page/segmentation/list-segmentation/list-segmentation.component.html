@@ -1,7 +1,7 @@
 <div class="list-segmentation" appAccessRights="analytics:read" appAccessMessage="true">
   <mat-card>
-    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaserDisabled>
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
       <app-tablet-example-segmentation  *ngIf="segmentation.length !== 0" [tableDataSource]="segmentation"></app-tablet-example-segmentation>
     </ng-template>
   </mat-card>

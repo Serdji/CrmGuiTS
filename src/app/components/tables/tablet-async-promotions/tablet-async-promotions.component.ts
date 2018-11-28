@@ -53,10 +53,8 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
 
   private initDisplayedColumns() {
     this.displayedColumns = [
-      'firstName',
-      'lastName',
-      'secondName',
-      'customerId',
+      'promotionName',
+      'promotionId'
     ];
   }
 
@@ -138,7 +136,7 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
   }
 
   redirectToProfile( id: number ): void {
-    this.router.navigate( [ `/crm/profile/${id}` ] );
+    // this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {

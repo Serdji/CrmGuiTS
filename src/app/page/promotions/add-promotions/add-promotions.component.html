@@ -18,4 +18,34 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
+
+  <mat-card class="add-promotions__table">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-tablet-async-promotions
+        *ngIf="promotions.length !== 0"
+        [tableDataSource]="promotions">
+      </app-tablet-async-promotions>
+    </ng-template>
+  </mat-card>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
