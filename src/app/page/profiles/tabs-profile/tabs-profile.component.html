@@ -96,7 +96,7 @@
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
                   <span><b *ngIf="orders">
-                    {{ orders[orders.length - 1].totalAmount.ticket.ticketCur | currency:'RUB':'symbol-narrow' }} |
+                    {{ orders[orders.length - 1].totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
                     {{ orders[orders.length - 1].totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
                     {{ orders[orders.length - 1].totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
@@ -108,7 +108,7 @@
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
                   <span><b *ngIf="orders">
-                    {{ orders[orders.length - 1].totalAmount.emd.emdCur | currency:'RUB':'symbol-narrow' }} |
+                    {{ orders[orders.length - 1].totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
                     {{ orders[orders.length - 1].totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
                     {{ orders[orders.length - 1].totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
