@@ -137,8 +137,8 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToProfile( id: number ): void {
-    // this.router.navigate( [ `/crm/profile/${id}` ] );
+  editCreate( promotionsId: number, promotionsName: string ): void {
+    this.windowDialog( ``, 'updatePromotions', { promotionsId, promotionsName }, 'updatePromotions' );
   }
 
   deleteProfileGroups(): void {
@@ -153,7 +153,7 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deleteAddPromotions' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deletePromotions' );
     }
   }
 

@@ -9,6 +9,7 @@
       <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
     </div>
   </div>
+
   <div *ngIf="data.status === 'updateContact'">
     <form class="dialog__form" [formGroup]="formUpdateContact">
       <mat-form-field class="dialog__input">
@@ -56,6 +57,17 @@
         <input matInput formControlName="expDate" placeholder="Срок действия" [matDatepicker]="expDate">
         <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
         <mat-datepicker touchUi="true" #expDate></mat-datepicker>
+      </mat-form-field>
+      <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
+        Изменить
+      </button>
+    </form>
+  </div>
+
+  <div *ngIf="data.status === 'updatePromotions'">
+    <form class="dialog__form" [formGroup]="formUpdatePromotions">
+      <mat-form-field class="dialog__input">
+        <input matInput formControlName="promotionsName">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
         Изменить

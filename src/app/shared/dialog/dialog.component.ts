@@ -31,6 +31,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   public formUpdateProfileName: FormGroup;
   public formUpdateDocument: FormGroup;
   public formProfileGroups: FormGroup;
+  public formUpdatePromotions: FormGroup;
   public profileGroups: IcustomerGroup[];
   public isLoader: boolean;
   public paramsProfileGroup: any;
@@ -83,6 +84,9 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.formProfileGroups = this.fb.group( {
       customerGroupId: '',
     } );
+    this.formUpdatePromotions = this.fb.group( {
+      promotionsName: '',
+    } );
     switch ( this.data.status ) {
       case 'updateContact':
         this.formUpdateContact.get( 'contactText' ).patchValue( this.data.params.text );
@@ -93,11 +97,14 @@ export class DialogComponent implements OnInit, OnDestroy {
       case 'updateDocument':
         this.formUpdateDocument.patchValue( this.data.params.fioObj );
         break;
+      case 'updatePromotions':
+        this.formUpdatePromotions.get( 'promotionsName' ).patchValue( this.data.params.promotionsName );
+        break;
       case 'addProfileGroup':
         this.formProfileGroups.get( 'customerGroupId' ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( id => {
-            if( +id !== 0 ) {
+            if ( +id !== 0 ) {
               const params = {
                 customerGroupId: +id,
                 customerId: this.data.params.profileId
@@ -297,8 +304,20 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.profileDistributionService.profileDistributionSubject.next();
           } );
         break;
-      case 'deleteAddPromotions':
+      case 'deletePromotions':
         this.addPromotionsService.deletePromotions( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.addPromotionsService.subjectDeletePromotions.next();
+          } );
+        break;
+      case 'updatePromotions':
+        const paramsPromotions = {
+          'promotionId':  this.data.params.promotionsId,
+          'promotionName': this.formUpdatePromotions.get( 'promotionsName' ).value
+        };
+        this.addPromotionsService.updatePromotions( paramsPromotions )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();

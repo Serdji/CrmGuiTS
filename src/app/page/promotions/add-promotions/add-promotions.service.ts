@@ -33,6 +33,10 @@ export class AddPromotionsService {
     return this.http.delete( `${this.configService.crmApi}/crm/promotions/deletePromotions`, httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
+  updatePromotions( params ): Observable<any> {
+    return this.http.put( this.configService.crmApi + '/crm/promotions', params ).pipe( this.retryRequestService.retry() );
+  }
+
 }
 
 
