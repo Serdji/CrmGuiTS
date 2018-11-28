@@ -19,10 +19,10 @@
         <mat-card class="add-promotions-cods__card">
           <mat-card-content class="add-promotions-cods__content">
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Откуда">
+              <input matInput type="text" placeholder="Направление откуда">
             </mat-form-field>
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Куда">
+              <input matInput type="text" placeholder="Направление куда">
             </mat-form-field>
             <mat-form-field class="add-promotions-cods__input">
               <input matInput type="text" placeholder="Номер рейса">
@@ -45,7 +45,7 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="4">
         <mat-card class="add-promotions-cods__card">
-          <mat-card-content class="add-promotions-cods__content">
+          <mat-card-content class="add-promotions-cods__content _d-b">
             <mat-form-field class="add-promotions-cods__input">
               <input matInput type="text" placeholder="Персональная кастность использования">
             </mat-form-field>
@@ -59,12 +59,39 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="5">
         <mat-card class="add-promotions-cods__card">
+          <mat-card-content class="add-promotions-cods__content">
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Промокод">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Account code">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput placeholder="Период Действия" [matDatepicker]="dob2">
+              <mat-datepicker-toggle matSuffix [for]="dob2"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dob2></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <textarea rows="5" matInput type="text" placeholder="Описание промоакции"></textarea>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <textarea rows="5" matInput type="text" placeholder="Основание"></textarea>
+            </mat-form-field>
+          </mat-card-content>
         </mat-card>
       </mat-grid-tile>
 
 
       <mat-grid-tile [colspan]="2" [rowspan]="2">
         <mat-card class="add-promotions-cods__card">
+          <mat-card-content class="add-promotions-cods__content">
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Профиль">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput type="text" placeholder="Группы профилей">
+            </mat-form-field>
+          </mat-card-content>
         </mat-card>
       </mat-grid-tile>
 
