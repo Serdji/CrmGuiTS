@@ -66,7 +66,6 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
 
   private initPaginator() {
     this.resultsLength = this.tabletAsyncPromotionsService.countPage;
-    this.totalCount = this.tabletAsyncPromotionsService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {

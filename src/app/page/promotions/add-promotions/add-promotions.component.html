@@ -23,8 +23,8 @@
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
       <app-tablet-async-promotions
-        *ngIf="promotions.length !== 0"
-        [tableDataSource]="promotions">
+        *ngIf="promotions.result.length !== 0"
+        [tableDataSource]="promotions.result">
       </app-tablet-async-promotions>
     </ng-template>
   </mat-card>

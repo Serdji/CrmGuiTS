@@ -59,7 +59,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
         };
         this.addPromotionsService.getAllPromotions( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( promotions: IPromotions ) => this.tabletAsyncPromotionsService.setTableDataSource( promotions ) );
+          .subscribe( ( promotions: IPromotions ) => this.tabletAsyncPromotionsService.setTableDataSource( promotions.result ) );
       } );
   }
 
@@ -71,7 +71,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.addPromotionsService.getAllPromotions( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promotions: IPromotions ) => {
-        // this.tabletAsyncPromotionsService.countPage = promotions.totalCount;
+        this.tabletAsyncPromotionsService.countPage = promotions.totalCount;
         this.promotions = promotions;
         this.isLoader = false;
       } );

@@ -1,4 +1,7 @@
 export interface IPromotions {
-  'promotionId': number;
-  'promotionName': string;
+  result: {
+    'promotionId': number;
+    'promotionName': string;
+  }[];
+  totalCount: number;
 }
