@@ -5,6 +5,7 @@ import { takeWhile } from 'rxjs/operators';
 import { TabletAsyncPromotionsService } from '../../../components/tables/tablet-async-promotions/tablet-async-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import { IpagPage } from '../../../interface/ipag-page';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-add-promotions',
@@ -29,8 +30,16 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.isLoader = true;
     this.initForm();
-    this.initTableProfile();
-    this.initTableProfilePagination();
+    this.initTablePromotions();
+    this.initTablePromotionsPagination();
+    this.addPromotionsService.subjectDeletePromotions
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoader = true;
+        timer( 300 )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => this.initTablePromotions() );
+      } );
   }
 
   private initForm() {
@@ -39,7 +48,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private initTableProfilePagination() {
+  private initTablePromotionsPagination() {
     this.tabletAsyncPromotionsService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
@@ -54,7 +63,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initTableProfile() {
+  private initTablePromotions() {
     const params = {
       from: 0,
       count: 10
@@ -63,16 +72,16 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promotions: IPromotions ) => {
         // this.tabletAsyncPromotionsService.countPage = promotions.totalCount;
-        console.log(promotions);
         this.promotions = promotions;
         this.isLoader = false;
       } );
   }
 
   saveForm(): void {
+    this.isLoader = true;
     this.addPromotionsService.savePromotions( this.formPromotions.getRawValue() )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe();
+      .subscribe( _ => this.initTablePromotions() );
   }
 
   ngOnDestroy(): void {

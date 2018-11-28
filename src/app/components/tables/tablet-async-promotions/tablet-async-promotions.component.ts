@@ -28,6 +28,7 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
   public resultsLength: number;
   public isLoadingResults: boolean = false;
   public totalCount: number;
+  public ids: any;
 
   private isActive: boolean;
 
@@ -53,6 +54,7 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
 
   private initDisplayedColumns() {
     this.displayedColumns = [
+      'select',
       'promotionName',
       'promotionId'
     ];
@@ -139,8 +141,41 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
     // this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
+  deleteProfileGroups(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      const params = Object.assign( {}, { ids: arrayId } );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deleteAddPromotions' );
+    }
+  }
+
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  isIds(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      } else {
+        this.ids = {};
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      this.ids = { customerGroupIds: arrayId };
+    }
   }
 
   ngOnDestroy(): void {

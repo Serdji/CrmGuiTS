@@ -18,6 +18,7 @@ import * as _ from 'lodash';
 import { EditorService } from '../../components/editors/editor/editor.service';
 import { ListDistributionService } from '../../page/distribution/list-distribution/list-distribution.service';
 import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
+import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -48,6 +49,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private editorService: EditorService,
     private listDistributionService: ListDistributionService,
     private profileDistributionService: ProfileDistributionService,
+    private addPromotionsService: AddPromotionsService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -293,6 +295,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           .subscribe( _ => {
             this.dialogRef.close();
             this.profileDistributionService.profileDistributionSubject.next();
+          } );
+        break;
+      case 'deleteAddPromotions':
+        this.addPromotionsService.deletePromotions( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.addPromotionsService.subjectDeletePromotions.next();
           } );
         break;
     }

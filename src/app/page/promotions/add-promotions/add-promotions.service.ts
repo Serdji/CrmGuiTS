@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AddPromotionsService {
+
+  public subjectDeletePromotions = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -23,4 +25,24 @@ export class AddPromotionsService {
     return this.http.get( this.configService.crmApi + '/crm/promotions', { params } ).pipe( this.retryRequestService.retry() );
   }
 
+  deletePromotions( params ): Observable<any> {
+    this.subjectDeletePromotions.next();
+    const httpOptions = {
+      headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
+    };
+    return this.http.delete( `${this.configService.crmApi}/crm/promotions/deletePromotions`, httpOptions ).pipe( this.retryRequestService.retry() );
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
