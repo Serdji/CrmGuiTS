@@ -26,7 +26,6 @@ export class AddPromotionsService {
   }
 
   deletePromotions( params ): Observable<any> {
-    this.subjectDeletePromotions.next();
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
     };

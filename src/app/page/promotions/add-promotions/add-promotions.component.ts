@@ -81,7 +81,10 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.addPromotionsService.savePromotions( this.formPromotions.getRawValue() )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.initTablePromotions() );
+      .subscribe( _ => {
+        this.formPromotions.get( 'promotionName' ).patchValue('');
+        this.initTablePromotions();
+      } );
   }
 
   ngOnDestroy(): void {
