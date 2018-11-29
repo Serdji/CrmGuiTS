@@ -100,7 +100,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeRbdList: '',
       depLocationId: '',
       arrLocationId: '',
-
     } );
   }
 
