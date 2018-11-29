@@ -9,6 +9,7 @@ import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -22,6 +23,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public locations: Ilocation[];
   public promotions: IPromotions;
   public promotionsOptions: Observable<Ilocation[]>;
+  public locationFromOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
 
@@ -50,7 +52,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private addPromotionsService: AddPromotionsService
+    private addPromotionsService: AddPromotionsService,
+    private profileSearchService: ProfileSearchService,
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +62,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initFormPromoCods();
     this.initAutocomplete();
     this.initPromotions();
+    this.initLocation();
   }
 
   private initPromotions() {
@@ -69,6 +73,14 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.addPromotionsService.getAllPromotions( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
+  }
+
+  private initLocation() {
+    this.profileSearchService.getLocation()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: Ilocation[] ) => {
+        this.locations = value;
+      } );
   }
 
   private initFormPromoCods() {
@@ -85,6 +97,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: '',
       promoCodeFlightList: '',
       promoCodeRbdList: '',
+      depLocationId: '',
+      arrLocationId: '',
 
     } );
   }
@@ -102,7 +116,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    // this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
+    this.locationFromOptions = this.autocomplete( 'depLocationId', 'location' );
+    this.locationToOptions = this.autocomplete( 'arrLocationId', 'location' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -114,6 +129,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
           switch ( options ) {
             case 'promotion':
               return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
+              break;
+            case 'location':
+              return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
           }
         } )

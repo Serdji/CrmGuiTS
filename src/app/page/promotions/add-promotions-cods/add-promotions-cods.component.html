@@ -102,12 +102,19 @@
             </mat-card-content>
             <mat-card-content class="add-promotions-cods__content _d-b _space">
               <div class="add-promotions-cods__date">
-                <mat-form-field class="add-promotions-cods__input">
-                  <input matInput type="text" placeholder="Направление откуда">
+                <mat-form-field class="profile-search__input">
+                  <input matInput formControlName="depLocationId" type="text" placeholder="Направление откуда" [matAutocomplete]="depLocationId">
+                  <mat-autocomplete #depLocationId="matAutocomplete">
+                    <mat-option *ngFor="let location of locationFromOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                  </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field class="add-promotions-cods__input">
-                  <input matInput type="text" placeholder="Направление куда">
+                <mat-form-field class="profile-search__input">
+                  <input matInput formControlName="arrLocationId" type="text" placeholder="Направление куда" [matAutocomplete]="arrLocationId">
+                  <mat-autocomplete #arrLocationId="matAutocomplete">
+                    <mat-option *ngFor="let location of locationToOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                  </mat-autocomplete>
                 </mat-form-field>
+                <mat-icon class="add-promotions-cods__add">add</mat-icon>
               </div>
             </mat-card-content>
           </div>
