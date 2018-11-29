@@ -61,10 +61,46 @@
               </mat-form-field>
             </div>
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Бренды">
+              <mat-chip-list #chipPromoCodeBrandListList>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let promoCodeBrandListChip of promoCodeBrandListChips"
+                  [selectable]="promoCodeBrandListSelectable"
+                  [removable]="promoCodeBrandListRemovable"
+                  (removed)="remove(promoCodeBrandListChip, promoCodeBrandListChips, 'promoCodeBrandListChips')">
+                  {{promoCodeBrandListChip}}
+                  <mat-icon matChipRemove *ngIf="promoCodeBrandListRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Бренды"
+                  #promoCodeBrandListChipInput
+                  formControlName="promoCodeBrandList"
+                  [matChipInputFor]="chipPromoCodeBrandListList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addPromoCodeBrandListOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'promoCodeBrandList', 'promoCodeBrandListChips')">
+              </mat-chip-list>
             </mat-form-field>
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="RBD">
+              <mat-chip-list #chipPromoCodeRbdListList>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let promoCodeRbdListChip of promoCodeRbdListChips"
+                  [selectable]="promoCodeRbdListSelectable"
+                  [removable]="promoCodeRbdListRemovable"
+                  (removed)="remove(promoCodeRbdListChip, promoCodeRbdListChips, 'promoCodeRbdListChips')">
+                  {{promoCodeRbdListChip}}
+                  <mat-icon matChipRemove *ngIf="promoCodeRbdListRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="RBD"
+                  #promoCodeRbdListChipInput
+                  formControlName="promoCodeRbdList"
+                  [matChipInputFor]="chipPromoCodeRbdListList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addPromoCodeRbdListOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'promoCodeRbdList', 'promoCodeRbdListChips')">
+              </mat-chip-list>
             </mat-form-field>
           </mat-card-content>
         </mat-card>

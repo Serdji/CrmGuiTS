@@ -30,10 +30,22 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public addPromoCodeFlightListOnBlur = false;
   public promoCodeFlightListChips: string[] = [];
 
+  public promoCodeBrandListSelectable = true;
+  public promoCodeBrandListRemovable = true;
+  public addPromoCodeBrandListOnBlur = false;
+  public promoCodeBrandListChips: string[] = [];
+
+  public promoCodeRbdListSelectable = true;
+  public promoCodeRbdListRemovable = true;
+  public addPromoCodeRbdListOnBlur = false;
+  public promoCodeRbdListChips: string[] = [];
+
   private isActive: boolean;
   private autDelay: number = 500;
 
-  @ViewChild( 'promoCodeFlightListChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeRbdListChipInput' ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
 
 
   constructor(
@@ -78,6 +90,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
+    this.promoCodeBrandListChips = [];
+    this.promoCodeFlightListChips = [];
+    this.promoCodeRbdListChips = [];
     _( this.formPromoCods.value ).each( ( value, key ) => {
       this.formPromoCods.get( key ).patchValue( '' );
       this.formPromoCods.get( key ).setErrors( null );
@@ -156,9 +171,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         moment( this.formPromoCods.get( 'flightDateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
       flightDateTo: this.formPromoCods.get( 'flightDateTo' ).value ?
         moment( this.formPromoCods.get( 'flightDateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
-      promoCodeBrandList: '',
+      promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
-      promoCodeRbdList: '',
+      promoCodeRbdList: this.promoCodeRbdListChips,
     };
     console.log( params );
   }
