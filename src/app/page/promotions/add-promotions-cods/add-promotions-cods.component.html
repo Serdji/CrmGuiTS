@@ -1,7 +1,7 @@
 <div class="add-promotions-cods">
   <form class="add-promotions-cods__form" [formGroup]="formPromoCods">
 
-    <mat-grid-list cols="3" rowHeight="90px">
+    <mat-grid-list cols="3" rowHeight="95px">
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="add-promotions-cods__card">
@@ -28,7 +28,25 @@
               <input matInput type="text" placeholder="Направление куда">
             </mat-form-field>
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Номер рейса">
+              <mat-chip-list #chipPromoCodeFlightList>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let promoCodeFlightListChip of promoCodeFlightListChips"
+                  [selectable]="promoCodeFlightListSelectable"
+                  [removable]="promoCodeFlightListRemovable"
+                  (removed)="remove(promoCodeFlightListChip, promoCodeFlightListChips, 'promoCodeFlightListChips')">
+                  {{promoCodeFlightListChip}}
+                  <mat-icon matChipRemove *ngIf="promoCodeFlightListRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Номера рейсов"
+                  #promoCodeFlightListChipInput
+                  formControlName="promoCodeFlightList"
+                  [matChipInputFor]="chipPromoCodeFlightList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addPromoCodeFlightListOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'promoCodeFlightList', 'promoCodeFlightListChips')">
+              </mat-chip-list>
             </mat-form-field>
             <div class="add-promotions-cods__date">
               <mat-form-field class="add-promotions-cods__input">

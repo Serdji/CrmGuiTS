@@ -8,6 +8,7 @@ import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { COMMA, ENTER } from '@angular/cdk/keycodes';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -22,12 +23,17 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public promotions: IPromotions;
   public promotionsOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
+  public separatorKeysCodes: number[] = [ ENTER, COMMA ];
+
+  public promoCodeFlightListSelectable = true;
+  public promoCodeFlightListRemovable = true;
+  public addPromoCodeFlightListOnBlur = false;
+  public promoCodeFlightListChips: string[] = [];
 
   private isActive: boolean;
   private autDelay: number = 500;
 
-  // @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  // @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeFlightListChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
 
 
   constructor(
@@ -64,6 +70,10 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       dateTo: '',
       flightDateFrom: '',
       flightDateTo: '',
+      promoCodeBrandList: '',
+      promoCodeFlightList: '',
+      promoCodeRbdList: '',
+
     } );
   }
 
@@ -146,6 +156,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         moment( this.formPromoCods.get( 'flightDateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
       flightDateTo: this.formPromoCods.get( 'flightDateTo' ).value ?
         moment( this.formPromoCods.get( 'flightDateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+      promoCodeBrandList: '',
+      promoCodeFlightList: this.promoCodeFlightListChips,
+      promoCodeRbdList: '',
     };
     console.log( params );
   }
