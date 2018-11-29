@@ -26,6 +26,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public locationFromOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  public promoCodeRouteList: any[] = [];
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -169,6 +170,27 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.formPromoCods.get( formControlName ).setValue( null );
   }
 
+  directionAdd(): void {
+    if (
+      this.formPromoCods.get( 'depLocationId' ).value !== '' &&
+      this.formPromoCods.get( 'arrLocationId' ).value !== ''
+    ) {
+      this.promoCodeRouteList.push(
+        {
+          dep_LocationId: this.formPromoCods.get( 'depLocationId' ).value,
+          arr_LocationId: this.formPromoCods.get( 'arrLocationId' ).value
+        }
+      );
+    }
+    this.formPromoCods.get( 'depLocationId' ).patchValue( '' );
+    this.formPromoCods.get( 'arrLocationId' ).patchValue( '' );
+    console.log( this.promoCodeRouteList );
+  }
+
+  directionRemove( dep: string, arr: string ): void {
+    const obj: any = { 'dep_LocationId': dep, 'arr_LocationId': arr };
+    this.promoCodeRouteList = _.reject( this.promoCodeRouteList, obj );
+  }
 
   saveForm(): void {
 
@@ -192,6 +214,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
+      promoCodeRouteList: this.promoCodeRouteList
     };
     console.log( params );
   }
