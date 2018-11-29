@@ -107,6 +107,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promoCodeBrandListChips = [];
     this.promoCodeFlightListChips = [];
     this.promoCodeRbdListChips = [];
+    this.promoCodeRouteList = [];
     _( this.formPromoCods.value ).each( ( value, key ) => {
       this.formPromoCods.get( key ).patchValue( '' );
       this.formPromoCods.get( key ).setErrors( null );
