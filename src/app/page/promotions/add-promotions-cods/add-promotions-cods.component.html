@@ -7,7 +7,7 @@
         <mat-card class="add-promotions-cods__card">
           <mat-card-content class="add-promotions-cods__content">
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput formControlName="promotionId" type="text" placeholder="Промоакция" [matAutocomplete]="promotion">
+              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция" [matAutocomplete]="promotion">
               <mat-autocomplete #promotion="matAutocomplete">
                 <mat-option *ngFor="let promotion of promotionsOptions | async" [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
               </mat-autocomplete>

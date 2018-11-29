@@ -6,6 +6,7 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/materi
 import { Ilocation } from '../../../interface/ilocation';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -52,14 +53,14 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   }
 
   private initFormPromoCods() {
-    this.formPromoCods = this.fb.group({
-      promotionId: ''
-    });
+    this.formPromoCods = this.fb.group( {
+      promotionName: ''
+    } );
   }
 
 
   private initAutocomplete() {
-    this.promotionsOptions = this.autocomplete( 'promotionId', 'promotion' );
+    this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
     // this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
     // this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     // this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
@@ -73,7 +74,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'promotion':
-              console.log(val);
               return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
             // case 'segmentation':
@@ -125,6 +125,13 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   saveForm(): void {
 
+    const params = {
+      PromotionId: _.chain( this.promotions.result )
+        .find( [ 'promotionName', this.formPromoCods.get( 'promotionName' ).value ] )
+        .get( 'promotionId' )
+        .value(),
+    };
+    console.log( params );
   }
 
   clearForm(): void {
