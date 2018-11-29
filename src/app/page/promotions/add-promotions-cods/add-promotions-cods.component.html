@@ -64,21 +64,28 @@
         <mat-card class="add-promotions-cods__card">
           <mat-card-content class="add-promotions-cods__content">
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Промокод">
+              <input matInput formControlName="code" type="text" placeholder="Промокод">
             </mat-form-field>
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Account code">
+              <input matInput formControlName="accountCode" type="text" placeholder="Account code">
+            </mat-form-field>
+            <div class="add-promotions-cods__date">
+              <mat-form-field class="add-promotions-cods__input">
+                <input matInput formControlName="dateFrom" placeholder="Период Действия от" [matDatepicker]="dateFrom">
+                <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-promotions-cods__input">
+                <input matInput formControlName="dateTo" placeholder="Период Действия до" [matDatepicker]="dateTo">
+                <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <mat-form-field class="add-promotions-cods__input">
+              <textarea rows="5" matInput formControlName="description" type="text" placeholder="Описание промоакции"></textarea>
             </mat-form-field>
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput placeholder="Период Действия" [matDatepicker]="dob2">
-              <mat-datepicker-toggle matSuffix [for]="dob2"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dob2></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-promotions-cods__input">
-              <textarea rows="5" matInput type="text" placeholder="Описание промоакции"></textarea>
-            </mat-form-field>
-            <mat-form-field class="add-promotions-cods__input">
-              <textarea rows="5" matInput type="text" placeholder="Основание"></textarea>
+              <textarea rows="5" matInput formControlName="reason" type="text" placeholder="Основание"></textarea>
             </mat-form-field>
           </mat-card-content>
         </mat-card>

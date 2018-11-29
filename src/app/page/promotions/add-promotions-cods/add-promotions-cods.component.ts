@@ -7,6 +7,7 @@ import { Ilocation } from '../../../interface/ilocation';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -54,7 +55,20 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   private initFormPromoCods() {
     this.formPromoCods = this.fb.group( {
-      promotionName: ''
+      promotionName: '',
+      code: '',
+      accountCode: '',
+      description: '',
+      reason: '',
+      dateFrom: '',
+      dateTo: '',
+    } );
+  }
+
+  private resetForm() {
+    _( this.formPromoCods.value ).each( ( value, key ) => {
+      this.formPromoCods.get( key ).patchValue( '' );
+      this.formPromoCods.get( key ).setErrors( null );
     } );
   }
 
@@ -130,12 +144,20 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         .find( [ 'promotionName', this.formPromoCods.get( 'promotionName' ).value ] )
         .get( 'promotionId' )
         .value(),
+      code: this.formPromoCods.get( 'code' ).value,
+      accountCode: this.formPromoCods.get( 'accountCode' ).value,
+      description: this.formPromoCods.get( 'description' ).value,
+      reason: this.formPromoCods.get( 'reason' ).value,
+      dateFrom: this.formPromoCods.get( 'dateFrom' ).value ?
+        moment( this.formPromoCods.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+      dateTo: this.formPromoCods.get( 'dateTo' ).value ?
+        moment( this.formPromoCods.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
     };
     console.log( params );
   }
 
   clearForm(): void {
-
+    this.resetForm();
   }
 
   ngOnDestroy(): void {
