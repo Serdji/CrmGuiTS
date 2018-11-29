@@ -20,7 +20,7 @@
 
       <mat-grid-tile [colspan]="1" [rowspan]="4">
         <mat-card class="add-promotions-cods__card">
-          <mat-card-content class="add-promotions-cods__content">
+          <mat-card-content class="add-promotions-cods__content _d-b">
             <mat-form-field class="add-promotions-cods__input">
               <input matInput type="text" placeholder="Направление откуда">
             </mat-form-field>
@@ -30,11 +30,18 @@
             <mat-form-field class="add-promotions-cods__input">
               <input matInput type="text" placeholder="Номер рейса">
             </mat-form-field>
-            <mat-form-field class="add-promotions-cods__input">
-              <input matInput placeholder="Период реализации" [matDatepicker]="dob">
-              <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dob></mat-datepicker>
-            </mat-form-field>
+            <div class="add-promotions-cods__date">
+              <mat-form-field class="add-promotions-cods__input">
+                <input matInput formControlName="flightDateFrom" placeholder="Период реализации от" [matDatepicker]="flightDateFrom">
+                <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-promotions-cods__input">
+                <input matInput formControlName="flightDateTo" placeholder="Период реализации до" [matDatepicker]="flightDateTo">
+                <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
+              </mat-form-field>
+            </div>
             <mat-form-field class="add-promotions-cods__input">
               <input matInput type="text" placeholder="Бренды">
             </mat-form-field>

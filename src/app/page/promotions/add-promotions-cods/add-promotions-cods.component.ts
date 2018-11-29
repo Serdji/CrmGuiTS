@@ -62,6 +62,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       reason: '',
       dateFrom: '',
       dateTo: '',
+      flightDateFrom: '',
+      flightDateTo: '',
     } );
   }
 
@@ -76,8 +78,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
     // this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
-    // this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
-    // this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -90,16 +90,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
             case 'promotion':
               return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            // case 'segmentation':
-            //   return this.segmentation.filter( segmentation => {
-            //       if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
-            //     }
-            //   );
-            // case 'customerGroup':
-            //   return this.customerGroup.filter( customerGroup => {
-            //       if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
-            //     }
-            //   );
           }
         } )
       );
@@ -152,6 +142,10 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         moment( this.formPromoCods.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
       dateTo: this.formPromoCods.get( 'dateTo' ).value ?
         moment( this.formPromoCods.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+      flightDateFrom: this.formPromoCods.get( 'flightDateFrom' ).value ?
+        moment( this.formPromoCods.get( 'flightDateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+      flightDateTo: this.formPromoCods.get( 'flightDateTo' ).value ?
+        moment( this.formPromoCods.get( 'flightDateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
     };
     console.log( params );
   }
