@@ -3,11 +3,12 @@ import { CommonModule } from '@angular/common';
 import { AddPromotionsCodsComponent } from './add-promotions-cods.component';
 import { AddPromotionsCodsService } from './add-promotions-cods.service';
 import { SharedModule } from '../../../shared/shared.module';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule( {
   imports: [
     CommonModule,
-    // ReactiveFormsModule,
+    ReactiveFormsModule,
     SharedModule,
   ],
   declarations: [ AddPromotionsCodsComponent ],

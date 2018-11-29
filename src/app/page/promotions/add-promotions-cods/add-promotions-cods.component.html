@@ -1,5 +1,5 @@
 <div class="add-promotions-cods">
-  <form class="add-promotions-cods__form">
+  <form class="add-promotions-cods__form" [formGroup]="formPromoCods">
 
     <mat-grid-list cols="3" rowHeight="90px">
 
@@ -7,7 +7,10 @@
         <mat-card class="add-promotions-cods__card">
           <mat-card-content class="add-promotions-cods__content">
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Группа сегментации">
+              <input matInput formControlName="promotionId" type="text" placeholder="Промоакция" [matAutocomplete]="promotion">
+              <mat-autocomplete #promotion="matAutocomplete">
+                <mat-option *ngFor="let promotion of promotionsOptions | async" [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
+              </mat-autocomplete>
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
           </mat-card-content>
