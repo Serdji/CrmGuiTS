@@ -228,6 +228,7 @@ export class OrderService {
             .sumBy( 'AmountUsd' );
   //------------------------------------------------------------------------------
 
+
           const { lut } = _.maxBy( orders, o => o.lut );
 
           orders.push( {
