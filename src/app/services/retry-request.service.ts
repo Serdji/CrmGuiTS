@@ -18,7 +18,7 @@ export class RetryRequestService {
           tap( err => {
             if ( err.status === 401 ) {
               this.count++;
-              if ( this.count <= 10 ) {
+              if ( this.count <= 20 ) {
                 timer(500).subscribe(  _ => this.count = 0 );
               }
               return err;

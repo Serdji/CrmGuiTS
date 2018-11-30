@@ -26,16 +26,16 @@
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
-                    <div class="order__content">
-                      <div class="order__content-ticket"><b>Recloc GDS:</b> {{pos.distrRecloc.recloc}}</div>
-                      <div class="order__content-ticket"><b>GDS:</b> {{pos.gds}}</div>
-                      <div class="order__content-ticket"><b>POS ID:</b> {{pos.posId}}</div>
+                    <div class="order__content _right-width">
+                      <div class="order__content-ticket">Recloc GDS: <b> {{pos.distrRecloc.recloc}} </b></div>
+                      <div class="order__content-ticket">GDS: <b> {{pos.gds}} </b></div>
+                      <div class="order__content-ticket">POS ID: <b> {{pos.posId}} </b></div>
                     </div>
 
                     <div class="order__content">
-                      <div class="order__content-ticket"><b>Агентство:</b> {{pos.agency}}</div>
-                      <div class="order__content-ticket"><b>Терминал:</b> {{pos.termId}}</div>
-                      <div class="order__content-ticket"><b>Страна:</b> {{pos.country}}</div>
+                      <div class="order__content-ticket">Агентство: <b> {{pos.agency}} </b></div>
+                      <div class="order__content-ticket">Терминал: <b> {{pos.termId}} </b></div>
+                      <div class="order__content-ticket">Страна: <b> {{pos.country}} </b></div>
                     </div>
                   </div>
                 </mat-card>
