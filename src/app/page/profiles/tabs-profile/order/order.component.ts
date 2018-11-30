@@ -40,7 +40,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initBooking() {
-    // YESSEN SYPATAYEV
+    // YESSEN SYPATAYEV 21428
     // АМИНА АДИЛОВНА ЗАКАРЬЯЕВА
     this.orderService.getBooking( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
