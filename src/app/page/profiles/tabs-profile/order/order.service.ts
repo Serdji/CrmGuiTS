@@ -98,7 +98,7 @@ export class OrderService {
                 .sumBy( 'Amount' );
 
 
-              // ------------------------- Сумма по каждой из валют в ticket --------------------------
+    // ------------------------- Сумма по каждой из валют в ticket --------------------------
 
               const ticketEurTEB = this.sumTEB( money, 'ticket', this.isTEB( money, 'ticket' ), 'AmountEur' );
               const ticketUsdTEB = this.sumTEB( money, 'ticket', this.isTEB( money, 'ticket' ), 'AmountUsd' );
@@ -114,10 +114,10 @@ export class OrderService {
 
               let subtractTicketEur, subtractTicketUsd, subtractTicketCur;
 
-              // --------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------
 
 
-              // ------------------------- Сумма по каждой из валют в emd -----------------------------
+    // ------------------------- Сумма по каждой из валют в emd -----------------------------
 
               const emdEurTEB = this.sumTEB( money, 'emd', this.isTEB( money, 'emd' ), 'AmountEur' );
               const emdUsdTEB = this.sumTEB( money, 'emd', this.isTEB( money, 'emd' ), 'AmountUsd' );
@@ -133,7 +133,7 @@ export class OrderService {
 
               let subtractEmdEur, subtractEmdUsd, subtractEmdCur;
 
-              // --------------------------------------------------------------------------------------
+    // --------------------------------------------------------------------------------------
 
               let sumEur, sumUsd, SumCur;
               let sumEurT, sumUsdT, SumCurT;
@@ -141,7 +141,7 @@ export class OrderService {
               const isTicketE = _( money ).filter( 'ticket' ).filter( [ 'Code', 'E' ] ).size() !== 0;
               const isEmdE = _( money ).filter( 'emd' ).filter( [ 'Code', 'E' ] ).size() !== 0;
 
-              // -------- Если в ticket есть хоть один элемент Code: E то вычитаем ticketT из ticketE, иначе из ticketB --------
+        // -------- Если в ticket есть хоть один элемент Code: E то вычитаем ticketT из ticketE, иначе из ticketB --------
               if ( isTicketE ) {
                 subtractTicketEur = ticketEurTEB - ticketEurE;
                 subtractTicketUsd = ticketUsdTEB - ticketUsdE;
@@ -151,10 +151,10 @@ export class OrderService {
                 subtractTicketUsd = ticketUsdTEB - ticketUsdB;
                 subtractTicketCur = ticketCurTEB - ticketCurB;
               }
-              // ---------------------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------------------
 
 
-              // -------------- Если в emd есть хоть один элемент Code: E то вычитаем emdT из emdE, иначе из emdB --------------
+        // -------------- Если в emd есть хоть один элемент Code: E то вычитаем emdT из emdE, иначе из emdB --------------
               if ( isEmdE ) {
                 subtractEmdEur = emdEurTEB - emdEurE;
                 subtractEmdUsd = emdUsdTEB - emdUsdE;
@@ -164,7 +164,7 @@ export class OrderService {
                 subtractEmdUsd = emdUsdTEB - emdUsdB;
                 subtractEmdCur = emdCurTEB - emdCurB;
               }
-              // ---------------------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------------------
 
               // ---- Сложение валют по ticket и emd с учетом таксы ----
               sumEur = subtractTicketEur + subtractEmdEur;
