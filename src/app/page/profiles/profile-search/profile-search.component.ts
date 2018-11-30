@@ -18,6 +18,8 @@ import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/materi
 import { saveAs } from 'file-saver';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
+import { ISettings } from '../../../interface/isettings';
+import { CurrencyDefaultService } from '../../../services/currency-default.service';
 
 @Component( {
   selector: 'app-profile-search',
@@ -37,6 +39,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public isLoader: boolean = false;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
+  public currencyDefault: string;
 
   public segmentationSelectable = true;
   public segmentationRemovable = true;
@@ -63,6 +66,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private profileGroupService: ProfileGroupService,
     private router: Router,
     private route: ActivatedRoute,
+    private currencyDefaultService: CurrencyDefaultService
   ) { }
 
   ngOnInit(): void {
@@ -72,11 +76,17 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initTableAsync();
     this.initSegmentation();
     this.initCustomerGroup();
+    this.initCurrencyDefault();
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
   }
 
+  private initCurrencyDefault() {
+    this.currencyDefaultService.getCurrencyDefault()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
+  }
 
   sendForm(): void {
     this.creatingObjectForm();
