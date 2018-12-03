@@ -65,7 +65,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public customerGroupChips: string[] = [];
 
   private isActive: boolean;
-  private autDelay: number = 500;
+  private autDelay: number;
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -86,6 +86,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.isLoader = true;
+    this.autDelay = 500;
     this.initFormPromoCods();
     this.initAutocomplete();
     this.initPromotions();
