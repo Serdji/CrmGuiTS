@@ -270,11 +270,11 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     const customerGroup = [];
 
     _.each( this.segmentationChips, segmentationChip => {
-      segmentation.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).result( 'segmentationId' ).value() );
+      segmentation.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).get( 'segmentationId' ).value() );
     } );
 
     _.each( this.customerGroupChips, customerGroupChip => {
-      customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).result( 'customerGroupId' ).value() );
+      customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).get( 'customerGroupId' ).value() );
     } );
 
     const params = {
