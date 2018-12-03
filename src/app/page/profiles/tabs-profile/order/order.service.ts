@@ -76,10 +76,11 @@ export class OrderService {
               }
             }
 
-
-            _.each( order.services, service => {
-              if ( service.emd ) ++counterServicesIsEmd;
-            } );
+            if ( order.BookingStatus === 'Active' ) {
+              _.each( order.services, service => {
+                if ( service.emd ) ++counterServicesIsEmd;
+              } );
+            }
 
             _.each( order.segments, segment => {
               _.each( order.tickets, ticket => {
@@ -217,17 +218,11 @@ export class OrderService {
           //------------------------------------------------------------------------------
 
 
-          console.log(_( orders )
-            .filter( [ 'BookingStatus', 'Active' ] )
-            .map( 'MonetaryInfo' )
-            .flattenDeep()
-            .filter( [ 'Code', 'TG' ] )
-            .size()
-          );
-
+          const countActiveTicket = _( orders ).filter( [ 'BookingStatus', 'Active' ] ).size();
           const { lut } = _.maxBy( orders, o => o.lut );
 
           orders.push( {
+            countActiveTicket,
             counterServicesIsEmd,
             lut,
             totalAmount: {
