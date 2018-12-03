@@ -91,7 +91,7 @@
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Всего заказов:</span>
-                  <span><b *ngIf="orders"> {{orders.length - 1}}</b></span>
+                  <span><b *ngIf="orders"> {{orders[orders.length - 1].countActiveTicket}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">На сумму:</span>
