@@ -306,6 +306,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeRouteList: this.promoCodeRouteList,
     };
     console.log( params );
+    this.addPromotionsCodsService.savePromoCode( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe();
   }
 
   clearForm(): void {

@@ -17,4 +17,9 @@ export class AddPromotionsCodsService {
   getPromoCodeValTypes(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/promoCodeValTypes' ).pipe( this.retryRequestService.retry() );
   }
+
+  savePromoCode( params ): Observable<any> {
+    return this.http.post( this.configService.crmApi + '/crm/promoCodes', params ).pipe( this.retryRequestService.retry() );
+  }
+
 }
