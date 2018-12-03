@@ -31,11 +31,11 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public promotions: IPromotions;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
-  public promotionsOptions: Observable<Ilocation[]>;
+  public promotionsOptions: Observable<IPromotions[]>;
   public locationFromOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
-  public customerGroupOptions: Observable<ISegmentation[]>;
+  public customerGroupOptions: Observable<IcustomerGroup[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
@@ -173,6 +173,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeRbdList: '',
       depLocationId: '',
       arrLocationId: '',
+      customersIds: '',
       segmentation: '',
       customerGroup: '',
       usesPerPerson: '',
