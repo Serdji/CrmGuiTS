@@ -266,6 +266,16 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
+    const segmentation = [];
+    const customerGroup = [];
+
+    _.each( this.segmentationChips, segmentationChip => {
+      segmentation.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).result( 'segmentationId' ).value() );
+    } );
+
+    _.each( this.customerGroupChips, customerGroupChip => {
+      customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).result( 'customerGroupId' ).value() );
+    } );
 
     const params = {
       PromotionId: _.chain( this.promotions.result )
@@ -291,8 +301,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
-      segmentation: this.segmentationChips,
-      customerGroup: this.customerGroupChips,
+      segmentation: segmentation,
+      customerGroup: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
     console.log( params );
