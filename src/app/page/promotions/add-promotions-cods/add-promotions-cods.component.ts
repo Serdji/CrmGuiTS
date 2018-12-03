@@ -14,6 +14,8 @@ import { ISegmentation } from '../../../interface/isegmentation';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
+import { AddPromotionsCodsService } from './add-promotions-cods.service';
+import { IPromoCodeValTypes } from '../../../interface/ipromo-code-val-types';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -35,6 +37,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public customerGroupOptions: Observable<ISegmentation[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public promoCodeRouteList: any[] = [];
+  public promoCodeValTypes: IPromoCodeValTypes;
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -74,6 +77,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private addPromotionsService: AddPromotionsService,
+    private addPromotionsCodsService: AddPromotionsCodsService,
     private profileSearchService: ProfileSearchService,
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
@@ -88,6 +92,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initLocation();
     this.initSegmentation();
     this.initCustomerGroup();
+    this.initPromoCodeValTypes();
   }
 
   private initPromotions() {
@@ -124,6 +129,12 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initPromoCodeValTypes() {
+    this.addPromotionsCodsService.getPromoCodeValTypes()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
+  }
+
   private initFormPromoCods() {
     this.formPromoCods = this.fb.group( {
       promotionName: '',
@@ -142,6 +153,10 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       arrLocationId: '',
       segmentation: '',
       customerGroup: '',
+      usesPerPerson: '',
+      usesTotal: '',
+      val: '',
+      promoCodeValTypeId: '',
     } );
   }
 
@@ -150,6 +165,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promoCodeFlightListChips = [];
     this.promoCodeRbdListChips = [];
     this.promoCodeRouteList = [];
+    this.segmentationChips = [];
+    this.customerGroupChips = [];
     _( this.formPromoCods.value ).each( ( value, key ) => {
       this.formPromoCods.get( key ).patchValue( '' );
       this.formPromoCods.get( key ).setErrors( null );
@@ -267,10 +284,16 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         moment( this.formPromoCods.get( 'flightDateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
       flightDateTo: this.formPromoCods.get( 'flightDateTo' ).value ?
         moment( this.formPromoCods.get( 'flightDateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+      usesPerPerson: this.formPromoCods.get( 'usesPerPerson' ).value,
+      usesTotal: this.formPromoCods.get( 'usesTotal' ).value,
+      val: this.formPromoCods.get( 'val' ).value,
+      promoCodeValTypeId: this.formPromoCods.get( 'promoCodeValTypeId' ).value,
       promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
-      promoCodeRouteList: this.promoCodeRouteList
+      segmentation: this.segmentationChips,
+      customerGroup: this.customerGroupChips,
+      promoCodeRouteList: this.promoCodeRouteList,
     };
     console.log( params );
   }

@@ -16,6 +16,8 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'customerIds': return '№ профиля';
       case  'Active': return 'Оформлен';
       case  'Cancelled': return 'Аннулирован';
+      case  'Amount': return 'Количество';
+      case  'Percent': return 'Процентов';
       case  'm': return 'M';
       case  'f': return 'Ж';
       case  'M': return 'M';
