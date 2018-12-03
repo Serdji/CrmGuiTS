@@ -302,7 +302,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
       segmentation: segmentation,
-      customerGroup: customerGroup,
+      customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
     console.log( params );
