@@ -1,8 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, pipe } from 'rxjs';
+import { Observable, pipe, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
 import { Ilocation } from '../../../interface/ilocation';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
@@ -16,6 +16,7 @@ import { ListSegmentationService } from '../../segmentation/list-segmentation/li
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { AddPromotionsCodsService } from './add-promotions-cods.service';
 import { IPromoCodeValTypes } from '../../../interface/ipromo-code-val-types';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -81,6 +82,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     private profileSearchService: ProfileSearchService,
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -134,6 +136,25 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.addPromotionsCodsService.getPromoCodeValTypes()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
+  }
+
+  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status: params,
+        params: '',
+        card,
+      },
+    } );
+    if ( !disableTimer ) {
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialog.closeAll();
+          this.resetForm();
+        } );
+    }
   }
 
   private initFormPromoCods() {
@@ -309,7 +330,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     console.log( params );
     this.addPromotionsCodsService.savePromoCode( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe();
+      .subscribe( _ => {
+        this.windowDialog( `Промокод успешно сохранен`, 'ok' );
+      } );
   }
 
   clearForm(): void {
