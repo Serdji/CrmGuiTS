@@ -102,28 +102,34 @@
             </mat-card-content>
             <mat-card-content class="add-promotions-cods__content _d-b _space">
               <div class="add-promotions-cods__list" *ngIf="promoCodeRouteList.length > 0">
-                <div  class="add-promotions-cods__list-item" *ngFor=" let routeList of promoCodeRouteList">
+                <div class="add-promotions-cods__list-item" *ngFor=" let routeList of promoCodeRouteList">
                   <div class="add-promotions-cods__list-item-wrapper">
                     {{routeList.dep_LocationId}}
                     <mat-icon>arrow_right_alt</mat-icon>
                     {{routeList.arr_LocationId}}
                   </div>
                   <div class="add-promotions-cods__list-item-wrapper _flex">
-                    <mat-icon class="add-promotions-cods__close" (click)="directionRemove(routeList.dep_LocationId, routeList.arr_LocationId)">close</mat-icon>
+                    <mat-icon class="add-promotions-cods__close"
+                              (click)="directionRemove(routeList.dep_LocationId, routeList.arr_LocationId)">close
+                    </mat-icon>
                   </div>
                 </div>
               </div>
               <div class="add-promotions-cods__date">
-                <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="depLocationId" type="text" placeholder="Направление откуда" [matAutocomplete]="depLocationId">
+                <mat-form-field class="add-promotions-cods__input">
+                  <input matInput formControlName="depLocationId" type="text" placeholder="Направление откуда"
+                         [matAutocomplete]="depLocationId">
                   <mat-autocomplete #depLocationId="matAutocomplete">
-                    <mat-option *ngFor="let location of locationFromOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                    <mat-option *ngFor="let location of locationFromOptions | async"
+                                [value]="location.locationCode">{{ location.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-                <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="arrLocationId" type="text" placeholder="Направление куда" [matAutocomplete]="arrLocationId">
+                <mat-form-field class="add-promotions-cods__input">
+                  <input matInput formControlName="arrLocationId" type="text" placeholder="Направление куда"
+                         [matAutocomplete]="arrLocationId">
                   <mat-autocomplete #arrLocationId="matAutocomplete">
-                    <mat-option *ngFor="let location of locationToOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                    <mat-option *ngFor="let location of locationToOptions | async"
+                                [value]="location.locationCode">{{ location.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-icon (click)="directionAdd()" class="add-promotions-cods__add">add</mat-icon>
@@ -185,8 +191,58 @@
             <mat-form-field class="add-promotions-cods__input">
               <input matInput type="text" placeholder="Профиль">
             </mat-form-field>
+
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput type="text" placeholder="Группы профилей">
+              <mat-chip-list #chipListSegmentation>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let segmentationChip of segmentationChips"
+                  [selectable]="segmentationSelectable"
+                  [removable]="segmentationRemovable"
+                  (removed)="remove(segmentationChip, segmentationChips, 'segmentationChips')">
+                  {{segmentationChip}}
+                  <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы сегментации"
+                  #segmentationChipInput
+                  formControlName="segmentation"
+                  [matAutocomplete]="segmentation"
+                  [matChipInputFor]="chipListSegmentation"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addSegmentationOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'segmentation', 'segmentationChips')">
+              </mat-chip-list>
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation', 'segmentationChips', 'segmentationFruitInput')">
+                <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="add-promotions-cods__input">
+              <mat-chip-list #chipListCustomerGroup>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let customerGroupChip of customerGroupChips"
+                  [selectable]="customerGroupSelectable"
+                  [removable]="customerGroupRemovable"
+                  (removed)="remove(customerGroupChip, customerGroupChips, 'customerGroupChips')">
+                  {{customerGroupChip}}
+                  <mat-icon matChipRemove *ngIf="customerGroupRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы пассажиров"
+                  #customerGroupChipInput
+                  formControlName="customerGroup"
+                  [matAutocomplete]="customerGroup"
+                  [matChipInputFor]="chipListCustomerGroup"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addCustomerGroupOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'customerGroup', 'customerGroupChips')">
+              </mat-chip-list>
+              <mat-autocomplete #customerGroup="matAutocomplete" (optionSelected)="selected($event, 'customerGroup', 'customerGroupChips', 'customerGroupFruitInput')">
+                <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
+              </mat-autocomplete>
             </mat-form-field>
           </mat-card-content>
         </mat-card>

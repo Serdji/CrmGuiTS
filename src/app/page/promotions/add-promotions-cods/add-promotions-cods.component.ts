@@ -10,6 +10,10 @@ import * as _ from 'lodash';
 import * as moment from 'moment';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
+import { ISegmentation } from '../../../interface/isegmentation';
+import { IcustomerGroup } from '../../../interface/icustomer-group';
+import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
+import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -22,9 +26,13 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public formPromoCods: FormGroup;
   public locations: Ilocation[];
   public promotions: IPromotions;
+  public segmentation: ISegmentation[];
+  public customerGroup: IcustomerGroup[];
   public promotionsOptions: Observable<Ilocation[]>;
   public locationFromOptions: Observable<Ilocation[]>;
   public locationToOptions: Observable<Ilocation[]>;
+  public segmentationOptions: Observable<ISegmentation[]>;
+  public customerGroupOptions: Observable<ISegmentation[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public promoCodeRouteList: any[] = [];
 
@@ -43,18 +51,32 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public addPromoCodeRbdListOnBlur = false;
   public promoCodeRbdListChips: string[] = [];
 
+  public segmentationSelectable = true;
+  public segmentationRemovable = true;
+  public addSegmentationOnBlur = false;
+  public segmentationChips: string[] = [];
+
+  public customerGroupSelectable = true;
+  public customerGroupRemovable = true;
+  public addCustomerGroupOnBlur = false;
+  public customerGroupChips: string[] = [];
+
   private isActive: boolean;
   private autDelay: number = 500;
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeRbdListChipInput' ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
 
   constructor(
     private fb: FormBuilder,
     private addPromotionsService: AddPromotionsService,
     private profileSearchService: ProfileSearchService,
+    private listSegmentationService: ListSegmentationService,
+    private profileGroupService: ProfileGroupService,
   ) { }
 
   ngOnInit(): void {
@@ -64,6 +86,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initPromotions();
     this.initLocation();
+    this.initSegmentation();
+    this.initCustomerGroup();
   }
 
   private initPromotions() {
@@ -84,6 +108,22 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initSegmentation() {
+    this.listSegmentationService.getSegmentation()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( segmentation: ISegmentation[] ) => {
+        this.segmentation = segmentation;
+      } );
+  }
+
+  private initCustomerGroup() {
+    this.profileGroupService.getProfileGroup()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( customerGroup: IcustomerGroup[] ) => {
+        this.customerGroup = customerGroup;
+      } );
+  }
+
   private initFormPromoCods() {
     this.formPromoCods = this.fb.group( {
       promotionName: '',
@@ -100,6 +140,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeRbdList: '',
       depLocationId: '',
       arrLocationId: '',
+      segmentation: '',
+      customerGroup: '',
     } );
   }
 
@@ -119,6 +161,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
     this.locationFromOptions = this.autocomplete( 'depLocationId', 'location' );
     this.locationToOptions = this.autocomplete( 'arrLocationId', 'location' );
+    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
+    this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -133,6 +177,18 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
               break;
             case 'location':
               return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+              break;
+            case 'segmentation':
+              return this.segmentation.filter( segmentation => {
+                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+              break;
+            case 'customerGroup':
+              return this.customerGroup.filter( customerGroup => {
+                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
               break;
           }
         } )
