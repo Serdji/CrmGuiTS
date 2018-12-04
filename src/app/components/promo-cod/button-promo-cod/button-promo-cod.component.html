@@ -1,3 +1,11 @@
-<p>
-  button-promo-cod works!
-</p>
+<button
+  mat-raised-button
+  color="primary"
+  (click)="openDialog()"
+  [disabled]="disabled"
+  appAccessRights="promotions:update"
+>Привязать промокод
+  <mat-icon style="margin-left: 10px">
+    receipt
+  </mat-icon>
+</button>
