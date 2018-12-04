@@ -1,3 +1,13 @@
-<p>
-  dialog-promo-cod works!
-</p>
+<div class="dialog-promo-cod">
+  <form class="dialog-promo-cod__form" [formGroup]="formPromoCod">
+    <mat-form-field class="dialog-promo-cod__input">
+      <input matInput formControlName="promoCodeId" type="text" placeholder="Промокод">
+      <mat-error>Обязательное поле</mat-error>
+    </mat-form-field>
+    <button appAccessRights="promotions:update" class="dialog-promo-cod__button" mat-raised-button
+            (click)="saveForm()" color="primary">
+      <mat-icon>save</mat-icon>
+      Добавить
+    </button>
+  </form>
+</div>
