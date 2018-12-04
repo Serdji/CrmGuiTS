@@ -100,4 +100,5 @@
     <mat-icon>delete</mat-icon>
   </button>
   <app-button-editor [ids]="ids" [totalCount]="totalCount"></app-button-editor>
+  <app-button-promo-cod [ids]="ids" [disabled]="!selection.hasValue() && !isAllSelected()"></app-button-promo-cod>
 </div>

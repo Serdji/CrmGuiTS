@@ -22,5 +22,6 @@ import { DirectivesModule } from '../../directives/directives.module';
     DialogPromoCodComponent,
     ButtonPromoCodComponent,
   ],
+  entryComponents: [ DialogPromoCodComponent ]
 })
 export class PromoCodModule { }
