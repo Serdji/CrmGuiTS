@@ -2,12 +2,14 @@ import { Injectable } from '@angular/core';
 import { retryWhen, takeWhile, tap } from 'rxjs/operators';
 import { timer } from 'rxjs';
 
-@Injectable({
+@Injectable( {
   providedIn: 'root'
-})
+} )
 export class RetryRequestService {
 
   private count: number = 0;
+  private maxCount: number = 20;
+  private timer: number = 10000;
 
   constructor() { }
 
@@ -18,17 +20,16 @@ export class RetryRequestService {
           tap( err => {
             if ( err.status === 401 ) {
               this.count++;
-              if ( this.count <= 20 ) {
-                timer(500).subscribe(  _ => this.count = 0 );
+              if ( this.count <= this.maxCount ) {
+                timer( this.timer ).subscribe( _ => this.count = 0 );
               }
               return err;
             } else {
               throw err;
             }
           } ),
-          takeWhile( _ => this.count <= 10 )
+          takeWhile( _ => this.count <= this.maxCount )
         );
     } );
   }
-
 }

@@ -92,6 +92,8 @@ export class UserComponent implements OnInit, OnDestroy {
       6: '',
       7: '',
       8: '',
+      9: '',
+      10: '',
     } );
   }
 
@@ -126,6 +128,14 @@ export class UserComponent implements OnInit, OnDestroy {
       .subscribe( value => {
         this.formPermission.get( '8' )[ value ? 'enable' : 'disable' ]();
         this.formPermission.get( '8' ).patchValue( '' );
+      } );
+
+    this.formPermission.get( '10' )[ this.formPermission.get( '9' ).value ? 'enable' : 'disable' ]();
+    this.formPermission.get( '9' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.formPermission.get( '10' )[ value ? 'enable' : 'disable' ]();
+        this.formPermission.get( '10' ).patchValue( '' );
       } );
   }
 

@@ -1,0 +1,51 @@
+<div class="add-promotions">
+  <form class="add-promotions__form" [formGroup]="formPromotions">
+    <mat-grid-list cols="1" rowHeight="80px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-promotions__card">
+          <mat-card-content class="add-promotions__content">
+            <mat-form-field class="add-promotions__input">
+              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <button appAccessRights="promotions:update" class="add-promotions__button" mat-raised-button
+                    (click)="saveForm()" color="primary">
+              <mat-icon>save</mat-icon>
+              Сохранить
+            </button>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+
+  <mat-card class="add-promotions__table">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-tablet-async-promotions
+        *ngIf="promotions.result.length !== 0"
+        [tableDataSource]="promotions.result">
+      </app-tablet-async-promotions>
+    </ng-template>
+  </mat-card>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

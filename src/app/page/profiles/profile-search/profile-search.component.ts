@@ -321,13 +321,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     for ( const segmentationChip of this.segmentationChips ) {
       if ( segmentationChip ) {
-        segmentation.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).result( 'segmentationId' ).value() );
+        segmentation.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).get( 'segmentationId' ).value() );
       }
     }
 
     for ( const customerGroupChip of this.customerGroupChips ) {
       if ( customerGroupChip ) {
-        customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).result( 'customerGroupId' ).value() );
+        customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).get( 'customerGroupId' ).value() );
       }
     }
 

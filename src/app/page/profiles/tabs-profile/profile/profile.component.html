@@ -111,8 +111,8 @@
     </form>
 
     <div *ngIf="profileNames?.length > 1">
-      <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-      <ng-template #loaserDisabled>
+      <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
         <app-tablet-example-profile-names *ngIf="profileNames.length > 1"
                                           [tableDataSource]="profileNames"></app-tablet-example-profile-names>
       </ng-template>
