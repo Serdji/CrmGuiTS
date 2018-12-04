@@ -1,21 +1,25 @@
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AddPromotionsCodsService } from '../../../page/promotions/add-promotions-cods/add-promotions-cods.service';
 import { IPromoCod } from '../../../interface/ipromo-cod';
-import { takeWhile } from 'rxjs/operators';
+import { delay, map, takeWhile } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { Ilocation } from '../../../interface/ilocation';
 
 @Component( {
   selector: 'app-dialog-promo-cod',
   templateUrl: './dialog-promo-cod.component.html',
   styleUrls: [ './dialog-promo-cod.component.styl' ]
 } )
-export class DialogPromoCodComponent implements OnInit {
+export class DialogPromoCodComponent implements OnInit, OnDestroy {
 
   public promoCods: IPromoCod;
   public formPromoCod: FormGroup;
+  public promoCodsOptions: Observable<IPromoCod>;
 
   private isActive: boolean;
+  private autDelay: number;
 
   constructor(
     private fb: FormBuilder,
@@ -27,8 +31,10 @@ export class DialogPromoCodComponent implements OnInit {
   ngOnInit(): void {
     console.log( this.data.params );
     this.isActive = true;
+    this.autDelay = 500;
     this.initForm();
     this.initPromoCods();
+    this.initAutocomplete();
   }
 
   private initPromoCods() {
@@ -47,8 +53,31 @@ export class DialogPromoCodComponent implements OnInit {
     } );
   }
 
+  private initAutocomplete() {
+    this.promoCodsOptions = this.autocomplete( 'promoCodeId', 'promoCode' );
+  }
+
+  private autocomplete( formControlName: string, options: string ): Observable<any> {
+    return this.formPromoCod.get( formControlName ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( this.autDelay ),
+        map( val => {
+          switch ( options ) {
+            case 'promoCode':
+              return this.promoCods.result.filter( promoCods => promoCods.code.toLowerCase().includes( val.toLowerCase() ) );
+              break;
+          }
+        } )
+      );
+  }
+
   saveForm(): void {
 
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
   }
 
 }
