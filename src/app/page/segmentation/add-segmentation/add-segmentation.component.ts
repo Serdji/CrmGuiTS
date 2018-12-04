@@ -109,7 +109,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
-        map( val => this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) ) )
+        map( val => {
+          if ( val ) {
+            return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+          }
+        } )
       );
   }
 
@@ -402,7 +406,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   deleteSegmentation(): void {
-    this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${ this.segmentationParams.segmentationTitle }" ?`, 'delete', 'segmentation', true );
+    this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${this.segmentationParams.segmentationTitle}" ?`, 'delete', 'segmentation', true );
   }
 
   clearForm(): void {
