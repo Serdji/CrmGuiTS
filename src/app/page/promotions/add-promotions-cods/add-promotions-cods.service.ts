@@ -28,13 +28,18 @@ export class AddPromotionsCodsService {
         this.retryRequestService.retry(),
         map( ( promoCods: IPromoCod ) => {
           _.each( promoCods.result, promoCod => {
-            const { code, accountCode, dateFrom, dateTo } = promoCod;
+            let { dateFrom, dateTo } = promoCod;
+            const { code, accountCode} = promoCod;
+            dateFrom = dateFrom ? moment( dateFrom ).format( 'DD.MM.YYYY' ) : '';
+            dateTo = dateTo ? moment( dateTo ).format( 'DD.MM.YYYY' ) : '';
             _.set(
               promoCod,
               'title',
-              'Название промокода: ' + code + '. ' +
-              'Аккаунт код: ' + accountCode + '. ' +
-              'Срок действия: ' + 'От ' + moment( dateFrom ).format( 'DD.MM.YYYY' ) + ' До ' + moment( dateTo ).format( 'DD.MM.YYYY' )
+              'Название промокода: ' + code + ' | ' +
+              'Аккаунт код: ' + accountCode + ' | ' +
+              'Срок действия: ' +
+              'От ' + dateFrom +
+              ' До ' + dateTo
             );
           } );
           return promoCods;
