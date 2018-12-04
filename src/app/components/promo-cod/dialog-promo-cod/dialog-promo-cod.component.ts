@@ -5,7 +5,7 @@ import { AddPromotionsCodsService } from '../../../page/promotions/add-promotion
 import { IPromoCod } from '../../../interface/ipromo-cod';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { Observable } from 'rxjs';
-import { Ilocation } from '../../../interface/ilocation';
+import { DialogPromoCodService } from './dialog-promo-cod.service';
 
 @Component( {
   selector: 'app-dialog-promo-cod',
@@ -24,6 +24,7 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private addPromotionsCodsService: AddPromotionsCodsService,
+    private dialogPromoCodService: DialogPromoCodService,
     public dialogRef: MatDialogRef<DialogPromoCodComponent>,
     @Inject( MAT_DIALOG_DATA ) public data: any
   ) { }
@@ -65,7 +66,7 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'promoCode':
-              return this.promoCods.result.filter( promoCods => promoCods.code.toLowerCase().includes( val.toLowerCase() ) );
+              return this.promoCods.result.filter( promoCods => promoCods.title.toLowerCase().includes( val.toLowerCase() ) );
               break;
           }
         } )
@@ -73,7 +74,15 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
-
+    const params = {
+      promoCodeId: this.formPromoCod.get( 'promoCodeId' ).value,
+      customerIds: this.data.params.customerIds,
+    };
+    if ( !this.formPromoCod.invalid ) {
+      this.dialogPromoCodService.savePromoCodeCustomers( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe();
+    }
   }
 
   ngOnDestroy(): void {

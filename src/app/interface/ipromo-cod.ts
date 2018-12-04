@@ -27,6 +27,7 @@ export interface IPromoCod {
     customerGroups: any;
     segmentationsIds: number[];
     segmentations: any;
+    title: string;
   }[];
   totalCount: number;
 };

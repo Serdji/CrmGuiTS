@@ -5,6 +5,7 @@ import { ButtonPromoCodComponent } from './button-promo-cod/button-promo-cod.com
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { DirectivesModule } from '../../directives/directives.module';
+import { DialogPromoCodService } from './dialog-promo-cod/dialog-promo-cod.service';
 
 @NgModule({
   imports: [
@@ -21,6 +22,7 @@ import { DirectivesModule } from '../../directives/directives.module';
     DialogPromoCodComponent,
     ButtonPromoCodComponent,
   ],
-  entryComponents: [ DialogPromoCodComponent ]
+  entryComponents: [ DialogPromoCodComponent ],
+  providers: [ DialogPromoCodService ],
 })
 export class PromoCodModule { }

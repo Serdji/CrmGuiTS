@@ -4,7 +4,7 @@
       <input matInput formControlName="promoCodeId" [matAutocomplete]="promoCodeId" type="text" placeholder="Промокод">
       <mat-autocomplete #promoCodeId="matAutocomplete">
         <mat-option *ngFor="let promoCod of promoCodsOptions | async"
-                    [value]="promoCod.code">{{ promoCod.code }}</mat-option>
+                    [value]="promoCod.title">{{ promoCod.title }}</mat-option>
       </mat-autocomplete>
       <mat-error>Обязательное поле</mat-error>
     </mat-form-field>
