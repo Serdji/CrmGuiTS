@@ -215,7 +215,25 @@
         <mat-card class="add-promotions-cods__card">
           <mat-card-content class="add-promotions-cods__content">
             <mat-form-field class="add-promotions-cods__input">
-              <input matInput formControlName="customersIds" type="text" placeholder="Профиль">
+              <mat-chip-list #chipPromoCodeCustomerListList>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let promoCodeCustomerListChip of promoCodeCustomerListChips"
+                  [selectable]="promoCodeCustomerListSelectable"
+                  [removable]="promoCodeCustomerListRemovable"
+                  (removed)="remove(promoCodeCustomerListChip, promoCodeCustomerListChips, 'promoCodeCustomerListChips')">
+                  {{promoCodeCustomerListChip}}
+                  <mat-icon matChipRemove *ngIf="promoCodeCustomerListRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Профиль"
+                  #promoCodeCustomerListChipInput
+                  formControlName="customersIds"
+                  [matChipInputFor]="chipPromoCodeCustomerListList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addPromoCodeCustomerListOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'customersIds', 'promoCodeCustomerListChips')">
+              </mat-chip-list>
             </mat-form-field>
 
             <mat-form-field class="add-promotions-cods__input">

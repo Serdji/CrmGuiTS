@@ -55,6 +55,11 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public addPromoCodeRbdListOnBlur = false;
   public promoCodeRbdListChips: string[] = [];
 
+  public promoCodeCustomerListSelectable = true;
+  public promoCodeCustomerListRemovable = true;
+  public addPromoCodeCustomerListOnBlur = false;
+  public promoCodeCustomerListChips: string[] = [];
+
   public segmentationSelectable = true;
   public segmentationRemovable = true;
   public addSegmentationOnBlur = false;
@@ -71,6 +76,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeRbdListChipInput' ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeCustomerListChipInput' ) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
@@ -187,6 +193,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promoCodeBrandListChips = [];
     this.promoCodeFlightListChips = [];
     this.promoCodeRbdListChips = [];
+    this.promoCodeCustomerListChips = [];
     this.promoCodeRouteList = [];
     this.segmentationChips = [];
     this.customerGroupChips = [];
@@ -324,6 +331,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
+      customersIds: this.promoCodeCustomerListChips,
       segmentationsIds: segmentation,
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
