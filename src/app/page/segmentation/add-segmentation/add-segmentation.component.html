@@ -95,7 +95,7 @@
               <input matInput formControlName="posIdT" type="text" placeholder="Код ППР (точка продажи)">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posAgencyT" type="text" placeholder="Код Агентства (точка продажи)">
+              <input matInput formControlName="posAgencyT" type="text" placeholder="Код агентства (точка продажи)">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -148,7 +148,7 @@
               <input matInput formControlName="posIdE" type="text" placeholder="Код ППР (точка продажи)">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posAgencyE" type="text" placeholder="Код Агентства (точка продажи)">
+              <input matInput formControlName="posAgencyE" type="text" placeholder="Код агентства (точка продажи)">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -292,8 +292,8 @@
   </form>
 
   <mat-card class="add-segmentation__table" *ngIf="isTable">
-    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaderDisabled>
+    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserDisabled>
       <app-tablet-async-segmentation-profile
         *ngIf="segmentationProfiles.customers.length !== 0"
         [tableDataSource]="segmentationProfiles.customers">
