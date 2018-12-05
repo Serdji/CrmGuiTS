@@ -201,6 +201,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
                 case 'promoCodeFlightList': this.promoCodeFlightListChips = value; break;
                 case 'promoCodeRbdList': this.promoCodeRbdListChips = value; break;
                 case 'promoCodeRouteList': this.promoCodeRouteList = value; break;
+                case 'customersIds': this.promoCodeCustomerListChips =  value; break;
+                case 'segmentations': this.segmentationChips = _.map( value, 'title' ); break;
+                case 'customerGroups': this.customerGroupChips = _.map( value, 'customerGroupName' ); break;
               }
             } else {
               _.each( this.formPromoCods.getRawValue(), ( valForm, keyForm ) => {
@@ -229,8 +232,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       dep_Location: '',
       arr_Location: '',
       customersIds: '',
-      segmentation: '',
-      customerGroup: '',
+      segmentations: '',
+      customerGroups: '',
       usesPerPerson: '',
       usesTotal: '',
       val: '',
@@ -257,8 +260,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
     this.locationFromOptions = this.autocomplete( 'dep_Location', 'location' );
     this.locationToOptions = this.autocomplete( 'arr_Location', 'location' );
-    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
-    this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
+    this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
+    this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -274,10 +277,10 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
             case 'location':
                if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'segmentation':
+            case 'segmentations':
                if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'customerGroup':
+            case 'customerGroups':
               return this.customerGroup.filter( customerGroup => {
                   if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
                 }

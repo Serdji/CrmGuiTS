@@ -250,14 +250,14 @@
                 <input
                   placeholder="Группы сегментации"
                   #segmentationChipInput
-                  formControlName="segmentation"
+                  formControlName="segmentations"
                   [matAutocomplete]="segmentation"
                   [matChipInputFor]="chipListSegmentation"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addSegmentationOnBlur"
-                  (matChipInputTokenEnd)="add($event, 'segmentation', 'segmentationChips')">
+                  (matChipInputTokenEnd)="add($event, 'segmentations', 'segmentationChips')">
               </mat-chip-list>
-              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation', 'segmentationChips', 'segmentationFruitInput')">
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentations', 'segmentationChips', 'segmentationFruitInput')">
                 <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
@@ -277,14 +277,14 @@
                 <input
                   placeholder="Группы пассажиров"
                   #customerGroupChipInput
-                  formControlName="customerGroup"
+                  formControlName="customerGroups"
                   [matAutocomplete]="customerGroup"
                   [matChipInputFor]="chipListCustomerGroup"
                   [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                   [matChipInputAddOnBlur]="addCustomerGroupOnBlur"
-                  (matChipInputTokenEnd)="add($event, 'customerGroup', 'customerGroupChips')">
+                  (matChipInputTokenEnd)="add($event, 'customerGroups', 'customerGroupChips')">
               </mat-chip-list>
-              <mat-autocomplete #customerGroup="matAutocomplete" (optionSelected)="selected($event, 'customerGroup', 'customerGroupChips', 'customerGroupFruitInput')">
+              <mat-autocomplete #customerGroup="matAutocomplete" (optionSelected)="selected($event, 'customerGroups', 'customerGroupChips', 'customerGroupFruitInput')">
                 <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
