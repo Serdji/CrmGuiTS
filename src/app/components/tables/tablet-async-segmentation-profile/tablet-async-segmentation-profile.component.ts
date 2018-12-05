@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
-import { TabletAsyncSegmentationProfileService } from './tablet-async-segmentation-profile.service';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-tablet-async-segmentation-profile',
@@ -40,7 +40,7 @@ export class TabletAsyncSegmentationProfileComponent implements OnInit, OnDestro
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private tabletAsyncSegmentationProfileService: TabletAsyncSegmentationProfileService
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit(): void {
@@ -65,18 +65,18 @@ export class TabletAsyncSegmentationProfileComponent implements OnInit, OnDestro
   }
 
   private initPaginator() {
-    this.resultsLength = this.tabletAsyncSegmentationProfileService.countPage;
-    this.totalCount = this.tabletAsyncSegmentationProfileService.countPage;
+    this.resultsLength = this.tableAsyncService.countPage;
+    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
-        this.tabletAsyncSegmentationProfileService.setPagPage( value );
+        this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
       } );
   }
 
   private initDataSourceAsync() {
-    this.tabletAsyncSegmentationProfileService.subjectTableDataSource
+    this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );
