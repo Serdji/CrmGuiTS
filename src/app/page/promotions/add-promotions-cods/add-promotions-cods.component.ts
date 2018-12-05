@@ -180,19 +180,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   private formFilling( id: number ) {
     this.addPromotionsCodsService.getPromoCode( +id )
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( 1000 )
-      )
+      .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCod: IPromoCod ) => {
-        _.set(
-          promoCod,
-          'promotionName',
-          _.chain( this.promotions.result )
-            .find( [ 'promotionId', promoCod['promotionId'] ] )
-            .get( 'promotionName' )
-            .value(),
-        );
+        _.set( promoCod, 'promotionName', _.get( promoCod, 'promotion.promotionName' ) );
         _.each( promoCod, ( value: any, key: string ) => {
           if ( !_.isNull( value ) && !_.isNaN( value ) ) {
             if ( _.isArray( value ) ) {
