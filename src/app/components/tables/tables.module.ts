@@ -21,6 +21,7 @@ import { TabletAsyncDistributionProfileComponent } from './tablet-async-distribu
 import { TabletAsyncDistributionProfileService } from './tablet-async-distribution-profile/tablet-async-distribution-profile.service';
 import { TabletAsyncPromotionsComponent } from './tablet-async-promotions/tablet-async-promotions.component';
 import { TabletAsyncPromotionsService } from './tablet-async-promotions/tablet-async-promotions.service';
+import { PromoCodModule } from '../promo-cod/promo-cod.module';
 
 @NgModule({
   imports: [
@@ -28,7 +29,8 @@ import { TabletAsyncPromotionsService } from './tablet-async-promotions/tablet-a
     SharedModule,
     DirectivesModule,
     PipesModule,
-    EditorsModule
+    EditorsModule,
+    PromoCodModule,
   ],
   declarations: [
     TableExampleComponent,

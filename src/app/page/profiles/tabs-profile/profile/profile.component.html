@@ -28,7 +28,10 @@
           <div class="profile__list">
             <span><b>Заметки: </b> {{profile.comment}} </span>
           </div>
-          <app-button-editor class="profile__distribution" [ids]="{customerIds: [id]}"></app-button-editor>
+          <div class="profile__distribution">
+            <app-button-editor [ids]="{customerIds: [id]}"></app-button-editor>
+            <app-button-promo-cod [ids]="{customerIds: [id]}"></app-button-promo-cod>
+          </div>
         </div>
       </mat-card-content>
     </div>

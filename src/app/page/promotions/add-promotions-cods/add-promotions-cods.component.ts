@@ -287,7 +287,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     }
     this.formPromoCods.get( 'depLocationId' ).patchValue( '' );
     this.formPromoCods.get( 'arrLocationId' ).patchValue( '' );
-    console.log( this.promoCodeRouteList );
   }
 
   directionRemove( dep: string, arr: string ): void {
@@ -336,7 +335,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
-    console.log( params );
     this.addPromotionsCodsService.savePromoCode( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {

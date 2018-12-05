@@ -10,7 +10,7 @@ import * as _ from 'lodash';
   templateUrl: './button-editor.component.html',
   styleUrls: [ './button-editor.component.styl' ]
 } )
-export class ButtonEditorComponent implements OnInit, OnDestroy, OnInit {
+export class ButtonEditorComponent implements OnInit, OnDestroy {
 
   @Input() ids: any;
   @Input() disabled: boolean;
