@@ -76,7 +76,7 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
         .subscribe( _ => {
           this.dialog.closeAll();
           this.dialogRef.close();
-          this.formPromoCod.get('promoCodeId').patchValue('');
+          this.formPromoCod.get( 'promoCodeId' ).patchValue( '' );
         } );
     }
   }
@@ -89,7 +89,7 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'promoCode':
-              return this.promoCods.result.filter( promoCods => promoCods.code.toLowerCase().includes( val.toLowerCase() ) );
+              if ( _.size( val ) >= 3 ) return this.promoCods.result.filter( promoCods => promoCods.code.toLowerCase().includes( val.toLowerCase() ) );
               break;
           }
         } )
