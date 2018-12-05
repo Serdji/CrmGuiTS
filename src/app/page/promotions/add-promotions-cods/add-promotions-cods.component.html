@@ -104,31 +104,31 @@
               <div class="add-promotions-cods__list" *ngIf="promoCodeRouteList.length > 0">
                 <div class="add-promotions-cods__list-item" *ngFor=" let routeList of promoCodeRouteList">
                   <div class="add-promotions-cods__list-item-wrapper">
-                    {{routeList.dep_LocationId}}
+                    {{routeList.dep_Location}}
                     <mat-icon>arrow_right_alt</mat-icon>
-                    {{routeList.arr_LocationId}}
+                    {{routeList.arr_Location}}
                   </div>
                   <div class="add-promotions-cods__list-item-wrapper _flex">
                     <mat-icon class="add-promotions-cods__close"
-                              (click)="directionRemove(routeList.dep_LocationId, routeList.arr_LocationId)">close
+                              (click)="directionRemove(routeList.dep_Location, routeList.arr_Location)">close
                     </mat-icon>
                   </div>
                 </div>
               </div>
               <div class="add-promotions-cods__date">
                 <mat-form-field class="add-promotions-cods__input">
-                  <input matInput formControlName="depLocationId" type="text" placeholder="Направление откуда"
-                         [matAutocomplete]="depLocationId">
-                  <mat-autocomplete #depLocationId="matAutocomplete">
+                  <input matInput formControlName="dep_Location" type="text" placeholder="Направление откуда"
+                         [matAutocomplete]="dep_Location">
+                  <mat-autocomplete #dep_Location="matAutocomplete">
                     <mat-option *ngFor="let location of locationFromOptions | async"
                                 [value]="location.locationCode">{{ location.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-icon>arrow_right_alt</mat-icon>
                 <mat-form-field class="add-promotions-cods__input">
-                  <input matInput formControlName="arrLocationId" type="text" placeholder="Направление куда"
-                         [matAutocomplete]="arrLocationId">
-                  <mat-autocomplete #arrLocationId="matAutocomplete">
+                  <input matInput formControlName="arr_Location" type="text" placeholder="Направление куда"
+                         [matAutocomplete]="arr_Location">
+                  <mat-autocomplete #arr_Location="matAutocomplete">
                     <mat-option *ngFor="let location of locationToOptions | async"
                                 [value]="location.locationCode">{{ location.locationCode }}</mat-option>
                   </mat-autocomplete>

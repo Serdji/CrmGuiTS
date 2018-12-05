@@ -47,6 +47,10 @@ export class AddPromotionsCodsService {
       );
   }
 
+  getPromoCode( id: number ) {
+    return this.http.get( this.configService.crmApi + '/crm/promoCodes/' + id ).pipe( this.retryRequestService.retry() );
+  }
+
   savePromoCode( params ): Observable<any> {
     return this.http.post( this.configService.crmApi + '/crm/promoCodes', params ).pipe( this.retryRequestService.retry() );
   }

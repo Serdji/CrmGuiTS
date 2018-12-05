@@ -17,6 +17,8 @@ import { ProfileGroupService } from '../../special-groups/profile-group/profile-
 import { AddPromotionsCodsService } from './add-promotions-cods.service';
 import { IPromoCodeValTypes } from '../../../interface/ipromo-code-val-types';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPromoCod } from '../../../interface/ipromo-cod';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -89,6 +91,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -102,6 +106,17 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initSegmentation();
     this.initCustomerGroup();
     this.initPromoCodeValTypes();
+    this.initQueryParams();
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( params => {
+        if ( params.id ) {
+          this.formFilling( params.id );
+        }
+      } );
   }
 
   private initPromotions() {
@@ -163,6 +178,29 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     }
   }
 
+  private formFilling( id: number ) {
+    this.addPromotionsCodsService.getPromoCode( +id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( promoCod: IPromoCod ) => {
+        _.each( promoCod, ( value: any, key: string ) => {
+          if ( !_.isNull( value ) && !_.isNaN( value ) ) {
+            if ( _.isArray( value ) ) {
+              switch ( key ) {
+                case 'promoCodeBrandList': this.promoCodeBrandListChips = value; break;
+                case 'promoCodeFlightList': this.promoCodeFlightListChips = value; break;
+                case 'promoCodeRbdList': this.promoCodeRbdListChips = value; break;
+                case 'promoCodeRouteList': this.promoCodeRouteList = value; break;
+              }
+            } else {
+              _.each( this.formPromoCods.getRawValue(), ( valForm, keyForm ) => {
+                if ( keyForm === key ) this.formPromoCods.get( key ).patchValue( value );
+              } );
+            }
+          }
+        } );
+      } );
+  }
+
   private initFormPromoCods() {
     this.formPromoCods = this.fb.group( {
       promotionName: '',
@@ -177,8 +215,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: '',
       promoCodeFlightList: '',
       promoCodeRbdList: '',
-      depLocationId: '',
-      arrLocationId: '',
+      dep_Location: '',
+      arr_Location: '',
       customersIds: '',
       segmentation: '',
       customerGroup: '',
@@ -206,8 +244,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.locationFromOptions = this.autocomplete( 'depLocationId', 'location' );
-    this.locationToOptions = this.autocomplete( 'arrLocationId', 'location' );
+    this.locationFromOptions = this.autocomplete( 'dep_Location', 'location' );
+    this.locationToOptions = this.autocomplete( 'arr_Location', 'location' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
@@ -275,22 +313,22 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   directionAdd(): void {
     if (
-      this.formPromoCods.get( 'depLocationId' ).value !== '' &&
-      this.formPromoCods.get( 'arrLocationId' ).value !== ''
+      this.formPromoCods.get( 'dep_Location' ).value !== '' &&
+      this.formPromoCods.get( 'arr_Location' ).value !== ''
     ) {
       this.promoCodeRouteList.push(
         {
-          dep_LocationId: this.formPromoCods.get( 'depLocationId' ).value,
-          arr_LocationId: this.formPromoCods.get( 'arrLocationId' ).value
+          dep_Location: this.formPromoCods.get( 'dep_Location' ).value,
+          arr_Location: this.formPromoCods.get( 'arr_Location' ).value
         }
       );
     }
-    this.formPromoCods.get( 'depLocationId' ).patchValue( '' );
-    this.formPromoCods.get( 'arrLocationId' ).patchValue( '' );
+    this.formPromoCods.get( 'dep_Location' ).patchValue( '' );
+    this.formPromoCods.get( 'arr_Location' ).patchValue( '' );
   }
 
   directionRemove( dep: string, arr: string ): void {
-    const obj: any = { 'dep_LocationId': dep, 'arr_LocationId': arr };
+    const obj: any = { 'dep_Location': dep, 'arr_Location': arr };
     this.promoCodeRouteList = _.reject( this.promoCodeRouteList, obj );
   }
 
@@ -344,6 +382,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   clearForm(): void {
     this.resetForm();
+    this.router.navigate( [ '/crm/add-promotions-cods' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {
