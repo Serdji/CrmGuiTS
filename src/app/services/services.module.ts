@@ -9,6 +9,7 @@ import { ParsTokenService } from './pars-token.service';
 import { ConfigService } from './config-service.service';
 import { RetryRequestService } from './retry-request.service';
 import { CurrencyDefaultService } from './currency-default.service';
+import { TableAsyncService } from './table-async.service';
 
 const appInitializerFn = ( appConfig: ConfigService ) => {
   return () => {
@@ -27,6 +28,7 @@ const appInitializerFn = ( appConfig: ConfigService ) => {
     ActivityUserService,
     RetryRequestService,
     CurrencyDefaultService,
+    TableAsyncService,
     ParsTokenService,
     {
       provide: HTTP_INTERCEPTORS,
