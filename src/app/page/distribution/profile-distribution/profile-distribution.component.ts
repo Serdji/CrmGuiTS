@@ -3,12 +3,12 @@ import { ActivatedRoute } from '@angular/router';
 import { ProfileDistributionService } from './profile-distribution.service';
 import { takeWhile } from 'rxjs/operators';
 import { IdistributionProfile } from '../../../interface/idistribution-profile';
-import { TabletAsyncDistributionProfileService } from '../../../components/tables/tablet-async-distribution-profile/tablet-async-distribution-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { EditorService } from '../../../components/editors/editor/editor.service';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-profile-distribution',
@@ -30,7 +30,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private profileDistributionService: ProfileDistributionService,
-    private tabletAsyncDistributionProfileService: TabletAsyncDistributionProfileService,
+    private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
     private editorService: EditorService,
   ) { }
@@ -64,7 +64,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
 
 
   private initTableProfilePagination() {
-    this.tabletAsyncDistributionProfileService.subjectPage
+    this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
@@ -75,7 +75,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         };
         this.profileDistributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( distributionProfile: IdistributionProfile ) => this.tabletAsyncDistributionProfileService.setTableDataSource( distributionProfile.customers ) );
+          .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
   }
 
@@ -90,7 +90,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( distributionProfile: IdistributionProfile ) => {
         if ( distributionProfile ) {
-          this.tabletAsyncDistributionProfileService.countPage = distributionProfile.totalCount;
+          this.tableAsyncService.countPage = distributionProfile.totalCount;
           this.distributionProfile = distributionProfile;
           this.isLoader = false;
           this.disabledButton( distributionProfile );

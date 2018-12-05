@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
-import { TabletAsyncDistributionProfileService } from './tablet-async-distribution-profile.service';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-tablet-async-distribution-profile',
@@ -39,7 +39,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private tabletAsyncDistributionProfileService: TabletAsyncDistributionProfileService
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit(): void {
@@ -66,17 +66,17 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
   }
 
   private initPaginator() {
-    this.resultsLength = this.tabletAsyncDistributionProfileService.countPage;
+    this.resultsLength = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
-        this.tabletAsyncDistributionProfileService.setPagPage( value );
+        this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
       } );
   }
 
   private initDataSourceAsync() {
-    this.tabletAsyncDistributionProfileService.subjectTableDataSource
+    this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );
