@@ -7,9 +7,8 @@ import { timer } from 'rxjs';
 } )
 export class RetryRequestService {
 
-  private count: number = 0;
-  private maxCount: number = 20;
-  private timer: number = 10000;
+  private isActive: boolean = true;
+  private timer: number = 5000;
 
   constructor() { }
 
@@ -19,16 +18,16 @@ export class RetryRequestService {
         .pipe(
           tap( err => {
             if ( err.status === 401 ) {
-              this.count++;
-              if ( this.count <= this.maxCount ) {
-                timer( this.timer ).subscribe( _ => this.count = 0 );
-              }
+              timer( this.timer ).subscribe( _ => {
+                this.isActive = false;
+                timer( this.timer ).subscribe( _ => this.isActive = true );
+              } );
               return err;
             } else {
               throw err;
             }
           } ),
-          takeWhile( _ => this.count <= this.maxCount )
+          takeWhile( _ => this.isActive )
         );
     } );
   }
