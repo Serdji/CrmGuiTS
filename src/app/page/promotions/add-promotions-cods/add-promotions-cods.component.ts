@@ -137,6 +137,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
           this.buttonSearch = false;
           this.promoCodeId = +params.id;
           this.formFilling( this.promoCodeId );
+          this.searchForm( );
         }
       } );
   }
@@ -242,13 +243,27 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
           if ( !_.isNull( value ) && !_.isNaN( value ) ) {
             if ( _.isArray( value ) ) {
               switch ( key ) {
-                case 'promoCodeBrandList': this.promoCodeBrandListChips = value; break;
-                case 'promoCodeFlightList': this.promoCodeFlightListChips = value; break;
-                case 'promoCodeRbdList': this.promoCodeRbdListChips = value; break;
-                case 'promoCodeRouteList': this.promoCodeRouteList = value; break;
-                case 'customersIds': this.promoCodeCustomerListChips =  value; break;
-                case 'segmentations': this.segmentationChips = _.map( value, 'title' ); break;
-                case 'customerGroups': this.customerGroupChips = _.map( value, 'customerGroupName' ); break;
+                case 'promoCodeBrandList':
+                  this.promoCodeBrandListChips = value;
+                  break;
+                case 'promoCodeFlightList':
+                  this.promoCodeFlightListChips = value;
+                  break;
+                case 'promoCodeRbdList':
+                  this.promoCodeRbdListChips = value;
+                  break;
+                case 'promoCodeRouteList':
+                  this.promoCodeRouteList = value;
+                  break;
+                case 'customersIds':
+                  this.promoCodeCustomerListChips = value;
+                  break;
+                case 'segmentations':
+                  this.segmentationChips = _.map( value, 'title' );
+                  break;
+                case 'customerGroups':
+                  this.customerGroupChips = _.map( value, 'customerGroupName' );
+                  break;
               }
             } else {
               _.each( this.formPromoCods.getRawValue(), ( valForm, keyForm ) => {
@@ -321,13 +336,13 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'promotion':
-               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
+              if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'location':
-               if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+              if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'segmentations':
-               if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
+              if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'customerGroups':
               return this.customerGroup.filter( customerGroup => {

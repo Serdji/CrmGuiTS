@@ -320,6 +320,15 @@
         </button>
       </div>
     </mat-grid-list>
-
   </form>
+
+  <mat-card class="add-promotions-cods__table" *ngIf="isTable">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-table-async-promo-code-profile
+        *ngIf="profilePromoCode.result.length !== 0"
+        [tableDataSource]="profilePromoCode.result">
+      </app-table-async-promo-code-profile>
+    </ng-template>
+  </mat-card>
 </div>

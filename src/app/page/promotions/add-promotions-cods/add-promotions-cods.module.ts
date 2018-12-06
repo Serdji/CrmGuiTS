@@ -5,6 +5,7 @@ import { AddPromotionsCodsService } from './add-promotions-cods.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { ComponentsModule } from '../../../components/components.module';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { PipesModule } from '../../../pipes/pipes.module';
     ReactiveFormsModule,
     SharedModule,
     PipesModule,
+    ComponentsModule
   ],
   declarations: [ AddPromotionsCodsComponent ],
   providers: [ AddPromotionsCodsService ]

@@ -292,8 +292,8 @@
   </form>
 
   <mat-card class="add-segmentation__table" *ngIf="isTable">
-    <mat-progress-bar *ngIf="isLoader; else loaserDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaserDisabled>
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
       <app-tablet-async-segmentation-profile
         *ngIf="segmentationProfiles.customers.length !== 0"
         [tableDataSource]="segmentationProfiles.customers">

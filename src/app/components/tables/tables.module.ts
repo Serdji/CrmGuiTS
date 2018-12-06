@@ -17,6 +17,7 @@ import { TabletAsyncDistributionProfileComponent } from './tablet-async-distribu
 import { TabletAsyncPromotionsComponent } from './tablet-async-promotions/tablet-async-promotions.component';
 import { PromoCodModule } from '../promo-cod/promo-cod.module';
 import { TableAsyncService } from '../../services/table-async.service';
+import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-profile/table-async-promo-code-profile.component';
 
 @NgModule({
   imports: [
@@ -39,6 +40,7 @@ import { TableAsyncService } from '../../services/table-async.service';
     TabletExampleDistributionComponent,
     TabletAsyncDistributionProfileComponent,
     TabletAsyncPromotionsComponent,
+    TableAsyncPromoCodeProfileComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -52,6 +54,7 @@ import { TableAsyncService } from '../../services/table-async.service';
     TabletExampleDistributionComponent,
     TabletAsyncDistributionProfileComponent,
     TabletAsyncPromotionsComponent,
+    TableAsyncPromoCodeProfileComponent,
   ],
   providers: [
     TableAsyncService
