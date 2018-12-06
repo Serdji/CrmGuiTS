@@ -84,7 +84,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.buttonSearch = false;
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
-          this.searchForm();
         }
       } );
   }
