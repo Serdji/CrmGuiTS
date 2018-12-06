@@ -76,6 +76,12 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public addCustomerGroupOnBlur = false;
   public customerGroupChips: string[] = [];
 
+  public buttonSave: boolean;
+  public buttonCreate: boolean;
+  public buttonDelete: boolean;
+  public buttonSearch: boolean;
+  public isTable: boolean;
+
   private isActive: boolean;
   private autDelay: number;
   private promoCodeId: number;
@@ -102,6 +108,10 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.buttonSave = false;
+    this.buttonCreate = true;
+    this.buttonDelete = true;
+    this.buttonSearch = true;
     this.isActive = true;
     this.isLoader = true;
     this.autDelay = 500;
@@ -121,8 +131,12 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         if ( params.id ) {
-          this.formFilling( params.id );
+          this.buttonSave = true;
+          this.buttonCreate = false;
+          this.buttonDelete = false;
+          this.buttonSearch = false;
           this.promoCodeId = +params.id;
+          this.formFilling( this.promoCodeId );
         }
       } );
   }
@@ -284,6 +298,10 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       this.formPromoCods.get( key ).patchValue( '' );
       this.formPromoCods.get( key ).setErrors( null );
     } );
+    this.buttonSave = false;
+    this.buttonCreate = true;
+    this.buttonSearch = true;
+    this.buttonDelete = true;
   }
 
 
@@ -415,11 +433,19 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
+
     this.addPromotionsCodsService.savePromoCode( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
+      .subscribe( value => {
         this.windowDialog( `Промокод успешно сохранен`, 'ok' );
+        this.router.navigate( [ '/crm/add-promotions-cods' ], { queryParams: { id: value.promoCodeId } } );
       } );
+  }
+
+  searchForm(): void {
+    this.isTable = true;
+    this.isLoader = true;
+    this.initTableProfile( this.promoCodeId );
   }
 
   clearForm(): void {

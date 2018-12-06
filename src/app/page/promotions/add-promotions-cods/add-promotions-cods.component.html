@@ -294,10 +294,25 @@
 
 
       <div class="add-promotions-cods__button-wrapper">
-        <button appAccessRights="promotions:update" class="add-promotions-cods__button" mat-raised-button
-                (click)="saveForm()" color="primary">
+        <button appAccessRights="analytics:update" class="add-promotions-cods__button" mat-raised-button
+                (click)="saveForm()" color="primary" [disabled]="buttonSave">
           <mat-icon>save</mat-icon>
           Сохранить
+        </button>
+        <button appAccessRights="analytics:read" class="add-promotions-cods__button" mat-raised-button
+                (click)="searchForm()" color="primary" [disabled]="buttonSearch">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button appAccessRights="analytics:update" class="add-promotions-cods__button" mat-raised-button
+                (click)="createForm()" [disabled]="buttonCreate">
+          <mat-icon>create</mat-icon>
+          Изменить
+        </button>
+        <button appAccessRights="analytics:update" class="add-promotions-cods__button" mat-raised-button
+                (click)="deleteSegmentation()" color="warn" [disabled]="buttonDelete">
+          <mat-icon>delete</mat-icon>
+          Удалить
         </button>
         <button class="add-promotions-cods__button" mat-raised-button (click)="clearForm()">
           <mat-icon>clear</mat-icon>
