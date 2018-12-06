@@ -137,7 +137,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
           this.buttonSearch = false;
           this.promoCodeId = +params.id;
           this.formFilling( this.promoCodeId );
-          this.searchForm( );
         }
       } );
   }
