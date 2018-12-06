@@ -19,6 +19,9 @@ import { IPromoCodeValTypes } from '../../../interface/ipromo-code-val-types';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IPromoCod } from '../../../interface/ipromo-cod';
+import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { IpagPage } from '../../../interface/ipag-page';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -41,6 +44,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
+  public profilePromoCode: IProfilePromoCode;
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -74,6 +78,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
   private autDelay: number;
+  private promoCodeId: number;
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -93,6 +98,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private router: Router,
+    private tableAsyncService: TableAsyncService,
   ) { }
 
   ngOnInit(): void {
@@ -107,6 +113,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initCustomerGroup();
     this.initPromoCodeValTypes();
     this.initQueryParams();
+    this.initTableProfilePagination();
   }
 
   private initQueryParams() {
@@ -115,6 +122,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         if ( params.id ) {
           this.formFilling( params.id );
+          this.promoCodeId = +params.id;
         }
       } );
   }
@@ -157,6 +165,39 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.addPromotionsCodsService.getPromoCodeValTypes()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
+  }
+
+  private initTableProfilePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          promoCodeId: this.promoCodeId,
+          from: pageIndex,
+          count: value.pageSize,
+          sortvalue: 'last_name'
+        };
+        this.addPromotionsCodsService.getProfiles( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( profilePromoCode: IProfilePromoCode ) => this.tableAsyncService.setTableDataSource( profilePromoCode.result ) );
+      } );
+  }
+
+  private initTableProfile( id: number ) {
+    const params = {
+      promoCodeId: id,
+      from: 0,
+      count: 10,
+      sortvalue: 'last_name'
+    };
+    this.addPromotionsCodsService.getProfiles( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( profilePromoCode: IProfilePromoCode ) => {
+        this.tableAsyncService.countPage = profilePromoCode.totalCount;
+        this.profilePromoCode = profilePromoCode;
+        this.isLoader = false;
+      } );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
