@@ -55,6 +55,14 @@ export class AddPromotionsCodsService {
     return this.http.post( this.configService.crmApi + '/crm/promoCodes', params ).pipe( this.retryRequestService.retry() );
   }
 
+  updatePromoCode( params ): Observable<any> {
+    return this.http.put( this.configService.crmApi + '/crm/promoCodes', params ).pipe( this.retryRequestService.retry() );
+  }
+
+  deletePromoCode( id: number ): Observable<any> {
+    return this.http.delete( `${this.configService.crmApi}/crm/promoCodes/${id}` ).pipe( this.retryRequestService.retry() );
+  }
+
   getProfiles( params ) {
     return this.http.get( this.configService.crmApi + '/crm/customer/searchByPromoCode', { params } ).pipe( this.retryRequestService.retry() );
   }

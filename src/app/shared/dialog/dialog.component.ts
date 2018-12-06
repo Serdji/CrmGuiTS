@@ -19,6 +19,7 @@ import { EditorService } from '../../components/editors/editor/editor.service';
 import { ListDistributionService } from '../../page/distribution/list-distribution/list-distribution.service';
 import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
+import { AddPromotionsCodsService } from '../../page/promotions/add-promotions-cods/add-promotions-cods.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -51,6 +52,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private listDistributionService: ListDistributionService,
     private profileDistributionService: ProfileDistributionService,
     private addPromotionsService: AddPromotionsService,
+    private addPromotionsCodsService: AddPromotionsCodsService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -322,6 +324,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsService.subjectDeletePromotions.next();
+          } );
+        break;
+      case 'promoCode':
+        this.addPromotionsCodsService.deletePromoCode( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.router.navigate( [ '/crm/add-promotions' ] );
           } );
         break;
     }

@@ -219,7 +219,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       data: {
         message: messDialog,
         status: params,
-        params: '',
+        params: this.promoCodeId,
         card,
       },
     } );
@@ -406,7 +406,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promoCodeRouteList = _.reject( this.promoCodeRouteList, obj );
   }
 
-  saveForm(): void {
+  private promoCodeParameters() {
     const segmentation = [];
     const customerGroup = [];
 
@@ -447,8 +447,11 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
+    return params;
+  }
 
-    this.addPromotionsCodsService.savePromoCode( params )
+  saveForm(): void {
+    this.addPromotionsCodsService.savePromoCode( this.promoCodeParameters() )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
         this.windowDialog( `Промокод успешно сохранен`, 'ok' );
@@ -462,9 +465,21 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initTableProfile( this.promoCodeId );
   }
 
+  createForm(): void {
+    this.addPromotionsCodsService.updatePromoCode( this.promoCodeParameters() )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.windowDialog( `Промокод успешно изменен`, 'ok' );
+      } );
+  }
+
   clearForm(): void {
     this.resetForm();
     this.router.navigate( [ '/crm/add-promotions-cods' ], { queryParams: {} } );
+  }
+
+  deletePromoCode(): void {
+    this.windowDialog( `Вы действительно хотите удалить промокод  "${ this.promoCodeParameters().code }" ?`, 'delete', 'promoCode', true );
   }
 
   ngOnDestroy(): void {
