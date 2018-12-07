@@ -10,6 +10,10 @@ import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { Observable } from 'rxjs';
 import { IPromotions } from '../../../interface/ipromotions';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
+import { ISegmentation } from '../../../interface/isegmentation';
+import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
+import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
+import { IcustomerGroup } from '../../../interface/icustomer-group';
 
 @Component( {
   selector: 'app-search-promotions-cods',
@@ -22,7 +26,11 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   public isLoader: boolean;
   public formSearchPromoCods: FormGroup;
   public promotionsOptions: Observable<IPromotions[]>;
+  public segmentationOptions: Observable<ISegmentation[]>;
+  public customerGroupOptions: Observable<ISegmentation[]>;
   public promotions: IPromotions;
+  public segmentation: ISegmentation[];
+  public customerGroup: IcustomerGroup[];
 
   private isActive: boolean;
   private autDelay: number;
@@ -30,6 +38,8 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   constructor(
     private searchPromotionsCodsService: SearchPromotionsCodsService,
     private addPromotionsService: AddPromotionsService,
+    private listSegmentationService: ListSegmentationService,
+    private profileGroupService: ProfileGroupService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
@@ -42,6 +52,8 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
     this.autDelay = 500;
     this.initFormSearchPromoCods();
     this.initPromotions();
+    this.initSegmentation();
+    this.initCustomerGroup();
     this.initAutocomplete();
   }
 
@@ -53,6 +65,22 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
     this.addPromotionsService.getAllPromotions( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
+  }
+
+  private initSegmentation() {
+    this.listSegmentationService.getSegmentation()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( segmentation: ISegmentation[] ) => {
+        this.segmentation = segmentation;
+      } );
+  }
+
+  private initCustomerGroup() {
+    this.profileGroupService.getProfileGroup()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( customerGroup: IcustomerGroup[] ) => {
+        this.customerGroup = customerGroup;
+      } );
   }
 
 
@@ -70,15 +98,10 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: '',
       promoCodeFlightList: '',
       promoCodeRbdList: '',
-      // dep_Location: '',
-      // arr_Location: '',
-      // customersIds: '',
-      // segmentations: '',
-      // customerGroups: '',
-      // usesPerPerson: '',
-      // usesTotal: '',
-      val: '',
-      // promoCodeValTypeId: '',
+      customersId: '',
+      segmentation: '',
+      customerGroup: '',
+      val: ''
     } );
   }
 
@@ -92,10 +115,8 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    // this.locationFromOptions = this.autocomplete( 'dep_Location', 'location' );
-    // this.locationToOptions = this.autocomplete( 'arr_Location', 'location' );
-    // this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
-    // this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
+    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
+    this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -108,18 +129,15 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
             case 'promotion':
               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            // case 'location':
-            //   if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-            //   break;
-            // case 'segmentations':
-            //   if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
-            //   break;
-            // case 'customerGroups':
-            //   return this.customerGroup.filter( customerGroup => {
-            //       if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
-            //     }
-            //   );
-            //   break;
+            case 'segmentation':
+              if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
+              break;
+            case 'customerGroup':
+              return this.customerGroup.filter( customerGroup => {
+                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+              break;
           }
         } )
       );
