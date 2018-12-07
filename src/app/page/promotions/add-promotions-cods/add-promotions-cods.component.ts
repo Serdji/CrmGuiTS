@@ -141,16 +141,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initPromotions() {
-    const params = {
-      from: 0,
-      count: 10000
-    };
-    this.addPromotionsService.getAllPromotions( params )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
-  }
-
   private initLocation() {
     this.profileSearchService.getLocation()
       .pipe( takeWhile( _ => this.isActive ) )
@@ -180,6 +170,17 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
   }
+
+  private initPromotions() {
+    const params = {
+      from: 0,
+      count: 10000
+    };
+    this.addPromotionsService.getAllPromotions( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
+  }
+
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage

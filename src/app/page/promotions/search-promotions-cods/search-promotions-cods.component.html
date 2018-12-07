@@ -33,6 +33,17 @@
         </mat-card>
       </mat-grid-tile>
 
+      <div class="search-promotions-cods__button-wrapper">
+        <button appAccessRights="promotions:read" class="search-promotions-cods__button" mat-raised-button
+                (click)="searchForm()" color="primary">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button class="search-promotions-cods__button" mat-raised-button (click)="clearForm()">
+          <mat-icon>clear</mat-icon>
+          Очистить форму
+        </button>
+      </div>
 
     </mat-grid-list>
   </form>
