@@ -228,7 +228,6 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
           this.dialog.closeAll();
-          this.resetForm();
         } );
     }
   }
@@ -466,7 +465,9 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   }
 
   createForm(): void {
-    this.addPromotionsCodsService.updatePromoCode( this.promoCodeParameters() )
+    const params = this.promoCodeParameters();
+    _.set( params, 'promoCodeId', this.promoCodeId );
+    this.addPromotionsCodsService.updatePromoCode( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.windowDialog( `Промокод успешно изменен`, 'ok' );
