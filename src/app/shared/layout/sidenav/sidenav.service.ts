@@ -50,7 +50,7 @@ export class SidenavService {
         claims: 'analytics:read',
         link: [
           { url: '/crm/listsegmentation', title: 'Список сегментаций' },
-          { url: '/crm/addsegmentation', title: 'Добавить сегментацию' }
+          { url: '/crm/addsegmentation', title: 'Добавить сегментацию' },
         ]
       },
       {
@@ -76,6 +76,7 @@ export class SidenavService {
         link: [
           { url: '/crm/add-promotions', title: 'Добавить промоакцию' },
           { url: '/crm/add-promotions-cods', title: 'Добавить промокод' },
+          { url: '/crm/search-promotions-cods', title: 'Поиск промокода' },
         ]
       },
       {

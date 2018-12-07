@@ -1,0 +1,107 @@
+<div class="search-promotions-cods">
+  <form class="search-promotions-cods__form" [formGroup]="formSearchPromoCods">
+
+    <mat-grid-list cols="3" rowHeight="400px">
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="search-promotions-cods__card">
+          <mat-card-content class="search-promotions-cods__content">
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция"
+                     [matAutocomplete]="promotion">
+              <mat-autocomplete #promotion="matAutocomplete">
+                <mat-option *ngFor="let promotion of promotionsOptions | async"
+                            [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
+              </mat-autocomplete>
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="code" type="text" placeholder="Промокод">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="accountCode" type="text" placeholder="Account code">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="dateFrom" placeholder="Период Действия от" [matDatepicker]="dateFrom">
+              <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="dateTo" placeholder="Период Действия до" [matDatepicker]="dateTo">
+              <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="val" type="text" placeholder="Кратность">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="search-promotions-cods__card">
+          <mat-card-content class="search-promotions-cods__content">
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="promoCodeFlightList" placeholder="Номера рейсов">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="flightDateFrom" placeholder="Период реализации от"
+                     [matDatepicker]="flightDateFrom">
+              <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="flightDateTo" placeholder="Период реализации до"
+                     [matDatepicker]="flightDateTo">
+              <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="promoCodeBrandList" placeholder="Бренды">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="promoCodeRbdList" placeholder="RBD">
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="search-promotions-cods__card">
+          <mat-card-content class="search-promotions-cods__content">
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="customersId" type="text" placeholder="Прорфиль">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации"
+                     [matAutocomplete]="segmentation">
+              <mat-autocomplete #segmentation="matAutocomplete">
+                <mat-option *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="customerGroup" type="text" placeholder="Группы пассажиров"
+                     [matAutocomplete]="customerGroup">
+              <mat-autocomplete #customerGroup="matAutocomplete">
+                <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <div class="search-promotions-cods__button-wrapper">
+        <button appAccessRights="promotions:read" class="search-promotions-cods__button" mat-raised-button
+                (click)="searchForm()" color="primary">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button class="search-promotions-cods__button" mat-raised-button (click)="clearForm()">
+          <mat-icon>clear</mat-icon>
+          Очистить форму
+        </button>
+      </div>
+
+    </mat-grid-list>
+  </form>
+</div>

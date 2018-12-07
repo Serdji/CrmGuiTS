@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { AddPromotionsComponent } from './add-promotions.component';
 import { ComponentsModule } from '../../../components/components.module';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { ComponentsModule } from '../../../components/components.module';
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
+    DirectivesModule,
   ],
   declarations: [ AddPromotionsComponent ],
   providers: [ AddPromotionsService ]
