@@ -29,7 +29,7 @@ export class AddPromotionsCodsService {
         map( ( promoCods: IPromoCod ) => {
           _.each( promoCods.result, promoCod => {
             let { dateFrom, dateTo } = promoCod;
-            const { code, accountCode} = promoCod;
+            const { code, accountCode } = promoCod;
             dateFrom = dateFrom ? moment( dateFrom ).format( 'DD.MM.YYYY' ) : '';
             dateTo = dateTo ? moment( dateTo ).format( 'DD.MM.YYYY' ) : '';
             _.set(
@@ -47,8 +47,38 @@ export class AddPromotionsCodsService {
       );
   }
 
+  getPromoCode( id: number ) {
+    return this.http.get( this.configService.crmApi + '/crm/promoCodes/' + id ).pipe( this.retryRequestService.retry() );
+  }
+
   savePromoCode( params ): Observable<any> {
     return this.http.post( this.configService.crmApi + '/crm/promoCodes', params ).pipe( this.retryRequestService.retry() );
   }
 
+  updatePromoCode( params ): Observable<any> {
+    return this.http.put( this.configService.crmApi + '/crm/promoCodes', params ).pipe( this.retryRequestService.retry() );
+  }
+
+  deletePromoCode( id: number ): Observable<any> {
+    return this.http.delete( `${this.configService.crmApi}/crm/promoCodes/${id}` ).pipe( this.retryRequestService.retry() );
+  }
+
+  getProfiles( params ) {
+    return this.http.get( this.configService.crmApi + '/crm/customer/searchByPromoCode', { params } ).pipe( this.retryRequestService.retry() );
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

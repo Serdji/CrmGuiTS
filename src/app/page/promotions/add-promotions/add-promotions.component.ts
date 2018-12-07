@@ -2,10 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AddPromotionsService } from './add-promotions.service';
 import { takeWhile } from 'rxjs/operators';
-import { TabletAsyncPromotionsService } from '../../../components/tables/tablet-async-promotions/tablet-async-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import { IpagPage } from '../../../interface/ipag-page';
 import { timer } from 'rxjs';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-add-promotions',
@@ -23,7 +23,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private addPromotionsService: AddPromotionsService,
-    private tabletAsyncPromotionsService: TabletAsyncPromotionsService
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit(): void {
@@ -49,7 +49,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
   }
 
   private initTablePromotionsPagination() {
-    this.tabletAsyncPromotionsService.subjectPage
+    this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
@@ -59,7 +59,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
         };
         this.addPromotionsService.getAllPromotions( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( promotions: IPromotions ) => this.tabletAsyncPromotionsService.setTableDataSource( promotions.result ) );
+          .subscribe( ( promotions: IPromotions ) => this.tableAsyncService.setTableDataSource( promotions.result ) );
       } );
   }
 
@@ -71,7 +71,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.addPromotionsService.getAllPromotions( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promotions: IPromotions ) => {
-        this.tabletAsyncPromotionsService.countPage = promotions.totalCount;
+        this.tableAsyncService.countPage = promotions.totalCount;
         this.promotions = promotions;
         this.isLoader = false;
       } );

@@ -9,10 +9,10 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material';
 import { Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
-import { TabletAsyncSegmentationProfileService } from '../../../components/tables/tablet-async-segmentation-profile/tablet-async-segmentation-profile.service';
 import * as moment from 'moment';
 import { Ilocation } from '../../../interface/ilocation';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 
 @Component( {
@@ -51,7 +51,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private addSegmentationService: AddSegmentationService,
     private dialog: MatDialog,
-    private tabletAsyncSegmentationProfileService: TabletAsyncSegmentationProfileService,
+    private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
   ) { }
 
@@ -84,7 +84,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.buttonSearch = false;
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
-          this.searchForm();
         }
       } );
   }
@@ -249,7 +248,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initTableProfilePagination() {
-    this.tabletAsyncSegmentationProfileService.subjectPage
+    this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
@@ -260,7 +259,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tabletAsyncSegmentationProfileService.setTableDataSource( segmentationProfiles.customers ) );
+          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
 
@@ -273,7 +272,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.addSegmentationService.getProfiles( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
-        this.tabletAsyncSegmentationProfileService.countPage = segmentationProfiles.totalCount;
+        this.tableAsyncService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
         this.isLoader = false;
       } );

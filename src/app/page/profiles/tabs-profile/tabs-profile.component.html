@@ -51,7 +51,7 @@
                 <div
                   *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
                   class="tabs-profile__content-point">
-                  <b routerLink="/crm/addsegmentation" [queryParams]="{id: takeSegmentation.segmentationId}"
+                  <b routerLink="/crm/addsegmentation" [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
                      [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}</b>
                 </div>
                 <mat-icon

@@ -4,7 +4,6 @@ import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
-import { TableAsyncProfileService } from '../../../components/tables/table-async-profile/table-async-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -20,6 +19,7 @@ import { ProfileGroupService } from '../../special-groups/profile-group/profile-
 import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { ISettings } from '../../../interface/isettings';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-profile-search',
@@ -61,7 +61,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private profileSearchService: ProfileSearchService,
-    private tableAsyncProfileService: TableAsyncProfileService,
+    private tableAsyncService: TableAsyncService,
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
     private router: Router,
@@ -115,14 +115,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initTableAsync() {
-    this.tableAsyncProfileService.subjectPage
+    this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
         this.profileSearchService.getProfileSearch( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( profile: Iprofiles ) => this.tableAsyncProfileService.setTableDataSource( profile.result ) );
+          .subscribe( ( profile: Iprofiles ) => this.tableAsyncService.setTableDataSource( profile.result ) );
       } );
   }
 
@@ -366,7 +366,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.profileSearchService.getProfileSearch( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profile => {
-        this.tableAsyncProfileService.countPage = profile.totalRows;
+        this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
       } );

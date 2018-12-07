@@ -6,7 +6,6 @@ import {
   MatTableDataSource,
 } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
-import { TableAsyncProfileService } from './table-async-profile.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -14,6 +13,7 @@ import { Router } from '@angular/router';
 import { Iprofile } from '../../../interface/iprofile';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-table-async-profile',
@@ -42,7 +42,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private tableAsyncProfileService: TableAsyncProfileService,
+    private tableAsyncService: TableAsyncService,
     private router: Router,
   ) { }
 
@@ -73,19 +73,19 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
 
   private initPaginator() {
-    this.resultsLength = this.tableAsyncProfileService.countPage;
-    this.totalCount = this.tableAsyncProfileService.countPage;
+    this.resultsLength = this.tableAsyncService.countPage;
+    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
-        this.tableAsyncProfileService.setPagPage( value );
+        this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
       } );
   }
 
 
   private initDataSourceAsync() {
-    this.tableAsyncProfileService.subjectTableDataSource
+    this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );

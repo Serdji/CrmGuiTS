@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IpagPage } from '../../../interface/ipag-page';
+import { IpagPage } from '../interface/ipag-page';
 
-@Injectable({
-  providedIn: 'root'
-})
-export class TabletAsyncSegmentationProfileService {
+@Injectable()
+export class TableAsyncService {
 
   public count: number;
   public subjectPage = new Subject();
@@ -28,6 +26,5 @@ export class TabletAsyncSegmentationProfileService {
   setTableDataSource( params: any ) {
     this.subjectTableDataSource.next( params );
   }
-
 
 }

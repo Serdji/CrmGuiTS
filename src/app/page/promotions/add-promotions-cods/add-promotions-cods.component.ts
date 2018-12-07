@@ -17,6 +17,11 @@ import { ProfileGroupService } from '../../special-groups/profile-group/profile-
 import { AddPromotionsCodsService } from './add-promotions-cods.service';
 import { IPromoCodeValTypes } from '../../../interface/ipromo-code-val-types';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IPromoCod } from '../../../interface/ipromo-cod';
+import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { IpagPage } from '../../../interface/ipag-page';
 
 @Component( {
   selector: 'app-add-promotions-cods',
@@ -39,6 +44,7 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
+  public profilePromoCode: IProfilePromoCode;
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -70,8 +76,15 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   public addCustomerGroupOnBlur = false;
   public customerGroupChips: string[] = [];
 
+  public buttonSave: boolean;
+  public buttonCreate: boolean;
+  public buttonDelete: boolean;
+  public buttonSearch: boolean;
+  public isTable: boolean;
+
   private isActive: boolean;
   private autDelay: number;
+  private promoCodeId: number;
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -89,9 +102,16 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
     private dialog: MatDialog,
+    private route: ActivatedRoute,
+    private router: Router,
+    private tableAsyncService: TableAsyncService,
   ) { }
 
   ngOnInit(): void {
+    this.buttonSave = false;
+    this.buttonCreate = true;
+    this.buttonDelete = true;
+    this.buttonSearch = true;
     this.isActive = true;
     this.isLoader = true;
     this.autDelay = 500;
@@ -102,6 +122,23 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
     this.initSegmentation();
     this.initCustomerGroup();
     this.initPromoCodeValTypes();
+    this.initQueryParams();
+    this.initTableProfilePagination();
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( params => {
+        if ( params.id ) {
+          this.buttonSave = true;
+          this.buttonCreate = false;
+          this.buttonDelete = false;
+          this.buttonSearch = false;
+          this.promoCodeId = +params.id;
+          this.formFilling( this.promoCodeId );
+        }
+      } );
   }
 
   private initPromotions() {
@@ -117,8 +154,8 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
   private initLocation() {
     this.profileSearchService.getLocation()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Ilocation[] ) => {
-        this.locations = value;
+      .subscribe( ( locations: Ilocation[] ) => {
+        this.locations = locations;
       } );
   }
 
@@ -144,12 +181,45 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
   }
 
+  private initTableProfilePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          promoCodeId: this.promoCodeId,
+          from: pageIndex,
+          count: value.pageSize,
+          sortvalue: 'last_name'
+        };
+        this.addPromotionsCodsService.getProfiles( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( profilePromoCode: IProfilePromoCode ) => this.tableAsyncService.setTableDataSource( profilePromoCode.result ) );
+      } );
+  }
+
+  private initTableProfile( id: number ) {
+    const params = {
+      promoCodeId: id,
+      from: 0,
+      count: 10,
+      sortvalue: 'last_name'
+    };
+    this.addPromotionsCodsService.getProfiles( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( profilePromoCode: IProfilePromoCode ) => {
+        this.tableAsyncService.countPage = profilePromoCode.totalCount;
+        this.profilePromoCode = profilePromoCode;
+        this.isLoader = false;
+      } );
+  }
+
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
         status: params,
-        params: '',
+        params: this.promoCodeId,
         card,
       },
     } );
@@ -158,9 +228,49 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
           this.dialog.closeAll();
-          this.resetForm();
         } );
     }
+  }
+
+  private formFilling( id: number ) {
+    this.addPromotionsCodsService.getPromoCode( +id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( promoCod: IPromoCod ) => {
+        _.set( promoCod, 'promotionName', _.get( promoCod, 'promotion.promotionName' ) );
+        _.each( promoCod, ( value: any, key: string ) => {
+          if ( !_.isNull( value ) && !_.isNaN( value ) ) {
+            if ( _.isArray( value ) ) {
+              switch ( key ) {
+                case 'promoCodeBrandList':
+                  this.promoCodeBrandListChips = value;
+                  break;
+                case 'promoCodeFlightList':
+                  this.promoCodeFlightListChips = value;
+                  break;
+                case 'promoCodeRbdList':
+                  this.promoCodeRbdListChips = value;
+                  break;
+                case 'promoCodeRouteList':
+                  this.promoCodeRouteList = value;
+                  break;
+                case 'customersIds':
+                  this.promoCodeCustomerListChips = value;
+                  break;
+                case 'segmentations':
+                  this.segmentationChips = _.map( value, 'title' );
+                  break;
+                case 'customerGroups':
+                  this.customerGroupChips = _.map( value, 'customerGroupName' );
+                  break;
+              }
+            } else {
+              _.each( this.formPromoCods.getRawValue(), ( valForm, keyForm ) => {
+                if ( keyForm === key ) this.formPromoCods.get( key ).patchValue( value );
+              } );
+            }
+          }
+        } );
+      } );
   }
 
   private initFormPromoCods() {
@@ -177,11 +287,11 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       promoCodeBrandList: '',
       promoCodeFlightList: '',
       promoCodeRbdList: '',
-      depLocationId: '',
-      arrLocationId: '',
+      dep_Location: '',
+      arr_Location: '',
       customersIds: '',
-      segmentation: '',
-      customerGroup: '',
+      segmentations: '',
+      customerGroups: '',
       usesPerPerson: '',
       usesTotal: '',
       val: '',
@@ -201,15 +311,19 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       this.formPromoCods.get( key ).patchValue( '' );
       this.formPromoCods.get( key ).setErrors( null );
     } );
+    this.buttonSave = false;
+    this.buttonCreate = true;
+    this.buttonSearch = true;
+    this.buttonDelete = true;
   }
 
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.locationFromOptions = this.autocomplete( 'depLocationId', 'location' );
-    this.locationToOptions = this.autocomplete( 'arrLocationId', 'location' );
-    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
-    this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
+    this.locationFromOptions = this.autocomplete( 'dep_Location', 'location' );
+    this.locationToOptions = this.autocomplete( 'arr_Location', 'location' );
+    this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
+    this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -220,18 +334,15 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'promotion':
-              return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
+              if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'location':
-              return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+              if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'segmentation':
-              return this.segmentation.filter( segmentation => {
-                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
-                }
-              );
+            case 'segmentations':
+              if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'customerGroup':
+            case 'customerGroups':
               return this.customerGroup.filter( customerGroup => {
                   if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
                 }
@@ -275,26 +386,26 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
 
   directionAdd(): void {
     if (
-      this.formPromoCods.get( 'depLocationId' ).value !== '' &&
-      this.formPromoCods.get( 'arrLocationId' ).value !== ''
+      this.formPromoCods.get( 'dep_Location' ).value !== '' &&
+      this.formPromoCods.get( 'arr_Location' ).value !== ''
     ) {
       this.promoCodeRouteList.push(
         {
-          dep_LocationId: this.formPromoCods.get( 'depLocationId' ).value,
-          arr_LocationId: this.formPromoCods.get( 'arrLocationId' ).value
+          dep_Location: this.formPromoCods.get( 'dep_Location' ).value,
+          arr_Location: this.formPromoCods.get( 'arr_Location' ).value
         }
       );
     }
-    this.formPromoCods.get( 'depLocationId' ).patchValue( '' );
-    this.formPromoCods.get( 'arrLocationId' ).patchValue( '' );
+    this.formPromoCods.get( 'dep_Location' ).patchValue( '' );
+    this.formPromoCods.get( 'arr_Location' ).patchValue( '' );
   }
 
   directionRemove( dep: string, arr: string ): void {
-    const obj: any = { 'dep_LocationId': dep, 'arr_LocationId': arr };
+    const obj: any = { 'dep_Location': dep, 'arr_Location': arr };
     this.promoCodeRouteList = _.reject( this.promoCodeRouteList, obj );
   }
 
-  saveForm(): void {
+  private promoCodeParameters() {
     const segmentation = [];
     const customerGroup = [];
 
@@ -335,15 +446,41 @@ export class AddPromotionsCodsComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
-    this.addPromotionsCodsService.savePromoCode( params )
+    return params;
+  }
+
+  saveForm(): void {
+    this.addPromotionsCodsService.savePromoCode( this.promoCodeParameters() )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => {
+        this.windowDialog( `Промокод успешно сохранен`, 'ok' );
+        this.router.navigate( [ '/crm/add-promotions-cods' ], { queryParams: { id: value.promoCodeId } } );
+      } );
+  }
+
+  searchForm(): void {
+    this.isTable = true;
+    this.isLoader = true;
+    this.initTableProfile( this.promoCodeId );
+  }
+
+  createForm(): void {
+    const params = this.promoCodeParameters();
+    _.set( params, 'promoCodeId', this.promoCodeId );
+    this.addPromotionsCodsService.updatePromoCode( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
-        this.windowDialog( `Промокод успешно сохранен`, 'ok' );
+        this.windowDialog( `Промокод успешно изменен`, 'ok' );
       } );
   }
 
   clearForm(): void {
     this.resetForm();
+    this.router.navigate( [ '/crm/add-promotions-cods' ], { queryParams: {} } );
+  }
+
+  deletePromoCode(): void {
+    this.windowDialog( `Вы действительно хотите удалить промокод  "${ this.promoCodeParameters().code }" ?`, 'delete', 'promoCode', true );
   }
 
   ngOnDestroy(): void {

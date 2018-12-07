@@ -12,13 +12,14 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
+import * as _ from 'lodash';
 
 @Component( {
-  selector: 'app-tablet-async-distribution-profile',
-  templateUrl: './tablet-async-distribution-profile.component.html',
-  styleUrls: [ './tablet-async-distribution-profile.component.styl' ],
+  selector: 'app-table-async-promo-code-profile',
+  templateUrl: './table-async-promo-code-profile.component.html',
+  styleUrls: [ './table-async-promo-code-profile.component.styl' ],
 } )
-export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestroy {
+export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -27,6 +28,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
   public isDisabled: boolean;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
+  public totalCount: number;
 
   private isActive: boolean;
 
@@ -44,7 +46,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
 
   ngOnInit(): void {
     this.isActive = true;
-    this.initDataSource();
+    this.initDataSource( this.tableDataSource );
     this.initDataSourceAsync();
     this.initPaginator();
     this.initDisplayedColumns();
@@ -55,18 +57,25 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       'firstName',
       'lastName',
       'secondName',
-      'distributionCustomerStatus',
-      'errorMessage',
-      'distributionCustomerId',
+      'customerId',
     ];
   }
 
-  private initDataSource() {
-    this.dataSourceFun( this.tableDataSource );
+  private initDataSource( tableDataSources ) {
+    _.each( tableDataSources, tableDataSource => {
+      const customerNames = _.find( tableDataSource.customerNames, [ 'customerNameType', 1 ] );
+      _.chain( tableDataSource )
+        .set( 'firstName', customerNames.firstName )
+        .set( 'lastName', customerNames.lastName )
+        .set( 'secondName', customerNames.secondName )
+        .value();
+    } );
+    this.dataSourceFun( tableDataSources );
   }
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
+    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
@@ -79,7 +88,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
     this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
-        this.dataSourceFun( value );
+        this.initDataSource( value );
         this.isLoadingResults = false;
       } );
   }
@@ -137,7 +146,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToDisplayed( id: number ): void {
+  redirectToProfile( id: number ): void {
     this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 
