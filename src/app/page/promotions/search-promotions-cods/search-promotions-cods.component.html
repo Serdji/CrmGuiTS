@@ -1,13 +1,38 @@
 <div class="search-promotions-cods">
-  <form class="search-promotions-cods__form">
+  <form class="search-promotions-cods__form" [formGroup]="formSearchPromoCods">
 
-    <mat-grid-list cols="3" rowHeight="135px">
+    <mat-grid-list cols="3" rowHeight="500px">
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="search-promotions-cods__card">
           <mat-card-content class="search-promotions-cods__content">
             <mat-form-field class="search-promotions-cods__input">
-              <input matInput type="text" placeholder="Промоакция">
+              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция"
+                     [matAutocomplete]="promotion">
+              <mat-autocomplete #promotion="matAutocomplete">
+                <mat-option *ngFor="let promotion of promotionsOptions | async"
+                            [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
+              </mat-autocomplete>
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="code" type="text" placeholder="Промокод">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="accountCode" type="text" placeholder="Account code">
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="dateFrom" placeholder="Период Действия от" [matDatepicker]="dateFrom">
+              <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="dateTo" placeholder="Период Действия до" [matDatepicker]="dateTo">
+              <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="search-promotions-cods__input">
+              <input matInput formControlName="val" type="text" placeholder="Кратность">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -16,8 +41,26 @@
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="search-promotions-cods__card">
           <mat-card-content class="search-promotions-cods__content">
-            <mat-form-field class="search-promotions-cods__input">
-              <input matInput type="text" placeholder="Промоакция">
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput formControlName="promoCodeFlightList" placeholder="Номера рейсов">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput formControlName="flightDateFrom" placeholder="Период реализации от"
+                     [matDatepicker]="flightDateFrom">
+              <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput formControlName="flightDateTo" placeholder="Период реализации до"
+                     [matDatepicker]="flightDateTo">
+              <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput formControlName="promoCodeBrandList" placeholder="Бренды">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cods__input">
+              <input matInput formControlName="promoCodeRbdList" placeholder="RBD">
             </mat-form-field>
           </mat-card-content>
         </mat-card>

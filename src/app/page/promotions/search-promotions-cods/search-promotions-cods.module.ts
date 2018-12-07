@@ -11,7 +11,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 @NgModule( {
   imports: [
     CommonModule,
-    // ReactiveFormsModule,
+    ReactiveFormsModule,
     SharedModule,
     PipesModule,
     ComponentsModule,
