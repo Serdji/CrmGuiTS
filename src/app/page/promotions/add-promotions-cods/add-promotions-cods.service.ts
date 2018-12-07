@@ -16,7 +16,8 @@ export class AddPromotionsCodsService {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
-    private retryRequestService: RetryRequestService ) { }
+    private retryRequestService: RetryRequestService
+  ) { }
 
   getPromoCodeValTypes(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/promoCodeValTypes' ).pipe( this.retryRequestService.retry() );
