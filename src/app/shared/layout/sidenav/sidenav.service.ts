@@ -85,6 +85,8 @@ export class SidenavService {
       _.each( menu, value => {
         if ( !_.includes( claims, value.claims) ) menu = _.reject( menu, { claims: value.claims } );
       } );
+    } else {
+      menu = _.reject( menu,  'claims' );
     }
 
     return menu;
