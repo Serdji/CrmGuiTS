@@ -47,7 +47,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initDataSource();
+    this.initDataSource( this.tableDataSource );
     this.initDataSourceAsync();
     this.initPaginator();
     this.initDisplayedColumns();
@@ -88,14 +88,14 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
-        this.dataSourceFun( value );
+        this.initDataSource( value );
         this.isLoadingResults = false;
       } );
   }
 
-  private initDataSource() {
-    _.each(this.tableDataSource, tableDataSource => _.set(tableDataSource, 'customerIds', tableDataSource.customerId) );
-    this.dataSourceFun( this.tableDataSource );
+  private initDataSource( params: Iprofile[] ) {
+    _.each( params, tableDataSource => _.set( tableDataSource, 'customerIds', tableDataSource.customerId ) );
+    this.dataSourceFun( params );
   }
 
   private dataSourceFun( params: Iprofile[] ) {
@@ -159,7 +159,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'этот профиль' : 'эти профили' } ?`, 'delete', params, 'profiles' );
+      this.windowDialog( `Вы действительно хотите удалить ${arrayId.length === 1 ? 'этот профиль' : 'эти профили'} ?`, 'delete', params, 'profiles' );
     }
   }
 
