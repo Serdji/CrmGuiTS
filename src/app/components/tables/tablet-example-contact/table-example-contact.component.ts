@@ -10,6 +10,7 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-table-example-contact',
@@ -47,11 +48,13 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
       'select',
       'contactTypeId',
       'contactText',
+      'contactDistribution',
       'contactId',
     ];
   }
 
   private initDataSource() {
+    _.each( this.tableDataSource, tableDataSource => _.set( tableDataSource, 'contactDistribution', true ));
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -81,7 +84,14 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
     const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 );
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
     return childrenWidth > parentWidth;
+  }
 
+  contactDistribution( contactDistribution: boolean, id: number ): void {
+    _.chain( this.tableDataSource )
+      .find( [ 'contactId', id ] )
+      .set( 'contactDistribution', !contactDistribution )
+      .value();
+    this.dataSourceFun( this.tableDataSource );
   }
 
   cursorPointer( elem: HTMLElement ): void {

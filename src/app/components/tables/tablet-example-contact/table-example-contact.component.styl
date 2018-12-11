@@ -33,11 +33,24 @@ contactId = 50px
   &-select
     width: select;
 
-  &-contactText
-    flex: 1;
-
+  &-contactText,
   &-contactTypeId
     flex: 1;
+
+  &-contactDistribution
+    display: flex
+    width: 200px;
+    margin-left: auto;
+
+    mat-icon
+      cursor: pointer
+      margin: auto;
+
+      &._true
+        color: #388E3C;
+
+      &._false
+        color: #D32F2F;
 
   &-contactId
     width: contactId;

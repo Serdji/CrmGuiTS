@@ -28,29 +28,46 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container  matColumnDef="contactTypeId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Тип </mat-header-cell>
+    <ng-container matColumnDef="contactTypeId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Тип</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactType.contactTypeCode}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.contactType.contactTypeCode}}</span>
       </mat-cell>
+    </ng-container>
 
-    </ng-container><ng-container  matColumnDef="contactText">
-    <mat-header-cell *matHeaderCellDef mat-sort-header> Значение </mat-header-cell>
-    <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-              (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactText}}</span>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="contactDistribution">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Контакт для рассылки </mat-header-cell>
+      <mat-cell
+        class="table__cell"
+        *matCellDef="let element"
+        (click)="contactDistribution( element.contactDistribution, element.contactId )"
+      >
+        <mat-icon *ngIf=" element.contactDistribution " class="_true">done</mat-icon>
+        <mat-icon *ngIf=" !element.contactDistribution " class="_false">clear</mat-icon>
+      </mat-cell>
+    </ng-container>
 
-    <ng-container  matColumnDef="contactId" stickyEnd>
+    <ng-container matColumnDef="contactText">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Значение</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactText}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="contactId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell #matCell  *matCellDef="let element">
+      <mat-cell #matCell *matCellDef="let element">
         <mat-icon [id]="element.contactId" (click)="editCreate(
         element.contactType.contactTypeCode,
         element.contactType.contactTypeId,
         element.contactId,
         element.customerId,
         element.contactText
-        )">create</mat-icon>
+        )">create
+        </mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -63,7 +80,8 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
   <div class="table__button-wrapper">
-    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteContact()" [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
+    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteContact()"
+            [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
       Удалить
       <mat-icon>delete</mat-icon>
     </button>
