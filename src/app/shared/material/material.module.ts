@@ -31,6 +31,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { ScrollDispatchModule } from '@angular/cdk/scrolling';
 
 const MY_FORMATS = {
   parse: {
@@ -73,6 +74,7 @@ const MY_FORMATS = {
     MatChipsModule,
     MatRippleModule,
     MatBadgeModule,
+    ScrollDispatchModule,
   ],
   exports: [
     MatToolbarModule,
@@ -104,6 +106,7 @@ const MY_FORMATS = {
     MatChipsModule,
     MatRippleModule,
     MatBadgeModule,
+    ScrollDispatchModule,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
