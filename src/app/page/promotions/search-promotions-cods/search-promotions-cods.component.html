@@ -22,11 +22,9 @@
                 <mat-option
                   class="dialog-promo-cod__option"
                   *ngFor="let promoCod of promoCodsOptions | async"
-                  [value]="promoCod.title"
+                  [value]="promoCod.code"
                 >
-                  <span>Название промокода: <b>{{promoCod.code}}</b></span> |
-                  <span>Аккаунт код: <b>{{promoCod.accountCode}}</b></span> |
-                  <span>Срок действия: От <b>{{promoCod.dateFrom | date:'dd.MM.yyyy'}}</b>  До <b>{{promoCod.dateTo | date:'dd.MM.yyyy'}}</b></span>
+                  {{promoCod.code}}
                 </mat-option>
               </mat-autocomplete>
               <mat-error>Обязательное поле</mat-error>
