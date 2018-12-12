@@ -15,8 +15,21 @@
               </mat-autocomplete>
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
-            <mat-form-field class="search-promotions-cods__input">
-              <input matInput formControlName="code" type="text" placeholder="Промокод">
+            <mat-form-field class="dialog-promo-cod__input">
+              <input matInput formControlName="promoCodeId" [matAutocomplete]="promoCodeId" type="text"
+                     placeholder="Промокод">
+              <mat-autocomplete #promoCodeId="matAutocomplete">
+                <mat-option
+                  class="dialog-promo-cod__option"
+                  *ngFor="let promoCod of promoCodsOptions | async"
+                  [value]="promoCod.title"
+                >
+                  <span>Название промокода: <b>{{promoCod.code}}</b></span> |
+                  <span>Аккаунт код: <b>{{promoCod.accountCode}}</b></span> |
+                  <span>Срок действия: От <b>{{promoCod.dateFrom | date:'dd.MM.yyyy'}}</b>  До <b>{{promoCod.dateTo | date:'dd.MM.yyyy'}}</b></span>
+                </mat-option>
+              </mat-autocomplete>
+              <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
             <mat-form-field class="search-promotions-cods__input">
               <input matInput formControlName="accountCode" type="text" placeholder="Account code">
@@ -76,14 +89,17 @@
               <input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации"
                      [matAutocomplete]="segmentation">
               <mat-autocomplete #segmentation="matAutocomplete">
-                <mat-option *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+                <mat-option *ngFor="let segmentation of segmentationOptions | async"
+                            [value]="segmentation.title">{{ segmentation.title }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="search-promotions-cods__input">
               <input matInput formControlName="customerGroup" type="text" placeholder="Группы пассажиров"
                      [matAutocomplete]="customerGroup">
               <mat-autocomplete #customerGroup="matAutocomplete">
-                <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
+                <mat-option *ngFor="let customerGroup of customerGroupOptions | async"
+                            [id]="customerGroup.customerGroupId"
+                            [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
           </mat-card-content>
