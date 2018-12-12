@@ -33,7 +33,6 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    console.log( this.data.params );
     this.isActive = true;
     this.autDelay = 500;
     this.initForm();
