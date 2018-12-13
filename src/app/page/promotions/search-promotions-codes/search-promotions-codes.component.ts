@@ -6,7 +6,6 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
-import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { Observable } from 'rxjs';
 import { IPromotions } from '../../../interface/ipromotions';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
@@ -177,13 +176,14 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
         this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( ppromoCode: IPromoCode ) => this.tableAsyncService.setTableDataSource( ppromoCode.result ) );
+          .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncService.setTableDataSource( promoCode.result ) );
       } );
   }
 
 
   searchForm(): void {
-
+    this.isTable = true;
+    this.isLoader = true;
     this.searchParams = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
     _.chain( this.searchParams )
       .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
@@ -208,7 +208,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
     this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCode: IPromoCode) => {
+      .subscribe( ( promoCode: IPromoCode ) => {
         this.tableAsyncService.countPage = promoCode.totalCount;
         this.promoCode = promoCode;
         this.isLoader = false;
