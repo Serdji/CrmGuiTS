@@ -113,9 +113,8 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       promoCodeBrand: '',
       promoCodeFlight: '',
       promoCodeRbd: '',
-      customersId: '',
-      segmentation: '',
-      customerGroup: '',
+      segmentationId: '',
+      customerGroupId: '',
       val: ''
     } );
   }
@@ -130,8 +129,8 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
-    this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
+    this.segmentationOptions = this.autocomplete( 'segmentationId', 'segmentationId' );
+    this.customerGroupOptions = this.autocomplete( 'customerGroupId', 'customerGroupId' );
     this.promoCodesOptions = this.autocomplete( 'code', 'promoCode' );
   }
 
@@ -145,10 +144,10 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
             case 'promotion':
               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'segmentation':
+            case 'segmentationId':
               if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'customerGroup':
+            case 'customerGroupId':
               return this.customerGroup.filter( customerGroup => {
                   if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
                 }
@@ -198,22 +197,27 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   searchForm(): void {
     console.log( this.formSearchPromoCodes.getRawValue() );
-    const params = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo' ] );
+    const params = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
 
     _.chain( params )
-      .set( 'dateFrom_From', this.formSearchPromoCodes.get('dateFrom').value.format( 'DD.MM.YYYY' ) )
-      .set( 'dateFrom_To', this.formSearchPromoCodes.get('dateFrom').value.format( 'DD.MM.YYYY' ) )
-      .set( 'dateTo_From', this.formSearchPromoCodes.get('dateTo').value.format( 'DD.MM.YYYY' ) )
-      .set( 'dateTo_To', this.formSearchPromoCodes.get('dateTo').value.format( 'DD.MM.YYYY' ) )
-      .set( 'flightDateFrom_From', this.formSearchPromoCodes.get('flightDateFrom').value.format( 'DD.MM.YYYY' ) )
-      .set( 'flightDateFrom_To', this.formSearchPromoCodes.get('flightDateFrom').value.format( 'DD.MM.YYYY' ) )
-      .set( 'flightDateTo_From', this.formSearchPromoCodes.get('flightDateTo').value.format( 'DD.MM.YYYY' ) )
-      .set( 'flightDateTo_To', this.formSearchPromoCodes.get('flightDateTo').value.format( 'DD.MM.YYYY' ) )
+      .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ?  this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ?  this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'segmentationId', _.chain( this.segmentation ).find( 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ).get( 'segmentationId' ).value() )
+      .set( 'customerGroupId', _.chain( this.customerGroup ).find( 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ).get( 'customerGroupId' ).value() )
       .set( 'from', 0 )
       .set( 'count', 10 )
       .value();
 
     console.log( params );
+
+
+
   }
 
   clearForm(): void {

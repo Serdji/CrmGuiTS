@@ -81,10 +81,7 @@
         <mat-card class="search-promotions-codes__card">
           <mat-card-content class="search-promotions-codes__content">
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="customersId" type="text" placeholder="Профиль">
-            </mat-form-field>
-            <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации"
+              <input matInput formControlName="segmentationId" type="text" placeholder="Группы сегментации"
                      [matAutocomplete]="segmentation">
               <mat-autocomplete #segmentation="matAutocomplete">
                 <mat-option *ngFor="let segmentation of segmentationOptions | async"
@@ -92,7 +89,7 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="customerGroup" type="text" placeholder="Группы пассажиров"
+              <input matInput formControlName="customerGroupId" type="text" placeholder="Группы пассажиров"
                      [matAutocomplete]="customerGroup">
               <mat-autocomplete #customerGroup="matAutocomplete">
                 <mat-option *ngFor="let customerGroup of customerGroupOptions | async"
