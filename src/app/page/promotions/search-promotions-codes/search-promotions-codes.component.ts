@@ -197,7 +197,23 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
 
   searchForm(): void {
+    console.log( this.formSearchPromoCodes.getRawValue() );
+    const params = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo' ] );
 
+    _.chain( params )
+      .set( 'dateFrom_From', this.formSearchPromoCodes.get('dateFrom').value.format( 'DD.MM.YYYY' ) )
+      .set( 'dateFrom_To', this.formSearchPromoCodes.get('dateFrom').value.format( 'DD.MM.YYYY' ) )
+      .set( 'dateTo_From', this.formSearchPromoCodes.get('dateTo').value.format( 'DD.MM.YYYY' ) )
+      .set( 'dateTo_To', this.formSearchPromoCodes.get('dateTo').value.format( 'DD.MM.YYYY' ) )
+      .set( 'flightDateFrom_From', this.formSearchPromoCodes.get('flightDateFrom').value.format( 'DD.MM.YYYY' ) )
+      .set( 'flightDateFrom_To', this.formSearchPromoCodes.get('flightDateFrom').value.format( 'DD.MM.YYYY' ) )
+      .set( 'flightDateTo_From', this.formSearchPromoCodes.get('flightDateTo').value.format( 'DD.MM.YYYY' ) )
+      .set( 'flightDateTo_To', this.formSearchPromoCodes.get('flightDateTo').value.format( 'DD.MM.YYYY' ) )
+      .set( 'from', 0 )
+      .set( 'count', 10 )
+      .value();
+
+    console.log( params );
   }
 
   clearForm(): void {
