@@ -6,7 +6,7 @@ import { RetryRequestService } from '../../../services/retry-request.service';
 @Injectable({
   providedIn: 'root'
 })
-export class SearchPromotionsCodsService {
+export class SearchPromotionsCodesService {
 
   constructor(
     private http: HttpClient,

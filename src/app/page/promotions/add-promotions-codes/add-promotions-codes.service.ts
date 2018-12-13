@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
 import { Observable } from 'rxjs';
-import { IPromoCod } from '../../../interface/ipromo-cod';
+import { IPromoCode } from '../../../interface/ipromo-code';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -11,7 +11,7 @@ import * as moment from 'moment';
 @Injectable( {
   providedIn: 'root'
 } )
-export class AddPromotionsCodsService {
+export class AddPromotionsCodesService {
 
   constructor(
     private http: HttpClient,
@@ -27,8 +27,8 @@ export class AddPromotionsCodsService {
     return this.http.get( this.configService.crmApi + '/crm/promoCodes', { params } )
       .pipe(
         this.retryRequestService.retry(),
-        map( ( promoCods: IPromoCod ) => {
-          _.each( promoCods.result, promoCod => {
+        map( ( promoCodes: IPromoCode ) => {
+          _.each( promoCodes.result, promoCod => {
             let { dateFrom, dateTo } = promoCod;
             const { code, accountCode } = promoCod;
             dateFrom = dateFrom ? moment( dateFrom ).format( 'DD.MM.YYYY' ) : '';
@@ -43,7 +43,7 @@ export class AddPromotionsCodsService {
               ' До ' + dateTo
             );
           } );
-          return promoCods;
+          return promoCodes;
         } )
       );
   }

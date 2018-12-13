@@ -7,7 +7,7 @@ import { Observable } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class DialogPromoCodService {
+export class DialogPromoCodeService {
 
   constructor(
     private http: HttpClient,

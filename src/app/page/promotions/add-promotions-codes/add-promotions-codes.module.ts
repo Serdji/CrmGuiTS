@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddPromotionsCodsComponent } from './add-promotions-cods.component';
-import { AddPromotionsCodsService } from './add-promotions-cods.service';
+import { AddPromotionsCodesComponent } from './add-promotions-codes.component';
+import { AddPromotionsCodesService } from './add-promotions-codes.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../../pipes/pipes.module';
@@ -17,8 +17,8 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ComponentsModule,
     DirectivesModule,
   ],
-  declarations: [ AddPromotionsCodsComponent ],
-  providers: [ AddPromotionsCodsService ]
+  declarations: [ AddPromotionsCodesComponent ],
+  providers: [ AddPromotionsCodesService ]
 } )
-export class AddPromotionsCodsModule {
+export class AddPromotionsCodesModule {
 }

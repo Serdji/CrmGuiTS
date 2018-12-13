@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as _ from 'lodash';
 import { ActivatedRoute, Router } from '@angular/router';
-import { SearchPromotionsCodsService } from './search-promotions-cods.service';
+import { SearchPromotionsCodesService } from './search-promotions-codes.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { delay, map, takeWhile } from 'rxjs/operators';
@@ -14,25 +14,25 @@ import { ISegmentation } from '../../../interface/isegmentation';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
-import { AddPromotionsCodsService } from '../add-promotions-cods/add-promotions-cods.service';
-import { IPromoCod } from '../../../interface/ipromo-cod';
+import { AddPromotionsCodesService } from '../add-promotions-codes/add-promotions-codes.service';
+import { IPromoCode } from '../../../interface/ipromo-code';
 
 @Component( {
-  selector: 'app-search-promotions-cods',
-  templateUrl: './search-promotions-cods.component.html',
-  styleUrls: [ './search-promotions-cods.component.styl' ]
+  selector: 'app-search-promotions-codes',
+  templateUrl: './search-promotions-codes.component.html',
+  styleUrls: [ './search-promotions-codes.component.styl' ]
 } )
-export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
+export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public isTable: boolean;
   public isLoader: boolean;
-  public formSearchPromoCods: FormGroup;
+  public formSearchPromoCodes: FormGroup;
   public promotionsOptions: Observable<IPromotions[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
-  public promoCodsOptions: Observable<IPromoCod>;
+  public promoCodesOptions: Observable<IPromoCode>;
   public promotions: IPromotions;
-  public promoCods: IPromoCod;
+  public promoCodes: IPromoCode;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
 
@@ -40,9 +40,9 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   private autDelay: number;
 
   constructor(
-    private searchPromotionsCodsService: SearchPromotionsCodsService,
+    private searchPromotionsCodesService: SearchPromotionsCodesService,
     private addPromotionsService: AddPromotionsService,
-    private addPromotionsCodsService: AddPromotionsCodsService,
+    private addPromotionsCodesService: AddPromotionsCodesService,
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
     private fb: FormBuilder,
@@ -55,9 +55,9 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.isLoader = true;
     this.autDelay = 500;
-    this.initFormSearchPromoCods();
+    this.initFormSearchPromoCodes();
     this.initPromotions();
-    this.initPromoCods();
+    this.initPromoCodes();
     this.initSegmentation();
     this.initCustomerGroup();
     this.initAutocomplete();
@@ -73,14 +73,14 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
       .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
   }
 
-  private initPromoCods() {
+  private initPromoCodes() {
     const params = {
       from: 0,
       count: 10000
     };
-    this.addPromotionsCodsService.getAllPromoCodes( params )
+    this.addPromotionsCodesService.getAllPromoCodes( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCods: IPromoCod ) => this.promoCods = promoCods );
+      .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
   }
 
   private initSegmentation() {
@@ -100,8 +100,8 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   }
 
 
-  private initFormSearchPromoCods() {
-    this.formSearchPromoCods = this.fb.group( {
+  private initFormSearchPromoCodes() {
+    this.formSearchPromoCodes = this.fb.group( {
       promotionName: '',
       promoCodeId: '',
       accountCode: '',
@@ -122,9 +122,9 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
-    _( this.formSearchPromoCods.value ).each( ( value, key ) => {
-      this.formSearchPromoCods.get( key ).patchValue( '' );
-      this.formSearchPromoCods.get( key ).setErrors( null );
+    _( this.formSearchPromoCodes.value ).each( ( value, key ) => {
+      this.formSearchPromoCodes.get( key ).patchValue( '' );
+      this.formSearchPromoCodes.get( key ).setErrors( null );
     } );
   }
 
@@ -133,11 +133,11 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
-    this.promoCodsOptions = this.autocomplete( 'promoCodeId', 'promoCode' );
+    this.promoCodesOptions = this.autocomplete( 'promoCodeId', 'promoCode' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
-    return this.formSearchPromoCods.get( formControlName ).valueChanges
+    return this.formSearchPromoCodes.get( formControlName ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
         delay( this.autDelay ),
@@ -156,7 +156,7 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
               );
               break;
             case 'promoCode':
-              if ( _.size( val ) >= 3 ) return this.promoCods.result.filter( promoCods => promoCods.code.toLowerCase().includes( val.toLowerCase() ) );
+              if ( _.size( val ) >= 3 ) return this.promoCodes.result.filter( promoCodes => promoCodes.code.toLowerCase().includes( val.toLowerCase() ) );
               break;
           }
         } )
@@ -174,7 +174,7 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   //         count: value.pageSize,
   //         sortvalue: 'last_name'
   //       };
-  //       this.addPromotionsCodsService.getProfiles( paramsAndCount )
+  //       this.addPromotionsCodesService.getProfiles( paramsAndCount )
   //         .pipe( takeWhile( _ => this.isActive ) )
   //         .subscribe( ( profilePromoCode: IProfilePromoCode ) => this.tableAsyncService.setTableDataSource( profilePromoCode.result ) );
   //     } );
@@ -187,7 +187,7 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
   //     count: 10,
   //     sortvalue: 'last_name'
   //   };
-  //   this.addPromotionsCodsService.getProfiles( params )
+  //   this.addPromotionsCodesService.getProfiles( params )
   //     .pipe( takeWhile( _ => this.isActive ) )
   //     .subscribe( ( profilePromoCode: IProfilePromoCode ) => {
   //       this.tableAsyncService.countPage = profilePromoCode.totalCount;
@@ -203,7 +203,7 @@ export class SearchPromotionsCodsComponent implements OnInit, OnDestroy {
 
   clearForm(): void {
     this.resetForm();
-    this.router.navigate( [ '/crm/search-promotions-cods' ], { queryParams: {} } );
+    this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {

@@ -15,7 +15,7 @@ import { EditorsModule } from '../editors/editors.module';
 import { TableExampleDistributionComponent } from './table-example-distribution/table-example-distribution.component';
 import { TableAsyncDistributionProfileComponent } from './table-async-distribution-profile/table-async-distribution-profile.component';
 import { TableAsyncPromotionsComponent } from './table-async-promotions/table-async-promotions.component';
-import { PromoCodModule } from '../promo-cod/promo-cod.module';
+import { PromoCodeModule } from '../promo-code/promo-code.module';
 import { TableAsyncService } from '../../services/table-async.service';
 import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-profile/table-async-promo-code-profile.component';
 
@@ -26,7 +26,7 @@ import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-pr
     DirectivesModule,
     PipesModule,
     EditorsModule,
-    PromoCodModule,
+    PromoCodeModule,
   ],
   declarations: [
     TableExampleComponent,

@@ -1,15 +1,15 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { DialogPromoCodComponent } from '../dialog-promo-cod/dialog-promo-cod.component';
+import { DialogPromoCodeComponent } from '../dialog-promo-code/dialog-promo-code.component';
 import * as _ from 'lodash';
 import { ActivatedRoute } from '@angular/router';
 
 @Component( {
-  selector: 'app-button-promo-cod',
-  templateUrl: './button-promo-cod.component.html',
-  styleUrls: [ './button-promo-cod.component.styl' ]
+  selector: 'app-button-promo-code',
+  templateUrl: './button-promo-code.component.html',
+  styleUrls: [ './button-promo-code.component.styl' ]
 } )
-export class ButtonPromoCodComponent implements OnDestroy, OnInit {
+export class ButtonPromoCodeComponent implements OnDestroy, OnInit {
 
   @Input() ids: any;
   @Input() disabled: boolean;
@@ -23,7 +23,7 @@ export class ButtonPromoCodComponent implements OnDestroy, OnInit {
   ) { }
 
   openDialog(): void {
-    this.dialog.open( DialogPromoCodComponent, {
+    this.dialog.open( DialogPromoCodeComponent, {
       width: '80vw',
       data: {
         params: this.ids,

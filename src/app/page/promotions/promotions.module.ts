@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AddPromotionsModule } from './add-promotions/add-promotions.module';
-import { AddPromotionsCodsModule } from './add-promotions-cods/add-promotions-cods.module';
-import { SearchPromotionsCodsModule } from './search-promotions-cods/search-promotions-cods.module';
+import { AddPromotionsCodesModule } from './add-promotions-codes/add-promotions-codes.module';
+import { SearchPromotionsCodesModule } from './search-promotions-codes/search-promotions-codes.module';
 
 @NgModule({
   imports: [
     CommonModule,
     AddPromotionsModule,
-    AddPromotionsCodsModule,
-    SearchPromotionsCodsModule,
+    AddPromotionsCodesModule,
+    SearchPromotionsCodesModule,
   ],
   declarations: []
 })

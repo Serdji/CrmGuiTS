@@ -1,34 +1,34 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { AddPromotionsCodsService } from '../../../page/promotions/add-promotions-cods/add-promotions-cods.service';
-import { IPromoCod } from '../../../interface/ipromo-cod';
+import { AddPromotionsCodesService } from '../../../page/promotions/add-promotions-codes/add-promotions-codes.service';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { Observable, timer } from 'rxjs';
-import { DialogPromoCodService } from './dialog-promo-cod.service';
+import { DialogPromoCodeService } from './dialog-promo-code.service';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { IPromoCode } from '../../../interface/ipromo-code';
 
 @Component( {
-  selector: 'app-dialog-promo-cod',
-  templateUrl: './dialog-promo-cod.component.html',
-  styleUrls: [ './dialog-promo-cod.component.styl' ]
+  selector: 'app-dialog-promo-code',
+  templateUrl: './dialog-promo-code.component.html',
+  styleUrls: [ './dialog-promo-code.component.styl' ]
 } )
-export class DialogPromoCodComponent implements OnInit, OnDestroy {
+export class DialogPromoCodeComponent implements OnInit, OnDestroy {
 
-  public promoCods: IPromoCod;
+  public promoCodes: IPromoCode;
   public formPromoCod: FormGroup;
-  public promoCodsOptions: Observable<IPromoCod>;
+  public promoCodesOptions: Observable<IPromoCode>;
 
   private isActive: boolean;
   private autDelay: number;
 
   constructor(
     private fb: FormBuilder,
-    private addPromotionsCodsService: AddPromotionsCodsService,
-    private dialogPromoCodService: DialogPromoCodService,
+    private addPromotionsCodesService: AddPromotionsCodesService,
+    private dialogPromoCodeService: DialogPromoCodeService,
     private dialog: MatDialog,
-    public dialogRef: MatDialogRef<DialogPromoCodComponent>,
+    public dialogRef: MatDialogRef<DialogPromoCodeComponent>,
     @Inject( MAT_DIALOG_DATA ) public data: any
   ) { }
 
@@ -36,18 +36,18 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.autDelay = 500;
     this.initForm();
-    this.initPromoCods();
+    this.initPromoCodes();
     this.initAutocomplete();
   }
 
-  private initPromoCods() {
+  private initPromoCodes() {
     const params = {
       from: 0,
       count: 10000
     };
-    this.addPromotionsCodsService.getAllPromoCodes( params )
+    this.addPromotionsCodesService.getAllPromoCodes( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCods: IPromoCod ) => this.promoCods = promoCods );
+      .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
   }
 
   private initForm() {
@@ -57,7 +57,7 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.promoCodsOptions = this.autocomplete( 'promoCodeId', 'promoCode' );
+    this.promoCodesOptions = this.autocomplete( 'promoCodeId', 'promoCode' );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
@@ -88,7 +88,7 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'promoCode':
-              if ( _.size( val ) >= 3 ) return this.promoCods.result.filter( promoCods => promoCods.code.toLowerCase().includes( val.toLowerCase() ) );
+              if ( _.size( val ) >= 3 ) return this.promoCodes.result.filter( promoCodes => promoCodes.code.toLowerCase().includes( val.toLowerCase() ) );
               break;
           }
         } )
@@ -97,11 +97,11 @@ export class DialogPromoCodComponent implements OnInit, OnDestroy {
 
   saveForm(): void {
     const params = {
-      promoCodeId: _.chain( this.promoCods.result ).find( { 'title': this.formPromoCod.get( 'promoCodeId' ).value } ).get( 'promoCodeId' ).value(),
+      promoCodeId: _.chain( this.promoCodes.result ).find( { 'title': this.formPromoCod.get( 'promoCodeId' ).value } ).get( 'promoCodeId' ).value(),
       customerIds: this.data.params.customerIds,
     };
     if ( !this.formPromoCod.invalid ) {
-      this.dialogPromoCodService.savePromoCodeCustomers( params )
+      this.dialogPromoCodeService.savePromoCodeCustomers( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => this.windowDialog( `Промокод успешно привязан`, 'ok' ) );
     }
