@@ -207,7 +207,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'segmentationId', this.formSearchPromoCodes.get( 'segmentationId' ).value ?  _.chain( this.segmentation ).find( 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ).get( 'segmentationId' ).value() : '' )
+      .set( 'segmentationId', this.formSearchPromoCodes.get( 'segmentationId' ).value ? _.chain( this.segmentation ).find( 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ).get( 'segmentationId' ).value() : '' )
       .set( 'customerGroupId', this.formSearchPromoCodes.get( 'customerGroupId' ).value ? _.chain( this.customerGroup ).find( 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ).get( 'customerGroupId' ).value() : '' )
       .set( 'from', 0 )
       .set( 'count', 10 )
@@ -224,6 +224,8 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.searchPromotionsCodesService.getSearchPromotionsCodes( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( promoCodes => console.log( promoCodes ) );
+
+    this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: params } );
   }
 
   clearForm(): void {
