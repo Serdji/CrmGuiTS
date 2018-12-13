@@ -2,6 +2,10 @@ export interface IPromoCode {
   result: {
     promoCodeId: number;
     promotionId: number;
+    promotion: {
+      promotionId: number;
+      promotionName: string;
+    };
     code: string;
     accountCode: number;
     description: string;

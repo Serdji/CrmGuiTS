@@ -35,9 +35,11 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCodes: IPromoCode;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
+  public promoCode: IPromoCode;
 
   private isActive: boolean;
   private autDelay: number;
+  private searchParams: any;
 
   constructor(
     private searchPromotionsCodesService: SearchPromotionsCodesService,
@@ -61,6 +63,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initSegmentation();
     this.initCustomerGroup();
     this.initAutocomplete();
+    this.initTableProfilePagination();
   }
 
   private initPromotions() {
@@ -161,44 +164,28 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       );
   }
 
-  // private initTableProfilePagination() {
-  //   this.tableAsyncService.subjectPage
-  //     .pipe( takeWhile( _ => this.isActive ) )
-  //     .subscribe( ( value: IpagPage ) => {
-  //       const pageIndex = value.pageIndex * value.pageSize;
-  //       const paramsAndCount = {
-  //         code: this.code,
-  //         from: pageIndex,
-  //         count: value.pageSize,
-  //         sortvalue: 'last_name'
-  //       };
-  //       this.addPromotionsCodesService.getProfiles( paramsAndCount )
-  //         .pipe( takeWhile( _ => this.isActive ) )
-  //         .subscribe( ( profilePromoCode: IProfilePromoCode ) => this.tableAsyncService.setTableDataSource( profilePromoCode.result ) );
-  //     } );
-  // }
-  //
-  // private initTableProfile( id: number ) {
-  //   const params = {
-  //     code: id,
-  //     from: 0,
-  //     count: 10,
-  //     sortvalue: 'last_name'
-  //   };
-  //   this.addPromotionsCodesService.getProfiles( params )
-  //     .pipe( takeWhile( _ => this.isActive ) )
-  //     .subscribe( ( profilePromoCode: IProfilePromoCode ) => {
-  //       this.tableAsyncService.countPage = profilePromoCode.totalCount;
-  //       this.profilePromoCode = profilePromoCode;
-  //       this.isLoader = false;
-  //     } );
-  // }
+  private initTableProfilePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+
+        this.searchParams = _.chain( this.searchParams )
+          .set( 'from', pageIndex )
+          .set( 'count', value.pageSize )
+          .value();
+
+        this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( ppromoCode: IPromoCode ) => this.tableAsyncService.setTableDataSource( ppromoCode.result ) );
+      } );
+  }
 
 
   searchForm(): void {
-    console.log( this.formSearchPromoCodes.getRawValue() );
-    let params = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
-    _.chain( params )
+
+    this.searchParams = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
+    _.chain( this.searchParams )
       .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
@@ -214,18 +201,21 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       .value();
 
     const paramsOmit = [];
-    _.each( params, ( val, key ) => {
+    _.each( this.searchParams, ( val, key ) => {
       if ( val === '' ) paramsOmit.push( key );
     } );
-    params = _.omit( params, paramsOmit );
-    console.log( paramsOmit );
-    console.log( params );
+    this.searchParams = _.omit( this.searchParams, paramsOmit );
 
-    this.searchPromotionsCodesService.getSearchPromotionsCodes( params )
+    this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( promoCodes => console.log( promoCodes ) );
+      .subscribe( ( promoCode: IPromoCode) => {
+        this.tableAsyncService.countPage = promoCode.totalCount;
+        this.promoCode = promoCode;
+        this.isLoader = false;
+        console.log( promoCode );
+      } );
 
-    this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: params } );
+    this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: this.searchParams } );
   }
 
   clearForm(): void {
