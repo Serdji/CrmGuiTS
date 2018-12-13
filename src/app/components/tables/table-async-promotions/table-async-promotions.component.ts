@@ -10,21 +10,28 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import { IpagPage } from '../../../interface/ipag-page';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
-  selector: 'app-tablet-example-segmentation',
-  templateUrl: './tablet-example-segmentation.component.html',
-  styleUrls: [ './tablet-example-segmentation.component.styl' ],
+  selector: 'app-table-async-promotions',
+  templateUrl: './table-async-promotions.component.html',
+  styleUrls: [ './table-async-promotions.component.styl' ],
 } )
-export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
+export class TableAsyncPromotionsComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+  public resultsLength: number;
+  public isLoadingResults: boolean = false;
+  public totalCount: number;
+  public ids: any;
 
   private isActive: boolean;
+
 
   @Input() private tableDataSource: any;
 
@@ -34,24 +41,46 @@ export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initDataSource();
+    this.initDataSourceAsync();
+    this.initPaginator();
     this.initDisplayedColumns();
   }
 
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'title',
-      'segmentationId',
+      'promotionName',
+      'promotionId'
     ];
   }
 
   private initDataSource() {
     this.dataSourceFun( this.tableDataSource );
+  }
+
+  private initPaginator() {
+    this.resultsLength = this.tableAsyncService.countPage;
+    this.paginator.page
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        this.tableAsyncService.setPagPage( value );
+        this.isLoadingResults = true;
+      } );
+  }
+
+  private initDataSourceAsync() {
+    this.tableAsyncService.subjectTableDataSource
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: any ) => {
+        this.dataSourceFun( value );
+        this.isLoadingResults = false;
+      } );
   }
 
   private dataSourceFun( params ) {
@@ -60,7 +89,6 @@ export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       } );
   }
 
@@ -94,10 +122,6 @@ export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
     }
   }
 
-  applyFilter( filterValue: string ): void {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
 
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -112,7 +136,11 @@ export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteContact(): void {
+  editCreate( promotionsId: number, promotionsName: string ): void {
+    this.windowDialog( ``, 'updatePromotions', { promotionsId, promotionsName }, 'updatePromotions' );
+  }
+
+  deleteProfileGroups(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -124,16 +152,29 @@ export class TabletExampleSegmentationComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'segmentations' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deletePromotions' );
     }
-  }
-
-  redirectToSegmentation( segmentationId: number ): void {
-    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId } } );
   }
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  isIds(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      } else {
+        this.ids = {};
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      this.ids = { customerGroupIds: arrayId };
+    }
   }
 
   ngOnDestroy(): void {

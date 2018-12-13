@@ -44,7 +44,7 @@
     <div *ngIf="documents?.length !== 0">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <app-tablet-example-document *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-tablet-example-document>
+        <app-table-example-document *ngIf="documents.length !== 0" [tableDataSource]="documents"></app-table-example-document>
       </ng-template>
     </div>
   </mat-card>

@@ -14,11 +14,11 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
-  selector: 'app-tablet-async-distribution-profile',
-  templateUrl: './tablet-async-distribution-profile.component.html',
-  styleUrls: [ './tablet-async-distribution-profile.component.styl' ],
+  selector: 'app-table-async-segmentation-profile',
+  templateUrl: './table-async-segmentation-profile.component.html',
+  styleUrls: [ './table-async-segmentation-profile.component.styl' ],
 } )
-export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestroy {
+export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -27,6 +27,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
   public isDisabled: boolean;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
+  public totalCount: number;
 
   private isActive: boolean;
 
@@ -55,9 +56,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       'firstName',
       'lastName',
       'secondName',
-      'distributionCustomerStatus',
-      'errorMessage',
-      'distributionCustomerId',
+      'customerId',
     ];
   }
 
@@ -67,6 +66,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
+    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
@@ -137,7 +137,7 @@ export class TabletAsyncDistributionProfileComponent implements OnInit, OnDestro
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToDisplayed( id: number ): void {
+  redirectToProfile( id: number ): void {
     this.router.navigate( [ `/crm/profile/${id}` ] );
   }
 

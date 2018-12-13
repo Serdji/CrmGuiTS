@@ -12,11 +12,11 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 
 @Component( {
-  selector: 'app-tablet-example-document',
-  templateUrl: './tablet-example-document.component.html',
-  styleUrls: [ './tablet-example-document.component.styl' ],
+  selector: 'app-table-example-document',
+  templateUrl: './table-example-document.component.html',
+  styleUrls: [ './table-example-document.component.styl' ],
 } )
-export class TabletExampleDocumentComponent implements OnInit, OnDestroy {
+export class TableExampleDocumentComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;

@@ -10,14 +10,13 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import * as _ from 'lodash';
 
 @Component( {
-  selector: 'app-tablet-example-distribution',
-  templateUrl: './tablet-example-distribution.component.html',
-  styleUrls: [ './tablet-example-distribution.component.styl' ],
+  selector: 'app-table-example-segmentation',
+  templateUrl: './table-example-segmentation.component.html',
+  styleUrls: [ './table-example-segmentation.component.styl' ],
 } )
-export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
+export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -46,22 +45,12 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'subject',
-      'statusNameRus',
-      'dateFrom',
-      'dateTo',
-      'lastTryDT',
-      'distributionId',
+      'title',
+      'segmentationId',
     ];
   }
 
   private initDataSource() {
-    _.each( this.tableDataSource, value => {
-      _( value )
-        .set( 'statusNameRus', value.status.statusNameRus )
-        .set( 'distributionStatusId', value.status.distributionStatusId )
-        .value();
-    } );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -123,7 +112,7 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteDisplayed(): void {
+  deleteContact(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -135,12 +124,12 @@ export class TabletExampleDistributionComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'рассылку' : 'рассылки' } ?`, 'delete', params, 'displayeds' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'segmentations' );
     }
   }
 
-  redirectToDistribution( id: number ): void {
-    this.router.navigate( [ `/crm/profile-distribution/${id}` ] );
+  redirectToSegmentation( segmentationId: number ): void {
+    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId } } );
   }
 
   disabledCheckbox( eventData ): void {

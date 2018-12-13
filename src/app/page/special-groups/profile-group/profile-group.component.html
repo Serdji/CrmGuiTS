@@ -22,7 +22,7 @@
   <mat-card>
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-tablet-example-profile-group  *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-tablet-example-profile-group>
+      <app-table-example-profile-group  *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-table-example-profile-group>
     </ng-template>
   </mat-card>
 </div>

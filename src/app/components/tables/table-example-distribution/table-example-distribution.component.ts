@@ -10,13 +10,14 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component( {
-  selector: 'app-tablet-example-profile-names',
-  templateUrl: './tablet-example-profile-names.component.html',
-  styleUrls: [ './tablet-example-profile-names.component.styl' ],
+  selector: 'app-table-example-distribution',
+  templateUrl: './table-example-distribution.component.html',
+  styleUrls: [ './table-example-distribution.component.styl' ],
 } )
-export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
+export class TableExampleDistributionComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -45,15 +46,22 @@ export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'firstName',
-      'lastName',
-      'secondName',
-      'customerNameId',
+      'subject',
+      'statusNameRus',
+      'dateFrom',
+      'dateTo',
+      'lastTryDT',
+      'distributionId',
     ];
   }
 
   private initDataSource() {
-    this.tableDataSource = this.tableDataSource.filter( value => value.customerNameType !== 1 );
+    _.each( this.tableDataSource, value => {
+      _( value )
+        .set( 'statusNameRus', value.status.statusNameRus )
+        .set( 'distributionStatusId', value.status.distributionStatusId )
+        .value();
+    } );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -62,9 +70,9 @@ export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
     timer( 1 )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    } );
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      } );
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
@@ -101,10 +109,6 @@ export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
     this.dataSource.filter = filterValue.trim().toLowerCase();
   }
 
-  editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
-    const fioObj = { firstName, lastName, secondName };
-    this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
-  }
 
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -119,7 +123,7 @@ export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteCustomerNames(): void {
+  deleteDisplayed(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -131,8 +135,12 @@ export class TabletExampleProfileNamesComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'это фио' : 'эти фио' } ?`, 'delete', params, 'profileNames' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'рассылку' : 'рассылки' } ?`, 'delete', params, 'displayeds' );
     }
+  }
+
+  redirectToDistribution( id: number ): void {
+    this.router.navigate( [ `/crm/profile-distribution/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {

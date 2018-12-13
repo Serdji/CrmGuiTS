@@ -116,8 +116,8 @@
     <div *ngIf="profileNames?.length > 1">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <app-tablet-example-profile-names *ngIf="profileNames.length > 1"
-                                          [tableDataSource]="profileNames"></app-tablet-example-profile-names>
+        <app-table-example-profile-names *ngIf="profileNames.length > 1"
+                                          [tableDataSource]="profileNames"></app-table-example-profile-names>
       </ng-template>
     </div>
 

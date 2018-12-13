@@ -5,31 +5,36 @@ import {
   MatSort,
   MatTableDataSource,
 } from '@angular/material';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
+import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component( {
-  selector: 'app-tablet-example-profile-group',
-  templateUrl: './tablet-example-profile-group.component.html',
-  styleUrls: [ './tablet-example-profile-group.component.styl' ],
+  selector: 'app-table-example-profile-names',
+  templateUrl: './table-example-profile-names.component.html',
+  styleUrls: [ './table-example-profile-names.component.styl' ],
 } )
-export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
+export class TableExampleProfileNamesComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
+  public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
-  private isActive: boolean;
   public isDisabled: boolean;
-  public ids: any;
+
+  private isActive: boolean;
 
   @Input() private tableDataSource: any;
 
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
 
-  constructor( private dialog: MatDialog ) { }
+  constructor(
+    private dialog: MatDialog,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
     this.isActive = true;
@@ -40,11 +45,15 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'customerGroupName',
+      'firstName',
+      'lastName',
+      'secondName',
+      'customerNameId',
     ];
   }
 
   private initDataSource() {
+    this.tableDataSource = this.tableDataSource.filter( value => value.customerNameType !== 1 );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -53,9 +62,9 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
     timer( 1 )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
-        this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
-      } );
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+    } );
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
@@ -67,6 +76,34 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
         card,
       },
     } );
+  }
+
+  private isChildMore( parentElement ): boolean {
+    const getElemCss = getComputedStyle( parentElement );
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 );
+    const childrenWidth = parentElement.firstElementChild.offsetWidth;
+    return childrenWidth > parentWidth;
+
+  }
+
+  cursorPointer( elem: HTMLElement ): void {
+    this.isCp = this.isChildMore( elem );
+  }
+
+  openText( elem: HTMLElement ): void {
+    if ( this.isCp ) {
+      const text = elem.innerText;
+      this.windowDialog( text, 'text' );
+    }
+  }
+
+  applyFilter( filterValue: string ): void {
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
+    const fioObj = { firstName, lastName, secondName };
+    this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
   }
 
   public isAllSelected() {
@@ -82,7 +119,7 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteProfileGroups(): void {
+  deleteCustomerNames(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -94,29 +131,12 @@ export class TabletExampleProfileGroupComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу пассажиров' : 'группы пассажиров' } ?`, 'delete', params, 'deleteProfileGroups' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'это фио' : 'эти фио' } ?`, 'delete', params, 'profileNames' );
     }
   }
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
-  }
-
-  isIds(): void {
-    const arrayId = [];
-    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
-    checkbox.forEach( ( el: HTMLInputElement ) => {
-      if ( el.checked ) {
-        const id = el.id.split( '-' );
-        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
-      } else {
-        this.ids = {};
-      }
-    } );
-
-    if ( arrayId.length !== 0 ) {
-      this.ids = { customerGroupIds: arrayId };
-    }
   }
 
   ngOnDestroy(): void {

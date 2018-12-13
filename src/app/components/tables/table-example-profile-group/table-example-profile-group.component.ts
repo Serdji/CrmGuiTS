@@ -5,82 +5,47 @@ import {
   MatSort,
   MatTableDataSource,
 } from '@angular/material';
-import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import { IpagPage } from '../../../interface/ipag-page';
-import { TableAsyncService } from '../../../services/table-async.service';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
 @Component( {
-  selector: 'app-tablet-async-promotions',
-  templateUrl: './tablet-async-promotions.component.html',
-  styleUrls: [ './tablet-async-promotions.component.styl' ],
+  selector: 'app-table-example-profile-group',
+  templateUrl: './table-example-profile-group.component.html',
+  styleUrls: [ './table-example-profile-group.component.styl' ],
 } )
-export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
+export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
-  public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
-  public isDisabled: boolean;
-  public resultsLength: number;
-  public isLoadingResults: boolean = false;
-  public totalCount: number;
-  public ids: any;
-
   private isActive: boolean;
-
+  public isDisabled: boolean;
+  public ids: any;
 
   @Input() private tableDataSource: any;
 
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
 
-  constructor(
-    private dialog: MatDialog,
-    private router: Router,
-    private tableAsyncService: TableAsyncService
-  ) { }
+  constructor( private dialog: MatDialog ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initDataSource();
-    this.initDataSourceAsync();
-    this.initPaginator();
     this.initDisplayedColumns();
   }
 
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
-      'promotionName',
-      'promotionId'
+      'customerGroupName',
     ];
   }
 
   private initDataSource() {
     this.dataSourceFun( this.tableDataSource );
-  }
-
-  private initPaginator() {
-    this.resultsLength = this.tableAsyncService.countPage;
-    this.paginator.page
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: IpagPage ) => {
-        this.tableAsyncService.setPagPage( value );
-        this.isLoadingResults = true;
-      } );
-  }
-
-  private initDataSourceAsync() {
-    this.tableAsyncService.subjectTableDataSource
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: any ) => {
-        this.dataSourceFun( value );
-        this.isLoadingResults = false;
-      } );
   }
 
   private dataSourceFun( params ) {
@@ -89,6 +54,7 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
       } );
   }
 
@@ -103,26 +69,6 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private isChildMore( parentElement ): boolean {
-    const getElemCss = getComputedStyle( parentElement );
-    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 );
-    const childrenWidth = parentElement.firstElementChild.offsetWidth;
-    return childrenWidth > parentWidth;
-
-  }
-
-  cursorPointer( elem: HTMLElement ): void {
-    this.isCp = this.isChildMore( elem );
-  }
-
-  openText( elem: HTMLElement ): void {
-    if ( this.isCp ) {
-      const text = elem.innerText;
-      this.windowDialog( text, 'text' );
-    }
-  }
-
-
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
     const numRows = this.dataSource.data.length;
@@ -134,10 +80,6 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach( row => this.selection.select( row ) );
-  }
-
-  editCreate( promotionsId: number, promotionsName: string ): void {
-    this.windowDialog( ``, 'updatePromotions', { promotionsId, promotionsName }, 'updatePromotions' );
   }
 
   deleteProfileGroups(): void {
@@ -152,7 +94,7 @@ export class TabletAsyncPromotionsComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deletePromotions' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу пассажиров' : 'группы пассажиров' } ?`, 'delete', params, 'deleteProfileGroups' );
     }
   }
 
