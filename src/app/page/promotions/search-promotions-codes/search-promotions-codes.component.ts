@@ -197,27 +197,33 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   searchForm(): void {
     console.log( this.formSearchPromoCodes.getRawValue() );
-    const params = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
-
+    let params = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
     _.chain( params )
-      .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ?  this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ?  this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'segmentationId', _.chain( this.segmentation ).find( 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ).get( 'segmentationId' ).value() )
-      .set( 'customerGroupId', _.chain( this.customerGroup ).find( 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ).get( 'customerGroupId' ).value() )
+      .set( 'segmentationId', this.formSearchPromoCodes.get( 'segmentationId' ).value ?  _.chain( this.segmentation ).find( 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ).get( 'segmentationId' ).value() : '' )
+      .set( 'customerGroupId', this.formSearchPromoCodes.get( 'customerGroupId' ).value ? _.chain( this.customerGroup ).find( 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ).get( 'customerGroupId' ).value() : '' )
       .set( 'from', 0 )
       .set( 'count', 10 )
       .value();
 
+    const paramsOmit = [];
+    _.each( params, ( val, key ) => {
+      if ( val === '' ) paramsOmit.push( key );
+    } );
+    params = _.omit( params, paramsOmit );
+    console.log( paramsOmit );
     console.log( params );
 
-
-
+    this.searchPromotionsCodesService.getSearchPromotionsCodes( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( promoCodes => console.log( promoCodes ) );
   }
 
   clearForm(): void {
