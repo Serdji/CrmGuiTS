@@ -103,17 +103,16 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   private initFormSearchPromoCodes() {
     this.formSearchPromoCodes = this.fb.group( {
       promotionName: '',
-      promoCodeId: '',
+      code: '',
       accountCode: '',
-      description: '',
       reason: '',
       dateFrom: '',
       dateTo: '',
       flightDateFrom: '',
       flightDateTo: '',
-      promoCodeBrandList: '',
-      promoCodeFlightList: '',
-      promoCodeRbdList: '',
+      promoCodeBrand: '',
+      promoCodeFlight: '',
+      promoCodeRbd: '',
       customersId: '',
       segmentation: '',
       customerGroup: '',
@@ -133,7 +132,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
-    this.promoCodesOptions = this.autocomplete( 'promoCodeId', 'promoCode' );
+    this.promoCodesOptions = this.autocomplete( 'code', 'promoCode' );
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -169,7 +168,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   //     .subscribe( ( value: IpagPage ) => {
   //       const pageIndex = value.pageIndex * value.pageSize;
   //       const paramsAndCount = {
-  //         promoCodeId: this.promoCodeId,
+  //         code: this.code,
   //         from: pageIndex,
   //         count: value.pageSize,
   //         sortvalue: 'last_name'
@@ -182,7 +181,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   //
   // private initTableProfile( id: number ) {
   //   const params = {
-  //     promoCodeId: id,
+  //     code: id,
   //     from: 0,
   //     count: 10,
   //     sortvalue: 'last_name'

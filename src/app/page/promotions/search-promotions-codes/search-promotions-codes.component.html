@@ -16,9 +16,9 @@
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
             <mat-form-field class="dialog-promo-cod__input">
-              <input matInput formControlName="promoCodeId" [matAutocomplete]="promoCodeId" type="text"
+              <input matInput formControlName="code" [matAutocomplete]="code" type="text"
                      placeholder="Промокод">
-              <mat-autocomplete #promoCodeId="matAutocomplete">
+              <mat-autocomplete #code="matAutocomplete">
                 <mat-option
                   class="dialog-promo-cod__option"
                   *ngFor="let promoCod of promoCodesOptions | async"
@@ -53,7 +53,7 @@
         <mat-card class="search-promotions-codes__card">
           <mat-card-content class="search-promotions-codes__content">
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promoCodeFlightList" placeholder="Номера рейсов">
+              <input matInput formControlName="promoCodeFlight" placeholder="Номера рейсов">
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
               <input matInput formControlName="flightDateFrom" placeholder="Период реализации от"
@@ -68,10 +68,10 @@
               <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promoCodeBrandList" placeholder="Бренды">
+              <input matInput formControlName="promoCodeBrand" placeholder="Бренды">
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promoCodeRbdList" placeholder="RBD">
+              <input matInput formControlName="promoCodeRbd" placeholder="RBD">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -81,7 +81,7 @@
         <mat-card class="search-promotions-codes__card">
           <mat-card-content class="search-promotions-codes__content">
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="customersId" type="text" placeholder="Прорфиль">
+              <input matInput formControlName="customersId" type="text" placeholder="Профиль">
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
               <input matInput formControlName="segmentation" type="text" placeholder="Группы сегментации"
