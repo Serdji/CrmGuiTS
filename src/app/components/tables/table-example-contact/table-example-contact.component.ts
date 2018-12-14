@@ -11,6 +11,8 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { ContactService } from '../../../page/profiles/tabs-profile/contact/contact.service';
+import { Icontact } from '../../../interface/icontact';
 
 @Component( {
   selector: 'app-table-example-contact',
@@ -33,6 +35,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
   @ViewChild( MatPaginator ) paginator: MatPaginator;
 
   constructor(
+    private contactService: ContactService,
     private dialog: MatDialog,
     private router: Router,
   ) { }
@@ -48,13 +51,12 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
       'select',
       'contactTypeId',
       'contactText',
-      'contactDistribution',
+      'useForDistribution',
       'contactId',
     ];
   }
 
   private initDataSource() {
-    _.each( this.tableDataSource, tableDataSource => _.set( tableDataSource, 'contactDistribution', true ));
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -86,12 +88,18 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
     return childrenWidth > parentWidth;
   }
 
-  contactDistribution( contactDistribution: boolean, id: number ): void {
-    _.chain( this.tableDataSource )
-      .find( [ 'contactId', id ] )
-      .set( 'contactDistribution', !contactDistribution )
-      .value();
-    this.dataSourceFun( this.tableDataSource );
+  contactDistribution( params: any ): void {
+    const isSubjectNext = false;
+    _.set( params, 'useForDistribution', !params.useForDistribution );
+    this.contactService.putContact( params, isSubjectNext )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( contact: Icontact ) => {
+        _.chain( this.tableDataSource )
+          .find( [ 'contactId', contact.contactId ] )
+          .set( 'useForDistribution', contact.useForDistribution )
+          .value();
+        this.dataSourceFun( this.tableDataSource );
+      } );
   }
 
   cursorPointer( elem: HTMLElement ): void {
@@ -138,7 +146,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'этот контакт' : 'эти контакты' } ?`, 'delete', params, 'contacts' );
+      this.windowDialog( `Вы действительно хотите удалить ${arrayId.length === 1 ? 'этот контакт' : 'эти контакты'} ?`, 'delete', params, 'contacts' );
     }
   }
 
