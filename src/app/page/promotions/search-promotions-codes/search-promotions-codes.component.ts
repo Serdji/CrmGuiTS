@@ -15,6 +15,7 @@ import { ProfileGroupService } from '../../special-groups/profile-group/profile-
 import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { AddPromotionsCodesService } from '../add-promotions-codes/add-promotions-codes.service';
 import { IPromoCode } from '../../../interface/ipromo-code';
+import * as moment from 'moment';
 
 @Component( {
   selector: 'app-search-promotions-codes',
@@ -63,6 +64,20 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initCustomerGroup();
     this.initAutocomplete();
     this.initTableProfilePagination();
+    this.initQueryParams();
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( 1000 ),
+      )
+      .subscribe( params => {
+        if ( params ) {
+          this.formFilling( params );
+        }
+      } );
   }
 
   private initPromotions() {
@@ -101,6 +116,33 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private formFilling( params ) {
+    const formParams = _.omit( params, [
+      'from',
+      'count',
+      'segmentationId',
+      'customerGroupId',
+      'dateFrom_From',
+      'dateFrom_To',
+      'dateTo_From',
+      'dateTo_To',
+      'flightDateFrom_From',
+      'flightDateFrom_To',
+      'flightDateTo_From',
+      'flightDateTo_To',
+    ] );
+
+    _.chain( formParams )
+      .set( 'segmentationId', _.chain( this.segmentation ).find( [ 'segmentationId', +params.segmentationId ] ).get( 'title' ).value() )
+      .set( 'customerGroupId', _.chain( this.customerGroup ).find( [ 'customerGroupId', +params.customerGroupId ] ).get( 'customerGroupName' ).value() )
+      .set( 'dateFrom', params.dateFrom_From ? new Date( params.dateFrom_From.split( '.' ).reverse().join( ',' ) ) : '' )
+      .set( 'dateTo', params.dateTo_From ? new Date( params.dateTo_From.split( '.' ).reverse().join( ',' ) ) : '' )
+      .set( 'flightDateFrom', params.dateTo_From ? new Date( params.flightDateFrom_From.split( '.' ).reverse().join( ',' ) ) : '' )
+      .set( 'flightDateTo', params.flightDateTo_From ? new Date( params.flightDateTo_From.split( '.' ).reverse().join( ',' ) ) : '' )
+      .value();
+
+    this.formSearchPromoCodes.patchValue( formParams );
+  }
 
   private initFormSearchPromoCodes() {
     this.formSearchPromoCodes = this.fb.group( {
@@ -147,11 +189,11 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'segmentationId':
-              if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
+              if ( val ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'customerGroupId':
               return this.customerGroup.filter( customerGroup => {
-                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                  if ( val ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
                 }
               );
               break;
@@ -186,14 +228,14 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.searchParams = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
     _.chain( this.searchParams )
-      .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? this.formSearchPromoCodes.get( 'dateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ? this.formSearchPromoCodes.get( 'dateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? this.formSearchPromoCodes.get( 'flightDateFrom' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? this.formSearchPromoCodes.get( 'flightDateTo' ).value.format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ?  moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
       .set( 'segmentationId', this.formSearchPromoCodes.get( 'segmentationId' ).value ? _.chain( this.segmentation ).find( 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ).get( 'segmentationId' ).value() : '' )
       .set( 'customerGroupId', this.formSearchPromoCodes.get( 'customerGroupId' ).value ? _.chain( this.customerGroup ).find( 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ).get( 'customerGroupId' ).value() : '' )
       .set( 'from', 0 )
@@ -212,7 +254,6 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
         this.tableAsyncService.countPage = promoCode.totalCount;
         this.promoCode = promoCode;
         this.isLoader = false;
-        console.log( promoCode );
       } );
 
     this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: this.searchParams } );
