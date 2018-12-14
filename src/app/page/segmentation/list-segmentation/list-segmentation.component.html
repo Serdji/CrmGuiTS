@@ -2,7 +2,7 @@
   <mat-card>
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-tablet-example-segmentation  *ngIf="segmentation.length !== 0" [tableDataSource]="segmentation"></app-tablet-example-segmentation>
+      <app-table-example-segmentation  *ngIf="segmentation.length !== 0" [tableDataSource]="segmentation"></app-table-example-segmentation>
     </ng-template>
   </mat-card>
 </div>

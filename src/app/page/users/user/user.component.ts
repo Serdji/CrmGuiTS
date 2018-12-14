@@ -2,7 +2,6 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
-import { emailValidator } from '../../../validators/emailValidator';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialog } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
@@ -66,7 +65,7 @@ export class UserComponent implements OnInit, OnDestroy {
   private initFormUser() {
     this.updateUser = this.fb.group( {
       login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-      email: [ '', [ emailValidator ] ],
+      email: [ '', [ Validators.email ] ],
       loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     }, {
       updateOn: 'submit',

@@ -5,35 +5,33 @@ import {
   MatSort,
   MatTableDataSource,
 } from '@angular/material';
-import { timer } from 'rxjs/observable/timer';
-import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { SelectionModel } from '@angular/cdk/collections';
+import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
-import { Iprofile } from '../../../interface/iprofile';
+import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import * as _ from 'lodash';
+import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
-  selector: 'app-table-async-profile',
-  templateUrl: './table-async-profile.component.html',
-  styleUrls: [ './table-async-profile.component.styl' ],
+  selector: 'app-table-async-promotions',
+  templateUrl: './table-async-promotions.component.html',
+  styleUrls: [ './table-async-promotions.component.styl' ],
 } )
-export class TableAsyncProfileComponent implements OnInit, OnDestroy {
+export class TableAsyncPromotionsComponent implements OnInit, OnDestroy {
 
-  public displayedColumns: string[];
-
+  public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
-  public resultsLength: number;
-  public isLoadingResults: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
-  public ids: any;
+  public resultsLength: number;
+  public isLoadingResults: boolean = false;
   public totalCount: number;
+  public ids: any;
 
-  private isActive: boolean = true;
+  private isActive: boolean;
+
 
   @Input() private tableDataSource: any;
 
@@ -42,39 +40,32 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   constructor(
     private dialog: MatDialog,
-    private tableAsyncService: TableAsyncService,
     private router: Router,
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit(): void {
-    this.initDataSource( this.tableDataSource );
+    this.isActive = true;
+    this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
     this.initDisplayedColumns();
   }
 
-
-  cursorPointer( elem: HTMLElement ): void {
-    this.isCp = this.isChildMore( elem );
-  }
-
-  openText( elem: HTMLElement ): void {
-    if ( this.isChildMore( elem ) ) {
-      const text = elem.innerText;
-      this.windowDialog( text, 'text' );
-    }
-  }
-
   private initDisplayedColumns() {
-    this.displayedColumns = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) );
-    this.displayedColumns.unshift( 'select' );
-    this.displayedColumns.push( 'customerId' );
+    this.displayedColumns = [
+      'select',
+      'promotionName',
+      'promotionId'
+    ];
   }
 
+  private initDataSource() {
+    this.dataSourceFun( this.tableDataSource );
+  }
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
-    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
@@ -83,26 +74,16 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
       } );
   }
 
-
   private initDataSourceAsync() {
     this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
-        this.initDataSource( value );
+        this.dataSourceFun( value );
         this.isLoadingResults = false;
       } );
   }
 
-  private initDataSource( params: Iprofile[] ) {
-    _.each( params, tableDataSource => _.set( tableDataSource, 'customerIds', tableDataSource.customerId ) );
-    this.dataSourceFun( params );
-  }
-
-  private dataSourceFun( params: Iprofile[] ) {
-    params = params.map( ( value: any ) => {
-      Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
-      return value;
-    } );
+  private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
       .pipe( takeWhile( _ => this.isActive ) )
@@ -124,11 +105,23 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   private isChildMore( parentElement ): boolean {
     const getElemCss = getComputedStyle( parentElement );
-    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 ) - parseInt( getElemCss.paddingLeft, 10 );
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 );
     const childrenWidth = parentElement.firstElementChild.offsetWidth;
-    return childrenWidth >= parentWidth;
+    return childrenWidth > parentWidth;
 
   }
+
+  cursorPointer( elem: HTMLElement ): void {
+    this.isCp = this.isChildMore( elem );
+  }
+
+  openText( elem: HTMLElement ): void {
+    if ( this.isCp ) {
+      const text = elem.innerText;
+      this.windowDialog( text, 'text' );
+    }
+  }
+
 
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -143,11 +136,11 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  editCreate( id ): void {
-    this.router.navigate( [ `/crm/profile/${id}` ] );
+  editCreate( promotionsId: number, promotionsName: string ): void {
+    this.windowDialog( ``, 'updatePromotions', { promotionsId, promotionsName }, 'updatePromotions' );
   }
 
-  deleteProfile(): void {
+  deleteProfileGroups(): void {
     const arrayId = [];
     const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
     checkbox.forEach( ( el: HTMLInputElement ) => {
@@ -159,7 +152,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${arrayId.length === 1 ? 'этот профиль' : 'эти профили'} ?`, 'delete', params, 'profiles' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deletePromotions' );
     }
   }
 
@@ -180,7 +173,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     } );
 
     if ( arrayId.length !== 0 ) {
-      this.ids = { customerIds: arrayId };
+      this.ids = { customerGroupIds: arrayId };
     }
   }
 
@@ -189,3 +182,15 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,7 +19,7 @@ import { EditorService } from '../../components/editors/editor/editor.service';
 import { ListDistributionService } from '../../page/distribution/list-distribution/list-distribution.service';
 import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
-import { AddPromotionsCodsService } from '../../page/promotions/add-promotions-cods/add-promotions-cods.service';
+import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-codes/add-promotions-codes.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -52,7 +52,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private listDistributionService: ListDistributionService,
     private profileDistributionService: ProfileDistributionService,
     private addPromotionsService: AddPromotionsService,
-    private addPromotionsCodsService: AddPromotionsCodsService,
+    private addPromotionsCodesService: AddPromotionsCodesService,
     private auth: AuthService,
     private fb: FormBuilder,
     private router: Router,
@@ -327,7 +327,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'promoCode':
-        this.addPromotionsCodsService.deletePromoCode( this.data.params )
+        this.addPromotionsCodesService.deletePromoCode( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();

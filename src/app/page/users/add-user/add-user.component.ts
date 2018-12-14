@@ -4,7 +4,6 @@ import { AddUserService } from './add-user.service';
 import { takeWhile } from 'rxjs/operators';
 import { MatDialog } from '@angular/material';
 import { timer } from 'rxjs/observable/timer';
-import { emailValidator } from '../../../validators/emailValidator';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { Router } from '@angular/router';
@@ -36,7 +35,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
       login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
       password: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
       confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      email: [ '', [ emailValidator ] ],
+      email: [ '', [ Validators.email ] ],
       loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     }, {
       updateOn: 'submit',
@@ -46,7 +45,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
   resetForm() {
     this.formUser.reset();
     for ( const formControlName in this.formUser.value ) {
-      this.formUser.get( `${ formControlName }` ).setErrors( null );
+      this.formUser.get( `${formControlName}` ).setErrors( null );
     }
   }
 

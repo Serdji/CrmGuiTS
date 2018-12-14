@@ -22,10 +22,10 @@
   <mat-card class="add-promotions__table">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-tablet-async-promotions
+      <app-table-async-promotions
         *ngIf="promotions.result.length !== 0"
         [tableDataSource]="promotions.result">
-      </app-tablet-async-promotions>
+      </app-table-async-promotions>
     </ng-template>
   </mat-card>
 </div>

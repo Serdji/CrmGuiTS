@@ -1,0 +1,334 @@
+<div class="add-promotions-codes">
+  <form class="add-promotions-codes__form" [formGroup]="formPromoCodes">
+
+    <mat-grid-list cols="4" rowHeight="135px">
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="add-promotions-codes__card">
+          <mat-card-content class="add-promotions-codes__content">
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция"
+                     [matAutocomplete]="promotion">
+              <mat-autocomplete #promotion="matAutocomplete">
+                <mat-option *ngFor="let promotion of promotionsOptions | async"
+                            [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
+              </mat-autocomplete>
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="2" [rowspan]="4">
+        <mat-card class="add-promotions-codes__card">
+          <div class="add-promotions-codes__content-wrapper">
+            <mat-card-content class="add-promotions-codes__content _d-b">
+              <mat-form-field class="add-promotions-codes__input">
+                <mat-chip-list #chipPromoCodeFlightList>
+                  <mat-chip
+                    [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                    *ngFor="let promoCodeFlightListChip of promoCodeFlightListChips"
+                    [selectable]="promoCodeFlightListSelectable"
+                    [removable]="promoCodeFlightListRemovable"
+                    (removed)="remove(promoCodeFlightListChip, promoCodeFlightListChips, 'promoCodeFlightListChips')">
+                    {{promoCodeFlightListChip}}
+                    <mat-icon matChipRemove *ngIf="promoCodeFlightListRemovable">cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    placeholder="Номера рейсов"
+                    #promoCodeFlightListChipInput
+                    formControlName="promoCodeFlightList"
+                    [matChipInputFor]="chipPromoCodeFlightList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addPromoCodeFlightListOnBlur"
+                    (matChipInputTokenEnd)="add($event, 'promoCodeFlightList', 'promoCodeFlightListChips')">
+                </mat-chip-list>
+              </mat-form-field>
+              <mat-form-field class="add-promotions-codes__input">
+                <input matInput formControlName="flightDateFrom" placeholder="Период реализации от"
+                       [matDatepicker]="flightDateFrom">
+                <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-promotions-codes__input">
+                <input matInput formControlName="flightDateTo" placeholder="Период реализации до"
+                       [matDatepicker]="flightDateTo">
+                <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-promotions-codes__input">
+                <mat-chip-list #chipPromoCodeBrandListList>
+                  <mat-chip
+                    [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                    *ngFor="let promoCodeBrandListChip of promoCodeBrandListChips"
+                    [selectable]="promoCodeBrandListSelectable"
+                    [removable]="promoCodeBrandListRemovable"
+                    (removed)="remove(promoCodeBrandListChip, promoCodeBrandListChips, 'promoCodeBrandListChips')">
+                    {{promoCodeBrandListChip}}
+                    <mat-icon matChipRemove *ngIf="promoCodeBrandListRemovable">cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    placeholder="Бренды"
+                    #promoCodeBrandListChipInput
+                    formControlName="promoCodeBrandList"
+                    [matChipInputFor]="chipPromoCodeBrandListList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addPromoCodeBrandListOnBlur"
+                    (matChipInputTokenEnd)="add($event, 'promoCodeBrandList', 'promoCodeBrandListChips')">
+                </mat-chip-list>
+              </mat-form-field>
+              <mat-form-field class="add-promotions-codes__input">
+                <mat-chip-list #chipPromoCodeRbdListList>
+                  <mat-chip
+                    [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                    *ngFor="let promoCodeRbdListChip of promoCodeRbdListChips"
+                    [selectable]="promoCodeRbdListSelectable"
+                    [removable]="promoCodeRbdListRemovable"
+                    (removed)="remove(promoCodeRbdListChip, promoCodeRbdListChips, 'promoCodeRbdListChips')">
+                    {{promoCodeRbdListChip}}
+                    <mat-icon matChipRemove *ngIf="promoCodeRbdListRemovable">cancel</mat-icon>
+                  </mat-chip>
+                  <input
+                    placeholder="RBD"
+                    #promoCodeRbdListChipInput
+                    formControlName="promoCodeRbdList"
+                    [matChipInputFor]="chipPromoCodeRbdListList"
+                    [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [matChipInputAddOnBlur]="addPromoCodeRbdListOnBlur"
+                    (matChipInputTokenEnd)="add($event, 'promoCodeRbdList', 'promoCodeRbdListChips')">
+                </mat-chip-list>
+              </mat-form-field>
+            </mat-card-content>
+            <mat-card-content class="add-promotions-codes__content _d-b _space">
+              <div class="add-promotions-codes__list" *ngIf="promoCodeRouteList.length > 0">
+                <div class="add-promotions-codes__list-item" *ngFor=" let routeList of promoCodeRouteList">
+                  <div class="add-promotions-codes__list-item-wrapper">
+                    {{routeList.dep_Location}}
+                    <mat-icon>arrow_right_alt</mat-icon>
+                    {{routeList.arr_Location}}
+                  </div>
+                  <div class="add-promotions-codes__list-item-wrapper _flex">
+                    <mat-icon class="add-promotions-codes__close"
+                              (click)="directionRemove(routeList.dep_Location, routeList.arr_Location)">close
+                    </mat-icon>
+                  </div>
+                </div>
+              </div>
+              <div class="add-promotions-codes__date">
+                <mat-form-field class="add-promotions-codes__input">
+                  <input matInput formControlName="dep_Location" type="text" placeholder="Направление откуда"
+                         [matAutocomplete]="dep_Location">
+                  <mat-autocomplete #dep_Location="matAutocomplete">
+                    <mat-option *ngFor="let location of locationFromOptions | async"
+                                [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <mat-icon>arrow_right_alt</mat-icon>
+                <mat-form-field class="add-promotions-codes__input">
+                  <input matInput formControlName="arr_Location" type="text" placeholder="Направление куда"
+                         [matAutocomplete]="arr_Location">
+                  <mat-autocomplete #arr_Location="matAutocomplete">
+                    <mat-option *ngFor="let location of locationToOptions | async"
+                                [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                  </mat-autocomplete>
+                </mat-form-field>
+                <mat-icon (click)="directionAdd()" class="add-promotions-codes__add">add</mat-icon>
+              </div>
+            </mat-card-content>
+          </div>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="4">
+        <mat-card class="add-promotions-codes__card">
+          <mat-card-content class="add-promotions-codes__content _d-b">
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="usesPerPerson" type="text" placeholder="Персональная кастность использования">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="usesTotal" type="text" placeholder="Общее число раз использования промокода">
+            </mat-form-field>
+          </mat-card-content>
+          <div class="add-promotions-codes__progress-bar">
+            <span>Использован: </span>
+            <section class="example-section">
+              <mat-progress-bar
+                class="example-margin"
+                color="primary"
+                mode="determinate"
+                [value]="50"
+                [bufferValue]="75">
+              </mat-progress-bar>
+            </section>
+          </div>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="1" [rowspan]="5">
+        <mat-card class="add-promotions-codes__card">
+          <mat-card-content class="add-promotions-codes__content">
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="code" type="text" placeholder="Промокод">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="accountCode" type="text" placeholder="Account code">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="dateFrom" placeholder="Период Действия от" [matDatepicker]="dateFrom">
+              <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="dateTo" placeholder="Период Действия до" [matDatepicker]="dateTo">
+              <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <input matInput formControlName="val" type="text" placeholder="Кратность">
+            </mat-form-field>
+            <mat-form-field class="add-promotions-cod__input">
+              <mat-select formControlName="promoCodeValTypeId" placeholder="Свойство кратности">
+                <mat-option></mat-option>
+                <mat-option
+                  *ngFor="let promoCodeValType of promoCodeValTypes"
+                  [value]="promoCodeValType.promoCodeValTypeId">
+                  {{promoCodeValType.promoCodeValTypeName | fieldTranslation}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <textarea rows="7" matInput formControlName="description" type="text"
+                        placeholder="Описание промоакции"></textarea>
+            </mat-form-field>
+            <mat-form-field class="add-promotions-codes__input">
+              <textarea rows="7" matInput formControlName="reason" type="text" placeholder="Основание"></textarea>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <mat-grid-tile [colspan]="3" [rowspan]="2">
+        <mat-card class="add-promotions-codes__card">
+          <mat-card-content class="add-promotions-codes__content">
+            <mat-form-field class="add-promotions-codes__input">
+              <mat-chip-list #chipPromoCodeCustomerListList>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let promoCodeCustomerListChip of promoCodeCustomerListChips"
+                  [selectable]="promoCodeCustomerListSelectable"
+                  [removable]="promoCodeCustomerListRemovable"
+                  (removed)="remove(promoCodeCustomerListChip, promoCodeCustomerListChips, 'promoCodeCustomerListChips')">
+                  {{promoCodeCustomerListChip}}
+                  <mat-icon matChipRemove *ngIf="promoCodeCustomerListRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Профиль"
+                  #promoCodeCustomerListChipInput
+                  formControlName="customersIds"
+                  [matChipInputFor]="chipPromoCodeCustomerListList"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addPromoCodeCustomerListOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'customersIds', 'promoCodeCustomerListChips')">
+              </mat-chip-list>
+            </mat-form-field>
+
+            <mat-form-field class="add-promotions-codes__input">
+              <mat-chip-list #chipListSegmentation>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let segmentationChip of segmentationChips"
+                  [selectable]="segmentationSelectable"
+                  [removable]="segmentationRemovable"
+                  (removed)="remove(segmentationChip, segmentationChips, 'segmentationChips')">
+                  {{segmentationChip}}
+                  <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы сегментации"
+                  #segmentationChipInput
+                  formControlName="segmentations"
+                  [matAutocomplete]="segmentation"
+                  [matChipInputFor]="chipListSegmentation"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addSegmentationOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'segmentations', 'segmentationChips')">
+              </mat-chip-list>
+              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentations', 'segmentationChips', 'segmentationFruitInput')">
+                <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+
+            <mat-form-field class="add-promotions-codes__input">
+              <mat-chip-list #chipListCustomerGroup>
+                <mat-chip
+                  [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"
+                  *ngFor="let customerGroupChip of customerGroupChips"
+                  [selectable]="customerGroupSelectable"
+                  [removable]="customerGroupRemovable"
+                  (removed)="remove(customerGroupChip, customerGroupChips, 'customerGroupChips')">
+                  {{customerGroupChip}}
+                  <mat-icon matChipRemove *ngIf="customerGroupRemovable">cancel</mat-icon>
+                </mat-chip>
+                <input
+                  placeholder="Группы пассажиров"
+                  #customerGroupChipInput
+                  formControlName="customerGroups"
+                  [matAutocomplete]="customerGroup"
+                  [matChipInputFor]="chipListCustomerGroup"
+                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                  [matChipInputAddOnBlur]="addCustomerGroupOnBlur"
+                  (matChipInputTokenEnd)="add($event, 'customerGroups', 'customerGroupChips')">
+              </mat-chip-list>
+              <mat-autocomplete #customerGroup="matAutocomplete" (optionSelected)="selected($event, 'customerGroups', 'customerGroupChips', 'customerGroupFruitInput')">
+                <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+
+      <div class="add-promotions-codes__button-wrapper">
+        <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+                (click)="saveForm()" color="primary" [disabled]="buttonSave">
+          <mat-icon>save</mat-icon>
+          Сохранить
+        </button>
+        <button appAccessRights="promotions:read" class="add-promotions-codes__button" mat-raised-button
+                (click)="searchForm()" color="primary" [disabled]="buttonSearch">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+                (click)="createForm()" [disabled]="buttonCreate">
+          <mat-icon>create</mat-icon>
+          Изменить
+        </button>
+        <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+                (click)="deletePromoCode()" color="warn" [disabled]="buttonDelete">
+          <mat-icon>delete</mat-icon>
+          Удалить
+        </button>
+        <button class="add-promotions-codes__button" mat-raised-button (click)="clearForm()">
+          <mat-icon>clear</mat-icon>
+          Очистить форму
+        </button>
+      </div>
+    </mat-grid-list>
+  </form>
+
+  <mat-card class="add-promotions-codes__table" *ngIf="isTable">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-table-async-promo-code-profile
+        *ngIf="profilePromoCode.result.length !== 0"
+        [tableDataSource]="profilePromoCode.result">
+      </app-table-async-promo-code-profile>
+    </ng-template>
+  </mat-card>
+</div>

@@ -26,3 +26,4 @@ import { PromotionsModule } from './promotions/promotions.module';
   declarations: []
 })
 export class PageModule { }
+
