@@ -142,6 +142,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       .value();
 
     this.formSearchPromoCodes.patchValue( formParams );
+    this.searchForm();
   }
 
   private initFormSearchPromoCodes() {
