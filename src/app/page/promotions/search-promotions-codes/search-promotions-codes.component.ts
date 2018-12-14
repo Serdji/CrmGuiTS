@@ -26,6 +26,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public isTable: boolean;
   public isLoader: boolean;
+  public isQueryParams: boolean;
   public formSearchPromoCodes: FormGroup;
   public promotionsOptions: Observable<IPromotions[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
@@ -56,6 +57,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isActive = true;
     this.isLoader = true;
+    this.isQueryParams = true;
     this.autDelay = 500;
     this.initFormSearchPromoCodes();
     this.initPromotions();
@@ -74,7 +76,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
         delay( 1000 ),
       )
       .subscribe( params => {
-        if ( params ) {
+        if ( _.size( params ) > 0 ) {
           this.formFilling( params );
         }
       } );
@@ -142,7 +144,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       .value();
 
     this.formSearchPromoCodes.patchValue( formParams );
-    this.searchForm();
+    if ( this.isQueryParams ) this.searchForm();
   }
 
   private initFormSearchPromoCodes() {
@@ -227,12 +229,13 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   searchForm(): void {
     this.isTable = true;
     this.isLoader = true;
+    this.isQueryParams = false;
     this.searchParams = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
     _.chain( this.searchParams )
       .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
       .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
       .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ?  moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+      .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
       .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
@@ -256,7 +259,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
         this.promoCode = promoCode;
         this.isLoader = false;
       } );
-
+    this.isQueryParams = false;
     this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: this.searchParams } );
   }
 
