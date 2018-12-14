@@ -38,8 +38,8 @@ export class ContactService {
     return this.http.delete( `${this.configService.crmApi}/crm/contact/deleteContacts`, httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
-  putContact( params ): Observable<any>  {
-    this.subjectPutContact.next();
+  putContact( params, isSubjectNext: boolean = true ): Observable<any> {
+    if ( isSubjectNext ) this.subjectPutContact.next();
     return this.http.put( `${this.configService.crmApi}/crm/contact`, params ).pipe( this.retryRequestService.retry() );
   }
 

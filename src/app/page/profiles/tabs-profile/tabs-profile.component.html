@@ -126,36 +126,36 @@
   </mat-card>
 
   <mat-tab-group backgroundColor="primary" color="accent">
-    <mat-tab label="Профиль">
-      <ng-template matTabContent>
-        <app-profile [id]="profileId"></app-profile>
-      </ng-template>
-    </mat-tab>
+    <!--<mat-tab label="Профиль">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-profile [id]="profileId"></app-profile>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
     <mat-tab label="Контакты">
       <ng-template matTabContent>
         <app-contact [id]="profileId"></app-contact>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Документы">
-      <ng-template matTabContent>
-        <app-document [id]="profileId"></app-document>
-      </ng-template>
-    </mat-tab>
-    <mat-tab label="Заказы">
-      <ng-template matTabContent>
-        <app-order [id]="profileId"></app-order>
-      </ng-template>
-    </mat-tab>
-    <mat-tab
-      label="Сообщения"
-      appAccessRights="distributions:read"
-      [appAccessDisabled]="true"
-      (emitAccessDisabled)="accessDisabled = $event"
-      [disabled]="accessDisabled"
-    >
-      <ng-template matTabContent>
-        <app-messages [id]="profileId"></app-messages>
-      </ng-template>
-    </mat-tab>
+    <!--<mat-tab label="Документы">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-document [id]="profileId"></app-document>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
+    <!--<mat-tab label="Заказы">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-order [id]="profileId"></app-order>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
+    <!--<mat-tab-->
+      <!--label="Сообщения"-->
+      <!--appAccessRights="distributions:read"-->
+      <!--[appAccessDisabled]="true"-->
+      <!--(emitAccessDisabled)="accessDisabled = $event"-->
+      <!--[disabled]="accessDisabled"-->
+    <!--&gt;-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-messages [id]="profileId"></app-messages>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
   </mat-tab-group>
 </div>

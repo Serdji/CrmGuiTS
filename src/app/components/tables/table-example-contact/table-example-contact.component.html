@@ -36,15 +36,21 @@
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="contactDistribution">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Контакт для рассылки </mat-header-cell>
+    <ng-container matColumnDef="useForDistribution">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Контакт для рассылки</mat-header-cell>
       <mat-cell
         class="table__cell"
         *matCellDef="let element"
-        (click)="contactDistribution( element.contactDistribution, element.contactId )"
+        (click)="contactDistribution( {
+            'contactId' : element.contactId,
+            'customerId' : element.customerId,
+            'contactText' : element.contactText,
+            'contactTypeId' : element.contactType.contactTypeId,
+            'useForDistribution' : element.useForDistribution
+          } )"
       >
-        <mat-icon *ngIf=" element.contactDistribution " class="_true">done</mat-icon>
-        <mat-icon *ngIf=" !element.contactDistribution " class="_false">clear</mat-icon>
+        <mat-icon *ngIf=" element.useForDistribution " class="_true">done</mat-icon>
+        <mat-icon *ngIf=" !element.useForDistribution " class="_false">clear</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -54,7 +60,6 @@
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactText}}</span>
       </mat-cell>
     </ng-container>
-
 
 
     <ng-container matColumnDef="contactId" stickyEnd>
