@@ -116,13 +116,13 @@
     </mat-grid-list>
   </form>
 
-  <!--<mat-card class="search-promotions-codes__table" *ngIf="isTable">-->
-    <!--<mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>-->
-    <!--<ng-template #loaderDisabled>-->
-      <!--<app-table-async-promo-code-profile-->
-        <!--*ngIf="promoCode.result.length !== 0"-->
-        <!--[tableDataSource]="promoCode.result">-->
-      <!--</app-table-async-promo-code-profile>-->
-    <!--</ng-template>-->
-  <!--</mat-card>-->
+  <mat-card class="search-promotions-codes__table" *ngIf="isTable">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-table-async-search-promo-code
+        *ngIf="promoCode.result.length !== 0"
+        [tableDataSource]="promoCode.result">
+      </app-table-async-search-promo-code>
+    </ng-template>
+  </mat-card>
 </div>

@@ -18,6 +18,7 @@ import { TableAsyncPromotionsComponent } from './table-async-promotions/table-as
 import { PromoCodeModule } from '../promo-code/promo-code.module';
 import { TableAsyncService } from '../../services/table-async.service';
 import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-profile/table-async-promo-code-profile.component';
+import { TableAsyncSearchPromoCodeComponent } from './table-async-search-promo-code/table-async-search-promo-code.component';
 
 @NgModule({
   imports: [
@@ -41,6 +42,7 @@ import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-pr
     TableAsyncDistributionProfileComponent,
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
+    TableAsyncSearchPromoCodeComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -55,6 +57,7 @@ import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-pr
     TableAsyncDistributionProfileComponent,
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
+    TableAsyncSearchPromoCodeComponent,
   ],
   providers: [
     TableAsyncService
