@@ -9,12 +9,15 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
 
+  public progress: boolean;
+
   private isActive: boolean;
 
   constructor() { }
 
   ngOnInit(): void {
     this.isActive = true;
+    this.progress = false;
   }
 
   ngOnDestroy(): void {

@@ -1,3 +1,168 @@
-<p>
-  code works!
-</p>
+<div class="promo-code">
+  <mat-card *ngIf="progress">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
+  <mat-accordion *ngIf="!progress" multi="true">
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title class="promo-code__title">
+          <span>Промокод: </span>
+          <span><b> Мой промокод </b></span>
+        </mat-panel-title>
+        <mat-panel-description class="promo-code__title">
+          <span> Промоакция: </span>
+          <span><b> Лето </b></span>
+        </mat-panel-description>
+        <mat-panel-description class="_data">
+          <span> Account code:  </span>
+          <span><b> 100 </b></span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-card class="promo-code__card mat-elevation-z0">
+          <div class="promo-code__box">
+
+
+            <div class="promo-code__info">
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Период действия от:</span>
+                <div class="promo-code__info-params">
+                  <span><b>03.04.2017</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Период действия до:</span>
+                <div class="promo-code__info-params">
+                  <span><b>03.04.2018</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Кратность:</span>
+                <div class="promo-code__info-params">
+                  <span><b>13</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Свойство кратности:</span>
+                <div class="promo-code__info-params">
+                  <span><b>Проценты</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Персональная кастность использования:</span>
+                <div class="promo-code__info-params">
+                  <span><b>3</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Общее число раз использования промокода:</span>
+                <div class="promo-code__info-params">
+                  <span><b>100</b></span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="promo-code__info">
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Номер рейсов:</span>
+                <div class="promo-code__info-params">
+                  <span><b>7R-124F</b></span>
+                  <span><b>7R-124R</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Период реализации от:</span>
+                <div class="promo-code__info-params">
+                  <span><b>03.04.2017</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Период реализации до:</span>
+                <div class="promo-code__info-params">
+                  <span><b>03.04.2018</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Бренды:</span>
+                <div class="promo-code__info-params">
+                  <span><b>Brand1</b></span>
+                  <span><b>Brand2</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">RBD:</span>
+                <div class="promo-code__info-params">
+                  <span><b>B</b></span>
+                  <span><b>R</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Направления:</span>
+                <div class="promo-code__info-params">
+                  <div class="promo-code__info-direction">
+                    ALA
+                    <mat-icon>arrow_right_alt</mat-icon>
+                    AKX
+                  </div>
+                  <div class="promo-code__info-direction">
+                    FRA
+                    <mat-icon>arrow_right_alt</mat-icon>
+                    NBO
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="promo-code__info">
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Профиль:</span>
+                <div class="promo-code__info-params">
+                  <span><b>612345</b></span>
+                  <span><b>34566334</b></span>
+                  <span><b>456456</b></span>
+                  <span><b>678123</b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Группы сегментации:</span>
+                <div class="promo-code__info-params">
+                  <span><b>Группа сегментаций 12</b></span>
+                  <span><b>Группа сегментаций 113</b></span>
+                  <span><b>Группа сегментаций сегментаций сегментаций 456456 </b></span>
+                </div>
+              </div>
+
+              <div class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Группы пассажиров:</span>
+                <div class="promo-code__info-params">
+                  <span><b>Группа пассажиров 12</b></span>
+                  <span><b>Группа пассажиров 113</b></span>
+                  <span><b>Группа пассажиров 456456 </b></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+
+          <span class="promo-code__link" routerLink="/crm/add-promotions-codes" [queryParams]="{ id: 81 }">Перейти в промокод</span>
+        </mat-card>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
