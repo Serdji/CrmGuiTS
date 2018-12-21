@@ -93,7 +93,6 @@
                      [matAutocomplete]="customerGroup">
               <mat-autocomplete #customerGroup="matAutocomplete">
                 <mat-option *ngFor="let customerGroup of customerGroupOptions | async"
-                            [id]="customerGroup.customerGroupId"
                             [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
