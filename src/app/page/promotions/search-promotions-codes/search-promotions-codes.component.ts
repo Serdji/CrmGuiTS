@@ -71,10 +71,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( 1000 ),
-      )
+      .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         if ( _.size( params ) > 0 ) {
           this.formFilling( params );
@@ -143,8 +140,24 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       .set( 'flightDateTo', params.flightDateTo_From ? new Date( params.flightDateTo_From.split( '.' ).reverse().join( ',' ) ) : '' )
       .value();
 
+    this.listSegmentationService.getSegmentation()
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        takeWhile( _ => !!params.segmentationId ),
+        map( ( segmentation: ISegmentation[] ) => _.set( formParams, 'segmentationId', _.chain( segmentation ).find( [ 'segmentationId', +params.segmentationId ] ).get( 'title' ).value() ) )
+      )
+      .subscribe( formParamsSegmentation => this.formSearchPromoCodes.patchValue( formParamsSegmentation ) );
+
+    this.profileGroupService.getProfileGroup()
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        takeWhile( _ => !!params.customerGroupId ),
+        map( ( customerGroup: IcustomerGroup[] ) => _.set( formParams, 'customerGroupId', _.chain( customerGroup ).find( [ 'customerGroupId', +params.customerGroupId ] ).get( 'customerGroupName' ).value() ) )
+      )
+      .subscribe( formParamsCustomerGroup => this.formSearchPromoCodes.patchValue( formParamsCustomerGroup ) );
+
     this.formSearchPromoCodes.patchValue( formParams );
-    if ( this.isQueryParams ) this.searchForm();
+    // if ( this.isQueryParams ) this.searchForm();
   }
 
   private initFormSearchPromoCodes() {
