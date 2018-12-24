@@ -13,11 +13,11 @@
           <span> Промоакция: </span>
           <span><b> {{ promoCode.promotion.promotionName }} </b></span>
         </mat-panel-description>
-        <mat-panel-description>
+        <mat-panel-description class="promo-code__title">
           <span> Период действия от:  </span>
           <span><b> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </b></span>
         </mat-panel-description>
-        <mat-panel-description class="_data">
+        <mat-panel-description class="promo-code__title _data">
           <span> Период действия до:  </span>
           <span><b> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </b></span>
         </mat-panel-description>
