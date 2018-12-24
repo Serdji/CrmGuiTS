@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit, Input } from '@angular/core';
 import { IPromoCode } from '../../../../interface/ipromo-code';
 import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-promo-code',
@@ -30,6 +31,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodes: IPromoCode ) => {
         this.promoCodes = promoCodes;
+        _.set( this.promoCodes, 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) );
         this.progress = false;
       } );
   }

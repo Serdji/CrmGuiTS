@@ -13,9 +13,13 @@
           <span> Промоакция: </span>
           <span><b> {{ promoCode.promotion.promotionName }} </b></span>
         </mat-panel-description>
+        <mat-panel-description>
+          <span> Период действия от:  </span>
+          <span><b> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </b></span>
+        </mat-panel-description>
         <mat-panel-description class="_data">
-          <span> Account code:  </span>
-          <span><b> {{promoCode.accountCode}} </b></span>
+          <span> Период действия до:  </span>
+          <span><b> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </b></span>
         </mat-panel-description>
       </mat-expansion-panel-header>
 
@@ -27,16 +31,9 @@
 
             <div class="promo-code__info">
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Период действия от:</span>
+                <span class="promo-code__info-text"> Account code:</span>
                 <div class="promo-code__info-params">
-                  <span><b>{{promoCode.dateFrom | date:'dd.MM.yyyy'}}</b></span>
-                </div>
-              </div>
-
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Период действия до:</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.dateTo | date:'dd.MM.yyyy'}}</b></span>
+                  <span><b>{{promoCode.accountCode}}</b></span>
                 </div>
               </div>
 
