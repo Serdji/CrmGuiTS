@@ -21,14 +21,17 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.progress = false;
+    this.progress = true;
     this.initPromoCodes();
   }
 
   private initPromoCodes() {
     this.promoCodeService.getPromoCodes( { 'customerId': this.id } )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
+      .subscribe( ( promoCodes: IPromoCode ) => {
+        this.promoCodes = promoCodes;
+        this.progress = false;
+      } );
   }
 
   ngOnDestroy(): void {
