@@ -13,6 +13,7 @@ import { OrderService } from './order/order.service';
 import { RouterModule } from '@angular/router';
 import { MessagesModule } from './messages/messages.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { PromoCodeModule } from './promo-code/promo-code.module';
 
 @NgModule( {
   imports: [
@@ -27,6 +28,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     PipesModule,
     RouterModule,
     DirectivesModule,
+    PromoCodeModule
   ],
   declarations: [ TabsProfileComponent ],
   providers: [
