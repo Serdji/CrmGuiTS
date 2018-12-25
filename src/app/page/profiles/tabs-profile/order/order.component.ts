@@ -20,6 +20,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public currencyDefault: string;
 
   private isActive: boolean;
+  private isSortFikterReverse: boolean;
 
   constructor(
     private orderService: OrderService,
@@ -29,6 +30,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.progress = true;
+    this.isSortFikterReverse = false;
     this.initBooking();
     this.initCurrencyDefault();
   }
@@ -50,6 +52,12 @@ export class OrderComponent implements OnInit, OnDestroy {
         },
         error => this.progress = false
       );
+  }
+
+  sortFilter( title: string ): void {
+    this.isSortFikterReverse = !this.isSortFikterReverse;
+    if ( this.isSortFikterReverse ) this.orders = _.chain( this.orders ).sortBy( title ).value();
+    else this.orders = _.chain( this.orders ).sortBy( title ).reverse().value();
   }
 
   ngOnDestroy(): void {
