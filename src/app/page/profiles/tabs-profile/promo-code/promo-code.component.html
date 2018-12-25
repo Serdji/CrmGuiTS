@@ -58,18 +58,18 @@
 
     <mat-expansion-panel *ngFor=" let promoCode of promoCodes.result ">
       <mat-expansion-panel-header>
-        <mat-panel-title class="promo-code__title">
+        <div class="promo-code__title">
           <span> {{promoCode.code}} </span>
-        </mat-panel-title>
-        <mat-panel-description class="promo-code__title">
+        </div>
+        <div class="promo-code__title">
           <span> {{ promoCode.promotion.promotionName }} </span>
-        </mat-panel-description>
-        <mat-panel-description class="promo-code__title">
+        </div>
+        <div class="promo-code__title">
           <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
-        </mat-panel-description>
-        <mat-panel-description class=" _data">
+        </div>
+        <div class="promo-code__title _data">
           <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
-        </mat-panel-description>
+        </div>
       </mat-expansion-panel-header>
 
 
