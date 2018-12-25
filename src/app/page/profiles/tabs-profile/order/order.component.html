@@ -29,7 +29,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="order__filter _data">
+      <div  class="order__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -45,15 +45,17 @@
 
     <mat-expansion-panel *ngFor="let order of orders">
       <mat-expansion-panel-header>
-        <mat-panel-title class="order__title">
-          <span>{{order.recloc}}</span>
-        </mat-panel-title>
-        <mat-panel-description class="order__title">
-          <span>{{order.BookingStatus | fieldTranslation}}</span>
-        </mat-panel-description>
-        <mat-panel-description  class="_data">
-          <span>{{order.createDate | date:'dd.MM.yyyy'}}</span>
-        </mat-panel-description>
+        <div class="order__header-wrapper">
+          <div class="order__title">
+            <span>{{order.recloc}}</span>
+          </div>
+          <div class="order__title">
+            <span>{{order.BookingStatus | fieldTranslation}}</span>
+          </div>
+          <div  class="order__title">
+            <span>{{order.createDate | date:'dd.MM.yyyy'}}</span>
+          </div>
+        </div>
       </mat-expansion-panel-header>
 
       <ng-template matExpansionPanelContent>

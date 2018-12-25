@@ -41,7 +41,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="promo-code__filter _data">
+      <div  class="promo-code__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -58,17 +58,19 @@
 
     <mat-expansion-panel *ngFor=" let promoCode of promoCodes.result ">
       <mat-expansion-panel-header>
-        <div class="promo-code__title">
-          <span> {{promoCode.code}} </span>
-        </div>
-        <div class="promo-code__title">
-          <span> {{ promoCode.promotion.promotionName }} </span>
-        </div>
-        <div class="promo-code__title">
-          <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
-        </div>
-        <div class="promo-code__title _data">
-          <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+        <div class="promo-code__header-wrapper">
+          <div class="promo-code__title">
+            <span> {{promoCode.code}} </span>
+          </div>
+          <div class="promo-code__title">
+            <span> {{ promoCode.promotion.promotionName }} </span>
+          </div>
+          <div class="promo-code__title">
+            <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
+          </div>
+          <div class="promo-code__title">
+            <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+          </div>
         </div>
       </mat-expansion-panel-header>
 
