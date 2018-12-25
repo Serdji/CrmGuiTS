@@ -4,8 +4,8 @@
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
 
-    <mat-card class="order__accordion-sort mat-elevation-z0">
-      <div class="order__accordion-filter">
+    <mat-card class="order__sort mat-elevation-z0">
+      <div class="order__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -17,7 +17,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div class="order__accordion-filter">
+      <div class="order__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -29,7 +29,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="order__accordion-filter _data">
+      <div  class="order__filter _data">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -45,10 +45,10 @@
 
     <mat-expansion-panel *ngFor="let order of orders">
       <mat-expansion-panel-header>
-        <mat-panel-title class="order__accordion-title">
+        <mat-panel-title class="order__title">
           <span>{{order.recloc}}</span>
         </mat-panel-title>
-        <mat-panel-description class="order__accordion-title">
+        <mat-panel-description class="order__title">
           <span>{{order.BookingStatus | fieldTranslation}}</span>
         </mat-panel-description>
         <mat-panel-description  class="_data">
