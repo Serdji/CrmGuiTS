@@ -3,7 +3,35 @@
   &._data
     flex-grow: 0;
 
+    span
+      min-width: 74px;
+
 .promo-code
+
+  &__title
+    width: 645px;
+
+  &__sort,
+  &__filter
+    display: flex;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 15px;
+    font-weight: 400;
+
+  &__sort
+    border-radius: 0;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.2), 0 0 2px 0 rgba(0,0,0,0.14), 0 0 0 0 rgba(0,0,0,0.12)
+
+  &__filter
+    flex-grow: 1;
+
+    span
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+    &._data
+      flex-grow: 0;
 
   &__card
     margin: auto;
@@ -13,6 +41,9 @@
 
   &__title
     width: 300px;
+
+    span
+      min-width: 74px;
 
   &__link
     margin: 0 auto;

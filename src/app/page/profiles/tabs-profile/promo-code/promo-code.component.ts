@@ -17,12 +17,14 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   public promoCodes: IPromoCode;
 
   private isActive: boolean;
+  private isSortFilterReverse: boolean;
 
   constructor( private promoCodeService: PromoCodeService ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.progress = true;
+    this.isSortFilterReverse = false;
     this.initPromoCodes();
   }
 
@@ -34,6 +36,12 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
         _.set( this.promoCodes, 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) );
         this.progress = false;
       } );
+  }
+
+  sortFilter( title: string ): void {
+    this.isSortFilterReverse = !this.isSortFilterReverse;
+    if ( this.isSortFilterReverse )  this.promoCodes.result = _.chain(  this.promoCodes.result ).sortBy( title ).value();
+    else  this.promoCodes.result = _.chain(  this.promoCodes.result ).sortBy( title ).reverse().value();
   }
 
   ngOnDestroy(): void {
