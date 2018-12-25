@@ -2,6 +2,7 @@ import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MessagesService } from './messages.service';
 import { takeWhile } from 'rxjs/operators';
 import { IMessages } from '../../../../interface/imessages';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-messages',
@@ -16,12 +17,14 @@ export class MessagesComponent implements OnInit, OnDestroy {
   public progress: boolean;
 
   private isActive: boolean;
+  private isSortFilterReverse: boolean;
 
   constructor( private messagesService: MessagesService ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.progress = true;
+    this.isSortFilterReverse = false;
     this.intiMessages();
   }
 
@@ -32,6 +35,12 @@ export class MessagesComponent implements OnInit, OnDestroy {
         this.messages = messages;
         this.progress = false;
       } );
+  }
+
+  sortFilter( title: string ): void {
+    this.isSortFilterReverse = !this.isSortFilterReverse;
+    if ( this.isSortFilterReverse )  this.messages = _.chain(  this.messages ).sortBy( title ).value();
+    else  this.messages = _.chain(  this.messages ).sortBy( title ).reverse().value();
   }
 
   ngOnDestroy(): void {
