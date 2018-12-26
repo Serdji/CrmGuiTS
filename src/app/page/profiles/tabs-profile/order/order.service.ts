@@ -60,7 +60,8 @@ export class OrderService {
         this.retryRequestService.retry(),
         map( ( orders: any ) => {
           orders = _( orders ).sortBy( 'lut' ).reverse().value();
-          let counterServicesIsEmd = 0;
+          let counterActiveServicesIsEmd = 0;
+          let counterCancelledServicesIsEmd = 0;
 
           _.each( orders, order => {
             if ( order.distrRecloc ) _.merge( _.find( order.pos ), { distrRecloc: _.find( order.distrRecloc ) } );
@@ -78,7 +79,13 @@ export class OrderService {
 
             if ( order.BookingStatus === 'Active' ) {
               _.each( order.services, service => {
-                if ( service.emd ) ++counterServicesIsEmd;
+                if ( service.emd ) ++counterActiveServicesIsEmd;
+              } );
+            }
+
+            if ( order.BookingStatus === 'Cancelled' ) {
+              _.each( order.services, service => {
+                if ( service.emd ) ++counterCancelledServicesIsEmd;
               } );
             }
 
@@ -219,11 +226,14 @@ export class OrderService {
 
 
           const countActiveTicket = _( orders ).filter( [ 'BookingStatus', 'Active' ] ).size();
+          const countCancelledTicket = _( orders ).filter( [ 'BookingStatus', 'Cancelled' ] ).size();
           const { lut } = _.maxBy( orders, o => o.lut );
 
           orders.push( {
             countActiveTicket,
-            counterServicesIsEmd,
+            countCancelledTicket,
+            counterActiveServicesIsEmd,
+            counterCancelledServicesIsEmd,
             lut,
             totalAmount: {
               ticket: {

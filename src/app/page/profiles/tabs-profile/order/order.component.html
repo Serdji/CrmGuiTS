@@ -3,20 +3,59 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
+
+    <mat-card class="order__sort mat-elevation-z0">
+      <div class="order__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('recloc')"
+        >
+          <b>Заказ №&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="order__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('BookingStatus')"
+        >
+          <b>Статус заказа&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div  class="order__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('createDate')"
+        >
+          <b>Дата создания&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+    </mat-card>
+
     <mat-expansion-panel *ngFor="let order of orders">
       <mat-expansion-panel-header>
-        <mat-panel-title class="order__accordion-title">
-          <span>Заказ №&nbsp;</span>
-          <span><b>{{order.recloc}}</b></span>
-        </mat-panel-title>
-        <mat-panel-description class="order__accordion-title">
-          <span>Статус заказа:&nbsp;</span>
-          <span><b>{{order.BookingStatus | fieldTranslation}}</b></span>
-        </mat-panel-description>
-        <mat-panel-description  class="_data">
-          <span>Дата создания:&nbsp;</span>
-          <span><b>{{order.createDate | date:'dd.MM.yyyy'}}</b></span>
-        </mat-panel-description>
+        <div class="order__header-wrapper">
+          <div class="order__title">
+            <span>{{order.recloc}}</span>
+          </div>
+          <div class="order__title">
+            <span>{{order.BookingStatus | fieldTranslation}}</span>
+          </div>
+          <div  class="order__title">
+            <span>{{order.createDate | date:'dd.MM.yyyy'}}</span>
+          </div>
+        </div>
       </mat-expansion-panel-header>
 
       <ng-template matExpansionPanelContent>

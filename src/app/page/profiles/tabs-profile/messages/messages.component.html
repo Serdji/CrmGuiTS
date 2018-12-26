@@ -3,20 +3,59 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
+
+    <mat-card class="messages__sort mat-elevation-z0">
+      <div class="messages__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('parsedSubject')"
+        >
+          <b>Тема письма&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="messages__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('distributionCustomerStatus.statusNameRus')"
+        >
+          <b>Текущий статус&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div  class="messages__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('lastTryDT')"
+        >
+          <b>Дата и время рассылки&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+    </mat-card>
+
     <mat-expansion-panel *ngFor="let message of messages;">
       <mat-expansion-panel-header>
-        <mat-panel-title class="messages__title">
-          <span>Тема письма: </span>
-          <span><b>{{message.parsedSubject}}</b></span>
-        </mat-panel-title>
-        <mat-panel-description class="messages__title">
-          <span>Текущий статус: </span>
-          <span><b>{{message.distributionCustomerStatus.statusNameRus}}</b></span>
-        </mat-panel-description>
-        <mat-panel-description class="_data">
-          <span>Дата и время рассылки: </span>
-          <span><b>{{message.lastTryDT | date: 'dd.MM.yyyy, h:mm a'}}</b></span>
-        </mat-panel-description>
+        <div class="messages__header-wrapper">
+          <div class="messages__title">
+            <span>{{message.parsedSubject}}</span>
+          </div>
+          <div class="messages__title">
+            <span>{{message.distributionCustomerStatus.statusNameRus}}</span>
+          </div>
+          <div class="messages__title">
+            <span>{{message.lastTryDT | date: 'dd.MM.yyyy, HH:mm'}}</span>
+          </div>
+        </div>
       </mat-expansion-panel-header>
 
 

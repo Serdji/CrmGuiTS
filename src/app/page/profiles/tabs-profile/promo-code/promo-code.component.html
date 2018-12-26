@@ -3,24 +3,75 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
+
+    <mat-card class="promo-code__sort mat-elevation-z0">
+      <div class="promo-code__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('code')"
+        >
+          <b>Промокод&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="promo-code__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('promotion.promotionName')"
+        >
+          <b>Промоакция&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div  class="promo-code__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('dateFrom')"
+        >
+          <b>Период действия от&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div  class="promo-code__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('dateTo')"
+        >
+          <b>Период действия до</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+    </mat-card>
+
+
     <mat-expansion-panel *ngFor=" let promoCode of promoCodes.result ">
       <mat-expansion-panel-header>
-        <mat-panel-title class="promo-code__title">
-          <span>Промокод: </span>
-          <span><b> {{promoCode.code}} </b></span>
-        </mat-panel-title>
-        <mat-panel-description class="promo-code__title">
-          <span> Промоакция: </span>
-          <span><b> {{ promoCode.promotion.promotionName }} </b></span>
-        </mat-panel-description>
-        <mat-panel-description>
-          <span> Период действия от:  </span>
-          <span><b> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </b></span>
-        </mat-panel-description>
-        <mat-panel-description class="_data">
-          <span> Период действия до:  </span>
-          <span><b> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </b></span>
-        </mat-panel-description>
+        <div class="promo-code__header-wrapper">
+          <div class="promo-code__title">
+            <span> {{promoCode.code}} </span>
+          </div>
+          <div class="promo-code__title">
+            <span> {{ promoCode.promotion.promotionName }} </span>
+          </div>
+          <div class="promo-code__title">
+            <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
+          </div>
+          <div class="promo-code__title">
+            <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+          </div>
+        </div>
       </mat-expansion-panel-header>
 
 
