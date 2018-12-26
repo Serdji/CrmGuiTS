@@ -38,9 +38,14 @@ export class MessagesComponent implements OnInit, OnDestroy {
   }
 
   sortFilter( title: string ): void {
-    this.isSortFilterReverse = !this.isSortFilterReverse;
-    if ( this.isSortFilterReverse )  this.messages = _.chain(  this.messages ).sortBy( title ).value();
-    else  this.messages = _.chain(  this.messages ).sortBy( title ).reverse().value();
+    this.messages = _.chain( this.messages )
+      .sortBy( title )
+      .thru( val => {
+        this.isSortFilterReverse = !this.isSortFilterReverse;
+        if ( this.isSortFilterReverse ) return val;
+        else return _.reverse( val );
+      } )
+      .value();
   }
 
   ngOnDestroy(): void {

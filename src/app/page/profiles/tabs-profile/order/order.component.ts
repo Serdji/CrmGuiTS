@@ -55,9 +55,14 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   sortFilter( title: string ): void {
-    this.isSortFilterReverse = !this.isSortFilterReverse;
-    if ( this.isSortFilterReverse ) this.orders = _.chain( this.orders ).sortBy( title ).value();
-    else this.orders = _.chain( this.orders ).sortBy( title ).reverse().value();
+    this.orders = _.chain( this.orders )
+      .sortBy( title )
+      .thru( val => {
+        this.isSortFilterReverse = !this.isSortFilterReverse;
+        if ( this.isSortFilterReverse ) return val;
+        else return _.reverse( val );
+      } )
+      .value();
   }
 
   ngOnDestroy(): void {

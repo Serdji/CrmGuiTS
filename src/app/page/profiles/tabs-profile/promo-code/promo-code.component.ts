@@ -39,9 +39,14 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   }
 
   sortFilter( title: string ): void {
-    this.isSortFilterReverse = !this.isSortFilterReverse;
-    if ( this.isSortFilterReverse )  this.promoCodes.result = _.chain(  this.promoCodes.result ).sortBy( title ).value();
-    else  this.promoCodes.result = _.chain(  this.promoCodes.result ).sortBy( title ).reverse().value();
+    this.promoCodes.result = _.chain( this.promoCodes.result )
+      .sortBy( title )
+      .thru( val => {
+        this.isSortFilterReverse = !this.isSortFilterReverse;
+        if ( this.isSortFilterReverse ) return val;
+        else return _.reverse( val );
+      } )
+      .value();
   }
 
   ngOnDestroy(): void {
