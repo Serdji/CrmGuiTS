@@ -90,11 +90,14 @@
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Всего заказов:</span>
+                  <span class="tabs-profile__content-text">Оформленных заказов:</span>
                   <span><b *ngIf="orders"> {{orders[orders.length - 1].countActiveTicket}}</b></span>
+                  <span> | </span>
+                  <span class="tabs-profile__content-text">Аннулированных заказов:</span>
+                  <span><b *ngIf="orders"> {{orders[orders.length - 1].countCancelledTicket}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">На сумму:</span>
+                  <span class="tabs-profile__content-text">Оформленных на сумму:</span>
                   <span><b *ngIf="orders">
                     {{ orders[orders.length - 1].totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
                     {{ orders[orders.length - 1].totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
@@ -102,11 +105,14 @@
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Всего платных услуг:</span>
-                  <span><b *ngIf="orders"> {{orders[orders.length - 1].counterServicesIsEmd}}</b></span>
+                  <span class="tabs-profile__content-text">Оформленных платных услуг:</span>
+                  <span><b *ngIf="orders"> {{orders[orders.length - 1].counterActiveServicesIsEmd}}</b></span>
+                  <span> | </span>
+                  <span class="tabs-profile__content-text">Аннулированных платных услуг:</span>
+                  <span><b *ngIf="orders"> {{orders[orders.length - 1].counterCancelledServicesIsEmd}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">На сумму:</span>
+                  <span class="tabs-profile__content-text">Оформленных на сумму:</span>
                   <span><b *ngIf="orders">
                     {{ orders[orders.length - 1].totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
                     {{ orders[orders.length - 1].totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
@@ -141,11 +147,11 @@
         <!--<app-document [id]="profileId"></app-document>-->
       <!--</ng-template>-->
     <!--</mat-tab>-->
-    <!--<mat-tab label="Заказы">-->
-      <!--<ng-template matTabContent>-->
-        <!--<app-order [id]="profileId"></app-order>-->
-      <!--</ng-template>-->
-    <!--</mat-tab>-->
+    <mat-tab label="Заказы">
+      <ng-template matTabContent>
+        <app-order [id]="profileId"></app-order>
+      </ng-template>
+    </mat-tab>
     <!--<mat-tab-->
       <!--label="Сообщения"-->
       <!--appAccessRights="distributions:read"-->
@@ -157,10 +163,10 @@
         <!--<app-messages [id]="profileId"></app-messages>-->
       <!--</ng-template>-->
     <!--</mat-tab>-->
-    <mat-tab label="Промокоды">
-      <ng-template matTabContent>
-        <app-promo-code [id]="profileId"></app-promo-code>
-      </ng-template>
-    </mat-tab>
+    <!--<mat-tab label="Промокоды">-->
+      <!--<ng-template matTabContent>-->
+        <!--<app-promo-code [id]="profileId"></app-promo-code>-->
+      <!--</ng-template>-->
+    <!--</mat-tab>-->
   </mat-tab-group>
 </div>
