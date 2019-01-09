@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, pipe, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
@@ -22,7 +22,7 @@ import { IPromoCode } from '../../../interface/ipromo-code';
 import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
-import { promotionValidator } from '../../../validators/promotionValidator';
+import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -277,7 +277,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initFormPromoCodes() {
     this.formPromoCodes = this.fb.group( {
-      promotionName: [ '', [Validators.required], promotionValidator(this.addPromotionsService) ],
+      promotionName: [ '', [Validators.required], promotionValidatorAsync(this.addPromotionsService) ],
       code: '',
       accountCode: '',
       description: '',
