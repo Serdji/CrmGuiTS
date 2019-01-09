@@ -22,6 +22,7 @@ import { IPromoCode } from '../../../interface/ipromo-code';
 import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
+import { promotionValidator } from '../../../validators/promotionValidator';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -276,7 +277,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initFormPromoCodes() {
     this.formPromoCodes = this.fb.group( {
-      promotionName: [ '', Validators.required ],
+      promotionName: [ '', [Validators.required], promotionValidator(this.addPromotionsService) ],
       code: '',
       accountCode: '',
       description: '',
@@ -451,7 +452,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
-    console.log(this.formPromoCodes.get( 'promotionName' ));
     if ( !this.formPromoCodes.invalid ) {
       this.addPromotionsCodesService.savePromoCode( this.promoCodeParameters() )
         .pipe( takeWhile( _ => this.isActive ) )

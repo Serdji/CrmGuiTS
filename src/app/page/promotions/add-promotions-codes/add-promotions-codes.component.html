@@ -13,7 +13,8 @@
                 <mat-option *ngFor="let promotion of promotionsOptions | async"
                             [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
               </mat-autocomplete>
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.required" >Обязательное поле</mat-error>
+              <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.promotionValidator" >{{ formPromoCodes.get( 'promotionName' ).errors?.promotionValidator.message }}</mat-error>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
