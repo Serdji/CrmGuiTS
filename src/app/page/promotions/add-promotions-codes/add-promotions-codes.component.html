@@ -145,7 +145,7 @@
         <mat-card class="add-promotions-codes__card">
           <mat-card-content class="add-promotions-codes__content _d-b">
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="usesPerPerson" type="text" placeholder="Персональная кратность использования">
+              <input matInput formControlName="usesPerPerson" type="text" placeholder="Персональная Размерность использования">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
               <input matInput formControlName="usesTotal" type="text" placeholder="Общее число раз использования промокода">
@@ -187,10 +187,10 @@
               <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="val" type="text" placeholder="Кратность">
+              <input matInput formControlName="val" type="text" placeholder="Размерность">
             </mat-form-field>
             <mat-form-field class="add-promotions-cod__input">
-              <mat-select formControlName="promoCodeValTypeId" placeholder="Свойство кратности">
+              <mat-select formControlName="promoCodeValTypeId" placeholder="Свойство размерности">
                 <mat-option></mat-option>
                 <mat-option
                   *ngFor="let promoCodeValType of promoCodeValTypes"
