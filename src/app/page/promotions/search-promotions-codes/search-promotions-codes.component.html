@@ -1,7 +1,7 @@
 <div class="search-promotions-codes">
   <form class="search-promotions-codes__form" [formGroup]="formSearchPromoCodes">
 
-    <mat-grid-list cols="3" rowHeight="400px">
+    <mat-grid-list cols="3" rowHeight="340px">
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="search-promotions-codes__card">
@@ -42,9 +42,9 @@
               <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
             </mat-form-field>
-            <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="val" type="text" placeholder="Размерность">
-            </mat-form-field>
+            <!--<mat-form-field class="search-promotions-codes__input">-->
+              <!--<input matInput formControlName="val" type="text" placeholder="Размерность">-->
+            <!--</mat-form-field>-->
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
