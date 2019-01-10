@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, pipe, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
@@ -22,6 +22,7 @@ import { IPromoCode } from '../../../interface/ipromo-code';
 import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
+import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -276,7 +277,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initFormPromoCodes() {
     this.formPromoCodes = this.fb.group( {
-      promotionName: '',
+      promotionName: [ '', [Validators.required], promotionValidatorAsync(this.addPromotionsService) ],
       code: '',
       accountCode: '',
       description: '',
@@ -451,12 +452,14 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
-    this.addPromotionsCodesService.savePromoCode( this.promoCodeParameters() )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.windowDialog( `Промокод успешно сохранен`, 'ok' );
-        this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { id: value.promoCodeId } } );
-      } );
+    if ( !this.formPromoCodes.invalid ) {
+      this.addPromotionsCodesService.savePromoCode( this.promoCodeParameters() )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => {
+          this.windowDialog( `Промокод успешно сохранен`, 'ok' );
+          this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { id: value.promoCodeId } } );
+        } );
+    }
   }
 
   searchForm(): void {
@@ -466,13 +469,15 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   createForm(): void {
-    const params = this.promoCodeParameters();
-    _.set( params, 'promoCodeId', this.promoCodeId );
-    this.addPromotionsCodesService.updatePromoCode( params )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        this.windowDialog( `Промокод успешно изменен`, 'ok' );
-      } );
+    if ( !this.formPromoCodes.invalid ) {
+      const params = this.promoCodeParameters();
+      _.set( params, 'promoCodeId', this.promoCodeId );
+      this.addPromotionsCodesService.updatePromoCode( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.windowDialog( `Промокод успешно изменен`, 'ok' );
+        } );
+    }
   }
 
   clearForm(): void {

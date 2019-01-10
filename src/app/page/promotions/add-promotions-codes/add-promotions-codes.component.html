@@ -13,7 +13,8 @@
                 <mat-option *ngFor="let promotion of promotionsOptions | async"
                             [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
               </mat-autocomplete>
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.required" >Обязательное поле</mat-error>
+              <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.promotionValidator" >{{ formPromoCodes.get( 'promotionName' ).errors?.promotionValidator.message }}</mat-error>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -145,7 +146,7 @@
         <mat-card class="add-promotions-codes__card">
           <mat-card-content class="add-promotions-codes__content _d-b">
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="usesPerPerson" type="text" placeholder="Персональная кратность использования">
+              <input matInput formControlName="usesPerPerson" type="text" placeholder="Персональная Размерность использования">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
               <input matInput formControlName="usesTotal" type="text" placeholder="Общее число раз использования промокода">
@@ -187,10 +188,10 @@
               <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="val" type="text" placeholder="Кратность">
+              <input matInput formControlName="val" type="text" placeholder="Размерность">
             </mat-form-field>
             <mat-form-field class="add-promotions-cod__input">
-              <mat-select formControlName="promoCodeValTypeId" placeholder="Свойство кратности">
+              <mat-select formControlName="promoCodeValTypeId" placeholder="Свойство размерности">
                 <mat-option></mat-option>
                 <mat-option
                   *ngFor="let promoCodeValType of promoCodeValTypes"
