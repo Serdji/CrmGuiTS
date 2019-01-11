@@ -34,14 +34,12 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .subscribe( ( promoCodes: IPromoCode ) => {
         this.promoCodes = promoCodes;
         _.set( this.promoCodes, 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) );
-
         _.each( this.promoCodes.result, result => {
           _.chain( result )
             .set( 'code', _.upperFirst( result.code ) )
             .set( 'promotion.promotionName', _.upperFirst( result.promotion.promotionName ) )
             .value();
         } );
-
         this.progress = false;
       } );
   }

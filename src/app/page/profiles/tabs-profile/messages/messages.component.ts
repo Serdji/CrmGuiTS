@@ -33,6 +33,9 @@ export class MessagesComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( messages: IMessages[] ) => {
         this.messages = messages;
+        _.each( this.messages, message => {
+          _.set( message, 'parsedSubject', _.upperFirst( message.parsedSubject ) );
+        } );
         this.progress = false;
       } );
   }
