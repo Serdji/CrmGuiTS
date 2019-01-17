@@ -277,7 +277,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initFormPromoCodes() {
     this.formPromoCodes = this.fb.group( {
-      promotionName: [ '', [Validators.required], promotionValidatorAsync(this.addPromotionsService) ],
+      promotionName: [ '', [ Validators.required ], promotionValidatorAsync( this.addPromotionsService ) ],
       code: '',
       accountCode: '',
       description: '',
@@ -387,17 +387,13 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   directionAdd(): void {
-    if (
-      this.formPromoCodes.get( 'dep_Location' ).value !== '' &&
-      this.formPromoCodes.get( 'arr_Location' ).value !== ''
-    ) {
-      this.promoCodeRouteList.push(
-        {
-          dep_Location: this.formPromoCodes.get( 'dep_Location' ).value,
-          arr_Location: this.formPromoCodes.get( 'arr_Location' ).value
-        }
-      );
-    }
+    this.promoCodeRouteList.push(
+      {
+        dep_Location: this.formPromoCodes.get( 'dep_Location' ).value,
+        arr_Location: this.formPromoCodes.get( 'arr_Location' ).value
+      }
+    );
+    this.promoCodeRouteList = _.unionWith( this.promoCodeRouteList, _.isEqual );
     this.formPromoCodes.get( 'dep_Location' ).patchValue( '' );
     this.formPromoCodes.get( 'arr_Location' ).patchValue( '' );
   }
@@ -486,7 +482,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   deletePromoCode(): void {
-    this.windowDialog( `Вы действительно хотите удалить промокод  "${ this.promoCodeParameters().code }" ?`, 'delete', 'promoCode', true );
+    this.windowDialog( `Вы действительно хотите удалить промокод  "${this.promoCodeParameters().code}" ?`, 'delete', 'promoCode', true );
   }
 
   ngOnDestroy(): void {
