@@ -96,9 +96,10 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
   }
 
   saveForm(): void {
+    console.log(this.data.params);
     const params = {
       promoCodeId: _.chain( this.promoCodes.result ).find( { 'title': this.formPromoCod.get( 'promoCodeId' ).value } ).get( 'promoCodeId' ).value(),
-      customerIds: this.data.params.customerIds,
+      customersIds: this.data.params.customerIds,
     };
     if ( !this.formPromoCod.invalid ) {
       this.dialogPromoCodeService.savePromoCodeCustomers( params )
