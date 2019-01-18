@@ -32,18 +32,21 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.promoCodeService.getPromoCodes( { 'customerId': this.id } )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodes: IPromoCode ) => {
-        this.promoCodes = promoCodes;
 
+
+        const setValIsType = _.curry(( path, obj ) => _.set( obj, path,_.get( obj, path ) === 1 ? 'количество' : 'процент'));
         const setUpperFirst = _.curry( ( path, obj ) => _.set( obj, path, _.upperFirst( _.get( obj, path ) ) ) );
         const setValue = _.curry( ( path, value, obj ) => _.set( obj, path, value ) );
-        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ) ] );
+
+        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ), setValIsType('promoCodeValTypeId') ] );
         const mapResultTitleUpperFirst = result => composeResultTitleUpperFirst( result );
+
         const composeResultMapSort = _.flow( [
-          setValue( 'result', _.map( this.promoCodes.result, mapResultTitleUpperFirst ) ),
-          setValue( 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) )
+          setValue( 'result', _.map( promoCodes.result, mapResultTitleUpperFirst ) ),
+          setValue( 'result', _.sortBy( promoCodes.result, 'dateFrom' ) )
         ] );
 
-        composeResultMapSort( this.promoCodes );
+        this.promoCodes = composeResultMapSort( promoCodes );
 
         this.progress = false;
       } );
