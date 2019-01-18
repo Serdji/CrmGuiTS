@@ -33,12 +33,11 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodes: IPromoCode ) => {
 
+        const setValue = _.curry( ( path, value, arr ) => _.set( arr, path, value ) );
+        const setUpperFirst = _.curry( ( path, arr ) => setValue( path, _.upperFirst( _.get( arr, path ) ), arr ) );
+        const setValIsType = _.curry( ( path, arr ) => setValue( path, _.get( arr, path ) === 1 ? 'количество' : 'процент', arr ) );
 
-        const setValIsType = _.curry(( path, obj ) => _.set( obj, path,_.get( obj, path ) === 1 ? 'количество' : 'процент'));
-        const setUpperFirst = _.curry( ( path, obj ) => _.set( obj, path, _.upperFirst( _.get( obj, path ) ) ) );
-        const setValue = _.curry( ( path, value, obj ) => _.set( obj, path, value ) );
-
-        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ), setValIsType('promoCodeValTypeId') ] );
+        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ), setValIsType( 'promoCodeValTypeId' ) ] );
         const mapResultTitleUpperFirst = result => composeResultTitleUpperFirst( result );
 
         const composeResultMapSort = _.flow( [
@@ -47,20 +46,18 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
         ] );
 
         this.promoCodes = composeResultMapSort( promoCodes );
-
         this.progress = false;
       } );
   }
 
   sortFilter( title: string ): void {
-    this.promoCodes.result = _.chain( this.promoCodes.result )
-      .sortBy( title )
-      .tap( val => {
-        this.isSortFilterReverse = !this.isSortFilterReverse;
-        if ( this.isSortFilterReverse ) return val;
-        else return _.reverse( val );
-      } )
-      .value();
+    this.isSortFilterReverse = !this.isSortFilterReverse;
+
+    const sortByTitle = _.curry( ( titleEvn, arr ) => _.sortBy( arr, titleEvn ) );
+    const sortFilterRevers = _.curry( ( isSortFilterReverse, arr ) => isSortFilterReverse ? arr : _.reverse( arr ) );
+    const composeSortByTitle = _.flow( [ sortByTitle( title ), sortFilterRevers( this.isSortFilterReverse ) ] );
+
+    this.promoCodes.result = composeSortByTitle( this.promoCodes.result );
   }
 
   ngOnDestroy(): void {
