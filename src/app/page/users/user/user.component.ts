@@ -194,7 +194,7 @@ export class UserComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         if ( this.user.login === localStorage.getItem( 'login' ) ) {
-          this.windowDialog( 'Вы изменили права для своей учетной записи. Что бы права вступили в силу Вам нужно зайти в приложение зонного. Через несколько секунд Вы будите перенаправлены на страницу авторизации!', 'error', '', true );
+          this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
           timer( 5000 )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( _ => {

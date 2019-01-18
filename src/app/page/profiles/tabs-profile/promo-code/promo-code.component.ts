@@ -34,14 +34,16 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .subscribe( ( promoCodes: IPromoCode ) => {
         this.promoCodes = promoCodes;
 
-        const setUpperFirst = _.curry( ( title, obj ) => _.set( obj, title, _.upperFirst( obj[ title ] ) ) );
-        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst('code'), setUpperFirst('promotion.promotionName')  ] );
+        const setUpperFirst = _.curry( ( path, obj ) => _.set( obj, path, _.upperFirst( _.get( obj, path ) ) ) );
+        const setValue = _.curry( ( path, value, obj ) => _.set( obj, path, value ) );
+        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ) ] );
         const mapResultTitleUpperFirst = result => composeResultTitleUpperFirst( result );
+        const composeResultMapSort = _.flow( [
+          setValue( 'result', _.map( this.promoCodes.result, mapResultTitleUpperFirst ) ),
+          setValue( 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) )
+        ] );
 
-        _.chain( this.promoCodes )
-          .set( 'result', _.map( this.promoCodes.result, mapResultTitleUpperFirst ) )
-          .set( 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) )
-          .value();
+        composeResultMapSort( this.promoCodes );
 
         this.progress = false;
       } );
