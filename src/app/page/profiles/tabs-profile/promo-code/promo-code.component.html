@@ -89,21 +89,21 @@
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Кратность:</span>
+                <span class="promo-code__info-text">Размерность:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.val}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Свойство кратности:</span>
+                <span class="promo-code__info-text">Свойство размерности:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{ promoCode.promoCodeValTypeId }}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Персональная кратность использования:</span>
+                <span class="promo-code__info-text">Персональная размерность использования:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.usesPerPerson}}</b></span>
                 </div>
@@ -158,9 +158,9 @@
                 <span class="promo-code__info-text">Направления:</span>
                 <div class="promo-code__info-params">
                   <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
-                    {{routeList.arr_Location}}
+                    <div class="promo-code__info-location">{{routeList.dep_Location !== '' ? routeList.dep_Location : '∞'}}</div>
                     <mat-icon>arrow_right_alt</mat-icon>
-                    {{routeList.dep_Location}}
+                    <div class="promo-code__info-location">{{routeList.arr_Location !== '' ? routeList.arr_Location : '∞'}}</div>
                   </div>
                 </div>
               </div>
