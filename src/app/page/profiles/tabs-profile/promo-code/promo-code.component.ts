@@ -33,13 +33,16 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodes: IPromoCode ) => {
         this.promoCodes = promoCodes;
-        _.set( this.promoCodes, 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) );
-        _.each( this.promoCodes.result, result => {
-          _.chain( result )
-            .set( 'code', _.upperFirst( result.code ) )
-            .set( 'promotion.promotionName', _.upperFirst( result.promotion.promotionName ) )
-            .value();
-        } );
+
+        const setUpperFirst = _.curry( ( title, obj ) => _.set( obj, title, _.upperFirst( obj[ title ] ) ) );
+        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst('code'), setUpperFirst('promotion.promotionName')  ] );
+        const mapResultTitleUpperFirst = result => composeResultTitleUpperFirst( result );
+
+        _.chain( this.promoCodes )
+          .set( 'result', _.map( this.promoCodes.result, mapResultTitleUpperFirst ) )
+          .set( 'result', _.sortBy( this.promoCodes.result, 'dateFrom' ) )
+          .value();
+
         this.progress = false;
       } );
   }
@@ -47,7 +50,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   sortFilter( title: string ): void {
     this.promoCodes.result = _.chain( this.promoCodes.result )
       .sortBy( title )
-      .thru( val => {
+      .tap( val => {
         this.isSortFilterReverse = !this.isSortFilterReverse;
         if ( this.isSortFilterReverse ) return val;
         else return _.reverse( val );
