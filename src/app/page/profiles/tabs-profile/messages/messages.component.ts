@@ -32,23 +32,22 @@ export class MessagesComponent implements OnInit, OnDestroy {
     this.messagesService.getMessages( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( messages: IMessages[] ) => {
-        this.messages = messages;
-        _.each( this.messages, message => {
-          _.set( message, 'parsedSubject', _.upperFirst( message.parsedSubject ) );
-        } );
+
+        const setUpperFirst = ( obj, path ) => _.set( obj , path, _.upperFirst( _.get( obj, path ) ) );
+        this.messages = _.map( messages, message => setUpperFirst( message, 'parsedSubject' ) );
+
         this.progress = false;
       } );
   }
 
   sortFilter( title: string ): void {
-    this.messages = _.chain( this.messages )
-      .sortBy( title )
-      .thru( val => {
-        this.isSortFilterReverse = !this.isSortFilterReverse;
-        if ( this.isSortFilterReverse ) return val;
-        else return _.reverse( val );
-      } )
-      .value();
+    this.isSortFilterReverse = !this.isSortFilterReverse;
+
+    const sortByTitle = _.curry( ( titleEvn, arr ) => _.sortBy( arr, titleEvn ) );
+    const sortFilterRevers = _.curry( ( isSortFilterReverse, arr ) => isSortFilterReverse ? arr : _.reverse( arr ) );
+    const composeSortByTitle = _.flow( [ sortByTitle( title ), sortFilterRevers( this.isSortFilterReverse ) ] );
+
+    this.messages = composeSortByTitle( this.messages );
   }
 
   ngOnDestroy(): void {
