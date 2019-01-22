@@ -3,7 +3,7 @@ import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/f
 import { Observable, pipe, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
-import { Ilocation } from '../../../interface/ilocation';
+import { ICity } from '../../../interface/icity';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
@@ -33,13 +33,13 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
   public formPromoCodes: FormGroup;
-  public locations: Ilocation[];
+  public cities: ICity[];
   public promotions: IPromotions;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
   public promotionsOptions: Observable<IPromotions[]>;
-  public locationFromOptions: Observable<Ilocation[]>;
-  public locationToOptions: Observable<Ilocation[]>;
+  public citiesFromOptions: Observable<ICity[]>;
+  public citiesToOptions: Observable<ICity[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
@@ -119,7 +119,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initFormPromoCodes();
     this.initAutocomplete();
     this.initPromotions();
-    this.initLocation();
+    this.initCities();
     this.initSegmentation();
     this.initCustomerGroup();
     this.initPromoCodeValTypes();
@@ -142,11 +142,11 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initLocation() {
-    this.profileSearchService.getLocation()
+  private initCities() {
+    this.profileSearchService.getCities()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( locations: Ilocation[] ) => {
-        this.locations = locations;
+      .subscribe( ( cities: ICity[] ) => {
+        this.cities = cities;
       } );
   }
 
@@ -322,8 +322,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.locationFromOptions = this.autocomplete( 'dep_Location', 'location' );
-    this.locationToOptions = this.autocomplete( 'arr_Location', 'location' );
+    this.citiesFromOptions = this.autocomplete( 'dep_Location', 'cities' );
+    this.citiesToOptions = this.autocomplete( 'arr_Location', 'cities' );
     this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
     this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
   }
@@ -338,8 +338,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
             case 'promotion':
               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'location':
-              if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'cities':
+              if ( val ) return this.cities.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'segmentations':
               if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );

@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
-import { Ilocation } from '../../../interface/ilocation';
+import { IAirport } from '../../../interface/iairport';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { TableAsyncService } from '../../../services/table-async.service';
 
@@ -32,11 +32,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public isTable: boolean;
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
-  public locations: Ilocation[];
-  public locationFromOptionsT: Observable<Ilocation[]>;
-  public locationToOptionsT: Observable<Ilocation[]>;
-  public locationFromOptionsE: Observable<Ilocation[]>;
-  public locationToOptionsE: Observable<Ilocation[]>;
+  public airports: IAirport[];
+  public airportsFromOptionsT: Observable<IAirport[]>;
+  public airportsToOptionsT: Observable<IAirport[]>;
+  public airportsFromOptionsE: Observable<IAirport[]>;
+  public airportsToOptionsE: Observable<IAirport[]>;
 
   private isActive: boolean;
   private segmentationId: number;
@@ -69,7 +69,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.formInputDisable();
     this.initTableProfilePagination();
-    this.initLocation();
+    this.initAirports();
     this.initAutocomplete();
   }
 
@@ -88,19 +88,19 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initLocation() {
-    this.profileSearchService.getLocation()
+  private initAirports() {
+    this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Ilocation[] ) => {
-        this.locations = value;
+      .subscribe( ( value: IAirport[] ) => {
+        this.airports = value;
       } );
   }
 
   private initAutocomplete() {
-    this.locationFromOptionsT = this.autocomplete( 'departureLocationCodeT' );
-    this.locationToOptionsT = this.autocomplete( 'arrivalLocationCodeT' );
-    this.locationFromOptionsE = this.autocomplete( 'departureLocationCodeE' );
-    this.locationToOptionsE = this.autocomplete( 'arrivalLocationCodeE' );
+    this.airportsFromOptionsT = this.autocomplete( 'departureLocationCodeT' );
+    this.airportsToOptionsT = this.autocomplete( 'arrivalLocationCodeT' );
+    this.airportsFromOptionsE = this.autocomplete( 'departureLocationCodeE' );
+    this.airportsToOptionsE = this.autocomplete( 'arrivalLocationCodeE' );
   }
 
   private autocomplete( formControlName: string ): Observable<any> {
@@ -110,7 +110,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         delay( this.autDelay ),
         map( val => {
           if ( val ) {
-            return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
           }
         } )
       );

@@ -8,7 +8,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IprofileSearch } from '../../../interface/iprofile-search';
-import { Ilocation } from '../../../interface/ilocation';
+import { IAirport } from '../../../interface/iairport';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
@@ -29,9 +29,9 @@ import { TableAsyncService } from '../../../services/table-async.service';
 export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
-  public locations: Ilocation[];
-  public locationFromOptions: Observable<Ilocation[]>;
-  public locationToOptions: Observable<Ilocation[]>;
+  public airports: IAirport[];
+  public airportsFromOptions: Observable<IAirport[]>;
+  public airportsToOptions: Observable<IAirport[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<ISegmentation[]>;
   public profiles: Iprofiles;
@@ -70,7 +70,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initLocation();
+    this.initAirports();
     this.initForm();
     this.initAutocomplete();
     this.initTableAsync();
@@ -127,11 +127,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private initLocation() {
-    this.profileSearchService.getLocation()
+  private initAirports() {
+    this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Ilocation[] ) => {
-        this.locations = value;
+      .subscribe( ( value: IAirport[] ) => {
+        this.airports = value;
       } );
   }
 
@@ -152,8 +152,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.locationFromOptions = this.autocomplete( 'deppoint', 'location' );
-    this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
+    this.airportsFromOptions = this.autocomplete( 'deppoint', 'airports' );
+    this.airportsToOptions = this.autocomplete( 'arrpoint', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
@@ -165,8 +165,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
-            case 'location':
-              return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'airports':
+              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
             case 'segmentation':
               return this.segmentation.filter( segmentation => {
                   if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );

@@ -128,15 +128,15 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deppoint" type="text" placeholder="Откуда" [matAutocomplete]="locationfrom">
-              <mat-autocomplete #locationfrom="matAutocomplete">
-                <mat-option *ngFor="let location of locationFromOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              <input matInput formControlName="deppoint" type="text" placeholder="Откуда" [matAutocomplete]="airportfrom">
+              <mat-autocomplete #airportfrom="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsFromOptions | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="arrpoint" type="text" placeholder="Куда" [matAutocomplete]="locationTo">
-              <mat-autocomplete #locationTo="matAutocomplete">
-                <mat-option *ngFor="let location of locationToOptions | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              <input matInput formControlName="arrpoint" type="text" placeholder="Куда" [matAutocomplete]="airportto">
+              <mat-autocomplete #airportto="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsToOptions | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">

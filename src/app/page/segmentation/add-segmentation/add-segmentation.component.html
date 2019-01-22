@@ -59,15 +59,15 @@
               <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="departureLocationCodeT" type="text" placeholder="Откуда" [matAutocomplete]="locationfromT">
-              <mat-autocomplete #locationfromT="matAutocomplete">
-                <mat-option *ngFor="let location of locationFromOptionsT | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              <input matInput formControlName="departureLocationCodeT" type="text" placeholder="Откуда" [matAutocomplete]="airportfromT">
+              <mat-autocomplete #airportfromT="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsFromOptionsT | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="Куда" [matAutocomplete]="locationToT">
-              <mat-autocomplete #locationToT="matAutocomplete">
-                <mat-option *ngFor="let location of locationToOptionsT | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="Куда" [matAutocomplete]="airporttoT">
+              <mat-autocomplete #airporttoT="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsToOptionsT | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
@@ -121,15 +121,15 @@
               <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="departureLocationCodeE" type="text" placeholder="Откуда" [matAutocomplete]="locationfromE">
-              <mat-autocomplete #locationfromE="matAutocomplete">
-                <mat-option *ngFor="let location of locationFromOptionsE | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              <input matInput formControlName="departureLocationCodeE" type="text" placeholder="Откуда" [matAutocomplete]="airportfromE">
+              <mat-autocomplete #airportfromE="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsFromOptionsE | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="Куда" [matAutocomplete]="locationToE">
-              <mat-autocomplete #locationToE="matAutocomplete">
-                <mat-option *ngFor="let location of locationToOptionsE | async" [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+              <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="Куда" [matAutocomplete]="airporttoE">
+              <mat-autocomplete #airporttoE="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsToOptionsE | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
