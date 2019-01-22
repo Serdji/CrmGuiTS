@@ -38,8 +38,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
   public promotionsOptions: Observable<IPromotions[]>;
-  public locationFromOptions: Observable<IAirport[]>;
-  public locationToOptions: Observable<IAirport[]>;
+  public airportsFromOptions: Observable<IAirport[]>;
+  public airportsToOptions: Observable<IAirport[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
@@ -322,8 +322,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.locationFromOptions = this.autocomplete( 'dep_Location', 'airports' );
-    this.locationToOptions = this.autocomplete( 'arr_Location', 'airports' );
+    this.airportsFromOptions = this.autocomplete( 'dep_Location', 'airports' );
+    this.airportsToOptions = this.autocomplete( 'arr_Location', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
     this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
   }

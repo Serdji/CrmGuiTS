@@ -33,10 +33,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
   public airports: IAirport[];
-  public locationFromOptionsT: Observable<IAirport[]>;
-  public locationToOptionsT: Observable<IAirport[]>;
-  public locationFromOptionsE: Observable<IAirport[]>;
-  public locationToOptionsE: Observable<IAirport[]>;
+  public airportsFromOptionsT: Observable<IAirport[]>;
+  public airportsToOptionsT: Observable<IAirport[]>;
+  public airportsFromOptionsE: Observable<IAirport[]>;
+  public airportsToOptionsE: Observable<IAirport[]>;
 
   private isActive: boolean;
   private segmentationId: number;
@@ -97,10 +97,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.locationFromOptionsT = this.autocomplete( 'departureLocationCodeT' );
-    this.locationToOptionsT = this.autocomplete( 'arrivalLocationCodeT' );
-    this.locationFromOptionsE = this.autocomplete( 'departureLocationCodeE' );
-    this.locationToOptionsE = this.autocomplete( 'arrivalLocationCodeE' );
+    this.airportsFromOptionsT = this.autocomplete( 'departureLocationCodeT' );
+    this.airportsToOptionsT = this.autocomplete( 'arrivalLocationCodeT' );
+    this.airportsFromOptionsE = this.autocomplete( 'departureLocationCodeE' );
+    this.airportsToOptionsE = this.autocomplete( 'arrivalLocationCodeE' );
   }
 
   private autocomplete( formControlName: string ): Observable<any> {

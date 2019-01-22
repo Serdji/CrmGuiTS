@@ -121,8 +121,8 @@
                   <input matInput formControlName="dep_Location" type="text" placeholder="Направление откуда"
                          [matAutocomplete]="dep_Location">
                   <mat-autocomplete #dep_Location="matAutocomplete">
-                    <mat-option *ngFor="let location of locationFromOptions | async"
-                                [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                    <mat-option *ngFor="let airport of airportsFromOptions | async"
+                                [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-icon>arrow_right_alt</mat-icon>
@@ -130,8 +130,8 @@
                   <input matInput formControlName="arr_Location" type="text" placeholder="Направление куда"
                          [matAutocomplete]="arr_Location">
                   <mat-autocomplete #arr_Location="matAutocomplete">
-                    <mat-option *ngFor="let location of locationToOptions | async"
-                                [value]="location.locationCode">{{ location.locationCode }}</mat-option>
+                    <mat-option *ngFor="let airport of airportsToOptions | async"
+                                [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-icon (click)="directionAdd()" class="add-promotions-codes__add">add</mat-icon>

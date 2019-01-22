@@ -30,8 +30,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
   public airports: IAirport[];
-  public locationFromOptions: Observable<IAirport[]>;
-  public locationToOptions: Observable<IAirport[]>;
+  public airportsFromOptions: Observable<IAirport[]>;
+  public airportsToOptions: Observable<IAirport[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<ISegmentation[]>;
   public profiles: Iprofiles;
@@ -152,8 +152,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.locationFromOptions = this.autocomplete( 'deppoint', 'airports' );
-    this.locationToOptions = this.autocomplete( 'arrpoint', 'airports' );
+    this.airportsFromOptions = this.autocomplete( 'deppoint', 'airports' );
+    this.airportsToOptions = this.autocomplete( 'arrpoint', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
