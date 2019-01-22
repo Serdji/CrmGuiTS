@@ -158,9 +158,9 @@
                 <span class="promo-code__info-text">Направления:</span>
                 <div class="promo-code__info-params">
                   <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
-                    <div class="promo-code__info-location">{{routeList.dep_Location !== '' ? routeList.dep_Location : '∞'}}</div>
+                    <div class="promo-code__info-location">{{routeList.dep_Location !== '' && routeList.dep_Location !==  null ? routeList.dep_Location : '∞'}}</div>
                     <mat-icon>arrow_right_alt</mat-icon>
-                    <div class="promo-code__info-location">{{routeList.arr_Location !== '' ? routeList.arr_Location : '∞'}}</div>
+                    <div class="promo-code__info-location">{{routeList.arr_Location !== '' && routeList.arr_Location !==  null ? routeList.arr_Location : '∞'}}</div>
                   </div>
                 </div>
               </div>

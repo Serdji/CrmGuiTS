@@ -289,8 +289,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       promoCodeBrandList: '',
       promoCodeFlightList: '',
       promoCodeRbdList: '',
-      dep_Location: '',
-      arr_Location: '',
+      dep_Location: null,
+      arr_Location: null,
       customersIds: '',
       segmentations: '',
       customerGroups: '',
@@ -387,15 +387,17 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   directionAdd(): void {
-    this.promoCodeRouteList.push(
-      {
-        dep_Location: this.formPromoCodes.get( 'dep_Location' ).value,
-        arr_Location: this.formPromoCodes.get( 'arr_Location' ).value
-      }
-    );
+    if ( this.formPromoCodes.get( 'dep_Location' ).value || this.formPromoCodes.get( 'arr_Location' ).value ){
+      this.promoCodeRouteList.push(
+        {
+          dep_Location: this.formPromoCodes.get( 'dep_Location' ).value,
+          arr_Location: this.formPromoCodes.get( 'arr_Location' ).value
+        }
+      );
+    }
     this.promoCodeRouteList = _.unionWith( this.promoCodeRouteList, _.isEqual );
-    this.formPromoCodes.get( 'dep_Location' ).patchValue( '' );
-    this.formPromoCodes.get( 'arr_Location' ).patchValue( '' );
+    this.formPromoCodes.get( 'dep_Location' ).patchValue( null );
+    this.formPromoCodes.get( 'arr_Location' ).patchValue( null );
   }
 
   directionRemove( dep: string, arr: string ): void {

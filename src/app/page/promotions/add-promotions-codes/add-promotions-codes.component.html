@@ -105,9 +105,9 @@
               <div class="add-promotions-codes__list" *ngIf="promoCodeRouteList.length > 0">
                 <div class="add-promotions-codes__list-item" *ngFor=" let routeList of promoCodeRouteList">
                   <div class="add-promotions-codes__list-item-wrapper">
-                    <div class="add-promotions-codes__location">{{routeList.dep_Location !== '' ? routeList.dep_Location : '∞'}}</div>
+                    <div class="add-promotions-codes__location">{{routeList.dep_Location !== '' && routeList.dep_Location !==  null ? routeList.dep_Location : '∞'}}</div>
                     <mat-icon>arrow_right_alt</mat-icon>
-                    <div class="add-promotions-codes__location">{{routeList.arr_Location !== '' ? routeList.arr_Location : '∞'}}</div>
+                    <div class="add-promotions-codes__location">{{routeList.arr_Location !== '' && routeList.arr_Location !==  null ? routeList.arr_Location : '∞'}}</div>
                   </div>
                   <div class="add-promotions-codes__list-item-wrapper _flex">
                     <mat-icon class="add-promotions-codes__close"
