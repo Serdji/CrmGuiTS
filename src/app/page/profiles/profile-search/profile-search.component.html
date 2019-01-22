@@ -210,7 +210,7 @@
       </mat-grid-tile>
 
       <div class="profile-search__button-wrapper">
-        <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
+        <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary" [disabled]="buttonSearch">
           <mat-icon>search</mat-icon>
           Искать
         </button>

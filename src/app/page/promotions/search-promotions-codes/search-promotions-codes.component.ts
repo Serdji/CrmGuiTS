@@ -37,6 +37,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
   public promoCode: IPromoCode;
+  public buttonSearch: boolean;
 
   private isActive: boolean;
   private autDelay: number;
@@ -58,6 +59,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.isLoader = true;
     this.isQueryParams = true;
+    this.buttonSearch = true;
     this.autDelay = 500;
     this.initFormSearchPromoCodes();
     this.initPromotions();
@@ -67,6 +69,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initTableProfilePagination();
     this.initQueryParams();
+    this.activeButton();
   }
 
   private initQueryParams() {
@@ -115,6 +118,21 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private activeButton() {
+    const mapKeyFormObj = _.curry( ( objForm, objFormValue ) => _.mapKeys( objFormValue, ( value, key ) => objForm.get( `${key}` ).value === '' ) );
+    const getBooleanObj = mapKeyFormObj( this.formSearchPromoCodes );
+    const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
+    const isActiveButtonSearch = _.flow( [ getBooleanObj, isSizeObj ] );
+
+    this.formSearchPromoCodes.valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( () => isActiveButtonSearch( this.formSearchPromoCodes.value ) )
+      )
+      .subscribe( isValue => this.buttonSearch = isValue );
+  }
+
+
   private formFilling( params ) {
     const formParams = _.omit( params, [
       'from',
@@ -131,9 +149,12 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       'flightDateTo_To',
     ] );
 
+    const getSegmentationName = _.chain( this.segmentation ).find( [ 'segmentationId', +params.segmentationId ] ).get( 'title' ).value();
+    const getCustomerGroupName = _.chain( this.customerGroup ).find( [ 'customerGroupId', +params.customerGroupId ] ).get( 'customerGroupName' ).value();
+
     _.chain( formParams )
-      .set( 'segmentationId', _.chain( this.segmentation ).find( [ 'segmentationId', +params.segmentationId ] ).get( 'title' ).value() )
-      .set( 'customerGroupId', _.chain( this.customerGroup ).find( [ 'customerGroupId', +params.customerGroupId ] ).get( 'customerGroupName' ).value() )
+      .set( 'segmentationId', getSegmentationName ? getSegmentationName : '' )
+      .set( 'customerGroupId', getCustomerGroupName ? getCustomerGroupName : '' )
       .set( 'dateFrom', params.dateFrom_From ? new Date( params.dateFrom_From.split( '.' ).reverse().join( ',' ) ) : '' )
       .set( 'dateTo', params.dateTo_From ? new Date( params.dateTo_From.split( '.' ).reverse().join( ',' ) ) : '' )
       .set( 'flightDateFrom', params.dateTo_From ? new Date( params.flightDateFrom_From.split( '.' ).reverse().join( ',' ) ) : '' )
@@ -190,6 +211,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       customerGroupId: '',
       val: ''
     } );
+    this.activeButton();
   }
 
   private resetForm() {
@@ -253,41 +275,43 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
 
   searchForm(): void {
-    this.isTable = true;
-    this.isLoader = true;
-    this.isQueryParams = false;
-    this.searchParams = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
+    if ( !this.formSearchPromoCodes.invalid ) {
+      this.isTable = true;
+      this.isLoader = true;
+      this.isQueryParams = false;
+      this.searchParams = _.omit( this.formSearchPromoCodes.getRawValue(), [ 'dateFrom', 'dateTo', 'flightDateFrom', 'flightDateTo', 'segmentationId', 'customerGroupId' ] );
 
-    _.chain( this.searchParams )
-      .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
-      .set( 'segmentationId', this.formSearchPromoCodes.get( 'segmentationId' ).value ? _.chain( this.segmentation ).find( [ 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ] ).get( 'segmentationId' ).value() : '' )
-      .set( 'customerGroupId', this.formSearchPromoCodes.get( 'customerGroupId' ).value ? _.chain( this.customerGroup ).find( [ 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ] ).get( 'customerGroupId' ).value() : '' )
-      .set( 'from', 0 )
-      .set( 'count', 10 )
-      .value();
+      _.chain( this.searchParams )
+        .set( 'dateFrom_From', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'dateFrom_To', this.formSearchPromoCodes.get( 'dateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'dateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'dateTo_From', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'dateTo_To', this.formSearchPromoCodes.get( 'dateTo' ).value ? moment( this.formSearchPromoCodes.get( 'dateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'flightDateFrom_From', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'flightDateFrom_To', this.formSearchPromoCodes.get( 'flightDateFrom' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateFrom' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'flightDateTo_From', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'flightDateTo_To', this.formSearchPromoCodes.get( 'flightDateTo' ).value ? moment( this.formSearchPromoCodes.get( 'flightDateTo' ).value ).format( 'DD.MM.YYYY' ) : '' )
+        .set( 'segmentationId', this.formSearchPromoCodes.get( 'segmentationId' ).value ? _.chain( this.segmentation ).find( [ 'title', this.formSearchPromoCodes.get( 'segmentationId' ).value ] ).get( 'segmentationId' ).value() : '' )
+        .set( 'customerGroupId', this.formSearchPromoCodes.get( 'customerGroupId' ).value ? _.chain( this.customerGroup ).find( [ 'customerGroupName', this.formSearchPromoCodes.get( 'customerGroupId' ).value ] ).get( 'customerGroupId' ).value() : '' )
+        .set( 'from', 0 )
+        .set( 'count', 10 )
+        .value();
 
-    const paramsOmit = [];
-    _.each( this.searchParams, ( val, key ) => {
-      if ( val === '' ) paramsOmit.push( key );
-    } );
-    this.searchParams = _.omit( this.searchParams, paramsOmit );
-
-    this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCode: IPromoCode ) => {
-        this.tableAsyncService.countPage = promoCode.totalCount;
-        this.promoCode = promoCode;
-        this.isLoader = false;
+      const paramsOmit = [];
+      _.each( this.searchParams, ( val, key ) => {
+        if ( val === '' ) paramsOmit.push( key );
       } );
-    this.isQueryParams = false;
-    this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: this.searchParams } );
+      this.searchParams = _.omit( this.searchParams, paramsOmit );
+
+      this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( ( promoCode: IPromoCode ) => {
+          this.tableAsyncService.countPage = promoCode.totalCount;
+          this.promoCode = promoCode;
+          this.isLoader = false;
+        } );
+      this.isQueryParams = false;
+      this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: this.searchParams } );
+    }
   }
 
   clearForm(): void {

@@ -101,8 +101,14 @@
       </mat-grid-tile>
 
       <div class="search-promotions-codes__button-wrapper">
-        <button appAccessRights="promotions:read" class="search-promotions-codes__button" mat-raised-button
-                (click)="searchForm()" color="primary">
+        <button
+          appAccessRights="promotions:read"
+          class="search-promotions-codes__button"
+          mat-raised-button
+          (click)="searchForm()"
+          color="primary"
+          [disabled]="buttonSearch"
+        >
           <mat-icon>search</mat-icon>
           Искать
         </button>

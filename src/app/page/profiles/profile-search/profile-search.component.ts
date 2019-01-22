@@ -20,6 +20,7 @@ import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { ISettings } from '../../../interface/isettings';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { TableAsyncService } from '../../../services/table-async.service';
+import { callHooks } from '@angular/core/src/render3/hooks';
 
 @Component( {
   selector: 'app-profile-search',
@@ -40,6 +41,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
   public currencyDefault: string;
+  public buttonSearch: boolean;
 
   public segmentationSelectable = true;
   public segmentationRemovable = true;
@@ -77,6 +79,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initSegmentation();
     this.initCustomerGroup();
     this.initCurrencyDefault();
+    this.activeButton();
+    this.buttonSearch = true;
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
@@ -89,7 +93,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   sendForm(): void {
-    this.creatingObjectForm();
+    if ( !this.formProfileSearch.invalid ) this.creatingObjectForm();
   }
 
   clearForm(): void {
@@ -109,9 +113,23 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private resetForm() {
     this.segmentationChips = [];
     for ( const formControlName in this.formProfileSearch.value ) {
-      this.formProfileSearch.get( `${ formControlName }` ).patchValue( '' );
-      this.formProfileSearch.get( `${ formControlName }` ).setErrors( null );
+      this.formProfileSearch.get( `${formControlName}` ).patchValue( '' );
+      this.formProfileSearch.get( `${formControlName}` ).setErrors( null );
     }
+  }
+
+  private activeButton() {
+    const mapKeyFormObj = _.curry( ( objForm, objFormValue ) => _.mapKeys( objFormValue, ( value, key ) => objForm.get( `${key}` ).value === '' ) );
+    const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
+    const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
+    const isActiveButtonSearch = _.flow( [ getBooleanObj, isSizeObj ] );
+
+    this.formProfileSearch.valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
+      )
+      .subscribe( isValue => this.buttonSearch = isValue );
   }
 
   private initTableAsync() {
@@ -172,7 +190,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
                   if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
                 }
               );
-              case 'customerGroup':
+            case 'customerGroup':
               return this.customerGroup.filter( customerGroup => {
                   if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
                 }
@@ -188,7 +206,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
-      this[chips].push( value.trim() );
+      this[ chips ].push( value.trim() );
     }
 
     // Reset the input value
@@ -203,13 +221,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const index = arrayChips.indexOf( textChip );
 
     if ( index >= 0 ) {
-      this[chips].splice( index, 1 );
+      this[ chips ].splice( index, 1 );
     }
   }
 
   selected( event: MatAutocompleteSelectedEvent, formControlName: string, chips: string, fruitInput: string ): void {
-    this[chips].push( event.option.viewValue );
-    this[fruitInput].nativeElement.value = '';
+    this[ chips ].push( event.option.viewValue );
+    this[ fruitInput ].nativeElement.value = '';
     this.formProfileSearch.get( formControlName ).setValue( null );
   }
 
@@ -351,7 +369,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     if ( _.size( customerGroup ) > 0 ) {
       _.set( params, 'customerGroupIds', customerGroup );
     }
-
 
 
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
