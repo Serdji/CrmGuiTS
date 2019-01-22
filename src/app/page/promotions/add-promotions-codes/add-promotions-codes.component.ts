@@ -33,7 +33,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
   public formPromoCodes: FormGroup;
-  public locations: IAirport[];
+  public airports: IAirport[];
   public promotions: IPromotions;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
@@ -145,8 +145,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private initAirports() {
     this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( locations: IAirport[] ) => {
-        this.locations = locations;
+      .subscribe( ( airports: IAirport[] ) => {
+        this.airports = airports;
       } );
   }
 
@@ -322,8 +322,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.locationFromOptions = this.autocomplete( 'dep_Location', 'location' );
-    this.locationToOptions = this.autocomplete( 'arr_Location', 'location' );
+    this.locationFromOptions = this.autocomplete( 'dep_Location', 'airports' );
+    this.locationToOptions = this.autocomplete( 'arr_Location', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
     this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
   }
@@ -338,8 +338,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
             case 'promotion':
               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
               break;
-            case 'location':
-              if ( val ) return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'airports':
+              if ( val ) return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'segmentations':
               if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );

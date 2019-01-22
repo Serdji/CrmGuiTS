@@ -32,7 +32,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public isTable: boolean;
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
-  public locations: IAirport[];
+  public airports: IAirport[];
   public locationFromOptionsT: Observable<IAirport[]>;
   public locationToOptionsT: Observable<IAirport[]>;
   public locationFromOptionsE: Observable<IAirport[]>;
@@ -92,7 +92,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IAirport[] ) => {
-        this.locations = value;
+        this.airports = value;
       } );
   }
 
@@ -110,7 +110,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         delay( this.autDelay ),
         map( val => {
           if ( val ) {
-            return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
           }
         } )
       );

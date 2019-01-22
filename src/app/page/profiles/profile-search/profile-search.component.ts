@@ -29,7 +29,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
-  public locations: IAirport[];
+  public airports: IAirport[];
   public locationFromOptions: Observable<IAirport[]>;
   public locationToOptions: Observable<IAirport[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
@@ -131,7 +131,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IAirport[] ) => {
-        this.locations = value;
+        this.airports = value;
       } );
   }
 
@@ -152,8 +152,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.locationFromOptions = this.autocomplete( 'deppoint', 'location' );
-    this.locationToOptions = this.autocomplete( 'arrpoint', 'location' );
+    this.locationFromOptions = this.autocomplete( 'deppoint', 'airports' );
+    this.locationToOptions = this.autocomplete( 'arrpoint', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
   }
@@ -165,8 +165,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
-            case 'location':
-              return this.locations.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'airports':
+              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
             case 'segmentation':
               return this.segmentation.filter( segmentation => {
                   if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
