@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
-import { Ilocation } from '../../../interface/ilocation';
+import { IAirport } from '../../../interface/iairport';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { TableAsyncService } from '../../../services/table-async.service';
 
@@ -32,11 +32,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public isTable: boolean;
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
-  public locations: Ilocation[];
-  public locationFromOptionsT: Observable<Ilocation[]>;
-  public locationToOptionsT: Observable<Ilocation[]>;
-  public locationFromOptionsE: Observable<Ilocation[]>;
-  public locationToOptionsE: Observable<Ilocation[]>;
+  public locations: IAirport[];
+  public locationFromOptionsT: Observable<IAirport[]>;
+  public locationToOptionsT: Observable<IAirport[]>;
+  public locationFromOptionsE: Observable<IAirport[]>;
+  public locationToOptionsE: Observable<IAirport[]>;
 
   private isActive: boolean;
   private segmentationId: number;
@@ -69,7 +69,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.formInputDisable();
     this.initTableProfilePagination();
-    this.initLocation();
+    this.initAirports();
     this.initAutocomplete();
   }
 
@@ -88,10 +88,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initLocation() {
-    this.profileSearchService.getLocation()
+  private initAirports() {
+    this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Ilocation[] ) => {
+      .subscribe( ( value: IAirport[] ) => {
         this.locations = value;
       } );
   }

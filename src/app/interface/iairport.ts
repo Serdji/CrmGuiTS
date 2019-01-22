@@ -1,4 +1,4 @@
-export interface Ilocation {
+export interface IAirport {
   locationId: number;
   locationCode: string;
 }

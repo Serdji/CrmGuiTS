@@ -3,7 +3,7 @@ import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/f
 import { Observable, pipe, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
-import { Ilocation } from '../../../interface/ilocation';
+import { IAirport } from '../../../interface/iairport';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
@@ -33,13 +33,13 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
   public formPromoCodes: FormGroup;
-  public locations: Ilocation[];
+  public locations: IAirport[];
   public promotions: IPromotions;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
   public promotionsOptions: Observable<IPromotions[]>;
-  public locationFromOptions: Observable<Ilocation[]>;
-  public locationToOptions: Observable<Ilocation[]>;
+  public locationFromOptions: Observable<IAirport[]>;
+  public locationToOptions: Observable<IAirport[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   public separatorKeysCodes: number[] = [ ENTER, COMMA ];
@@ -119,7 +119,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initFormPromoCodes();
     this.initAutocomplete();
     this.initPromotions();
-    this.initLocation();
+    this.initAirports();
     this.initSegmentation();
     this.initCustomerGroup();
     this.initPromoCodeValTypes();
@@ -142,10 +142,10 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initLocation() {
-    this.profileSearchService.getLocation()
+  private initAirports() {
+    this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( locations: Ilocation[] ) => {
+      .subscribe( ( locations: IAirport[] ) => {
         this.locations = locations;
       } );
   }

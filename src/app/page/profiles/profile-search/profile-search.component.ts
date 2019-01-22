@@ -8,7 +8,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { Router, ActivatedRoute } from '@angular/router';
 import { IprofileSearch } from '../../../interface/iprofile-search';
-import { Ilocation } from '../../../interface/ilocation';
+import { IAirport } from '../../../interface/iairport';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
@@ -29,9 +29,9 @@ import { TableAsyncService } from '../../../services/table-async.service';
 export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
-  public locations: Ilocation[];
-  public locationFromOptions: Observable<Ilocation[]>;
-  public locationToOptions: Observable<Ilocation[]>;
+  public locations: IAirport[];
+  public locationFromOptions: Observable<IAirport[]>;
+  public locationToOptions: Observable<IAirport[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<ISegmentation[]>;
   public profiles: Iprofiles;
@@ -70,7 +70,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.initLocation();
+    this.initAirports();
     this.initForm();
     this.initAutocomplete();
     this.initTableAsync();
@@ -127,10 +127,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
-  private initLocation() {
-    this.profileSearchService.getLocation()
+  private initAirports() {
+    this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: Ilocation[] ) => {
+      .subscribe( ( value: IAirport[] ) => {
         this.locations = value;
       } );
   }
