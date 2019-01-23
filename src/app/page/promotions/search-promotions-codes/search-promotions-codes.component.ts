@@ -119,7 +119,10 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private activeButton() {
-    const mapKeyFormObj = _.curry( ( objForm, objFormValue ) => _.mapKeys( objFormValue, ( value, key ) => objForm.get( `${key}` ).value === '' ) );
+    const isValueNullOrUnd = value => _.isNull( value ) || _.isUndefined( value );
+    const isFormInvalid = _.curry( ( objForm, value ) => isValueNullOrUnd( value ) || objForm.invalid );
+    const isFormValOfInv = isFormInvalid( this.formSearchPromoCodes );
+    const mapKeyFormObj = _.curry( ( objForm, objFormValue ) => _.mapKeys( objFormValue, ( value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) ) );
     const getBooleanObj = mapKeyFormObj( this.formSearchPromoCodes );
     const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
     const isActiveButtonSearch = _.flow( [ getBooleanObj, isSizeObj ] );
