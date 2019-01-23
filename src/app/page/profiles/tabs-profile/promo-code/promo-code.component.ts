@@ -35,7 +35,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
         const setValue = _.curry( ( path, value, arr ) => _.set( arr, path, value ) );
         const setUpperFirst = _.curry( ( path, arr ) => setValue( path, _.upperFirst( _.get( arr, path ) ), arr ) );
-        const setValIsType = _.curry( ( path, arr ) => setValue( path, _.get( arr, path ) === 1 ? 'количество' : 'процент', arr ) );
+        const setValIsType = _.curry( ( path, arr ) => setValue( path, _.get( arr, path ) === 1 ? 'сумма' : 'процент', arr ) );
 
         const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ), setValIsType( 'promoCodeValTypeId' ) ] );
         const mapResultTitleUpperFirst = result => composeResultTitleUpperFirst( result );
