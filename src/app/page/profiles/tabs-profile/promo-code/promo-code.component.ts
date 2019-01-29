@@ -3,6 +3,7 @@ import { IPromoCode } from '../../../../interface/ipromo-code';
 import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-promo-code',
@@ -32,32 +33,30 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.promoCodeService.getPromoCodes( { 'customerId': this.id } )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodes: IPromoCode ) => {
+        const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
+        this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
 
-        const setValue = _.curry( ( path, value, arr ) => _.set( arr, path, value ) );
-        const setUpperFirst = _.curry( ( path, arr ) => setValue( path, _.upperFirst( _.get( arr, path ) ), arr ) );
-        const setValIsType = _.curry( ( path, arr ) => setValue( path, _.get( arr, path ) === 1 ? 'сумма' : 'процент', arr ) );
+        const upperFirst = R.compose(
+          R.over( R.lensProp( 'code' ), _.upperFirst ),
+          R.over( R.lensPath( [ 'promotion', 'promotionName' ] ), _.upperFirst )
+        );
+        const resultMap = R.map( upperFirst, this.promoCodes.result );
+        this.promoCodes = R.set( R.lensProp( 'result' ), resultMap, this.promoCodes );
 
-        const composeResultTitleUpperFirst = _.flow( [ setUpperFirst( 'code' ), setUpperFirst( 'promotion.promotionName' ), setValIsType( 'promoCodeValTypeId' ) ] );
-        const mapResultTitleUpperFirst = result => composeResultTitleUpperFirst( result );
-
-        const composeResultMapSort = _.flow( [
-          setValue( 'result', _.map( promoCodes.result, mapResultTitleUpperFirst ) ),
-          setValue( 'result', _.sortBy( promoCodes.result, 'dateFrom' ) )
-        ] );
-
-        this.promoCodes = composeResultMapSort( promoCodes );
         this.progress = false;
       } );
   }
 
   sortFilter( title: string ): void {
-    this.isSortFilterReverse = !this.isSortFilterReverse;
+    const isSortFilterReverse = _ => this.isSortFilterReverse = !this.isSortFilterReverse;
+    const isSortFilterReverseFunc = R.ifElse( isSortFilterReverse, R.identity, R.reverse );
+    const sortByTitle = R.compose( R.sortBy, R.path, R.split( '.' ) );
+    const funcSortByTitle = R.compose(
+      isSortFilterReverseFunc,
+      sortByTitle( title )
+    );
 
-    const sortByTitle = _.curry( ( titleEvn, arr ) => _.sortBy( arr, titleEvn ) );
-    const sortFilterRevers = _.curry( ( isSortFilterReverse, arr ) => isSortFilterReverse ? arr : _.reverse( arr ) );
-    const composeSortByTitle = _.flow( [ sortByTitle( title ), sortFilterRevers( this.isSortFilterReverse ) ] );
-
-    this.promoCodes.result = composeSortByTitle( this.promoCodes.result );
+    this.promoCodes.result = funcSortByTitle( this.promoCodes.result );
   }
 
   ngOnDestroy(): void {
