@@ -28,6 +28,7 @@
     "@angular/router": "7.0.1",
     "@auth0/angular-jwt": "2.0.0",
     "@types/moment": "2.13.0",
+    "@types/ramda": "^0.25.47",
     "core-js": "2.5.7",
     "file-saver": "^2.0.0-rc.4",
     "hammerjs": "2.0.8",
