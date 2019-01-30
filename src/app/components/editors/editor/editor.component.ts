@@ -12,6 +12,7 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
 import { MatDialog } from '@angular/material';
 import { Router } from '@angular/router';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-editor',
@@ -86,13 +87,13 @@ export class EditorComponent implements OnInit, OnDestroy {
   private resetForm() {
     this.formDistribution.reset();
     for ( const formControlName in this.formDistribution.value ) {
-      this.formDistribution.get( `${ formControlName }` ).setErrors( null );
+      this.formDistribution.get( `${formControlName}` ).setErrors( null );
     }
   }
 
   private formFilling() {
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
-    this.formDistribution.get( 'dateTo' ).patchValue( moment().add(1, 'days').format() );
+    this.formDistribution.get( 'dateTo' ).patchValue( moment().add( 1, 'days' ).format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
     this.formDistribution.get( 'totalCount' ).disable();
     this.editorService.getEmailLimits()
@@ -176,7 +177,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   saveDistribution(): void {
 
-    const editorRes = this.elRef.nativeElement.querySelector('.nw-editor__res');
+    const editorRes = this.elRef.nativeElement.querySelector( '.nw-editor__res' );
 
     const newParams = _( this.formDistribution.getRawValue() )
       .merge( this.params )
@@ -188,17 +189,24 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     if ( !this.formDistribution.invalid ) {
       this.buttonSave = true;
-      console.log(newParams);
-      // this.editorService.saveDistribution( newParams )
-      //   .pipe( takeWhile( _ => this.isActive ) )
-      //   .subscribe(
-      //     value => {
-      //       this.distributionId = value.distributionId;
-      //       this.dialog.closeAll();
-      //       this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
-      //     },
-      //     _ => this.windowDialog( 'Ошибка при отправки', 'error' )
-      //   );
+
+      const success = value => {
+        this.distributionId = value.distributionId;
+        this.dialog.closeAll();
+        this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
+      };
+      const error = _ => this.windowDialog( 'Ошибка при отправки', 'error' );
+
+      const saveDistribution = params => this.editorService.saveDistribution( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( success, error );
+      const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( success, error );
+
+      const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
+      whichMethod( newParams );
+
     } else {
       this.windowDialog( 'Не все поля заполнены', 'error' );
     }

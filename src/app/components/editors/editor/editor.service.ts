@@ -20,6 +20,10 @@ export class EditorService {
     return this.http.post( this.configService.crmApi + '/crm/distribution/searchAndCreateDistribution', params ).pipe( this.retryRequestService.retry() );
   }
 
+  saveFromPromoCode( params: IprofileSearch ): Observable<any> {
+    return this.http.post( this.configService.crmApi + '/crm/distribution/createFromPromocode', params ).pipe( this.retryRequestService.retry() );
+  }
+
   getDistributionPlaceholders(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/dictionary/distributionPlaceholders' ).pipe( this.retryRequestService.retry() );
   }
