@@ -16,6 +16,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
   public progress: boolean;
   public promoCodes: IPromoCode;
+  public styleButton: string;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -26,6 +27,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
+    this.styleButton = 'available';
     this.initPromoCodes();
   }
 
@@ -57,6 +59,10 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     );
 
     this.promoCodes.result = funcSortByTitle( this.promoCodes.result );
+  }
+
+  filterPromoCodes( key: string ): void {
+    this.styleButton = key;
   }
 
   ngOnDestroy(): void {

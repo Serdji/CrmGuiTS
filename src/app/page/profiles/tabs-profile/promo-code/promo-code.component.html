@@ -9,6 +9,7 @@
       matRippleRadius="25"
       mat-button
       color="primary"
+      [ngClass]="{ '_active': styleButton === 'available' }"
       (click)="filterPromoCodes('available')"
     >
       Доступные
@@ -21,6 +22,7 @@
       matRippleRadius="25"
       mat-button
       color="primary"
+      [ngClass]="{ '_active': styleButton === 'used' }"
       (click)="filterPromoCodes('used')"
     >
       Использованные

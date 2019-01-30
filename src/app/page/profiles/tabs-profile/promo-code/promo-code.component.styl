@@ -1,4 +1,4 @@
-minWidthTitle = 448px
+minWidthTitle = 440px
 
 .mat-expansion-panel-header
   padding: 0 16px;
@@ -15,6 +15,11 @@ minWidthTitle = 448px
       width: 100%;
       padding: 5px 0;
       box-sizing: border-box;
+      border-radius: 0;
+      border-bottom: 2px solid #ffd74000;
+
+      &._active
+        border-bottom: 2px solid #ffd740;
 
   &__accordion
     flex: 1;
