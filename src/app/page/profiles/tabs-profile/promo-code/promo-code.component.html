@@ -1,8 +1,40 @@
 <div class="promo-code">
-  <mat-card *ngIf="progress">
+
+  <mat-card class="promo-code__menu mat-elevation-z1">
+    <button
+      class="promo-code__menu-button example-ripple-container"
+      matRipple
+      matRippleColor="rgba(3, 169, 244, .1)"
+      matRippleUnbounded="false"
+      matRippleRadius="25"
+      mat-button
+      color="primary"
+      [ngClass]="{ '_active': styleButton === 'available' }"
+      (click)="filterPromoCodes('available')"
+    >
+      Доступные
+    </button>
+    <button
+      class="promo-code__menu-button example-ripple-container"
+      matRipple
+      matRippleColor="rgba(3, 169, 244, .1)"
+      matRippleUnbounded="false"
+      matRippleRadius="25"
+      mat-button
+      color="primary"
+      [ngClass]="{ '_active': styleButton === 'used' }"
+      (click)="filterPromoCodes('used')"
+    >
+      Использованные
+    </button>
+  </mat-card>
+
+
+  <mat-card class="promo-code__progress-bar" *ngIf="progress">
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
-  <mat-accordion *ngIf="!progress" multi="true">
+
+  <mat-accordion  class="promo-code__accordion" *ngIf="!progress" multi="true">
 
     <mat-card class="promo-code__sort mat-elevation-z0">
       <div class="promo-code__filter">
@@ -29,7 +61,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="promo-code__filter">
+      <div class="promo-code__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -41,7 +73,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="promo-code__filter">
+      <div class="promo-code__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -158,9 +190,11 @@
                 <span class="promo-code__info-text">Направления:</span>
                 <div class="promo-code__info-params">
                   <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
-                    <div class="promo-code__info-location">{{routeList.dep_Location !== '' && routeList.dep_Location !==  null ? routeList.dep_Location : '∞'}}</div>
+                    <div
+                      class="promo-code__info-location">{{routeList.dep_Location !== '' && routeList.dep_Location !== null ? routeList.dep_Location : '∞'}}</div>
                     <mat-icon>arrow_right_alt</mat-icon>
-                    <div class="promo-code__info-location">{{routeList.arr_Location !== '' && routeList.arr_Location !==  null ? routeList.arr_Location : '∞'}}</div>
+                    <div
+                      class="promo-code__info-location">{{routeList.arr_Location !== '' && routeList.arr_Location !== null ? routeList.arr_Location : '∞'}}</div>
                   </div>
                 </div>
               </div>
@@ -185,7 +219,8 @@
               <div class="promo-code__info-wrapper">
                 <span class="promo-code__info-text">Группы пассажиров:</span>
                 <div class="promo-code__info-params">
-                  <span *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
+                  <span
+                    *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
                 </div>
               </div>
 
@@ -193,7 +228,8 @@
           </div>
 
 
-          <span class="promo-code__link" routerLink="/crm/add-promotions-codes" [queryParams]="{ id: promoCode.promoCodeId }">Перейти в промокод</span>
+          <span class="promo-code__link" routerLink="/crm/add-promotions-codes"
+                [queryParams]="{ id: promoCode.promoCodeId }">Перейти в промокод</span>
         </mat-card>
       </ng-template>
     </mat-expansion-panel>
