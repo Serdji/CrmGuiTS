@@ -131,12 +131,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
-        if ( params.id ) {
+        if ( params.promoCodeId ) {
           this.buttonSave = true;
           this.buttonCreate = false;
           this.buttonDelete = false;
           this.buttonSearch = false;
-          this.promoCodeId = +params.id;
+          this.promoCodeId = +params.promoCodeId;
           this.formFilling( this.promoCodeId );
         }
       } );
@@ -200,9 +200,9 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initTableProfile( id: number ) {
+  private initTableProfile( promoCodeId: number ) {
     const params = {
-      promoCodeId: id,
+      promoCodeId: promoCodeId,
       from: 0,
       count: 10,
       sortvalue: 'last_name'
@@ -234,8 +234,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     }
   }
 
-  private formFilling( id: number ) {
-    this.addPromotionsCodesService.getPromoCode( +id )
+  private formFilling( promoCodeId: number ) {
+    this.addPromotionsCodesService.getPromoCode( +promoCodeId )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCod: IPromoCode ) => {
         _.set( promoCod, 'promotionName', _.get( promoCod, 'promotion.promotionName' ) );
@@ -455,7 +455,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => {
           this.windowDialog( `Промокод успешно сохранен`, 'ok' );
-          this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { id: value.promoCodeId } } );
+          this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: value.promoCodeId } } );
         } );
     }
   }

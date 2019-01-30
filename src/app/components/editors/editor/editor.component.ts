@@ -188,16 +188,17 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     if ( !this.formDistribution.invalid ) {
       this.buttonSave = true;
-      this.editorService.saveDistribution( newParams )
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe(
-          value => {
-            this.distributionId = value.distributionId;
-            this.dialog.closeAll();
-            this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
-          },
-          _ => this.windowDialog( 'Ошибка при отправки', 'error' )
-        );
+      console.log(newParams);
+      // this.editorService.saveDistribution( newParams )
+      //   .pipe( takeWhile( _ => this.isActive ) )
+      //   .subscribe(
+      //     value => {
+      //       this.distributionId = value.distributionId;
+      //       this.dialog.closeAll();
+      //       this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
+      //     },
+      //     _ => this.windowDialog( 'Ошибка при отправки', 'error' )
+      //   );
     } else {
       this.windowDialog( 'Не все поля заполнены', 'error' );
     }

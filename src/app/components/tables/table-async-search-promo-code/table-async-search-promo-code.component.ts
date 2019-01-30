@@ -147,8 +147,8 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToProfile( id: number ): void {
-    this.router.navigate( [ '/crm/add-promotions-codes'], { queryParams: { id } } );
+  redirectToProfile( promoCodeId: number ): void {
+    this.router.navigate( [ '/crm/add-promotions-codes'], { queryParams: { promoCodeId } } );
   }
 
   disabledCheckbox( eventData ): void {
