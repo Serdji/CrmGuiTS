@@ -180,7 +180,7 @@ export class EditorComponent implements OnInit, OnDestroy {
 
     const newParams = _( this.formDistribution.getRawValue() )
       .merge( this.params )
-      .omit( [ 'templateId', 'totalCount', 'emailLimits' ] )
+      .omit( [ 'templateId', 'totalCount', 'emailLimits', 'count', 'from' ] )
       .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
       .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
       .set( 'text', editorRes.innerHTML )
