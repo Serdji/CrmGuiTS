@@ -20,7 +20,7 @@ import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { ISettings } from '../../../interface/isettings';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { TableAsyncService } from '../../../services/table-async.service';
-import { callHooks } from '@angular/core/src/render3/hooks';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-profile-search',
@@ -112,6 +112,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private resetForm() {
     this.segmentationChips = [];
+    this.customerGroupChips = [];
     for ( const formControlName in this.formProfileSearch.value ) {
       this.formProfileSearch.get( `${formControlName}` ).patchValue( '' );
       this.formProfileSearch.get( `${formControlName}` ).setErrors( null );
@@ -119,13 +120,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private activeButton() {
-    const isValueNullOrUnd = value => _.isNull( value ) || _.isUndefined( value );
-    const isFormInvalid = _.curry( ( objForm, value ) => isValueNullOrUnd( value ) || objForm.invalid );
+    const isChips = () => R.length( this.segmentationChips ) > 0 || R.length( this.customerGroupChips ) > 0;
+    const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
     const isFormValOfInv = isFormInvalid( this.formProfileSearch );
-    const mapKeyFormObj = _.curry( ( objForm, objFormValue ) => _.mapKeys( objFormValue, ( value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) ) );
+    const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
+    const mapKeyFormObj = R.curry( ( objForm: any, objFormValue ) => _.mapKeys( objFormValue, funcMapKeys( objForm ) ) );
     const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
     const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
-    const isActiveButtonSearch = _.flow( [ getBooleanObj, isSizeObj ] );
+    const isActiveButtonSearch = R.compose( isSizeObj, getBooleanObj );
 
     this.formProfileSearch.valueChanges
       .pipe(
