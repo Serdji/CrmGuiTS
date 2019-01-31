@@ -120,7 +120,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private activeButton() {
-    const isChips = () => R.length( this.segmentationChips ) > 0 || R.length( this.customerGroupChips ) > 0;
+    const isChips = () => R.length( this.segmentationChips ) === 0 && R.length( this.customerGroupChips ) === 0;
+
     const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
     const isFormValOfInv = isFormInvalid( this.formProfileSearch );
     const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
@@ -134,7 +135,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         takeWhile( _ => this.isActive ),
         map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
       )
-      .subscribe( isValue => this.buttonSearch = isValue );
+      .subscribe( isValue => this.buttonSearch = isValue && isChips() );
   }
 
   private initTableAsync() {
