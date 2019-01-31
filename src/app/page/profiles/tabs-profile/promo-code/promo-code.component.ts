@@ -16,7 +16,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
   public progress: boolean;
   public promoCodes: IPromoCode;
-  public styleButton: string;
+  public nameButton: string;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -27,26 +27,41 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
-    this.styleButton = 'available';
+    this.nameButton = 'available';
     this.initPromoCodes();
   }
 
   private initPromoCodes() {
-    this.promoCodeService.availableByCustomer( { 'customerId': this.id } )
+    const customerId = { 'customerId': this.id };
+    const success = ( promoCodes: IPromoCode ) => {
+      const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
+      this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
+
+      const upperFirst = R.compose(
+        R.over( R.lensProp( 'code' ), _.upperFirst ),
+        R.over( R.lensPath( [ 'promotion', 'promotionName' ] ), _.upperFirst )
+      );
+      const resultMap = R.map( upperFirst, this.promoCodes.result );
+      this.promoCodes = R.set( R.lensProp( 'result' ), resultMap, this.promoCodes );
+
+      this.progress = false;
+    };
+
+    const availableByCustomer = id => this.promoCodeService.availableByCustomer( id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCodes: IPromoCode ) => {
-        const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
-        this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
+      .subscribe( success );
+    const usedByCustomer = id => this.promoCodeService.usedByCustomer( id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
 
-        const upperFirst = R.compose(
-          R.over( R.lensProp( 'code' ), _.upperFirst ),
-          R.over( R.lensPath( [ 'promotion', 'promotionName' ] ), _.upperFirst )
-        );
-        const resultMap = R.map( upperFirst, this.promoCodes.result );
-        this.promoCodes = R.set( R.lensProp( 'result' ), resultMap, this.promoCodes );
+    const whichMethod =  ( id, nameButton ) => {
+      switch ( nameButton ) {
+        case 'available': availableByCustomer( id ); break;
+        case 'used': usedByCustomer( id ); break;
+      }
+    };
 
-        this.progress = false;
-      } );
+    whichMethod( customerId, this.nameButton );
   }
 
   sortFilter( title: string ): void {
@@ -62,7 +77,9 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   }
 
   filterPromoCodes( key: string ): void {
-    this.styleButton = key;
+    this.nameButton = key;
+    this.progress = true;
+    this.initPromoCodes();
   }
 
   ngOnDestroy(): void {
