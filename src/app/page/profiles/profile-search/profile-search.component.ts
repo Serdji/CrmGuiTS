@@ -46,12 +46,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public segmentationSelectable = true;
   public segmentationRemovable = true;
-  public addSegmentationOnBlur = true;
+  public addSegmentationOnBlur = false;
   public segmentationChips: string[] = [];
 
   public customerGroupSelectable = true;
   public customerGroupRemovable = true;
-  public addCustomerGroupOnBlur = true;
+  public addCustomerGroupOnBlur = false;
   public customerGroupChips: string[] = [];
 
   private autDelay: number = 500;

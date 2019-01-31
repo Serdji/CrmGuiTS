@@ -8,7 +8,7 @@ import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
@@ -42,7 +42,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public citiesToOptions: Observable<ICity[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
-  readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  readonly separatorKeysCodes: number[] = [ ENTER, COMMA, SPACE ];
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
   public profilePromoCode: IProfilePromoCode;
@@ -69,12 +69,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public segmentationSelectable = true;
   public segmentationRemovable = true;
-  public addSegmentationOnBlur = true;
+  public addSegmentationOnBlur = false;
   public segmentationChips: string[] = [];
 
   public customerGroupSelectable = true;
   public customerGroupRemovable = true;
-  public addCustomerGroupOnBlur = true;
+  public addCustomerGroupOnBlur = false;
   public customerGroupChips: string[] = [];
 
   public buttonSave: boolean;
