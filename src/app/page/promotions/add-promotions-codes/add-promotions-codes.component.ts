@@ -42,39 +42,39 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public citiesToOptions: Observable<ICity[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
-  public separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
   public profilePromoCode: IProfilePromoCode;
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
-  public addPromoCodeFlightListOnBlur = false;
+  public addPromoCodeFlightListOnBlur = true;
   public promoCodeFlightListChips: string[] = [];
 
   public promoCodeBrandListSelectable = true;
   public promoCodeBrandListRemovable = true;
-  public addPromoCodeBrandListOnBlur = false;
+  public addPromoCodeBrandListOnBlur = true;
   public promoCodeBrandListChips: string[] = [];
 
   public promoCodeRbdListSelectable = true;
   public promoCodeRbdListRemovable = true;
-  public addPromoCodeRbdListOnBlur = false;
+  public addPromoCodeRbdListOnBlur = true;
   public promoCodeRbdListChips: string[] = [];
 
   public promoCodeCustomerListSelectable = true;
   public promoCodeCustomerListRemovable = true;
-  public addPromoCodeCustomerListOnBlur = false;
+  public addPromoCodeCustomerListOnBlur = true;
   public promoCodeCustomerListChips: string[] = [];
 
   public segmentationSelectable = true;
   public segmentationRemovable = true;
-  public addSegmentationOnBlur = false;
+  public addSegmentationOnBlur = true;
   public segmentationChips: string[] = [];
 
   public customerGroupSelectable = true;
   public customerGroupRemovable = true;
-  public addCustomerGroupOnBlur = false;
+  public addCustomerGroupOnBlur = true;
   public customerGroupChips: string[] = [];
 
   public buttonSave: boolean;
