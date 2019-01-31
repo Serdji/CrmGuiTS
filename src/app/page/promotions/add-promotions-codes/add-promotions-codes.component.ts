@@ -8,7 +8,7 @@ import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { COMMA, ENTER } from '@angular/cdk/keycodes';
+import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
@@ -42,29 +42,29 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public citiesToOptions: Observable<ICity[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
-  public separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  readonly separatorKeysCodes: number[] = [ ENTER, COMMA, SPACE ];
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
   public profilePromoCode: IProfilePromoCode;
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
-  public addPromoCodeFlightListOnBlur = false;
+  public addPromoCodeFlightListOnBlur = true;
   public promoCodeFlightListChips: string[] = [];
 
   public promoCodeBrandListSelectable = true;
   public promoCodeBrandListRemovable = true;
-  public addPromoCodeBrandListOnBlur = false;
+  public addPromoCodeBrandListOnBlur = true;
   public promoCodeBrandListChips: string[] = [];
 
   public promoCodeRbdListSelectable = true;
   public promoCodeRbdListRemovable = true;
-  public addPromoCodeRbdListOnBlur = false;
+  public addPromoCodeRbdListOnBlur = true;
   public promoCodeRbdListChips: string[] = [];
 
   public promoCodeCustomerListSelectable = true;
   public promoCodeCustomerListRemovable = true;
-  public addPromoCodeCustomerListOnBlur = false;
+  public addPromoCodeCustomerListOnBlur = true;
   public promoCodeCustomerListChips: string[] = [];
 
   public segmentationSelectable = true;
