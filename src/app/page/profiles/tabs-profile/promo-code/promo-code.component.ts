@@ -32,7 +32,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   }
 
   private initPromoCodes() {
-    this.promoCodeService.getPromoCodes( { 'customerId': this.id } )
+    this.promoCodeService.availableByCustomer( { 'customerId': this.id } )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( promoCodes: IPromoCode ) => {
         const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );

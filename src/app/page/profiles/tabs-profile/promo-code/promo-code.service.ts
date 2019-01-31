@@ -4,9 +4,9 @@ import { ConfigService } from '../../../../services/config-service.service';
 import { RetryRequestService } from '../../../../services/retry-request.service';
 import { Observable } from 'rxjs';
 
-@Injectable({
+@Injectable( {
   providedIn: 'root'
-})
+} )
 export class PromoCodeService {
 
   constructor(
@@ -15,8 +15,12 @@ export class PromoCodeService {
     private retryRequestService: RetryRequestService,
   ) { }
 
-  getPromoCodes( params ): Observable<any> {
+  availableByCustomer( params ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/promoCodes/findUsableForCustomer`, { params } ).pipe( this.retryRequestService.retry() );
+  }
+
+  usedByCustomer( params ): Observable<any> {
+    return this.http.get( `${this.configService.crmApi}/crm/promoCodes/usedByCustomer`, { params } ).pipe( this.retryRequestService.retry() );
   }
 
 }
