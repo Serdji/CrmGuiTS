@@ -43,14 +43,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public currencyDefault: string;
   public buttonSearch: boolean;
 
+  readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public segmentationSelectable = true;
   public segmentationRemovable = true;
-  public addSegmentationOnBlur = false;
-  public separatorKeysCodes: number[] = [ ENTER, COMMA ];
+  public addSegmentationOnBlur = true;
   public segmentationChips: string[] = [];
+
   public customerGroupSelectable = true;
   public customerGroupRemovable = true;
-  public addCustomerGroupOnBlur = false;
+  public addCustomerGroupOnBlur = true;
   public customerGroupChips: string[] = [];
 
   private autDelay: number = 500;
