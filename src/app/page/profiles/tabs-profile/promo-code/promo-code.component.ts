@@ -4,6 +4,7 @@ import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as R from 'ramda';
+import { validate } from 'codelyzer/walkerFactory/walkerFn';
 
 @Component( {
   selector: 'app-promo-code',
@@ -16,7 +17,8 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
   public progress: boolean;
   public promoCodes: IPromoCode;
-  public styleButton: string;
+  public nameButton: string;
+  public isUsedHostRecLoc: boolean;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -27,26 +29,46 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
-    this.styleButton = 'available';
+    this.nameButton = 'available';
     this.initPromoCodes();
   }
 
   private initPromoCodes() {
-    this.promoCodeService.getPromoCodes( { 'customerId': this.id } )
+    const customerId = { 'customerId': this.id };
+    const success = ( promoCodes: IPromoCode ) => {
+      const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
+      this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
+
+      const totalCount = R.compose( R.length, R.prop( 'usedHostRecLoc' ) );
+      const setUsedHostRecLocTotalCount = R.assoc( 'usedHostRecLocTotalCount' );
+      const usedHostRecLocTotalCount = value => setUsedHostRecLocTotalCount( totalCount( value ), value );
+
+      const upperFirstAndTotalCount = R.compose(
+        usedHostRecLocTotalCount,
+        R.over( R.lensProp( 'code' ), _.upperFirst ),
+        R.over( R.lensPath( [ 'promotion', 'promotionName' ] ), _.upperFirst )
+      );
+
+      const resultMapping = R.map( upperFirstAndTotalCount, this.promoCodes.result );
+      this.promoCodes = R.set( R.lensProp( 'result' ), resultMapping, this.promoCodes );
+
+      const funcIsUsedHostRecLoc = R.compose( R.has( 'usedHostRecLoc' ), R.head, R.prop( 'result' ) );
+      this.isUsedHostRecLoc = funcIsUsedHostRecLoc( this.promoCodes );
+
+      this.progress = false;
+    };
+
+    const availableByCustomer = id => this.promoCodeService.availableByCustomer( id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( promoCodes: IPromoCode ) => {
-        const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
-        this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
+      .subscribe( success );
+    const usedByCustomer = id => this.promoCodeService.usedByCustomer( id )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
 
-        const upperFirst = R.compose(
-          R.over( R.lensProp( 'code' ), _.upperFirst ),
-          R.over( R.lensPath( [ 'promotion', 'promotionName' ] ), _.upperFirst )
-        );
-        const resultMap = R.map( upperFirst, this.promoCodes.result );
-        this.promoCodes = R.set( R.lensProp( 'result' ), resultMap, this.promoCodes );
+    const whichButton = nameButton => () => nameButton === 'available';
+    const whichMethod = R.ifElse( whichButton( this.nameButton ), availableByCustomer, usedByCustomer );
 
-        this.progress = false;
-      } );
+    whichMethod( customerId );
   }
 
   sortFilter( title: string ): void {
@@ -62,7 +84,9 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   }
 
   filterPromoCodes( key: string ): void {
-    this.styleButton = key;
+    this.nameButton = key;
+    this.progress = true;
+    this.initPromoCodes();
   }
 
   ngOnDestroy(): void {
