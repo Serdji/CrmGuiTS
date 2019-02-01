@@ -9,7 +9,7 @@
       matRippleRadius="25"
       mat-button
       color="primary"
-      [ngClass]="{ '_active': styleButton === 'available' }"
+      [ngClass]="{ '_active': nameButton === 'available' }"
       (click)="filterPromoCodes('available')"
     >
       Доступные
@@ -22,7 +22,7 @@
       matRippleRadius="25"
       mat-button
       color="primary"
-      [ngClass]="{ '_active': styleButton === 'used' }"
+      [ngClass]="{ '_active': nameButton === 'used' }"
       (click)="filterPromoCodes('used')"
     >
       Использованные
@@ -34,7 +34,7 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
 
-  <mat-accordion  class="promo-code__accordion" *ngIf="!progress" multi="true">
+  <mat-accordion  class="promo-code__accordion" [ngClass]="{'_used': isUsedHostRecLoc}" *ngIf="!progress" multi="true">
 
     <mat-card class="promo-code__sort mat-elevation-z0">
       <div class="promo-code__filter">
@@ -85,6 +85,18 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
+      <div *ngIf="isUsedHostRecLoc" class="promo-code__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('usedHostRecLocTotalCount')"
+        >
+          <b>Количество</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
     </mat-card>
 
 
@@ -102,6 +114,9 @@
           </div>
           <div class="promo-code__title">
             <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+          </div>
+          <div *ngIf="isUsedHostRecLoc" class="promo-code__title">
+            <span> {{promoCode.usedHostRecLocTotalCount}} </span>
           </div>
         </div>
       </mat-expansion-panel-header>
@@ -221,6 +236,14 @@
                 <div class="promo-code__info-params">
                   <span
                     *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
+                </div>
+              </div>
+
+              <div *ngIf="isUsedHostRecLoc" class="promo-code__info-wrapper">
+                <span class="promo-code__info-text">Заказы:</span>
+                <div class="promo-code__info-params">
+                  <span
+                    *ngFor="let usedHostRecLoc of promoCode.usedHostRecLoc"><b>{{usedHostRecLoc.hostRecLoc}} | {{usedHostRecLoc.useDt | date:'HH:mm dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
 

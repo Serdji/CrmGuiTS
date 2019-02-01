@@ -1,5 +1,10 @@
 export interface IPromoCode {
   result: {
+    usedHostRecLoc?: {
+      hostRecLoc: string;
+      useDt: string;
+    }[];
+    usedHostRecLocTotalCount?: number;
     promoCodeId: number;
     promotionId: number;
     promotion: {
@@ -22,9 +27,9 @@ export interface IPromoCode {
     promoCodeFlightList: string[];
     promoCodeRbdList: string[];
     promoCodeRouteList: {
-        dep_Location: string;
-        arr_Location: string
-      }[];
+      dep_Location: string;
+      arr_Location: string
+    }[];
     customersIds: number[];
     customers: any;
     customerGroupsIds: number[];
