@@ -7,6 +7,7 @@ import { ICity } from '../../../interface/icity';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
+import * as R from 'ramda';
 import * as moment from 'moment';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
@@ -23,6 +24,7 @@ import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
+import { IPromoCodeAdd } from '../../../interface/ipromo-code-add';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -387,7 +389,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   directionAdd(): void {
-    if ( this.formPromoCodes.get( 'dep_Location' ).value || this.formPromoCodes.get( 'arr_Location' ).value ){
+    if ( this.formPromoCodes.get( 'dep_Location' ).value || this.formPromoCodes.get( 'arr_Location' ).value ) {
       this.promoCodeRouteList.push(
         {
           dep_Location: this.formPromoCodes.get( 'dep_Location' ).value,
@@ -453,9 +455,11 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     if ( !this.formPromoCodes.invalid ) {
       this.addPromotionsCodesService.savePromoCode( this.promoCodeParameters() )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( value => {
-          this.windowDialog( `Промокод успешно сохранен`, 'ok' );
-          this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: value.promoCodeId } } );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => {
+          if ( !R.isNil( promoCodeAdd.promoCode ) ) {
+            this.windowDialog( `Промокод успешно сохранен`, 'ok' );
+            this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
+          }
         } );
     }
   }
@@ -472,8 +476,10 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => {
-          this.windowDialog( `Промокод успешно изменен`, 'ok' );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => {
+          if ( !R.isNil( promoCodeAdd.promoCode ) ) {
+            this.windowDialog( `Промокод успешно изменен`, 'ok' );
+          }
         } );
     }
   }
