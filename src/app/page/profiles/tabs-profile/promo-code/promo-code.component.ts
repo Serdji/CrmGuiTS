@@ -39,12 +39,9 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
       this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
 
-      const lengthUsedHostRecLoc = R.compose( R.length, R.prop( 'usedHostRecLoc' ) );
+      const totalCount = R.compose( R.length, R.prop( 'usedHostRecLoc' ) );
       const setUsedHostRecLocTotalCount = R.assoc( 'usedHostRecLocTotalCount' );
-      const usedHostRecLocTotalCount = value => {
-        const totalCount = lengthUsedHostRecLoc( value );
-        return setUsedHostRecLocTotalCount( totalCount, value );
-      };
+      const usedHostRecLocTotalCount = value => setUsedHostRecLocTotalCount( totalCount( value ), value );
 
       const upperFirstAndTotalCount = R.compose(
         usedHostRecLocTotalCount,
@@ -68,14 +65,10 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
 
-    const whichMethod = ( id, nameButton ) => {
-      switch ( nameButton ) {
-        case 'available': availableByCustomer( id ); break;
-        case 'used': usedByCustomer( id ); break;
-      }
-    };
+    const whichButton = _ => this.nameButton === 'available';
+    const whichMethod = R.ifElse( whichButton, availableByCustomer, usedByCustomer );
 
-    whichMethod( customerId, this.nameButton );
+    whichMethod( customerId );
   }
 
   sortFilter( title: string ): void {
