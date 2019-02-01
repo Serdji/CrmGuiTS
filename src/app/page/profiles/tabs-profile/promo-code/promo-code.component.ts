@@ -4,6 +4,7 @@ import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as R from 'ramda';
+import { validate } from 'codelyzer/walkerFactory/walkerFn';
 
 @Component( {
   selector: 'app-promo-code',
@@ -28,7 +29,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
-    this.nameButton = 'used';
+    this.nameButton = 'available';
     this.initPromoCodes();
   }
 
@@ -38,15 +39,25 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
       this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
 
-      const upperFirst = R.compose(
+      const lengthUsedHostRecLoc = R.compose( R.length, R.prop( 'usedHostRecLoc' ) );
+      const setUsedHostRecLocTotalCount = R.assoc( 'usedHostRecLocTotalCount' );
+      const usedHostRecLocTotalCount = value => {
+        const totalCount = lengthUsedHostRecLoc( value );
+        return setUsedHostRecLocTotalCount( totalCount, value );
+      };
+
+      const upperFirstAndTotalCount = R.compose(
+        usedHostRecLocTotalCount,
         R.over( R.lensProp( 'code' ), _.upperFirst ),
         R.over( R.lensPath( [ 'promotion', 'promotionName' ] ), _.upperFirst )
       );
-      const resultMap = R.map( upperFirst, this.promoCodes.result );
-      this.promoCodes = R.set( R.lensProp( 'result' ), resultMap, this.promoCodes );
-      const funcIsUsedHostRecLoc = R.compose( R.has('usedHostRecLoc' ), R.head, R.prop('result') );
 
+      const resultMapping = R.map( upperFirstAndTotalCount, this.promoCodes.result );
+      this.promoCodes = R.set( R.lensProp( 'result' ), resultMapping, this.promoCodes );
+
+      const funcIsUsedHostRecLoc = R.compose( R.has( 'usedHostRecLoc' ), R.head, R.prop( 'result' ) );
       this.isUsedHostRecLoc = funcIsUsedHostRecLoc( this.promoCodes );
+
       this.progress = false;
     };
 
@@ -57,7 +68,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
 
-    const whichMethod =  ( id, nameButton ) => {
+    const whichMethod = ( id, nameButton ) => {
       switch ( nameButton ) {
         case 'available': availableByCustomer( id ); break;
         case 'used': usedByCustomer( id ); break;

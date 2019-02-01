@@ -1,9 +1,10 @@
 export interface IPromoCode {
   result: {
-    'usedHostRecLoc'?: {
-      'hostRecLoc': string;
-      'useDt': string;
+    usedHostRecLoc?: {
+      hostRecLoc: string;
+      useDt: string;
     }[];
+    usedHostRecLocTotalCount?: number;
     promoCodeId: number;
     promotionId: number;
     promotion: {

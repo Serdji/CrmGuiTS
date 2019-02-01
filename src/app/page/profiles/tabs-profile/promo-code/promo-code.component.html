@@ -91,7 +91,7 @@
           matRippleColor="rgba(0,0,0,.1)"
           matRippleUnbounded="true"
           matRippleRadius="50"
-          (click)="sortFilter('dateTo')"
+          (click)="sortFilter('usedHostRecLocTotalCount')"
         >
           <b>Количество</b>
           <mat-icon>swap_vert</mat-icon>
@@ -116,7 +116,7 @@
             <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
           </div>
           <div *ngIf="isUsedHostRecLoc" class="promo-code__title">
-            <span> {{promoCode.usedHostRecLoc.length}} </span>
+            <span> {{promoCode.usedHostRecLocTotalCount}} </span>
           </div>
         </div>
       </mat-expansion-panel-header>
