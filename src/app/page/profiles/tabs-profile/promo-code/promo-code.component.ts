@@ -65,8 +65,8 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
 
-    const whichButton = _ => this.nameButton === 'available';
-    const whichMethod = R.ifElse( whichButton, availableByCustomer, usedByCustomer );
+    const whichButton = nameButton => () => nameButton === 'available';
+    const whichMethod = R.ifElse( whichButton( this.nameButton ), availableByCustomer, usedByCustomer );
 
     whichMethod( customerId );
   }
