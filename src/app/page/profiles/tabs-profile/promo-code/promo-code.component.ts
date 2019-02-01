@@ -17,6 +17,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public promoCodes: IPromoCode;
   public nameButton: string;
+  public isUsedHostRecLoc: boolean;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -27,7 +28,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
-    this.nameButton = 'available';
+    this.nameButton = 'used';
     this.initPromoCodes();
   }
 
@@ -43,7 +44,9 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       );
       const resultMap = R.map( upperFirst, this.promoCodes.result );
       this.promoCodes = R.set( R.lensProp( 'result' ), resultMap, this.promoCodes );
+      const funcIsUsedHostRecLoc = R.compose( R.has('usedHostRecLoc' ), R.head, R.prop('result') );
 
+      this.isUsedHostRecLoc = funcIsUsedHostRecLoc( this.promoCodes );
       this.progress = false;
     };
 

@@ -1,4 +1,5 @@
-minWidthTitle = 440px
+minWidthTitleAvailable = 432px
+minWidthTitleUsed = 342px
 
 .mat-expansion-panel-header
   padding: 0 16px;
@@ -24,6 +25,18 @@ minWidthTitle = 440px
   &__accordion
     flex: 1;
 
+    &._used
+      .promo-code__filter,
+      .promo-code__title
+        min-width: minWidthTitleUsed;
+        &:last-child
+          min-width: 0;
+
+      .promo-code__title
+        &:last-child
+          margin-right: 26px;
+
+
   &__progress-bar
     width: 100%;
 
@@ -32,7 +45,6 @@ minWidthTitle = 440px
     &-wrapper
       display: flex;
       flex-direction: row;
-      justify-content: space-between;
       width: 100%;
 
   &__sort,
@@ -43,13 +55,13 @@ minWidthTitle = 440px
     font-weight: 400;
 
   &__sort
-    justify-content: space-between;
     border-radius: 0;
     box-shadow: 0 0 0 0 rgba(0,0,0,0.2), 0 2px 0 0 rgba(0,0,0,0.05), 0 0 0 0 rgba(0,0,0,0.12)
 
   &__filter
   &__title
-    min-width: minWidthTitle;
+    min-width: minWidthTitleAvailable;
+    margin-left: auto;
 
     span
       display: flex;
