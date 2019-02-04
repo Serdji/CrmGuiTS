@@ -127,6 +127,9 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initPromoCodeValTypes();
     this.initQueryParams();
     this.initTableProfilePagination();
+    this.addPromotionsCodesService.subjectDeletePromotionsCodes
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.resetForm() );
   }
 
   private initQueryParams() {
