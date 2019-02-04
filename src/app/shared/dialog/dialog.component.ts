@@ -331,7 +331,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.router.navigate( [ '/crm/add-promotions' ] );
+            this.addPromotionsCodesService.subjectDeletePromotionsCodes.next();
           } );
         break;
     }

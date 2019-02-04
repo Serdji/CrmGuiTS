@@ -7,6 +7,7 @@ import { ICity } from '../../../interface/icity';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
 import * as _ from 'lodash';
+import * as R from 'ramda';
 import * as moment from 'moment';
 import { COMMA, ENTER, SPACE } from '@angular/cdk/keycodes';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
@@ -23,6 +24,7 @@ import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
+import { IPromoCodeAdd } from '../../../interface/ipromo-code-add';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -125,6 +127,9 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initPromoCodeValTypes();
     this.initQueryParams();
     this.initTableProfilePagination();
+    this.addPromotionsCodesService.subjectDeletePromotionsCodes
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.clearForm() );
   }
 
   private initQueryParams() {
@@ -216,13 +221,14 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
+  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false, intersection: any = [] ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
         status: params,
         params: this.promoCodeId,
         card,
+        intersection,
       },
     } );
     if ( !disableTimer ) {
@@ -387,7 +393,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   directionAdd(): void {
-    if ( this.formPromoCodes.get( 'dep_Location' ).value || this.formPromoCodes.get( 'arr_Location' ).value ){
+    if ( this.formPromoCodes.get( 'dep_Location' ).value || this.formPromoCodes.get( 'arr_Location' ).value ) {
       this.promoCodeRouteList.push(
         {
           dep_Location: this.formPromoCodes.get( 'dep_Location' ).value,
@@ -449,14 +455,31 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     return params;
   }
 
+
+  private isPromoCod( messDialog ) {
+    return ( promoCodeAdd: IPromoCodeAdd ) => {
+      this.windowDialog( messDialog, 'ok' );
+      this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
+    };
+  }
+
+  private isIntersectionPromoCod() {
+    return ( promoCodeAdd: IPromoCodeAdd ) => {
+      this.windowDialog( '', 'intersection', 'intersection', true, promoCodeAdd.intersectingPromoCodes );
+    }
+  }
+
+  private intersectionPromoCod( promoCodeAdd: IPromoCodeAdd, messDialog ) {
+    const isNil = () => R.isNil( promoCodeAdd.promoCode );
+    const whichMethod = R.ifElse( isNil, this.isIntersectionPromoCod(), this.isPromoCod( messDialog ) );
+    whichMethod( promoCodeAdd );
+  }
+
   saveForm(): void {
     if ( !this.formPromoCodes.invalid ) {
       this.addPromotionsCodesService.savePromoCode( this.promoCodeParameters() )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( value => {
-          this.windowDialog( `Промокод успешно сохранен`, 'ok' );
-          this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: value.promoCodeId } } );
-        } );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно сохранен' ) );
     }
   }
 
@@ -472,9 +495,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => {
-          this.windowDialog( `Промокод успешно изменен`, 'ok' );
-        } );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) =>  this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно изменен' ) );
     }
   }
 

@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { IPromoCode } from '../../../interface/ipromo-code';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -12,6 +12,8 @@ import * as moment from 'moment';
   providedIn: 'root'
 } )
 export class AddPromotionsCodesService {
+
+  public subjectDeletePromotionsCodes = new Subject();
 
   constructor(
     private http: HttpClient,

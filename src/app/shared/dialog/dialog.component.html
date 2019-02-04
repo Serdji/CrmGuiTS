@@ -117,6 +117,158 @@
   </div>
 
 
+
+  <div *ngIf="data.status === 'intersection'">
+    <h2 mat-dialog-title class="dialog__text">Обнаружено пересечение промокодов</h2>
+    <mat-accordion  class="promo-code__accordion" multi="true">
+      <mat-expansion-panel class=" mat-elevation-z5" *ngFor=" let promoCode of data.intersection ">
+        <mat-expansion-panel-header>
+          <div class="promo-code__header-wrapper">
+            <div class="promo-code__title">
+              <span> {{promoCode.code}} </span>
+            </div>
+            <div class="promo-code__title">
+              <span> {{ promoCode.promotion.promotionName }} </span>
+            </div>
+            <div class="promo-code__title">
+              <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
+            </div>
+            <div class="promo-code__title">
+              <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+            </div>
+          </div>
+        </mat-expansion-panel-header>
+0
+
+        <ng-template matExpansionPanelContent>
+          <mat-card class="promo-code__card mat-elevation-z0">
+            <div class="promo-code__box">
+
+
+              <div class="promo-code__info">
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text"> Account code:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.accountCode}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Размерность:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.val}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Свойство размерности:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{ promoCode.promoCodeValTypeId }}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Персональная размерность использования:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.usesPerPerson}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Общее число раз использования промокода:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.usesTotal}}</b></span>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="promo-code__info">
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Номер рейсов:</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let flightList of promoCode.promoCodeFlightList "><b>{{flightList}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Период реализации от:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.flightDateFrom | date:'dd.MM.yyyy'}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Период реализации до:</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.flightDateTo | date:'dd.MM.yyyy'}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Бренды:</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let brandList of promoCode.promoCodeBrandList"><b>{{brandList}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">RBD:</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Направления:</span>
+                  <div class="promo-code__info-params">
+                    <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
+                      <div
+                        class="promo-code__info-location">{{routeList.dep_Location !== '' && routeList.dep_Location !== null ? routeList.dep_Location : '∞'}}</div>
+                      <mat-icon>arrow_right_alt</mat-icon>
+                      <div
+                        class="promo-code__info-location">{{routeList.arr_Location !== '' && routeList.arr_Location !== null ? routeList.arr_Location : '∞'}}</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <div class="promo-code__info">
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Профиль:</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let customersId of promoCode.customersIds"><b>{{customersId}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Группы сегментации:</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let segmentation of promoCode.segmentations"><b>{{segmentation.title}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                  <span class="promo-code__info-text">Группы пассажиров:</span>
+                  <div class="promo-code__info-params">
+                  <span
+                    *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <span class="promo-code__link" (click)="onNoClick()" routerLink="/crm/add-promotions-codes"
+                  [queryParams]="{ promoCodeId: promoCode.promoCodeId }">Перейти в промокод</span>
+          </mat-card>
+        </ng-template>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+
+
 </div>
 
 
