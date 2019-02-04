@@ -129,7 +129,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initTableProfilePagination();
     this.addPromotionsCodesService.subjectDeletePromotionsCodes
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.resetForm() );
+      .subscribe( _ => this.clearForm() );
   }
 
   private initQueryParams() {
@@ -221,13 +221,14 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
+  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false, intersection: any = [] ) {
     this.dialog.open( DialogComponent, {
       data: {
         message: messDialog,
         status: params,
         params: this.promoCodeId,
         card,
+        intersection,
       },
     } );
     if ( !disableTimer ) {
@@ -454,16 +455,31 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     return params;
   }
 
+
+  private isPromoCod( messDialog ) {
+    return ( promoCodeAdd: IPromoCodeAdd ) => {
+      this.windowDialog( messDialog, 'ok' );
+      this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
+    };
+  }
+
+  private isIntersectionPromoCod() {
+    return ( promoCodeAdd: IPromoCodeAdd ) => {
+      this.windowDialog( '', 'intersection', 'intersection', true, promoCodeAdd.intersectingPromoCodes );
+    }
+  }
+
+  private intersectionPromoCod( promoCodeAdd: IPromoCodeAdd, messDialog ) {
+    const isNil = () => R.isNil( promoCodeAdd.promoCode );
+    const whichMethod = R.ifElse( isNil, this.isIntersectionPromoCod(), this.isPromoCod( messDialog ) );
+    whichMethod( promoCodeAdd );
+  }
+
   saveForm(): void {
     if ( !this.formPromoCodes.invalid ) {
       this.addPromotionsCodesService.savePromoCode( this.promoCodeParameters() )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => {
-          if ( !R.isNil( promoCodeAdd.promoCode ) ) {
-            this.windowDialog( `Промокод успешно сохранен`, 'ok' );
-            this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
-          }
-        } );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно сохранен' ) );
     }
   }
 
@@ -479,11 +495,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => {
-          if ( !R.isNil( promoCodeAdd.promoCode ) ) {
-            this.windowDialog( `Промокод успешно изменен`, 'ok' );
-          }
-        } );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) =>  this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно изменен' ) );
     }
   }
 
