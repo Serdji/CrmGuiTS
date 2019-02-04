@@ -34,7 +34,7 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
 
-  <mat-accordion  class="promo-code__accordion" [ngClass]="{'_used': isUsedHostRecLoc}" *ngIf="!progress" multi="true">
+  <mat-accordion  class="promo-code__accordion" [ngClass]="{'_used': isUsedHostRecLoc}" *ngIf="!progress && !isPromoCodNull" multi="true">
 
     <mat-card class="promo-code__sort mat-elevation-z0">
       <div class="promo-code__filter">
