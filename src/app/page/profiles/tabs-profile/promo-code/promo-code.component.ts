@@ -19,6 +19,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   public promoCodes: IPromoCode;
   public nameButton: string;
   public isUsedHostRecLoc: boolean;
+  public isPromoCodNull: boolean;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -29,6 +30,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
+    this.isPromoCodNull = false;
     this.nameButton = 'available';
     this.initPromoCodes();
   }
@@ -55,15 +57,21 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
       const funcIsUsedHostRecLoc = R.compose( R.has( 'usedHostRecLoc' ), R.head, R.prop( 'result' ) );
       this.isUsedHostRecLoc = funcIsUsedHostRecLoc( this.promoCodes );
 
+      this.isPromoCodNull = false;
+      this.progress = false;
+    };
+
+    const error = _ => {
+      this.isPromoCodNull = true;
       this.progress = false;
     };
 
     const availableByCustomer = id => this.promoCodeService.availableByCustomer( id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( success );
+      .subscribe( success, error );
     const usedByCustomer = id => this.promoCodeService.usedByCustomer( id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( success );
+      .subscribe( success, error );
 
     const whichButton = nameButton => () => nameButton === 'available';
     const whichMethod = R.ifElse( whichButton( this.nameButton ), availableByCustomer, usedByCustomer );

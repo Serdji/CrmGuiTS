@@ -19,6 +19,7 @@ import { PromoCodeModule } from '../promo-code/promo-code.module';
 import { TableAsyncService } from '../../services/table-async.service';
 import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-profile/table-async-promo-code-profile.component';
 import { TableAsyncSearchPromoCodeComponent } from './table-async-search-promo-code/table-async-search-promo-code.component';
+import { RouterModule } from '@angular/router';
 
 @NgModule({
   imports: [
@@ -28,6 +29,7 @@ import { TableAsyncSearchPromoCodeComponent } from './table-async-search-promo-c
     PipesModule,
     EditorsModule,
     PromoCodeModule,
+    RouterModule,
   ],
   declarations: [
     TableExampleComponent,

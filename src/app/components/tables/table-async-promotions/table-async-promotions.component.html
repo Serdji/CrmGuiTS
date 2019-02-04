@@ -40,10 +40,20 @@
     <ng-container matColumnDef="promotionId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
+        <mat-icon
+          routerLink="/crm/search-promotions-codes"
+          [queryParams]="{
+            promotionName: element.promotionName,
+            from: 0,
+            count: 10
+          }"
+        >search
+        </mat-icon>
         <mat-icon (click)="editCreate(
         element.promotionId,
         element.promotionName
-        )" >create</mat-icon>
+        )">create
+        </mat-icon>
       </mat-cell>
     </ng-container>
 
