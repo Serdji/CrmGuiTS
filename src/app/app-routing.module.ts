@@ -41,7 +41,7 @@ const routes: Routes = [
         { path: 'addprofile', loadChildren: './page/profiles/add-profile/add-profile.module#AddProfileModule' },
         { path: 'listsegmentation', loadChildren: './page/segmentation/list-segmentation/list-segmentation.module#ListSegmentationModule' },
         { path: 'addsegmentation', loadChildren: './page/segmentation/add-segmentation/add-segmentation.module#AddSegmentationModule' },
-        // { path: 'profilegroup', component: ProfileGroupComponent },
+        { path: 'profilegroup', loadChildren: './page/special-groups/profile-group/profile-group.module#ProfileGroupModule' },
         // { path: 'list-distribution', component: ListDistributionComponent },
         // { path: 'profile-distribution/:id', component: ProfileDistributionComponent, canActivate: [ AccessRightsDistributionGuard ] },
         // { path: 'add-promotions', component: AddPromotionsComponent, },
