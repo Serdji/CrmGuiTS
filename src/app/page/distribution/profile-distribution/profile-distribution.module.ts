@@ -6,6 +6,7 @@ import { ComponentsModule } from '../../../components/components.module';
 import { ProfileDistributionService } from './profile-distribution.service';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { ProfileDistributionRoutes } from './profile-distribution.routing';
 
 @NgModule( {
   imports: [
@@ -14,6 +15,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ComponentsModule,
     PipesModule,
     DirectivesModule,
+    ProfileDistributionRoutes
   ],
   declarations: [ ProfileDistributionComponent ],
   providers: [ ProfileDistributionService ]
