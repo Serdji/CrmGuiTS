@@ -7,6 +7,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { SettingsService } from '../settings.service';
 import { FormTableAsyncProfileSettingsComponent } from './form-table-async-profile-settings.component';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { FormTableAsyncProfileSettingsRoutes } from './form-table-async-profile-settings.routing';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     PipesModule,
     DirectivesModule,
     DragulaModule.forRoot(),
+    FormTableAsyncProfileSettingsRoutes
   ],
   declarations: [ FormTableAsyncProfileSettingsComponent ],
   providers: [ SettingsService ]

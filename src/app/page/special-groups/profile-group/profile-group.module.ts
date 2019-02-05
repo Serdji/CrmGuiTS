@@ -7,6 +7,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { MaterialModule } from '../../../shared/material';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { ProfileGroupRoutes } from './profile-group.routing';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ReactiveFormsModule,
     ComponentsModule,
     DirectivesModule,
+    ProfileGroupRoutes
   ],
   declarations: [ProfileGroupComponent],
   providers: [ProfileGroupService]

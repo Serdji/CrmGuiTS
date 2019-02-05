@@ -5,6 +5,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { ListDistributionService } from './list-distribution.service';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { ListDistributionRoutes } from './list-distribution.routing';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     SharedModule,
     ComponentsModule,
     DirectivesModule,
+    ListDistributionRoutes
   ],
   declarations: [ ListDistributionComponent ],
   providers: [ ListDistributionService ]

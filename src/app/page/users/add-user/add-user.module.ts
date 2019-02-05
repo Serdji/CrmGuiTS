@@ -5,6 +5,7 @@ import { AddUserService } from './add-user.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { AddUserRoutes } from './add-user.routing';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
+    AddUserRoutes
   ],
   declarations: [ AddUserComponent ],
   providers: [ AddUserService ]

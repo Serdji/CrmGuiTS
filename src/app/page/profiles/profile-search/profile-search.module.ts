@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { ProfileSearchRoutes } from './profile-search.routing';
 
 @NgModule( {
   imports: [
@@ -14,6 +15,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     SharedModule,
     ComponentsModule,
     DirectivesModule,
+    ProfileSearchRoutes
   ],
   declarations: [ ProfileSearchComponent ],
   providers: [ ProfileSearchService ]

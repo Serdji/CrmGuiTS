@@ -5,6 +5,7 @@ import { LoginService } from './login.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../shared/material/material.module';
+import { LoginRoutes } from './login.routing';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { MaterialModule } from '../../shared/material/material.module';
     SharedModule,
     MaterialModule,
     ReactiveFormsModule,
+    LoginRoutes
   ],
   declarations: [ LoginComponent ],
   providers: [ LoginService ]

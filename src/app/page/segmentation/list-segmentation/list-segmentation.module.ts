@@ -5,6 +5,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ListSegmentationComponent } from './list-segmentation.component';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { ListSegmentationRoutes } from './list-segmentation.routing';
 
 @NgModule({
   imports: [
@@ -12,6 +13,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     SharedModule,
     DirectivesModule,
     ComponentsModule,
+    ListSegmentationRoutes
   ],
   declarations: [ ListSegmentationComponent],
   providers: [ ListSegmentationService ]

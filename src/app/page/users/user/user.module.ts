@@ -5,6 +5,7 @@ import { UserComponent } from './user.component';
 import { UserService } from './user.service';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { UserRoutes } from './user.routing';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     SharedModule,
     ReactiveFormsModule,
     DirectivesModule,
+    UserRoutes
   ],
   declarations: [ UserComponent ],
   providers: [ UserService ]

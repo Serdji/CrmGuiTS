@@ -9,7 +9,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
-import { PageModule } from './page/page.module';
 import { ServicesModule } from './services/services.module';
 import { ComponentsModule } from './components/components.module';
 
@@ -26,7 +25,6 @@ if ( environment.production ) {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    PageModule,
     ServicesModule,
     SharedModule.forRoot(),
     ComponentsModule.forRoot()
