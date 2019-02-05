@@ -5,6 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { AddProfileService } from './add-profile.service';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { AddProfileRoutes } from './add-profile.routing';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
+    AddProfileRoutes
   ],
   declarations: [ AddProfileComponent ],
   providers: [ AddProfileService ]

@@ -38,7 +38,7 @@ const routes: Routes = [
         { path: 'user/:id', loadChildren: './page/users/user/user.module#UserModule', canActivate: [ AccessRightsUserGuard ] },
         { path: 'profilesearch', loadChildren: './page/profiles/profile-search/profile-search.module#ProfileSearchModule' },
         { path: 'profile/:id', loadChildren: './page/profiles/tabs-profile/tabs-profile.module#TabsProfileModule', canActivate: [ AccessRightsProfileGuard ] },
-        // { path: 'addprofile', component: AddProfileComponent },
+        { path: 'addprofile', loadChildren: './page/profiles/add-profile/add-profile.module#AddProfileModule' },
         // { path: 'listsegmentation', component: ListSegmentationComponent },
         // { path: 'addsegmentation', component: AddSegmentationComponent },
         // { path: 'profilegroup', component: ProfileGroupComponent },
