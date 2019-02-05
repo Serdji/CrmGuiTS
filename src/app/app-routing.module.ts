@@ -35,7 +35,7 @@ const routes: Routes = [
         { path: 'entrance', loadChildren: './page/entrance/entrance.module#EntranceModule' },
         { path: 'adduser', loadChildren: './page/users/add-user/add-user.module#AddUserModule' },
         { path: 'listusers', loadChildren: './page/users/list-users/list-users.module#ListUsersModule' },
-        // { path: 'user/:id', component: UserComponent, canActivate: [ AccessRightsUserGuard ] },
+        { path: 'user/:id', loadChildren: './page/users/user/user.module#UserModule', canActivate: [ AccessRightsUserGuard ] },
         // { path: 'profilesearch', component: ProfileSearchComponent },
         // { path: 'profile/:id', component: TabsProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
         // { path: 'addprofile', component: AddProfileComponent },
