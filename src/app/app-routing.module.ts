@@ -36,7 +36,7 @@ const routes: Routes = [
         { path: 'adduser', loadChildren: './page/users/add-user/add-user.module#AddUserModule' },
         { path: 'listusers', loadChildren: './page/users/list-users/list-users.module#ListUsersModule' },
         { path: 'user/:id', loadChildren: './page/users/user/user.module#UserModule', canActivate: [ AccessRightsUserGuard ] },
-        // { path: 'profilesearch', component: ProfileSearchComponent },
+        { path: 'profilesearch', loadChildren: './page/profiles/profile-search/profile-search.module#ProfileSearchModule' },
         // { path: 'profile/:id', component: TabsProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
         // { path: 'addprofile', component: AddProfileComponent },
         // { path: 'listsegmentation', component: ListSegmentationComponent },
