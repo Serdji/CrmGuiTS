@@ -91,7 +91,7 @@
                     <mat-icon matChipRemove *ngIf="promoCodeRbdListRemovable">cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="RBD"
+                    placeholder="Класс бронирования"
                     #promoCodeRbdListChipInput
                     formControlName="promoCodeRbdList"
                     [matChipInputFor]="chipPromoCodeRbdListList"
@@ -175,7 +175,7 @@
               <input matInput formControlName="code" type="text" placeholder="Промокод">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="accountCode" type="text" placeholder="Account code">
+              <input matInput formControlName="accountCode" type="text" placeholder="Расчётный код">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
               <input matInput formControlName="dateFrom" placeholder="Период действия от" [matDatepicker]="dateFrom">
