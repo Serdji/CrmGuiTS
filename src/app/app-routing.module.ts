@@ -26,33 +26,33 @@ import { AddPromotionsCodesComponent } from './page/promotions/add-promotions-co
 import { SearchPromotionsCodesComponent } from './page/promotions/search-promotions-codes/search-promotions-codes.component';
 
 const routes: Routes = [
-    { path: '', component: LoginComponent },
+    { path: '', loadChildren: './page/login/login.module#LoginModule' },
     {
       path: 'crm',
       component: LayoutComponent,
       canActivate: [ AuthGuard ],
       children: [
-        { path: 'entrance', component: EntranceComponent },
-        { path: 'adduser', component: AddUserComponent },
-        { path: 'listusers', component: ListUsersComponent },
-        { path: 'user/:id', component: UserComponent, canActivate: [ AccessRightsUserGuard ] },
-        { path: 'profilesearch', component: ProfileSearchComponent },
-        { path: 'profile/:id', component: TabsProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
-        { path: 'addprofile', component: AddProfileComponent },
-        { path: 'listsegmentation', component: ListSegmentationComponent },
-        { path: 'addsegmentation', component: AddSegmentationComponent },
-        { path: 'profilegroup', component: ProfileGroupComponent },
-        { path: 'list-distribution', component: ListDistributionComponent },
-        { path: 'profile-distribution/:id', component: ProfileDistributionComponent, canActivate: [ AccessRightsDistributionGuard ] },
-        { path: 'add-promotions', component: AddPromotionsComponent, },
-        { path: 'add-promotions-codes', component: AddPromotionsCodesComponent },
-        { path: 'search-promotions-codes', component: SearchPromotionsCodesComponent },
-        { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
-        { path: 'restart', component: RestartComponent },
+        { path: 'entrance', loadChildren: './page/entrance/entrance.module#EntranceModule' },
+        // { path: 'adduser', component: AddUserComponent },
+        // { path: 'listusers', component: ListUsersComponent },
+        // { path: 'user/:id', component: UserComponent, canActivate: [ AccessRightsUserGuard ] },
+        // { path: 'profilesearch', component: ProfileSearchComponent },
+        // { path: 'profile/:id', component: TabsProfileComponent, canActivate: [ AccessRightsProfileGuard ] },
+        // { path: 'addprofile', component: AddProfileComponent },
+        // { path: 'listsegmentation', component: ListSegmentationComponent },
+        // { path: 'addsegmentation', component: AddSegmentationComponent },
+        // { path: 'profilegroup', component: ProfileGroupComponent },
+        // { path: 'list-distribution', component: ListDistributionComponent },
+        // { path: 'profile-distribution/:id', component: ProfileDistributionComponent, canActivate: [ AccessRightsDistributionGuard ] },
+        // { path: 'add-promotions', component: AddPromotionsComponent, },
+        // { path: 'add-promotions-codes', component: AddPromotionsCodesComponent },
+        // { path: 'search-promotions-codes', component: SearchPromotionsCodesComponent },
+        // { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
+        // { path: 'restart', component: RestartComponent },
       ],
     },
-  { path: '404', component: ErrorPageComponent },
-  { path: '**', redirectTo: '404', pathMatch: 'full' }
+  // { path: '404', component: ErrorPageComponent },
+  // { path: '**', redirectTo: '404', pathMatch: 'full' }
   ]
 ;
 

@@ -26,7 +26,7 @@ if ( environment.production ) {
     ReactiveFormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    PageModule,
+    // PageModule,
     ServicesModule,
     SharedModule.forRoot(),
     ComponentsModule.forRoot()
