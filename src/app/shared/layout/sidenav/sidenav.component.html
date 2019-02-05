@@ -21,7 +21,10 @@
   </mat-sidenav>
   <mat-sidenav-content class="sidenav__content">
     <div class="example-sidenav-content">
-     <ng-content></ng-content>
+      <div *ngIf="loader" class="sidenav__loader">
+        <mat-spinner></mat-spinner>
+      </div>
+      <ng-content></ng-content>
     </div>
   </mat-sidenav-content>
 </mat-sidenav-container>
