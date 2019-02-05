@@ -39,7 +39,7 @@ const routes: Routes = [
         { path: 'profilesearch', loadChildren: './page/profiles/profile-search/profile-search.module#ProfileSearchModule' },
         { path: 'profile/:id', loadChildren: './page/profiles/tabs-profile/tabs-profile.module#TabsProfileModule', canActivate: [ AccessRightsProfileGuard ] },
         { path: 'addprofile', loadChildren: './page/profiles/add-profile/add-profile.module#AddProfileModule' },
-        // { path: 'listsegmentation', component: ListSegmentationComponent },
+        { path: 'listsegmentation', loadChildren: './page/segmentation/list-segmentation/list-segmentation.module#ListSegmentationModule' },
         // { path: 'addsegmentation', component: AddSegmentationComponent },
         // { path: 'profilegroup', component: ProfileGroupComponent },
         // { path: 'list-distribution', component: ListDistributionComponent },
