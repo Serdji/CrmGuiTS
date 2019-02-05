@@ -15,7 +15,7 @@ import { PromotionsModule } from './promotions/promotions.module';
     LoginModule,
     ProfilesModule,
     EntranceModule,
-    UsersModule,
+    // UsersModule,
     SettingsModule,
     SegmentationModule,
     SpecialGroupsModule,
