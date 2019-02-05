@@ -7,6 +7,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { SearchPromotionsCodesRoutes } from './search-promotions-codes.routing';
 
 @NgModule( {
   imports: [
@@ -16,6 +17,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
     PipesModule,
     ComponentsModule,
     DirectivesModule,
+    SearchPromotionsCodesRoutes
   ],
   declarations: [ SearchPromotionsCodesComponent ],
   providers: [ SearchPromotionsCodesService ]
