@@ -311,7 +311,12 @@
           Изменить
         </button>
         <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
-                (click)="deletePromoCode()" color="warn" [disabled]="buttonDelete">
+                (click)="copyForm()" color="warn" [disabled]="buttonCopy">
+          <mat-icon>file_copy</mat-icon>
+          Копировать
+        </button>
+        <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+                (click)="deletePromoCode()" color="accent" [disabled]="buttonDelete">
           <mat-icon>delete</mat-icon>
           Удалить
         </button>

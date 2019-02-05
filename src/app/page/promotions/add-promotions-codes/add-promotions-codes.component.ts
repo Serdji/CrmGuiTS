@@ -81,6 +81,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public buttonSave: boolean;
   public buttonCreate: boolean;
+  public buttonCopy: boolean;
   public buttonDelete: boolean;
   public buttonSearch: boolean;
   public isTable: boolean;
@@ -112,6 +113,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.buttonSave = false;
+    this.buttonCopy = true;
     this.buttonCreate = true;
     this.buttonDelete = true;
     this.buttonSearch = true;
@@ -138,6 +140,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         if ( params.promoCodeId ) {
           this.buttonSave = true;
+          this.buttonCopy = false;
           this.buttonCreate = false;
           this.buttonDelete = false;
           this.buttonSearch = false;
@@ -497,6 +500,15 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( promoCodeAdd: IPromoCodeAdd ) =>  this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно изменен' ) );
     }
+  }
+
+  copyForm(): void {
+    this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: {} } );
+    this.buttonSave = false;
+    this.buttonCopy = true;
+    this.buttonCreate = true;
+    this.buttonDelete = true;
+    this.buttonSearch = true;
   }
 
   clearForm(): void {
