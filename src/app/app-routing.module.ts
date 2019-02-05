@@ -45,7 +45,7 @@ const routes: Routes = [
         { path: 'list-distribution', loadChildren: './page/distribution/list-distribution/list-distribution.module#ListDistributionModule' },
         { path: 'profile-distribution/:id', loadChildren: './page/distribution/profile-distribution/profile-distribution.module#ProfileDistributionModule', canActivate: [ AccessRightsDistributionGuard ] },
         { path: 'add-promotions', loadChildren: './page/promotions/add-promotions/add-promotions.module#AddPromotionsModule' },
-        // { path: 'add-promotions-codes', component: AddPromotionsCodesComponent },
+        { path: 'add-promotions-codes', loadChildren: './page/promotions/add-promotions-codes/add-promotions-codes.module#AddPromotionsCodesModule' },
         // { path: 'search-promotions-codes', component: SearchPromotionsCodesComponent },
         // { path: 'form-table-async-profile-settings', component: FormTableAsyncProfileSettingsComponent },
         // { path: 'restart', component: RestartComponent },

@@ -7,6 +7,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
+import { AddPromotionsCodesRoutes } from './add-promotions-codes.routing';
+import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 
 @NgModule( {
   imports: [
@@ -16,9 +18,13 @@ import { DirectivesModule } from '../../../directives/directives.module';
     PipesModule,
     ComponentsModule,
     DirectivesModule,
+    AddPromotionsCodesRoutes
   ],
   declarations: [ AddPromotionsCodesComponent ],
-  providers: [ AddPromotionsCodesService ]
+  providers: [
+    AddPromotionsCodesService,
+    ProfileSearchService
+  ]
 } )
 export class AddPromotionsCodesModule {
 }
