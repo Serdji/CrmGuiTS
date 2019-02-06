@@ -377,8 +377,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       _.set( params, 'customerGroupIds', customerGroup );
     }
 
-
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
     this.serverRequest( params );
   }
 
@@ -393,6 +391,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
+        this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
       } );
   }
 

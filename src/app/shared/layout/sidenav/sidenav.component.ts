@@ -4,9 +4,9 @@ import { timer } from 'rxjs/observable/timer';
 import { IMenu } from '../../../interface/imenu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from '../layout.service';
-import { NavigationCancel, NavigationEnd, NavigationError, NavigationStart, Router, RoutesRecognized } from '@angular/router';
+import {  NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SidenavService } from './sidenav.service';
-import { filter, takeWhile } from 'rxjs/operators';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-sidenav',
