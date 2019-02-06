@@ -469,7 +469,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private isIntersectionPromoCod() {
     return ( promoCodeAdd: IPromoCodeAdd ) => {
       this.windowDialog( '', 'intersection', 'intersection', true, promoCodeAdd.intersectingPromoCodes );
-    }
+    };
   }
 
   private intersectionPromoCod( promoCodeAdd: IPromoCodeAdd, messDialog ) {
@@ -487,9 +487,16 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   searchForm(): void {
-    this.isTable = true;
-    this.isLoader = true;
-    this.initTableProfile( this.promoCodeId );
+    const isEmptyInput = () => R.isEmpty( this.promoCodeCustomerListChips ) || R.isEmpty( this.segmentationChips ) || R.isEmpty( this.customerGroupChips );
+    const startSearch = () => {
+      this.isTable = true;
+      this.isLoader = true;
+      this.initTableProfile( this.promoCodeId );
+    };
+    const stopSearch = () => this.windowDialog( 'Данный промокод НЕ персонализированный, т.е. доступен для любого пассажира авиакомпании.', 'ok', '_', true );
+    const search = R.ifElse( isEmptyInput, stopSearch, startSearch );
+
+    search( R.identity );
   }
 
   createForm(): void {
@@ -498,7 +505,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) =>  this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно изменен' ) );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно изменен' ) );
     }
   }
 

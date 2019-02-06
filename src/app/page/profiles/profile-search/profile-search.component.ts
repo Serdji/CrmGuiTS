@@ -2,7 +2,7 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
 import { takeWhile, map, delay } from 'rxjs/operators';
-import { Observable, timer } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
@@ -57,6 +57,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private autDelay: number = 500;
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
+
+  private subjectStarFormFilling = new Subject();
 
   @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
@@ -160,11 +162,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
+
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( segmentation: ISegmentation[] ) => {
         this.segmentation = segmentation;
+        this.subjectStarFormFilling.next( 'is ready segmentation' );
       } );
   }
 
@@ -173,6 +177,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( customerGroup: IcustomerGroup[] ) => {
         this.customerGroup = customerGroup;
+        this.subjectStarFormFilling.next( 'is ready customer group' );
       } );
   }
 
@@ -275,9 +280,14 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.switchCheckbox();
-    timer( 500 )
+
+    const isReady = [];
+    this.subjectStarFormFilling
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.formFilling() );
+      .subscribe( value1 => {
+        isReady.push( value1 );
+        if ( R.length( isReady ) === 2 ) this.formFilling();
+      } );
   }
 
   private switchCheckbox() {
@@ -297,6 +307,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
+
           if ( Object.keys( value ).length !== 0 ) {
 
             const newObjectForm = {};
@@ -377,8 +388,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       _.set( params, 'customerGroupIds', customerGroup );
     }
 
-
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
     this.serverRequest( params );
   }
 
@@ -393,6 +402,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
+        this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
       } );
   }
 

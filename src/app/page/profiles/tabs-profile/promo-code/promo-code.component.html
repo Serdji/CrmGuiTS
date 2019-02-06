@@ -129,35 +129,35 @@
 
             <div class="promo-code__info">
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text"> Account code:</span>
+                <span class="promo-code__info-text"> Расчётный код:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.accountCode}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Размерность:</span>
+                <span class="promo-code__info-text">Величина скидки:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.val}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Свойство размерности:</span>
+                <span class="promo-code__info-text">Тип скидки:</span>
                 <div class="promo-code__info-params">
-                  <span><b>{{ promoCode.promoCodeValTypeId }}</b></span>
+                  <span><b>{{ promoCode.promoCodeValTypeId === 1 ? 'Сумма' : 'Процент' }}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Персональная размерность использования:</span>
+                <span class="promo-code__info-text">Использование для профиля:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.usesPerPerson}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Общее число раз использования промокода:</span>
+                <span class="promo-code__info-text">Общее количество использования:</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.usesTotal}}</b></span>
                 </div>
@@ -195,7 +195,7 @@
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">RBD:</span>
+                <span class="promo-code__info-text">Класс бронирования:</span>
                 <div class="promo-code__info-params">
                   <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
                 </div>

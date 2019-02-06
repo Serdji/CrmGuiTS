@@ -91,7 +91,7 @@
                     <mat-icon matChipRemove *ngIf="promoCodeRbdListRemovable">cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="RBD"
+                    placeholder="Класс бронирования"
                     #promoCodeRbdListChipInput
                     formControlName="promoCodeRbdList"
                     [matChipInputFor]="chipPromoCodeRbdListList"
@@ -146,10 +146,10 @@
         <mat-card class="add-promotions-codes__card">
           <mat-card-content class="add-promotions-codes__content _d-b">
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="usesPerPerson" type="text" placeholder="Персональная размерность использования">
+              <input matInput formControlName="usesPerPerson" type="text" placeholder="Использование для профиля">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="usesTotal" type="text" placeholder="Общее число раз использования промокода">
+              <input matInput formControlName="usesTotal" type="text" placeholder="Общее количество использования">
             </mat-form-field>
           </mat-card-content>
           <div class="add-promotions-codes__progress-bar">
@@ -175,7 +175,7 @@
               <input matInput formControlName="code" type="text" placeholder="Промокод">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="accountCode" type="text" placeholder="Account code">
+              <input matInput formControlName="accountCode" type="text" placeholder="Расчётный код">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
               <input matInput formControlName="dateFrom" placeholder="Период действия от" [matDatepicker]="dateFrom">
@@ -188,10 +188,10 @@
               <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="val" type="text" placeholder="Размерность">
+              <input matInput formControlName="val" type="text" placeholder="Величина скидки">
             </mat-form-field>
             <mat-form-field class="add-promotions-cod__input">
-              <mat-select formControlName="promoCodeValTypeId" placeholder="Свойство размерности">
+              <mat-select formControlName="promoCodeValTypeId" placeholder="Тип скидки">
                 <mat-option></mat-option>
                 <mat-option
                   *ngFor="let promoCodeValType of promoCodeValTypes"

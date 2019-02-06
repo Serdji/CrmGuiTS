@@ -4,7 +4,7 @@ import { timer } from 'rxjs/observable/timer';
 import { IMenu } from '../../../interface/imenu';
 import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from '../layout.service';
-import { Router } from '@angular/router';
+import {  NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SidenavService } from './sidenav.service';
 import { takeWhile } from 'rxjs/operators';
 
@@ -21,6 +21,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public menu: IMenu[];
   public version: string;
   public AirlineCode: string;
+  public loader: boolean;
 
   private isActive: boolean;
 
@@ -36,10 +37,23 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.activityUser.idleLogout();
     this.autoOpenAccord();
     this.autoOpenSidena();
+    this.louder();
+    this.loader = false;
     this.menu = this.sidenavService.menu;
     this.layoutService.subjectToggle.pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.toggle() );
     this.sidenavService.getVersion().pipe( takeWhile( _ => this.isActive ) ).subscribe( value => this.version = `2.0.0.${value}` );
     this.AirlineCode = localStorage.getItem( 'AirlineCode' );
+  }
+
+  private louder() {
+    this.router.events
+      .pipe(
+        takeWhile( _ => this.isActive ),
+      )
+      .subscribe( ( event ) => {
+        if ( event instanceof NavigationStart ) this.loader = true;
+        if ( event instanceof NavigationEnd ) this.loader = false;
+      } );
   }
 
   private autoOpenSidena() {

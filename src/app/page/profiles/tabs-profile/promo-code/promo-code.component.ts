@@ -4,7 +4,6 @@ import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as R from 'ramda';
-import { validate } from 'codelyzer/walkerFactory/walkerFn';
 
 @Component( {
   selector: 'app-promo-code',
