@@ -487,7 +487,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   searchForm(): void {
-    const isEmptyInput = () => R.isEmpty( this.promoCodeCustomerListChips ) || R.isEmpty( this.segmentationChips ) || R.isEmpty( this.customerGroupChips );
+    const isEmptyInput = () => R.isEmpty( this.promoCodeCustomerListChips ) && R.isEmpty( this.segmentationChips ) && R.isEmpty( this.customerGroupChips );
     const startSearch = () => {
       this.isTable = true;
       this.isLoader = true;
