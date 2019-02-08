@@ -57,6 +57,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
       'firstName',
       'lastName',
       'secondName',
+      'profileId',
       'customerId',
     ];
   }
@@ -68,6 +69,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
         .set( 'firstName', customerNames.firstName )
         .set( 'lastName', customerNames.lastName )
         .set( 'secondName', customerNames.secondName )
+        .set( 'profileId', customerNames.customerId )
         .value();
     } );
     this.dataSourceFun( tableDataSources );

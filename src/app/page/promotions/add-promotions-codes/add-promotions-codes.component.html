@@ -201,11 +201,11 @@
               </mat-select>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <textarea rows="7" matInput formControlName="description" type="text"
+              <textarea rows="6" matInput formControlName="description" type="text"
                         placeholder="Описание промоакции"></textarea>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <textarea rows="7" matInput formControlName="reason" type="text" placeholder="Основание"></textarea>
+              <textarea rows="6" matInput formControlName="reason" type="text" placeholder="Основание"></textarea>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -223,7 +223,7 @@
                   [selectable]="promoCodeCustomerListSelectable"
                   [removable]="promoCodeCustomerListRemovable"
                   (removed)="remove(promoCodeCustomerListChip, promoCodeCustomerListChips, 'promoCodeCustomerListChips')">
-                  {{promoCodeCustomerListChip}}
+                  {{promoCodeCustomerListChip.customerName}}
                   <mat-icon matChipRemove *ngIf="promoCodeCustomerListRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input

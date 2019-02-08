@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, pipe, timer } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
 import { ICity } from '../../../interface/icity';
@@ -25,6 +25,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
 import { IPromoCodeAdd } from '../../../interface/ipromo-code-add';
+import { IChipsCustomerList } from '../../../interface/ichips-customer-list';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -67,7 +68,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCodeCustomerListSelectable = true;
   public promoCodeCustomerListRemovable = true;
   public addPromoCodeCustomerListOnBlur = true;
-  public promoCodeCustomerListChips: string[] = [];
+  public promoCodeCustomerListChips: IChipsCustomerList[] = [];
 
   public segmentationSelectable = true;
   public segmentationRemovable = true;
@@ -89,6 +90,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   private autDelay: number;
   private promoCodeId: number;
+  private arrCustomerIds: number[] = [];
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -265,7 +267,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
                   this.promoCodeRouteList = value;
                   break;
                 case 'customersIds':
-                  this.promoCodeCustomerListChips = value;
+                  this.arrCustomerIds = value;
+                  this.searchCustomerName( this.arrCustomerIds );
                   break;
                 case 'segmentations':
                   this.segmentationChips = _.map( value, 'title' );
@@ -364,13 +367,59 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       );
   }
 
+  private searchCustomerName( customerIds ) {
+    if ( !_.isArray( customerIds ) ) {
+      this.arrCustomerIds.push( +customerIds );
+      this.searchCustomerName( this.arrCustomerIds );
+      return;
+    }
+
+    const customerResult = customer => customer.result;
+    const resultCustomerNames = result => result[ 0 ].customerNames;
+    const newCustomerName = customerNames => {
+      const { customerId, firstName, lastName } = _.head( customerNames );
+      return {
+        customerId,
+        customerName: `${firstName} ${lastName}`
+      };
+    };
+    const success = value =>  {
+      this.promoCodeCustomerListChips.push( value );
+      this.promoCodeCustomerListChips = _.uniqWith( this.promoCodeCustomerListChips, _.isEqual );
+    };
+    const mapCustomerId = id => {
+      const params: any = {
+        customerids: id,
+        sortvalue: 'last_name',
+        from: 0,
+        count: 10
+      };
+      this.profileSearchService.getProfileSearch( params )
+        .pipe(
+          takeWhile( _ => this.isActive ),
+          map( customerResult ),
+          map( resultCustomerNames ),
+          map( newCustomerName )
+        )
+        .subscribe( success );
+    };
+    const mappingCustomer = R.map( mapCustomerId );
+
+    mappingCustomer( customerIds );
+  }
+
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
     const input = event.input;
     const value = event.value;
 
+
     // Add our fruit
     if ( ( value || '' ).trim() ) {
-      this[ chips ].push( value.trim() );
+      if ( chips === 'promoCodeCustomerListChips' ) {
+        this.searchCustomerName( value.trim() );
+      } else {
+        this[ chips ].push( value.trim() );
+      }
     }
 
     // Reset the input value
@@ -426,6 +475,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).get( 'customerGroupId' ).value() );
     } );
 
+    const mapCustomer = R.map( ( customer: IChipsCustomerList ) => customer.customerId );
+
     const params = {
       PromotionId: _.chain( this.promotions.result )
         .find( [ 'promotionName', this.formPromoCodes.get( 'promotionName' ).value ] )
@@ -450,7 +501,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
-      customersIds: this.promoCodeCustomerListChips,
+      customersIds: mapCustomer( this.promoCodeCustomerListChips ),
       segmentationsIds: segmentation,
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
