@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { AsyncValidatorFn, FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, pipe, timer } from 'rxjs';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Observable, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
 import { ICity } from '../../../interface/icity';
@@ -373,6 +373,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       this.searchCustomerName( this.arrCustomerIds );
       return;
     }
+
     const customerResult = customer => customer.result;
     const resultCustomerNames = result => result[ 0 ].customerNames;
     const newCustomerName = customerNames => {
