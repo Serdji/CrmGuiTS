@@ -368,7 +368,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private searchCustomerName( customerIds ) {
-    console.log( customerIds );
     if ( !_.isArray( customerIds ) ) {
       this.arrCustomerIds.push( +customerIds );
       this.searchCustomerName( this.arrCustomerIds );
