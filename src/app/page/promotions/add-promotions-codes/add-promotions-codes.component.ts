@@ -25,6 +25,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
 import { IPromoCodeAdd } from '../../../interface/ipromo-code-add';
+import { IChipsCustomerList } from '../../../interface/ichips-customer-list';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -67,7 +68,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCodeCustomerListSelectable = true;
   public promoCodeCustomerListRemovable = true;
   public addPromoCodeCustomerListOnBlur = true;
-  public promoCodeCustomerListChips: string[] = [];
+  public promoCodeCustomerListChips: IChipsCustomerList[] = [];
 
   public segmentationSelectable = true;
   public segmentationRemovable = true;
@@ -265,7 +266,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
                   this.promoCodeRouteList = value;
                   break;
                 case 'customersIds':
-                  this.promoCodeCustomerListChips = value;
+                  this.searchCustomerName( value );
                   break;
                 case 'segmentations':
                   this.segmentationChips = _.map( value, 'title' );
@@ -364,9 +365,42 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       );
   }
 
+  private searchCustomerName( customerIds ) {
+    const customerResult = customer => customer.result;
+    const resultCustomerNames = result => result[ 0 ].customerNames;
+    const success = value => this.promoCodeCustomerListChips.push( value );
+    const newCustomerName = customerNames => {
+      const { customerId, firstName, lastName } = _.head( customerNames );
+      return {
+        customerId,
+        customerName: `${firstName} ${lastName}`
+      };
+    };
+    const mapCustomerId = id => {
+      const params: any = {
+        customerids: id,
+        sortvalue: 'last_name',
+        from: 0,
+        count: 10
+      };
+      this.profileSearchService.getProfileSearch( params )
+        .pipe(
+          takeWhile( _ => this.isActive ),
+          map( customerResult ),
+          map( resultCustomerNames ),
+          map( newCustomerName )
+        )
+        .subscribe( success );
+    };
+    const mappingCustomer = R.map( mapCustomerId );
+
+    mappingCustomer( customerIds );
+  }
+
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
     const input = event.input;
     const value = event.value;
+
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
@@ -426,6 +460,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       customerGroup.push( _.chain( this.customerGroup ).find( { 'customerGroupName': customerGroupChip } ).get( 'customerGroupId' ).value() );
     } );
 
+    const mapCustomer = R.map( ( customer: IChipsCustomerList ) => customer.customerId );
+
     const params = {
       PromotionId: _.chain( this.promotions.result )
         .find( [ 'promotionName', this.formPromoCodes.get( 'promotionName' ).value ] )
@@ -450,7 +486,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       promoCodeBrandList: this.promoCodeBrandListChips,
       promoCodeFlightList: this.promoCodeFlightListChips,
       promoCodeRbdList: this.promoCodeRbdListChips,
-      customersIds: this.promoCodeCustomerListChips,
+      customersIds: mapCustomer( this.promoCodeCustomerListChips ),
       segmentationsIds: segmentation,
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,

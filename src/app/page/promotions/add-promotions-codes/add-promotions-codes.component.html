@@ -223,7 +223,7 @@
                   [selectable]="promoCodeCustomerListSelectable"
                   [removable]="promoCodeCustomerListRemovable"
                   (removed)="remove(promoCodeCustomerListChip, promoCodeCustomerListChips, 'promoCodeCustomerListChips')">
-                  {{promoCodeCustomerListChip}}
+                  {{promoCodeCustomerListChip.customerName}}
                   <mat-icon matChipRemove *ngIf="promoCodeCustomerListRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input
