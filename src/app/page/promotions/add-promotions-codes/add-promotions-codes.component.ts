@@ -90,6 +90,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   private autDelay: number;
   private promoCodeId: number;
+  private arrCustomerIds: number[] = [];
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -266,7 +267,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
                   this.promoCodeRouteList = value;
                   break;
                 case 'customersIds':
-                  this.searchCustomerName( value );
+                  this.arrCustomerIds = value;
+                  this.searchCustomerName( this.arrCustomerIds );
                   break;
                 case 'segmentations':
                   this.segmentationChips = _.map( value, 'title' );
@@ -366,15 +368,24 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private searchCustomerName( customerIds ) {
+    console.log( customerIds );
+    if ( !_.isArray( customerIds ) ) {
+      this.arrCustomerIds.push( +customerIds );
+      this.searchCustomerName( this.arrCustomerIds );
+      return;
+    }
     const customerResult = customer => customer.result;
     const resultCustomerNames = result => result[ 0 ].customerNames;
-    const success = value => this.promoCodeCustomerListChips.push( value );
     const newCustomerName = customerNames => {
       const { customerId, firstName, lastName } = _.head( customerNames );
       return {
         customerId,
         customerName: `${firstName} ${lastName}`
       };
+    };
+    const success = value =>  {
+      this.promoCodeCustomerListChips.push( value );
+      this.promoCodeCustomerListChips = _.uniqWith( this.promoCodeCustomerListChips, _.isEqual );
     };
     const mapCustomerId = id => {
       const params: any = {
@@ -404,7 +415,11 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
-      this[ chips ].push( value.trim() );
+      if ( chips === 'promoCodeCustomerListChips' ) {
+        this.searchCustomerName( value.trim() );
+      } else {
+        this[ chips ].push( value.trim() );
+      }
     }
 
     // Reset the input value
