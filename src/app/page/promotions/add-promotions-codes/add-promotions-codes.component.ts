@@ -410,17 +410,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
-      if ( chips === 'promoCodeCustomerListChips' ) {
-        this.searchCustomerName( value.trim() );
-      } else {
-        this[ chips ].push( value.trim() );
-      }
+      if ( chips === 'promoCodeCustomerListChips' ) this.searchCustomerName( value.trim() );
+      else this[ chips ].push( value.trim() );
     }
 
     // Reset the input value
-    if ( input ) {
-      input.value = '';
-    }
+    if ( input ) input.value = '';
 
     this.formPromoCodes.get( formControlName ).setValue( null );
   }
