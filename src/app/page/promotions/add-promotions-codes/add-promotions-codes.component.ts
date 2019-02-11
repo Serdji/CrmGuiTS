@@ -374,38 +374,31 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const customerResult = customer => customer.result;
-    const resultCustomerNames = result => result[ 0 ].customerNames;
-    const newCustomerName = customerNames => {
-      const { customerId, firstName, lastName } = _.head( customerNames );
+    const customerName = result => {
+      const { customerId, firstName, lastName } = _.head( result.customerNames );
       return {
         customerId,
         customerName: `${firstName} ${lastName}`
       };
     };
-    const success = value =>  {
-      this.promoCodeCustomerListChips.push( value );
-      this.promoCodeCustomerListChips = _.uniqWith( this.promoCodeCustomerListChips, _.isEqual );
+    const mapCustomerName = R.map( customerName );
+    const customerResult = customer => customer.result;
+    const newCustomerName = result => mapCustomerName( result );
+    const success = value => this.promoCodeCustomerListChips = _.uniqWith( value, _.isEqual );
+    const params: any = {
+      customerids: customerIds,
+      sortvalue: 'last_name',
+      from: 0,
+      count: 10
     };
-    const mapCustomerId = id => {
-      const params: any = {
-        customerids: id,
-        sortvalue: 'last_name',
-        from: 0,
-        count: 10
-      };
-      this.profileSearchService.getProfileSearch( params )
-        .pipe(
-          takeWhile( _ => this.isActive ),
-          map( customerResult ),
-          map( resultCustomerNames ),
-          map( newCustomerName )
-        )
-        .subscribe( success );
-    };
-    const mappingCustomer = R.map( mapCustomerId );
 
-    mappingCustomer( customerIds );
+    this.profileSearchService.getProfileSearch( params )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( customerResult ),
+        map( newCustomerName )
+      )
+      .subscribe( success );
   }
 
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
