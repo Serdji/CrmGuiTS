@@ -369,10 +369,10 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private searchCustomerName( customerIds ) {
     const isArray = R.is( Array );
-    const arrPush = R.curry(( arr: number[], arrIds ) => R.append( +arrIds, arr ) );
+    const arrPush = R.curry( ( arr: number[], arrIds: string ) => R.append( +arrIds, arr ) );
     const arrCustomerIdsPush = arrPush( this.arrCustomerIds );
-    const uniqWith = arrCustomerIds => _.uniqWith( arrCustomerIds, _.isEqual );
-    const startSearchCustomer = arrCustomerIds =>  this.searchCustomerName( arrCustomerIds );
+    const uniqWith = ( arrCustomerIds: number[] ) => _.uniqWith( arrCustomerIds, _.isEqual );
+    const startSearchCustomer = ( arrCustomerIds: number[] ) => this.searchCustomerName( arrCustomerIds );
     const composeSearchCustomer = R.compose( startSearchCustomer, uniqWith, arrCustomerIdsPush );
     if ( !isArray( customerIds ) ) composeSearchCustomer( customerIds );
 
@@ -386,7 +386,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     const mapCustomerName = R.map( customerName );
     const customerResult = customer => customer.result;
     const newCustomerName = result => mapCustomerName( result );
-    const success = value => this.promoCodeCustomerListChips =  value;
+    const success = ( value: IChipsCustomerList[] ) => this.promoCodeCustomerListChips = value;
     const params: any = {
       customerids: customerIds,
       sortvalue: 'last_name',
