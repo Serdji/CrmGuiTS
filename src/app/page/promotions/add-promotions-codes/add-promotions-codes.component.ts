@@ -368,11 +368,13 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private searchCustomerName( customerIds ) {
-    if ( !_.isArray( customerIds ) ) {
-      this.arrCustomerIds.push( +customerIds );
-      this.searchCustomerName( this.arrCustomerIds );
-      return;
-    }
+    const isArray = R.is( Array );
+    const arrPush = R.curry(( arr: number[], arrIds ) => R.append( +arrIds, arr ) );
+    const arrCustomerIdsPush = arrPush( this.arrCustomerIds );
+    const uniqWith = arrCustomerIds => _.uniqWith( arrCustomerIds, _.isEqual );
+    const startSearchCustomer = arrCustomerIds =>  this.searchCustomerName( arrCustomerIds );
+    const composeSearchCustomer = R.compose( startSearchCustomer, uniqWith, arrCustomerIdsPush );
+    if ( !isArray( customerIds ) ) composeSearchCustomer( customerIds );
 
     const customerName = result => {
       const { customerId, firstName, lastName } = _.head( result.customerNames );
@@ -384,7 +386,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     const mapCustomerName = R.map( customerName );
     const customerResult = customer => customer.result;
     const newCustomerName = result => mapCustomerName( result );
-    const success = value => this.promoCodeCustomerListChips = _.uniqWith( value, _.isEqual );
+    const success = value => this.promoCodeCustomerListChips =  value;
     const params: any = {
       customerids: customerIds,
       sortvalue: 'last_name',
