@@ -368,44 +368,39 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private searchCustomerName( customerIds ) {
-    if ( !_.isArray( customerIds ) ) {
-      this.arrCustomerIds.push( +customerIds );
-      this.searchCustomerName( this.arrCustomerIds );
-      return;
-    }
+    const isArray = R.is( Array );
+    const arrPush = R.curry( ( arr: number[], arrIds: string ) => R.append( +arrIds, arr ) );
+    const arrCustomerIdsPush = arrPush( this.arrCustomerIds );
+    const uniqWith = ( arrCustomerIds: number[] ) => _.uniqWith( arrCustomerIds, _.isEqual );
+    const startSearchCustomer = ( arrCustomerIds: number[] ) => this.searchCustomerName( arrCustomerIds );
+    const composeSearchCustomer = R.compose( startSearchCustomer, uniqWith, arrCustomerIdsPush );
+    if ( !isArray( customerIds ) ) composeSearchCustomer( customerIds );
 
-    const customerResult = customer => customer.result;
-    const resultCustomerNames = result => result[ 0 ].customerNames;
-    const newCustomerName = customerNames => {
-      const { customerId, firstName, lastName } = _.head( customerNames );
+    const customerName = result => {
+      const { customerId, firstName, lastName } = _.head( result.customerNames );
       return {
         customerId,
         customerName: `${firstName} ${lastName}`
       };
     };
-    const success = value =>  {
-      this.promoCodeCustomerListChips.push( value );
-      this.promoCodeCustomerListChips = _.uniqWith( this.promoCodeCustomerListChips, _.isEqual );
+    const mapCustomerName = R.map( customerName );
+    const customerResult = customer => customer.result;
+    const newCustomerName = result => mapCustomerName( result );
+    const success = ( value: IChipsCustomerList[] ) => this.promoCodeCustomerListChips = value;
+    const params: any = {
+      customerids: customerIds,
+      sortvalue: 'last_name',
+      from: 0,
+      count: 10
     };
-    const mapCustomerId = id => {
-      const params: any = {
-        customerids: id,
-        sortvalue: 'last_name',
-        from: 0,
-        count: 10
-      };
-      this.profileSearchService.getProfileSearch( params )
-        .pipe(
-          takeWhile( _ => this.isActive ),
-          map( customerResult ),
-          map( resultCustomerNames ),
-          map( newCustomerName )
-        )
-        .subscribe( success );
-    };
-    const mappingCustomer = R.map( mapCustomerId );
 
-    mappingCustomer( customerIds );
+    this.profileSearchService.getProfileSearch( params )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( customerResult ),
+        map( newCustomerName )
+      )
+      .subscribe( success );
   }
 
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
@@ -415,17 +410,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
-      if ( chips === 'promoCodeCustomerListChips' ) {
-        this.searchCustomerName( value.trim() );
-      } else {
-        this[ chips ].push( value.trim() );
-      }
+      if ( chips === 'promoCodeCustomerListChips' ) this.searchCustomerName( value.trim() );
+      else this[ chips ].push( value.trim() );
     }
 
     // Reset the input value
-    if ( input ) {
-      input.value = '';
-    }
+    if ( input ) input.value = '';
 
     this.formPromoCodes.get( formControlName ).setValue( null );
   }

@@ -11,11 +11,19 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { animate, state, style, transition, trigger } from '@angular/animations';
 
 @Component( {
   selector: 'app-table-example-distribution',
   templateUrl: './table-example-distribution.component.html',
   styleUrls: [ './table-example-distribution.component.styl' ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0', display: 'none', borderColor: 'rgba(0,0,0,0)'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 } )
 export class TableExampleDistributionComponent implements OnInit, OnDestroy {
 
@@ -24,10 +32,11 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+  public expandedElement: PeriodicElement | null;
 
   private isActive: boolean;
 
-  @Input() private tableDataSource: any;
+  @Input() private tableDataSource: PeriodicElement[];
 
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
@@ -151,6 +160,18 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
     this.isActive = false;
   }
 
+}
+
+export interface PeriodicElement {
+  status: any;
+  select: any;
+  subject: string;
+  statusNameRus: string;
+  dateFrom: string;
+  dateTo: string;
+  lastTryDT: string;
+  distributionId: number;
+  distributionStatuses: any;
 }
 
 
