@@ -27,6 +27,26 @@ distributionId = 50px
       display: flex;
       width: 100%;
 
+  &__detail
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+
+  &__distribution-statuses
+    padding: 16px;
+    width: 100%;
+
+  &__grid
+    display: flex;
+    flex-direction: column;
+    padding-top: 25px;
+
+    span
+      margin-bottom: 15px;
+      color: rgba(0, 0, 0, .54);
+
 .mat-column
 
 
@@ -47,6 +67,11 @@ distributionId = 50px
       cursor: pointer
       color: #696969;
       margin-left: auto
+
+  &-expandedDetail
+    padding 0
+    width: 100%
+
 
 
 
@@ -73,6 +98,8 @@ mat-cell
 
 .example-detail-row
   min-height: 0;
+
+.example-element-row
   cursor: pointer;
 
 .example-element-row:not(.example-expanded-row):hover {
@@ -87,30 +114,10 @@ mat-cell
   border-bottom-width: 0;
 }
 
-.example-element-detail {
-  overflow: hidden;
-  display: flex;
-}
-
-.example-element-diagram {
-  min-width: 80px;
-  border: 2px solid black;
-  padding: 8px;
-  font-weight: lighter;
-  margin: 8px 0;
-  height: 104px;
-}
-
-.example-element-symbol {
-  font-weight: bold;
-  font-size: 40px;
-  line-height: normal;
-}
-
-.example-element-description {
-  padding: 16px;
-}
-
-.example-element-description-attribution {
-  opacity: 0.5;
-}
+.mat-badge-content
+  color: white !important;
+  top: calc(50% - 22px / 2) !important;
+  right: -70px !important;
+  width auto !important;
+  padding 0 8px;
+  border-radius: 50px;

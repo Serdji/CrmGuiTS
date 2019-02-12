@@ -72,10 +72,30 @@
 
     <ng-container matColumnDef="expandedDetail">
       <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
-        <div class="example-element-detail"
+        <div class="table__detail"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
-          <div class="example-element-description">
-            {{element.distributionStatuses.bouncedCount}}
+          <div class="table__distribution-statuses">
+            <mat-grid-list cols="8" rowHeight="200px">
+              <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+              <mat-grid-tile [colspan]="3" [rowspan]="1">
+                <div class="table__grid">
+                  <span [matBadge]="element.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.notSentNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.sentToGatewayNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.sendToCustomerNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.errorNameRus}}</span>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="3" [rowspan]="1">
+                <div class="table__grid">
+                  <span [matBadge]="element.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.deliveredNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.readNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.clickedNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.bouncedNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.rejectedNameRus}}</span>
+                </div>
+              </mat-grid-tile>
+              <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
+            </mat-grid-list>
           </div>
         </div>
       </mat-cell>
