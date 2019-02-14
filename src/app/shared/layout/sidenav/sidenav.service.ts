@@ -81,7 +81,7 @@ export class SidenavService {
       },
       {
         name: 'Отчеты',
-        icon: 'assessment',
+        icon: 'assignment',
         link: [
           { url: '/crm/distribution-report', title: 'Рассылки' },
         ]
