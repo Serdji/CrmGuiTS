@@ -80,6 +80,13 @@ export class SidenavService {
         ]
       },
       {
+        name: 'Отчеты',
+        icon: 'assessment',
+        link: [
+          { url: '/crm/distribution-report', title: 'Рассылки' },
+        ]
+      },
+      {
         name: 'Настройки',
         icon: 'settings',
         link: [
