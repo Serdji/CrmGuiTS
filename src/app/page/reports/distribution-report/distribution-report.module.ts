@@ -4,8 +4,8 @@ import { DistributionReportComponent } from './distribution-report.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
-import { AddPromotionsRoutes } from '../../promotions/add-promotions/add-promotions.routing';
 import { DistributionReportService } from './distribution-report.service';
+import { DistributionReportRoutes } from './distribution-report';
 
 @NgModule( {
   imports: [
@@ -13,7 +13,7 @@ import { DistributionReportService } from './distribution-report.service';
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
-    AddPromotionsRoutes
+    DistributionReportRoutes
   ],
   declarations: [ DistributionReportComponent ],
   providers: [ DistributionReportService ]
