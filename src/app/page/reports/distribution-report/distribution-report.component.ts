@@ -43,18 +43,17 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
     this.objectProps = composeObjProps( person );
 
     const formGroup = {};
-    // const formControls = prop => new FormControl( person[ prop ].value || '', this.mapValidators( person[ prop ].validation ) );
-    // const setFormGroup = prop => R.assoc( prop, formControls( prop ), formGroup );
-    // const mapPerson = R.map( setFormGroup );
-    // const composeFormControl = R.compose( mapPerson, R.keys );
+    const formControls = prop => new FormControl(
+      R.view( R.lensPath( [ prop, 'value' ] ), person ) || '',
+      this.mapValidators( R.view( R.lensPath( [ prop, 'validation' ] ), person ) )
+    );
+    const setFormGroup = prop => formGroup[ prop ] = formControls( prop );
+    const mapPerson = R.map( setFormGroup );
+    const composeFormControl = R.compose( mapPerson, R.keys );
 
-    for ( const prop of Object.keys( person ) ) {
-      formGroup[ prop ] = new FormControl( person[ prop ].value || '', this.mapValidators( person[ prop ].validation ) );
-    }
+    composeFormControl( person );
 
-    // composeFormControl( person );
-
-    console.log(formGroup);
+    console.log( formGroup );
 
     this.dynamicForm = new FormGroup( formGroup );
   }
