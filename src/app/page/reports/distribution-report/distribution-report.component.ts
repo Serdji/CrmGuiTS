@@ -1,18 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { timer } from 'rxjs';
+
+import { person } from './person';
+
 
 @Component( {
   selector: 'app-distribution-report',
   templateUrl: './distribution-report.component.html',
-  styleUrls: [ './distribution-report.component.styl' ]
+  styleUrls: [ './distribution-report.component.styl' ],
 } )
 export class DistributionReportComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
 
-  public isLinear = false;
   public templateForm: FormGroup;
   public dynamicForm: FormGroup;
+  public objectProps: any;
+
+  @ViewChild( 'stepper' ) stepper;
 
   constructor( private fb: FormBuilder ) { }
 
@@ -24,14 +30,51 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
 
   private initTemplateForm() {
     this.templateForm = this.fb.group( {
-      firstCtrl: [ '', Validators.required ]
+      template: [ '', Validators.required ]
     } );
   }
 
   private initDynamicForm() {
-    this.dynamicForm = this.fb.group( {
-      secondCtrl: [ '', Validators.required ]
-    } );
+
+    // remap the API to be suitable for iterating over it
+    this.objectProps =
+      Object.keys( person )
+        .map( prop => {
+          return Object.assign( {}, { key: prop }, person[ prop ] );
+        } );
+
+    // setup the form
+    const formGroup = {};
+    for ( const prop of Object.keys( person ) ) {
+      formGroup[ prop ] = new FormControl( person[ prop ].value || '', this.mapValidators( person[ prop ].validation ) );
+    }
+
+    this.dynamicForm = new FormGroup( formGroup );
+  }
+
+  private mapValidators( validators ) {
+    const formValidators = [];
+
+    if ( validators ) {
+      for ( const validation of Object.keys( validators ) ) {
+        if ( validation === 'required' ) {
+          formValidators.push( Validators.required );
+        } else if ( validation === 'min' ) {
+          formValidators.push( Validators.min( validators[ validation ] ) );
+        }
+      }
+    }
+
+    return formValidators;
+  }
+
+  stepperNext(): void {
+    timer( 1000 ).subscribe( _ => this.stepper.next() );
+  }
+
+  onSubmit( form ): void {
+    console.log( form );
+    this.stepper.next();
   }
 
   ngOnDestroy(): void {

@@ -1,31 +1,64 @@
 <div class="distribution-report">
-  <button mat-raised-button (click)="isLinear = !isLinear" id="toggle-linear">
-    {{!isLinear ? 'Enable linear mode' : 'Disable linear mode'}}
-  </button>
-  <mat-vertical-stepper [linear]="isLinear" #stepper>
+  <mat-vertical-stepper linear #stepper>
+
     <mat-step [stepControl]="templateForm">
       <form [formGroup]="templateForm">
-        <ng-template matStepLabel>Fill out your name</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Last name, First name" formControlName="firstCtrl" required>
+        <ng-template matStepLabel>Шаблон</ng-template>
+        <mat-form-field class="distribution-report__input">
+          <mat-select formControlName="template" placeholder="Шаблон запроса">
+            <mat-option></mat-option>
+            <mat-option value="Шаблон 1">
+              Шаблон 1
+            </mat-option>
+          </mat-select>
+          <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <div>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button (click)="stepperNext()">Next</button>
         </div>
       </form>
     </mat-step>
+
     <mat-step [stepControl]="dynamicForm">
-      <form [formGroup]="dynamicForm">
-        <ng-template matStepLabel>Fill out your address</ng-template>
-        <mat-form-field>
-          <input matInput placeholder="Address" formControlName="secondCtrl" required>
-        </mat-form-field>
+      <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit(dynamicForm.value)">
+        <ng-template matStepLabel>Форма запроса отчета</ng-template>
+        <div *ngFor="let prop of objectProps">
+          <div [ngSwitch]="prop.type">
+
+            <mat-form-field *ngSwitchCase="'text'">
+              <input  matInput [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.label">
+              <mat-error>Обязательное поле</mat-error>
+            </mat-form-field>
+
+            <div *ngSwitchCase="'radio'">
+              <mat-radio-group [formControlName]="prop.key">
+                <mat-radio-button *ngFor="let option of prop.options" [value]="option.value">{{option.label}}</mat-radio-button>
+              </mat-radio-group>
+            </div>
+
+            <mat-form-field *ngSwitchCase="'select'">
+              <mat-select [formControlName]="prop.key">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let option of prop.options" [value]="option.value">
+                  {{ option.label }}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+
+            <mat-form-field *ngSwitchCase="'data'">
+              <input matInput [formControlName]="prop.key" [placeholder]="prop.label" [matDatepicker]="picker">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #picker></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button matStepperNext>Next</button>
+          <button mat-button  type="submit">Next</button>
         </div>
       </form>
     </mat-step>
+
     <mat-step>
       <ng-template matStepLabel>Done</ng-template>
       You are now done.
