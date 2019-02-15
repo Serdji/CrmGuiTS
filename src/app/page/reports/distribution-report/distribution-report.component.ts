@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { timer } from 'rxjs';
 
 import { person } from './person';
+import * as R from 'ramda';
 
 
 @Component( {
@@ -36,18 +37,24 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
 
   private initDynamicForm() {
 
-    // remap the API to be suitable for iterating over it
-    this.objectProps =
-      Object.keys( person )
-        .map( prop => {
-          return Object.assign( {}, { key: prop }, person[ prop ] );
-        } );
+    const objMerge = prop => R.merge( { key: prop }, person[ prop ] );
+    const mapKeys = R.map( objMerge );
+    const composeObjProps = R.compose( mapKeys, R.keys );
+    this.objectProps = composeObjProps( person );
 
-    // setup the form
     const formGroup = {};
+    // const formControls = prop => new FormControl( person[ prop ].value || '', this.mapValidators( person[ prop ].validation ) );
+    // const setFormGroup = prop => R.assoc( prop, formControls( prop ), formGroup );
+    // const mapPerson = R.map( setFormGroup );
+    // const composeFormControl = R.compose( mapPerson, R.keys );
+
     for ( const prop of Object.keys( person ) ) {
       formGroup[ prop ] = new FormControl( person[ prop ].value || '', this.mapValidators( person[ prop ].validation ) );
     }
+
+    // composeFormControl( person );
+
+    console.log(formGroup);
 
     this.dynamicForm = new FormGroup( formGroup );
   }
@@ -69,7 +76,7 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
   }
 
   stepperNext(): void {
-    timer( 1000 ).subscribe( _ => this.stepper.next() );
+    timer( 100 ).subscribe( _ => this.stepper.next() );
   }
 
   onSubmit( form ): void {
