@@ -80,10 +80,9 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
     const generateNewObj = R.curry(( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value);
     const momentFunc = generateNewObj( objParserDara );
     const parserData = R.forEachObjIndexed( momentFunc );
+
     parserData( this.dynamicForm.value );
-
     console.log( objParserDara );
-
     this.stepper.next();
   }
 
