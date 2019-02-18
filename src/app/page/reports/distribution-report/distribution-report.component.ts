@@ -4,6 +4,7 @@ import { timer } from 'rxjs';
 
 import { person } from './person';
 import * as R from 'ramda';
+import * as moment from 'moment';
 
 
 @Component( {
@@ -35,8 +36,22 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private initDynamicForm() {
+  private mapValidators( validators ) {
+    const formValidators = [];
+    const mapValidationFunc = validation => {
+      switch ( validation ) {
+        case 'required': formValidators.push( Validators.required ); break;
+        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
+      }
+    };
+    const mapValidation = R.map( mapValidationFunc );
+    const composeValidation = R.compose( mapValidation, R.keys );
 
+    if ( validators ) composeValidation( validators );
+    return formValidators;
+  }
+
+  private initDynamicForm() {
     const objMerge = prop => R.merge( { key: prop }, person[ prop ] );
     const mapKeys = R.map( objMerge );
     const composeObjProps = R.compose( mapKeys, R.keys );
@@ -52,34 +67,23 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
     const composeFormControl = R.compose( mapPerson, R.keys );
 
     composeFormControl( person );
-
-    console.log( formGroup );
-
     this.dynamicForm = new FormGroup( formGroup );
   }
 
-  private mapValidators( validators ) {
-    const formValidators = [];
-
-    if ( validators ) {
-      for ( const validation of Object.keys( validators ) ) {
-        if ( validation === 'required' ) {
-          formValidators.push( Validators.required );
-        } else if ( validation === 'min' ) {
-          formValidators.push( Validators.min( validators[ validation ] ) );
-        }
-      }
-    }
-
-    return formValidators;
-  }
 
   stepperNext(): void {
     timer( 100 ).subscribe( _ => this.stepper.next() );
   }
 
-  onSubmit( form ): void {
-    console.log( form );
+  sendForm(): void {
+    const objParserDara = {};
+    const generateNewObj = R.curry(( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value);
+    const momentFunc = generateNewObj( objParserDara );
+    const parserData = R.forEachObjIndexed( momentFunc );
+    parserData( this.dynamicForm.value );
+
+    console.log( objParserDara );
+
     this.stepper.next();
   }
 

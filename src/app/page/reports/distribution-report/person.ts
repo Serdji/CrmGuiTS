@@ -37,10 +37,10 @@ export const person = {
   },
   fromData: {
     label: 'From data',
-    value: '',
+    value: '2019-03-29T00:00:00',
     type: 'data'
   },
- toData: {
+  toData: {
     label: 'To data',
     value: '',
     type: 'data'

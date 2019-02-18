@@ -20,7 +20,7 @@
     </mat-step>
 
     <mat-step [stepControl]="dynamicForm">
-      <form [formGroup]="dynamicForm" (ngSubmit)="onSubmit(dynamicForm.value)">
+      <form [formGroup]="dynamicForm">
         <ng-template matStepLabel>Форма запроса отчета</ng-template>
         <div *ngFor="let prop of objectProps">
           <div [ngSwitch]="prop.type">
@@ -54,7 +54,7 @@
         </div>
         <div>
           <button mat-button matStepperPrevious>Back</button>
-          <button mat-button  type="submit">Next</button>
+          <button mat-button (click)="sendForm()">Next</button>
         </div>
       </form>
     </mat-step>
