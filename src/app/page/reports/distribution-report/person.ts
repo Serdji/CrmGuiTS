@@ -1,6 +1,6 @@
 export const person = {
   name: {
-    label: 'Name',
+    placeholder: 'Name',
     value: 'Juri',
     type: 'text',
     validation: {
@@ -8,50 +8,50 @@ export const person = {
     }
   },
   age: {
-    label: 'Age',
+    placeholder: 'Age',
     value: 32,
     type: 'text'
   },
   gender: {
-    label: 'Gender',
+    placeholder: 'Gender',
     value: 'M',
     type: 'radio',
     options: [
-      { label: 'Male', value: 'M' },
-      { label: 'Female', value: 'F' }
+      { placeholder: 'Male', value: 'M' },
+      { placeholder: 'Female', value: 'F' }
     ]
   },
   city: {
-    label: 'City',
+    placeholder: 'City',
     value: '39010',
     type: 'select',
     options: [
-      { label: '(choose one)', value: '' },
-      { label: 'Bolzano', value: '39100' },
-      { label: 'Meltina', value: '39010' },
-      { label: 'Appiano', value: '39057' }
+      { placeholder: '(choose one)', value: '' },
+      { placeholder: 'Bolzano', value: '39100' },
+      { placeholder: 'Meltina', value: '39010' },
+      { placeholder: 'Appiano', value: '39057' }
     ],
     validation: {
       required: true
     }
   },
   fromDate: {
-    label: 'From date',
+    placeholder: 'From date',
     value: '2019-03-29T00:00:00',
-    type: 'data'
+    type: 'date'
   },
   toDate: {
-    label: 'To date',
+    placeholder: 'To date',
     value: '',
     type: 'date'
   },
   1: {
-    label: 'Чтение',
+    placeholder: 'Чтение',
     value: true,
     type: 'checkbox'
   },
   2: {
-    label: 'Изменения',
+    placeholder: 'Изменения',
     value: false,
     type: 'checkbox'
   }
