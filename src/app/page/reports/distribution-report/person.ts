@@ -35,14 +35,14 @@ export const person = {
       required: true
     }
   },
-  fromData: {
-    label: 'From data',
+  fromDate: {
+    label: 'From date',
     value: '2019-03-29T00:00:00',
     type: 'data'
   },
-  toData: {
-    label: 'To data',
+  toDate: {
+    label: 'To date',
     value: '',
-    type: 'data'
+    type: 'date'
   },
 };

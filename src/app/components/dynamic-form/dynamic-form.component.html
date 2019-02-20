@@ -23,7 +23,7 @@
           </mat-select>
         </mat-form-field>
 
-        <mat-form-field *ngSwitchCase="'data'">
+        <mat-form-field *ngSwitchCase="'date'">
           <input matInput [formControlName]="prop.key" [placeholder]="prop.label" [matDatepicker]="picker">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #picker></mat-datepicker>

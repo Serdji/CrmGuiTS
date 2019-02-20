@@ -62,21 +62,21 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   }
 
   private initDynamicFormEmit() {
-    const objParserData = {};
+    const objParserDate = {};
     const generateNewObj = R.curry(( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value);
-    const momentFunc = generateNewObj( objParserData );
-    const parserData = R.forEachObjIndexed( momentFunc );
+    const momentFunc = generateNewObj( objParserDate );
+    const parserDate = R.forEachObjIndexed( momentFunc );
 
-    const mappingMomentData = value => {
-      parserData( value );
-      return objParserData;
+    const mappingMomentDate = value => {
+      parserDate( value );
+      return objParserDate;
     };
-    const success = value => console.log( value );
+    const success = value => this.dynamicFormEmit.emit( value );
 
     this.dynamicForm.valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
-        map( mappingMomentData )
+        map( mappingMomentDate )
         )
       .subscribe( success );
   }

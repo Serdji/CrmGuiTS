@@ -3,8 +3,6 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { timer } from 'rxjs';
 
 import { person } from './person';
-import * as R from 'ramda';
-import * as moment from 'moment';
 
 
 @Component( {
@@ -15,6 +13,7 @@ import * as moment from 'moment';
 export class DistributionReportComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
+  private dynamicFormValue: any;
 
   public templateForm: FormGroup;
   public dynamicForm: FormGroup;
@@ -36,7 +35,6 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
   }
 
 
-
   stepperNext(): void {
     timer( 100 ).subscribe( _ => {
       this.person = person;
@@ -44,7 +42,12 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
     } );
   }
 
-  sendForm(): void {
+  onDynamicFormValue( data ): void {
+    this.dynamicFormValue = data;
+  }
+
+  resultForm(): void {
+    console.log( this.dynamicFormValue );
     this.stepper.next();
   }
 
