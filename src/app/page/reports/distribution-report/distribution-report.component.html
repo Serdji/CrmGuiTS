@@ -20,43 +20,14 @@
     </mat-step>
 
     <mat-step [stepControl]="dynamicForm">
-      <form [formGroup]="dynamicForm">
-        <ng-template matStepLabel>Форма запроса отчета</ng-template>
-        <div *ngFor="let prop of objectProps">
-          <div [ngSwitch]="prop.type">
+      <ng-template matStepLabel>Форма запроса отчета</ng-template>
 
-            <mat-form-field *ngSwitchCase="'text'">
-              <input  matInput [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.label">
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
+      <app-dynamic-form *ngIf="person" [dataObject]="person"></app-dynamic-form>
 
-            <div *ngSwitchCase="'radio'">
-              <mat-radio-group [formControlName]="prop.key">
-                <mat-radio-button *ngFor="let option of prop.options" [value]="option.value">{{option.label}}</mat-radio-button>
-              </mat-radio-group>
-            </div>
-
-            <mat-form-field *ngSwitchCase="'select'">
-              <mat-select [formControlName]="prop.key">
-                <mat-option></mat-option>
-                <mat-option *ngFor="let option of prop.options" [value]="option.value">
-                  {{ option.label }}
-                </mat-option>
-              </mat-select>
-            </mat-form-field>
-
-            <mat-form-field *ngSwitchCase="'data'">
-              <input matInput [formControlName]="prop.key" [placeholder]="prop.label" [matDatepicker]="picker">
-              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #picker></mat-datepicker>
-            </mat-form-field>
-          </div>
-        </div>
-        <div>
-          <button mat-button matStepperPrevious>Back</button>
-          <button mat-button (click)="sendForm()">Next</button>
-        </div>
-      </form>
+      <div>
+        <button mat-button matStepperPrevious>Back</button>
+        <button mat-button (click)="sendForm()">Next</button>
+      </div>
     </mat-step>
 
     <mat-step>

@@ -18,7 +18,7 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
 
   public templateForm: FormGroup;
   public dynamicForm: FormGroup;
-  public objectProps: any;
+  public person: any;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -27,7 +27,6 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.initTemplateForm();
-    this.initDynamicForm();
   }
 
   private initTemplateForm() {
@@ -36,53 +35,16 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
     } );
   }
 
-  private mapValidators( validators ) {
-    const formValidators = [];
-    const mapValidationFunc = validation => {
-      switch ( validation ) {
-        case 'required': formValidators.push( Validators.required ); break;
-        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
-      }
-    };
-    const mapValidation = R.map( mapValidationFunc );
-    const composeValidation = R.compose( mapValidation, R.keys );
-
-    if ( validators ) composeValidation( validators );
-    return formValidators;
-  }
-
-  private initDynamicForm() {
-    const objMerge = prop => R.merge( { key: prop }, person[ prop ] );
-    const mapKeys = R.map( objMerge );
-    const composeObjProps = R.compose( mapKeys, R.keys );
-    this.objectProps = composeObjProps( person );
-
-    const formGroup = {};
-    const formControls = prop => new FormControl(
-      R.view( R.lensPath( [ prop, 'value' ] ), person ) || '',
-      this.mapValidators( R.view( R.lensPath( [ prop, 'validation' ] ), person ) )
-    );
-    const setFormGroup = prop => formGroup[ prop ] = formControls( prop );
-    const mapPerson = R.map( setFormGroup );
-    const composeFormControl = R.compose( mapPerson, R.keys );
-
-    composeFormControl( person );
-    this.dynamicForm = new FormGroup( formGroup );
-  }
 
 
   stepperNext(): void {
-    timer( 100 ).subscribe( _ => this.stepper.next() );
+    timer( 100 ).subscribe( _ => {
+      this.person = person;
+      this.stepper.next();
+    } );
   }
 
   sendForm(): void {
-    const objParserDara = {};
-    const generateNewObj = R.curry(( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value);
-    const momentFunc = generateNewObj( objParserDara );
-    const parserData = R.forEachObjIndexed( momentFunc );
-
-    parserData( this.dynamicForm.value );
-    console.log( objParserDara );
     this.stepper.next();
   }
 
