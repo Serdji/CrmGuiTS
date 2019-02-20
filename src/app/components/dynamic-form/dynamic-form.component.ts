@@ -4,19 +4,21 @@ import * as R from 'ramda';
 import * as moment from 'moment';
 import { map, takeWhile } from 'rxjs/operators';
 
-@Component({
+@Component( {
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
-  styleUrls: ['./dynamic-form.component.styl']
-})
+  styleUrls: [ './dynamic-form.component.styl' ]
+} )
 export class DynamicFormComponent implements OnInit, OnDestroy {
 
   public dynamicForm: FormGroup;
   public objectProps: any;
+  public splitObjectProps: any;
 
   private isActive: boolean;
 
   @Input() dataObject: any;
+  @Input() splitInput: number;
   @Output() dynamicFormEmit: EventEmitter<any> = new EventEmitter<any>();
 
   constructor() { }
@@ -25,16 +27,25 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.initDynamicForm();
     this.initDynamicFormEmit();
+    this.initSplitObjectProps();
   }
 
   private mapValidators( validators ) {
     const formValidators = [];
     const mapValidationFunc = validation => {
       switch ( validation ) {
-        case 'required': formValidators.push( Validators.required ); break;
-        case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
-        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
-        case 'email': formValidators.push( Validators.email ); break;
+        case 'required':
+          formValidators.push( Validators.required );
+          break;
+        case 'max':
+          formValidators.push( Validators.max( validators[ validation ] ) );
+          break;
+        case 'min':
+          formValidators.push( Validators.min( validators[ validation ] ) );
+          break;
+        case 'email':
+          formValidators.push( Validators.email );
+          break;
       }
     };
     const mapValidation = R.map( mapValidationFunc );
@@ -65,7 +76,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   private initDynamicFormEmit() {
     const objParserDate = {};
-    const generateNewObj = R.curry(( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value);
+    const generateNewObj = R.curry( ( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
     const momentFunc = generateNewObj( objParserDate );
     const parserDate = R.forEachObjIndexed( momentFunc );
 
@@ -79,8 +90,14 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mappingMomentDate )
-        )
+      )
       .subscribe( success );
+  }
+
+  private initSplitObjectProps() {
+    const splitInput = this.splitInput || R.length( this.objectProps );
+    const splitEvery = R.splitEvery( splitInput );
+    this.splitObjectProps = splitEvery( this.objectProps );
   }
 
   ngOnDestroy(): void {
