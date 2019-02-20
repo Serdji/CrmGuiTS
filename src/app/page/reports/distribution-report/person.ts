@@ -45,4 +45,14 @@ export const person = {
     value: '',
     type: 'date'
   },
+  1: {
+    label: 'Чтение',
+    value: true,
+    type: 'checkbox'
+  },
+  2: {
+    label: 'Изменения',
+    value: false,
+    type: 'checkbox'
+  }
 };
