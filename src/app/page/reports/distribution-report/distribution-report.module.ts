@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DistributionReportService } from './distribution-report.service';
-import { DistributionReportRoutes } from './distribution-report';
+import { DistributionReportRoutes } from './distribution-report.routing';
 
 @NgModule( {
   imports: [
