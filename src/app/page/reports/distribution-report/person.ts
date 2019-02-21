@@ -54,5 +54,13 @@ export const person = {
     placeholder: 'Изменения',
     value: false,
     type: 'checkbox'
-  }
+  },
+  name2: {
+    placeholder: 'Name',
+    value: 'Bob',
+    type: 'text',
+    validation: {
+      required: true
+    }
+  },
 };

@@ -1,23 +1,23 @@
 <div class="dynamic-form">
   <form [formGroup]="dynamicForm">
-    <mat-grid-list cols="4" rowHeight="100px">
-      <mat-grid-tile *ngFor="let objectProps of splitObjectProps" colspan="1" rowspan="1">
+    <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
+      <mat-grid-tile class="dynamic-form__grid-tile" *ngFor="let objectProps of splitObjectProps" colspan="1" rowspan="1">
         <div *ngFor="let prop of objectProps">
           <div [ngSwitch]="prop.type">
 
-            <mat-form-field *ngSwitchCase="'text'">
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'text'">
               <input matInput [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder">
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
 
-            <div *ngSwitchCase="'radio'">
+            <div class="dynamic-form__input" *ngSwitchCase="'radio'">
               <mat-radio-group [formControlName]="prop.key">
-                <mat-radio-button *ngFor="let option of prop.options"
+                <mat-radio-button class="dynamic-form__radio" *ngFor="let option of prop.options"
                                   [value]="option.value">{{option.placeholder}}</mat-radio-button>
               </mat-radio-group>
             </div>
 
-            <mat-form-field *ngSwitchCase="'select'">
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'select'">
               <mat-select [formControlName]="prop.key">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let option of prop.options" [value]="option.value">
@@ -26,13 +26,13 @@
               </mat-select>
             </mat-form-field>
 
-            <mat-form-field *ngSwitchCase="'date'">
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'date'">
               <input matInput [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #picker></mat-datepicker>
             </mat-form-field>
 
-            <div *ngSwitchCase="'checkbox'">
+            <div class="dynamic-form__input" *ngSwitchCase="'checkbox'">
               <mat-checkbox [formControlName]="prop.key">{{prop.placeholder}}</mat-checkbox>
             </div>
           </div>

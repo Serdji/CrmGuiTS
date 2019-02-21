@@ -30,7 +30,7 @@ export class DistributionReportComponent implements OnInit, OnDestroy {
 
   private initTemplateForm() {
     this.templateForm = this.fb.group( {
-      template: [ '', Validators.required ]
+      template: [ '' ]
     } );
   }
 

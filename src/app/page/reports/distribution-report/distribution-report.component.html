@@ -22,7 +22,15 @@
     <mat-step [stepControl]="dynamicForm">
       <ng-template matStepLabel>Форма запроса отчета</ng-template>
 
-      <app-dynamic-form *ngIf="person" [dataObject]="person" [splitInput]="2" (dynamicFormEmit)="onDynamicFormValue($event)"></app-dynamic-form>
+      <app-dynamic-form
+        *ngIf="person"
+        [dataObject]="person"
+        [splitInput]="2"
+        [cols]="3"
+        rowHeight="200px"
+        (dynamicFormEmit)="onDynamicFormValue($event)"
+      >
+      </app-dynamic-form>
 
       <div>
         <button mat-button matStepperPrevious>Back</button>
