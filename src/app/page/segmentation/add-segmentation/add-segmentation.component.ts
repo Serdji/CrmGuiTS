@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
@@ -23,6 +23,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   public formSegmentation: FormGroup;
+  public formSegmentationStepper: FormGroup;
   public segmentationProfiles: ISegmentationProfile;
   public buttonSave: boolean;
   public buttonCreate: boolean;
@@ -38,6 +39,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public airportsFromOptionsE: Observable<IAirport[]>;
   public airportsToOptionsE: Observable<IAirport[]>;
 
+  private controlsConfig: any;
   private isActive: boolean;
   private segmentationId: number;
   private segmentationParams: any;
@@ -136,9 +138,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-
-  private initFormSegmentation() {
-    this.formSegmentation = this.fb.group( {
+  private initFormControl() {
+    this.controlsConfig = {
       segmentationTitle: [ '', Validators.required ],
       dobFromInclude: '',
       dobToExclude: '',
@@ -175,7 +176,15 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       posGdsE: '',
       posIdE: '',
       posAgencyE: ''
-    }, {
+    };
+  }
+
+  private initFormSegmentation() {
+    this.initFormControl();
+    this.formSegmentation = this.fb.group( this.controlsConfig, {
+      updateOn: 'submit',
+    } );
+    this.formSegmentationStepper = this.fb.group( this.controlsConfig, {
       updateOn: 'submit',
     } );
     this.formInputDisable();
