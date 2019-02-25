@@ -255,14 +255,19 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
-    _( this.formSegmentation.value ).each( ( value, key ) => {
-      this.formSegmentation.get( key ).patchValue( '' );
-      this.formSegmentation.get( key ).setErrors( null );
+    const arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
+    const formGroups = R.curry( ( method, formGroup, value, key ) => formGroup.get( key )[ method ]( null ) );
+    const mapFormGroup = R.curry( ( method: string, formGroup: any ) => {
+      const keysFormGroup = formGroups( method, this[ formGroup ] );
+      const formGroupValue = R.forEachObjIndexed( keysFormGroup );
+      formGroupValue( this[ formGroup ].value );
     } );
-    _( this.formSegmentationStepper.value ).each( ( value, key ) => {
-      this.formSegmentation.get( key ).patchValue( '' );
-      this.formSegmentation.get( key ).setErrors( null );
-    } );
+    const formPatchValue = R.map( mapFormGroup( 'patchValue' ) );
+    const formSetErrors = R.map( mapFormGroup( 'setErrors' ) );
+
+    formPatchValue( arrFormGroup );
+    formSetErrors( arrFormGroup );
+
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonSearch = true;
