@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, map, takeWhile } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
@@ -22,6 +22,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 } )
 export class AddSegmentationComponent implements OnInit, OnDestroy {
 
+  public isFormSegmentation: boolean;
   public formSegmentation: FormGroup;
   public formSegmentationStepper: FormGroup;
   public segmentationProfiles: ISegmentationProfile;
@@ -66,6 +67,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.resetRadioButtonFood = false;
     this.resetRadioButtonCurrentRange = false;
+    this.isFormSegmentation = false;
 
     this.initFormSegmentation();
     this.initQueryParams();
@@ -84,6 +86,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.buttonCreate = false;
           this.buttonDelete = false;
           this.buttonSearch = false;
+          this.isFormSegmentation = true;
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
         }
@@ -99,23 +102,44 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.airportsFromOptionsT = this.autocomplete( 'departureLocationCodeT' );
-    this.airportsToOptionsT = this.autocomplete( 'arrivalLocationCodeT' );
-    this.airportsFromOptionsE = this.autocomplete( 'departureLocationCodeE' );
-    this.airportsToOptionsE = this.autocomplete( 'arrivalLocationCodeE' );
+    this.airportsFromOptionsT = this.autocomplete( 'formSegmentation', 'departureLocationCodeT' );
+    this.airportsToOptionsT = this.autocomplete( 'formSegmentation', 'arrivalLocationCodeT' );
+    this.airportsFromOptionsE = this.autocomplete( 'formSegmentation', 'departureLocationCodeE' );
+    this.airportsToOptionsE = this.autocomplete( 'formSegmentation', 'arrivalLocationCodeE' );
+
+    this.airportsFromOptionsT = this.autocomplete( 'formSegmentationStepper', 'departureLocationCodeT' );
+    this.airportsToOptionsT = this.autocomplete( 'formSegmentationStepper', 'arrivalLocationCodeT' );
+    this.airportsFromOptionsE = this.autocomplete( 'formSegmentationStepper', 'departureLocationCodeE' );
+    this.airportsToOptionsE = this.autocomplete( 'formSegmentationStepper', 'arrivalLocationCodeE' );
   }
 
-  private autocomplete( formControlName: string ): Observable<any> {
-    return this.formSegmentation.get( formControlName ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          if ( val ) {
-            return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-          }
-        } )
-      );
+  private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
+    switch ( formGroup ) {
+      case 'formSegmentation':
+        return this.formSegmentation.get( formControlName ).valueChanges
+          .pipe(
+            takeWhile( _ => this.isActive ),
+            delay( this.autDelay ),
+            map( val => {
+              if ( val ) {
+                return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+              }
+            } )
+          );
+        break;
+      case 'formSegmentationStepper':
+        return this.formSegmentationStepper.get( formControlName ).valueChanges
+          .pipe(
+            takeWhile( _ => this.isActive ),
+            delay( this.autDelay ),
+            map( val => {
+              if ( val ) {
+                return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+              }
+            } )
+          );
+        break;
+    }
   }
 
 
@@ -250,6 +274,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       this.formSegmentation.get( key ).patchValue( '' );
       this.formSegmentation.get( key ).setErrors( null );
     } );
+    _( this.formSegmentationStepper.value ).each( ( value, key ) => {
+      this.formSegmentation.get( key ).patchValue( '' );
+      this.formSegmentation.get( key ).setErrors( null );
+    } );
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonSearch = true;
@@ -381,6 +409,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.formSegmentation.get( formControlName ).patchValue( '' );
   }
 
+  changeForm(): void {
+    this.isFormSegmentation = true;
+    this.formSegmentation.patchValue( this.formSegmentationStepper.value );
+  }
+
   saveForm(): void {
     if ( !this.formSegmentation.invalid ) {
       _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
@@ -420,6 +453,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   clearForm(): void {
     this.resetForm();
     this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
+    this.isFormSegmentation = false;
   }
 
   ngOnDestroy(): void {

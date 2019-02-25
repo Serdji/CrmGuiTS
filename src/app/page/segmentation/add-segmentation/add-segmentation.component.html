@@ -1,6 +1,6 @@
 <div class="add-segmentation" appAccessRights="analytics:read" appAccessMessage="true">
 
-  <div class="add-segmentation__stepper">
+  <div class="add-segmentation__stepper" *ngIf="!isFormSegmentation">
     <form [formGroup]="formSegmentationStepper">
       <mat-vertical-stepper linear #stepper>
         <mat-step [completed]="!formSegmentationStepper.get('segmentationTitle').invalid">
@@ -234,7 +234,7 @@
         </mat-step>
 
         <mat-step>
-          <ng-template matStepLabel>Сумма по заказу</ng-template>
+          <ng-template matStepLabel>Диапазон дат бронирования</ng-template>
           <div class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
               <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
@@ -293,7 +293,7 @@
           </div>
           <div>
             <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button (click)="changeForm()">Next</button>
           </div>
         </mat-step>
       </mat-vertical-stepper>
@@ -301,7 +301,11 @@
   </div>
 
 
-  <div class="add-segmentation__change" *ngIf="false">
+
+
+
+
+  <div class="add-segmentation__change" *ngIf="isFormSegmentation">
     <form class="add-segmentation__form" [formGroup]="formSegmentation">
       <mat-grid-list cols="1" rowHeight="80px">
         <mat-grid-tile [colspan]="1" [rowspan]="1">
