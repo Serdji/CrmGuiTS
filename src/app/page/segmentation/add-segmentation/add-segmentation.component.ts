@@ -264,9 +264,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     } );
     const formPatchValue = R.map( mapFormGroup( 'patchValue' ) );
     const formSetErrors = R.map( mapFormGroup( 'setErrors' ) );
+    const resetForm = R.juxt( [ formPatchValue, formSetErrors ] );
 
-    formPatchValue( arrFormGroup );
-    formSetErrors( arrFormGroup );
+    resetForm( arrFormGroup );
 
     this.buttonSave = false;
     this.buttonCreate = true;
@@ -445,7 +445,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
-    this.resetForm();
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.resetForm() );
   }
 
   ngOnDestroy(): void {
