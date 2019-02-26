@@ -5,6 +5,7 @@ import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
 import * as R from 'ramda';
+import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
 import { ISegmentation } from '../../../../interface/isegmentation';
@@ -20,6 +21,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   @Input() id: number;
 
   public orders;
+  public originalOrders;
   public progress: boolean;
   public currencyDefault: string;
   public formFilter: FormGroup;
@@ -28,7 +30,6 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
-  private filterConfig: any;
   private controlConfig: any;
 
   constructor(
@@ -46,7 +47,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initControlConfig();
     this.initFormFilter();
     this.initAutocomplete();
-    this.initFilter();
+    this.initFilterOrders();
   }
 
   private initCurrencyDefault() {
@@ -62,7 +63,8 @@ export class OrderComponent implements OnInit, OnDestroy {
       .subscribe(
         orders => {
           const getRecloc = R.pluck( 'recloc' );
-          this.orders = _.initial( orders );
+          this.originalOrders = _.initial( orders );
+          this.orders = R.clone( this.originalOrders );
           this.arrRecloc = getRecloc( this.orders );
           this.progress = false;
         },
@@ -73,7 +75,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   private initControlConfig() {
     this.controlConfig = {
       'recloc': '',
-      'bookingStatus': '',
+      'BookingStatus': '',
       'createDate': ''
     };
   }
@@ -94,15 +96,21 @@ export class OrderComponent implements OnInit, OnDestroy {
       );
   }
 
-  private initFilter() {
-    this.filterConfig = R.clone( this.controlConfig );
-    const valueForm = ( val , formControl) => {
+  private initFilterOrders() {
+    const paramsFilter = R.filter;
+    const success = R.curry( ( formControl: any, value: string ) => {
+      const propEq = R.propEq( formControl, moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
+      const filterOrders = paramsFilter( propEq );
+      const startFilter = orders => {
+        if ( R.isEmpty( filterOrders( orders ) ) ) return;
+        this.orders = filterOrders( orders );
+      };
+       startFilter( this.originalOrders );
+    } );
+    const valueForm = ( val, formControl ) => {
       this.formFilter.get( formControl ).valueChanges
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( value => {
-          this.filterConfig[ formControl ] = value;
-          console.log(this.filterConfig);
-        } );
+        .subscribe( success( formControl ) );
     };
     const generationFilterConfig = R.forEachObjIndexed( valueForm );
     generationFilterConfig( this.controlConfig );
