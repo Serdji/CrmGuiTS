@@ -8,7 +8,6 @@ import * as R from 'ramda';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable } from 'rxjs';
-import { ISegmentation } from '../../../../interface/isegmentation';
 
 
 @Component( {
@@ -97,21 +96,23 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initFilterOrders() {
-    const paramsFilter = R.filter;
+    let filterConfig = {};
+    const filterOrders = config => _.filter( this.originalOrders, config );
+    const startFilterOrders = config => !R.isEmpty( filterOrders( config ) ) ? this.orders = filterOrders( config ) : null;
     const success = R.curry( ( formControl: any, value: string ) => {
-      const propEq = R.propEq( formControl, moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
-      const filterOrders = paramsFilter( propEq );
-      const startFilter = orders => {
-        if ( R.isEmpty( filterOrders( orders ) ) ) return;
-        this.orders = filterOrders( orders );
-      };
-       startFilter( this.originalOrders );
+      const eachObj = ( val, key ) => val === '' || R.isNil( val ) ? filterConfig = R.omit( [ key ], filterConfig ) : null;
+      const omitKey = R.forEachObjIndexed( eachObj );
+      filterConfig[ formControl ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value;
+      omitKey( filterConfig );
+      startFilterOrders( filterConfig );
     } );
+
     const valueForm = ( val, formControl ) => {
       this.formFilter.get( formControl ).valueChanges
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( success( formControl ) );
     };
+
     const generationFilterConfig = R.forEachObjIndexed( valueForm );
     generationFilterConfig( this.controlConfig );
   }
