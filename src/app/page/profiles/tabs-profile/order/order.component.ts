@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { delay, map, takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
