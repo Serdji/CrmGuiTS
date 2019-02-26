@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { delay, map, takeWhile } from 'rxjs/operators';
@@ -48,6 +48,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private saveSegmentationParams: any = {};
   private createSegmentationParams: any = {};
   private autDelay: number = 500;
+  private arrFormGroup: string[];
+
+  @ViewChild( 'stepper' ) stepper;
 
   constructor(
     private route: ActivatedRoute,
@@ -69,7 +72,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.resetRadioButtonFood = false;
     this.resetRadioButtonCurrentRange = false;
     this.isFormSegmentation = false;
+    this.arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
 
+    this.initFormControl();
     this.initFormSegmentation();
     this.initQueryParams();
     this.formInputDisable();
@@ -189,18 +194,17 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initFormSegmentation() {
-    this.initFormControl();
-    this.formSegmentation = this.fb.group( this.controlsConfig, {
-      updateOn: 'submit',
+    const initFbGroup = R.curry( ( controlsConfig: any, formGroup: string ) => {
+      this[ formGroup ] = this.fb.group( controlsConfig, {
+        updateOn: 'submit',
+      } );
     } );
-    this.formSegmentationStepper = this.fb.group( this.controlsConfig, {
-      updateOn: 'submit',
-    } );
+    const mapForm = R.map( initFbGroup( this.controlsConfig ) );
+    mapForm( this.arrFormGroup );
     this.formInputDisable();
   }
 
   private formInputDisable() {
-
     _( [
       'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP', 'currency',
       'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS'
@@ -255,7 +259,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private resetForm() {
-    const arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
     const formGroups = R.curry( ( method, formGroup, value, key ) => formGroup.get( key )[ method ]( null ) );
     const mapFormGroup = R.curry( ( method: string, formGroup: any ) => {
       const keysFormGroup = formGroups( method, this[ formGroup ] );
@@ -266,7 +269,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const formSetErrors = R.map( mapFormGroup( 'setErrors' ) );
     const resetForm = R.juxt( [ formPatchValue, formSetErrors ] );
 
-    resetForm( arrFormGroup );
+    resetForm( this.arrFormGroup );
 
     this.buttonSave = false;
     this.buttonCreate = true;

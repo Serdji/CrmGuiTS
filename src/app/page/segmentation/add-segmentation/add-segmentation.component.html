@@ -10,7 +10,7 @@
             <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
           <div>
-            <button mat-button matStepperNext>Next</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -33,9 +33,9 @@
               </div>
             </mat-radio-group>
           </mat-card-content>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -66,9 +66,9 @@
               </mat-form-field>
             </div>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -100,9 +100,9 @@
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -168,9 +168,9 @@
               <input matInput formControlName="posAgencyT" type="text" placeholder="Код агентства (точка продажи)">
             </mat-form-field>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -227,9 +227,9 @@
               <input matInput formControlName="posAgencyE" type="text" placeholder="Код агентства (точка продажи)">
             </mat-form-field>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -249,9 +249,9 @@
               <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
             </mat-form-field>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
@@ -291,19 +291,21 @@
               </div>
             </mat-radio-group>
           </div>
-          <div>
-            <button mat-button matStepperPrevious>Back</button>
-            <button mat-button matStepperNext>Next</button>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
           </div>
         </mat-step>
 
         <mat-step >
           <ng-template matStepLabel>Сформировать сегментацию</ng-template>
-          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                  (click)="changeForm()" color="primary" [disabled]="buttonSave">
-            <mat-icon>group</mat-icon>
-            Сформировать
-          </button>
+          <div class="add-segmentation__stepper-button">
+            <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                    (click)="changeForm()" color="primary" [disabled]="buttonSave">
+              <mat-icon>group</mat-icon>
+              Сформировать
+            </button>
+          </div>
         </mat-step>
       </mat-vertical-stepper>
     </form>
