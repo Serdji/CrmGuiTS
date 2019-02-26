@@ -28,6 +28,8 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
+  private filterConfig: any;
+  private controlConfig: any;
 
   constructor(
     private orderService: OrderService,
@@ -41,8 +43,10 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.isSortFilterReverse = false;
     this.initBooking();
     this.initCurrencyDefault();
+    this.initControlConfig();
     this.initFormFilter();
     this.initAutocomplete();
+    this.initFilter();
   }
 
   private initCurrencyDefault() {
@@ -66,12 +70,16 @@ export class OrderComponent implements OnInit, OnDestroy {
       );
   }
 
-  private initFormFilter() {
-    this.formFilter = this.fb.group( {
+  private initControlConfig() {
+    this.controlConfig = {
       'recloc': '',
       'bookingStatus': '',
       'createDate': ''
-    } );
+    };
+  }
+
+  private initFormFilter() {
+    this.formFilter = this.fb.group( this.controlConfig );
   }
 
   private initAutocomplete() {
@@ -84,6 +92,20 @@ export class OrderComponent implements OnInit, OnDestroy {
         takeWhile( _ => this.isActive ),
         map( val => this.arrRecloc.filter( recloc => recloc.toLowerCase().includes( val.toLowerCase() ) ) )
       );
+  }
+
+  private initFilter() {
+    this.filterConfig = R.clone( this.controlConfig );
+    const valueForm = ( val , formControl) => {
+      this.formFilter.get( formControl ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => {
+          this.filterConfig[ formControl ] = value;
+          console.log(this.filterConfig);
+        } );
+    };
+    const generationFilterConfig = R.forEachObjIndexed( valueForm );
+    generationFilterConfig( this.controlConfig );
   }
 
   sortFilter( title: string ): void {
