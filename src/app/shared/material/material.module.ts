@@ -16,7 +16,7 @@ import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginato
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatTooltipModule } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatStepperModule, MatTooltipModule } from '@angular/material';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -73,6 +73,7 @@ const MY_FORMATS = {
     MatChipsModule,
     MatRippleModule,
     MatBadgeModule,
+    MatStepperModule,
   ],
   exports: [
     MatToolbarModule,
@@ -104,6 +105,7 @@ const MY_FORMATS = {
     MatChipsModule,
     MatRippleModule,
     MatBadgeModule,
+    MatStepperModule,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
