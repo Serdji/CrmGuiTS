@@ -194,13 +194,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initFormSegmentation() {
-    const initFbGroup = R.curry( ( controlsConfig: any, formGroup: string ) => {
+    const mapForm = R.curry( ( controlsConfig: any, formGroup: string ) => {
       this[ formGroup ] = this.fb.group( controlsConfig, {
         updateOn: 'submit',
       } );
     } );
-    const mapForm = R.map( initFbGroup( this.controlsConfig ) );
-    mapForm( this.arrFormGroup );
+    const initFbGroup = R.map( mapForm( this.controlsConfig ) );
+
+    initFbGroup( this.arrFormGroup );
     this.formInputDisable();
   }
 
