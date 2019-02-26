@@ -5,6 +5,25 @@
   <mat-accordion *ngIf="!progress" multi="true">
 
     <mat-card class="order__sort mat-elevation-z0">
+      <form class="order__form" [formGroup]="formFilter">
+        <div class="order__filter">
+          <mat-form-field class="order__input">
+            <input matInput formControlName="recloc" type="text" placeholder="Откуда" [matAutocomplete]="recloc">
+            <mat-autocomplete #recloc="matAutocomplete">
+              <mat-option *ngFor="let recloc of reclocOptions | async" [value]="recloc">{{ recloc }}</mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </div>
+        <div class="order__filter">
+
+        </div>
+        <div  class="order__filter">
+
+        </div>
+      </form>
+    </mat-card>
+
+    <mat-card class="order__sort mat-elevation-z0">
       <div class="order__filter">
         <span
           matRipple

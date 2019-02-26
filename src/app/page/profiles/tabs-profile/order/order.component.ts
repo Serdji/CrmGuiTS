@@ -1,9 +1,13 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { takeWhile } from 'rxjs/operators';
+import { delay, map, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
+import * as R from 'ramda';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { Observable } from 'rxjs';
+import { ISegmentation } from '../../../../interface/isegmentation';
 
 
 @Component( {
@@ -18,13 +22,17 @@ export class OrderComponent implements OnInit, OnDestroy {
   public orders;
   public progress: boolean;
   public currencyDefault: string;
+  public formFilter: FormGroup;
+  public arrRecloc: string[];
+  public reclocOptions: Observable<string[]>;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
 
   constructor(
     private orderService: OrderService,
-    private currencyDefaultService: CurrencyDefaultService
+    private currencyDefaultService: CurrencyDefaultService,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
@@ -33,6 +41,8 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.isSortFilterReverse = false;
     this.initBooking();
     this.initCurrencyDefault();
+    this.initFormFilter();
+    this.initAutocomplete();
   }
 
   private initCurrencyDefault() {
@@ -47,10 +57,32 @@ export class OrderComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe(
         orders => {
+          const getRecloc = R.pluck( 'recloc' );
           this.orders = _.initial( orders );
+          this.arrRecloc = getRecloc( this.orders );
           this.progress = false;
         },
         error => this.progress = false
+      );
+  }
+
+  private initFormFilter() {
+    this.formFilter = this.fb.group( {
+      'recloc': '',
+      'BookingStatus': '',
+      'createDate': ''
+    } );
+  }
+
+  private initAutocomplete() {
+    this.reclocOptions = this.autocomplete( 'recloc' );
+  }
+
+  private autocomplete( formControlName: string ): Observable<any> {
+    return this.formFilter.get( formControlName ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( val => this.arrRecloc.filter( recloc => recloc.toLowerCase().includes( val.toLowerCase() ) ) )
       );
   }
 
