@@ -8,17 +8,27 @@
       <form class="order__form" [formGroup]="formFilter">
         <div class="order__filter">
           <mat-form-field class="order__input">
-            <input matInput formControlName="recloc" type="text" placeholder="Откуда" [matAutocomplete]="recloc">
+            <input matInput formControlName="recloc" type="text" placeholder="Заказ №" [matAutocomplete]="recloc">
             <mat-autocomplete #recloc="matAutocomplete">
               <mat-option *ngFor="let recloc of reclocOptions | async" [value]="recloc">{{ recloc }}</mat-option>
             </mat-autocomplete>
           </mat-form-field>
         </div>
         <div class="order__filter">
-
+          <mat-form-field class="order__input">
+            <mat-select formControlName="bookingStatus" placeholder="Статус заказа">
+              <mat-option></mat-option>
+              <mat-option value="Active" >Оформлен</mat-option>
+              <mat-option value="Cancelled" >Аннулирован</mat-option>
+            </mat-select>
+          </mat-form-field>
         </div>
         <div  class="order__filter">
-
+          <mat-form-field class="order__input">
+            <input matInput formControlName="createDate" placeholder="Дата создания" [matDatepicker]="createDate">
+            <mat-datepicker-toggle matSuffix [for]="createDate"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #createDate></mat-datepicker>
+          </mat-form-field>
         </div>
       </form>
     </mat-card>

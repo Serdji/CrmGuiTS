@@ -69,7 +69,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   private initFormFilter() {
     this.formFilter = this.fb.group( {
       'recloc': '',
-      'BookingStatus': '',
+      'bookingStatus': '',
       'createDate': ''
     } );
   }
