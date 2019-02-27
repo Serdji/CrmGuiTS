@@ -1,24 +1,22 @@
 <div class="add-segmentation" appAccessRights="analytics:read" appAccessMessage="true">
-  <form class="add-segmentation__form" [formGroup]="formSegmentation">
-    <mat-grid-list cols="1" rowHeight="80px">
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="segmentationTitle" type="text" placeholder="Группа сегментации">
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-    </mat-grid-list>
 
-    <mat-grid-list cols="4" rowHeight="300px">
+  <div class="add-segmentation__stepper" *ngIf="!isFormSegmentation">
+    <form [formGroup]="formSegmentationStepper">
+      <mat-vertical-stepper linear #stepper>
+        <mat-step [completed]="!formSegmentationStepper.get('segmentationTitle').invalid">
+          <ng-template matStepLabel>Группа сегментации</ng-template>
+          <mat-form-field class="add-segmentation__input">
+            <input matInput formControlName="segmentationTitle" type="text" placeholder="Группа сегментации">
+            <mat-error>Обязательное поле</mat-error>
+          </mat-form-field>
+          <div>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
 
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
+        <mat-step [completed]="formSegmentationStepper.get('subjectAnalysis').value !== ''">
+          <ng-template matStepLabel>Предмет анализа</ng-template>
           <div class="add-segmentation__content-title-wrapper">
-            <span class="add-segmentation__content-title">Предмет анализа</span>
             <mat-icon *ngIf="resetRadioButtonFood" matTooltip="Сбросить настройки предмета анализа"
                       (click)="resetRadioButton('subjectAnalysis')">remove_circle_outline
             </mat-icon>
@@ -35,210 +33,54 @@
               </div>
             </mat-radio-group>
           </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
 
+        <mat-step
+          *ngIf="formSegmentationStepper.get('subjectAnalysis').value === 'segment'"
+          [completed]="
+            !formSegmentationStepper.get('segmentsCountFromInclude').invalid &&
+            !formSegmentationStepper.get('segmentsCountToExclude').invalid &&
+            !formSegmentationStepper.get('eDocTypeS').invalid"
+        >
+          <ng-template matStepLabel>Количество сегментов</ng-template>
+          <div>
+            <div class="add-segmentation__content">
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <mat-select formControlName="eDocTypeS">
+                  <mat-option value="T">Билеты</mat-option>
+                  <mat-option value="E">Услуги</mat-option>
+                </mat-select>
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
 
-      <mat-grid-tile [colspan]="1" [rowspan]="3">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Билеты</span>
-          <mat-card-content class="add-segmentation__content _none-justify">
-            <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDFromIncludeT" matInput placeholder="Диапазон даты вылета с"
-                     [matDatepicker]="arrivalDFromIncludeT">
-              <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeT"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #arrivalDFromIncludeT></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDToExcludeT" matInput placeholder="Диапазон даты вылета по"
-                     [matDatepicker]="arrivalDToExcludeT">
-              <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeT"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="departureLocationCodeT" type="text" placeholder="Откуда" [matAutocomplete]="airportfromT">
-              <mat-autocomplete #airportfromT="matAutocomplete">
-                <mat-option *ngFor="let airport of airportsFromOptionsT | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="Куда" [matAutocomplete]="airporttoT">
-              <mat-autocomplete #airporttoT="matAutocomplete">
-                <mat-option *ngFor="let airport of airportsToOptionsT | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="cabinT" type="text" placeholder="Кабина">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="rbdT" type="text" placeholder="Класс бронирования">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="fareCodeT" type="text" placeholder="Код тарифа">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posGdsT" type="text" placeholder="Код ГРС (точка продажи)">
-            </mat-form-field>
-            <!--<mat-form-field class="add-segmentation__input">-->
-              <!--<input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">-->
-            <!--</mat-form-field>-->
-            <!--<mat-form-field class="add-segmentation__input">-->
-              <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
-            <!--</mat-form-field>-->
-            <!--<mat-form-field class="add-segmentation__input">-->
-              <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
-            <!--</mat-form-field>-->
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posIdT" type="text" placeholder="Код ППР (точка продажи)">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posAgencyT" type="text" placeholder="Код агентства (точка продажи)">
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1" [rowspan]="3">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Платные услуги</span>
-          <mat-card-content class="add-segmentation__content _none-justify">
-            <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDFromIncludeE" matInput placeholder="Диапазон даты вылета с"
-                     [matDatepicker]="arrivalDFromIncludeE">
-              <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeE"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #arrivalDFromIncludeE></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDToExcludeE" matInput placeholder="Диапазон даты вылета по"
-                     [matDatepicker]="arrivalDToExcludeE">
-              <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeE"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="departureLocationCodeE" type="text" placeholder="Откуда" [matAutocomplete]="airportfromE">
-              <mat-autocomplete #airportfromE="matAutocomplete">
-                <mat-option *ngFor="let airport of airportsFromOptionsE | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="Куда" [matAutocomplete]="airporttoE">
-              <mat-autocomplete #airporttoE="matAutocomplete">
-                <mat-option *ngFor="let airport of airportsToOptionsE | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
-              </mat-autocomplete>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="serviceCodeE" type="text" placeholder="Код услути">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posGdsE" type="text" placeholder="Код ГРС (точка продажи)">
-            </mat-form-field>
-            <!--<mat-form-field class="add-segmentation__input">-->
-              <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
-            <!--</mat-form-field>-->
-            <!--<mat-form-field class="add-segmentation__input">-->
-              <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
-            <!--</mat-form-field>-->
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posIdE" type="text" placeholder="Код ППР (точка продажи)">
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posAgencyE" type="text" placeholder="Код агентства (точка продажи)">
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Диапазон дат бронирования</span>
-          <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
-                     [matDatepicker]="bookingCreateDateFromInclude">
-              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
-                     [matDatepicker]="bookingCreateDateToExclude">
-              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Количество сегментов</span>
-          <mat-card-content class="add-segmentation__content">
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <mat-select formControlName="eDocTypeS">
-                <mat-option value="T">Билеты</mat-option>
-                <mat-option value="E">Услуги</mat-option>
-              </mat-select>
-              <mat-error>Обязательное поле</mat-error>
-            </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <mat-card-content class="add-segmentation__content">
-            <span class="add-segmentation__content-title">Детали профиля</span>
-            <mat-form-field class="add-segmentation__input">
-              <mat-select formControlName="gender" placeholder="Пол">
-                <mat-option></mat-option>
-                <mat-option value="M">М</mat-option>
-                <mat-option value="F">Ж</mat-option>
-              </mat-select>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="dobFromInclude" placeholder="Дата рождения от" [matDatepicker]="dobFromInclude">
-              <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
-            </mat-form-field>
-            <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="dobToExclude" placeholder="Дата рождения до" [matDatepicker]="dobToExclude">
-              <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
-            </mat-form-field>
-            <mat-radio-group formControlName="withChild" class="add-segmentation__input">
-              <div class="add-segmentation__input-radio-wrapper">
-                <div class="add-segmentation__input-radio-group">
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="true">Летает с детьми
-                  </mat-radio-button>
-                </div>
-                <div class="add-segmentation__input-radio-group _right">
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="false">Летает без детей
-                  </mat-radio-button>
-                </div>
-              </div>
-            </mat-radio-group>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
-
-
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="add-segmentation__card">
-          <span class="add-segmentation__content-title">Сумма по заказу</span>
-          <mat-card-content class="add-segmentation__content">
+        <mat-step
+          *ngIf="formSegmentationStepper.get('subjectAnalysis').value === 'payment'"
+          [completed]="
+            !formSegmentationStepper.get('moneyAmountFromInclude').invalid &&
+            !formSegmentationStepper.get('moneyAmountToExclude').invalid &&
+            !formSegmentationStepper.get('eDocTypeP').invalid"
+        >
+          <ng-template matStepLabel>Сумма по заказу</ng-template>
+          <div class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
               <input formControlName="moneyAmountFromInclude" matInput type="text" placeholder="От">
               <mat-error>Обязательное поле</mat-error>
@@ -257,47 +99,535 @@
               </mat-select>
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
-          </mat-card-content>
-        </mat-card>
-      </mat-grid-tile>
+          </div>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
+
+        <mat-step *ngIf="formSegmentationStepper.get('eDocTypeS').value === 'T'">
+          <ng-template matStepLabel>Билет</ng-template>
+          <div class="add-segmentation__content _none-justify">
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDFromIncludeT" matInput placeholder="Диапазон даты вылета с"
+                     [matDatepicker]="arrivalDFromIncludeT">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeT"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDFromIncludeT></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDToExcludeT" matInput placeholder="Диапазон даты вылета по"
+                     [matDatepicker]="arrivalDToExcludeT">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeT"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="departureLocationCodeT" type="text" placeholder="Откуда"
+                     [matAutocomplete]="airportfromT">
+              <mat-autocomplete #airportfromT="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsFromOptionsT | async"
+                            [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="Куда"
+                     [matAutocomplete]="airporttoT">
+              <mat-autocomplete #airporttoT="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsToOptionsT | async"
+                            [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="cabinT" type="text" placeholder="Кабина">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="rbdT" type="text" placeholder="Класс бронирования">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="fareCodeT" type="text" placeholder="Код тарифа">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="posGdsT" type="text" placeholder="Код ГРС (точка продажи)">
+            </mat-form-field>
+            <!--<mat-form-field class="add-segmentation__input">-->
+            <!--<input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">-->
+            <!--</mat-form-field>-->
+            <!--<mat-form-field class="add-segmentation__input">-->
+            <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
+            <!--</mat-form-field>-->
+            <!--<mat-form-field class="add-segmentation__input">-->
+            <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
+            <!--</mat-form-field>-->
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="posIdT" type="text" placeholder="Код ППР (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="posAgencyT" type="text" placeholder="Код агентства (точка продажи)">
+            </mat-form-field>
+          </div>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
+
+        <mat-step *ngIf="formSegmentationStepper.get('eDocTypeS').value === 'E'">
+          <ng-template matStepLabel>Платные услуги</ng-template>
+          <div class="add-segmentation__content _none-justify">
+            <mat-form-field class="add-segmentation__input">
+              <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDFromIncludeE" matInput placeholder="Диапазон даты вылета с"
+                     [matDatepicker]="arrivalDFromIncludeE">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeE"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDFromIncludeE></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="arrivalDToExcludeE" matInput placeholder="Диапазон даты вылета по"
+                     [matDatepicker]="arrivalDToExcludeE">
+              <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeE"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="departureLocationCodeE" type="text" placeholder="Откуда"
+                     [matAutocomplete]="airportfromE">
+              <mat-autocomplete #airportfromE="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsFromOptionsE | async"
+                            [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="Куда"
+                     [matAutocomplete]="airporttoE">
+              <mat-autocomplete #airporttoE="matAutocomplete">
+                <mat-option *ngFor="let airport of airportsToOptionsE | async"
+                            [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="serviceCodeE" type="text" placeholder="Код услути">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="posGdsE" type="text" placeholder="Код ГРС (точка продажи)">
+            </mat-form-field>
+            <!--<mat-form-field class="add-segmentation__input">-->
+            <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
+            <!--</mat-form-field>-->
+            <!--<mat-form-field class="add-segmentation__input">-->
+            <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
+            <!--</mat-form-field>-->
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="posIdE" type="text" placeholder="Код ППР (точка продажи)">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="posAgencyE" type="text" placeholder="Код агентства (точка продажи)">
+            </mat-form-field>
+          </div>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Диапазон дат бронирования</ng-template>
+          <div class="add-segmentation__content">
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
+                     [matDatepicker]="bookingCreateDateFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
+                     [matDatepicker]="bookingCreateDateToExclude">
+              <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
+
+        <mat-step>
+          <ng-template matStepLabel>Детали профиля</ng-template>
+          <div class="add-segmentation__content">
+            <mat-form-field class="add-segmentation__input">
+              <mat-select formControlName="gender" placeholder="Пол">
+                <mat-option></mat-option>
+                <mat-option value="M">М</mat-option>
+                <mat-option value="F">Ж</mat-option>
+              </mat-select>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dobFromInclude" placeholder="Дата рождения от"
+                     [matDatepicker]="dobFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dobToExclude" placeholder="Дата рождения до"
+                     [matDatepicker]="dobToExclude">
+              <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
+            </mat-form-field>
+            <mat-radio-group formControlName="withChild" class="add-segmentation__input">
+              <div class="add-segmentation__input-radio-wrapper">
+                <div class="add-segmentation__input-radio-group">
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="true">Летает с детьми
+                  </mat-radio-button>
+                </div>
+                <div class="add-segmentation__input-radio-group _right">
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="false">Летает без
+                    детей
+                  </mat-radio-button>
+                </div>
+              </div>
+            </mat-radio-group>
+          </div>
+          <div class="add-segmentation__stepper-button">
+            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperNext>Вперед</button>
+          </div>
+        </mat-step>
+
+        <mat-step >
+          <ng-template matStepLabel>Сформировать сегментацию</ng-template>
+          <div class="add-segmentation__stepper-button">
+            <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                    (click)="changeForm()" color="primary" [disabled]="buttonSave">
+              <mat-icon>group</mat-icon>
+              Сформировать
+            </button>
+          </div>
+        </mat-step>
+      </mat-vertical-stepper>
+    </form>
+  </div>
 
 
-      <div class="add-segmentation__button-wrapper">
-        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                (click)="saveForm()" color="primary" [disabled]="buttonSave">
-          <mat-icon>save</mat-icon>
-          Сохранить
-        </button>
-        <button appAccessRights="analytics:read" class="add-segmentation__button" mat-raised-button
-                (click)="searchForm()" color="primary" [disabled]="buttonSearch">
-          <mat-icon>search</mat-icon>
-          Искать
-        </button>
-        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                (click)="createForm()" [disabled]="buttonCreate">
-          <mat-icon>create</mat-icon>
-          Изменить
-        </button>
-        <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                (click)="deleteSegmentation()" color="warn" [disabled]="buttonDelete">
-          <mat-icon>delete</mat-icon>
-          Удалить
-        </button>
-        <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">
-          <mat-icon>clear</mat-icon>
-          Очистить форму
-        </button>
-      </div>
-    </mat-grid-list>
-  </form>
 
-  <mat-card class="add-segmentation__table" *ngIf="isTable">
-    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaderDisabled>
-      <app-table-async-segmentation-profile
-        *ngIf="segmentationProfiles.customers.length !== 0"
-        [tableDataSource]="segmentationProfiles.customers">
-      </app-table-async-segmentation-profile>
-    </ng-template>
-  </mat-card>
+
+
+
+  <div class="add-segmentation__change" *ngIf="isFormSegmentation">
+    <form class="add-segmentation__form" [formGroup]="formSegmentation">
+      <mat-grid-list cols="1" rowHeight="80px">
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="add-segmentation__card">
+            <mat-card-content class="add-segmentation__content">
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="segmentationTitle" type="text" placeholder="Группа сегментации">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+      </mat-grid-list>
+
+      <mat-grid-list cols="4" rowHeight="300px">
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="add-segmentation__card">
+            <div class="add-segmentation__content-title-wrapper">
+              <span class="add-segmentation__content-title">Предмет анализа</span>
+              <mat-icon *ngIf="resetRadioButtonFood" matTooltip="Сбросить настройки предмета анализа"
+                        (click)="resetRadioButton('subjectAnalysis')">remove_circle_outline
+              </mat-icon>
+            </div>
+            <mat-card-content class="add-segmentation__content">
+              <mat-radio-group class="add-segmentation__input" formControlName="subjectAnalysis">
+                <div class="add-segmentation__input-radio-wrapper">
+                  <div class="add-segmentation__input-radio-group">
+                    <mat-radio-button class="add-segmentation__input-radio" value="segment">Количество сегментов
+                    </mat-radio-button>
+                    <mat-radio-button class="add-segmentation__input-radio _margin-none" value="payment">Сумма покупок
+                    </mat-radio-button>
+                  </div>
+                </div>
+              </mat-radio-group>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+
+        <mat-grid-tile [colspan]="1" [rowspan]="3">
+          <mat-card class="add-segmentation__card">
+            <span class="add-segmentation__content-title">Билеты</span>
+            <mat-card-content class="add-segmentation__content _none-justify">
+              <mat-form-field class="add-segmentation__input">
+                <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="arrivalDFromIncludeT" matInput placeholder="Диапазон даты вылета с"
+                       [matDatepicker]="arrivalDFromIncludeT">
+                <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeT"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #arrivalDFromIncludeT></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="arrivalDToExcludeT" matInput placeholder="Диапазон даты вылета по"
+                       [matDatepicker]="arrivalDToExcludeT">
+                <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeT"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="departureLocationCodeT" type="text" placeholder="Откуда"
+                       [matAutocomplete]="airportfromT">
+                <mat-autocomplete #airportfromT="matAutocomplete">
+                  <mat-option *ngFor="let airport of airportsFromOptionsT | async"
+                              [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="Куда"
+                       [matAutocomplete]="airporttoT">
+                <mat-autocomplete #airporttoT="matAutocomplete">
+                  <mat-option *ngFor="let airport of airportsToOptionsT | async"
+                              [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="cabinT" type="text" placeholder="Кабина">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="rbdT" type="text" placeholder="Класс бронирования">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="fareCodeT" type="text" placeholder="Код тарифа">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="posGdsT" type="text" placeholder="Код ГРС (точка продажи)">
+              </mat-form-field>
+              <!--<mat-form-field class="add-segmentation__input">-->
+              <!--<input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">-->
+              <!--</mat-form-field>-->
+              <!--<mat-form-field class="add-segmentation__input">-->
+              <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
+              <!--</mat-form-field>-->
+              <!--<mat-form-field class="add-segmentation__input">-->
+              <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
+              <!--</mat-form-field>-->
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="posIdT" type="text" placeholder="Код ППР (точка продажи)">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="posAgencyT" type="text" placeholder="Код агентства (точка продажи)">
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="3">
+          <mat-card class="add-segmentation__card">
+            <span class="add-segmentation__content-title">Платные услуги</span>
+            <mat-card-content class="add-segmentation__content _none-justify">
+              <mat-form-field class="add-segmentation__input">
+                <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="arrivalDFromIncludeE" matInput placeholder="Диапазон даты вылета с"
+                       [matDatepicker]="arrivalDFromIncludeE">
+                <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeE"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #arrivalDFromIncludeE></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="arrivalDToExcludeE" matInput placeholder="Диапазон даты вылета по"
+                       [matDatepicker]="arrivalDToExcludeE">
+                <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeE"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="departureLocationCodeE" type="text" placeholder="Откуда"
+                       [matAutocomplete]="airportfromE">
+                <mat-autocomplete #airportfromE="matAutocomplete">
+                  <mat-option *ngFor="let airport of airportsFromOptionsE | async"
+                              [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="Куда"
+                       [matAutocomplete]="airporttoE">
+                <mat-autocomplete #airporttoE="matAutocomplete">
+                  <mat-option *ngFor="let airport of airportsToOptionsE | async"
+                              [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="serviceCodeE" type="text" placeholder="Код услути">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="posGdsE" type="text" placeholder="Код ГРС (точка продажи)">
+              </mat-form-field>
+              <!--<mat-form-field class="add-segmentation__input">-->
+              <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
+              <!--</mat-form-field>-->
+              <!--<mat-form-field class="add-segmentation__input">-->
+              <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
+              <!--</mat-form-field>-->
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="posIdE" type="text" placeholder="Код ППР (точка продажи)">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="posAgencyE" type="text" placeholder="Код агентства (точка продажи)">
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="add-segmentation__card">
+            <span class="add-segmentation__content-title">Диапазон дат бронирования</span>
+            <mat-card-content class="add-segmentation__content">
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="bookingCreateDateFromInclude" matInput placeholder="Свободный диапазон от"
+                       [matDatepicker]="bookingCreateDateFromInclude">
+                <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="bookingCreateDateToExclude" matInput placeholder="Свободный диапазон до"
+                       [matDatepicker]="bookingCreateDateToExclude">
+                <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="add-segmentation__card">
+            <span class="add-segmentation__content-title">Количество сегментов</span>
+            <mat-card-content class="add-segmentation__content">
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <mat-select formControlName="eDocTypeS">
+                  <mat-option value="T">Билеты</mat-option>
+                  <mat-option value="E">Услуги</mat-option>
+                </mat-select>
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="add-segmentation__card">
+            <mat-card-content class="add-segmentation__content">
+              <span class="add-segmentation__content-title">Детали профиля</span>
+              <mat-form-field class="add-segmentation__input">
+                <mat-select formControlName="gender" placeholder="Пол">
+                  <mat-option></mat-option>
+                  <mat-option value="M">М</mat-option>
+                  <mat-option value="F">Ж</mat-option>
+                </mat-select>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dobFromInclude" placeholder="Дата рождения от"
+                       [matDatepicker]="dobFromInclude">
+                <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dobToExclude" placeholder="Дата рождения до"
+                       [matDatepicker]="dobToExclude">
+                <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
+              </mat-form-field>
+              <mat-radio-group formControlName="withChild" class="add-segmentation__input">
+                <div class="add-segmentation__input-radio-wrapper">
+                  <div class="add-segmentation__input-radio-group">
+                    <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="true">Летает с детьми
+                    </mat-radio-button>
+                  </div>
+                  <div class="add-segmentation__input-radio-group _right">
+                    <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="false">Летает без
+                      детей
+                    </mat-radio-button>
+                  </div>
+                </div>
+              </mat-radio-group>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+
+        <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <mat-card class="add-segmentation__card">
+            <span class="add-segmentation__content-title">Сумма по заказу</span>
+            <mat-card-content class="add-segmentation__content">
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="moneyAmountFromInclude" matInput type="text" placeholder="От">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input formControlName="moneyAmountToExclude" matInput type="text" placeholder="До">
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="currency" type="text" placeholder="Валюта оплаты">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <mat-select formControlName="eDocTypeP">
+                  <mat-option value="T">Билеты</mat-option>
+                  <mat-option value="E">Услуги</mat-option>
+                </mat-select>
+                <mat-error>Обязательное поле</mat-error>
+              </mat-form-field>
+            </mat-card-content>
+          </mat-card>
+        </mat-grid-tile>
+
+
+        <div class="add-segmentation__button-wrapper">
+          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                  (click)="saveForm()" color="primary" [disabled]="buttonSave">
+            <mat-icon>save</mat-icon>
+            Сохранить
+          </button>
+          <button appAccessRights="analytics:read" class="add-segmentation__button" mat-raised-button
+                  (click)="searchForm()" color="primary" [disabled]="buttonSearch">
+            <mat-icon>search</mat-icon>
+            Искать
+          </button>
+          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                  (click)="createForm()" [disabled]="buttonCreate">
+            <mat-icon>create</mat-icon>
+            Изменить
+          </button>
+          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+                  (click)="deleteSegmentation()" color="warn" [disabled]="buttonDelete">
+            <mat-icon>delete</mat-icon>
+            Удалить
+          </button>
+          <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">
+            <mat-icon>clear</mat-icon>
+            Очистить форму
+          </button>
+        </div>
+      </mat-grid-list>
+    </form>
+
+    <mat-card class="add-segmentation__table" *ngIf="isTable">
+      <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <app-table-async-segmentation-profile
+          *ngIf="segmentationProfiles.customers.length !== 0"
+          [tableDataSource]="segmentationProfiles.customers">
+        </app-table-async-segmentation-profile>
+      </ng-template>
+    </mat-card>
+  </div>
 </div>
