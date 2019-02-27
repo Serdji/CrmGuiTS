@@ -79,6 +79,13 @@ export class SidenavService {
           { url: '/crm/add-promotions', title: 'Добавить промоакцию' },
         ]
       },
+      // {
+      //   name: 'Отчеты',
+      //   icon: 'assignment',
+      //   link: [
+      //     { url: '/crm/distribution-report', title: 'Рассылки' },
+      //   ]
+      // },
       {
         name: 'Настройки',
         icon: 'settings',

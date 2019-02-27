@@ -28,6 +28,7 @@ const routes: Routes = [
         { path: 'add-promotions', loadChildren: './page/promotions/add-promotions/add-promotions.module#AddPromotionsModule' },
         { path: 'add-promotions-codes', loadChildren: './page/promotions/add-promotions-codes/add-promotions-codes.module#AddPromotionsCodesModule' },
         { path: 'search-promotions-codes', loadChildren: './page/promotions/search-promotions-codes/search-promotions-codes.module#SearchPromotionsCodesModule' },
+        { path: 'distribution-report', loadChildren: './page/reports/distribution-report/distribution-report.module#DistributionReportModule' },
         { path: 'form-table-async-profile-settings', loadChildren: './page/settings/form-table-async-profile-settings/form-table-async-profile-settings.module#FormTableAsyncProfileSettingsModule' },
         { path: 'restart', loadChildren: './page/settings/restart/restart.module#RestartModule' },
       ],
