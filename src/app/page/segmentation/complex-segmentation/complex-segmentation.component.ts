@@ -14,7 +14,7 @@ import * as R from 'ramda';
 export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   public segmentation: ISegmentation[];
-  public selectionSegmentation: ISegmentation[];
+  public selectionSegmentation: ISegmentation[] = [];
   public segmentationOptions: Observable<ISegmentation[]>;
   public formAdd: FormGroup;
 
@@ -44,7 +44,6 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( segmentation => {
         this.segmentation = segmentation;
         this.initAutocomplete();
-        console.log( this.segmentation );
       } );
   }
 
@@ -53,7 +52,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive ),
         map( value => typeof value === 'string' ? value : value.title ),
-        map( title => title ? this._filter( title ) : this.segmentation.slice() )
+        map( title => this._filter( title ) )
       );
   }
 
@@ -62,18 +61,24 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private _filter( title: string ): ISegmentation[] {
+    console.log( this.selectionSegmentation );
     const toLower = R.toLower;
     const includes = R.includes( toLower( title ) );
     const filterIter = segmentation => includes( toLower( segmentation.title ) );
+    const segmentationDifference = R.difference( this.segmentation, this.selectionSegmentation );
     const filterSegmentation = R.filter( filterIter );
-    return filterSegmentation( this.segmentation );
+    return filterSegmentation( segmentationDifference );
   }
 
   public onAdd(): void {
-    const appendSegmentation = R.append( this.formAdd.get( 'segmentation' ).value );
-    this.selectionSegmentation = appendSegmentation( this.selectionSegmentation );
+    const value = this.formAdd.get( 'segmentation' ).value;
+    const isObject = R.is( Object );
+    if ( isObject( value ) ) {
+      const appendSegmentation = R.append( value );
+      this.selectionSegmentation = appendSegmentation( this.selectionSegmentation );
+      this.formAdd.get( 'segmentation' ).patchValue( '' );
+    }
     console.log( this.selectionSegmentation );
-    this.formAdd.get( 'segmentation' ).patchValue( '' );
   }
 
   ngOnDestroy(): void {
