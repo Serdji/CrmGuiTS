@@ -27,6 +27,13 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="profileId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> № профиля</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.profileId}}</span>
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="customerId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
