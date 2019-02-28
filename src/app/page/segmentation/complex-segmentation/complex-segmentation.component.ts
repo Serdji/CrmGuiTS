@@ -61,13 +61,15 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private _filter( title: string ): ISegmentation[] {
-    console.log( this.selectionSegmentation );
-    const toLower = R.toLower;
-    const includes = R.includes( toLower( title ) );
-    const filterIter = segmentation => includes( toLower( segmentation.title ) );
-    const segmentationDifference = R.difference( this.segmentation, this.selectionSegmentation );
+    const includes = R.includes( R.toLower( title ) );
+    const composeInc = R.compose( includes, R.toLower );
+    const filterIter = segmentation => composeInc( segmentation.title );
     const filterSegmentation = R.filter( filterIter );
-    return filterSegmentation( segmentationDifference );
+    // @ts-ignore
+    const differenceSegmentation = R.difference( R.__, this.selectionSegmentation );
+    const composeFilter = R.compose( filterSegmentation, differenceSegmentation );
+    // @ts-ignore
+    return composeFilter( this.segmentation );
   }
 
   public onAdd(): void {
