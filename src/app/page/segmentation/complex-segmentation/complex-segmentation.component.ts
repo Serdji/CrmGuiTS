@@ -4,6 +4,7 @@ import { ListSegmentationService } from '../list-segmentation/list-segmentation.
 import { ISegmentation } from '../../../interface/isegmentation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-complex-segmentation',
@@ -13,6 +14,7 @@ import { Observable } from 'rxjs';
 export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   public segmentation: ISegmentation[];
+  public selectionSegmentation: ISegmentation[];
   public segmentationOptions: Observable<ISegmentation[]>;
   public formAdd: FormGroup;
 
@@ -47,10 +49,9 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initAutocomplete() {
-    this.segmentationOptions = this.formAdd.valueChanges
+    this.segmentationOptions = this.formAdd.get( 'segmentation' ).valueChanges
       .pipe(
         takeWhile( _ => this.isActive ),
-        startWith<string | ISegmentation>( '' ),
         map( value => typeof value === 'string' ? value : value.title ),
         map( title => title ? this._filter( title ) : this.segmentation.slice() )
       );
@@ -61,13 +62,14 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private _filter( title: string ): ISegmentation[] {
-    const filterValue = title.toLowerCase();
-
-    return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().indexOf( filterValue ) === 0 );
+    return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( title.toLowerCase() ));
   }
 
   public onAdd(): void {
-    console.log(this.formAdd.get('segmentation').value);
+    const appendSegmentation = R.append( this.formAdd.get( 'segmentation' ).value );
+    this.selectionSegmentation = appendSegmentation( this.selectionSegmentation );
+    console.log( this.selectionSegmentation );
+    this.formAdd.get( 'segmentation' ).patchValue( '' );
   }
 
   ngOnDestroy(): void {
