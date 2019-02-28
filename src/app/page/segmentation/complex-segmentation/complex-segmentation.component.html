@@ -1,3 +1,20 @@
-<p>
-  complex-segmentation works!
-</p>
+<div class="complex-segmentation">
+  <mat-card class="complex-segmentation__card">
+    <mat-card-content class="complex-segmentation__content">
+      <form [formGroup]="formAdd" class="complex-segmentation__form">
+        <mat-form-field class="complex-segmentation__input">
+          <input matInput formControlName="title" type="text" placeholder="Название сложной сегментации">
+          <mat-error>Обязательное поле</mat-error>
+        </mat-form-field>
+        <mat-form-field class="complex-segmentation__input">
+          <input (keyup.enter)="onAdd()" matInput formControlName="segmentation" [matAutocomplete]="auto" type="text" placeholder="Выбор сегментации">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option (keyup.enter)="onAdd()" (click)="onAdd()" *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation">
+              {{segmentation.title}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+      </form>
+    </mat-card-content>
+  </mat-card>
+</div>

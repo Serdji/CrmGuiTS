@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { ComplexSegmentationRoutes } from './complex-segmentation.routing';
+import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 
 @NgModule( {
   imports: [
@@ -16,7 +17,8 @@ import { ComplexSegmentationRoutes } from './complex-segmentation.routing';
     ComponentsModule,
     ComplexSegmentationRoutes,
   ],
-  declarations: [ ComplexSegmentationComponent ]
+  declarations: [ ComplexSegmentationComponent ],
+  providers: [ ListSegmentationService ],
 } )
 export class ComplexSegmentationModule {
 }
