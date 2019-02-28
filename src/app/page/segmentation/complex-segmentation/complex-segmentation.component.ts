@@ -62,7 +62,11 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private _filter( title: string ): ISegmentation[] {
-    return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( title.toLowerCase() ));
+    const toLower = R.toLower;
+    const includes = R.includes( toLower( title ) );
+    const filterIter = segmentation => includes( toLower( segmentation.title ) );
+    const filterSegmentation = R.filter( filterIter );
+    return filterSegmentation( this.segmentation );
   }
 
   public onAdd(): void {
