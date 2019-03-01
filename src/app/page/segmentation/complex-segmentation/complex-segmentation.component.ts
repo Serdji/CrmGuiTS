@@ -60,13 +60,17 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     return segmentation ? segmentation.title : undefined;
   }
 
+  private differenceSegmentationFn() {
+    // @ts-ignore
+    return R.difference( R.__, this.selectionSegmentation );
+  }
+
   private _filter( title: string ): ISegmentation[] {
     const includes = R.includes( R.toLower( title ) );
     const composeInc = R.compose( includes, R.toLower );
     const filterIter = segmentation => composeInc( segmentation.title );
     const filterSegmentation = R.filter( filterIter );
-    // @ts-ignore
-    const differenceSegmentation = R.difference( R.__, this.selectionSegmentation );
+    const differenceSegmentation = this.differenceSegmentationFn();
     const composeFilter = R.compose( filterSegmentation, differenceSegmentation );
     // @ts-ignore
     return composeFilter( this.segmentation );
@@ -81,6 +85,10 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.formAdd.get( 'segmentation' ).patchValue( '' );
     }
     console.log( this.selectionSegmentation );
+  }
+
+  public onDeleteSelectionSegmentation( id: number ) {
+    console.log( id );
   }
 
   ngOnDestroy(): void {
