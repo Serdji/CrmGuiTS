@@ -80,15 +80,17 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const value = this.formAdd.get( 'segmentation' ).value;
     const isObject = R.is( Object );
     if ( isObject( value ) ) {
-      const appendSegmentation = R.append( value );
-      this.selectionSegmentation = appendSegmentation( this.selectionSegmentation );
+      const prependSegmentation = R.prepend( value );
+      this.selectionSegmentation = prependSegmentation( this.selectionSegmentation );
       this.formAdd.get( 'segmentation' ).patchValue( '' );
     }
     console.log( this.selectionSegmentation );
   }
 
   public onDeleteSelectionSegmentation( id: number ) {
-    console.log( id );
+    const segmentationId = item => item.segmentationId === id;
+    const deleteSelectionSegmentation = R.reject( segmentationId );
+    this.selectionSegmentation = deleteSelectionSegmentation( this.selectionSegmentation );
   }
 
   ngOnDestroy(): void {
