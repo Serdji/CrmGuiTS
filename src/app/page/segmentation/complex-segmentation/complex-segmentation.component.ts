@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { map, startWith, takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -17,6 +17,8 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   public selectionSegmentation: ISegmentation[] = [];
   public segmentationOptions: Observable<ISegmentation[]>;
   public formAdd: FormGroup;
+  public buttonSave: boolean;
+  public buttonCreate: boolean;
 
   private isActive: boolean;
 
@@ -27,6 +29,8 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.buttonSave = false;
+    this.buttonCreate = true;
     this.initSegmentation();
     this.initFormAdd();
   }
@@ -84,13 +88,25 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.selectionSegmentation = prependSegmentation( this.selectionSegmentation );
       this.formAdd.get( 'segmentation' ).patchValue( '' );
     }
-    console.log( this.selectionSegmentation );
   }
 
-  public onDeleteSelectionSegmentation( id: number ) {
+  public onDeleteSelectionSegmentation( id: number ): void {
     const segmentationId = item => item.segmentationId === id;
     const deleteSelectionSegmentation = R.reject( segmentationId );
     this.selectionSegmentation = deleteSelectionSegmentation( this.selectionSegmentation );
+  }
+
+  public saveForm(): void {
+    const params = {};
+    const lensTitle = R.lensProp( 'title' );
+    const lensSegmentationIds = R.lensProp( 'segmentationIds' );
+    const mapSegmentationId = selection => selection.segmentationId;
+    const formTitleValue = this.formAdd.get( 'title' ).value;
+    const arrSegmentationIds = R.map( mapSegmentationId, this.selectionSegmentation );
+    const setTitle = R.set( lensTitle, formTitleValue );
+    const setSegmentationIds = R.set( lensSegmentationIds, arrSegmentationIds );
+    const sendParams = R.compose( setSegmentationIds, setTitle );
+    if ( !this.formAdd.invalid ) console.log( sendParams( params ) );
   }
 
   ngOnDestroy(): void {
