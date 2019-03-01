@@ -35,14 +35,19 @@
       </mat-card-content>
       <div class="complex-segmentation__button-wrapper">
         <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
-                (click)="createForm()" [disabled]="buttonCreate">
-          <mat-icon>create</mat-icon>
-          Изменить
-        </button>
-        <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
                 (click)="saveForm()" color="primary" [disabled]="buttonSave">
           <mat-icon>save</mat-icon>
           Сохранить
+        </button>
+        <button appAccessRights="analytics:read" class="complex-segmentation__button" mat-raised-button
+                (click)="searchForm()" color="primary" [disabled]="buttonSearch">
+          <mat-icon>search</mat-icon>
+          Искать
+        </button>
+        <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
+                (click)="createForm()" [disabled]="buttonCreate">
+          <mat-icon>create</mat-icon>
+          Изменить
         </button>
       </div>
     </mat-card>

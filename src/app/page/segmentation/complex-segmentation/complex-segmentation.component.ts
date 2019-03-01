@@ -17,6 +17,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   public selectionSegmentation: ISegmentation[] = [];
   public segmentationOptions: Observable<ISegmentation[]>;
   public formAdd: FormGroup;
+  public buttonSearch: boolean;
   public buttonSave: boolean;
   public buttonCreate: boolean;
 
@@ -29,6 +30,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.buttonSearch = true;
     this.buttonSave = false;
     this.buttonCreate = true;
     this.initSegmentation();
