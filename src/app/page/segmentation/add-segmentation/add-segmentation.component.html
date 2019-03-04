@@ -293,18 +293,7 @@
           </div>
           <div class="add-segmentation__stepper-button">
             <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
-          </div>
-        </mat-step>
-
-        <mat-step >
-          <ng-template matStepLabel>Сформировать сегментацию</ng-template>
-          <div class="add-segmentation__stepper-button">
-            <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                    (click)="changeForm()" color="primary" [disabled]="buttonSave">
-              <mat-icon>group</mat-icon>
-              Сформировать
-            </button>
+            <button mat-button (click)="changeForm()">Сформировать</button>
           </div>
         </mat-step>
       </mat-vertical-stepper>
