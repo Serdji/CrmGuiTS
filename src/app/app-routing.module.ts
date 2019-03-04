@@ -22,6 +22,7 @@ const routes: Routes = [
         { path: 'addprofile', loadChildren: './page/profiles/add-profile/add-profile.module#AddProfileModule' },
         { path: 'listsegmentation', loadChildren: './page/segmentation/list-segmentation/list-segmentation.module#ListSegmentationModule' },
         { path: 'addsegmentation', loadChildren: './page/segmentation/add-segmentation/add-segmentation.module#AddSegmentationModule' },
+        { path: 'complexsegmentation', loadChildren: './page/segmentation/complex-segmentation/complex-segmentation.module#ComplexSegmentationModule' },
         { path: 'profilegroup', loadChildren: './page/special-groups/profile-group/profile-group.module#ProfileGroupModule' },
         { path: 'list-distribution', loadChildren: './page/distribution/list-distribution/list-distribution.module#ListDistributionModule' },
         { path: 'profile-distribution/:id', loadChildren: './page/distribution/profile-distribution/profile-distribution.module#ProfileDistributionModule', canActivate: [ AccessRightsDistributionGuard ] },

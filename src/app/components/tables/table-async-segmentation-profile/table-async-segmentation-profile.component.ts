@@ -12,6 +12,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-table-async-segmentation-profile',
@@ -56,6 +57,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
       'firstName',
       'lastName',
       'secondName',
+      'profileId',
       'customerId',
     ];
   }
@@ -85,7 +87,14 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
   }
 
   private dataSourceFun( params ) {
-    this.dataSource = new MatTableDataSource( params );
+    const lensProfileId = R.lensProp( 'profileId' );
+    const propCustomerId = R.prop( 'customerId' );
+    const setProfileId = R.set( lensProfileId );
+    const mapParams = item => setProfileId( propCustomerId( item ), item );
+    const setMapProfileId = R.map( mapParams );
+    const newParams =  setMapProfileId( params );
+
+    this.dataSource = new MatTableDataSource( newParams );
     timer( 1 )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
