@@ -276,19 +276,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       updateOn: 'submit',
     } );
     this.switchCheckbox();
-
-    const success = value => {
-      this.segmentation = value[ 0 ];
-      this.customerGroup = value[ 1 ];
-      this.formFilling();
-    };
-
-    forkJoin(
-      this.listSegmentationService.getSegmentation(),
-      this.profileGroupService.getProfileGroup()
-    )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( success );
+    this.forkJoinObservable();
   }
 
   private switchCheckbox() {
@@ -302,6 +290,21 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           this.formProfileSearch.get( 'contactphone' ).patchValue( '' );
         }
       } );
+  }
+
+  private forkJoinObservable() {
+    const success = value => {
+      this.segmentation = value[ 0 ];
+      this.customerGroup = value[ 1 ];
+      this.formFilling();
+    };
+
+    forkJoin(
+      this.listSegmentationService.getSegmentation(),
+      this.profileGroupService.getProfileGroup()
+    )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
   }
 
   private formFilling() {
