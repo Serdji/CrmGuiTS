@@ -67,18 +67,14 @@ export class UserComponent implements OnInit, OnDestroy {
       login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
       email: [ '', [ Validators.email ] ],
       loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   private initFormPassword() {
     this.updatePassword = this.fb.group( {
       newPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
       confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   private initFormPermission() {

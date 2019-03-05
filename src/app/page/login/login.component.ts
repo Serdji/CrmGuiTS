@@ -42,9 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: [ '', [ Validators.required ] ],
       AirlineCode: [ '', [ Validators.required ] ],
       save: [ '' ],
-    }, {
-      updateOn: 'submit',
-    } );
+    });
     const AirlineCode = localStorage.getItem( 'AirlineCode' );
     if ( AirlineCode ) {
       this.formLogin.get( 'AirlineCode' ).patchValue( AirlineCode );

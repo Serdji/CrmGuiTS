@@ -88,9 +88,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       gender: '',
       dob: '',
       comment: '',
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   private initFormAddProfile() {
@@ -98,9 +96,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       firstName: [ '', Validators.required ],
       lastName: '',
       secondName: '',
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   sendFormUpdateProfile(): void {

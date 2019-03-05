@@ -272,9 +272,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       contactphone: '',
       contactsexist: '',
       id: '',
-    }, {
-      updateOn: 'submit',
-    } );
+    });
     this.switchCheckbox();
     this.forkJoinObservable();
   }
