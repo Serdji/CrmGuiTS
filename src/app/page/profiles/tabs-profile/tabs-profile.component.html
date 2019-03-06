@@ -30,7 +30,7 @@
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">С нами:</span>
-                  <span><b> {{profile.createDate | date:'dd.MM.yyyy' }}</b></span>
+                  <span><b *ngIf="orders"> {{orders.createDate | date:'dd.MM.yyyy' }}</b></span>
                 </div>
               </div>
             </div>
@@ -91,37 +91,37 @@
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Оформленных заказов:</span>
-                  <span><b *ngIf="orders"> {{orders[orders.length - 1].countActiveTicket}}</b></span>
+                  <span><b *ngIf="orders"> {{orders.countActiveTicket}}</b></span>
                   <span> | </span>
                   <span class="tabs-profile__content-text">Аннулированных заказов:</span>
-                  <span><b *ngIf="orders"> {{orders[orders.length - 1].countCancelledTicket}}</b></span>
+                  <span><b *ngIf="orders"> {{orders.countCancelledTicket}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Оформленных на сумму:</span>
                   <span><b *ngIf="orders">
-                    {{ orders[orders.length - 1].totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
-                    {{ orders[orders.length - 1].totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
-                    {{ orders[orders.length - 1].totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
+                    {{ orders.totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
+                    {{ orders.totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
+                    {{ orders.totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Оформленных платных услуг:</span>
-                  <span><b *ngIf="orders"> {{orders[orders.length - 1].counterActiveServicesIsEmd}}</b></span>
+                  <span><b *ngIf="orders"> {{orders.counterActiveServicesIsEmd}}</b></span>
                   <span> | </span>
                   <span class="tabs-profile__content-text">Аннулированных платных услуг:</span>
-                  <span><b *ngIf="orders"> {{orders[orders.length - 1].counterCancelledServicesIsEmd}}</b></span>
+                  <span><b *ngIf="orders"> {{orders.counterCancelledServicesIsEmd}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Оформленных на сумму:</span>
                   <span><b *ngIf="orders">
-                    {{ orders[orders.length - 1].totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
-                    {{ orders[orders.length - 1].totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
-                    {{ orders[orders.length - 1].totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
+                    {{ orders.totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
+                    {{ orders.totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
+                    {{ orders.totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">Дата последней активности:</span>
-                  <span><b *ngIf="orders"> {{orders[orders.length - 1].lut | date:'dd.MM.yyyy'}}</b></span>
+                  <span><b *ngIf="orders"> {{orders.lut | date:'dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
             </div>

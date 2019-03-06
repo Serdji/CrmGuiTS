@@ -228,6 +228,7 @@ export class OrderService {
           const countActiveTicket = _( orders ).filter( [ 'BookingStatus', 'Active' ] ).size();
           const countCancelledTicket = _( orders ).filter( [ 'BookingStatus', 'Cancelled' ] ).size();
           const { lut } = _.maxBy( orders, o => o.lut );
+          const { createDate } = _.minBy( orders, o => o.createDate );
 
           orders.push( {
             countActiveTicket,
@@ -235,6 +236,7 @@ export class OrderService {
             counterActiveServicesIsEmd,
             counterCancelledServicesIsEmd,
             lut,
+            createDate,
             totalAmount: {
               ticket: {
                 ticketCur,
