@@ -233,7 +233,7 @@ export class OrderService {
     const { lut } = _.maxBy( orders, o => o.lut );
     const { createDate } = _.minBy( orders, o => o.createDate );
 
-    const totalAmountAppend = R.append( {
+    const appendTotalAmount = R.append( {
       countActiveTicket,
       countCancelledTicket,
       counterActiveServicesIsEmd: this.counterActiveServicesIsEmd,
@@ -253,7 +253,7 @@ export class OrderService {
         }
       }
     } );
-    return totalAmountAppend( orders );
+    return appendTotalAmount( orders );
   };
   private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMixing, this.orderSort );
 
