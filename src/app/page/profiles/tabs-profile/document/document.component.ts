@@ -76,9 +76,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       firstName: '',
       secondName: '',
       expDate: [ '', Validators.required ],
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   private resetForm() {

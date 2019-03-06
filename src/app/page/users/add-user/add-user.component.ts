@@ -37,9 +37,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
       confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
       email: [ '', [ Validators.email ] ],
       loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   resetForm() {

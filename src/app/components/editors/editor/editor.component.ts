@@ -62,9 +62,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       dateTo: '',
       totalCount: '',
       emailLimits: '',
-    }, {
-      updateOn: 'submit',
-    } );
+    });
     this.formFilling();
   }
 

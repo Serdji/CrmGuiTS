@@ -42,18 +42,23 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.initQueryRouter();
+    this.initCurrencyDefault();
+    this.profileGroupService.subjectProfileGroup
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.initProfile( this.profileId );
+      } );
+  }
+
+  private initQueryRouter() {
     this.route.params
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         this.profileId = params.id;
+        this.initProfile( this.profileId );
         this.initOrder( this.profileId );
-        this.profileGroupService.subjectProfileGroup
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( _ => {
-            this.initProfile( this.profileId, this.orders );
-          } );
       } );
-    this.initCurrencyDefault();
   }
 
   private initCurrencyDefault() {
@@ -70,8 +75,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe(
         orders => {
-          this.initProfile( id, orders );
-          this.orders = orders;
+          this.orders = _.last( orders );
           this.ordersProgress = false;
         },
         error => {
@@ -81,17 +85,11 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       );
   }
 
-  private initProfile( id: number, orders? ) {
+  private initProfile( id: number ) {
     this.profileService.getProfile( id )
       .pipe(
-        takeWhile( _ => this.isActive ),
-        map( profile => {
-          if ( orders ) {
-            const { createDate } = _.minBy( orders, o => o.createDate );
-            return _.merge( profile, { createDate } );
-          }
-          return profile;
-        } ) )
+        takeWhile( _ => this.isActive )
+        )
       .subscribe( ( profile ) => {
         this.initProfileSegmentation( profile );
         this.initProfileGroup( profile );

@@ -43,9 +43,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
       secondName: '',
       gender: '',
       dob: [ '', Validators.required ],
-    }, {
-      updateOn: 'submit',
-    } );
+    });
   }
 
   // private oneRequired() {
