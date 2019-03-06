@@ -63,11 +63,11 @@ export class OrderService {
           let counterActiveServicesIsEmd = 0;
           let counterCancelledServicesIsEmd = 0;
 
-          _.each( orders, order => {
+          _.map( orders, order => {
             if ( order.distrRecloc ) _.merge( _.find( order.pos ), { distrRecloc: _.find( order.distrRecloc ) } );
             if ( order.ssrs ) {
               if ( order.services ) {
-                _.each( order.ssrs, ssr => {
+                _.map( order.ssrs, ssr => {
                   if ( ssr.segNum || ssr.passNum ) {
                     order.services.push( ssr );
                   }
@@ -78,23 +78,23 @@ export class OrderService {
             }
 
             if ( order.BookingStatus === 'Active' ) {
-              _.each( order.services, service => {
+              _.map( order.services, service => {
                 if ( service.emd ) ++counterActiveServicesIsEmd;
               } );
             }
 
             if ( order.BookingStatus === 'Cancelled' ) {
-              _.each( order.services, service => {
+              _.map( order.services, service => {
                 if ( service.emd ) ++counterCancelledServicesIsEmd;
               } );
             }
 
-            _.each( order.segments, segment => {
-              _.each( order.tickets, ticket => {
+            _.map( order.segments, segment => {
+              _.map( order.tickets, ticket => {
                 if ( segment.segNum === ticket.segNum ) _.merge( ticket, { segment } );
               } );
 
-              _.each( order.services, service => {
+              _.map( order.services, service => {
                 if ( segment.segNum === service.segNum ) _.merge( service, { segment } );
               } );
             } );
