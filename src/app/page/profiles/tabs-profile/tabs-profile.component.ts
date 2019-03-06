@@ -44,6 +44,11 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.initQueryRouter();
     this.initCurrencyDefault();
+    this.profileGroupService.subjectProfileGroup
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.initProfile( this.profileId );
+      } );
   }
 
   private initQueryRouter() {
@@ -51,13 +56,8 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         this.profileId = params.id;
-        this.initOrder( this.profileId );
         this.initProfile( this.profileId );
-        this.profileGroupService.subjectProfileGroup
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( _ => {
-            this.initProfile( this.profileId );
-          } );
+        this.initOrder( this.profileId );
       } );
   }
 
