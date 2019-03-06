@@ -24,18 +24,18 @@ export class OrderService {
 
 
 //---------------------------------- Суммирования валюты -----------------------------------
-  private sumTEB( moneyInfo: IMonetaryInfo, ticketOrEmd: string, code: string, amount: string ): number {
+  private sumTEB = R.curry( ( moneyInfo: IMonetaryInfo, ticketOrEmd: string, code: string, amount: string ): number => {
     return _( moneyInfo )
       .filter( ticketOrEmd )
       .filter( [ 'Code', code ] )
       .sumBy( amount );
-  }
+  } );
 
 //-------------------------------------------------------------------------------------------
 
 
 //---------- Возвращает T E или B в зависимости от условия для суммирования валюты ----------
-  private isTEB( moneyInfo: IMonetaryInfo, ticketOrEmd: string ): string {
+  private isTEB = R.curry( ( moneyInfo: IMonetaryInfo, ticketOrEmd: string ): string => {
     const isT = _( moneyInfo ).filter( ticketOrEmd ).filter( [ 'Code', 'T' ] ).filter( 'Amount' ).size() !== 0;
     const isE = _( moneyInfo ).filter( ticketOrEmd ).filter( [ 'Code', 'E' ] ).filter( 'Amount' ).size() !== 0;
     const isB = _( moneyInfo ).filter( ticketOrEmd ).filter( [ 'Code', 'B' ] ).filter( 'Amount' ).size() !== 0;
@@ -44,7 +44,7 @@ export class OrderService {
     if ( !isT || isB ) return 'E';
     if ( !isT && !isB ) return 'E';
     if ( !isT && !isE ) return 'B';
-  }
+  } );
 
 //-------------------------------------------------------------------------------------------
 
@@ -99,39 +99,47 @@ export class OrderService {
         if ( segment.segNum === service.segNum ) _.merge( service, { segment } );
       } );
     } );
-
-
-// ------------------------------------------ Пересчет валют в заказе ------------------------------------------
+    return orders;
+  } );
+  private ordersMonetaryInfo = R.map( ( orders: any ) => {
+    // ------------------------------------------ Пересчет валют в заказе ------------------------------------------
     if ( orders.MonetaryInfo ) {
 
       const money = orders.MonetaryInfo;
+      const isTBEMoney = this.isTEB( money );
 
       const currency = _.chain( money )
         .filter( 'ticket' )
-        .filter( [ 'Code', this.isTEB( money, 'ticket' ) ] )
+        .filter( [ 'Code', isTBEMoney( 'ticket' ) ] )
         .find( 'Currency' )
         .get( 'Currency' )
         .value();
 
       const ticketAmoTEB = _( money )
         .filter( 'ticket' )
-        .filter( [ 'Code', this.isTEB( money, 'ticket' ) ] )
+        .filter( [ 'Code', isTBEMoney( 'ticket' ) ] )
         .sumBy( 'Amount' );
 
 
       // ------------------------- Сумма по каждой из валют в ticket --------------------------
 
-      const ticketEurTEB = this.sumTEB( money, 'ticket', this.isTEB( money, 'ticket' ), 'AmountEur' );
-      const ticketUsdTEB = this.sumTEB( money, 'ticket', this.isTEB( money, 'ticket' ), 'AmountUsd' );
-      const ticketCurTEB = this.sumTEB( money, 'ticket', this.isTEB( money, 'ticket' ), 'AmountCur' );
+      const sumMoney = this.sumTEB( money );
 
-      const ticketEurE = this.sumTEB( money, 'ticket', 'E', 'AmountEur' );
-      const ticketUsdE = this.sumTEB( money, 'ticket', 'E', 'AmountUsd' );
-      const ticketCurE = this.sumTEB( money, 'ticket', 'E', 'AmountCur' );
+      const sumTicketIsTEB = sumMoney( 'ticket', isTBEMoney( 'ticket' ) );
+      const sumTicketIsE = sumMoney( 'ticket', 'E' );
+      const sumTicketIsB = sumMoney( 'ticket', 'B' );
 
-      const ticketEurB = this.sumTEB( money, 'ticket', 'B', 'AmountEur' );
-      const ticketUsdB = this.sumTEB( money, 'ticket', 'B', 'AmountUsd' );
-      const ticketCurB = this.sumTEB( money, 'ticket', 'B', 'AmountCur' );
+      const ticketEurTEB = sumTicketIsTEB( 'AmountEur' );
+      const ticketUsdTEB = sumTicketIsTEB( 'AmountUsd' );
+      const ticketCurTEB = sumTicketIsTEB( 'AmountCur' );
+
+      const ticketEurE = sumTicketIsE( 'AmountEur' );
+      const ticketUsdE = sumTicketIsE( 'AmountUsd' );
+      const ticketCurE = sumTicketIsE( 'AmountCur' );
+
+      const ticketEurB = sumTicketIsB( 'AmountEur' );
+      const ticketUsdB = sumTicketIsB( 'AmountUsd' );
+      const ticketCurB = sumTicketIsB( 'AmountCur' );
 
       let subtractTicketEur, subtractTicketUsd, subtractTicketCur;
 
@@ -140,17 +148,21 @@ export class OrderService {
 
       // ------------------------- Сумма по каждой из валют в emd -----------------------------
 
-      const emdEurTEB = this.sumTEB( money, 'emd', this.isTEB( money, 'emd' ), 'AmountEur' );
-      const emdUsdTEB = this.sumTEB( money, 'emd', this.isTEB( money, 'emd' ), 'AmountUsd' );
-      const emdCurTEB = this.sumTEB( money, 'emd', this.isTEB( money, 'emd' ), 'AmountCur' );
+      const sumEmdIsTEB = sumMoney( 'emd', isTBEMoney( 'emd' ) );
+      const sumEmdIsE = sumMoney( 'emd', 'E' );
+      const sumEmdIsB = sumMoney( 'emd', 'B' );
 
-      const emdEurE = this.sumTEB( money, 'emd', 'E', 'AmountEur' );
-      const emdUsdE = this.sumTEB( money, 'emd', 'E', 'AmountUsd' );
-      const emdCurE = this.sumTEB( money, 'emd', 'E', 'AmountCur' );
+      const emdEurTEB = sumEmdIsTEB( 'AmountEur' );
+      const emdUsdTEB = sumEmdIsTEB( 'AmountUsd' );
+      const emdCurTEB = sumEmdIsTEB( 'AmountCur' );
 
-      const emdEurB = this.sumTEB( money, 'emd', 'B', 'AmountEur' );
-      const emdUsdB = this.sumTEB( money, 'emd', 'B', 'AmountUsd' );
-      const emdCurB = this.sumTEB( money, 'emd', 'B', 'AmountCur' );
+      const emdEurE = sumEmdIsE( 'AmountEur' );
+      const emdUsdE = sumEmdIsE( 'AmountUsd' );
+      const emdCurE = sumEmdIsE( 'AmountCur' );
+
+      const emdEurB = sumEmdIsB( 'AmountEur' );
+      const emdUsdB = sumEmdIsB( 'AmountUsd' );
+      const emdCurB = sumEmdIsB( 'AmountCur' );
 
       let subtractEmdEur, subtractEmdUsd, subtractEmdCur;
 
@@ -163,28 +175,16 @@ export class OrderService {
       const isEmdE = _( money ).filter( 'emd' ).filter( [ 'Code', 'E' ] ).size() !== 0;
 
       // -------- Если в ticket есть хоть один элемент Code: E то вычитаем ticketT из ticketE, иначе из ticketB --------
-      if ( isTicketE ) {
-        subtractTicketEur = ticketEurTEB - ticketEurE;
-        subtractTicketUsd = ticketUsdTEB - ticketUsdE;
-        subtractTicketCur = ticketCurTEB - ticketCurE;
-      } else {
-        subtractTicketEur = ticketEurTEB - ticketEurB;
-        subtractTicketUsd = ticketUsdTEB - ticketUsdB;
-        subtractTicketCur = ticketCurTEB - ticketCurB;
-      }
+      subtractTicketEur = ticketEurTEB - ( isTicketE ? ticketEurE : ticketEurB );
+      subtractTicketUsd = ticketUsdTEB - ( isTicketE ? ticketUsdE : ticketUsdB );
+      subtractTicketCur = ticketCurTEB - ( isTicketE ? ticketCurE : ticketCurB );
       // ---------------------------------------------------------------------------------------------------------------
 
 
       // -------------- Если в emd есть хоть один элемент Code: E то вычитаем emdT из emdE, иначе из emdB --------------
-      if ( isEmdE ) {
-        subtractEmdEur = emdEurTEB - emdEurE;
-        subtractEmdUsd = emdUsdTEB - emdUsdE;
-        subtractEmdCur = emdCurTEB - emdCurE;
-      } else {
-        subtractEmdEur = emdEurTEB - emdEurB;
-        subtractEmdUsd = emdUsdTEB - emdUsdB;
-        subtractEmdCur = emdCurTEB - emdCurB;
-      }
+      subtractEmdEur = emdEurTEB - ( isEmdE ? emdEurE : emdEurB );
+      subtractEmdUsd = emdUsdTEB - ( isEmdE ? emdUsdE : emdUsdB );
+      subtractEmdCur = emdCurTEB - ( isEmdE ? emdCurE : emdCurB );
       // ---------------------------------------------------------------------------------------------------------------
 
       // ---- Сложение валют по ticket и emd с учетом таксы ----
@@ -252,7 +252,7 @@ export class OrderService {
     } );
     return orders;
   };
-  private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMixing, this.orderSort );
+  private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMixing, this.orderSort );
 
   getBooking( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/booking` )
