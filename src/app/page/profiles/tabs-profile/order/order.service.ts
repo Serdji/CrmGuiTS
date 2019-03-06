@@ -50,14 +50,14 @@ export class OrderService {
 
 
 //------------- Суммирования по всем заказам с учетам только активных заказов ---------------
-  private sumAllTEB( orders: any, code: string, amount: string ): number {
+  private sumAllTEB = R.curry( ( orders: any, code: string, amount: string ): number => {
     return _( orders )
       .filter( [ 'BookingStatus', 'Active' ] )
       .map( 'MonetaryInfo' )
       .flattenDeep()
       .filter( [ 'Code', code ] )
       .sumBy( amount );
-  }
+  } );
 
 //-------------------------------------------------------------------------------------------
 
@@ -211,17 +211,20 @@ export class OrderService {
     return orders;
   } );
   private ordersAmount = ( orders: any ) => {
+    const sumAll = this.sumAllTEB( orders );
+    const sumAllTG = sumAll( 'TG' );
+    const sumAllTE = sumAll( 'TE' );
     //------------ Общая сумма по всем заказам из ticket с условием TEB ------------
-    const ticketCur = this.sumAllTEB( orders, 'TG', 'AmountCur' );
-    const ticketEur = this.sumAllTEB( orders, 'TG', 'AmountEur' );
-    const ticketUsd = this.sumAllTEB( orders, 'TG', 'AmountUsd' );
+    const ticketCur = sumAllTG( 'AmountCur' );
+    const ticketEur = sumAllTG( 'AmountEur' );
+    const ticketUsd = sumAllTG( 'AmountUsd' );
     //------------------------------------------------------------------------------
 
 
     //-------------- Общая сумма по всем заказам из emd с условием TEB -------------
-    const emdCur = this.sumAllTEB( orders, 'TE', 'AmountCur' );
-    const emdEur = this.sumAllTEB( orders, 'TE', 'AmountEur' );
-    const emdUsd = this.sumAllTEB( orders, 'TE', 'AmountUsd' );
+    const emdCur = sumAllTE( 'AmountCur' );
+    const emdEur = sumAllTE( 'AmountEur' );
+    const emdUsd = sumAllTE( 'AmountUsd' );
     //------------------------------------------------------------------------------
 
 
@@ -230,7 +233,7 @@ export class OrderService {
     const { lut } = _.maxBy( orders, o => o.lut );
     const { createDate } = _.minBy( orders, o => o.createDate );
 
-    orders.push( {
+    const totalAmountAppend = R.append( {
       countActiveTicket,
       countCancelledTicket,
       counterActiveServicesIsEmd: this.counterActiveServicesIsEmd,
@@ -250,7 +253,7 @@ export class OrderService {
         }
       }
     } );
-    return orders;
+    return totalAmountAppend( orders );
   };
   private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMixing, this.orderSort );
 
