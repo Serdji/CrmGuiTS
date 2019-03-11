@@ -6,4 +6,5 @@ export interface IMonetaryInfo {
   Code: string;
   Currency: string;
   ticket: string;
+  emd: string;
 }[]

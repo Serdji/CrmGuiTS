@@ -101,6 +101,26 @@ export class OrderService {
     } );
     return orders;
   } );
+
+
+  private ordersMoneyIsCZeroB = ( orders: any ) => {
+    const groupByMoney = R.groupBy( ( money: IMonetaryInfo ) => money.ticket ? money.ticket : money.emd );
+    const filterMoney = R.filter(  R.propEq( 'Code', 'C' ) );
+    const mapMoneyGroup = R.map( ( moneyGroup: any ) => {
+      console.log( filterMoney( moneyGroup ));
+      return moneyGroup;
+    } );
+    const mapOrdersMoney = R.map( ( order: any ) => {
+      const groupByResult: any = order.MonetaryInfo ? groupByMoney( order.MonetaryInfo ) : {};
+      return mapMoneyGroup( groupByResult );
+    } );
+
+    console.log( mapOrdersMoney( orders ) );
+
+    return orders;
+  };
+
+
   private ordersMonetaryInfo = R.map( ( orders: any ) => {
     // ------------------------------------------ Пересчет валют в заказе ------------------------------------------
     if ( orders.MonetaryInfo ) {
@@ -255,7 +275,7 @@ export class OrderService {
     } );
     return appendTotalAmount( orders );
   };
-  private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMixing, this.orderSort );
+  private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMoneyIsCZeroB, this.ordersMixing, this.orderSort );
 
   getBooking( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/booking` )
