@@ -131,10 +131,8 @@ export class OrderService {
     const groupResultCompose = R.compose( filterMoneyCodeB, R.flatten, _.compact, mapMoneyIsCZeroB, R.values, groupByResult );
     const mapOrdersMoney = R.map( ( order: any ) => {
       if ( order.MonetaryInfo ) {
-        const result = groupResultCompose( order.MonetaryInfo );
-        if ( !R.isEmpty( result ) ) {
-          order.MonetaryInfo.push( result );
-        }
+        const results = groupResultCompose( order.MonetaryInfo );
+        if ( !R.isEmpty( results ) ) R.map( result => order.MonetaryInfo.push( result ), results );
       }
     } );
 
