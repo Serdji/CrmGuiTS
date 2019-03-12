@@ -106,20 +106,15 @@ export class OrderService {
   private ordersMoneyIsCZeroB = ( orders: any ) => {
     const groupByMoney = R.groupBy( ( money: IMonetaryInfo ) => money.ticket ? money.ticket : money.emd );
     const mapMoneyGroup = R.map( ( moneyGroup: IMonetaryInfo[] ) => {
-
       let isC = false;
-      R.map( item => isC = R.propEq( 'Code', 'C', item ) , moneyGroup );
-      console.log( isC );
-
-      if( isC ) console.log( moneyGroup );
-      isC = false;
-      return moneyGroup;
+      R.map( item => isC = R.propEq( 'Code', 'C', item ), moneyGroup );
+      if ( isC ) return moneyGroup;
     } );
+    const groupByResult = ( money: IMonetaryInfo[] ) => groupByMoney( money );
     const mapOrdersMoney = R.map( ( order: any ) => {
       if ( order.MonetaryInfo ) {
-        const groupByResult = order.MonetaryInfo ? groupByMoney( order.MonetaryInfo ) : {};
-        mapMoneyGroup( R.values( groupByResult ) );
-        // order.MonetaryInfo.push(  );
+        const composeGroupResult = R.compose( R.flatten, _.compact, mapMoneyGroup, R.values, groupByResult );
+        order.MonetaryInfo.push( composeGroupResult( order.MonetaryInfo ) );
       }
       // console.log( order );
     } );
