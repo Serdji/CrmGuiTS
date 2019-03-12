@@ -104,18 +104,32 @@ export class OrderService {
 
 
   private ordersMoneyIsCZeroB = ( orders: any ) => {
+
+    const AmountLens = R.lensProp( 'Amount' );
+    const AmountCurLens = R.lensProp( 'AmountCur' );
+    const AmountEurLens = R.lensProp( 'AmountEur' );
+    const AmountUsdLens = R.lensProp( 'AmountUsd' );
+
+    const setAmount = lens => R.set( lens, 0 );
+    const composeSetAmount = R.compose( setAmount( AmountLens ), setAmount( AmountCurLens ), setAmount( AmountEurLens ), setAmount( AmountUsdLens ) );
+
     const groupByMoney = R.groupBy( ( money: IMonetaryInfo ) => money.ticket ? money.ticket : money.emd );
-    const mapMoneyGroup = R.map( ( moneyGroup: IMonetaryInfo[] ) => {
+    const mapMoneyCodeIsB = R.map( ( money: IMonetaryInfo ) => {
+      if ( R.propEq( 'Code', 'B', money ) ) {
+        return composeSetAmount( money );
+      }
+      return money;
+    } );
+    const mapMoneyCodeIsC = R.map( ( money: IMonetaryInfo[] ) => {
       let isC = false;
-      R.map( item => isC = R.propEq( 'Code', 'C', item ), moneyGroup );
-      if ( isC ) return moneyGroup;
+      R.map( item => isC = R.propEq( 'Code', 'C', item ), money );
+      if ( isC ) return mapMoneyCodeIsB( money );
     } );
     const groupByResult = ( money: IMonetaryInfo[] ) => groupByMoney( money );
+    const log = R.tap( console.log );
+    const composeGroupResult = R.compose( R.flatten, _.compact, mapMoneyCodeIsC, R.values, groupByResult );
     const mapOrdersMoney = R.map( ( order: any ) => {
-      if ( order.MonetaryInfo ) {
-        const composeGroupResult = R.compose( R.flatten, _.compact, mapMoneyGroup, R.values, groupByResult );
-        order.MonetaryInfo.push( composeGroupResult( order.MonetaryInfo ) );
-      }
+      if ( order.MonetaryInfo ) order.MonetaryInfo.push( composeGroupResult( order.MonetaryInfo ) );
       // console.log( order );
     } );
 
