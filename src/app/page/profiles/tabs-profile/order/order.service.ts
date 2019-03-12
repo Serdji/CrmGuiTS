@@ -109,14 +109,14 @@ export class OrderService {
     const AmountEurLens = R.lensProp( 'AmountEur' );
     const AmountUsdLens = R.lensProp( 'AmountUsd' );
     const setAmount = lens => R.set( lens, 0 );
-    const composeSetAmount = R.compose( setAmount( AmountLens ), setAmount( AmountCurLens ), setAmount( AmountEurLens ), setAmount( AmountUsdLens ) );
+    const setAmountCompose = R.compose( setAmount( AmountLens ), setAmount( AmountCurLens ), setAmount( AmountEurLens ), setAmount( AmountUsdLens ) );
 
     const groupByMoney = R.groupBy( ( money: IMonetaryInfo ) => money.ticket ? money.ticket : money.emd );
     const groupByResult = ( money: IMonetaryInfo[] ) => groupByMoney( money );
 
     const mapMoneyCodeIsB = R.map( ( money: IMonetaryInfo ) => {
       if ( R.propEq( 'Code', 'B', money ) ) {
-        return composeSetAmount( money );
+        return setAmountCompose( money );
       }
       return money;
     } );
@@ -126,12 +126,15 @@ export class OrderService {
       if ( moneyIsC ) return mapMoneyCodeIsB( money );
     } );
 
-    const log = R.tap( console.log );
-    const composeGroupResult = R.compose( R.flatten, _.compact, mapMoneyIsCZeroB, R.values, groupByResult );
+    const filterMoneyCodeB = money => R.filter( R.propEq( 'Code', 'B' ), money );
+
+    const groupResultCompose = R.compose( filterMoneyCodeB, R.flatten, _.compact, mapMoneyIsCZeroB, R.values, groupByResult );
     const mapOrdersMoney = R.map( ( order: any ) => {
       if ( order.MonetaryInfo ) {
-        const result: any = composeGroupResult( order.MonetaryInfo );
-        if ( !R.isEmpty( result ) ) order.MonetaryInfo.push( composeGroupResult( result ) );
+        const result = groupResultCompose( order.MonetaryInfo );
+        if ( !R.isEmpty( result ) ) {
+          order.MonetaryInfo.push( result );
+        }
       }
     } );
 
