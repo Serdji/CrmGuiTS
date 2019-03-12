@@ -101,9 +101,9 @@ export class OrderService {
     } );
     return orders;
   } );
-
-
   private ordersMoneyIsCZeroB = ( orders: any ) => {
+    // ------------------------------------------ Обнуление валют в коде B если есть C ------------------------------------------
+
     const propEqB = R.propEq( 'Code', 'B' );
     const propEqC = R.propEq( 'Code', 'C' );
     const AmountLens = R.lensProp( 'Amount' );
@@ -113,44 +113,63 @@ export class OrderService {
     const setAmount = lens => R.set( lens, 0 );
     const setAmountCompose = R.compose( setAmount( AmountLens ), setAmount( AmountCurLens ), setAmount( AmountEurLens ), setAmount( AmountUsdLens ) );
 
+    // --------------------------- Груперовка валют по ticket и emd ---------------------------
     const groupByMoney = R.groupBy( ( money: IMonetaryInfo ) => money.ticket ? money.ticket : money.emd );
     const groupByResult = ( money: IMonetaryInfo[] ) => groupByMoney( money );
+    // ----------------------------------------------------------------------------------------
+
+    // ----------------------------- Маппинг валют по парамтру B ------------------------------
     const mapMoneyCodeIsB = R.map( ( money: IMonetaryInfo ) => {
       if ( propEqB( money ) ) {
-        return setAmountCompose( money );
+        return setAmountCompose( money ); // Обнуление валют в B
       }
       return money;
     } );
+    // -----------------------------------------------------------------------------------------
+
+    // -------------------- Маппинг сгруперованных валют по ticket и emd -----------------------
     const mapMoneyIsCZeroB = R.map( ( money: IMonetaryInfo[] ) => {
       let moneyIsC = false;
       R.map( item => moneyIsC = propEqC( item ), money );
-      if ( moneyIsC ) return mapMoneyCodeIsB( money );
+      if ( moneyIsC ) return mapMoneyCodeIsB( money ); // Передать группу в которой есть C для маппинга
     } );
-    const filterMoneyCodeB = money => R.filter( propEqB, money );
+    // ------------------------------------------------------------------------------------------
 
+    // --------------------------- Отфильтровать параметр только по B ---------------------------
+    const filterMoneyCodeB = money => R.filter( propEqB, money );
+    // ------------------------------------------------------------------------------------------
+
+    // ---------------------------- Условия удаления валют с кодом B  ---------------------------
     const ticketRemoveIsB = ( money, result ) => money.ticket === result.ticket && money.Code === 'B' && money.Amount !== 0;
     const emdRemoveIsB = ( money, result ) => money.emd === result.emd && money.Code === 'B' && money.Amount !== 0;
+    // ------------------------------------------------------------------------------------------
 
+    // ---------------------------- Передаем все функции в компазицию ----------------------------
     const groupResultCompose = R.compose( filterMoneyCodeB, R.flatten, _.compact, mapMoneyIsCZeroB, R.values, groupByResult );
+    // ------------------------------------------------------------------------------------------
+
+    // ----------------------- Маппируем orders для работы с MonetaryInfo -----------------------
     const mapOrdersMoney = R.map( ( order: any ) => {
       if ( order.MonetaryInfo ) {
-        const results = groupResultCompose( order.MonetaryInfo );
-        if ( !R.isEmpty( results ) ) {
+        const results = groupResultCompose( order.MonetaryInfo ); // Передаем в компазицию параметр MonetaryInfo
+        if ( !R.isEmpty( results ) ) { // Избавляемся от пустых массивов
           R.map( result => {
-            order.MonetaryInfo.push( result );
+            order.MonetaryInfo.push( result ); // Добавляем в MonetaryInfo результат обнуленных валют с кодом B
+
+            // ----- Удаление валют с кодом B, но остаются нулевые валюы с кодом B -----
             _.remove( order.MonetaryInfo, ( money: IMonetaryInfo ) => money.ticket ? ticketRemoveIsB( money, result ) : emdRemoveIsB( money, result ) );
+            // -------------------------------------------------------------------------
+
           }, results );
         }
       }
     } );
+    // ------------------------------------------------------------------------------------------
 
-    mapOrdersMoney( orders );
-    console.log( orders );
+    mapOrdersMoney( orders ); // Запуск замены валют
 
     return orders;
   };
-
-
   private ordersMonetaryInfo = R.map( ( orders: any ) => {
     // ------------------------------------------ Пересчет валют в заказе ------------------------------------------
     if ( orders.MonetaryInfo ) {
