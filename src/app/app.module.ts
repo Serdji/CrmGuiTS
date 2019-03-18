@@ -11,6 +11,7 @@ import { environment } from '../environments/environment';
 import { SharedModule } from './shared/shared.module';
 import { ServicesModule } from './services/services.module';
 import { ComponentsModule } from './components/components.module';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 if ( environment.production ) {
@@ -27,7 +28,8 @@ if ( environment.production ) {
     HttpClientModule,
     ServicesModule,
     SharedModule.forRoot(),
-    ComponentsModule.forRoot()
+    ComponentsModule.forRoot(),
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   bootstrap: [ AppComponent ],
 } )
