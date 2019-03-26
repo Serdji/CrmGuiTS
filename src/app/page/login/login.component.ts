@@ -76,7 +76,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
             if ( !localStorage.getItem( 'tableAsyncProfile' ) ) localStorage.setItem( 'tableAsyncProfile', JSON.stringify( this.settingsService.getDefaultFieldTableAsyncProfiledTable() ) );
-            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
+            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) {
+              const navigate = localStorage.getItem( 'returnToSaveUrl' );
+              this.router.navigate( [  navigate !== '/' ? navigate : 'crm' ] );
+            }
           },
           _ => this.isErrorAuth = true
         );

@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
-import { Router } from '@angular/router';
+import { NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SwUpdate } from '@angular/service-worker';
 import { MatSnackBar } from '@angular/material';
+import { timer } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-root',
@@ -10,6 +13,9 @@ import { MatSnackBar } from '@angular/material';
   styleUrls: [ './app.component.css' ],
 } )
 export class AppComponent implements OnInit {
+
+  private history: { id: number, url: string }[] = [];
+  private historeFind: { id: number, url: string };
 
   constructor(
     private router: Router,
@@ -19,14 +25,36 @@ export class AppComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.returnToSaveUrl();
+    this.isTokenRedirect();
+    this.updateVersion();
+  }
+
+  private returnToSaveUrl() {
+    this.router.events
+      .pipe( filter( event => event instanceof NavigationStart ) )
+      .subscribe( ( { id, url }: NavigationStart ) => {
+        const findId = R.find( ( history: { id: number, url: string } ) => history.id === 1 );
+        this.history = [ ...this.history, { id, url } ];
+        console.log(this.history);
+        this.historeFind = findId( this.history );
+        console.log( this.historeFind  );
+        localStorage.setItem( 'returnToSaveUrl', this.historeFind.url );
+      } );
+  }
+
+  private isTokenRedirect() {
     const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
     if ( !token ) {
-      this.router.navigate( [ '/' ] );
+      timer( 300 ).subscribe( _ => this.router.navigate( [ '/' ] ) );
     } else {
       if ( this.location.path() === '' ) {
         this.router.navigate( [ 'crm' ] );
       }
     }
+  }
+
+  private updateVersion() {
     // --------- Событие изменения приложения, Service worker ---------
     this.swUpdate.available.subscribe( _ => {
       const snackBarRef = this.snackBar.open( 'Приложение было обновлено, просьба перезагрузить приложение.', 'Перезагрузить' );
@@ -35,4 +63,5 @@ export class AppComponent implements OnInit {
       } );
     } );
   }
+
 }
