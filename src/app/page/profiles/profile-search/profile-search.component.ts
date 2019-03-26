@@ -344,7 +344,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
             }
 
             this.formProfileSearch.patchValue( newObjectForm );
-            this.creatingObjectForm();
+            // this.creatingObjectForm();
           }
         }
       );
@@ -398,13 +398,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.sendProfileParams = params;
     Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
     this.profileSearchService.getProfileSearch( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profile => {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
-        this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
       } );
   }
 
