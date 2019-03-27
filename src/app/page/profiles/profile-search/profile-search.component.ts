@@ -57,6 +57,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private autDelay: number = 500;
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
+  private isQueryParams: boolean;
 
   @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
@@ -81,10 +82,18 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initCustomerGroup();
     this.initCurrencyDefault();
     this.activeButton();
+    this.initQueryParams();
+    this.isQueryParams = true;
     this.buttonSearch = true;
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( params => this.formFilling( params ) );
   }
 
   private initCurrencyDefault() {
@@ -272,7 +281,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       contactphone: '',
       contactsexist: '',
       id: '',
-    });
+    } );
     this.switchCheckbox();
     this.forkJoinObservable();
   }
@@ -294,7 +303,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const success = value => {
       this.segmentation = value[ 0 ];
       this.customerGroup = value[ 1 ];
-      this.formFilling();
+      this.initQueryParams();
     };
 
     forkJoin(
@@ -305,49 +314,45 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( success );
   }
 
-  private formFilling() {
-    this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
+  private formFilling( params ) {
 
-          if ( Object.keys( value ).length !== 0 ) {
 
-            const newObjectForm = {};
-            const segmentationTitles = [];
-            const customerGroupTitles = [];
+    if ( Object.keys( params ).length !== 0 ) {
 
-            if ( value.segmentationIds ) {
-              const segmentationIds = !_.isArray( value.segmentationIds ) ? _.castArray( value.segmentationIds ) : value.segmentationIds;
-              for ( const segmentationId of segmentationIds ) {
-                if ( segmentationId ) {
-                  segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentationId } ).result( 'title' ).value() );
-                }
-              }
-            }
+      const newObjectForm = {};
+      const segmentationTitles = [];
+      const customerGroupTitles = [];
 
-            if ( value.customerGroupIds ) {
-              const customerGroupIds = !_.isArray( value.customerGroupIds ) ? _.castArray( value.customerGroupIds ) : value.customerGroupIds;
-              for ( const customerGroupId of customerGroupIds ) {
-                if ( customerGroupId ) {
-                  customerGroupTitles.push( _.chain( this.customerGroup ).find( { 'customerGroupId': +customerGroupId } ).result( 'customerGroupName' ).value() );
-                }
-              }
-            }
-
-            this.segmentationChips = segmentationTitles;
-            this.customerGroupChips = customerGroupTitles;
-
-            for ( const key of Object.keys( value ) ) {
-              if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = value[ key ];
-              if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = value[ key ] ? new Date( value[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-              if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = value[ key ];
-            }
-
-            this.formProfileSearch.patchValue( newObjectForm );
-            // this.creatingObjectForm();
+      if ( params.segmentationIds ) {
+        const segmentationIds = !_.isArray( params.segmentationIds ) ? _.castArray( params.segmentationIds ) : params.segmentationIds;
+        for ( const segmentationId of segmentationIds ) {
+          if ( segmentationId ) {
+            segmentationTitles.push( _.chain( this.segmentation ).find( { 'segmentationId': +segmentationId } ).result( 'title' ).value() );
           }
         }
-      );
+      }
+
+      if ( params.customerGroupIds ) {
+        const customerGroupIds = !_.isArray( params.customerGroupIds ) ? _.castArray( params.customerGroupIds ) : params.customerGroupIds;
+        for ( const customerGroupId of customerGroupIds ) {
+          if ( customerGroupId ) {
+            customerGroupTitles.push( _.chain( this.customerGroup ).find( { 'customerGroupId': +customerGroupId } ).result( 'customerGroupName' ).value() );
+          }
+        }
+      }
+
+      this.segmentationChips = segmentationTitles;
+      this.customerGroupChips = customerGroupTitles;
+
+      for ( const key of Object.keys( params ) ) {
+        if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = params[ key ];
+        if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
+        if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
+      }
+
+      this.formProfileSearch.patchValue( newObjectForm );
+      if ( this.isQueryParams ) this.creatingObjectForm();
+    }
   }
 
   private creatingObjectForm() {
@@ -398,6 +403,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.sendProfileParams = params;
     Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+    this.isQueryParams = false;
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
     this.profileSearchService.getProfileSearch( params )
       .pipe( takeWhile( _ => this.isActive ) )

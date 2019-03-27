@@ -36,10 +36,8 @@ export class AppComponent implements OnInit {
       .subscribe( ( { id, url }: NavigationStart ) => {
         const findId = R.find( ( history: { id: number, url: string } ) => history.id === 1 );
         this.history = [ ...this.history, { id, url } ];
-        console.log(this.history);
         this.historyFind = findId( this.history );
-        console.log( this.historyFind  );
-        localStorage.setItem( 'returnToSaveUrl', this.historyFind.url );
+        if ( url !== '/' ) localStorage.setItem( 'returnToSaveUrl', this.historyFind.url );
       } );
   }
 
