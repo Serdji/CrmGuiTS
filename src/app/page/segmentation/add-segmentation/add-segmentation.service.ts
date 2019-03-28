@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
 
@@ -8,6 +8,8 @@ import { RetryRequestService } from '../../../services/retry-request.service';
   providedIn: 'root'
 } )
 export class AddSegmentationService {
+
+  public subjectDeleteSegmentation = new Subject();
 
   constructor(
     private http: HttpClient,
