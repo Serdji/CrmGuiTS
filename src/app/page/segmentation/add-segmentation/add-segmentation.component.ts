@@ -49,6 +49,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private createSegmentationParams: any = {};
   private autDelay: number = 500;
   private arrFormGroup: string[];
+  private isFormSavingIndicator: boolean;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -73,6 +74,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.resetRadioButtonCurrentRange = false;
     this.isFormSegmentation = false;
     this.arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
+    this.isFormSavingIndicator = true;
 
     this.initFormControl();
     this.initFormSegmentation();
@@ -81,12 +83,16 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initTableProfilePagination();
     this.initAirports();
     this.initAutocomplete( 'formSegmentationStepper' );
+    this.addSegmentationService.subjectDeleteSegmentation
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.clearForm() );
   }
 
   private initQueryParams() {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
+        const hasSaveFormParams = R.has( 'saveFormParams' );
         if ( params.segmentationId ) {
           this.buttonSave = true;
           this.buttonCreate = false;
@@ -96,6 +102,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
           this.initAutocomplete( 'formSegmentation' );
+        } else {
+          if ( this.isFormSavingIndicator ) {
+            this.isFormSegmentation = hasSaveFormParams( params );
+            this.saveForm( params );
+          }
         }
       } );
   }
@@ -195,7 +206,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initFormSegmentation() {
     const mapForm = R.curry( ( controlsConfig: any, formGroup: string ) => {
-      this[ formGroup ] = this.fb.group( controlsConfig);
+      this[ formGroup ] = this.fb.group( controlsConfig );
     } );
     const initFbGroup = R.map( mapForm( this.controlsConfig ) );
 
@@ -204,57 +215,58 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private formInputDisable() {
-    _( [
-      'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP', 'currency',
-      'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS'
-    ] )
-      .each( values => this.formSegmentation.get( values ).disable() );
+    _( this.arrFormGroup ).each( formGroupName => {
+      _( [
+        'moneyAmountFromInclude', 'moneyAmountToExclude', 'eDocTypeP', 'currency',
+        'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS'
+      ] )
+        .each( values => this[ formGroupName ].get( values ).disable() );
 
-    this.formSegmentation.get( 'subjectAnalysis' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( params => {
-        _( this.formSegmentation.getRawValue() ).each( () => {
-          _( [ 'moneyAmountFromInclude', 'moneyAmountToExclude', 'currency', 'eDocTypeP' ] )
-            .each( value => {
-              this.formSegmentation.get( value )[ params !== 'payment' ? 'disable' : 'enable' ]();
-              this.formSegmentation.get( value ).patchValue( '' );
-            } );
-          _( [ 'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS' ] )
-            .each( value => {
-              this.formSegmentation.get( value )[ params !== 'segment' ? 'disable' : 'enable' ]();
-              this.formSegmentation.get( value ).patchValue( '' );
-            } );
-        } );
-        this.resetRadioButtonFood = !!params;
-      } );
-
-    _( this.formSegmentation.getRawValue() ).each( ( values, key ) => {
-      if ( key === 'eDocTypeS' ) {
-        this.formSegmentation.get( key ).valueChanges
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( params => {
-            _( [
-              'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
-              'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
-              'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
-            ] )
-              .each( formControlName => {
-                this.formSegmentation.get( formControlName )[ params !== 'T' ? 'disable' : 'enable' ]();
-                this.formSegmentation.get( formControlName ).patchValue( '' );
+      this[ formGroupName ].get( 'subjectAnalysis' ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( params => {
+          _( this[ formGroupName ].getRawValue() ).each( () => {
+            _( [ 'moneyAmountFromInclude', 'moneyAmountToExclude', 'currency', 'eDocTypeP' ] )
+              .each( value => {
+                this[ formGroupName ].get( value )[ params !== 'payment' ? 'disable' : 'enable' ]();
+                this[ formGroupName ].get( value ).patchValue( '' );
               } );
-            _( [
-              'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
-              'departureLocationCodeE', 'arrivalLocationCodeE',
-              'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE'
-            ] )
-              .each( formControlName => {
-                this.formSegmentation.get( formControlName )[ params !== 'E' ? 'disable' : 'enable' ]();
-                this.formSegmentation.get( formControlName ).patchValue( '' );
+            _( [ 'segmentsCountFromInclude', 'segmentsCountToExclude', 'eDocTypeS' ] )
+              .each( value => {
+                this[ formGroupName ].get( value )[ params !== 'segment' ? 'disable' : 'enable' ]();
+                this[ formGroupName ].get( value ).patchValue( '' );
               } );
           } );
-      }
-    } );
+          this.resetRadioButtonFood = !!params;
+        } );
 
+      _( this[ formGroupName ].getRawValue() ).each( ( values, key ) => {
+        if ( key === 'eDocTypeS' ) {
+          this[ formGroupName ].get( key ).valueChanges
+            .pipe( takeWhile( _ => this.isActive ) )
+            .subscribe( params => {
+              _( [
+                'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
+                'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
+                'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
+              ] )
+                .each( formControlName => {
+                  this[ formGroupName ].get( formControlName )[ params !== 'T' ? 'disable' : 'enable' ]();
+                  this[ formGroupName ].get( formControlName ).patchValue( '' );
+                } );
+              _( [
+                'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
+                'departureLocationCodeE', 'arrivalLocationCodeE',
+                'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE'
+              ] )
+                .each( formControlName => {
+                  this[ formGroupName ].get( formControlName )[ params !== 'E' ? 'disable' : 'enable' ]();
+                  this[ formGroupName ].get( formControlName ).patchValue( '' );
+                } );
+            } );
+        }
+      } );
+    } );
   }
 
   private resetForm() {
@@ -267,13 +279,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const formPatchValue = R.map( mapFormGroup( 'patchValue' ) );
     const formSetErrors = R.map( mapFormGroup( 'setErrors' ) );
     const resetForm = R.juxt( [ formPatchValue, formSetErrors ] );
-
     resetForm( this.arrFormGroup );
-
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonSearch = true;
     this.buttonDelete = true;
+    this.saveSegmentationParams = {};
   }
 
   private initTableProfilePagination() {
@@ -393,7 +404,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         }
       } );
     } );
-
+    if ( this.isFormSavingIndicator ) this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( filterSegmentationParameters ) } } );
     return filterSegmentationParameters;
   }
 
@@ -407,15 +418,21 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initAutocomplete( 'formSegmentation' );
   }
 
-  saveForm(): void {
-    if ( !this.formSegmentation.invalid ) {
-      _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
-      this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( value => {
-          this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
-          this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { id: value.segmentationId } } );
-        } );
+  saveForm( queryParams: any = '' ): void {
+    const hasSaveFormParams = R.has( 'saveFormParams' );
+    const isQueryParams = hasSaveFormParams( queryParams );
+    const saveFormParams = isQueryParams ? JSON.parse( queryParams.saveFormParams ) : '';
+    if ( !this.formSegmentation.invalid || isQueryParams ) {
+      _( this.saveSegmentationParams ).assign( isQueryParams ? saveFormParams : this.segmentationParameters() ).value();
+      if( !R.isEmpty( this.saveSegmentationParams ) ) {
+        this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( value => {
+            this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+            this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
+            this.isFormSavingIndicator = false;
+          } );
+      }
     }
   }
 
@@ -429,6 +446,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
           this.windowDialog( `Сегментация успешно изменена`, 'ok' );
+          this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
         } );
     }
   }
@@ -440,20 +458,23 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   deleteSegmentation(): void {
-    this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${this.segmentationParams.segmentationTitle}" ?`, 'delete', 'segmentation', true );
+    this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${this.segmentationParams.segmentationTitle}" ?`, 'delete', 'deleteSegmentation', true );
   }
 
   clearForm(): void {
-    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.resetForm() );
+      .subscribe( _ => {
+        this.resetForm();
+      } );
+    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {
     this.isActive = false;
+    this.isFormSavingIndicator = true;
   }
 
 }

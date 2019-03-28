@@ -42,7 +42,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: [ '', [ Validators.required ] ],
       AirlineCode: [ '', [ Validators.required ] ],
       save: [ '' ],
-    });
+    } );
     const AirlineCode = localStorage.getItem( 'AirlineCode' );
     if ( AirlineCode ) {
       this.formLogin.get( 'AirlineCode' ).patchValue( AirlineCode );
@@ -76,7 +76,10 @@ export class LoginComponent implements OnInit, OnDestroy {
             localStorage.setItem( 'login', this.formLogin.get( 'login' ).value );
             localStorage.setItem( 'paramsToken', JSON.stringify( value ) );
             if ( !localStorage.getItem( 'tableAsyncProfile' ) ) localStorage.setItem( 'tableAsyncProfile', JSON.stringify( this.settingsService.getDefaultFieldTableAsyncProfiledTable() ) );
-            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) this.router.navigate( [ 'crm' ] );
+            if ( JSON.parse( localStorage.getItem( 'paramsToken' ) ) ) {
+              const navigate = localStorage.getItem( 'returnToSaveUrl' );
+              this.router.navigateByUrl(navigate ? navigate : 'crm' );
+            }
           },
           _ => this.isErrorAuth = true
         );

@@ -242,15 +242,15 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.dialogRef.close();
           } );
         break;
-      case 'segmentation':
+      case 'deleteSegmentation':
         this.addSegmentationService.deleteSegmentation( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.router.navigate( [ '/crm/listsegmentation' ] );
+            this.addSegmentationService.subjectDeleteSegmentation.next();
           } );
         break;
-      case 'segmentations':
+      case 'deleteSegmentations':
         this.listSegmentationService.deleteSegmentations( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {

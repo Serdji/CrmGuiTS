@@ -124,7 +124,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'segmentations' );
+      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'deleteSegmentations' );
     }
   }
 

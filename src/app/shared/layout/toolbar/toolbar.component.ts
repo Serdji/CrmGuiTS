@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivityUserService } from '../../../services/activity-user.service';
 import { LayoutService } from '../layout.service';
+import { timer } from 'rxjs';
 
 @Component({
   selector: 'app-toolbar',
@@ -22,6 +23,7 @@ export class ToolbarComponent implements OnInit {
 
   goOut(): void {
     this.activityUser.logout();
+    localStorage.setItem( 'goOut', 'true' );
   }
 
   sidenavToggle(): void {
