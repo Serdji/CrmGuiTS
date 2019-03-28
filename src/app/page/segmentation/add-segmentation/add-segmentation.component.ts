@@ -49,6 +49,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private createSegmentationParams: any = {};
   private autDelay: number = 500;
   private arrFormGroup: string[];
+  private isFormSavingIndicator: boolean;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -73,6 +74,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.resetRadioButtonCurrentRange = false;
     this.isFormSegmentation = false;
     this.arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
+    this.isFormSavingIndicator = true;
 
     this.initFormControl();
     this.initFormSegmentation();
@@ -90,6 +92,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
+        const hasSaveFormParams = R.has( 'saveFormParams' );
         if ( params.segmentationId ) {
           this.buttonSave = true;
           this.buttonCreate = false;
@@ -99,6 +102,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
           this.initAutocomplete( 'formSegmentation' );
+        } else {
+          if ( this.isFormSavingIndicator ) {
+            this.isFormSegmentation = hasSaveFormParams( params );
+            this.saveForm( params );
+          }
         }
       } );
   }
@@ -276,7 +284,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonSearch = true;
     this.buttonDelete = true;
-    this.saveSegmentationParams = [];
+    this.saveSegmentationParams = {};
   }
 
   private initTableProfilePagination() {
@@ -396,7 +404,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         }
       } );
     } );
-
+    if ( this.isFormSavingIndicator ) this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( filterSegmentationParameters ) } } );
     return filterSegmentationParameters;
   }
 
@@ -410,15 +418,21 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initAutocomplete( 'formSegmentation' );
   }
 
-  saveForm(): void {
-    if ( !this.formSegmentation.invalid ) {
-      _( this.saveSegmentationParams ).assign( this.segmentationParameters() ).value();
-      this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( value => {
-          this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
-          this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
-        } );
+  saveForm( queryParams: any = '' ): void {
+    const hasSaveFormParams = R.has( 'saveFormParams' );
+    const isQueryParams = hasSaveFormParams( queryParams );
+    const saveFormParams = isQueryParams ? JSON.parse( queryParams.saveFormParams ) : '';
+    if ( !this.formSegmentation.invalid || isQueryParams ) {
+      _( this.saveSegmentationParams ).assign( isQueryParams ? saveFormParams : this.segmentationParameters() ).value();
+      if( !R.isEmpty( this.saveSegmentationParams ) ) {
+        this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( value => {
+            this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+            this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
+            this.isFormSavingIndicator = false;
+          } );
+      }
     }
   }
 
@@ -432,6 +446,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
           this.windowDialog( `Сегментация успешно изменена`, 'ok' );
+          this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
         } );
     }
   }
@@ -444,20 +459,22 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   deleteSegmentation(): void {
     this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${this.segmentationParams.segmentationTitle}" ?`, 'delete', 'deleteSegmentation', true );
-    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
   }
 
   clearForm(): void {
-    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.resetForm() );
+      .subscribe( _ => {
+        this.resetForm();
+      } );
+    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {
     this.isActive = false;
+    this.isFormSavingIndicator = true;
   }
 
 }

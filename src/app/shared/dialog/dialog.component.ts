@@ -250,7 +250,7 @@ export class DialogComponent implements OnInit, OnDestroy {
             this.addSegmentationService.subjectDeleteSegmentation.next();
           } );
         break;
-      case 'segmentations':
+      case 'deleteSegmentations':
         this.listSegmentationService.deleteSegmentations( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
