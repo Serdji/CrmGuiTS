@@ -501,10 +501,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
-    if ( this.isFormSavingIndicator ) {
-      this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { saveFormParams: JSON.stringify( params ) } } );
-      this.isFormSavingIndicator = false;
-    }
+    if ( this.isFormSavingIndicator ) this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { saveFormParams: JSON.stringify( params ) } } );
     return params;
   }
 
@@ -513,6 +510,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     return ( promoCodeAdd: IPromoCodeAdd ) => {
       this.windowDialog( messDialog, 'ok' );
       this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
+      this.isFormSavingIndicator = false;
     };
   }
 
@@ -578,7 +576,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   deletePromoCode(): void {
     this.windowDialog( `Вы действительно хотите удалить промокод  "${this.promoCodeParameters().code}" ?`, 'delete', 'promoCode', true );
-    this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: this.promoCodeId } } );
   }
 
   ngOnDestroy(): void {
