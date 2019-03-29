@@ -570,6 +570,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   clearForm(): void {
+    this.isFormSavingIndicator = false;
     this.resetForm();
     this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: {} } );
   }
