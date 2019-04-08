@@ -462,7 +462,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   clearForm(): void {
-    this.isFormSavingIndicator = false;
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
