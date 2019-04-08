@@ -318,6 +318,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private funcIsFormSavingIndicator() {
+    this.isFormSavingIndicator = false;
+    timer( 1000 ).pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.isFormSavingIndicator = true );
+  }
+
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
     this.dialog.open( DialogComponent, {
       data: {
@@ -413,7 +418,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   changeForm(): void {
-    this.isFormSegmentation = true;
+    this.funcIsFormSavingIndicator();
     this.formSegmentation.patchValue( this.formSegmentationStepper.value );
     this.initAutocomplete( 'formSegmentation' );
   }
@@ -430,13 +435,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           .subscribe( value => {
             this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
             this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
-            this.isFormSavingIndicator = false;
+            this.funcIsFormSavingIndicator();
           } );
       }
     }
   }
 
   createForm(): void {
+    this.funcIsFormSavingIndicator();
     if ( !this.formSegmentation.invalid ) {
       _( this.createSegmentationParams )
         .assign( this.segmentationParameters() )
@@ -458,11 +464,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   deleteSegmentation(): void {
+    this.funcIsFormSavingIndicator();
     this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${this.segmentationParams.segmentationTitle}" ?`, 'delete', 'deleteSegmentation', true );
   }
 
   clearForm(): void {
-    this.isFormSavingIndicator = false;
+    this.funcIsFormSavingIndicator();
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )

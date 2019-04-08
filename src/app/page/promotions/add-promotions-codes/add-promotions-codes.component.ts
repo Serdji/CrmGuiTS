@@ -230,6 +230,11 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private funcIsFormSavingIndicator() {
+    this.isFormSavingIndicator = false;
+    timer( 1000 ).pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.isFormSavingIndicator = true );
+  }
+
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false, intersection: any = [] ) {
     this.dialog.open( DialogComponent, {
       data: {
@@ -501,6 +506,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
+
     if ( this.isFormSavingIndicator ) this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { saveFormParams: JSON.stringify( params ) } } );
     return params;
   }
@@ -510,7 +516,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     return ( promoCodeAdd: IPromoCodeAdd ) => {
       this.windowDialog( messDialog, 'ok' );
       this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
-      this.isFormSavingIndicator = false;
     };
   }
 
@@ -524,6 +529,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     const isNil = () => R.isNil( promoCodeAdd.promoCode );
     const whichMethod = R.ifElse( isNil, this.isIntersectionPromoCod(), this.isPromoCod( messDialog ) );
     whichMethod( promoCodeAdd );
+    this.funcIsFormSavingIndicator();
   }
 
   saveForm( queryParams: any = '' ): void {
@@ -551,6 +557,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   createForm(): void {
+    this.funcIsFormSavingIndicator();
     if ( !this.formPromoCodes.invalid ) {
       const params = this.promoCodeParameters();
       _.set( params, 'promoCodeId', this.promoCodeId );
@@ -561,6 +568,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   copyForm(): void {
+    this.funcIsFormSavingIndicator();
     this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: {} } );
     this.buttonSave = false;
     this.buttonCopy = true;
@@ -570,12 +578,13 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   clearForm(): void {
-    this.isFormSavingIndicator = false;
+    this.funcIsFormSavingIndicator();
     this.resetForm();
     this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: {} } );
   }
 
   deletePromoCode(): void {
+    this.funcIsFormSavingIndicator();
     this.windowDialog( `Вы действительно хотите удалить промокод  "${this.promoCodeParameters().code}" ?`, 'delete', 'promoCode', true );
   }
 
