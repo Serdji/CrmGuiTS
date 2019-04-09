@@ -73,6 +73,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.resetRadioButtonFood = false;
     this.resetRadioButtonCurrentRange = false;
+    this.isFormSegmentation = false;
     this.arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
 
     this.initFormControl();
@@ -103,6 +104,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.buttonCreate = false;
           this.buttonDelete = false;
           this.buttonSearch = false;
+          this.isFormSegmentation = true;
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
           this.initAutocomplete( 'formSegmentation' );
@@ -414,6 +416,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   changeForm(): void {
+    this.isFormSegmentation = true;
     this.formSegmentation.patchValue( this.formSegmentationStepper.value );
     this.initAutocomplete( 'formSegmentation' );
   }
