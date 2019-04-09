@@ -14,6 +14,7 @@ import { IAirport } from '../../../interface/iairport';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
+import { SaveUrlServiceService } from '../../../services/save-url-service.service';
 
 
 @Component( {
@@ -49,7 +50,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private createSegmentationParams: any = {};
   private autDelay: number = 500;
   private arrFormGroup: string[];
-  private isFormSavingIndicator: boolean;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -61,6 +61,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
+    private saveUrlServiceService: SaveUrlServiceService,
   ) { }
 
   ngOnInit(): void {
@@ -72,9 +73,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.resetRadioButtonFood = false;
     this.resetRadioButtonCurrentRange = false;
-    this.isFormSegmentation = false;
     this.arrFormGroup = [ 'formSegmentation', 'formSegmentationStepper' ];
-    this.isFormSavingIndicator = true;
 
     this.initFormControl();
     this.initFormSegmentation();
@@ -86,6 +85,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.addSegmentationService.subjectDeleteSegmentation
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.clearForm() );
+    this.saveUrlServiceService.subjectEvent401
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
+      } );
   }
 
   private initQueryParams() {
@@ -93,20 +97,17 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         const hasSaveFormParams = R.has( 'saveFormParams' );
-        if ( params.segmentationId ) {
+        const hasSegmentationId = R.has( 'segmentationId' );
+        if ( hasSegmentationId( params ) ) {
           this.buttonSave = true;
           this.buttonCreate = false;
           this.buttonDelete = false;
           this.buttonSearch = false;
-          this.isFormSegmentation = true;
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
           this.initAutocomplete( 'formSegmentation' );
-        } else {
-          if ( this.isFormSavingIndicator ) {
-            this.isFormSegmentation = hasSaveFormParams( params );
-            this.saveForm( params );
-          }
+        } else if ( hasSaveFormParams( params ) ) {
+          this.saveForm( params );
         }
       } );
   }
@@ -318,6 +319,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
+
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
     this.dialog.open( DialogComponent, {
       data: {
@@ -404,7 +406,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         }
       } );
     } );
-    if ( this.isFormSavingIndicator ) this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( filterSegmentationParameters ) } } );
     return filterSegmentationParameters;
   }
 
@@ -413,7 +414,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   changeForm(): void {
-    this.isFormSegmentation = true;
     this.formSegmentation.patchValue( this.formSegmentationStepper.value );
     this.initAutocomplete( 'formSegmentation' );
   }
@@ -424,13 +424,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const saveFormParams = isQueryParams ? JSON.parse( queryParams.saveFormParams ) : '';
     if ( !this.formSegmentation.invalid || isQueryParams ) {
       _( this.saveSegmentationParams ).assign( isQueryParams ? saveFormParams : this.segmentationParameters() ).value();
-      if( !R.isEmpty( this.saveSegmentationParams ) ) {
+      if ( !R.isEmpty( this.saveSegmentationParams ) ) {
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( value => {
             this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
             this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
-            this.isFormSavingIndicator = false;
           } );
       }
     }
@@ -474,7 +473,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isActive = false;
-    this.isFormSavingIndicator = true;
   }
 
 }

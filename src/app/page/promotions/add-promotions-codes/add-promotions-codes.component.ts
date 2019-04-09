@@ -26,6 +26,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
 import { IPromoCodeAdd } from '../../../interface/ipromo-code-add';
 import { IChipsCustomerList } from '../../../interface/ichips-customer-list';
+import { SaveUrlServiceService } from '../../../services/save-url-service.service';
 
 @Component( {
   selector: 'app-add-promotions-codes',
@@ -91,7 +92,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private autDelay: number;
   private promoCodeId: number;
   private arrCustomerIds: number[] = [];
-  private isFormSavingIndicator: boolean;
 
   @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -112,6 +112,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     private tableAsyncService: TableAsyncService,
+    private saveUrlServiceService: SaveUrlServiceService,
   ) { }
 
   ngOnInit(): void {
@@ -123,7 +124,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.isLoader = true;
     this.autDelay = 500;
-    this.isFormSavingIndicator = true;
     this.initFormPromoCodes();
     this.initAutocomplete();
     this.initPromotions();
@@ -136,13 +136,20 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.addPromotionsCodesService.subjectDeletePromotionsCodes
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.clearForm() );
+    this.saveUrlServiceService.subjectEvent401
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { saveFormParams: JSON.stringify( this.promoCodeParameters() ) } } );
+      } );
   }
 
   private initQueryParams() {
+    const hasSaveFormParams = R.has( 'saveFormParams' );
+    const hasPromoCodeId = R.has( 'promoCodeId' );
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
-        if ( params.promoCodeId ) {
+        if ( hasPromoCodeId( params ) ) {
           this.buttonSave = true;
           this.buttonCopy = false;
           this.buttonCreate = false;
@@ -150,8 +157,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
           this.buttonSearch = false;
           this.promoCodeId = +params.promoCodeId;
           this.formFilling( this.promoCodeId );
-        } else {
-          if ( this.isFormSavingIndicator ) this.saveForm( params );
+        } else if ( hasSaveFormParams( params ) ) {
+          this.saveForm( params );
         }
       } );
   }
@@ -501,7 +508,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       customerGroupsIds: customerGroup,
       promoCodeRouteList: this.promoCodeRouteList,
     };
-    if ( this.isFormSavingIndicator ) this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { saveFormParams: JSON.stringify( params ) } } );
+
     return params;
   }
 
@@ -510,7 +517,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     return ( promoCodeAdd: IPromoCodeAdd ) => {
       this.windowDialog( messDialog, 'ok' );
       this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
-      this.isFormSavingIndicator = false;
     };
   }
 
@@ -580,7 +586,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.isActive = false;
-    this.isFormSavingIndicator = true;
   }
 
 }
