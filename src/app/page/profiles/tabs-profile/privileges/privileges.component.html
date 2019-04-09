@@ -1,3 +1,183 @@
-<p>
-  privileges works!
-</p>
+<div class="privileges">
+
+  <!--    <mat-card *ngIf="progress">-->
+  <!--      <mat-progress-bar mode="buffer"></mat-progress-bar>-->
+  <!--    </mat-card>-->
+  <!--    -->
+
+  <mat-accordion  class="privileges__accordion" multi="true">
+
+    <mat-card class="privileges__sort mat-elevation-z0">
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('code')"
+        >
+          <b> Организация&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('promotion.promotionName')"
+        >
+          <b> Направление от&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('dateFrom')"
+        >
+          <b> Направление до&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('dateTo')"
+        >
+          <b> Дата продажи </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('dateTo')"
+        >
+          <b> Дата перевозки </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="sortFilter('dateTo')"
+        >
+          <b> Статус </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+    </mat-card>
+
+    <mat-expansion-panel >
+      <mat-expansion-panel-header>
+        <div class="privileges__header-wrapper">
+          <div class="privileges__title">
+            <span> Ямал МФЦ </span>
+          </div>
+          <div class="privileges__title">
+            <span> DME </span>
+          </div>
+          <div class="privileges__title">
+            <span> PKC </span>
+          </div>
+          <div class="privileges__title">
+            <span> 10.12.2018 </span>
+          </div>
+          <div class="privileges__title">
+            <span> 12.06.2019 </span>
+          </div>
+          <div class="privileges__title">
+            <span> Перелет отменен</span>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-card class="privileges__card mat-elevation-z0">
+          <div class="privileges__box">
+
+
+            <div class="privileges__info">
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Организация предоставляющая льготу: </span>
+                <div class="privileges__info-params">
+                  <span><b>Ямал МФЦ</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Дата предоставления льготы ( дата продажи ) </span>
+                <div class="privileges__info-params">
+                  <span><b>11.12.2018</b></span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="privileges__info">
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Направление от: </span>
+                <div class="privileges__info-params">
+                  <span><b>DME</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Направление до: </span>
+                <div class="privileges__info-params">
+                  <span><b>PKC</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Дата перевозки: </span>
+                <div class="privileges__info-params">
+                  <span><b>12.06.2019</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Статус </span>
+                <div class="privileges__info-params">
+                  <span><b>Перелет отменен</b></span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="privileges__info">
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Полная стоимость перевозки: </span>
+                <div class="privileges__info-params">
+                  <span><b>1000000</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text">Сумма предоставляемой льготы</span>
+                <div class="privileges__info-params">
+                  <span><b>5000000</b></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
