@@ -51,7 +51,7 @@ export class SidenavService {
         link: [
           { url: '/crm/listsegmentation', title: 'Список сегментаций' },
           { url: '/crm/addsegmentation', title: 'Добавить сегментацию' },
-          // { url: '/crm/complexsegmentation', title: 'Сложная сегментация' },
+          { url: '/crm/complexsegmentation', title: 'Сложная сегментация' },
         ]
       },
       {
