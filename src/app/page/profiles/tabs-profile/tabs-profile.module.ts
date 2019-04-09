@@ -15,6 +15,7 @@ import { MessagesModule } from './messages/messages.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { PromoCodeModule } from './promo-code/promo-code.module';
 import { TabsProfileRoutes } from './tabs-profile.routing';
+import { PrivilegesModule } from './privileges/privileges.module';
 
 @NgModule( {
   imports: [
@@ -30,6 +31,7 @@ import { TabsProfileRoutes } from './tabs-profile.routing';
     RouterModule,
     DirectivesModule,
     PromoCodeModule,
+    PrivilegesModule,
     TabsProfileRoutes
   ],
   declarations: [ TabsProfileComponent ],
