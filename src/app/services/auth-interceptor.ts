@@ -15,6 +15,7 @@ import { MatDialog } from '@angular/material';
 import { throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { DialogComponent } from '../shared/dialog/dialog.component';
+import { SaveUrlServiceService } from './save-url-service.service';
 
 @Injectable()
 export class AuthInterceptor implements HttpInterceptor {
@@ -28,6 +29,7 @@ export class AuthInterceptor implements HttpInterceptor {
     private auth: AuthService,
     private dialog: MatDialog,
     private router: Router,
+    private saveUrlServiceService: SaveUrlServiceService
   ) {}
 
   intercept( req: HttpRequest<any>, next: HttpHandler ): Observable<HttpEvent<any>> {
@@ -78,7 +80,8 @@ export class AuthInterceptor implements HttpInterceptor {
             timer( this.delay ).subscribe( _ => this.isRefreshingToken = false );
           }, err => {
             if ( err.status === 401 ) {
-              this.activityUser.logout();
+              this.saveUrlServiceService.subjectEvent401.next();
+              timer( 0 ).subscribe( _ =>this.activityUser.logout() );
               timer( this.delay ).subscribe( _ => this.isRefreshingToken = false );
             }
           }

@@ -10,6 +10,7 @@ import { ConfigService } from './config-service.service';
 import { RetryRequestService } from './retry-request.service';
 import { CurrencyDefaultService } from './currency-default.service';
 import { TableAsyncService } from './table-async.service';
+import { SaveUrlServiceService } from './save-url-service.service';
 
 const appInitializerFn = ( appConfig: ConfigService ) => {
   return () => {
@@ -41,7 +42,8 @@ const appInitializerFn = ( appConfig: ConfigService ) => {
       useFactory: appInitializerFn,
       multi: true,
       deps: [ ConfigService ]
-    }
+    },
+    SaveUrlServiceService,
   ],
 } )
 export class ServicesModule {
