@@ -20,6 +20,7 @@ import { TableAsyncService } from '../../services/table-async.service';
 import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-profile/table-async-promo-code-profile.component';
 import { TableAsyncSearchPromoCodeComponent } from './table-async-search-promo-code/table-async-search-promo-code.component';
 import { RouterModule } from '@angular/router';
+import { MergeProfileModule } from '../merge-profile/merge-profile.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { RouterModule } from '@angular/router';
     PipesModule,
     EditorsModule,
     PromoCodeModule,
+    MergeProfileModule,
     RouterModule,
   ],
   declarations: [

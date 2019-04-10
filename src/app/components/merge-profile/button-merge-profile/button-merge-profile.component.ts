@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogMergeProfileComponent } from '../dialog-merge-profile/dialog-merge-profile.component';
 
@@ -7,7 +7,7 @@ import { DialogMergeProfileComponent } from '../dialog-merge-profile/dialog-merg
   templateUrl: './button-merge-profile.component.html',
   styleUrls: ['./button-merge-profile.component.styl']
 })
-export class ButtonMergeProfileComponent implements OnInit {
+export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
 
   @Input() ids: any;
   @Input() disabled: boolean;
