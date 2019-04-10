@@ -17,5 +17,6 @@ import { DialogMergeProfileComponent } from './dialog-merge-profile/dialog-merge
     ButtonMergeProfileComponent,
     DialogMergeProfileComponent,
   ],
+  entryComponents: [ DialogMergeProfileComponent ]
 })
 export class MergeProfileModule { }

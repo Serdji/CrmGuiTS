@@ -21,7 +21,7 @@ export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
 
   openDialog(): void {
     this.dialog.open( DialogMergeProfileComponent, {
-      width: '80vw',
+      width: '40vw',
       data: {
         params: this.ids,
       }
