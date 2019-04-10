@@ -20,6 +20,14 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     this.isActive = true;
   }
 
+  onYesClick(): void {
+    console.log( this.data.params.customer );
+  }
+
+  onNoClick(): void {
+    this.dialogRef.close();
+  }
+
   ngOnDestroy(): void {
     this.isActive = false;
   }
