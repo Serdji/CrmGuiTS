@@ -1,8 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogPromoCodeComponent } from '../dialog-promo-code/dialog-promo-code.component';
-import * as _ from 'lodash';
-import { ActivatedRoute } from '@angular/router';
 
 @Component( {
   selector: 'app-button-promo-code',
@@ -19,7 +17,6 @@ export class ButtonPromoCodeComponent implements OnDestroy, OnInit {
 
   constructor(
     public dialog: MatDialog,
-    private route: ActivatedRoute,
   ) { }
 
   openDialog(): void {

@@ -1,3 +1,14 @@
-<p>
-  button-merge-profile works!
-</p>
+<button
+  style="margin-right: 15px"
+  mat-raised-button
+  color="accent"
+  (click)="openDialog()"
+  [disabled]="disabled"
+  appAccessRights="promotions:update"
+>Слить пассажира
+  <mat-icon
+    style="margin-left: 10px"
+  >
+    receipt
+  </mat-icon>
+</button>

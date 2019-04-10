@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material';
+import { DialogMergeProfileComponent } from '../dialog-merge-profile/dialog-merge-profile.component';
 
 @Component({
   selector: 'app-button-merge-profile',
@@ -7,9 +9,32 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ButtonMergeProfileComponent implements OnInit {
 
-  constructor() { }
+  @Input() ids: any;
+  @Input() disabled: boolean;
 
-  ngOnInit() {
+  private isActive: boolean;
+
+
+  constructor(
+    public dialog: MatDialog,
+  ) { }
+
+  openDialog(): void {
+    this.dialog.open( DialogMergeProfileComponent, {
+      width: '80vw',
+      data: {
+        params: this.ids,
+      }
+    } );
   }
+
+  ngOnInit(): void {
+    this.isActive = true;
+  }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
+  }
+
 
 }
