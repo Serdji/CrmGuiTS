@@ -1,5 +1,9 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { takeWhile } from 'rxjs/operators';
+import { ProfileSearchService } from '../../../page/profiles/profile-search/profile-search.service';
+import { Iprofiles } from '../../../interface/iprofiles';
+import * as R from 'ramda';
 
 @Component({
   selector: 'app-dialog-merge-profile',
@@ -9,19 +13,42 @@ import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
 export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
+  private profiles: Iprofiles[] = [];
 
   constructor(
     private dialog: MatDialog,
+    private profileSearchService: ProfileSearchService,
     public dialogRef: MatDialogRef<DialogMergeProfileComponent>,
     @Inject( MAT_DIALOG_DATA ) public data: any
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
+    this.initProfiles();
+  }
+
+  private initProfiles() {
+    const success = profile => this.profiles.push( profile );
+    const objParams = id => {
+      return {
+        customerids: id,
+        sortvalue: 'last_name',
+        from: 0,
+        count: 10
+      };
+    };
+    const mapIds = customerIds => {
+      this.profileSearchService.getProfileSearch( objParams( customerIds ) )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( success );
+    };
+    const profilePush = R.map( mapIds );
+
+    profilePush( this.data.params.customerIds );
   }
 
   onYesClick(): void {
-    console.log( this.data.params.customer );
+    console.log( this.data.params.customerIds);
   }
 
   onNoClick(): void {

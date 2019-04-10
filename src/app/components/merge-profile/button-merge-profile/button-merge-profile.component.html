@@ -1,11 +1,12 @@
 <button
   style="margin-right: 15px"
+  [style.backgroundColor]="!disabled ? '#795548' : ''"
   mat-raised-button
   color="warn"
   (click)="openDialog()"
   [disabled]="disabled"
   appAccessRights="promotions:update"
->Слить пассажира
+>Объединить пассажиров
   <mat-icon
     style="margin-left: 10px"
   >

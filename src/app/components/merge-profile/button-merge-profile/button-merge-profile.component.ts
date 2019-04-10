@@ -1,6 +1,9 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material';
 import { DialogMergeProfileComponent } from '../dialog-merge-profile/dialog-merge-profile.component';
+import { ProfileSearchService } from '../../../page/profiles/profile-search/profile-search.service';
+import { Iprofiles } from '../../../interface/iprofiles';
+import { takeWhile } from 'rxjs/operators';
 
 @Component({
   selector: 'app-button-merge-profile',
@@ -19,6 +22,10 @@ export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
     public dialog: MatDialog,
   ) { }
 
+  ngOnInit(): void {
+    this.isActive = true;
+  }
+
   openDialog(): void {
     this.dialog.open( DialogMergeProfileComponent, {
       width: '40vw',
@@ -26,10 +33,6 @@ export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
         params: this.ids,
       }
     } );
-  }
-
-  ngOnInit(): void {
-    this.isActive = true;
   }
 
   ngOnDestroy(): void {
