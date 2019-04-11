@@ -5,12 +5,13 @@ import { ProfileSearchService } from '../../../page/profiles/profile-search/prof
 import { Iprofiles } from '../../../interface/iprofiles';
 import * as R from 'ramda';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import * as _ from 'lodash';
 
-@Component({
+@Component( {
   selector: 'app-dialog-merge-profile',
   templateUrl: './dialog-merge-profile.component.html',
-  styleUrls: ['./dialog-merge-profile.component.styl']
-})
+  styleUrls: [ './dialog-merge-profile.component.styl' ]
+} )
 export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
@@ -48,12 +49,17 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     profilePush( this.data.params.customerIds );
   }
 
-  drop(event: CdkDragDrop<string[]>) {
-    moveItemInArray(this.profiles, event.previousIndex, event.currentIndex);
+  drop( event: CdkDragDrop<string[]> ) {
+    moveItemInArray( this.profiles, event.previousIndex, event.currentIndex );
   }
 
   onYesClick(): void {
+    const arrCustomerIds = [];
     console.log( this.profiles );
+    _.map( this.profiles, profile => {
+      _.map( profile.result, result => arrCustomerIds.push( result.customerId ) );
+    } );
+    console.log( arrCustomerIds );
   }
 
   onNoClick(): void {
