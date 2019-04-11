@@ -29,6 +29,7 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
   }
 
   private initPrivileges() {
+    // ALMA ISKENOV 430352
     const success = ( value: IPrivileges ) => this.privileges = value;
     this.privilegesService.getPrivileges( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
