@@ -1,0 +1,183 @@
+<div class="privileges">
+
+  <!--    <mat-card *ngIf="progress">-->
+  <!--      <mat-progress-bar mode="buffer"></mat-progress-bar>-->
+  <!--    </mat-card>-->
+  <!--    -->
+
+  <mat-accordion  class="privileges__accordion" multi="true">
+
+    <mat-card class="privileges__sort mat-elevation-z0">
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('externalDiscountSourceName')"
+        >
+          <b> Организация&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('arrivalLocationCode')"
+        >
+          <b> Направление от&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('departureLocationCode')"
+        >
+          <b> Направление до&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('saleDate')"
+        >
+          <b> Дата продажи </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('flightDate')"
+        >
+          <b> Дата перевозки </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('externalDiscountStatusName')"
+        >
+          <b> Статус </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+    </mat-card>
+
+    <mat-expansion-panel *ngFor="let privileges of privileges.result ">
+      <mat-expansion-panel-header>
+        <div class="privileges__header-wrapper">
+          <div class="privileges__title">
+            <span> {{privileges.externalDiscountSourceName}} </span>
+          </div>
+          <div class="privileges__title">
+            <span> {{privileges.arrivalLocationCode}} </span>
+          </div>
+          <div class="privileges__title">
+            <span> {{privileges.departureLocationCode}} </span>
+          </div>
+          <div class="privileges__title">
+            <span> {{privileges.saleDate | date:'dd.MM.yyyy'}} </span>
+          </div>
+          <div class="privileges__title">
+            <span> {{privileges.flightDate | date:'dd.MM.yyyy'}} </span>
+          </div>
+          <div class="privileges__title">
+            <span> {{privileges.externalDiscountStatusName}} </span>
+          </div>
+        </div>
+      </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-card class="privileges__card mat-elevation-z0">
+          <div class="privileges__box">
+
+
+            <div class="privileges__info">
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Организация предоставляющая льготу: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.externalDiscountSourceName}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Дата предоставления льготы ( дата продажи ) </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.saleDate | date:'dd.MM.yyyy'}}</b></span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="privileges__info">
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Направление от: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.arrivalLocationCode}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Направление до: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.departureLocationCode}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Дата перевозки: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.flightDate | date:'dd.MM.yyyy'}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Статус </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.externalDiscountStatusName}}</b></span>
+                </div>
+              </div>
+            </div>
+
+
+            <div class="privileges__info">
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Полная стоимость перевозки: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.discountSum}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text">Сумма предоставляемой льготы</span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.price}}</b></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </mat-card>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

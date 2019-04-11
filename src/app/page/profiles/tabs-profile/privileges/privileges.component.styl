@@ -1,0 +1,98 @@
+minWidthTitleAvailable = 285px
+
+.mat-expansion-panel-header
+  padding: 0 16px;
+
+.privileges
+
+  &__header
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+
+  &__sort,
+  &__filter
+    display: flex;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 15px;
+    font-weight: 400;
+
+  &__sort
+    border-radius: 0;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.2), 0 2px 0 0 rgba(0,0,0,0.05), 0 0 0 0 rgba(0,0,0,0.12)
+
+  &__filter
+  &__title
+    min-width: minWidthTitleAvailable;
+
+    span
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+    &:last-child
+      min-width: 0;
+      margin-left: auto;
+      margin-right: 128px;
+
+  &__title
+    margin-right: 0;
+
+    &:last-child
+      min-width: 0;
+      margin-right: 65px;
+      flex-grow: 0;
+
+      span
+        width: 130px;
+
+  &__card
+    margin: auto;
+    padding: 15px 0;
+    display: flex;
+    flex-direction: column;
+
+
+  &__box
+    display: flex;
+    flex-direction: row;
+    position: relative
+
+  &__info
+    display: flex;
+    flex-direction: column;
+    background: #f0f9ff;
+    border: 1px solid #dedede;
+    flex: 1
+    padding: 15px 10px;
+    margin: 0 5px;
+    font-size: 12px;
+
+    &-wrapper
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 5px;
+      padding-bottom: 5px;
+      border-bottom: 1px solid #dedede;
+
+      &:last-child
+        margin-bottom: 0;
+        padding-bottom: 0;
+        border-bottom: none
+
+    &-text
+      color: #b5b5b5;
+
+    &-params
+      display: flex;
+      flex-direction: column;
+      justify-content: right;
+
+      span
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 250px;
+        text-align: right;
