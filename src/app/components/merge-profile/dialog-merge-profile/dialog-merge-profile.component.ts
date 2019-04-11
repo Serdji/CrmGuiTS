@@ -5,7 +5,6 @@ import { ProfileSearchService } from '../../../page/profiles/profile-search/prof
 import { Iprofiles } from '../../../interface/iprofiles';
 import * as R from 'ramda';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
-import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-dialog-merge-profile',
@@ -54,11 +53,13 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
   }
 
   onYesClick(): void {
-    const arrCustomerIds = [];
-    console.log( this.profiles );
-    _.map( this.profiles, profile => {
-      _.map( profile.result, result => arrCustomerIds.push( result.customerId ) );
-    } );
+    const funcMapResult = result => result.customerId;
+    const funcMapProfiles = profile => {
+      return R.map( funcMapResult, profile.result );
+    };
+    const mapProfiles = R.map( funcMapProfiles );
+    const composeArrCustomerIds = R.compose( R.flatten, mapProfiles );
+    const arrCustomerIds = composeArrCustomerIds( this.profiles );
     console.log( arrCustomerIds );
   }
 
