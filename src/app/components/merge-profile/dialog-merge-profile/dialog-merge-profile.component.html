@@ -1,7 +1,7 @@
 <div class="dialog-merge-profile">
-  <mat-divider></mat-divider>
-  <div *ngFor="let profile of profiles" >
-    <div *ngFor="let result of profile.result">
+  <div cdkDropList class="dialog-merge-profile__example-list" (cdkDropListDropped)="drop($event)">
+    <div class="dialog-merge-profile__example-box" *ngFor="let profile of profiles" cdkDrag>
+      <div *ngFor="let result of profile.result">
         <mat-list>
           <mat-list-item *ngFor="let customerName of result.customerNames">
             <mat-icon mat-list-icon style="color: #696969">how_to_reg</mat-icon>
@@ -10,14 +10,16 @@
               <b>Фамилия:</b> {{customerName.lastName}} |
               <b>№ профиля</b> {{customerName.customerId}}
             </h4>
-            <p mat-line> <b>Дата рождения:</b> {{result.dob | date:'dd.MM.yyyy'}} </p>
+            <p mat-line><b>Дата рождения:</b> {{result.dob | date:'dd.MM.yyyy'}} </p>
           </mat-list-item>
-          <mat-divider></mat-divider>
         </mat-list>
+      </div>
     </div>
   </div>
   <div class="dialog-merge-profile__button-wrapper">
-    <button class="dialog-merge-profile__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">Да</button>
+    <button class="dialog-merge-profile__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">
+      Да
+    </button>
     <button class="dialog-merge-profile__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
   </div>
 </div>

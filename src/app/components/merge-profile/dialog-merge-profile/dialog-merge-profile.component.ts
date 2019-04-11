@@ -4,6 +4,7 @@ import { takeWhile } from 'rxjs/operators';
 import { ProfileSearchService } from '../../../page/profiles/profile-search/profile-search.service';
 import { Iprofiles } from '../../../interface/iprofiles';
 import * as R from 'ramda';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'app-dialog-merge-profile',
@@ -47,8 +48,12 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     profilePush( this.data.params.customerIds );
   }
 
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.profiles, event.previousIndex, event.currentIndex);
+  }
+
   onYesClick(): void {
-    console.log( this.data.params.customerIds);
+    console.log( this.profiles );
   }
 
   onNoClick(): void {
