@@ -1,10 +1,10 @@
 <div class="dialog-merge-profile">
   <div cdkDropList class="dialog-merge-profile__example-list" (cdkDropListDropped)="drop($event)">
-    <div class="dialog-merge-profile__example-box" *ngFor="let profile of profiles" cdkDrag>
-      <div *ngFor="let result of profile.result">
+    <div class="dialog-merge-profile__example-wrapper" *ngFor="let profile of profiles; let i = index">
+      <div class="dialog-merge-profile__example-box" *ngFor="let result of profile.result" cdkDrag>
         <mat-list>
           <mat-list-item *ngFor="let customerName of result.customerNames">
-            <mat-icon mat-list-icon style="color: #696969">how_to_reg</mat-icon>
+            <mat-icon mat-list-icon>how_to_reg</mat-icon>
             <h4 mat-line>
               <b>Имя:</b> {{customerName.firstName}} |
               <b>Фамилия:</b> {{customerName.lastName}} |
@@ -14,6 +14,7 @@
           </mat-list-item>
         </mat-list>
       </div>
+      <mat-icon class="dialog-merge-profile__example-icon" [ngClass]="{ '_hide' : i > 0 }" >call_merge</mat-icon>
     </div>
   </div>
   <div class="dialog-merge-profile__button-wrapper">
