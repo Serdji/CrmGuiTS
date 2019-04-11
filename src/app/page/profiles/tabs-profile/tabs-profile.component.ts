@@ -26,7 +26,9 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public orders;
   public profileSegmentation: any;
   public profileGroup: any;
-  public accessDisabled: boolean;
+  public accessDisabledMessages: boolean;
+  public accessDisabledPromoCode: boolean;
+  public accessDisabledPrivileges: boolean;
   public currencyDefault: string;
 
   private isActive: boolean;

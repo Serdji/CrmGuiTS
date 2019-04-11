@@ -156,19 +156,31 @@
       label="Сообщения"
       appAccessRights="distributions:read"
       [appAccessDisabled]="true"
-      (emitAccessDisabled)="accessDisabled = $event"
-      [disabled]="accessDisabled"
+      (emitAccessDisabled)="accessDisabledMessages = $event"
+      [disabled]="accessDisabledMessages"
     >
       <ng-template matTabContent>
         <app-messages [id]="profileId"></app-messages>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Промокоды" appAccessRights="promotions:update">
+    <mat-tab
+      label="Промокоды"
+      appAccessRights="promotions:update"
+      [appAccessDisabled]="true"
+      (emitAccessDisabled)="accessDisabledPromoCode = $event"
+      [disabled]="accessDisabledPromoCode"
+    >
       <ng-template matTabContent>
         <app-promo-code [id]="profileId"></app-promo-code>
       </ng-template>
     </mat-tab>
-    <mat-tab label="Льготы" appAccessRights="promotions:update">
+    <mat-tab
+      label="Льготы"
+      appAccessRights="externaldiscounts:update"
+      [appAccessDisabled]="true"
+      (emitAccessDisabled)="accessDisabledPrivileges = $event"
+      [disabled]="accessDisabledPrivileges"
+    >
       <ng-template matTabContent>
         <app-privileges [id]="profileId"></app-privileges>
       </ng-template>
