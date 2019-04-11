@@ -32,6 +32,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   public isDisabled: boolean;
   public ids: any;
   public totalCount: number;
+  public lessThanTwo: boolean;
 
   private isActive: boolean = true;
 
@@ -47,6 +48,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.lessThanTwo = true;
     this.initDataSource( this.tableDataSource );
     this.initDataSourceAsync();
     this.initPaginator();
@@ -181,6 +183,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       this.ids = { customerIds: arrayId };
+      this.lessThanTwo = this.ids.customerIds.length < 2;
     }
   }
 
