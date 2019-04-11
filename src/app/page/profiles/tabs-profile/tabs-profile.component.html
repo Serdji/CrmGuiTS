@@ -168,5 +168,10 @@
         <app-promo-code [id]="profileId"></app-promo-code>
       </ng-template>
     </mat-tab>
+    <mat-tab label="Льготы" appAccessRights="promotions:update">
+      <ng-template matTabContent>
+        <app-privileges [id]="profileId"></app-privileges>
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
 </div>
