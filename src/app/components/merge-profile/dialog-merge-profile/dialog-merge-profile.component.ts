@@ -52,15 +52,22 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     moveItemInArray( this.profiles, event.previousIndex, event.currentIndex );
   }
 
-  onYesClick(): void {
-    const funcMapResult = result => result.customerId;
+  private paramMergeCustomer() {
+    const propCustomerId = R.prop( 'customerId' );
     const funcMapProfiles = profile => {
-      return R.map( funcMapResult, profile.result );
+      return propCustomerId( R.head( profile.result ) );
     };
     const mapProfiles = R.map( funcMapProfiles );
-    const composeArrCustomerIds = R.compose( R.flatten, mapProfiles );
-    const arrCustomerIds = composeArrCustomerIds( this.profiles );
-    console.log( arrCustomerIds );
+    const arrCustomerIds = mapProfiles( this.profiles );
+
+    return {
+      MainCustomerId: R.head( arrCustomerIds ),
+      CustomerIds: R.tail( arrCustomerIds )
+    };
+  }
+
+  onYesClick(): void {
+    console.log( this.paramMergeCustomer() );
   }
 
   onNoClick(): void {
