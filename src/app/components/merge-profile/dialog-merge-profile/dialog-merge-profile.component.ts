@@ -6,6 +6,8 @@ import { Iprofiles } from '../../../interface/iprofiles';
 import * as R from 'ramda';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { DialogMergeProfileService } from './dialog-merge-profile.service';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-dialog-merge-profile',
@@ -54,6 +56,23 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     moveItemInArray( this.profiles, event.previousIndex, event.currentIndex );
   }
 
+  private windowDialog( messDialog: string, params: string, disableTimer: boolean = false ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status: params,
+      },
+    } );
+    if ( !disableTimer ) {
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialogMergeProfileService.subjectMergeCustomer.next();
+          this.dialog.closeAll();
+        } );
+    }
+  }
+
   private paramMergeCustomer() {
     const propCustomerId = R.prop( 'customerId' );
     const funcMapProfiles = profile => propCustomerId( R.head( profile.result ) );
@@ -67,7 +86,12 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
   }
 
   onYesClick(): void {
-    console.log( this.paramMergeCustomer() );
+    const success = _ => this.windowDialog( `Пассажир успешно объединен`, 'ok' );
+    const params = this.paramMergeCustomer();
+    this.dialogMergeProfileService.mergeCustomer( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe();
+
   }
 
   onNoClick(): void {
