@@ -16,6 +16,8 @@ import { timer } from 'rxjs';
 } )
 export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
+  public progress: boolean;
+
   private isActive: boolean;
   private profiles: Iprofiles[] = [];
 
@@ -29,11 +31,15 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.progress = true;
     this.initProfiles();
   }
 
   private initProfiles() {
-    const success = profile => this.profiles.push( profile );
+    const success = profile => {
+      this.profiles.push( profile );
+      this.progress = false;
+    };
     const objParams = id => {
       return {
         customerids: id,
@@ -86,11 +92,13 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
   }
 
   onYesClick(): void {
+    this.progress = true;
     const success = _ => this.windowDialog( `Пассажир успешно объединен`, 'ok' );
+    const error = _ => this.progress = false;
     const params = this.paramMergeCustomer();
     this.dialogMergeProfileService.mergeCustomer( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe();
+      .subscribe( success, error );
 
   }
 

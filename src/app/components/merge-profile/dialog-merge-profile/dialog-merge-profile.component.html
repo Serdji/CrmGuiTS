@@ -1,5 +1,8 @@
 <div class="dialog-merge-profile">
-  <div cdkDropList class="dialog-merge-profile__example-list" (cdkDropListDropped)="drop($event)">
+
+  <mat-progress-bar *ngIf="progress" mode="buffer"></mat-progress-bar>
+
+  <div *ngIf="!progress" cdkDropList class="dialog-merge-profile__example-list" (cdkDropListDropped)="drop($event)">
     <div class="dialog-merge-profile__example-wrapper" *ngFor="let profile of profiles; let i = index">
       <div class="dialog-merge-profile__example-box" *ngFor="let result of profile.result" cdkDrag>
         <mat-list>
