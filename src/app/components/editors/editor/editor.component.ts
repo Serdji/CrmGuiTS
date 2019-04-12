@@ -46,17 +46,24 @@ export class EditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.buttonSave = false;
+    this.buttonSave = true;
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
     this.insertTemplate();
+    this.initIsButtonSave();
+  }
+
+  private initIsButtonSave() {
+    this.formDistribution.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.buttonSave = this.formDistribution.invalid );
   }
 
   private initForm() {
     this.formDistribution = this.fb.group( {
       subject: [ '', [ Validators.required ] ],
-      text: '',
+      text: [ '', [ Validators.required ] ],
       templateId: '',
       dateFrom: '',
       dateTo: '',
@@ -186,8 +193,6 @@ export class EditorComponent implements OnInit, OnDestroy {
       .value();
 
     if ( !this.formDistribution.invalid ) {
-      this.buttonSave = true;
-
       const success = value => {
         this.distributionId = value.distributionId;
         this.dialog.closeAll();

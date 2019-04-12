@@ -1,11 +1,11 @@
 <div class="privileges">
 
-  <!--    <mat-card *ngIf="progress">-->
-  <!--      <mat-progress-bar mode="buffer"></mat-progress-bar>-->
-  <!--    </mat-card>-->
-  <!--    -->
+  <mat-card *ngIf="progress">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
 
-  <mat-accordion  class="privileges__accordion" multi="true">
+
+  <mat-accordion *ngIf="!progress" class="privileges__accordion" multi="true">
 
     <mat-card class="privileges__sort mat-elevation-z0">
       <div class="privileges__filter">

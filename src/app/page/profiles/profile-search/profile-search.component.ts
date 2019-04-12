@@ -21,6 +21,7 @@ import { ISettings } from '../../../interface/isettings';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
+import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
 
 @Component( {
   selector: 'app-profile-search',
@@ -70,7 +71,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private profileGroupService: ProfileGroupService,
     private router: Router,
     private route: ActivatedRoute,
-    private currencyDefaultService: CurrencyDefaultService
+    private currencyDefaultService: CurrencyDefaultService,
+    private dialogMergeProfileService: DialogMergeProfileService,
   ) { }
 
   ngOnInit(): void {
@@ -88,6 +90,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
+    this.dialogMergeProfileService.subjectMergeCustomer
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.creatingObjectForm() );
   }
 
   private initQueryParams() {

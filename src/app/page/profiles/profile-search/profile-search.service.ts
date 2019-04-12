@@ -29,7 +29,7 @@ export class ProfileSearchService {
     return this.http.get( this.configService.crmApi + '/crm/city' ).pipe( this.retryRequestService.retry() );
   }
 
-  getProfileSearch( params: IprofileSearch ): Observable<any> {
+  getProfileSearch( params ): Observable<any> {
     this.params = params;
     return this.http.get( this.configService.crmApi + '/crm/customer/search', { params: this.params } ).pipe( this.retryRequestService.retry() );
   }

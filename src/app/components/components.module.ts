@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { EditorsModule } from './editors/editors.module';
 import { PromoCodeModule } from './promo-code/promo-code.module';
 import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
+import { MergeProfileModule } from './merge-profile/merge-profile.module';
 
 @NgModule({
   imports: [
@@ -11,12 +12,14 @@ import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
     TablesModule,
     EditorsModule,
     PromoCodeModule,
+    MergeProfileModule,
     DynamicFormModule,
   ],
   exports: [
     TablesModule,
     EditorsModule,
     PromoCodeModule,
+    MergeProfileModule,
     DynamicFormModule,
   ],
 })

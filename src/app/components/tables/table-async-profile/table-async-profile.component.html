@@ -78,7 +78,9 @@
     <ng-container  matColumnDef="customerId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon [id]="element.customerId" (click)="editCreate( element.customerId )">remove_red_eye</mat-icon>
+        <a [id]="element.customerId" routerLink="/crm/profile/{{element.customerId}}" target="_blank">
+          <mat-icon>remove_red_eye</mat-icon>
+        </a>
       </mat-cell>
     </ng-container>
 
@@ -101,4 +103,5 @@
   </button>
   <app-button-editor [ids]="ids" [totalCount]="totalCount"></app-button-editor>
   <app-button-promo-code [ids]="ids" [disabled]="!selection.hasValue() && !isAllSelected()"></app-button-promo-code>
+  <app-button-merge-profile [ids]="ids" [disabled]="(!selection.hasValue() && !isAllSelected()) || lessThanTwo"></app-button-merge-profile>
 </div>

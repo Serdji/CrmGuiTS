@@ -1,0 +1,15 @@
+<button
+  style="margin-right: 15px"
+  [style.backgroundColor]="!disabled ? '#795548' : ''"
+  mat-raised-button
+  color="warn"
+  (click)="openDialog()"
+  [disabled]="disabled"
+  appAccessRights="promotions:update"
+>Объединить пассажиров
+  <mat-icon
+    style="margin-left: 10px"
+  >
+    call_merge
+  </mat-icon>
+</button>
