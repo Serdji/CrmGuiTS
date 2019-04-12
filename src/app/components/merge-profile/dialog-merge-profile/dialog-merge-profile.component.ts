@@ -5,6 +5,7 @@ import { ProfileSearchService } from '../../../page/profiles/profile-search/prof
 import { Iprofiles } from '../../../interface/iprofiles';
 import * as R from 'ramda';
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { DialogMergeProfileService } from './dialog-merge-profile.service';
 
 @Component( {
   selector: 'app-dialog-merge-profile',
@@ -19,6 +20,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private profileSearchService: ProfileSearchService,
+    private dialogMergeProfileService: DialogMergeProfileService,
     public dialogRef: MatDialogRef<DialogMergeProfileComponent>,
     @Inject( MAT_DIALOG_DATA ) public data: any
   ) { }
@@ -54,9 +56,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   private paramMergeCustomer() {
     const propCustomerId = R.prop( 'customerId' );
-    const funcMapProfiles = profile => {
-      return propCustomerId( R.head( profile.result ) );
-    };
+    const funcMapProfiles = profile => propCustomerId( R.head( profile.result ) );
     const mapProfiles = R.map( funcMapProfiles );
     const arrCustomerIds = mapProfiles( this.profiles );
 

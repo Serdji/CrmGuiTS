@@ -4,6 +4,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { ButtonMergeProfileComponent } from './button-merge-profile/button-merge-profile.component';
 import { DialogMergeProfileComponent } from './dialog-merge-profile/dialog-merge-profile.component';
 import { FormsModule } from '@angular/forms';
+import { DialogMergeProfileService } from './dialog-merge-profile/dialog-merge-profile.service';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { FormsModule } from '@angular/forms';
     ButtonMergeProfileComponent,
     DialogMergeProfileComponent,
   ],
-  entryComponents: [ DialogMergeProfileComponent ]
+  entryComponents: [ DialogMergeProfileComponent ],
+  providers: [ DialogMergeProfileService ]
 })
 export class MergeProfileModule { }
