@@ -143,6 +143,9 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach( row => this.selection.select( row ) );
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.isIds() );
   }
 
   editCreate( id ): void {
