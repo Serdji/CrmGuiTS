@@ -5,6 +5,8 @@ import { MatSnackBar } from '@angular/material';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { SaveUrlServiceService } from './services/save-url-service.service';
+import { TitleService } from './services/title.service';
+
 @Component( {
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -18,7 +20,8 @@ export class AppComponent implements OnInit {
     private location: Location,
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar,
-    private saveUrlServiceService: SaveUrlServiceService
+    private saveUrlServiceService: SaveUrlServiceService,
+    private titleService: TitleService
   ) { }
 
   ngOnInit(): void {
@@ -26,6 +29,7 @@ export class AppComponent implements OnInit {
     this.isTokenRedirect();
     this.updateVersion();
     this.saveUrlServiceService.deleteLocalStorageParams();
+    this.titleService.dataTitle();
   }
 
   private isTokenRedirect() {

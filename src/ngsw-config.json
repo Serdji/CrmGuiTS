@@ -2,14 +2,15 @@
   "index": "/index.html",
   "dataGroups": [
     {
-      "name": "api-performance",
+      "name": "api-freshness",
       "urls": [
         "/**"
       ],
       "cacheConfig": {
-        "strategy": "performance",
-        "maxSize": 100,
-        "maxAge": "1m"
+        "strategy": "freshness",
+        "maxSize": 20,
+        "maxAge": "5m",
+        "timeout": "5s"
       }
     }
   ],
