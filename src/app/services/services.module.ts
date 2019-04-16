@@ -11,6 +11,7 @@ import { RetryRequestService } from './retry-request.service';
 import { CurrencyDefaultService } from './currency-default.service';
 import { TableAsyncService } from './table-async.service';
 import { SaveUrlServiceService } from './save-url-service.service';
+import { TitleService } from './title.service';
 
 const appInitializerFn = ( appConfig: ConfigService ) => {
   return () => {
@@ -30,6 +31,7 @@ const appInitializerFn = ( appConfig: ConfigService ) => {
     RetryRequestService,
     CurrencyDefaultService,
     TableAsyncService,
+    TitleService,
     ParsTokenService,
     {
       provide: HTTP_INTERCEPTORS,
