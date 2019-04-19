@@ -10,5 +10,7 @@ export interface IPrivileges {
     'arrivalLocationCode': string;
     'externalDiscountSourceName': string;
     'externalDiscountStatusName': string;
+    'coupon': number;
+    'ticket': string;
   }[];
 }

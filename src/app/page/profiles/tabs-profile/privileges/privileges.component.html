@@ -110,10 +110,10 @@
             <span> {{privileges.departureLocationCode}} </span>
           </div>
           <div class="privileges__title">
-            <span> {{privileges.saleDate | date:'dd.MM.yyyy'}} </span>
+            <span> {{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}} </span>
           </div>
           <div class="privileges__title">
-            <span> {{privileges.flightDate | date:'dd.MM.yyyy'}} </span>
+            <span> {{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}} </span>
           </div>
           <div class="privileges__title">
             <span> {{privileges.externalDiscountStatusName}} </span>
@@ -136,9 +136,23 @@
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Дата предоставления льготы ( дата продажи ) </span>
+                <span class="privileges__info-text"> Дата предоставления льготы ( дата продажи ): </span>
                 <div class="privileges__info-params">
-                  <span><b>{{privileges.saleDate | date:'dd.MM.yyyy'}}</b></span>
+                  <span><b>{{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Номер билета: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.ticket}}</b></span>
+                </div>
+              </div>
+
+              <div class="privileges__info-wrapper">
+                <span class="privileges__info-text"> Номер купона: </span>
+                <div class="privileges__info-params">
+                  <span><b>{{privileges.coupon}}</b></span>
                 </div>
               </div>
             </div>
@@ -162,12 +176,12 @@
               <div class="privileges__info-wrapper">
                 <span class="privileges__info-text"> Дата перевозки: </span>
                 <div class="privileges__info-params">
-                  <span><b>{{privileges.flightDate | date:'dd.MM.yyyy'}}</b></span>
+                  <span><b>{{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Статус </span>
+                <span class="privileges__info-text"> Статус: </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.externalDiscountStatusName}}</b></span>
                 </div>
@@ -184,7 +198,7 @@
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text">Сумма предоставляемой льготы</span>
+                <span class="privileges__info-text"> Сумма предоставляемой льготы: </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.discountSum}}</b></span>
                 </div>
