@@ -14,6 +14,18 @@
           matRippleColor="rgba(0,0,0,.1)"
           matRippleUnbounded="true"
           matRippleRadius="50"
+          (click)="onSortFilter('recLoc')"
+        >
+          <b> Льгота №&nbsp;</b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+      </div>
+      <div class="privileges__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
           (click)="onSortFilter('externalDiscountSourceName')"
         >
           <b> Организация&nbsp;</b>
@@ -85,6 +97,9 @@
     <mat-expansion-panel *ngFor="let privileges of privileges.result ">
       <mat-expansion-panel-header>
         <div class="privileges__header-wrapper">
+          <div class="privileges__title">
+            <span> {{privileges.recLoc}} </span>
+          </div>
           <div class="privileges__title">
             <span> {{privileges.externalDiscountSourceName}} </span>
           </div>
