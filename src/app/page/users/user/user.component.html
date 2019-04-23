@@ -1,5 +1,5 @@
 <div class="user">
-  <mat-grid-list cols="2" rowHeight="900px">
+  <mat-grid-list cols="2" [rowHeight]="rowHeight">
     <mat-grid-tile [colspan]="1" [rowspan]="1">
       <mat-card class="user__card">
         <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>

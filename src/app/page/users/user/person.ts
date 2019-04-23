@@ -19,4 +19,8 @@ export const person = [
     title: 'Промокоды',
     ids: [ 9, 10 ]
   },
+  {
+    title: 'Льготы',
+    ids: [ 11, 12 ]
+  },
 ];

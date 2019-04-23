@@ -25,6 +25,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public formPermission: FormGroup;
   public edit = false;
   public persons: { title: string, ids: number[] }[] = person;
+  public rowHeight: number;
 
   private checkboxArr: number[];
   private loginId: number;
@@ -40,6 +41,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isActive = true;
+    this.rowHeight = 300;
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
@@ -82,6 +84,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   }
   private initFormPermission() {
+    R.map( _ => this.rowHeight += 103, this.persons );
     const formGroup = {};
     const propIds = R.prop( 'ids' );
     const mapIds = R.map( propIds );
@@ -91,7 +94,6 @@ export class UserComponent implements OnInit, OnDestroy {
     const tapCheckboxArr = R.tap( funcCheckboxArr );
     const composeIds = R.compose( mapControlConfig, tapCheckboxArr, R.flatten, mapIds );
     composeIds( this.persons );
-
     this.formPermission = this.fb.group( formGroup );
   }
 
