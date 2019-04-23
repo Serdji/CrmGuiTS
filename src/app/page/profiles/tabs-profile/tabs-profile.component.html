@@ -157,7 +157,7 @@
       appAccessRights="distributions:read"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledMessages = $event"
-      [disabled]="accessDisabledMessages"
+      *ngIf="!accessDisabledMessages"
     >
       <ng-template matTabContent>
         <app-messages [id]="profileId"></app-messages>
@@ -168,7 +168,7 @@
       appAccessRights="promotions:update"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledPromoCode = $event"
-      [disabled]="accessDisabledPromoCode"
+      *ngIf="!accessDisabledPromoCode"
     >
       <ng-template matTabContent>
         <app-promo-code [id]="profileId"></app-promo-code>
@@ -179,7 +179,7 @@
       appAccessRights="externaldiscounts:update"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledPrivileges = $event"
-      [disabled]="accessDisabledPrivileges"
+      *ngIf="!accessDisabledPrivileges"
     >
       <ng-template matTabContent>
         <app-privileges [id]="profileId"></app-privileges>
