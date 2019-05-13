@@ -51,7 +51,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.initQueryRouter();
     this.initCurrencyDefault();
-    this.selectedIndex = 0;
+    this.selectedIndex = 6;
     this.profileGroupService.subjectProfileGroup
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
