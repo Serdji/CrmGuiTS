@@ -6,7 +6,7 @@ import { Subject } from 'rxjs';
 })
 export class TabsProfileService {
 
-  public subjectStepSelectedIndex = new Subject();
+  public subjectControlTabsData = new Subject();
 
   constructor() { }
 }

@@ -12,6 +12,7 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { ISettings } from '../../../interface/isettings';
 import { timer } from 'rxjs';
 import { TabsProfileService } from './tabs-profile.service';
+import { IControlTabsData } from '../../../interface/icontrol-tabs-data';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -56,9 +57,9 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .subscribe( _ => {
         this.initProfile( this.profileId );
       } );
-    this.tabsProfileService.subjectStepSelectedIndex
+    this.tabsProfileService.subjectControlTabsData
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( index: number ) => this.selectedIndex = index );
+      .subscribe( ( data: IControlTabsData ) => this.selectedIndex = data.index );
   }
 
   private initQueryRouter() {
