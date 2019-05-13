@@ -131,7 +131,11 @@
     </mat-grid-list>
   </mat-card>
 
-  <mat-tab-group backgroundColor="primary" color="accent">
+  <mat-tab-group
+    backgroundColor="primary"
+    color="accent"
+    [selectedIndex]="selectedIndex"
+  >
     <mat-tab label="Профиль">
       <ng-template matTabContent>
         <app-profile [id]="profileId"></app-profile>

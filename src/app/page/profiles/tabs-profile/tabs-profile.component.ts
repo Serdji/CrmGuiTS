@@ -10,6 +10,8 @@ import { MatDialog } from '@angular/material';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { ISettings } from '../../../interface/isettings';
+import { timer } from 'rxjs';
+import { TabsProfileService } from './tabs-profile.service';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -30,6 +32,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public accessDisabledPromoCode: boolean;
   public accessDisabledPrivileges: boolean;
   public currencyDefault: string;
+  public selectedIndex: number;
 
   private isActive: boolean;
 
@@ -39,18 +42,23 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private dialog: MatDialog,
     private profileGroupService: ProfileGroupService,
-    private currencyDefaultService: CurrencyDefaultService
+    private currencyDefaultService: CurrencyDefaultService,
+    private tabsProfileService: TabsProfileService,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initQueryRouter();
     this.initCurrencyDefault();
+    this.selectedIndex = 0;
     this.profileGroupService.subjectProfileGroup
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.initProfile( this.profileId );
       } );
+    this.tabsProfileService.subjectStepSelectedIndex
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( index: number ) => this.selectedIndex = index );
   }
 
   private initQueryRouter() {
@@ -91,7 +99,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.profileService.getProfile( id )
       .pipe(
         takeWhile( _ => this.isActive )
-        )
+      )
       .subscribe( ( profile ) => {
         this.initProfileSegmentation( profile );
         this.initProfileGroup( profile );
