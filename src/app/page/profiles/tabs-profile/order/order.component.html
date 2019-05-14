@@ -73,8 +73,10 @@
     </mat-card>
 
     <mat-expansion-panel
-      *ngFor="let order of orders"
-      [expanded]=" order.pos[0].distrRecloc.recloc === 'J7JWKN' "
+      *ngFor="let order of orders; let i = index"
+      [expanded]="order.pos[0].distrRecloc.recloc === recLocCDS"
+      [id]="'panel-index-' + i"
+      (opened)="onOpenPanel( 'panel-index-' + i )"
     >
       <mat-expansion-panel-header>
         <div class="order__header-wrapper">

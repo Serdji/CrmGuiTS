@@ -34,6 +34,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public accessDisabledPrivileges: boolean;
   public currencyDefault: string;
   public selectedIndex: number;
+  public dataOrder: { recLocGDS: string };
 
   private isActive: boolean;
 
@@ -63,10 +64,14 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       } );
     this.tabsProfileService.subjectControlTabsData
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( data: ITabsControlData ) => {
-        console.log( this.selectedIndex );
+      .subscribe( ( tabsControlData: ITabsControlData ) => {
         this.selectedIndex = 0;
-        timer( 0 ).subscribe( _ =>  this.selectedIndex = data.selectedIndex );
+        timer( 0 )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.selectedIndex = tabsControlData.selectedIndex;
+            this.dataOrder = tabsControlData.order;
+          } );
       } );
   }
 

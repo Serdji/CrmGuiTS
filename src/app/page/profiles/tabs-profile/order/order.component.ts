@@ -18,6 +18,7 @@ import { Observable } from 'rxjs';
 export class OrderComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
+  @Input() data: { recLocGDS: string };
 
   public orders;
   public originalOrders;
@@ -60,18 +61,20 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private initBooking() {
     // YESSEN SYPATAYEV 21428 26ML5C
+    const success = orders => {
+      const getRecloc = R.pluck( 'recloc' );
+      this.originalOrders = R.init( orders );
+      this.orders = R.clone( this.originalOrders );
+      this.arrRecloc = getRecloc( this.orders );
+      this.progress = false;
+      this.recLocCDS = this.data ? this.data.recLocGDS : '';
+      console.log( this.recLocCDS );
+    };
+    const error = _ => this.progress = false;
+
     this.orderService.getBooking( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe(
-        orders => {
-          const getRecloc = R.pluck( 'recloc' );
-          this.originalOrders = R.init( orders );
-          this.orders = R.clone( this.originalOrders );
-          this.arrRecloc = getRecloc( this.orders );
-          this.progress = false;
-        },
-        error => this.progress = false
-      );
+      .subscribe( success, error );
   }
 
   private initControlConfig() {
@@ -130,8 +133,13 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.orders = composeSortByTitle( this.orders );
   }
 
+  onOpenPanel( id: string ): void {
+    console.log( id );
+  }
+
   ngOnDestroy(): void {
     this.isActive = false;
+    if ( this.data ) this.data.recLocGDS = '';
   }
 
 }
