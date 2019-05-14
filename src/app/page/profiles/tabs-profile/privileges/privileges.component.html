@@ -16,7 +16,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('recLoc')"
         >
-          <b> Заказ №&nbsp;</b>
+          <b> Заказ (GDS) №&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -97,7 +97,7 @@
     <mat-expansion-panel *ngFor="let privileges of privileges.result ">
       <mat-expansion-panel-header>
         <div class="privileges__header-wrapper">
-          <div class="privileges__title _hover">
+          <div class="privileges__title _hover" (click)="onOpenTabOrder(privileges.recLoc)">
             <span> {{privileges.recLoc}} </span>
           </div>
           <div class="privileges__title">

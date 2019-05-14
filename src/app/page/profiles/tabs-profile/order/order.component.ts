@@ -26,6 +26,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public formFilter: FormGroup;
   public arrRecloc: string[];
   public reclocOptions: Observable<string[]>;
+  public recLocCDS: string;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -41,6 +42,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
+    this.recLocCDS = '';
     this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();
@@ -48,6 +50,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initFilterOrders();
   }
+
 
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
@@ -62,7 +65,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       .subscribe(
         orders => {
           const getRecloc = R.pluck( 'recloc' );
-          this.originalOrders = _.initial( orders );
+          this.originalOrders = R.init( orders );
           this.orders = R.clone( this.originalOrders );
           this.arrRecloc = getRecloc( this.orders );
           this.progress = false;

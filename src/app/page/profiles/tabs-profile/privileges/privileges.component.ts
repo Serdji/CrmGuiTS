@@ -3,6 +3,7 @@ import * as R from 'ramda';
 import { PrivilegesService } from './privileges.service';
 import { takeWhile } from 'rxjs/operators';
 import { IPrivileges } from '../../../../interface/iprivileges';
+import { TabsProfileService } from '../tabs-profile.service';
 
 @Component( {
   selector: 'app-privileges',
@@ -19,7 +20,10 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
 
-  constructor( private privilegesService: PrivilegesService ) { }
+  constructor(
+    private privilegesService: PrivilegesService,
+    private tabsProfileService: TabsProfileService,
+    ) { }
 
   ngOnInit(): void {
     this.progress = true;
@@ -49,6 +53,16 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
     );
 
     this.privileges.result = funcSortByTitle( this.privileges.result );
+  }
+
+  onOpenTabOrder( recLocGDS: string ): void {
+    const params = {
+      selectedIndex: 3,
+      order: {
+        recLocGDS
+      }
+    };
+    this.tabsProfileService.subjectControlTabsData.next( params );
   }
 
   ngOnDestroy(): void {

@@ -10,9 +10,9 @@ import { MatDialog } from '@angular/material';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { ISettings } from '../../../interface/isettings';
-import { timer } from 'rxjs';
 import { TabsProfileService } from './tabs-profile.service';
-import { IControlTabsData } from '../../../interface/icontrol-tabs-data';
+import { ITabsControlData } from '../../../interface/itabs-control-data';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -49,9 +49,13 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.selectedIndex = 0;
     this.initQueryRouter();
     this.initCurrencyDefault();
-    this.selectedIndex = 6;
+    this.initSubjects();
+  }
+
+  private initSubjects() {
     this.profileGroupService.subjectProfileGroup
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
@@ -59,7 +63,11 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       } );
     this.tabsProfileService.subjectControlTabsData
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( data: IControlTabsData ) => this.selectedIndex = data.index );
+      .subscribe( ( data: ITabsControlData ) => {
+        console.log( this.selectedIndex );
+        this.selectedIndex = 0;
+        timer( 0 ).subscribe( _ =>  this.selectedIndex = data.selectedIndex );
+      } );
   }
 
   private initQueryRouter() {
