@@ -7,12 +7,13 @@ import {
 } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as _ from 'lodash';
+import { TabsProfileService } from '../../../services/tabs-profile.service';
 
 @Component( {
   selector: 'app-table-async-promo-code-profile',
@@ -41,7 +42,9 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private tableAsyncService: TableAsyncService
+    private route: ActivatedRoute,
+    private tableAsyncService: TableAsyncService,
+    private tabsProfileService: TabsProfileService,
   ) { }
 
   ngOnInit(): void {
@@ -150,6 +153,18 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
 
   redirectToProfile( id: number ): void {
     this.router.navigate( [ `/crm/profile/${id}` ] );
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( queryParams => {
+        const promoCodeId = +queryParams.promoCodeId;
+        const params = {
+          selectedIndex: 5,
+          promoCode: {
+            promoCodeId
+          }
+        };
+        this.tabsProfileService.setControlTabsData = params;
+      } );
   }
 
   disabledCheckbox( eventData ): void {

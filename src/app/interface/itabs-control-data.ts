@@ -6,4 +6,7 @@ export interface ITabsControlData {
   message?: {
     distributionId: number;
   };
+  promoCode?: {
+    promoCodeId: number;
+  };
 }

@@ -181,7 +181,10 @@
       *ngIf="!accessDisabledPromoCode"
     >
       <ng-template matTabContent>
-        <app-promo-code [id]="profileId"></app-promo-code>
+        <app-promo-code
+          [id]="profileId"
+          [data]="dataPromoCode"
+        ></app-promo-code>
       </ng-template>
     </mat-tab>
     <mat-tab
