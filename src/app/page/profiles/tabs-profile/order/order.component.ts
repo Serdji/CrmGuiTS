@@ -124,13 +124,15 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   sortFilter( title: string ): void {
-    this.isSortFilterReverse = !this.isSortFilterReverse;
+    const isSortFilterReverse = _ => this.isSortFilterReverse = !this.isSortFilterReverse;
+    const isSortFilterReverseFunc = R.ifElse( isSortFilterReverse, R.identity, R.reverse );
+    const sortByTitle = R.compose( R.sortBy, R.path, R.split( '.' ) );
+    const funcSortByTitle = R.compose(
+      isSortFilterReverseFunc,
+      sortByTitle( title )
+    );
 
-    const sortByTitle = _.curry( ( titleEvn, arr ) => _.sortBy( arr, titleEvn ) );
-    const sortFilterRevers = _.curry( ( isSortFilterReverse, arr ) => isSortFilterReverse ? arr : _.reverse( arr ) );
-    const composeSortByTitle = _.flow( [ sortByTitle( title ), sortFilterRevers( this.isSortFilterReverse ) ] );
-
-    this.orders = composeSortByTitle( this.orders );
+    this.orders = funcSortByTitle( this.orders );
   }
 
   onOpenPanel( id: string ): void {
