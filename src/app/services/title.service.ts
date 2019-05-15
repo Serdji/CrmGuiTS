@@ -20,10 +20,7 @@ export class TitleService {
         filter( event => event instanceof NavigationEnd ),
         map( () => this.activatedRoute ),
         map( route => route.root.firstChild.snapshot.children[ 0 ] ),
-        map( route => {
-          if ( route ) return route.data.title;
-          return 'Главная';
-        } ),
+        map( route => route ? route.data.title : 'Главная' ),
       )
       .subscribe( stateTitle => this.titleService.setTitle( `Leonardo.CRM - ${stateTitle}` ) );
   }

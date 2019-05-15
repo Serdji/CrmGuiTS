@@ -16,7 +16,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('recLoc')"
         >
-          <b> Заказ №&nbsp;</b>
+          <b> Заказ (GDS) №&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -97,17 +97,17 @@
     <mat-expansion-panel *ngFor="let privileges of privileges.result ">
       <mat-expansion-panel-header>
         <div class="privileges__header-wrapper">
-          <div class="privileges__title">
+          <div class="privileges__title _hover" (click)="onOpenTabOrder(privileges.recLoc)">
             <span> {{privileges.recLoc}} </span>
           </div>
           <div class="privileges__title">
             <span> {{privileges.externalDiscountSourceName}} </span>
           </div>
           <div class="privileges__title">
-            <span> {{privileges.arrivalLocationCode}} </span>
+            <span> {{privileges.departureLocationCode}} </span>
           </div>
           <div class="privileges__title">
-            <span> {{privileges.departureLocationCode}} </span>
+            <span> {{privileges.arrivalLocationCode}} </span>
           </div>
           <div class="privileges__title">
             <span> {{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}} </span>
@@ -162,14 +162,14 @@
               <div class="privileges__info-wrapper">
                 <span class="privileges__info-text"> Направление от: </span>
                 <div class="privileges__info-params">
-                  <span><b>{{privileges.arrivalLocationCode}}</b></span>
+                  <span><b>{{privileges.departureLocationCode}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
                 <span class="privileges__info-text"> Направление до: </span>
                 <div class="privileges__info-params">
-                  <span><b>{{privileges.departureLocationCode}}</b></span>
+                  <span><b>{{privileges.arrivalLocationCode}}</b></span>
                 </div>
               </div>
 

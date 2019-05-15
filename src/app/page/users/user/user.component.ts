@@ -8,6 +8,8 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { takeWhile } from 'rxjs/operators';
 import { ActivityUserService } from '../../../services/activity-user.service';
+import { person } from './person';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-user',
@@ -22,7 +24,10 @@ export class UserComponent implements OnInit, OnDestroy {
   public updatePassword: FormGroup;
   public formPermission: FormGroup;
   public edit = false;
+  public persons: { title: string, ids: number[] }[] = person;
+  public rowHeight: number;
 
+  private checkboxArr: number[];
   private loginId: number;
   private isActive: boolean;
 
@@ -36,6 +41,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isActive = true;
+    this.rowHeight = 300;
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
@@ -67,81 +73,42 @@ export class UserComponent implements OnInit, OnDestroy {
       login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
       email: [ '', [ Validators.email ] ],
       loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-    });
+    } );
   }
 
   private initFormPassword() {
     this.updatePassword = this.fb.group( {
       newPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
       confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-    });
-  }
-
-  private initFormPermission() {
-    this.formPermission = this.fb.group( {
-      1: '',
-      2: '',
-      3: '',
-      4: '',
-      5: '',
-      6: '',
-      7: '',
-      8: '',
-      9: '',
-      10: '',
-      11: '',
-      12: '',
     } );
+
+  }
+  private initFormPermission() {
+    R.map( _ => this.rowHeight += 103, this.persons );
+    const formGroup = {};
+    const propIds = R.prop( 'ids' );
+    const mapIds = R.map( propIds );
+    const funcControlConfig = id => formGroup[ id ] = '';
+    const mapControlConfig = R.map( funcControlConfig );
+    const funcCheckboxArr = arrIds => this.checkboxArr = arrIds;
+    const tapCheckboxArr = R.tap( funcCheckboxArr );
+    const composeIds = R.compose( mapControlConfig, tapCheckboxArr, R.flatten, mapIds );
+    composeIds( this.persons );
+    this.formPermission = this.fb.group( formGroup );
   }
 
   private checkboxDisabled() {
-    this.formPermission.get( '2' )[ this.formPermission.get( '1' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '1' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '2' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '2' ).patchValue( '' );
-      } );
-
-    this.formPermission.get( '4' )[ this.formPermission.get( '3' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '3' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '4' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '4' ).patchValue( '' );
-      } );
-
-    this.formPermission.get( '6' )[ this.formPermission.get( '5' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '5' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '6' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '6' ).patchValue( '' );
-      } );
-
-    this.formPermission.get( '8' )[ this.formPermission.get( '7' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '7' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '8' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '8' ).patchValue( '' );
-      } );
-
-    this.formPermission.get( '10' )[ this.formPermission.get( '9' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '9' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '10' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '10' ).patchValue( '' );
-      } );
-
-    this.formPermission.get( '12' )[ this.formPermission.get( '9' ).value ? 'enable' : 'disable' ]();
-    this.formPermission.get( '11' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => {
-        this.formPermission.get( '12' )[ value ? 'enable' : 'disable' ]();
-        this.formPermission.get( '12' ).patchValue( '' );
-      } );
+    R.map( id => {
+      if ( id % 2 === 0 ) {
+        this.formPermission.get( `${id}` )[ this.formPermission.get( `${id - 1}` ).value ? 'enable' : 'disable' ]();
+        this.formPermission.get( `${id - 1}` ).valueChanges
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( value => {
+            this.formPermission.get( `${id}` )[ value ? 'enable' : 'disable' ]();
+            this.formPermission.get( `${id}` ).patchValue( '' );
+          } );
+      }
+    }, this.checkboxArr );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
@@ -177,7 +144,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(): void {
-    this.windowDialog( `Вы действительно хотите удалить пользователя "${ this.user.login }" ?`, 'delete', 'user', true );
+    this.windowDialog( `Вы действительно хотите удалить пользователя "${this.user.login}" ?`, 'delete', 'user', true );
   }
 
   sendFormPassword(): void {

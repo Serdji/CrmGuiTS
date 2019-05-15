@@ -100,7 +100,12 @@
     </mat-card>
 
 
-    <mat-expansion-panel *ngFor=" let promoCode of promoCodes.result ">
+    <mat-expansion-panel
+      *ngFor=" let promoCode of promoCodes.result "
+      [expanded]="promoCode.promoCodeId === promoCodeId"
+      [id]="promoCode.promoCodeId"
+      (opened)="onOpenPanel( promoCode.promoCodeId )"
+    >
       <mat-expansion-panel-header>
         <div class="promo-code__header-wrapper">
           <div class="promo-code__title">
