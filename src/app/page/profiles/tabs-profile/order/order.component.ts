@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { map, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -7,7 +7,8 @@ import { ISettings } from '../../../../interface/isettings';
 import * as R from 'ramda';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component( {
@@ -37,13 +38,13 @@ export class OrderComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private currencyDefaultService: CurrencyDefaultService,
     private fb: FormBuilder,
+    @Inject( DOCUMENT ) document,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
-    this.recLocCDS = '';
     this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();
@@ -68,7 +69,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.arrRecloc = getRecloc( this.orders );
       this.progress = false;
       this.recLocCDS = this.data ? this.data.recLocGDS : '';
-      console.log( this.recLocCDS );
     };
     const error = _ => this.progress = false;
 
@@ -134,12 +134,21 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   onOpenPanel( id: string ): void {
-    console.log( id );
+    timer( 0 )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        takeWhile( _ => !!this.data ),
+        takeWhile( _ => this.data.recLocGDS !== '' ),
+      )
+      .subscribe( _ => {
+        const panel: HTMLElement = document.getElementById( id );
+        panel.scrollIntoView();
+        this.data.recLocGDS = '';
+      } );
   }
 
   ngOnDestroy(): void {
     this.isActive = false;
-    if ( this.data ) this.data.recLocGDS = '';
   }
 
 }
