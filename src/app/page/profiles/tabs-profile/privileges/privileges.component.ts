@@ -3,7 +3,7 @@ import * as R from 'ramda';
 import { PrivilegesService } from './privileges.service';
 import { takeWhile } from 'rxjs/operators';
 import { IPrivileges } from '../../../../interface/iprivileges';
-import { TabsProfileService } from '../tabs-profile.service';
+import { TabsProfileService } from '../../../../services/tabs-profile.service';
 
 @Component( {
   selector: 'app-privileges',

@@ -1,6 +1,9 @@
 export interface ITabsControlData {
   selectedIndex: number;
-  order: {
+  order?: {
     recLocGDS: string;
+  };
+  message?: {
+    distributionId: number;
   };
 }

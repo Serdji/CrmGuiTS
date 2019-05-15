@@ -12,6 +12,7 @@ import { CurrencyDefaultService } from './currency-default.service';
 import { TableAsyncService } from './table-async.service';
 import { SaveUrlServiceService } from './save-url-service.service';
 import { TitleService } from './title.service';
+import { TabsProfileService } from './tabs-profile.service';
 
 const appInitializerFn = ( appConfig: ConfigService ) => {
   return () => {
@@ -32,6 +33,7 @@ const appInitializerFn = ( appConfig: ConfigService ) => {
     CurrencyDefaultService,
     TableAsyncService,
     TitleService,
+    TabsProfileService,
     ParsTokenService,
     {
       provide: HTTP_INTERCEPTORS,

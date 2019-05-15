@@ -10,7 +10,7 @@ import { MatDialog } from '@angular/material';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { ISettings } from '../../../interface/isettings';
-import { TabsProfileService } from './tabs-profile.service';
+import { TabsProfileService } from '../../../services/tabs-profile.service';
 import { ITabsControlData } from '../../../interface/itabs-control-data';
 import { timer } from 'rxjs';
 
@@ -35,6 +35,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public currencyDefault: string;
   public selectedIndex: number;
   public dataOrder: { recLocGDS: string };
+  public dataMessage: { distributionId: number };
 
   private isActive: boolean;
 
@@ -53,7 +54,18 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.selectedIndex = 0;
     this.initQueryRouter();
     this.initCurrencyDefault();
+    this.initTabsControlData();
     this.initSubjects();
+  }
+
+  private initTabsControlData() {
+    const tabsControlData = this.tabsProfileService.getControlTabsData;
+    if ( tabsControlData ) {
+      timer( 0 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => this.tabsProfileService.subjectControlTabsData.next( tabsControlData ) );
+      this.tabsProfileService.setControlTabsData = null;
+    }
   }
 
   private initSubjects() {
@@ -71,6 +83,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           .subscribe( _ => {
             this.selectedIndex = tabsControlData.selectedIndex;
             this.dataOrder = tabsControlData.order;
+            this.dataMessage = tabsControlData.message;
           } );
       } );
   }

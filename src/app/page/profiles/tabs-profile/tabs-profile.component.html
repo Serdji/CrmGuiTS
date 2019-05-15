@@ -167,7 +167,10 @@
       *ngIf="!accessDisabledMessages"
     >
       <ng-template matTabContent>
-        <app-messages [id]="profileId"></app-messages>
+        <app-messages
+          [id]="profileId"
+          [data]="dataMessage"
+        ></app-messages>
       </ng-template>
     </mat-tab>
     <mat-tab

@@ -7,11 +7,13 @@ import {
 } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { takeWhile } from 'rxjs/operators';
+import { filter, takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
+import { TabsProfileService } from '../../../services/tabs-profile.service';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-table-async-distribution-profile',
@@ -39,7 +41,9 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private tableAsyncService: TableAsyncService
+    private route: ActivatedRoute,
+    private tableAsyncService: TableAsyncService,
+    private tabsProfileService: TabsProfileService,
   ) { }
 
   ngOnInit(): void {
@@ -139,6 +143,17 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
 
   redirectToDisplayed( id: number ): void {
     this.router.navigate( [ `/crm/profile/${id}` ] );
+    const splitUrl = R.split( '/' );
+    // @ts-ignore
+    const lastParamsUrl = R.compose( R.last, splitUrl );
+    const distributionId = +lastParamsUrl( this.router.url );
+    const params = {
+      selectedIndex: 4,
+      message: {
+        distributionId
+      }
+    };
+    this.tabsProfileService.setControlTabsData = params;
   }
 
   disabledCheckbox( eventData ): void {
