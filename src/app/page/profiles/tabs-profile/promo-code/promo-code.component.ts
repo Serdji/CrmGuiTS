@@ -4,6 +4,7 @@ import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as R from 'ramda';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-promo-code',
@@ -13,12 +14,14 @@ import * as R from 'ramda';
 export class PromoCodeComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
+  @Input() data: { promoCodeId: number };
 
   public progress: boolean;
   public promoCodes: IPromoCode;
   public nameButton: string;
   public isUsedHostRecLoc: boolean;
   public isPromoCodNull: boolean;
+  public promoCodeId: number;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -76,6 +79,8 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     const whichMethod = R.ifElse( whichButton( this.nameButton ), availableByCustomer, usedByCustomer );
 
     whichMethod( customerId );
+
+    this.promoCodeId = this.data ? this.data.promoCodeId : 0;
   }
 
   sortFilter( title: string ): void {
@@ -95,6 +100,21 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     this.progress = true;
     this.initPromoCodes();
   }
+
+  onOpenPanel( id: number ): void {
+    timer( 0 )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        takeWhile( _ => !!this.data ),
+        takeWhile( _ => this.data.promoCodeId !== 0 ),
+      )
+      .subscribe( _ => {
+        const panel: HTMLElement = document.getElementById( R.toString( id ) );
+        panel.scrollIntoView();
+        this.data.promoCodeId = 0;
+      } );
+  }
+
 
   ngOnDestroy(): void {
     this.isActive = false;

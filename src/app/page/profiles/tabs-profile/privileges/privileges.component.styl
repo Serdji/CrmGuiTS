@@ -1,7 +1,7 @@
 minWidthTitleAvailable = 233px
 
 .mat-expansion-panel-header
-  padding: 0 16px;
+  padding: 0 16px 0 0;
 
 .privileges
 
@@ -42,6 +42,8 @@ minWidthTitleAvailable = 233px
       margin-left: 0;
 
   &__title
+    height: 48px;
+    display: flex
     margin-right: 0;
 
     &:last-child
@@ -51,6 +53,12 @@ minWidthTitleAvailable = 233px
 
       span
         width: 212px;
+
+    &._hover
+      padding-left: 16px;
+      &:hover
+        background: rgba(0, 0, 0, 0.07);
+
 
   &__card
     margin: auto;

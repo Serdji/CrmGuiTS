@@ -131,7 +131,11 @@
     </mat-grid-list>
   </mat-card>
 
-  <mat-tab-group backgroundColor="primary" color="accent">
+  <mat-tab-group
+    backgroundColor="primary"
+    color="accent"
+    [selectedIndex]="selectedIndex"
+  >
     <mat-tab label="Профиль">
       <ng-template matTabContent>
         <app-profile [id]="profileId"></app-profile>
@@ -149,7 +153,10 @@
     </mat-tab>
     <mat-tab label="Заказы">
       <ng-template matTabContent>
-        <app-order [id]="profileId"></app-order>
+        <app-order
+          [id]="profileId"
+          [data]="dataOrder"
+        ></app-order>
       </ng-template>
     </mat-tab>
     <mat-tab
@@ -157,10 +164,13 @@
       appAccessRights="distributions:read"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledMessages = $event"
-      [disabled]="accessDisabledMessages"
+      *ngIf="!accessDisabledMessages"
     >
       <ng-template matTabContent>
-        <app-messages [id]="profileId"></app-messages>
+        <app-messages
+          [id]="profileId"
+          [data]="dataMessage"
+        ></app-messages>
       </ng-template>
     </mat-tab>
     <mat-tab
@@ -168,10 +178,13 @@
       appAccessRights="promotions:update"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledPromoCode = $event"
-      [disabled]="accessDisabledPromoCode"
+      *ngIf="!accessDisabledPromoCode"
     >
       <ng-template matTabContent>
-        <app-promo-code [id]="profileId"></app-promo-code>
+        <app-promo-code
+          [id]="profileId"
+          [data]="dataPromoCode"
+        ></app-promo-code>
       </ng-template>
     </mat-tab>
     <mat-tab
@@ -179,7 +192,7 @@
       appAccessRights="externaldiscounts:update"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledPrivileges = $event"
-      [disabled]="accessDisabledPrivileges"
+      *ngIf="!accessDisabledPrivileges"
     >
       <ng-template matTabContent>
         <app-privileges [id]="profileId"></app-privileges>

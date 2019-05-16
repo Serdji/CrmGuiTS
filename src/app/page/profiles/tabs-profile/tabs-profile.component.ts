@@ -10,6 +10,9 @@ import { MatDialog } from '@angular/material';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { ISettings } from '../../../interface/isettings';
+import { TabsProfileService } from '../../../services/tabs-profile.service';
+import { ITabsControlData } from '../../../interface/itabs-control-data';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -30,6 +33,10 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public accessDisabledPromoCode: boolean;
   public accessDisabledPrivileges: boolean;
   public currencyDefault: string;
+  public selectedIndex: number;
+  public dataOrder: { recLocGDS: string };
+  public dataMessage: { distributionId: number };
+  public dataPromoCode: { promoCodeId: number };
 
   private isActive: boolean;
 
@@ -39,17 +46,47 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private dialog: MatDialog,
     private profileGroupService: ProfileGroupService,
-    private currencyDefaultService: CurrencyDefaultService
+    private currencyDefaultService: CurrencyDefaultService,
+    private tabsProfileService: TabsProfileService,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
+    this.selectedIndex = 0;
     this.initQueryRouter();
     this.initCurrencyDefault();
+    this.initTabsControlData();
+    this.initSubjects();
+  }
+
+  private initTabsControlData() {
+    const tabsControlData = this.tabsProfileService.getControlTabsData;
+    if ( tabsControlData ) {
+      timer( 0 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => this.tabsProfileService.subjectControlTabsData.next( tabsControlData ) );
+      this.tabsProfileService.setControlTabsData = null;
+    }
+  }
+
+  private initSubjects() {
     this.profileGroupService.subjectProfileGroup
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.initProfile( this.profileId );
+      } );
+    this.tabsProfileService.subjectControlTabsData
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( tabsControlData: ITabsControlData ) => {
+        this.selectedIndex = 0;
+        timer( 0 )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.selectedIndex = tabsControlData.selectedIndex;
+            this.dataOrder = tabsControlData.order;
+            this.dataMessage = tabsControlData.message;
+            this.dataPromoCode = tabsControlData.promoCode;
+          } );
       } );
   }
 
@@ -91,7 +128,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.profileService.getProfile( id )
       .pipe(
         takeWhile( _ => this.isActive )
-        )
+      )
       .subscribe( ( profile ) => {
         this.initProfileSegmentation( profile );
         this.initProfileGroup( profile );

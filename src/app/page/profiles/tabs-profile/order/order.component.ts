@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
 import { map, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -7,7 +7,8 @@ import { ISettings } from '../../../../interface/isettings';
 import * as R from 'ramda';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
+import { DOCUMENT } from '@angular/common';
 
 
 @Component( {
@@ -18,6 +19,7 @@ import { Observable } from 'rxjs';
 export class OrderComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
+  @Input() data: { recLocGDS: string };
 
   public orders;
   public originalOrders;
@@ -26,6 +28,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public formFilter: FormGroup;
   public arrRecloc: string[];
   public reclocOptions: Observable<string[]>;
+  public recLocCDS: string;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -35,6 +38,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     private orderService: OrderService,
     private currencyDefaultService: CurrencyDefaultService,
     private fb: FormBuilder,
+    @Inject( DOCUMENT ) document,
   ) { }
 
   ngOnInit(): void {
@@ -49,6 +53,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initFilterOrders();
   }
 
+
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
       .pipe( takeWhile( _ => this.isActive ) )
@@ -57,18 +62,19 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private initBooking() {
     // YESSEN SYPATAYEV 21428 26ML5C
+    const success = orders => {
+      const getRecloc = R.pluck( 'recloc' );
+      this.originalOrders = R.init( orders );
+      this.orders = R.clone( this.originalOrders );
+      this.arrRecloc = getRecloc( this.orders );
+      this.progress = false;
+      this.recLocCDS = this.data ? this.data.recLocGDS : '';
+    };
+    const error = _ => this.progress = false;
+
     this.orderService.getBooking( this.id )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe(
-        orders => {
-          const getRecloc = R.pluck( 'recloc' );
-          this.originalOrders = _.initial( orders );
-          this.orders = R.clone( this.originalOrders );
-          this.arrRecloc = getRecloc( this.orders );
-          this.progress = false;
-        },
-        error => this.progress = false
-      );
+      .subscribe( success, error );
   }
 
   private initControlConfig() {
@@ -118,13 +124,29 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   sortFilter( title: string ): void {
-    this.isSortFilterReverse = !this.isSortFilterReverse;
+    const isSortFilterReverse = _ => this.isSortFilterReverse = !this.isSortFilterReverse;
+    const isSortFilterReverseFunc = R.ifElse( isSortFilterReverse, R.identity, R.reverse );
+    const sortByTitle = R.compose( R.sortBy, R.path, R.split( '.' ) );
+    const funcSortByTitle = R.compose(
+      isSortFilterReverseFunc,
+      sortByTitle( title )
+    );
 
-    const sortByTitle = _.curry( ( titleEvn, arr ) => _.sortBy( arr, titleEvn ) );
-    const sortFilterRevers = _.curry( ( isSortFilterReverse, arr ) => isSortFilterReverse ? arr : _.reverse( arr ) );
-    const composeSortByTitle = _.flow( [ sortByTitle( title ), sortFilterRevers( this.isSortFilterReverse ) ] );
+    this.orders = funcSortByTitle( this.orders );
+  }
 
-    this.orders = composeSortByTitle( this.orders );
+  onOpenPanel( id: string ): void {
+    timer( 0 )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        takeWhile( _ => !!this.data ),
+        takeWhile( _ => this.data.recLocGDS !== '' ),
+      )
+      .subscribe( _ => {
+        const panel: HTMLElement = document.getElementById( id );
+        panel.scrollIntoView();
+        this.data.recLocGDS = '';
+      } );
   }
 
   ngOnDestroy(): void {

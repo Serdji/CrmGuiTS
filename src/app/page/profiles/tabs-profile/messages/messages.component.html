@@ -43,7 +43,12 @@
       </div>
     </mat-card>
 
-    <mat-expansion-panel *ngFor="let message of messages;">
+    <mat-expansion-panel
+      *ngFor="let message of messages;"
+      [expanded]="message.distributionId === distributionId"
+      [id]="message.distributionId"
+      (opened)="onOpenPanel( message.distributionId )"
+    >
       <mat-expansion-panel-header>
         <div class="messages__header-wrapper">
           <div class="messages__title">

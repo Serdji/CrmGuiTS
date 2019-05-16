@@ -4,7 +4,6 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ProfileModule } from './profile/profile.module';
 import { SharedModule } from '../../../shared/shared.module';
 import { TabsProfileComponent } from './tabs-profile.component';
-import { TabsProfileService } from './tabs-profile.service';
 import { ContactModule } from './contact/contact.module';
 import { DocumentModule } from './document/document.module';
 import { OrderModule } from './order/order.module';
@@ -35,10 +34,7 @@ import { PrivilegesModule } from './privileges/privileges.module';
     TabsProfileRoutes
   ],
   declarations: [ TabsProfileComponent ],
-  providers: [
-    TabsProfileService,
-    OrderService,
-  ]
+  providers: [ OrderService ]
 } )
 export class TabsProfileModule {
 }
