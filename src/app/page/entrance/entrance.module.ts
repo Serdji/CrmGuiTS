@@ -5,13 +5,15 @@ import { EntranceComponent } from './entrance.component';
 import { RouterModule } from '@angular/router';
 import { SidenavService } from '../../shared/layout/sidenav/sidenav.service';
 import { EntranceRoutes } from './entrance.routing';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule( {
   imports: [
     CommonModule,
     SharedModule,
     RouterModule,
-    EntranceRoutes
+    EntranceRoutes,
+    PdfViewerModule
   ],
   declarations: [ EntranceComponent ],
   providers: [ SidenavService ]

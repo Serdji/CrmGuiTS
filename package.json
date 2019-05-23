@@ -37,6 +37,7 @@
     "lodash": "^4.17.11",
     "moment": "2.24.0",
     "ng2-dragula": "2.1.0",
+    "ng2-pdf-viewer": "^5.2.4",
     "ngx-wig": "^1.6.0",
     "normalize.css": "8.0.0",
     "npm": "^6.4.1",
