@@ -12,13 +12,6 @@
     </div>
   </mat-grid-list>
 
-  <mat-paginator
-    #paginator
-    [length]="pageLength"
-    [pageSize]="1"
-    [showFirstLastButtons]="true">
-  </mat-paginator>
-
   <pdf-viewer
     *ngIf="pdfSrc"
     [src]="pdfSrc"
@@ -30,6 +23,13 @@
   >
   </pdf-viewer>
 
+  <mat-paginator
+    #paginator
+    [length]="pageLength"
+    [pageSize]="1"
+    [showFirstLastButtons]="true">
+  </mat-paginator>
 
+  <a [href]="pdfSrc" target="_blank" >Download the PDF</a>
 
 </div>

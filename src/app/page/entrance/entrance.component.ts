@@ -3,7 +3,6 @@ import { SidenavService } from '../../shared/layout/sidenav/sidenav.service';
 import { IMenu } from '../../interface/imenu';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 import { MatPaginator } from '@angular/material';
-import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../interface/ipag-page';
 
 @Component( {
