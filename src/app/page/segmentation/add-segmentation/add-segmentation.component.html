@@ -106,7 +106,10 @@
           </div>
         </mat-step>
 
-        <mat-step *ngIf="formSegmentationStepper.get('eDocTypeS').value === 'T'">
+        <mat-step *ngIf="
+          formSegmentationStepper.get('eDocTypeS').value === 'T' ||
+          formSegmentationStepper.get('eDocTypeP').value === 'T'
+        ">
           <ng-template matStepLabel>Билет</ng-template>
           <div class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
@@ -174,7 +177,10 @@
           </div>
         </mat-step>
 
-        <mat-step *ngIf="formSegmentationStepper.get('eDocTypeS').value === 'E'">
+        <mat-step *ngIf="
+          formSegmentationStepper.get('eDocTypeS').value === 'E' ||
+          formSegmentationStepper.get('eDocTypeP').value === 'E'
+        ">
           <ng-template matStepLabel>Платные услуги</ng-template>
           <div class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
