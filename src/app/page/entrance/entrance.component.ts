@@ -25,7 +25,7 @@ export class EntranceComponent implements OnInit {
     this.sidenavService.closesAccord();
 
     this.pageVariable = 1;
-    this.pdfSrc = 'https://10.1.8.155:8080/reports/test.rdl/';
+    this.pdfSrc = 'https://10.1.8.155:8080/reports/test/%D1%82%D0%B5%D1%81%D1%82%20%D1%8F%D0%BC%D0%B0%D0%BB';
     this.buttonPreviousDisabled = true;
     this.buttonNextDisabled = false;
   }
