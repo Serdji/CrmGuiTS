@@ -7,14 +7,14 @@
         <mat-form-field class="distribution-report__input">
           <mat-select formControlName="template" placeholder="Шаблон запроса">
             <mat-option></mat-option>
-            <mat-option value="Шаблон 1">
-              Шаблон 1
+            <mat-option *ngFor=" let template of templates " value="template">
+              {{ template }}
             </mat-option>
           </mat-select>
           <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <div>
-          <button mat-button (click)="stepperNext()">Next</button>
+          <button mat-button (click)="stepperNext()">Вперед</button>
         </div>
       </form>
     </mat-step>
