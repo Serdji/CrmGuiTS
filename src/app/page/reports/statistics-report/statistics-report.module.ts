@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { DistributionReportComponent } from './distribution-report.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
-import { DistributionReportService } from './distribution-report.service';
-import { DistributionReportRoutes } from './distribution-report.routing';
+import { StatisticsReportComponent } from './statistics-report.component';
+import { StatisticsReportService } from './statistics-report.service';
+import { StatisticsReportRoutes } from './statistics-reportrouting';
 
 @NgModule( {
   imports: [
@@ -13,10 +13,10 @@ import { DistributionReportRoutes } from './distribution-report.routing';
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
-    DistributionReportRoutes
+    StatisticsReportRoutes
   ],
-  declarations: [ DistributionReportComponent ],
-  providers: [ DistributionReportService ]
+  declarations: [ StatisticsReportComponent ],
+  providers: [ StatisticsReportService ]
 } )
-export class DistributionReportModule {
+export class StatisticsReportModule {
 }

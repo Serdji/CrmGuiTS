@@ -29,7 +29,7 @@ const routes: Routes = [
         { path: 'add-promotions', loadChildren: './page/promotions/add-promotions/add-promotions.module#AddPromotionsModule', data: { title: 'Добавить промоакцию' } },
         { path: 'add-promotions-codes', loadChildren: './page/promotions/add-promotions-codes/add-promotions-codes.module#AddPromotionsCodesModule', data: { title: 'Добавить промокод' } },
         { path: 'search-promotions-codes', loadChildren: './page/promotions/search-promotions-codes/search-promotions-codes.module#SearchPromotionsCodesModule', data: { title: 'Поиск промокода' } },
-        { path: 'distribution-report', loadChildren: './page/reports/distribution-report/distribution-report.module#DistributionReportModule', data: { title: 'Отчеты рассылки' } },
+        { path: 'statistics-report', loadChildren: './page/reports/statistics-report/statistics-report.module#StatisticsReportModule', data: { title: 'Отчеты' } },
         { path: 'form-table-async-profile-settings', loadChildren: './page/settings/form-table-async-profile-settings/form-table-async-profile-settings.module#FormTableAsyncProfileSettingsModule', data: { title: 'Таблицы пассажиров' } },
         { path: 'restart', loadChildren: './page/settings/restart/restart.module#RestartModule', data: { title: 'Перезагрузка' } },
       ],

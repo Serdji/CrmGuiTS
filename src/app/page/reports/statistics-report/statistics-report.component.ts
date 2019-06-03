@@ -7,10 +7,10 @@ import { person } from './person';
 
 @Component( {
   selector: 'app-distribution-report',
-  templateUrl: './distribution-report.component.html',
-  styleUrls: [ './distribution-report.component.styl' ],
+  templateUrl: './statistics-report.component.html',
+  styleUrls: [ './statistics-report.component.styl' ],
 } )
-export class DistributionReportComponent implements OnInit, OnDestroy {
+export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
   private dynamicFormValue: any;
