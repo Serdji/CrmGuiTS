@@ -1,11 +1,17 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { timer } from 'rxjs';
+import { config, timer } from 'rxjs';
 
 import { person } from './person';
 import { StatisticsReportService } from './statistics-report.service';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import * as R from 'ramda';
+
+
+interface FoodNode {
+  name: string;
+  children?: FoodNode[];
+}
 
 
 @Component( {
@@ -21,7 +27,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public templateForm: FormGroup;
   public dynamicForm: FormGroup;
   public person: any;
-  public templates: string[];
+  public templates: FoodNode[];
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -43,44 +49,67 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   private initTemplates() {
-
+    const TREE_DATA: FoodNode[] = [];
     const funcMapTemplates = template => {
-      let config: { dir: string[], temp: string }  ;
-      const dir: string[] = [];
-      let temp: string;
-
-      const split = R.split( '/' );
-      const dropLast = R.dropLast( 1 );
-      const append = R.append( template );
       // @ts-ignore
-      const composeSplitDrop = R.compose( append, dropLast, split );
-      const lengthTemplate = R.length( composeSplitDrop( template ) );
+      const composeSplitDrop = R.compose( R.append( template ), R.dropLast( 1 ), R.split( '/' ) );
 
-      const funcEachConfig = ( splitDropTemplate, index ) => {
-        const i = +index + 1;
-        if ( i !== lengthTemplate ) dir.push( splitDropTemplate );
-        else temp = splitDropTemplate;
-        config = {
-          dir,
-          temp
-        };
+      const funcConfig = ( splitDrop, config = [], children = [], i = 1 ) => {
+        if ( !R.isNil( splitDrop[ 0 ] ) )
+          children.push( {
+            level: i,
+            name: splitDrop[ 0 ],
+            children: []
+          } );
+        config.push( children );
+        if ( !R.isEmpty( splitDrop ) ) funcConfig( R.tail( splitDrop ), config, children[ 0 ].children, ++i );
+        return config;
       };
-      const eachConfig = R.forEachObjIndexed( funcEachConfig );
-      eachConfig( composeSplitDrop( template ) );
 
-      return config;
+      const composeTreeData = R.compose( R.filter( R.propEq( 'level', 1 ) ), R.unnest, funcConfig );
+      // @ts-ignore
+      TREE_DATA.push( composeTreeData( composeSplitDrop( template ) ) );
+      return R.unnest( TREE_DATA );
     };
 
     const mapTemplates = R.map( funcMapTemplates );
+    const composeUnnestConfig = R.compose( R.unnest, R.last );
 
     const success = templates => {
-      this.templates = templates;
-      console.log(mapTemplates( templates ));
+      const lensChildren = R.lensProp( 'children' );
+      const propName = R.prop( 'name' );
+      const unnestConfig = composeUnnestConfig( templates );
+      const uniqByName = R.uniqBy( propName );
+      const uniqByConfig = uniqByName( unnestConfig );
 
+      // console.log( unnestConfig );
+      // console.log( uniqByConfig );
+
+      const funcUniqByConfig = uniqByCon => {
+        const mapUniqByConfig = R.map( ( uniqByConf: any ) => {
+          const funcUnnestConfig = unnestCon => {
+            const mapUnnestConfig = R.map( ( unnestConf: any ) => {
+              if ( uniqByConf.name === unnestConf.name ) uniqByConf.children.push( unnestConf.children[ 0 ] );
+              if( unnestConf.children ) funcUnnestConfig( unnestConf.children[ 0 ]  );
+            } );
+            mapUnnestConfig( unnestCon );
+          };
+          funcUnnestConfig( unnestConfig );
+
+          if( !R.isEmpty( uniqByConf.children ) ) funcUniqByConfig( uniqByConf.children );
+          return R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf );
+        } );
+        return mapUniqByConfig( uniqByCon );
+      };
+
+      console.log(funcUniqByConfig( uniqByConfig ));
     };
 
     this.statisticsReportService.getTemplates()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( mapTemplates )
+      )
       .subscribe( success );
   }
 
