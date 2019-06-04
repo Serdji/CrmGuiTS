@@ -85,24 +85,26 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       // console.log( unnestConfig );
       // console.log( uniqByConfig );
 
-      const funcUniqByConfig = uniqByCon => {
-        const mapUniqByConfig = R.map( ( uniqByConf: any ) => {
-          const funcUnnestConfig = unnestCon => {
-            const mapUnnestConfig = R.map( ( unnestConf: any ) => {
-              if ( uniqByConf.name === unnestConf.name ) uniqByConf.children.push( unnestConf.children[ 0 ] );
-              if( unnestConf.children ) funcUnnestConfig( unnestConf.children[ 0 ]  );
-            } );
-            mapUnnestConfig( unnestCon );
-          };
-          funcUnnestConfig( unnestConfig );
+      const funcUniqByConfig = ( uniqByCon, unnestCon, i = 1 ) => {
 
-          if( !R.isEmpty( uniqByConf.children ) ) funcUniqByConfig( uniqByConf.children );
+        const mapUniqByConfig = R.map( ( uniqByConf: any ) => {
+
+
+          const mapUnnestConfig = R.map( ( unnestConf: any ) => {
+
+            if ( uniqByConf.name === unnestConf.name ) uniqByConf.children.push( unnestConf.children[ 0 ] );
+            funcUniqByConfig( uniqByConf.children, unnestConf.children[ 0 ], ++i );
+          } );
+
+          mapUnnestConfig( unnestCon );
+
           return R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf );
         } );
+
         return mapUniqByConfig( uniqByCon );
       };
 
-      console.log(funcUniqByConfig( uniqByConfig ));
+      console.log( funcUniqByConfig( uniqByConfig, unnestConfig ) );
     };
 
     this.statisticsReportService.getTemplates()
