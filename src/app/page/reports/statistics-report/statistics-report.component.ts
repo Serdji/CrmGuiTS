@@ -86,21 +86,20 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       // console.log( uniqByConfig );
 
       const funcUniqByConfig = ( uniqByCon, unnestCon, i = 1 ) => {
-
         const mapUniqByConfig = R.map( ( uniqByConf: any ) => {
-
-
           const mapUnnestConfig = R.map( ( unnestConf: any ) => {
-
-            if ( uniqByConf.name === unnestConf.name ) uniqByConf.children.push( unnestConf.children[ 0 ] );
-            funcUniqByConfig( uniqByConf.children, unnestConf.children[ 0 ], ++i );
+            if ( !R.isNil( uniqByConf.children[ 0 ] )) {
+              if ( uniqByConf.name === unnestConf.name ) uniqByConf.children.push( unnestConf.children[ 0 ] );
+              if ( !R.isEmpty( uniqByConf.children ) ) funcUniqByConfig( uniqByConf.children, uniqByConf.children, ++i );
+            }
           } );
 
           mapUnnestConfig( unnestCon );
-
-          return R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf );
+          if( !R.isEmpty( uniqByConf.children  ) ){
+            console.log(  R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf ) );
+            return R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf );
+          }
         } );
-
         return mapUniqByConfig( uniqByCon );
       };
 
