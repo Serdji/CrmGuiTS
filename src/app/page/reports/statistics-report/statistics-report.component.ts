@@ -33,6 +33,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public paramsDynamicForm: IParamsDynamicForm[];
   public isDynamicForm: boolean;
 
+  private patternPath: string;
+
   @ViewChild( 'stepper' ) stepper;
 
   constructor(
@@ -125,6 +127,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
 
   onSendTemplate( patternPath: string ): void {
+    this.patternPath = patternPath;
     this.isDynamicForm = false;
     this.statisticsReportService.getParamsDynamicForm( patternPath )
       .pipe( takeWhile( _ => this.isActive ) )
@@ -136,7 +139,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onDynamicFormValue( event ): void {
-    console.log( event );
+    const params = {
+      ReportName: this.patternPath,
+      ReportParameters: event,
+    };
+    console.log( params );
+    this.statisticsReportService.getParams( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( value => console.log(value) );
   }
 
 

@@ -4,6 +4,7 @@ import * as R from 'ramda';
 import * as moment from 'moment';
 import { map, takeWhile } from 'rxjs/operators';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
+import { __values } from 'tslib';
 
 @Component( {
   selector: 'app-dynamic-form',
@@ -101,13 +102,9 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   onDynamicFormEmit(): void {
     const objParserDate = {};
-    const generateNewObj = R.curry( ( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
-    const momentFunc = generateNewObj( objParserDate );
-    const parserDate = R.forEachObjIndexed( momentFunc );
-
-    const mappingMomentDate = value => parserDate( value );
-
-    this.dynamicFormEmit.emit( R.map( mappingMomentDate,  this.dynamicForm.getRawValue()) );
+    const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
+    R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
+    this.dynamicFormEmit.emit( objParserDate );
   }
 
   ngOnDestroy(): void {
