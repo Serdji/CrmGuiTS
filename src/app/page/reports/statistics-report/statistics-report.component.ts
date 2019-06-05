@@ -6,6 +6,8 @@ import { person } from './person';
 import { StatisticsReportService } from './statistics-report.service';
 import { map, takeWhile, tap } from 'rxjs/operators';
 import * as R from 'ramda';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { MatTreeNestedDataSource } from '@angular/material';
 
 
 interface FoodNode {
@@ -21,12 +23,16 @@ interface FoodNode {
 } )
 export class StatisticsReportComponent implements OnInit, OnDestroy {
 
+  treeControl = new NestedTreeControl<FoodNode>( node => node.children );
+  dataSource = new MatTreeNestedDataSource<FoodNode>();
+
   private isActive: boolean;
   private dynamicFormValue: any;
 
   public dynamicForm: FormGroup;
   public person: any;
   public templates: FoodNode[];
+  public isProgress: boolean;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -38,6 +44,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.initTemplates();
+    this.isProgress = true;
   }
 
 
@@ -47,7 +54,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const uniqByName = R.uniqBy( propName );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
 
-    const funcMapPathConversion = template => {
+    const funcMapPathConversion = ( template: string ): FoodNode[] => {
       // @ts-ignore
       const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
         if ( !R.isNil( splitDrop[ 0 ] ) )
@@ -75,7 +82,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     };
     const mapPathConversion = R.map( funcMapPathConversion );
 
-    const mapRemoveRepetitions = templates => {
+    const mapRemoveRepetitions = ( templates: any ): FoodNode[] => {
       const unnestConfig = composeUnnestConfig( templates );
       const uniqByConfig = uniqByName( unnestConfig );
       const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
@@ -98,7 +105,10 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       return funcRecurRecDist( uniqByConfig, unnestConfig );
     };
 
-    const success = templates => console.log( templates );
+    const success = templates => {
+      this.dataSource.data = templates;
+      this.isProgress = false;
+    };
 
     this.statisticsReportService.getTemplates()
       .pipe(
@@ -124,6 +134,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     console.log( this.dynamicFormValue );
     this.stepper.next();
   }
+
+  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
 
   ngOnDestroy(): void {
     this.isActive = false;
