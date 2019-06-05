@@ -2,21 +2,7 @@
   <mat-vertical-stepper linear #stepper>
 
     <mat-step [stepControl]="templateForm">
-      <form [formGroup]="templateForm">
-        <ng-template matStepLabel>Шаблон</ng-template>
-        <mat-form-field class="distribution-report__input">
-          <mat-select formControlName="template" placeholder="Шаблон запроса">
-            <mat-option></mat-option>
-            <mat-option *ngFor=" let template of templates " value="template">
-              {{ template }}
-            </mat-option>
-          </mat-select>
-          <mat-error>Обязательное поле</mat-error>
-        </mat-form-field>
-        <div>
-          <button mat-button (click)="stepperNext()">Вперед</button>
-        </div>
-      </form>
+      <button mat-button (click)="stepperNext()">Вперед</button>
     </mat-step>
 
     <mat-step [stepControl]="dynamicForm">

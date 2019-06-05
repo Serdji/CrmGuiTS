@@ -4,7 +4,7 @@ import { config, timer } from 'rxjs';
 
 import { person } from './person';
 import { StatisticsReportService } from './statistics-report.service';
-import { map, takeWhile } from 'rxjs/operators';
+import { map, takeWhile, tap } from 'rxjs/operators';
 import * as R from 'ramda';
 
 
@@ -24,7 +24,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   private dynamicFormValue: any;
 
-  public templateForm: FormGroup;
   public dynamicForm: FormGroup;
   public person: any;
   public templates: FoodNode[];
@@ -38,78 +37,74 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.initTemplateForm();
     this.initTemplates();
   }
 
-  private initTemplateForm() {
-    this.templateForm = this.fb.group( {
-      template: [ '' ]
-    } );
-  }
 
   private initTemplates() {
     const TREE_DATA: FoodNode[] = [];
-    const funcMapTemplates = template => {
-      // @ts-ignore
-      const composeSplitDrop = R.compose( R.append( template ), R.dropLast( 1 ), R.split( '/' ) );
+    const propName = R.prop( 'name' );
+    const uniqByName = R.uniqBy( propName );
+    const composeUnnestConfig = R.compose( R.unnest, R.last );
 
-      const funcConfig = ( splitDrop, config = [], children = [], i = 1 ) => {
+    const funcMapPathConversion = template => {
+      // @ts-ignore
+      const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
         if ( !R.isNil( splitDrop[ 0 ] ) )
           children.push( {
             level: i,
             name: splitDrop[ 0 ],
             children: []
           } );
-        config.push( children );
-        if ( !R.isEmpty( splitDrop ) ) funcConfig( R.tail( splitDrop ), config, children[ 0 ].children, ++i );
-        return config;
+        configTreeData.push( children );
+        if ( !R.isEmpty( splitDrop ) ) funcRecurConfig( R.tail( splitDrop ), configTreeData, children[ 0 ].children, ++i );
+        return configTreeData;
       };
-
-      const composeTreeData = R.compose( R.filter( R.propEq( 'level', 1 ) ), R.unnest, funcConfig );
+      const composeTreeDataSplitDrop = R.compose(
+        R.filter( R.propEq( 'level', 1 ) ),
+        R.unnest,
+        funcRecurConfig,
+        R.append( template ),
+        R.dropLast( 1 ),
+        // @ts-ignore
+        R.split( '/' )
+      );
       // @ts-ignore
-      TREE_DATA.push( composeTreeData( composeSplitDrop( template ) ) );
+      TREE_DATA.push( composeTreeDataSplitDrop( template ) );
       return R.unnest( TREE_DATA );
     };
+    const mapPathConversion = R.map( funcMapPathConversion );
 
-    const mapTemplates = R.map( funcMapTemplates );
-    const composeUnnestConfig = R.compose( R.unnest, R.last );
-
-    const success = templates => {
-      const lensChildren = R.lensProp( 'children' );
-      const propName = R.prop( 'name' );
+    const mapRemoveRepetitions = templates => {
       const unnestConfig = composeUnnestConfig( templates );
-      const uniqByName = R.uniqBy( propName );
       const uniqByConfig = uniqByName( unnestConfig );
-
-      // console.log( unnestConfig );
-      // console.log( uniqByConfig );
-
-      const funcUniqByConfig = ( uniqByCon, unnestCon, i = 1 ) => {
-        const mapUniqByConfig = R.map( ( uniqByConf: any ) => {
-          const mapUnnestConfig = R.map( ( unnestConf: any ) => {
-            if ( !R.isNil( uniqByConf.children[ 0 ] )) {
-              if ( uniqByConf.name === unnestConf.name ) uniqByConf.children.push( unnestConf.children[ 0 ] );
-              if ( !R.isEmpty( uniqByConf.children ) ) funcUniqByConfig( uniqByConf.children, uniqByConf.children, ++i );
+      const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
+        const mapUniqByConfig = R.map( ( receiver: any ) => {
+          const mapUnnestConfig = R.map( ( distributor: any ) => {
+            if ( !R.isNil( receiver.children[ 0 ] ) ) {
+              if ( receiver.name === distributor.name ) receiver.children.push( distributor.children[ 0 ] );
+              if ( !R.isEmpty( receiver.children ) ) funcRecurRecDist( receiver.children, receiver.children );
             }
           } );
-
           mapUnnestConfig( unnestCon );
-          if( !R.isEmpty( uniqByConf.children  ) ){
-            console.log(  R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf ) );
-            return R.set( lensChildren, uniqByName( uniqByConf.children ), uniqByConf );
+          if ( !R.isEmpty( receiver.children ) ) {
+            receiver.children = uniqByName( receiver.children );
+            return receiver;
           }
         } );
         return mapUniqByConfig( uniqByCon );
       };
 
-      console.log( funcUniqByConfig( uniqByConfig, unnestConfig ) );
+      return funcRecurRecDist( uniqByConfig, unnestConfig );
     };
+
+    const success = templates => console.log( templates );
 
     this.statisticsReportService.getTemplates()
       .pipe(
         takeWhile( _ => this.isActive ),
-        map( mapTemplates )
+        map( mapPathConversion ),
+        map( mapRemoveRepetitions )
       )
       .subscribe( success );
   }
