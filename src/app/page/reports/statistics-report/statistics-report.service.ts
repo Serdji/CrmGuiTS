@@ -18,4 +18,8 @@ export class StatisticsReportService {
   getTemplates( ): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/reports' ).pipe( this.retryRequestService.retry() );
   }
+
+  getParamsDynamicForm( params: string ): Observable<any> {
+    return this.http.get( this.configService.crmApi + `/crm/reports/getParams?reportName=${ params }` ).pipe( this.retryRequestService.retry() );
+  }
 }

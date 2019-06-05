@@ -1,13 +1,11 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { config, timer } from 'rxjs';
-
-import { person } from './person';
 import { StatisticsReportService } from './statistics-report.service';
 import { map, takeWhile, tap } from 'rxjs/operators';
 import * as R from 'ramda';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
+import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 
 
 interface FoodNode {
@@ -33,6 +31,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public person: any;
   public templates: FoodNode[];
   public isProgress: boolean;
+  public paramsDynamicForm: IParamsDynamicForm[];
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -54,7 +53,9 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const uniqByName = R.uniqBy( propName );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
 
+    // Мапируем массив из строк во вложенную структуру
     const funcMapPathConversion = ( template: string ): FoodNode[] => {
+      // Рекурсивная функция для структурирования вложенностей
       // @ts-ignore
       const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
         if ( !R.isNil( splitDrop[ 0 ] ) )
@@ -82,9 +83,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     };
     const mapPathConversion = R.map( funcMapPathConversion );
 
+    // Маппинг для уделения повторений и проверки вложанностей структуры каталогов
     const mapRemoveRepetitions = ( templates: any ): FoodNode[] => {
       const unnestConfig = composeUnnestConfig( templates );
       const uniqByConfig = uniqByName( unnestConfig );
+
+      // Рекурсия для прохода по не определленной глубене вложанности дерева
       const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
         const mapUniqByConfig = R.map( ( receiver: any ) => {
           const mapUnnestConfig = R.map( ( distributor: any ) => {
@@ -101,7 +105,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         } );
         return mapUniqByConfig( uniqByCon );
       };
-
       return funcRecurRecDist( uniqByConfig, unnestConfig );
     };
 
@@ -119,11 +122,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       .subscribe( success );
   }
 
-  stepperNext(): void {
-    timer( 100 ).subscribe( _ => {
-      this.person = person;
-      this.stepper.next();
-    } );
+
+  onSendTemplate( patternPath: string ): void {
+    this.statisticsReportService.getParamsDynamicForm( patternPath )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( paramsDynamicForm => {
+        this.paramsDynamicForm = paramsDynamicForm;
+        this.stepper.next();
+      } );
   }
 
   onDynamicFormValue( data ): void {
