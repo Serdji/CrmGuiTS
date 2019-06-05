@@ -24,6 +24,6 @@ export class StatisticsReportService {
   }
 
   getParams( params ): Observable<any> {
-    return this.http.post( this.configService.crmApi + '/crm/reports/getReport', params ).pipe( this.retryRequestService.retry() );
+    return this.http.post( this.configService.crmApi + '/crm/reports/getReport', params, { responseType: 'blob', observe: 'response' } ).pipe( this.retryRequestService.retry() );
   }
 }

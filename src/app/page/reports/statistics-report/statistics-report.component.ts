@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticsReportService } from './statistics-report.service';
 import { map, takeWhile, tap } from 'rxjs/operators';
 import * as R from 'ramda';
+import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
@@ -146,7 +147,13 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     console.log( params );
     this.statisticsReportService.getParams( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( value => console.log(value) );
+      .subscribe( resp => {
+        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
+        console.log( resp );
+        console.log( resp.body, );
+        console.log( filename );
+        saveAs( resp.body, 'report' );
+      } );
   }
 
 
