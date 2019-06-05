@@ -37,8 +37,8 @@
       <ng-template matStepLabel>Форма запроса отчета</ng-template>
 
       <app-dynamic-form
-        *ngIf="paramsDynamicForm"
-        [dataObject]="paramsDynamicForm"
+        *ngIf="paramsDynamicForm && isDynamicForm"
+        [paramsDynamicForm]="paramsDynamicForm"
         [splitInput]="2"
         [cols]="3"
         rowHeight="200px"

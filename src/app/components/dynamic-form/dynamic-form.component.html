@@ -27,7 +27,7 @@
             </mat-form-field>
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'date'">
-              <input matInput [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
+              <input matInput  [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #picker></mat-datepicker>
             </mat-form-field>

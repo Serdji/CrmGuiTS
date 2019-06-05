@@ -32,6 +32,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public templates: FoodNode[];
   public isProgress: boolean;
   public paramsDynamicForm: IParamsDynamicForm[];
+  public isDynamicForm: boolean;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -44,6 +45,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.initTemplates();
     this.isProgress = true;
+    this.isDynamicForm = false;
   }
 
 
@@ -124,10 +126,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
 
   onSendTemplate( patternPath: string ): void {
+    this.isDynamicForm = false;
     this.statisticsReportService.getParamsDynamicForm( patternPath )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( paramsDynamicForm => {
         this.paramsDynamicForm = paramsDynamicForm;
+        this.isDynamicForm = true;
         this.stepper.next();
       } );
   }
