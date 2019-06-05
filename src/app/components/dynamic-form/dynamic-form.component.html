@@ -1,5 +1,5 @@
 <div class="dynamic-form">
-  <form [formGroup]="dynamicForm">
+  <form class="dynamic-form__form" [formGroup]="dynamicForm">
     <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
       <mat-grid-tile class="dynamic-form__grid-tile" *ngFor="let objectProps of splitObjectProps" colspan="1" rowspan="1">
         <div *ngFor="let prop of objectProps">
@@ -40,4 +40,9 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
+  <button class="dynamic-form__button" mat-raised-button
+          (click)="onDynamicFormEmit()" color="primary">
+    <mat-icon>graphic_eq</mat-icon>
+    Сформировать
+  </button>
 </div>

@@ -1,7 +1,6 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as R from 'ramda';
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import { map, takeWhile } from 'rxjs/operators';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
@@ -32,7 +31,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.initParameterConversion();
     this.initDynamicForm();
-    this.initDynamicFormEmit();
     this.initSplitObjectProps();
   }
 
@@ -77,29 +75,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.dynamicForm = new FormGroup( formGroup );
   }
 
-  private initDynamicFormEmit() {
-    const objParserDate = {};
-    const generateNewObj = R.curry( ( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
-    const momentFunc = generateNewObj( objParserDate );
-    const parserDate = R.forEachObjIndexed( momentFunc );
-
-    const mappingMomentDate = value => {
-      parserDate( value );
-      return objParserDate;
-    };
-    const success = value => {
-      console.log(value);
-      this.dynamicFormEmit.emit( value );
-    }
-
-    this.dynamicForm.valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( mappingMomentDate )
-      )
-      .subscribe( success );
-  }
-
   private initSplitObjectProps() {
     const splitInput = this.splitInput || R.length( this.objectProps );
     const splitEvery = R.splitEvery( splitInput );
@@ -122,6 +97,17 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
     if ( validators ) composeValidation( validators );
     return formValidators;
+  }
+
+  onDynamicFormEmit(): void {
+    const objParserDate = {};
+    const generateNewObj = R.curry( ( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
+    const momentFunc = generateNewObj( objParserDate );
+    const parserDate = R.forEachObjIndexed( momentFunc );
+
+    const mappingMomentDate = value => parserDate( value );
+
+    this.dynamicFormEmit.emit( R.map( mappingMomentDate,  this.dynamicForm.getRawValue()) );
   }
 
   ngOnDestroy(): void {

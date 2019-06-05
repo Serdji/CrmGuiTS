@@ -25,7 +25,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   dataSource = new MatTreeNestedDataSource<FoodNode>();
 
   private isActive: boolean;
-  private dynamicFormValue: any;
 
   public dynamicForm: FormGroup;
   public person: any;
@@ -136,16 +135,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       } );
   }
 
-  onDynamicFormValue( data ): void {
-    this.dynamicFormValue = data;
+  onDynamicFormValue( event ): void {
+    console.log( event );
   }
 
-  resultForm(): void {
-    console.log( this.dynamicFormValue );
-    this.stepper.next();
-  }
 
-  hasChild = (_: number, node: FoodNode) => !!node.children && node.children.length > 0;
+  hasChild = ( _: number, node: FoodNode ) => !!node.children && node.children.length > 0;
 
   ngOnDestroy(): void {
     this.isActive = false;

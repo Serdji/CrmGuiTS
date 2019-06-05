@@ -45,20 +45,6 @@
         (dynamicFormEmit)="onDynamicFormValue($event)"
       >
       </app-dynamic-form>
-
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="resultForm()">Next</button>
-      </div>
-    </mat-step>
-
-    <mat-step>
-      <ng-template matStepLabel>Done</ng-template>
-      You are now done.
-      <div>
-        <button mat-button matStepperPrevious>Back</button>
-        <button mat-button (click)="stepper.reset()">Reset</button>
-      </div>
     </mat-step>
   </mat-vertical-stepper>
 </div>
