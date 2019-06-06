@@ -8,6 +8,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
+import { DomSanitizer } from '@angular/platform-browser';
 
 
 interface FoodNode {
@@ -42,12 +43,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public buttonNextDisabled: boolean;
 
   private patternPath: string;
+  private blob: Blob;
 
   @ViewChild( 'stepper' ) stepper;
 
   constructor(
     private fb: FormBuilder,
-    private statisticsReportService: StatisticsReportService
+    private statisticsReportService: StatisticsReportService,
+    private sanitizer: DomSanitizer
   ) { }
 
   ngOnInit(): void {
@@ -57,7 +60,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.isDynamicForm = false;
 
     this.pageVariable = 1;
-    this.pdfSrc = 'assets/test.pdf';
     this.buttonPreviousDisabled = true;
     this.buttonNextDisabled = false;
   }
@@ -156,15 +158,17 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
-    console.log( params );
     this.statisticsReportService.getParams( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( resp => {
-        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
-        console.log( resp );
-        console.log( resp.body, );
-        console.log( filename );
-        saveAs( resp.body, 'report' );
+        this.blob = resp.body;
+        if ( typeof ( FileReader ) !== 'undefined' ) {
+          const reader = new FileReader();
+          reader.onload = ( e: any ) => {
+            this.pdfSrc = e.target.result;
+          };
+          reader.readAsArrayBuffer( resp.body );
+        }
       } );
   }
 
@@ -175,11 +179,11 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   onIncrementPage( amount: number ): void {
     this.pageVariable += amount;
     this.buttonPreviousDisabled = this.pageVariable <= 1;
-    this.buttonNextDisabled = this.pageVariable >=  this.pageLength;
+    this.buttonNextDisabled = this.pageVariable >= this.pageLength;
   }
 
   onDownloadPDF() {
-    window.open( this.pdfSrc, '_blank' );
+    saveAs( this.blob, 'Отчет' );
   }
 
 

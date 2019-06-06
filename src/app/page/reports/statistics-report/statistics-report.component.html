@@ -48,9 +48,8 @@
     </mat-step>
   </mat-vertical-stepper>
 
-  <div style="text-align: center; margin-top: 15px;">
+  <div class="distribution-report__pdf-viewer" *ngIf="pdfSrc">
     <pdf-viewer
-      *ngIf="pdfSrc"
       [src]="pdfSrc"
       [page]="pageVariable"
       [show-all]="false"
@@ -60,7 +59,7 @@
     >
     </pdf-viewer>
 
-    <div>
+    <div class="distribution-report__paginator">
       <button [disabled]="buttonPreviousDisabled" (click)="onIncrementPage(-1)" mat-button>
         <mat-icon>navigate_before</mat-icon>
       </button>
@@ -70,9 +69,9 @@
         <mat-icon>navigate_next</mat-icon>
       </button>
     </div>
-    <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button matTooltip="Вагрузка PDF файла с учетом поискового запроса" (click)="onDownloadPDF()" color="accent">
+    <button class="distribution-report__button" mat-raised-button matTooltip="Скачать PDF файла с учетом сформированного запроса" (click)="onDownloadPDF()" color="accent">
       <mat-icon>insert_drive_file</mat-icon>
-      PDF
+      Скачать PDF
     </button>
   </div>
 
