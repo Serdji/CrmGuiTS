@@ -8,6 +8,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
+import { logger } from 'codelyzer/util/logger';
 
 
 interface FoodNode {
@@ -151,9 +152,13 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.statisticsReportService.getParamsDynamicForm( patternPath )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( paramsDynamicForm => {
-        this.paramsDynamicForm = paramsDynamicForm;
-        this.isDynamicForm = true;
-        this.stepper.next();
+        if ( !R.isEmpty( paramsDynamicForm ) ) {
+          this.paramsDynamicForm = paramsDynamicForm;
+          this.isDynamicForm = true;
+          this.stepper.next();
+        } else {
+          this.onDynamicFormValue( {} );
+        }
       } );
   }
 

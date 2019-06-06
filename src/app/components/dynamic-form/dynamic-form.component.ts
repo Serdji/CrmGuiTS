@@ -31,8 +31,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.initParameterConversion();
-    this.initDynamicForm();
-    this.initSplitObjectProps();
   }
 
   private initParameterConversion() {
@@ -53,6 +51,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
           type: typeCheck( paramsDynamicForm.dataType ),
         }
       } );
+      this.initDynamicForm();
+      this.initSplitObjectProps();
     } );
     mapParamsDynamicForm( this.paramsDynamicForm );
   }
