@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { SidenavService } from '../../shared/layout/sidenav/sidenav.service';
 import { IMenu } from '../../interface/imenu';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 
 @Component( {
   selector: 'app-entrance',
@@ -17,6 +18,7 @@ export class EntranceComponent implements OnInit {
     this.cards = this.sidenavService.menu;
     this.sidenavService.closesAccord();
   }
+
 
   openLink(): void {
     this.sidenavService.openAccord();

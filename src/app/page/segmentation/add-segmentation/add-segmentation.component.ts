@@ -244,7 +244,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         } );
 
       _( this[ formGroupName ].getRawValue() ).each( ( values, key ) => {
-        if ( key === 'eDocTypeS' ) {
+        if ( key === 'eDocTypeS' || key === 'eDocTypeP' ) {
           this[ formGroupName ].get( key ).valueChanges
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( params => {

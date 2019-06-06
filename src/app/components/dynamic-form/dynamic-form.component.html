@@ -1,5 +1,5 @@
 <div class="dynamic-form">
-  <form [formGroup]="dynamicForm">
+  <form class="dynamic-form__form" [formGroup]="dynamicForm">
     <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
       <mat-grid-tile class="dynamic-form__grid-tile" *ngFor="let objectProps of splitObjectProps" colspan="1" rowspan="1">
         <div *ngFor="let prop of objectProps">
@@ -27,7 +27,7 @@
             </mat-form-field>
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'date'">
-              <input matInput [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
+              <input matInput  [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #picker></mat-datepicker>
             </mat-form-field>
@@ -40,4 +40,9 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
+  <button class="dynamic-form__button" mat-raised-button
+          (click)="onDynamicFormEmit()" color="primary">
+    <mat-icon>graphic_eq</mat-icon>
+    Сформировать
+  </button>
 </div>
