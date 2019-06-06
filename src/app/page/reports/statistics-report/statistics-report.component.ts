@@ -10,6 +10,7 @@ import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 import { forkJoin } from 'rxjs';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 
 interface FoodNode {
@@ -45,7 +46,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public buttonNextDisabled: boolean;
 
   private patternPath: string;
-  private blobPDF: Blob;
+  private blob: any = {};
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -169,13 +170,15 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
+    const date = moment( ).format( 'DD.MM.YYYY, HH:mm:ss' );
+    console.log( date );
     const PDF = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
     const getFiles = forkJoin( PDF );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
         switch ( index ) {
           case 0:
-            this.blobPDF = resp.body;
+            this.blob['pdf'] = { blob: resp.body, fileName: `${resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ]} ${ date }` };
             if ( typeof ( FileReader ) !== 'undefined' ) {
               const reader = new FileReader();
               reader.readAsArrayBuffer( resp.body );
@@ -202,7 +205,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   onDownloadPDF( value: string ) {
     switch ( value ) {
-      case 'PDF': saveAs( this.blobPDF, 'Отчет' ); break;
+      case 'pdf': saveAs( this.blob.pdf.blob, this.blob.pdf.fileName ); break;
     }
   }
 

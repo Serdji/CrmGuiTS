@@ -38,9 +38,9 @@
       <app-dynamic-form
         *ngIf="paramsDynamicForm && isDynamicForm"
         [paramsDynamicForm]="paramsDynamicForm"
-        [splitInput]="2"
+        [splitInput]="1"
         [cols]="1"
-        rowHeight="200px"
+        rowHeight="80px"
         (dynamicFormEmit)="onDynamicFormValue($event)"
       >
       </app-dynamic-form>
@@ -71,7 +71,7 @@
           <mat-icon>navigate_next</mat-icon>
         </button>
       </div>
-      <button class="distribution-report__button" mat-raised-button matTooltip="Скачать PDF файла с учетом сформированного запроса" (click)="onDownloadPDF( 'PDF' )" color="accent">
+      <button class="distribution-report__button" mat-raised-button matTooltip="Скачать PDF файла с учетом сформированного запроса" (click)="onDownloadPDF( 'pdf' )" color="accent">
         <mat-icon>insert_drive_file</mat-icon>
         Скачать PDF
       </button>

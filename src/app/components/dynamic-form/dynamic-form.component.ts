@@ -2,9 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as R from 'ramda';
 import * as moment from 'moment';
-import { map, takeWhile } from 'rxjs/operators';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
-import { __values } from 'tslib';
 
 @Component( {
   selector: 'app-dynamic-form',
