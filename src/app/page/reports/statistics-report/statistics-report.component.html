@@ -4,8 +4,8 @@
     <mat-step >
       <ng-template matStepLabel>Шаблон формы отчета</ng-template>
 
-      <mat-progress-bar *ngIf="isProgress" mode="buffer"></mat-progress-bar>
-      <mat-tree *ngIf="!isProgress" [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
+      <mat-progress-bar *ngIf="isProgressTemplates" mode="buffer"></mat-progress-bar>
+      <mat-tree *ngIf="!isProgressTemplates" [dataSource]="dataSource" [treeControl]="treeControl" class="example-tree">
         <!-- This is the tree node template for leaf nodes -->
         <mat-tree-node *matTreeNodeDef="let node" matTreeNodeToggle>
           <li class="mat-tree-node">
@@ -48,7 +48,9 @@
     </mat-step>
   </mat-vertical-stepper>
 
-  <div class="distribution-report__pdf-viewer" *ngIf="pdfSrc">
+  <mat-progress-bar  class="distribution-report__progress-bar" *ngIf="isProgressPdfViewer" mode="buffer"></mat-progress-bar>
+
+  <div class="distribution-report__pdf-viewer" *ngIf="pdfSrc && !isProgressPdfViewer">
     <pdf-viewer
       [src]="pdfSrc"
       [page]="pageVariable"

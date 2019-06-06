@@ -8,7 +8,6 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
-import { DomSanitizer } from '@angular/platform-browser';
 
 
 interface FoodNode {
@@ -32,7 +31,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public dynamicForm: FormGroup;
   public person: any;
   public templates: FoodNode[];
-  public isProgress: boolean;
+  public isProgressTemplates: boolean;
+  public isProgressPdfViewer: boolean;
   public paramsDynamicForm: IParamsDynamicForm[];
   public isDynamicForm: boolean;
 
@@ -49,14 +49,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-    private statisticsReportService: StatisticsReportService,
-    private sanitizer: DomSanitizer
+    private statisticsReportService: StatisticsReportService
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initTemplates();
-    this.isProgress = true;
+    this.isProgressTemplates = true;
+    this.isProgressPdfViewer = false;
     this.isDynamicForm = false;
 
     this.pageVariable = 1;
@@ -128,7 +128,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
     const success = templates => {
       this.dataSource.data = templates;
-      this.isProgress = false;
+      this.isProgressTemplates = false;
     };
 
     this.statisticsReportService.getTemplates()
@@ -140,6 +140,10 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       .subscribe( success );
   }
 
+  private buttonIsDisabled() {
+    this.buttonPreviousDisabled = this.pageVariable <= 1;
+    this.buttonNextDisabled = this.pageVariable >= this.pageLength;
+  }
 
   onSendTemplate( patternPath: string ): void {
     this.patternPath = patternPath;
@@ -154,6 +158,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onDynamicFormValue( event ): void {
+    this.isProgressPdfViewer = true;
     const params = {
       ReportName: this.patternPath,
       ReportParameters: event,
@@ -164,22 +169,23 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         this.blob = resp.body;
         if ( typeof ( FileReader ) !== 'undefined' ) {
           const reader = new FileReader();
+          reader.readAsArrayBuffer( resp.body );
           reader.onload = ( e: any ) => {
             this.pdfSrc = e.target.result;
+            this.isProgressPdfViewer = false;
           };
-          reader.readAsArrayBuffer( resp.body );
         }
       } );
   }
 
   afterLoadComplete( pdf: PDFDocumentProxy ) {
     this.pageLength = pdf.numPages;
+    this.buttonIsDisabled();
   }
 
   onIncrementPage( amount: number ): void {
     this.pageVariable += amount;
-    this.buttonPreviousDisabled = this.pageVariable <= 1;
-    this.buttonNextDisabled = this.pageVariable >= this.pageLength;
+    this.buttonIsDisabled();
   }
 
   onDownloadPDF() {
