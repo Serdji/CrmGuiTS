@@ -6,6 +6,7 @@ import { ComponentsModule } from '../../../components/components.module';
 import { StatisticsReportComponent } from './statistics-report.component';
 import { StatisticsReportService } from './statistics-report.service';
 import { StatisticsReportRoutes } from './statistics-reportrouting';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule( {
   imports: [
@@ -13,7 +14,8 @@ import { StatisticsReportRoutes } from './statistics-reportrouting';
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
-    StatisticsReportRoutes
+    StatisticsReportRoutes,
+    PdfViewerModule,
   ],
   declarations: [ StatisticsReportComponent ],
   providers: [ StatisticsReportService ]

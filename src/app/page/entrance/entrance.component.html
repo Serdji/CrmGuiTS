@@ -11,33 +11,4 @@
       </mat-grid-tile>
     </div>
   </mat-grid-list>
-
-  <div style="text-align: center">
-    <pdf-viewer
-      *ngIf="pdfSrc"
-      [src]="pdfSrc"
-      [page]="pageVariable"
-      [show-all]="false"
-      [render-text]="true"
-      (after-load-complete)="afterLoadComplete($event)"
-      style="display: block;"
-    >
-    </pdf-viewer>
-
-    <div>
-      <button [disabled]="buttonPreviousDisabled" (click)="onIncrementPage(-1)" mat-button>
-        <mat-icon>navigate_before</mat-icon>
-      </button>
-
-      <span *ngIf="pageLength"> от {{pageVariable}} до {{ pageLength }}</span>
-      <button [disabled]="buttonNextDisabled" (click)="onIncrementPage(1)"  mat-button>
-        <mat-icon>navigate_next</mat-icon>
-      </button>
-    </div>
-    <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button matTooltip="Вагрузка PDF файла с учетом поискового запроса" (click)="onDownloadPDF()" color="accent">
-      <mat-icon>insert_drive_file</mat-icon>
-      PDF
-    </button>
-  </div>
-
 </div>

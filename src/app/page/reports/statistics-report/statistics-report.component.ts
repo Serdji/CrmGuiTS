@@ -7,6 +7,7 @@ import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
+import { PDFDocumentProxy } from 'pdfjs-dist';
 
 
 interface FoodNode {
@@ -34,6 +35,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public paramsDynamicForm: IParamsDynamicForm[];
   public isDynamicForm: boolean;
 
+  public pdfSrc: string;
+  public pageVariable: number;
+  public pageLength: number;
+  public buttonPreviousDisabled: boolean;
+  public buttonNextDisabled: boolean;
+
   private patternPath: string;
 
   @ViewChild( 'stepper' ) stepper;
@@ -48,6 +55,11 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.initTemplates();
     this.isProgress = true;
     this.isDynamicForm = false;
+
+    this.pageVariable = 1;
+    this.pdfSrc = 'assets/test.pdf';
+    this.buttonPreviousDisabled = true;
+    this.buttonNextDisabled = false;
   }
 
 
@@ -154,6 +166,20 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         console.log( filename );
         saveAs( resp.body, 'report' );
       } );
+  }
+
+  afterLoadComplete( pdf: PDFDocumentProxy ) {
+    this.pageLength = pdf.numPages;
+  }
+
+  onIncrementPage( amount: number ): void {
+    this.pageVariable += amount;
+    this.buttonPreviousDisabled = this.pageVariable <= 1;
+    this.buttonNextDisabled = this.pageVariable >=  this.pageLength;
+  }
+
+  onDownloadPDF() {
+    window.open( this.pdfSrc, '_blank' );
   }
 
 
