@@ -34,13 +34,13 @@
 
     <mat-step [stepControl]="dynamicForm">
       <ng-template matStepLabel>Форма запроса отчета</ng-template>
-
+      <mat-progress-bar *ngIf="isProgressDynamicForm" mode="buffer"></mat-progress-bar>
       <app-dynamic-form
         *ngIf="paramsDynamicForm && isDynamicForm"
         [paramsDynamicForm]="paramsDynamicForm"
         [splitInput]="1"
         [cols]="1"
-        rowHeight="80px"
+        rowHeight="70px"
         (dynamicFormEmit)="onDynamicFormValue($event)"
       >
       </app-dynamic-form>
@@ -48,7 +48,7 @@
   </mat-vertical-stepper>
 
   <div class="distribution-report__pdf-viewer" >
-    <mat-progress-bar  class="distribution-report__progress-bar" *ngIf="isProgressPdfViewer" mode="buffer"></mat-progress-bar>
+    <mat-spinner class="distribution-report__spinner" *ngIf="isProgressPdfViewer"></mat-spinner>
     <div *ngIf="pdfSrc && !isProgressPdfViewer">
       <pdf-viewer
         zoom="1.3"

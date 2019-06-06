@@ -36,6 +36,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public templates: FoodNode[];
   public isProgressTemplates: boolean;
   public isProgressPdfViewer: boolean;
+  public isProgressDynamicForm: boolean;
   public paramsDynamicForm: IParamsDynamicForm[];
   public isDynamicForm: boolean;
 
@@ -60,6 +61,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.initTemplates();
     this.isProgressTemplates = true;
     this.isProgressPdfViewer = false;
+    this.isProgressDynamicForm = false;
     this.isDynamicForm = false;
 
     this.pageVariable = 1;
@@ -150,18 +152,30 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   onSendTemplate( patternPath: string ): void {
     this.patternPath = patternPath;
+    this.isProgressDynamicForm = true;
     this.isDynamicForm = false;
+    this.stepper.next();
+
+    const success = paramsDynamicForm => {
+      if ( !R.isEmpty( paramsDynamicForm ) ) {
+        this.paramsDynamicForm = paramsDynamicForm;
+        this.isProgressDynamicForm = false;
+        this.isDynamicForm = true;
+      } else {
+        this.onDynamicFormValue( {} );
+        this.isProgressDynamicForm = false;
+        this.isDynamicForm = false;
+      }
+    };
+    const error = _ => {
+      this.isProgressDynamicForm = false;
+      this.isDynamicForm = false;
+    };
+
     this.statisticsReportService.getParamsDynamicForm( patternPath )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( paramsDynamicForm => {
-        if ( !R.isEmpty( paramsDynamicForm ) ) {
-          this.paramsDynamicForm = paramsDynamicForm;
-          this.isDynamicForm = true;
-          this.stepper.next();
-        } else {
-          this.onDynamicFormValue( {} );
-        }
-      } );
+      .subscribe( success, error );
+
   }
 
   onDynamicFormValue( event ): void {
@@ -170,15 +184,24 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
-    const date = moment( ).format( 'DD.MM.YYYY, HH:mm:ss' );
-    console.log( date );
+
     const PDF = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
     const getFiles = forkJoin( PDF );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
+
+        const fileNameSplit = R.compose(
+          R.nth( -2 ),
+          R.split( '.' ),
+          R.nth( 1 ),
+          R.split( '=' ),
+          R.nth( 1 ),
+          R.split( ';' ),
+        );
+
         switch ( index ) {
           case 0:
-            this.blob['pdf'] = { blob: resp.body, fileName: `${resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ]} ${ date }` };
+            this.blob['pdf'] = { blob: resp.body, fileName: fileNameSplit(resp.headers.get( 'content-disposition' ))};
             if ( typeof ( FileReader ) !== 'undefined' ) {
               const reader = new FileReader();
               reader.readAsArrayBuffer( resp.body );
@@ -203,9 +226,10 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.buttonIsDisabled();
   }
 
-  onDownloadPDF( value: string ) {
-    switch ( value ) {
-      case 'pdf': saveAs( this.blob.pdf.blob, this.blob.pdf.fileName ); break;
+  onDownloadPDF( expansion: string ) {
+    const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
+    switch ( expansion ) {
+      case 'pdf': saveAs( this.blob.pdf.blob, `${this.blob.pdf.fileName}_${date}.${expansion}` ); break;
     }
   }
 

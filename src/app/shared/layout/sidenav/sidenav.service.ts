@@ -84,7 +84,7 @@ export class SidenavService {
         name: 'Отчеты',
         icon: 'graphic_eq',
         link: [
-          { url: '/crm/statistics-report', title: 'Статистика' },
+          { url: '/crm/statistics-report', title: 'Список отчетов' },
         ]
       },
       {
