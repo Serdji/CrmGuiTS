@@ -11,11 +11,17 @@ import { PDFDocumentProxy } from 'pdfjs-dist';
 import { forkJoin } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { TitleService } from '../../../services/title.service';
 
 
 interface FoodNode {
   name: string;
   children?: FoodNode[];
+}
+
+interface BlobFile {
+  blob: Blob;
+  fileName: any;
 }
 
 
@@ -47,13 +53,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public buttonNextDisabled: boolean;
 
   private patternPath: string;
-  private blob: any = {};
+  private file: { pdf: BlobFile };
 
   @ViewChild( 'stepper' ) stepper;
 
   constructor(
     private fb: FormBuilder,
-    private statisticsReportService: StatisticsReportService
+    private statisticsReportService: StatisticsReportService,
+    private titleService: TitleService
   ) { }
 
   ngOnInit(): void {
@@ -162,7 +169,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         this.isProgressDynamicForm = false;
         this.isDynamicForm = true;
       } else {
-        this.onDynamicFormValue( {} );
+        this.onReportGeneration( {} );
         this.isProgressDynamicForm = false;
         this.isDynamicForm = false;
       }
@@ -178,18 +185,17 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   }
 
-  onDynamicFormValue( event ): void {
+  onReportGeneration( event ): void {
     this.isProgressPdfViewer = true;
     const params = {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
 
-    const PDF = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
-    const getFiles = forkJoin( PDF );
+    const oPdf = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
+    const getFiles = forkJoin( oPdf );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
-
         const fileNameSplit = R.compose(
           R.nth( -2 ),
           R.split( '.' ),
@@ -198,10 +204,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
           R.nth( 1 ),
           R.split( ';' ),
         );
-
+        const blob = resp.body;
+        const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
+        const creatureFile = expansion => this.file = R.merge( this.file, { [expansion]: { blob, fileName } } );
         switch ( index ) {
           case 0:
-            this.blob['pdf'] = { blob: resp.body, fileName: fileNameSplit(resp.headers.get( 'content-disposition' ))};
+            creatureFile( 'pdf' );
             if ( typeof ( FileReader ) !== 'undefined' ) {
               const reader = new FileReader();
               reader.readAsArrayBuffer( resp.body );
@@ -213,6 +221,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
             break;
         }
       } );
+      this.titleService.title = this.file.pdf.fileName;
     } );
   }
 
@@ -228,9 +237,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   onDownloadPDF( expansion: string ) {
     const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
-    switch ( expansion ) {
-      case 'pdf': saveAs( this.blob.pdf.blob, `${this.blob.pdf.fileName}_${date}.${expansion}` ); break;
-    }
+    saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
   }
 
 

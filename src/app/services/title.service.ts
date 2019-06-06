@@ -24,4 +24,9 @@ export class TitleService {
       )
       .subscribe( stateTitle => this.titleService.setTitle( `Leonardo.CRM - ${stateTitle}` ) );
   }
+
+  set title( title: string ) {
+    this.titleService.setTitle( `Leonardo.CRM - ${title}` );
+  }
+
 }
