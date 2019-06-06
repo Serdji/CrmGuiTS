@@ -1,14 +1,15 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticsReportService } from './statistics-report.service';
-import { map, takeWhile, tap } from 'rxjs/operators';
+import { map, takeWhile, } from 'rxjs/operators';
 import * as R from 'ramda';
 import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
-import { logger } from 'codelyzer/util/logger';
+import { forkJoin } from 'rxjs';
+import * as _ from 'lodash';
 
 
 interface FoodNode {
@@ -44,7 +45,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public buttonNextDisabled: boolean;
 
   private patternPath: string;
-  private blob: Blob;
+  private blobPDF: Blob;
 
   @ViewChild( 'stepper' ) stepper;
 
@@ -168,19 +169,25 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
-    this.statisticsReportService.getParams( params )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( resp => {
-        this.blob = resp.body;
-        if ( typeof ( FileReader ) !== 'undefined' ) {
-          const reader = new FileReader();
-          reader.readAsArrayBuffer( resp.body );
-          reader.onload = ( e: any ) => {
-            this.pdfSrc = e.target.result;
-            this.isProgressPdfViewer = false;
-          };
+    const PDF = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
+    const getFiles = forkJoin( PDF );
+    getFiles.subscribe( ( respArr: any[] ) => {
+      _.each( respArr, ( resp, index ) => {
+        switch ( index ) {
+          case 0:
+            this.blobPDF = resp.body;
+            if ( typeof ( FileReader ) !== 'undefined' ) {
+              const reader = new FileReader();
+              reader.readAsArrayBuffer( resp.body );
+              reader.onload = ( e: any ) => {
+                this.pdfSrc = e.target.result;
+                this.isProgressPdfViewer = false;
+              };
+            }
+            break;
         }
       } );
+    } );
   }
 
   afterLoadComplete( pdf: PDFDocumentProxy ) {
@@ -193,8 +200,10 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.buttonIsDisabled();
   }
 
-  onDownloadPDF() {
-    saveAs( this.blob, 'Отчет' );
+  onDownloadPDF( value: string ) {
+    switch ( value ) {
+      case 'PDF': saveAs( this.blobPDF, 'Отчет' ); break;
+    }
   }
 
 
