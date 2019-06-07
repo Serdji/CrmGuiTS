@@ -2,7 +2,7 @@
   <mat-card class="distribution-report__stepper">
     <mat-vertical-stepper linear #stepper>
       <mat-step>
-        <ng-template matStepLabel>Шаблон формы отчета</ng-template>
+        <ng-template matStepLabel>Выбор отчета</ng-template>
 
         <mat-progress-bar *ngIf="isProgressTemplates" mode="buffer"></mat-progress-bar>
         <mat-tree *ngIf="!isProgressTemplates" [dataSource]="dataSource" [treeControl]="treeControl"
@@ -36,7 +36,7 @@
       </mat-step>
 
       <mat-step [stepControl]="dynamicForm">
-        <ng-template matStepLabel>Форма запроса отчета</ng-template>
+        <ng-template matStepLabel>Параметры отчета</ng-template>
         <mat-progress-bar *ngIf="isProgressDynamicForm" mode="buffer"></mat-progress-bar>
         <app-dynamic-form
           *ngIf="paramsDynamicForm && isDynamicForm"
