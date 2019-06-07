@@ -186,6 +186,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onReportGeneration( event ): void {
+    this.pageVariable = 1;
     this.isProgressPdfViewer = true;
     const params = {
       ReportName: this.patternPath,
