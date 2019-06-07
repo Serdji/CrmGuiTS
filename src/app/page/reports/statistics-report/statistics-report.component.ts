@@ -10,11 +10,18 @@ import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 import { forkJoin } from 'rxjs';
 import * as _ from 'lodash';
+import * as moment from 'moment';
+import { TitleService } from '../../../services/title.service';
 
 
 interface FoodNode {
   name: string;
   children?: FoodNode[];
+}
+
+interface BlobFile {
+  blob: Blob;
+  fileName: any;
 }
 
 
@@ -35,6 +42,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public templates: FoodNode[];
   public isProgressTemplates: boolean;
   public isProgressPdfViewer: boolean;
+  public isProgressDynamicForm: boolean;
   public paramsDynamicForm: IParamsDynamicForm[];
   public isDynamicForm: boolean;
 
@@ -45,13 +53,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public buttonNextDisabled: boolean;
 
   private patternPath: string;
-  private blobPDF: Blob;
+  private file: { pdf: BlobFile };
 
   @ViewChild( 'stepper' ) stepper;
 
   constructor(
     private fb: FormBuilder,
-    private statisticsReportService: StatisticsReportService
+    private statisticsReportService: StatisticsReportService,
+    private titleService: TitleService
   ) { }
 
   ngOnInit(): void {
@@ -59,6 +68,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.initTemplates();
     this.isProgressTemplates = true;
     this.isProgressPdfViewer = false;
+    this.isProgressDynamicForm = false;
     this.isDynamicForm = false;
 
     this.pageVariable = 1;
@@ -149,33 +159,58 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   onSendTemplate( patternPath: string ): void {
     this.patternPath = patternPath;
+    this.isProgressDynamicForm = true;
     this.isDynamicForm = false;
+    this.stepper.next();
+
+    const success = paramsDynamicForm => {
+      if ( !R.isEmpty( paramsDynamicForm ) ) {
+        this.paramsDynamicForm = paramsDynamicForm;
+        this.isProgressDynamicForm = false;
+        this.isDynamicForm = true;
+      } else {
+        this.onReportGeneration( {} );
+        this.isProgressDynamicForm = false;
+        this.isDynamicForm = false;
+      }
+    };
+    const error = _ => {
+      this.isProgressDynamicForm = false;
+      this.isDynamicForm = false;
+    };
+
     this.statisticsReportService.getParamsDynamicForm( patternPath )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( paramsDynamicForm => {
-        if ( !R.isEmpty( paramsDynamicForm ) ) {
-          this.paramsDynamicForm = paramsDynamicForm;
-          this.isDynamicForm = true;
-          this.stepper.next();
-        } else {
-          this.onDynamicFormValue( {} );
-        }
-      } );
+      .subscribe( success, error );
+
   }
 
-  onDynamicFormValue( event ): void {
+  onReportGeneration( event ): void {
+    this.pageVariable = 1;
     this.isProgressPdfViewer = true;
     const params = {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
-    const PDF = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
-    const getFiles = forkJoin( PDF );
+
+    const oPdf = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
+    const getFiles = forkJoin( oPdf );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
+        const fileNameSplit = R.compose(
+          R.nth( -2 ),
+          R.split( '.' ),
+          R.nth( 1 ),
+          R.split( '=' ),
+          R.nth( 1 ),
+          R.split( ';' ),
+        );
+        const blob = resp.body;
+        const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
+        const creatureFile = expansion => this.file = R.merge( this.file, { [expansion]: { blob, fileName } } );
         switch ( index ) {
           case 0:
-            this.blobPDF = resp.body;
+            creatureFile( 'pdf' );
             if ( typeof ( FileReader ) !== 'undefined' ) {
               const reader = new FileReader();
               reader.readAsArrayBuffer( resp.body );
@@ -187,6 +222,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
             break;
         }
       } );
+      this.titleService.title = this.file.pdf.fileName;
     } );
   }
 
@@ -200,10 +236,9 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.buttonIsDisabled();
   }
 
-  onDownloadPDF( value: string ) {
-    switch ( value ) {
-      case 'PDF': saveAs( this.blobPDF, 'Отчет' ); break;
-    }
+  onDownloadPDF( expansion: string ) {
+    const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
+    saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
   }
 
 
