@@ -200,7 +200,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const oPdf = this.statisticsReportService.getParams( R.set( reportType, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
     const oWord = this.statisticsReportService.getParams( R.set( reportType, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
     const oExcel = this.statisticsReportService.getParams( R.set( reportType, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const getFiles = combineLatest( oPdf, oWord, oExcel  );
+    const getFiles = forkJoin( oPdf, oWord, oExcel  );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
         const fileNameSplit = R.compose(
@@ -227,8 +227,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
               };
             }
             break;
-          case 1: creatureFile( 'word' ); break;
-          case 2: creatureFile( 'excel' ); break;
+          case 1: creatureFile( 'doc' ); break;
+          case 2: creatureFile( 'xls' ); break;
         }
       } );
       this.titleService.title = this.file.pdf.fileName;
@@ -246,7 +246,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onDownloadPDF( expansion: string ) {
-    console.log( this.file );
     const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
     saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
   }
