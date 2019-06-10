@@ -8,7 +8,6 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
-import { forkJoin } from 'rxjs';
 import { combineLatest } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -200,7 +199,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const oPdf = this.statisticsReportService.getParams( R.set( reportType, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
     const oWord = this.statisticsReportService.getParams( R.set( reportType, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
     const oExcel = this.statisticsReportService.getParams( R.set( reportType, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const getFiles = forkJoin( oPdf, oWord, oExcel  );
+
+    const getFiles = combineLatest( oPdf, oWord, oExcel  );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
         const fileNameSplit = R.compose(
