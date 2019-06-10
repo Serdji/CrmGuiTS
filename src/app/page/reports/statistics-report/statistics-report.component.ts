@@ -8,7 +8,7 @@ import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
-import { forkJoin } from 'rxjs';
+import { combineLatest } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TitleService } from '../../../services/title.service';
@@ -186,15 +186,21 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onReportGeneration( event ): void {
+    const reportType = R.lensProp( 'ReportType' );
     this.pageVariable = 1;
     this.isProgressPdfViewer = true;
     const params = {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
+    // @ts-ignore
+    const composeSplitFileName = R.compose( R.last, R.split( '/' ) );
 
-    const oPdf = this.statisticsReportService.getParams( params ).pipe( takeWhile( _ => this.isActive ) );
-    const getFiles = forkJoin( oPdf );
+    const oPdf = this.statisticsReportService.getParams( R.set( reportType, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oWord = this.statisticsReportService.getParams( R.set( reportType, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oExcel = this.statisticsReportService.getParams( R.set( reportType, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
+
+    const getFiles = combineLatest( oPdf, oWord, oExcel  );
     getFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
         const fileNameSplit = R.compose(
@@ -206,7 +212,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
           R.split( ';' ),
         );
         const blob = resp.body;
-        const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
+        // const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
+        const fileName = composeSplitFileName( this.patternPath );
         const creatureFile = expansion => this.file = R.merge( this.file, { [expansion]: { blob, fileName } } );
         switch ( index ) {
           case 0:
@@ -220,6 +227,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
               };
             }
             break;
+          case 1: creatureFile( 'doc' ); break;
+          case 2: creatureFile( 'xls' ); break;
         }
       } );
       this.titleService.title = this.file.pdf.fileName;

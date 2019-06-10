@@ -2,7 +2,7 @@
   <mat-card class="distribution-report__stepper">
     <mat-vertical-stepper linear #stepper>
       <mat-step>
-        <ng-template matStepLabel>Шаблон формы отчета</ng-template>
+        <ng-template matStepLabel>Выбор отчета</ng-template>
 
         <mat-progress-bar *ngIf="isProgressTemplates" mode="buffer"></mat-progress-bar>
         <mat-tree *ngIf="!isProgressTemplates" [dataSource]="dataSource" [treeControl]="treeControl"
@@ -36,7 +36,7 @@
       </mat-step>
 
       <mat-step [stepControl]="dynamicForm">
-        <ng-template matStepLabel>Форма запроса отчета</ng-template>
+        <ng-template matStepLabel>Параметры отчета</ng-template>
         <mat-progress-bar *ngIf="isProgressDynamicForm" mode="buffer"></mat-progress-bar>
         <app-dynamic-form
           *ngIf="paramsDynamicForm && isDynamicForm"
@@ -80,6 +80,18 @@
               color="accent">
         <mat-icon>insert_drive_file</mat-icon>
         Скачать PDF
+      </button>
+      <button class="distribution-report__button" mat-raised-button
+              matTooltip="Скачать Word файла с учетом сформированного запроса" (click)="onDownloadPDF( 'doc' )"
+              color="primary">
+        <mat-icon>insert_drive_file</mat-icon>
+        Скачать Word
+      </button>
+      <button class="distribution-report__button _excel" mat-raised-button
+              matTooltip="Скачать Excel файла с учетом сформированного запроса" (click)="onDownloadPDF( 'xls' )"
+              color="primary">
+        <mat-icon>insert_drive_file</mat-icon>
+        Скачать Excel
       </button>
     </mat-card>
   </div>
