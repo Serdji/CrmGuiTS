@@ -186,7 +186,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onReportGeneration( event ): void {
-    const reportType = R.lensProp( 'ReportType' );
+    const reportTypeLens = R.lensProp( 'ReportType' );
     this.pageVariable = 1;
     this.isProgressPdfViewer = true;
     const params = {
@@ -195,22 +195,22 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     };
     // @ts-ignore
     const composeSplitFileName = R.compose( R.last, R.split( '/' ) );
+    const fileNameSplit = R.compose(
+      R.nth( -2 ),
+      R.split( '.' ),
+      R.nth( 1 ),
+      R.split( '=' ),
+      R.nth( 1 ),
+      R.split( ';' ),
+    );
 
-    const oPdf = this.statisticsReportService.getParams( R.set( reportType, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const oWord = this.statisticsReportService.getParams( R.set( reportType, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const oExcel = this.statisticsReportService.getParams( R.set( reportType, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oPdf = this.statisticsReportService.getParams( R.set( reportTypeLens, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oWord = this.statisticsReportService.getParams( R.set( reportTypeLens, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oExcel = this.statisticsReportService.getParams( R.set( reportTypeLens, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
 
-    const getFiles = combineLatest( oPdf, oWord, oExcel  );
-    getFiles.subscribe( ( respArr: any[] ) => {
+    const getObservablesFiles = combineLatest( oPdf, oWord, oExcel  );
+    getObservablesFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
-        const fileNameSplit = R.compose(
-          R.nth( -2 ),
-          R.split( '.' ),
-          R.nth( 1 ),
-          R.split( '=' ),
-          R.nth( 1 ),
-          R.split( ';' ),
-        );
         const blob = resp.body;
         // const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
         const fileName = composeSplitFileName( this.patternPath );
@@ -249,7 +249,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
     saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
   }
-
 
   hasChild = ( _: number, node: FoodNode ) => !!node.children && node.children.length > 0;
 
