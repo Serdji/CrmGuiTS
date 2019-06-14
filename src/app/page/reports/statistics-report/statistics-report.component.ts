@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticsReportService } from './statistics-report.service';
-import { map, takeWhile, tap, } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import * as R from 'ramda';
 import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
@@ -149,7 +149,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mapNameReport ),
-        tap( val => console.log( val ) ),
         // @ts-ignore
         map( mapPathConversion ),
         map( mapRemoveRepetitions )
