@@ -15,8 +15,12 @@ export class StatisticsReportService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getTemplates( ): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/reports' ).pipe( this.retryRequestService.retry() );
+  getReport( ): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/crm/report' ).pipe( this.retryRequestService.retry() );
+  }
+
+  getAdminReport( ): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/admin/report' ).pipe( this.retryRequestService.retry() );
   }
 
   getParamsDynamicForm( params: string ): Observable<any> {

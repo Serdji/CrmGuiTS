@@ -123,7 +123,7 @@ export class UserComponent implements OnInit, OnDestroy {
       this.isProgressTemplates = false;
     };
 
-    this.statisticsReportService.getTemplates()
+    this.statisticsReportService.getAdminReport()
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mapPathConversion ),

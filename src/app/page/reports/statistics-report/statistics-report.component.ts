@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticsReportService } from './statistics-report.service';
-import { map, takeWhile, } from 'rxjs/operators';
+import { map, takeWhile, tap, } from 'rxjs/operators';
 import * as R from 'ramda';
 import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
@@ -82,6 +82,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const propName = R.prop( 'name' );
     const uniqByName = R.uniqBy( propName );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
+    const mapNameReport = R.map( R.prop( 'name' ) );
+
 
     // Мапируем массив из строк во вложенную структуру
     const funcMapPathConversion = ( template: string ): FoodNode[] => {
@@ -143,9 +145,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       this.isProgressTemplates = false;
     };
 
-    this.statisticsReportService.getTemplates()
+    this.statisticsReportService.getReport()
       .pipe(
         takeWhile( _ => this.isActive ),
+        map( mapNameReport ),
+        tap( val => console.log( val ) ),
+        // @ts-ignore
         map( mapPathConversion ),
         map( mapRemoveRepetitions )
       )
