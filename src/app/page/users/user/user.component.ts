@@ -3,13 +3,16 @@ import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTreeNestedDataSource } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import { ActivityUserService } from '../../../services/activity-user.service';
 import { person } from './person';
 import * as R from 'ramda';
+import { IFoodNode } from '../../../interface/ifood-node';
+import { NestedTreeControl } from '@angular/cdk/tree';
+import { StatisticsReportService } from '../../reports/statistics-report/statistics-report.service';
 
 @Component( {
   selector: 'app-user',
@@ -18,6 +21,9 @@ import * as R from 'ramda';
 } )
 export class UserComponent implements OnInit, OnDestroy {
 
+  public treeControl = new NestedTreeControl<IFoodNode>( node => node.children );
+  public dataSource = new MatTreeNestedDataSource<IFoodNode>();
+
   public user: IlistUsers;
   public progress: boolean;
   public updateUser: FormGroup;
@@ -25,6 +31,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public formPermission: FormGroup;
   public edit = false;
   public persons: { title: string, ids: number[] }[] = person;
+  public isProgressTemplates: boolean;
 
   private checkboxArr: number[];
   private loginId: number;
@@ -36,14 +43,93 @@ export class UserComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private activityUserService: ActivityUserService,
+    private statisticsReportService: StatisticsReportService
   ) { }
 
   ngOnInit() {
     this.isActive = true;
+    this.isProgressTemplates = true;
+
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
     this.initFormPermission();
+    this.initTemplates();
+  }
+
+  private initTemplates() {
+    const TREE_DATA: IFoodNode[] = [];
+    const propName = R.prop( 'name' );
+    const uniqByName = R.uniqBy( propName );
+    const composeUnnestConfig = R.compose( R.unnest, R.last );
+
+    // Мапируем массив из строк во вложенную структуру
+    const funcMapPathConversion = ( template: string ): IFoodNode[] => {
+      // Рекурсивная функция для структурирования вложенностей
+      // @ts-ignore
+      const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
+        if ( !R.isNil( splitDrop[ 0 ] ) )
+          children.push( {
+            level: i,
+            name: splitDrop[ 0 ],
+            children: []
+          } );
+        configTreeData.push( children );
+        if ( !R.isEmpty( splitDrop ) ) funcRecurConfig( R.tail( splitDrop ), configTreeData, children[ 0 ].children, ++i );
+        return configTreeData;
+      };
+      const composeTreeDataSplitDrop = R.compose(
+        R.filter( R.propEq( 'level', 1 ) ),
+        R.unnest,
+        funcRecurConfig,
+        R.append( template ),
+        R.dropLast( 1 ),
+        // @ts-ignore
+        R.split( '/' )
+      );
+      // @ts-ignore
+      TREE_DATA.push( composeTreeDataSplitDrop( template ) );
+      return R.unnest( TREE_DATA );
+    };
+    const mapPathConversion = R.map( funcMapPathConversion );
+
+    // Маппинг для уделения повторений и проверки вложанностей структуры каталогов
+    const mapRemoveRepetitions = ( templates: any ): IFoodNode[] => {
+      const unnestConfig = composeUnnestConfig( templates );
+      const uniqByConfig = uniqByName( unnestConfig );
+
+      // Рекурсия для прохода по не определленной глубене вложанности дерева
+      const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
+        const mapUniqByConfig = R.map( ( receiver: any ) => {
+          const mapUnnestConfig = R.map( ( distributor: any ) => {
+            if ( !R.isNil( receiver.children[ 0 ] ) ) {
+              if ( receiver.name === distributor.name ) receiver.children.push( distributor.children[ 0 ] );
+              if ( !R.isEmpty( receiver.children ) ) funcRecurRecDist( receiver.children, receiver.children );
+            }
+          } );
+          mapUnnestConfig( unnestCon );
+          if ( !R.isEmpty( receiver.children ) ) {
+            receiver.children = uniqByName( receiver.children );
+            return receiver;
+          }
+        } );
+        return mapUniqByConfig( uniqByCon );
+      };
+      return funcRecurRecDist( uniqByConfig, unnestConfig );
+    };
+
+    const success = templates => {
+      this.dataSource.data = templates;
+      this.isProgressTemplates = false;
+    };
+
+    this.statisticsReportService.getTemplates()
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( mapPathConversion ),
+        map( mapRemoveRepetitions )
+      )
+      .subscribe( success );
   }
 
   private initUser() {
@@ -181,6 +267,8 @@ export class UserComponent implements OnInit, OnDestroy {
   toggleEdit(): void {
     this.edit = !this.edit;
   }
+
+  hasChild = ( _: number, node: IFoodNode ) => !!node.children && node.children.length > 0;
 
   ngOnDestroy(): void {
     this.isActive = false;
