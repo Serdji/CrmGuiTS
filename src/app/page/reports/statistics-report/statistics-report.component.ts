@@ -82,7 +82,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const propName = R.prop( 'name' );
     const uniqByName = R.uniqBy( propName );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
-    const mapNameReport = R.map( R.prop( 'name' ) );
+    const mapNameReport = R.map( propName );
 
 
     // Мапируем массив из строк во вложенную структуру
