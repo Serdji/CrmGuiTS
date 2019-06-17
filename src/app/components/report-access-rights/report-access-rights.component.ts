@@ -13,6 +13,7 @@ import { StatisticsReportService } from '../../page/reports/statistics-report/st
 export class TodoItemNode {
   children: TodoItemNode[];
   item: string;
+  reportId?: number;
 }
 
 /** Плоский узел дел с расширяемой и уровневой информацией */
@@ -20,6 +21,7 @@ export class TodoItemFlatNode {
   item: string;
   level: number;
   expandable: boolean;
+  reportId?: number;
 }
 
 
@@ -64,21 +66,29 @@ export class ReportAccessRightsComponent implements OnInit {
     const propName = R.prop( 'name' );
     const uniqByName = R.uniqBy( propItem );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
+    let reports;
+    const startMap = report => {
+      reports = report;
+      return report;
+    };
     const mapNameReport = R.map( propName );
-
 
     // Мапируем массив из строк во вложенную структуру
     const funcMapPathConversion = ( template: string ): TodoItemNode[] => {
       // Рекурсивная функция для структурирования вложенностей
       // @ts-ignore
       const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
-        if ( !R.isNil( splitDrop[ 0 ] ) )
+        if ( !R.isNil( splitDrop[ 0 ] ) ) {
+          const downChildrenReportId = R.find( R.propEq( 'name', splitDrop[ 0 ] ), reports );
           children.push( {
             level: i,
             item: splitDrop[ 0 ],
-            children: []
+            children: [],
+            // Забераем id из исходного экземпляра объекта
+            reportId: !R.isNil( downChildrenReportId ) ? downChildrenReportId.reportId : ''
           } );
-        configTreeData.push( children );
+          configTreeData.push( children );
+        }
         if ( !R.isEmpty( splitDrop ) ) funcRecurConfig( R.tail( splitDrop ), configTreeData, children[ 0 ].children, ++i );
         return configTreeData;
       };
@@ -130,6 +140,7 @@ export class ReportAccessRightsComponent implements OnInit {
 
     this.statisticsReportService.getReport()
       .pipe(
+        map( startMap ),
         map( mapNameReport ),
         // @ts-ignore
         map( mapPathConversion ),
@@ -156,6 +167,7 @@ export class ReportAccessRightsComponent implements OnInit {
       ? existingNode
       : new TodoItemFlatNode();
     flatNode.item = node.item;
+    flatNode.reportId = node.reportId;
     flatNode.level = level;
     flatNode.expandable = !R.isEmpty( node.children );
     this.flatNodeMap.set( flatNode, node );
@@ -181,6 +193,7 @@ export class ReportAccessRightsComponent implements OnInit {
 
   /** Переключить выбор элемента списка дел. Выбрать / отменить выбор всех потомков */
   todoItemSelectionToggle( node: TodoItemFlatNode ): void {
+    console.log( node );
     this.checklistSelection.toggle( node );
     const descendants = this.treeControl.getDescendants( node );
     this.checklistSelection.isSelected( node )
@@ -196,7 +209,7 @@ export class ReportAccessRightsComponent implements OnInit {
 
   /** Переключить лист выбора списка дел. Проверьте всех родителей, чтобы увидеть, если они изменились */
   todoLeafItemSelectionToggle( node: TodoItemFlatNode ): void {
-    console.log(node);
+    console.log( node );
     this.checklistSelection.toggle( node );
     this.checkAllParentsSelection( node );
   }
@@ -243,5 +256,4 @@ export class ReportAccessRightsComponent implements OnInit {
     }
     return null;
   }
-
 }
