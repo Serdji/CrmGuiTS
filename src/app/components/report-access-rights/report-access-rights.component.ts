@@ -37,7 +37,7 @@ export class ReportAccessRightsComponent implements OnInit {
   /** Карта от плоского узла к вложенному узлу. Это помогает нам найти вложенный узел, который нужно изменить */
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
 
-  /** Map from nested node to flattened node. This helps us to keep the same object for selection */
+  /** Карта от вложенного узла до плоского узла. Это помогает нам сохранить один и тот же объект для выбора */
   nestedNodeMap = new Map<TodoItemNode, TodoItemFlatNode>();
 
   treeControl: FlatTreeControl<TodoItemFlatNode>;
