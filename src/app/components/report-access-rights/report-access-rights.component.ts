@@ -196,6 +196,7 @@ export class ReportAccessRightsComponent implements OnInit {
 
   /** Переключить лист выбора списка дел. Проверьте всех родителей, чтобы увидеть, если они изменились */
   todoLeafItemSelectionToggle( node: TodoItemFlatNode ): void {
+    console.log(node);
     this.checklistSelection.toggle( node );
     this.checkAllParentsSelection( node );
   }
