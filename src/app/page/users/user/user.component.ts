@@ -30,7 +30,6 @@ export class UserComponent implements OnInit, OnDestroy {
   public formPermission: FormGroup;
   public edit = false;
   public persons: { title: string, ids: number[] }[] = person;
-  public isProgressTemplates: boolean;
 
   private checkboxArr: number[];
   private loginId: number;
@@ -46,7 +45,6 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isActive = true;
-    this.isProgressTemplates = false;
 
     this.initUser();
     this.initFormUser();
