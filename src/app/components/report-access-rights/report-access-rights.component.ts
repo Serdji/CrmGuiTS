@@ -65,78 +65,10 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   }
 
   private initTemplates() {
-    const TREE_DATA: TodoItemNode[] = [];
-    const propItem = R.prop( 'item' );
-    const propName = R.prop( 'name' );
+
     const propReportId = R.prop( 'reportId' );
-    const uniqByName = R.uniqBy( propItem );
-    const composeUnnestConfig = R.compose( R.unnest, R.last );
-    let reports;
-    const startMap = report => {
-      reports = report;
-      return report;
-    };
-    const mapNameReport = R.map( propName );
     const mapMyReports = R.map( propReportId );
 
-    // Мапируем массив из строк во вложенную структуру
-    const funcMapPathConversion = ( template: string ): TodoItemNode[] => {
-      // Рекурсивная функция для структурирования вложенностей
-      // @ts-ignore
-      const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
-        if ( !R.isNil( splitDrop[ 0 ] ) ) {
-          const downChildrenReportId = R.find( R.propEq( 'name', splitDrop[ 0 ] ), reports );
-          children.push( {
-            level: i,
-            item: splitDrop[ 0 ],
-            children: [],
-            // Забераем id из исходного экземпляра объекта
-            reportId: !R.isNil( downChildrenReportId ) ? downChildrenReportId.reportId : ''
-          } );
-          configTreeData.push( children );
-        }
-        if ( !R.isEmpty( splitDrop ) ) funcRecurConfig( R.tail( splitDrop ), configTreeData, children[ 0 ].children, ++i );
-        return configTreeData;
-      };
-      const composeTreeDataSplitDrop = R.compose(
-        R.filter( R.propEq( 'level', 1 ) ),
-        R.unnest,
-        funcRecurConfig,
-        R.append( template ),
-        R.dropLast( 1 ),
-        // @ts-ignore
-        R.split( '/' )
-      );
-      // @ts-ignore
-      TREE_DATA.push( R.unnest( composeTreeDataSplitDrop( template ) ) );
-      return TREE_DATA;
-    };
-    const mapPathConversion = R.map( funcMapPathConversion );
-
-    // Маппинг для уделения повторений и проверки вложанностей структуры каталогов
-    const mapRemoveRepetitions = ( templates: any ): TodoItemNode[] => {
-      const unnestConfig = composeUnnestConfig( templates );
-      const uniqByConfig = uniqByName( unnestConfig );
-
-      // Рекурсия для прохода по не определленной глубене вложанности дерева
-      const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
-        const mapUniqByConfig = R.map( ( receiver: any ) => {
-          const mapUnnestConfig = R.map( ( distributor: any ) => {
-            if ( !R.isNil( receiver.children[ 0 ] ) ) {
-              if ( receiver.item === distributor.item ) receiver.children.push( distributor.children[ 0 ] );
-              if ( !R.isEmpty( receiver.children ) ) funcRecurRecDist( receiver.children, receiver.children );
-            }
-          } );
-          mapUnnestConfig( unnestCon );
-          if ( !R.isEmpty( receiver.children ) ) {
-            receiver.children = uniqByName( receiver.children );
-            return receiver;
-          }
-        } );
-        return mapUniqByConfig( uniqByCon );
-      };
-      return funcRecurRecDist( uniqByConfig, unnestConfig );
-    };
 
     const success = value => {
       this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
@@ -154,11 +86,6 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const oGetAdminReport = this.statisticsReportService.getAdminReport()
       .pipe(
         takeWhile( _ => this.isActive ),
-        map( startMap ),
-        map( mapNameReport ),
-        // @ts-ignore
-        map( mapPathConversion ),
-        map( mapRemoveRepetitions )
       );
     const oGetMyReport = this.statisticsReportService.getCustomerReport( this.loginId )
       .pipe(

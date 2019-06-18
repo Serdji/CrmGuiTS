@@ -78,11 +78,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
 
   private initTemplates() {
-    const TREE_DATA: FoodNode[] = [];
-    const propName = R.prop( 'name' );
-    const uniqByName = R.uniqBy( propName );
-    const composeUnnestConfig = R.compose( R.unnest, R.last );
-    const mapNameReport = R.map( propName );
     const isNotEmptyArray = template => {
       if ( !R.isEmpty( template ) ) {
         return !R.isEmpty( template );
@@ -90,61 +85,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         this.isProgressTemplates = false;
         return !R.isEmpty( template );
       }
-    };
-
-    // Мапируем массив из строк во вложенную структуру
-    const funcMapPathConversion = ( template: string ): FoodNode[] => {
-      // Рекурсивная функция для структурирования вложенностей
-      // @ts-ignore
-      const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
-        if ( !R.isNil( splitDrop[ 0 ] ) )
-          children.push( {
-            level: i,
-            name: splitDrop[ 0 ],
-            children: []
-          } );
-        configTreeData.push( children );
-        if ( !R.isEmpty( splitDrop ) ) funcRecurConfig( R.tail( splitDrop ), configTreeData, children[ 0 ].children, ++i );
-        return configTreeData;
-      };
-      const composeTreeDataSplitDrop = R.compose(
-        R.filter( R.propEq( 'level', 1 ) ),
-        R.unnest,
-        funcRecurConfig,
-        R.append( template ),
-        R.dropLast( 1 ),
-        // @ts-ignore
-        R.split( '/' )
-      );
-      // @ts-ignore
-      TREE_DATA.push( composeTreeDataSplitDrop( template ) );
-      return R.unnest( TREE_DATA );
-    };
-    const mapPathConversion = R.map( funcMapPathConversion );
-
-    // Маппинг для уделения повторений и проверки вложанностей структуры каталогов
-    const mapRemoveRepetitions = ( templates: any ): FoodNode[] => {
-      const unnestConfig = composeUnnestConfig( templates );
-      const uniqByConfig = uniqByName( unnestConfig );
-
-      // Рекурсия для прохода по не определленной глубене вложанности дерева
-      const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
-        const mapUniqByConfig = R.map( ( receiver: any ) => {
-          const mapUnnestConfig = R.map( ( distributor: any ) => {
-            if ( !R.isNil( receiver.children[ 0 ] ) ) {
-              if ( receiver.name === distributor.name ) receiver.children.push( distributor.children[ 0 ] );
-              if ( !R.isEmpty( receiver.children ) ) funcRecurRecDist( receiver.children, receiver.children );
-            }
-          } );
-          mapUnnestConfig( unnestCon );
-          if ( !R.isEmpty( receiver.children ) ) {
-            receiver.children = uniqByName( receiver.children );
-            return receiver;
-          }
-        } );
-        return mapUniqByConfig( uniqByCon );
-      };
-      return funcRecurRecDist( uniqByConfig, unnestConfig );
     };
 
     const success = templates => {
@@ -156,10 +96,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       .pipe(
         takeWhile( _ => this.isActive ),
         takeWhile( isNotEmptyArray ),
-        map( mapNameReport ),
-        // @ts-ignore
-        map( mapPathConversion ),
-        map( mapRemoveRepetitions )
       )
       .subscribe( success );
   }

@@ -13,7 +13,7 @@
               <!-- use a disabled button to provide padding for tree leaf -->
               <button mat-icon-button disabled></button>
               <button mat-button class="distribution-report__template"
-                      (click)="onSendTemplate( node.name )">{{node.name.split('/')[node.name.split('/').length - 1]}}</button>
+                      (click)="onSendTemplate( node.item )">{{node.item.split('/')[node.item.split('/').length - 1]}}</button>
             </li>
           </mat-tree-node>
           <!-- This is the tree node template for expandable nodes -->
@@ -25,7 +25,7 @@
                     folder
                   </mat-icon>
                 </button>
-                <span class="distribution-report__dir">{{node.name}}</span>
+                <span class="distribution-report__dir">{{node.item}}</span>
               </div>
               <ul [class.example-tree-invisible]="!treeControl.isExpanded(node)">
                 <ng-container matTreeNodeOutlet></ng-container>
