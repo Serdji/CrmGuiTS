@@ -83,7 +83,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const uniqByName = R.uniqBy( propName );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
     const mapNameReport = R.map( propName );
-    const isNotEmptyArrey = template => {
+    const isNotEmptyArray = template => {
       if ( !R.isEmpty( template ) ) {
         return !R.isEmpty( template );
       } else {
@@ -155,7 +155,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.statisticsReportService.getMyReport()
       .pipe(
         takeWhile( _ => this.isActive ),
-        takeWhile( isNotEmptyArrey ),
+        takeWhile( isNotEmptyArray ),
         map( mapNameReport ),
         // @ts-ignore
         map( mapPathConversion ),
