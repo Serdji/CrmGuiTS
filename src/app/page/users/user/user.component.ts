@@ -144,7 +144,6 @@ export class UserComponent implements OnInit, OnDestroy {
       loginId: +this.loginId,
       reportsIds: event
     };
-    console.log( this.paramsReport );
   }
 
   sendFormUser(): void {

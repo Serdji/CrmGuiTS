@@ -19,6 +19,10 @@ export class StatisticsReportService {
     return this.http.get( this.configService.crmApi + '/crm/report' ).pipe( this.retryRequestService.retry() );
   }
 
+  getCustomerReport( id: number ): Observable<any> {
+    return this.http.get( this.configService.crmApi + `/admin/customerReport/${id}` ).pipe( this.retryRequestService.retry() );
+  }
+
   getAdminReport( ): Observable<any> {
     return this.http.get( this.configService.crmApi + '/admin/report' ).pipe( this.retryRequestService.retry() );
   }

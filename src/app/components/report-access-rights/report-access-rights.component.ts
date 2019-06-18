@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -33,7 +33,8 @@ export class TodoItemFlatNode {
 } )
 export class ReportAccessRightsComponent implements OnInit, OnDestroy {
 
-  @Output( ) sendReportsIds = new EventEmitter();
+  @Input() loginId: number;
+  @Output() sendReportsIds = new EventEmitter();
 
   public isProgressTemplates: boolean;
   public isActive: boolean;
@@ -60,10 +61,6 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.isProgressTemplates = true;
-    // this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
-    //   this.isExpandable, this.getChildren );
-    // this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
-    // this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
     this.initTemplates();
   }
 
@@ -163,7 +160,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
         map( mapPathConversion ),
         map( mapRemoveRepetitions )
       );
-    const oGetMyReport = this.statisticsReportService.getMyReport()
+    const oGetMyReport = this.statisticsReportService.getCustomerReport( this.loginId )
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mapMyReports )
