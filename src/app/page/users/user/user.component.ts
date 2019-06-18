@@ -12,6 +12,8 @@ import { person } from './person';
 import * as R from 'ramda';
 import { IFoodNode } from '../../../interface/ifood-node';
 import { NestedTreeControl } from '@angular/cdk/tree';
+import { StatisticsReportService } from '../../reports/statistics-report/statistics-report.service';
+import { forkJoin, Observable } from 'rxjs';
 
 @Component( {
   selector: 'app-user',
@@ -34,13 +36,15 @@ export class UserComponent implements OnInit, OnDestroy {
   private checkboxArr: number[];
   private loginId: number;
   private isActive: boolean;
+  private paramsReport: { loginId: number, reportsIds: number[] };
 
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private activityUserService: ActivityUserService
+    private activityUserService: ActivityUserService,
+    private statisticsReportService: StatisticsReportService,
   ) { }
 
   ngOnInit() {
@@ -88,6 +92,7 @@ export class UserComponent implements OnInit, OnDestroy {
     } );
 
   }
+
   private initFormPermission() {
     const formGroup = {};
     const propIds = R.prop( 'ids' );
@@ -134,8 +139,12 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
-  collectObjectReport(event): void {
-    console.log( event );
+  collectObjectReport( event ): void {
+    this.paramsReport = {
+      loginId: +this.loginId,
+      reportsIds: event
+    };
+    console.log( this.paramsReport );
   }
 
   sendFormUser(): void {
@@ -171,22 +180,26 @@ export class UserComponent implements OnInit, OnDestroy {
       if ( this.formPermission.get( key ).value ) progressArray.push( +key );
     }
     const params = Object.assign( {}, { loginId: +this.loginId, ClaimPermissions: progressArray } );
-    this.userService.updateClaimPermissions( params )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        if ( this.user.login === localStorage.getItem( 'login' ) ) {
-          this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
-          timer( 5000 )
-            .pipe( takeWhile( _ => this.isActive ) )
-            .subscribe( _ => {
-              this.dialog.closeAll();
-              this.activityUserService.logout();
-              this.edit = false;
-            } );
-        } else {
-          this.windowDialog( 'Права пользователя изменены', 'ok' );
-        }
-      } );
+
+    const success = _ => {
+      if ( this.user.login === localStorage.getItem( 'login' ) ) {
+        this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
+        timer( 5000 )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialog.closeAll();
+            this.activityUserService.logout();
+            this.edit = false;
+          } );
+      } else {
+        this.windowDialog( 'Права пользователя изменены', 'ok' );
+      }
+    };
+
+    const oUpdateClaimPermissions = this.userService.updateClaimPermissions( params ).pipe( takeWhile( _ => this.isActive ) );
+    const oSetAdminReports = this.statisticsReportService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
+    const permissionsObservable = forkJoin( oUpdateClaimPermissions, oSetAdminReports );
+    permissionsObservable.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
   }
 
   toggleEdit(): void {

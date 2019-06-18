@@ -23,6 +23,10 @@ export class StatisticsReportService {
     return this.http.get( this.configService.crmApi + '/admin/report' ).pipe( this.retryRequestService.retry() );
   }
 
+  setAdminReports( params ): Observable<any> {
+    return this.http.post( this.configService.crmApi + '/admin/report', params ).pipe( this.retryRequestService.retry() );
+  }
+
   getParamsDynamicForm( params: string ): Observable<any> {
     return this.http.get( this.configService.crmApi + `/crm/reports/getParams?reportName=${ params }` ).pipe( this.retryRequestService.retry() );
   }
@@ -30,4 +34,7 @@ export class StatisticsReportService {
   getParams( params ): Observable<any> {
     return this.http.post( this.configService.crmApi + '/crm/reports/getReport', params, { responseType: 'blob', observe: 'response' } ).pipe( this.retryRequestService.retry() );
   }
+
+
+
 }

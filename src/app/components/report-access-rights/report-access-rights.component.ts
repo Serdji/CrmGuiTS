@@ -147,7 +147,8 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
       this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
       const getAdminReport = value[ 0 ];
-      const getMyReport = value[ 1 ]
+      const getMyReport = value[ 1 ];
+      this.sendReportsIds.emit( getMyReport );
       this.reportsIds = getMyReport;
       this.dataSource.data = getAdminReport;
       this.isProgressTemplates = false;
