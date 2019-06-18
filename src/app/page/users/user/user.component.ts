@@ -134,6 +134,10 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
+  collectObjectReport(event): void {
+    console.log( event );
+  }
+
   sendFormUser(): void {
     if ( !this.updateUser.invalid ) {
       const params = this.updateUser.getRawValue();

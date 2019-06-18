@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -32,6 +32,8 @@ export class TodoItemFlatNode {
   styleUrls: [ './report-access-rights.component.styl' ],
 } )
 export class ReportAccessRightsComponent implements OnInit, OnDestroy {
+
+  @Output( ) sendReportsIds = new EventEmitter();
 
   public isProgressTemplates: boolean;
   public isActive: boolean;
@@ -185,8 +187,10 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       this.reportsIds.push( mapReportsIds( nodes ) );
       // @ts-ignore
       this.reportsIds = composeUniqReportsIds( this.reportsIds );
+      this.sendReportsIds.emit( this.reportsIds );
     } else {
       R.forEach( removeReportsIds, nodes );
+      this.sendReportsIds.emit( this.reportsIds );
     }
 
   }
@@ -240,8 +244,6 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const isSelected = this.checklistSelection.isSelected( node );
     this.collectReportsIds( descendants, isSelected );
 
-    console.log( this.reportsIds );
-
     this.checklistSelection.isSelected( node )
       ? this.checklistSelection.select( ...descendants )
       : this.checklistSelection.deselect( ...descendants );
@@ -255,8 +257,6 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   todoLeafItemSelectionToggle( node: TodoItemFlatNode ): void {
     const isSelected = !this.checklistSelection.isSelected( node );
     this.collectReportsIds( [ node ], isSelected );
-
-    console.log( this.reportsIds );
 
     this.checklistSelection.toggle( node );
     this.checkAllParentsSelection( node );
