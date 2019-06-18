@@ -36,8 +36,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   public isProgressTemplates: boolean;
   public isActive: boolean;
 
-  private adminReportsIds: number[] = [];
-  private myReportsIds: number[] = [];
+  private reportsIds: number[] = [];
 
   /** Карта от плоского узла к вложенному узлу. Это помогает нам найти вложенный узел, который нужно изменить */
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
@@ -146,8 +145,8 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
       this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
       const getAdminReport = value[ 0 ];
-      const getMyReport = value[ 1 ];
-      this.myReportsIds = getMyReport;
+      const getMyReport = value[ 1 ]
+      this.reportsIds = getMyReport;
       this.dataSource.data = getAdminReport;
       this.isProgressTemplates = false;
     };
@@ -175,17 +174,17 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const composeUniqReportsIds = R.compose( R.uniq, R.unnest );
     const propReportId = R.prop( 'reportId' );
     const mapReportsIds = R.map( propReportId );
-    const funcNodes = R.curry( ( node: TodoItemFlatNode, adminReportsIds: number ) => node.reportId === adminReportsIds );
+    const funcNodes = R.curry( ( node: TodoItemFlatNode, reportsIds: number ) => node.reportId === reportsIds );
     const removeReportsIds = node => {
       const funcReportId = funcNodes( node );
-      this.adminReportsIds = R.reject( funcReportId, this.adminReportsIds );
+      this.reportsIds = R.reject( funcReportId, this.reportsIds );
     };
 
     if ( isSelected ) {
       // @ts-ignore
-      this.adminReportsIds.push( mapReportsIds( nodes ) );
+      this.reportsIds.push( mapReportsIds( nodes ) );
       // @ts-ignore
-      this.adminReportsIds = composeUniqReportsIds( this.adminReportsIds );
+      this.reportsIds = composeUniqReportsIds( this.reportsIds );
     } else {
       R.forEach( removeReportsIds, nodes );
     }
@@ -216,7 +215,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     this.flatNodeMap.set( flatNode, node );
     this.nestedNodeMap.set( node, flatNode );
     const funcChecklistSelect = myReportId => myReportId === flatNode.reportId ? this.checklistSelection.select( flatNode ) : null;
-    R.forEach( funcChecklistSelect, this.myReportsIds );
+    R.forEach( funcChecklistSelect, this.reportsIds );
     return flatNode;
   }
 
@@ -241,7 +240,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const isSelected = this.checklistSelection.isSelected( node );
     this.collectReportsIds( descendants, isSelected );
 
-    console.log( this.adminReportsIds );
+    console.log( this.reportsIds );
 
     this.checklistSelection.isSelected( node )
       ? this.checklistSelection.select( ...descendants )
@@ -257,7 +256,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const isSelected = !this.checklistSelection.isSelected( node );
     this.collectReportsIds( [ node ], isSelected );
 
-    console.log( this.adminReportsIds );
+    console.log( this.reportsIds );
 
     this.checklistSelection.toggle( node );
     this.checkAllParentsSelection( node );
