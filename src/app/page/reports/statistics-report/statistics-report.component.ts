@@ -145,7 +145,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       this.isProgressTemplates = false;
     };
 
-    this.statisticsReportService.getReport()
+    this.statisticsReportService.getMyReport()
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mapNameReport ),

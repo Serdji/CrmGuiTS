@@ -5,6 +5,7 @@ import { SelectionModel } from '@angular/cdk/collections';
 import * as R from 'ramda';
 import { map, takeWhile } from 'rxjs/operators';
 import { StatisticsReportService } from '../../page/reports/statistics-report/statistics-report.service';
+import { forkJoin } from 'rxjs';
 
 
 /**
@@ -35,7 +36,8 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   public isProgressTemplates: boolean;
   public isActive: boolean;
 
-  private reportsIds: number[] = [];
+  private adminReportsIds: number[] = [];
+  private myReportsIds: number[] = [];
 
   /** Карта от плоского узла к вложенному узлу. Это помогает нам найти вложенный узел, который нужно изменить */
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
@@ -57,10 +59,10 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.isProgressTemplates = true;
-    this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
-      this.isExpandable, this.getChildren );
-    this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
-    this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
+    // this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
+    //   this.isExpandable, this.getChildren );
+    // this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
+    // this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
     this.initTemplates();
   }
 
@@ -68,6 +70,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const TREE_DATA: TodoItemNode[] = [];
     const propItem = R.prop( 'item' );
     const propName = R.prop( 'name' );
+    const propReportId = R.prop( 'reportId' );
     const uniqByName = R.uniqBy( propItem );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
     let reports;
@@ -76,6 +79,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       return report;
     };
     const mapNameReport = R.map( propName );
+    const mapMyReports = R.map( propReportId );
 
     // Мапируем массив из строк во вложенную структуру
     const funcMapPathConversion = ( template: string ): TodoItemNode[] => {
@@ -136,12 +140,19 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       return funcRecurRecDist( uniqByConfig, unnestConfig );
     };
 
-    const success = templates => {
-      this.dataSource.data = templates;
+    const success = value => {
+      this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
+        this.isExpandable, this.getChildren );
+      this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
+      this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
+      const getAdminReport = value[ 0 ];
+      const getMyReport = value[ 1 ];
+      this.myReportsIds = getMyReport;
+      this.dataSource.data = getAdminReport;
       this.isProgressTemplates = false;
     };
 
-    this.statisticsReportService.getAdminReport()
+    const oGetAdminReport = this.statisticsReportService.getAdminReport()
       .pipe(
         takeWhile( _ => this.isActive ),
         map( startMap ),
@@ -149,25 +160,32 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
         // @ts-ignore
         map( mapPathConversion ),
         map( mapRemoveRepetitions )
-      )
-      .subscribe( success );
+      );
+    const oGetMyReport = this.statisticsReportService.getMyReport()
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( mapMyReports )
+      );
+    const getObservablesReports = forkJoin( oGetAdminReport, oGetMyReport );
+    getObservablesReports.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
+
   }
 
   private collectReportsIds( nodes: TodoItemFlatNode[], isSelected: boolean ) {
     const composeUniqReportsIds = R.compose( R.uniq, R.unnest );
     const propReportId = R.prop( 'reportId' );
     const mapReportsIds = R.map( propReportId );
-    const funcNodes = R.curry( ( node: TodoItemFlatNode, reportsIds: number ) => node.reportId === reportsIds );
+    const funcNodes = R.curry( ( node: TodoItemFlatNode, adminReportsIds: number ) => node.reportId === adminReportsIds );
     const removeReportsIds = node => {
-       const funcReportId = funcNodes( node );
-       this.reportsIds = R.reject( funcReportId, this.reportsIds );
+      const funcReportId = funcNodes( node );
+      this.adminReportsIds = R.reject( funcReportId, this.adminReportsIds );
     };
 
     if ( isSelected ) {
       // @ts-ignore
-      this.reportsIds.push( mapReportsIds( nodes ) );
+      this.adminReportsIds.push( mapReportsIds( nodes ) );
       // @ts-ignore
-      this.reportsIds = composeUniqReportsIds( this.reportsIds );
+      this.adminReportsIds = composeUniqReportsIds( this.adminReportsIds );
     } else {
       R.forEach( removeReportsIds, nodes );
     }
@@ -197,8 +215,10 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     flatNode.expandable = !R.isEmpty( node.children );
     this.flatNodeMap.set( flatNode, node );
     this.nestedNodeMap.set( node, flatNode );
+    const funcChecklistSelect = myReportId => myReportId === flatNode.reportId ? this.checklistSelection.select( flatNode ) : null;
+    R.forEach( funcChecklistSelect, this.myReportsIds );
     return flatNode;
-  };
+  }
 
   /** Все ли потомки узла выбраны. */
   descendantsAllSelected( node: TodoItemFlatNode ): boolean {
@@ -221,7 +241,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const isSelected = this.checklistSelection.isSelected( node );
     this.collectReportsIds( descendants, isSelected );
 
-    console.log( this.reportsIds );
+    console.log( this.adminReportsIds );
 
     this.checklistSelection.isSelected( node )
       ? this.checklistSelection.select( ...descendants )
@@ -237,7 +257,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     const isSelected = !this.checklistSelection.isSelected( node );
     this.collectReportsIds( [ node ], isSelected );
 
-    console.log( this.reportsIds );
+    console.log( this.adminReportsIds );
 
     this.checklistSelection.toggle( node );
     this.checkAllParentsSelection( node );

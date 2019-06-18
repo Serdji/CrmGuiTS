@@ -15,7 +15,7 @@ export class StatisticsReportService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getReport( ): Observable<any> {
+  getMyReport( ): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/report' ).pipe( this.retryRequestService.retry() );
   }
 
