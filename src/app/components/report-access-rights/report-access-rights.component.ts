@@ -143,15 +143,20 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     flatNode.expandable = !R.isEmpty( node.children );
     this.flatNodeMap.set( flatNode, node );
     this.nestedNodeMap.set( node, flatNode );
-    const funcChecklistSelect = myReportId => myReportId === flatNode.reportId ? this.checklistSelection.select( flatNode ) : null;
-    R.forEach( funcChecklistSelect, this.reportsIds );
+    const flatNodeSelect = myReportId => myReportId === flatNode.reportId ? this.checklistSelection.select( flatNode ) : null;
+    R.forEach( flatNodeSelect, this.reportsIds );
     return flatNode;
-  }
+  };
 
   /** Все ли потомки узла выбраны. */
   descendantsAllSelected( node: TodoItemFlatNode ): boolean {
     const descendants = this.treeControl.getDescendants( node );
-    const descAllSelected = descendants.every( child => this.checklistSelection.isSelected( child ) );
+    const descAllSelected = descendants.every( child => {
+      this.checklistSelection.isSelected( child )
+        ? this.checklistSelection.select( node )
+        : this.checklistSelection.deselect( node );
+      return this.checklistSelection.isSelected( child );
+    } );
     return descAllSelected;
   }
 
