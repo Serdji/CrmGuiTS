@@ -83,7 +83,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const uniqByName = R.uniqBy( propName );
     const composeUnnestConfig = R.compose( R.unnest, R.last );
     const mapNameReport = R.map( propName );
-
+    const isNotEmptyArrey = template => {
+      if ( !R.isEmpty( template ) ) {
+        return !R.isEmpty( template );
+      } else {
+        this.isProgressTemplates = false;
+        return !R.isEmpty( template );
+      }
+    };
 
     // Мапируем массив из строк во вложенную структуру
     const funcMapPathConversion = ( template: string ): FoodNode[] => {
@@ -148,6 +155,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.statisticsReportService.getMyReport()
       .pipe(
         takeWhile( _ => this.isActive ),
+        takeWhile( isNotEmptyArrey ),
         map( mapNameReport ),
         // @ts-ignore
         map( mapPathConversion ),
