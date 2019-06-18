@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
 import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
 import { SelectionModel } from '@angular/cdk/collections';
@@ -30,9 +30,12 @@ export class TodoItemFlatNode {
   templateUrl: './report-access-rights.component.html',
   styleUrls: [ './report-access-rights.component.styl' ],
 } )
-export class ReportAccessRightsComponent implements OnInit {
+export class ReportAccessRightsComponent implements OnInit, OnDestroy {
 
   public isProgressTemplates: boolean;
+  public isActive: boolean;
+
+  private reportsIds: number[] = [];
 
   /** Карта от плоского узла к вложенному узлу. Это помогает нам найти вложенный узел, который нужно изменить */
   flatNodeMap = new Map<TodoItemFlatNode, TodoItemNode>();
@@ -52,6 +55,7 @@ export class ReportAccessRightsComponent implements OnInit {
   constructor( private statisticsReportService: StatisticsReportService ) {}
 
   ngOnInit(): void {
+    this.isActive = true;
     this.isProgressTemplates = true;
     this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
       this.isExpandable, this.getChildren );
@@ -135,11 +139,11 @@ export class ReportAccessRightsComponent implements OnInit {
     const success = templates => {
       this.dataSource.data = templates;
       this.isProgressTemplates = false;
-      console.log( this.dataSource.data );
     };
 
-    this.statisticsReportService.getReport()
+    this.statisticsReportService.getAdminReport()
       .pipe(
+        takeWhile( _ => this.isActive ),
         map( startMap ),
         map( mapNameReport ),
         // @ts-ignore
@@ -147,6 +151,27 @@ export class ReportAccessRightsComponent implements OnInit {
         map( mapRemoveRepetitions )
       )
       .subscribe( success );
+  }
+
+  private collectReportsIds( nodes: TodoItemFlatNode[], isSelected: boolean ) {
+    const composeUniqReportsIds = R.compose( R.uniq, R.unnest );
+    const propReportId = R.prop( 'reportId' );
+    const mapReportsIds = R.map( propReportId );
+    const funcNodes = R.curry( ( node: TodoItemFlatNode, reportsIds: number ) => node.reportId === reportsIds );
+    const removeReportsIds = node => {
+       const funcReportId = funcNodes( node );
+       this.reportsIds = R.reject( funcReportId, this.reportsIds );
+    };
+
+    if ( isSelected ) {
+      // @ts-ignore
+      this.reportsIds.push( mapReportsIds( nodes ) );
+      // @ts-ignore
+      this.reportsIds = composeUniqReportsIds( this.reportsIds );
+    } else {
+      R.forEach( removeReportsIds, nodes );
+    }
+
   }
 
   getLevel = ( node: TodoItemFlatNode ) => node.level;
@@ -178,9 +203,7 @@ export class ReportAccessRightsComponent implements OnInit {
   /** Все ли потомки узла выбраны. */
   descendantsAllSelected( node: TodoItemFlatNode ): boolean {
     const descendants = this.treeControl.getDescendants( node );
-    const descAllSelected = descendants.every( child =>
-      this.checklistSelection.isSelected( child )
-    );
+    const descAllSelected = descendants.every( child => this.checklistSelection.isSelected( child ) );
     return descAllSelected;
   }
 
@@ -193,23 +216,29 @@ export class ReportAccessRightsComponent implements OnInit {
 
   /** Переключить выбор элемента списка дел. Выбрать / отменить выбор всех потомков */
   todoItemSelectionToggle( node: TodoItemFlatNode ): void {
-    console.log( node );
     this.checklistSelection.toggle( node );
     const descendants = this.treeControl.getDescendants( node );
+    const isSelected = this.checklistSelection.isSelected( node );
+    this.collectReportsIds( descendants, isSelected );
+
+    console.log( this.reportsIds );
+
     this.checklistSelection.isSelected( node )
       ? this.checklistSelection.select( ...descendants )
       : this.checklistSelection.deselect( ...descendants );
 
     // Принудительное обновление для родителя
-    descendants.every( child =>
-      this.checklistSelection.isSelected( child )
-    );
+    descendants.every( child => this.checklistSelection.isSelected( child ) );
     this.checkAllParentsSelection( node );
   }
 
   /** Переключить лист выбора списка дел. Проверьте всех родителей, чтобы увидеть, если они изменились */
   todoLeafItemSelectionToggle( node: TodoItemFlatNode ): void {
-    console.log( node );
+    const isSelected = !this.checklistSelection.isSelected( node );
+    this.collectReportsIds( [ node ], isSelected );
+
+    console.log( this.reportsIds );
+
     this.checklistSelection.toggle( node );
     this.checkAllParentsSelection( node );
   }
@@ -256,4 +285,9 @@ export class ReportAccessRightsComponent implements OnInit {
     }
     return null;
   }
+
+  ngOnDestroy(): void {
+    this.isActive = false;
+  }
+
 }
