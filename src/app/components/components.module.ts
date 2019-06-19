@@ -5,6 +5,7 @@ import { EditorsModule } from './editors/editors.module';
 import { PromoCodeModule } from './promo-code/promo-code.module';
 import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 import { MergeProfileModule } from './merge-profile/merge-profile.module';
+import { ReportAccessRightsModule } from './report-access-rights/report-access-rights.module';
 
 @NgModule({
   imports: [
@@ -14,6 +15,7 @@ import { MergeProfileModule } from './merge-profile/merge-profile.module';
     PromoCodeModule,
     MergeProfileModule,
     DynamicFormModule,
+    ReportAccessRightsModule,
   ],
   exports: [
     TablesModule,
@@ -21,6 +23,7 @@ import { MergeProfileModule } from './merge-profile/merge-profile.module';
     PromoCodeModule,
     MergeProfileModule,
     DynamicFormModule,
+    ReportAccessRightsModule,
   ],
 })
 export class ComponentsModule {

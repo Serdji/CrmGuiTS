@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticsReportService } from './statistics-report.service';
-import { map, takeWhile, } from 'rxjs/operators';
+import { map, takeWhile } from 'rxjs/operators';
 import * as R from 'ramda';
 import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
@@ -65,7 +65,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.initTemplates();
     this.isProgressTemplates = true;
     this.isProgressPdfViewer = false;
     this.isProgressDynamicForm = false;
@@ -77,80 +76,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
 
-  private initTemplates() {
-    const TREE_DATA: FoodNode[] = [];
-    const propName = R.prop( 'name' );
-    const uniqByName = R.uniqBy( propName );
-    const composeUnnestConfig = R.compose( R.unnest, R.last );
-
-    // Мапируем массив из строк во вложенную структуру
-    const funcMapPathConversion = ( template: string ): FoodNode[] => {
-      // Рекурсивная функция для структурирования вложенностей
-      // @ts-ignore
-      const funcRecurConfig = ( splitDrop, configTreeData = [], children = [], i = 1 ) => {
-        if ( !R.isNil( splitDrop[ 0 ] ) )
-          children.push( {
-            level: i,
-            name: splitDrop[ 0 ],
-            children: []
-          } );
-        configTreeData.push( children );
-        if ( !R.isEmpty( splitDrop ) ) funcRecurConfig( R.tail( splitDrop ), configTreeData, children[ 0 ].children, ++i );
-        return configTreeData;
-      };
-      const composeTreeDataSplitDrop = R.compose(
-        R.filter( R.propEq( 'level', 1 ) ),
-        R.unnest,
-        funcRecurConfig,
-        R.append( template ),
-        R.dropLast( 1 ),
-        // @ts-ignore
-        R.split( '/' )
-      );
-      // @ts-ignore
-      TREE_DATA.push( composeTreeDataSplitDrop( template ) );
-      return R.unnest( TREE_DATA );
-    };
-    const mapPathConversion = R.map( funcMapPathConversion );
-
-    // Маппинг для уделения повторений и проверки вложанностей структуры каталогов
-    const mapRemoveRepetitions = ( templates: any ): FoodNode[] => {
-      const unnestConfig = composeUnnestConfig( templates );
-      const uniqByConfig = uniqByName( unnestConfig );
-
-      // Рекурсия для прохода по не определленной глубене вложанности дерева
-      const funcRecurRecDist = ( uniqByCon, unnestCon ) => {
-        const mapUniqByConfig = R.map( ( receiver: any ) => {
-          const mapUnnestConfig = R.map( ( distributor: any ) => {
-            if ( !R.isNil( receiver.children[ 0 ] ) ) {
-              if ( receiver.name === distributor.name ) receiver.children.push( distributor.children[ 0 ] );
-              if ( !R.isEmpty( receiver.children ) ) funcRecurRecDist( receiver.children, receiver.children );
-            }
-          } );
-          mapUnnestConfig( unnestCon );
-          if ( !R.isEmpty( receiver.children ) ) {
-            receiver.children = uniqByName( receiver.children );
-            return receiver;
-          }
-        } );
-        return mapUniqByConfig( uniqByCon );
-      };
-      return funcRecurRecDist( uniqByConfig, unnestConfig );
-    };
-
-    const success = templates => {
-      this.dataSource.data = templates;
-      this.isProgressTemplates = false;
-    };
-
-    this.statisticsReportService.getTemplates()
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( mapPathConversion ),
-        map( mapRemoveRepetitions )
-      )
-      .subscribe( success );
-  }
 
   private buttonIsDisabled() {
     this.buttonPreviousDisabled = this.pageVariable <= 1;
@@ -186,7 +111,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
   onReportGeneration( event ): void {
-    const reportType = R.lensProp( 'ReportType' );
+    const reportTypeLens = R.lensProp( 'ReportType' );
     this.pageVariable = 1;
     this.isProgressPdfViewer = true;
     const params = {
@@ -195,22 +120,22 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     };
     // @ts-ignore
     const composeSplitFileName = R.compose( R.last, R.split( '/' ) );
+    const fileNameSplit = R.compose(
+      R.nth( -2 ),
+      R.split( '.' ),
+      R.nth( 1 ),
+      R.split( '=' ),
+      R.nth( 1 ),
+      R.split( ';' ),
+    );
 
-    const oPdf = this.statisticsReportService.getParams( R.set( reportType, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const oWord = this.statisticsReportService.getParams( R.set( reportType, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const oExcel = this.statisticsReportService.getParams( R.set( reportType, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oPdf = this.statisticsReportService.getParams( R.set( reportTypeLens, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oWord = this.statisticsReportService.getParams( R.set( reportTypeLens, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
+    const oExcel = this.statisticsReportService.getParams( R.set( reportTypeLens, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
 
-    const getFiles = combineLatest( oPdf, oWord, oExcel  );
-    getFiles.subscribe( ( respArr: any[] ) => {
+    const getObservablesFiles = combineLatest( oPdf, oWord, oExcel  );
+    getObservablesFiles.subscribe( ( respArr: any[] ) => {
       _.each( respArr, ( resp, index ) => {
-        const fileNameSplit = R.compose(
-          R.nth( -2 ),
-          R.split( '.' ),
-          R.nth( 1 ),
-          R.split( '=' ),
-          R.nth( 1 ),
-          R.split( ';' ),
-        );
         const blob = resp.body;
         // const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
         const fileName = composeSplitFileName( this.patternPath );
@@ -249,9 +174,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
     saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
   }
-
-
-  hasChild = ( _: number, node: FoodNode ) => !!node.children && node.children.length > 0;
 
   ngOnDestroy(): void {
     this.isActive = false;

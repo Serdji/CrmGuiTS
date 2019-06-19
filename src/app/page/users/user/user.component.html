@@ -77,13 +77,31 @@
       </mat-card-header>
       <mat-card-content class="user__content">
         <form class="user__form" [formGroup]="formPermission">
-          <div class="user__label" *ngFor=" let person of persons">
-            <div class="user__label-title"><b>{{ person.title }}</b></div>
-            <mat-checkbox
-              class="user__checkbox" *ngFor=" let id of person.ids "
-              [formControlName]="id">
-              {{ id % 2 === 1 ? 'Чтение' : 'Изменение'}}
-            </mat-checkbox>
+          <div class="user__form-wrapper" *ngFor=" let person of persons">
+            <div class="user__label">
+              <div class="user__label-title"><b>{{ person.title }}</b></div>
+              <mat-checkbox
+                class="user__checkbox" *ngFor=" let id of person.ids "
+                [formControlName]="id">
+                {{ id % 2 === 1 ? 'Чтение' : 'Изменение'}}
+              </mat-checkbox>
+            </div>
+            <div class="user__templates" *ngIf=" person.title === 'Отчеты'">
+              <mat-progress-bar *ngIf="isProgressTemplates" mode="buffer"></mat-progress-bar>
+              <mat-accordion *ngIf="!isProgressTemplates">
+                <mat-expansion-panel class="mat-elevation-z0">
+                  <mat-expansion-panel-header>
+                    <mat-panel-description>
+                      Дополнительные права
+                    </mat-panel-description>
+                  </mat-expansion-panel-header>
+
+                  <app-report-access-rights (sendReportsIds)="collectObjectReport($event)" [loginId]="+loginId" ></app-report-access-rights>
+
+
+                </mat-expansion-panel>
+              </mat-accordion>
+            </div>
           </div>
           <div class="user__button-wrapper">
             <button class="user__button _left-button" mat-raised-button (click)="sendFormPermission()"

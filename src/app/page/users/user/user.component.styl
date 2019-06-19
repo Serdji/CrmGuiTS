@@ -21,6 +21,9 @@
     &-title
       margin-bottom: 20px;
 
+  &__templates
+    flex: 1;
+
   &__content
     margin-top: 50px;
 
@@ -37,6 +40,11 @@
     display: flex;
     flex-direction: column;
 
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+
 
   &__input
     display: block
@@ -50,6 +58,15 @@
     &-wrapper
       margin-left: auto;
 
+  &__dir,
+  &__template
+    color: #464646;
+    cursor: pointer;
+
+  &__dir
+    font-size 16px;
+
+
 .mat-card-header
   align-items: center;
 
@@ -57,3 +74,19 @@
     margin-left: auto
     cursor: pointer;
     color: #696969;
+
+
+example-tree
+  mat-icon
+    color: #464646;
+
+.example-tree-invisible {
+  display: none;
+}
+
+.example-tree ul,
+.example-tree li {
+  margin-top: 0;
+  margin-bottom: 0;
+  list-style-type: none;
+}
