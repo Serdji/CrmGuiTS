@@ -50,5 +50,9 @@ export class UserService {
     return this.http.post( `${this.configService.crmApi}/admin/user/update-claim-permissions`, params ).pipe( this.retryRequestService.retry() );
   }
 
+  setAdminReports( params ): Observable<any> {
+    return this.http.post( this.configService.crmApi + '/admin/report', params ).pipe( this.retryRequestService.retry() );
+  }
+
 
 }

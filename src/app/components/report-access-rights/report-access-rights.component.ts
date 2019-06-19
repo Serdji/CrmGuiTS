@@ -1,11 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FlatTreeControl } from '@angular/cdk/tree';
-import { MatTreeFlatDataSource, MatTreeFlattener } from '@angular/material/tree';
+import { MatTreeFlatDataSource, MatTreeFlattener, MatTreeNestedDataSource } from '@angular/material/tree';
 import { SelectionModel } from '@angular/cdk/collections';
 import * as R from 'ramda';
 import { map, takeWhile } from 'rxjs/operators';
-import { StatisticsReportService } from '../../page/reports/statistics-report/statistics-report.service';
 import { forkJoin } from 'rxjs';
+import { ReportAccessRightsService } from './report-access-rights.service';
 
 
 /**
@@ -34,7 +34,9 @@ export class TodoItemFlatNode {
 export class ReportAccessRightsComponent implements OnInit, OnDestroy {
 
   @Input() loginId: number;
+  @Input() isDir: boolean;
   @Output() sendReportsIds = new EventEmitter();
+  @Output() sendTemplate = new EventEmitter();
 
   public isProgressTemplates: boolean;
   public isActive: boolean;
@@ -56,45 +58,62 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   /** Выбор для контрольного списка */
   checklistSelection = new SelectionModel<TodoItemFlatNode>( true /* multiple */ );
 
-  constructor( private statisticsReportService: StatisticsReportService ) {}
+  constructor( private reportAccessRightsService: ReportAccessRightsService) {}
 
   ngOnInit(): void {
     this.isActive = true;
     this.isProgressTemplates = true;
     this.initTemplates();
+
   }
 
   private initTemplates() {
-
+    this.isDir = !R.isNil( this.isDir );
     const propReportId = R.prop( 'reportId' );
     const mapMyReports = R.map( propReportId );
-
+    const isNotEmptyArray = template => {
+      if ( !R.isEmpty( template ) ) {
+        return !R.isEmpty( template );
+      } else {
+        this.isProgressTemplates = false;
+        return !R.isEmpty( template );
+      }
+    };
 
     const success = value => {
-      this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel,
-        this.isExpandable, this.getChildren );
+      this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel, this.isExpandable, this.getChildren );
       this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
       this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
       const getAdminReport = value[ 0 ];
       const getMyReport = value[ 1 ];
       this.sendReportsIds.emit( getMyReport );
       this.reportsIds = getMyReport;
-      this.dataSource.data = getAdminReport;
+      this.dataSource.data = this.isDir ? value : getAdminReport;
       this.isProgressTemplates = false;
     };
 
-    const oGetAdminReport = this.statisticsReportService.getAdminReport()
+    const oGetAdminReport = this.reportAccessRightsService.getAdminReport()
       .pipe(
         takeWhile( _ => this.isActive ),
       );
-    const oGetMyReport = this.statisticsReportService.getCustomerReport( this.loginId )
+    const oGetMyReport = this.reportAccessRightsService.getCustomerReport( this.loginId )
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mapMyReports )
       );
     const getObservablesReports = forkJoin( oGetAdminReport, oGetMyReport );
-    getObservablesReports.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
+    const myReport = _ => this.reportAccessRightsService.getMyReport()
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        takeWhile( isNotEmptyArray ),
+      )
+      .subscribe( success );
+    const collectionReports = _ =>  getObservablesReports.pipe(
+      takeWhile( _ => this.isActive ),
+    ).subscribe( success );
 
+    const whichTemplate = R.ifElse( _ => this.isDir, myReport, collectionReports  );
+    whichTemplate( R.identity );
   }
 
   private collectReportsIds( nodes: TodoItemFlatNode[], isSelected: boolean ) {
@@ -233,6 +252,10 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       }
     }
     return null;
+  }
+
+  onSendTemplate( item: string ): void {
+    this.sendTemplate.emit( item );
   }
 
   ngOnDestroy(): void {

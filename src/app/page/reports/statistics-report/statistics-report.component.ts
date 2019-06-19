@@ -65,7 +65,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.initTemplates();
     this.isProgressTemplates = true;
     this.isProgressPdfViewer = false;
     this.isProgressDynamicForm = false;
@@ -77,28 +76,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   }
 
 
-  private initTemplates() {
-    const isNotEmptyArray = template => {
-      if ( !R.isEmpty( template ) ) {
-        return !R.isEmpty( template );
-      } else {
-        this.isProgressTemplates = false;
-        return !R.isEmpty( template );
-      }
-    };
-
-    const success = templates => {
-      this.dataSource.data = templates;
-      this.isProgressTemplates = false;
-    };
-
-    this.statisticsReportService.getMyReport()
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        takeWhile( isNotEmptyArray ),
-      )
-      .subscribe( success );
-  }
 
   private buttonIsDisabled() {
     this.buttonPreviousDisabled = this.pageVariable <= 1;
@@ -197,8 +174,6 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
     saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
   }
-
-  hasChild = ( _: number, node: FoodNode ) => !!node.children && node.children.length > 0;
 
   ngOnDestroy(): void {
     this.isActive = false;

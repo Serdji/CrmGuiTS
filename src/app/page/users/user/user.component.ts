@@ -11,9 +11,7 @@ import { ActivityUserService } from '../../../services/activity-user.service';
 import { person } from './person';
 import * as R from 'ramda';
 import { IFoodNode } from '../../../interface/ifood-node';
-import { NestedTreeControl } from '@angular/cdk/tree';
-import { StatisticsReportService } from '../../reports/statistics-report/statistics-report.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
 
 @Component( {
   selector: 'app-user',
@@ -22,7 +20,6 @@ import { forkJoin, Observable } from 'rxjs';
 } )
 export class UserComponent implements OnInit, OnDestroy {
 
-  public treeControl = new NestedTreeControl<IFoodNode>( node => node.children );
   public dataSource = new MatTreeNestedDataSource<IFoodNode>();
 
   public user: IlistUsers;
@@ -44,7 +41,6 @@ export class UserComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private activityUserService: ActivityUserService,
-    private statisticsReportService: StatisticsReportService,
   ) { }
 
   ngOnInit() {
@@ -196,7 +192,7 @@ export class UserComponent implements OnInit, OnDestroy {
     };
 
     const oUpdateClaimPermissions = this.userService.updateClaimPermissions( params ).pipe( takeWhile( _ => this.isActive ) );
-    const oSetAdminReports = this.statisticsReportService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
+    const oSetAdminReports = this.userService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
     const permissionsObservable = forkJoin( oUpdateClaimPermissions, oSetAdminReports );
     permissionsObservable.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
   }

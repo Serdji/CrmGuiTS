@@ -16,6 +16,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     ComponentsModule,
     StatisticsReportRoutes,
     PdfViewerModule,
+    ComponentsModule,
   ],
   declarations: [ StatisticsReportComponent ],
   providers: [ StatisticsReportService ]
