@@ -83,6 +83,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initTableProfilePagination();
     this.initAirports();
     this.initAutocomplete( 'formSegmentationStepper' );
+    this.initAutocomplete( 'formSegmentation' );
     this.addSegmentationService.subjectDeleteSegmentation
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.clearForm() );
@@ -130,6 +131,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
+    console.log( formGroup, formControlName );
     const mapFilter = val => {
       if ( val ) {
         return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
