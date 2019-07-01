@@ -3,13 +3,15 @@ import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog, MatTreeNestedDataSource } from '@angular/material';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { takeWhile } from 'rxjs/operators';
 import { ActivityUserService } from '../../../services/activity-user.service';
 import { person } from './person';
 import * as R from 'ramda';
+import { IFoodNode } from '../../../interface/ifood-node';
+import { forkJoin } from 'rxjs';
 
 @Component( {
   selector: 'app-user',
@@ -18,6 +20,8 @@ import * as R from 'ramda';
 } )
 export class UserComponent implements OnInit, OnDestroy {
 
+  public dataSource = new MatTreeNestedDataSource<IFoodNode>();
+
   public user: IlistUsers;
   public progress: boolean;
   public updateUser: FormGroup;
@@ -25,11 +29,11 @@ export class UserComponent implements OnInit, OnDestroy {
   public formPermission: FormGroup;
   public edit = false;
   public persons: { title: string, ids: number[] }[] = person;
-  public rowHeight: number;
 
   private checkboxArr: number[];
   private loginId: number;
   private isActive: boolean;
+  private paramsReport: { loginId: number, reportsIds: number[] };
 
   constructor(
     private route: ActivatedRoute,
@@ -41,12 +45,13 @@ export class UserComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isActive = true;
-    this.rowHeight = 300;
+
     this.initUser();
     this.initFormUser();
     this.initFormPassword();
     this.initFormPermission();
   }
+
 
   private initUser() {
     this.progress = true;
@@ -83,8 +88,8 @@ export class UserComponent implements OnInit, OnDestroy {
     } );
 
   }
+
   private initFormPermission() {
-    R.map( _ => this.rowHeight += 103, this.persons );
     const formGroup = {};
     const propIds = R.prop( 'ids' );
     const mapIds = R.map( propIds );
@@ -130,6 +135,13 @@ export class UserComponent implements OnInit, OnDestroy {
     }
   }
 
+  collectObjectReport( event ): void {
+    this.paramsReport = {
+      loginId: +this.loginId,
+      reportsIds: event
+    };
+  }
+
   sendFormUser(): void {
     if ( !this.updateUser.invalid ) {
       const params = this.updateUser.getRawValue();
@@ -163,27 +175,32 @@ export class UserComponent implements OnInit, OnDestroy {
       if ( this.formPermission.get( key ).value ) progressArray.push( +key );
     }
     const params = Object.assign( {}, { loginId: +this.loginId, ClaimPermissions: progressArray } );
-    this.userService.updateClaimPermissions( params )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => {
-        if ( this.user.login === localStorage.getItem( 'login' ) ) {
-          this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
-          timer( 5000 )
-            .pipe( takeWhile( _ => this.isActive ) )
-            .subscribe( _ => {
-              this.dialog.closeAll();
-              this.activityUserService.logout();
-              this.edit = false;
-            } );
-        } else {
-          this.windowDialog( 'Права пользователя изменены', 'ok' );
-        }
-      } );
+
+    const success = _ => {
+      if ( this.user.login === localStorage.getItem( 'login' ) ) {
+        this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
+        timer( 5000 )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialog.closeAll();
+            this.activityUserService.logout();
+            this.edit = false;
+          } );
+      } else {
+        this.windowDialog( 'Права пользователя изменены', 'ok' );
+      }
+    };
+
+    const oUpdateClaimPermissions = this.userService.updateClaimPermissions( params ).pipe( takeWhile( _ => this.isActive ) );
+    const oSetAdminReports = this.userService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
+    const permissionsObservable = forkJoin( oUpdateClaimPermissions, oSetAdminReports );
+    permissionsObservable.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
   }
 
   toggleEdit(): void {
     this.edit = !this.edit;
   }
+
 
   ngOnDestroy(): void {
     this.isActive = false;

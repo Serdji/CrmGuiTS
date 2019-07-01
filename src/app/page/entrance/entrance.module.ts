@@ -11,7 +11,7 @@ import { EntranceRoutes } from './entrance.routing';
     CommonModule,
     SharedModule,
     RouterModule,
-    EntranceRoutes
+    EntranceRoutes,
   ],
   declarations: [ EntranceComponent ],
   providers: [ SidenavService ]

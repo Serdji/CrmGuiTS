@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as R from 'ramda';
 import * as moment from 'moment';
-import { map, takeWhile } from 'rxjs/operators';
+import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
 
 @Component( {
   selector: 'app-dynamic-form',
@@ -16,10 +16,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public splitObjectProps: any;
 
   private isActive: boolean;
+  private dataObject: any = {};
 
   @Input() cols: number;
   @Input() rowHeight: string;
-  @Input() dataObject: any;
+  @Input() paramsDynamicForm: IParamsDynamicForm[];
   @Input() splitInput: number;
   @Output() dynamicFormEmit: EventEmitter<any> = new EventEmitter<any>();
 
@@ -27,26 +28,31 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.initDynamicForm();
-    this.initDynamicFormEmit();
-    this.initSplitObjectProps();
+    this.initParameterConversion();
   }
 
-  private mapValidators( validators ) {
-    const formValidators = [];
-    const mapValidationFunc = validation => {
-      switch ( validation ) {
-        case 'required': formValidators.push( Validators.required ); break;
-        case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
-        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
-        case 'email': formValidators.push( Validators.email ); break;
+  private initParameterConversion() {
+    const typeCheck = ( typeNumber: number ): string => {
+      switch ( typeNumber ) {
+        case 0: return 'checkbox'; break;
+        case 1: return 'date'; break;
+        case 2:
+        case 3:
+        case 4: return 'text'; break;
       }
     };
-    const mapValidation = R.map( mapValidationFunc );
-    const composeValidation = R.compose( mapValidation, R.keys );
-
-    if ( validators ) composeValidation( validators );
-    return formValidators;
+    const mapParamsDynamicForm = R.map( ( paramsDynamicForm: IParamsDynamicForm ) => {
+      this.dataObject = R.merge( this.dataObject, {
+        [`${paramsDynamicForm.name}`]: {
+          placeholder: paramsDynamicForm.name,
+          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
+          type: typeCheck( paramsDynamicForm.dataType ),
+        }
+      } );
+      this.initDynamicForm();
+      this.initSplitObjectProps();
+    } );
+    mapParamsDynamicForm( this.paramsDynamicForm );
   }
 
   private initDynamicForm() {
@@ -68,30 +74,35 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.dynamicForm = new FormGroup( formGroup );
   }
 
-  private initDynamicFormEmit() {
-    const objParserDate = {};
-    const generateNewObj = R.curry( ( obj, value, key ) => obj[ key ] = moment.isMoment( value ) ? moment( value ).format( 'YYYY-MM-DD' ) : value );
-    const momentFunc = generateNewObj( objParserDate );
-    const parserDate = R.forEachObjIndexed( momentFunc );
-
-    const mappingMomentDate = value => {
-      parserDate( value );
-      return objParserDate;
-    };
-    const success = value => this.dynamicFormEmit.emit( value );
-
-    this.dynamicForm.valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( mappingMomentDate )
-      )
-      .subscribe( success );
-  }
-
   private initSplitObjectProps() {
     const splitInput = this.splitInput || R.length( this.objectProps );
     const splitEvery = R.splitEvery( splitInput );
     this.splitObjectProps = splitEvery( this.objectProps );
+  }
+
+
+  private mapValidators( validators ) {
+    const formValidators = [];
+    const mapValidationFunc = validation => {
+      switch ( validation ) {
+        case 'required': formValidators.push( Validators.required ); break;
+        case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
+        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
+        case 'email': formValidators.push( Validators.email ); break;
+      }
+    };
+    const mapValidation = R.map( mapValidationFunc );
+    const composeValidation = R.compose( mapValidation, R.keys );
+
+    if ( validators ) composeValidation( validators );
+    return formValidators;
+  }
+
+  onDynamicFormEmit(): void {
+    const objParserDate = {};
+    const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
+    R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
+    this.dynamicFormEmit.emit( objParserDate );
   }
 
   ngOnDestroy(): void {

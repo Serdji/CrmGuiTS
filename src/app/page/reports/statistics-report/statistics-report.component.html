@@ -1,0 +1,72 @@
+<div class="distribution-report">
+  <mat-card class="distribution-report__stepper">
+    <mat-vertical-stepper linear #stepper>
+      <mat-step>
+        <ng-template matStepLabel>Выбор отчета</ng-template>
+
+        <app-report-access-rights (sendTemplate)="onSendTemplate( $event )" isDir ></app-report-access-rights>
+
+      </mat-step>
+
+      <mat-step [stepControl]="dynamicForm">
+        <ng-template matStepLabel>Параметры отчета</ng-template>
+        <mat-progress-bar *ngIf="isProgressDynamicForm" mode="buffer"></mat-progress-bar>
+        <app-dynamic-form
+          *ngIf="paramsDynamicForm && isDynamicForm"
+          [paramsDynamicForm]="paramsDynamicForm"
+          [splitInput]="1"
+          [cols]="1"
+          rowHeight="70px"
+          (dynamicFormEmit)="onReportGeneration($event)"
+        >
+        </app-dynamic-form>
+      </mat-step>
+    </mat-vertical-stepper>
+  </mat-card>
+
+  <div class="distribution-report__pdf-viewer">
+    <mat-spinner class="distribution-report__spinner" *ngIf="isProgressPdfViewer"></mat-spinner>
+    <mat-card *ngIf="pdfSrc && !isProgressPdfViewer">
+      <pdf-viewer
+        zoom="1.3"
+        [src]="pdfSrc"
+        [page]="pageVariable"
+        [show-all]="false"
+        [render-text]="true"
+        (after-load-complete)="afterLoadComplete($event)"
+        style="display: block;"
+      >
+      </pdf-viewer>
+
+      <div class="distribution-report__paginator">
+        <button [disabled]="buttonPreviousDisabled" (click)="onIncrementPage(-1)" mat-button>
+          <mat-icon>navigate_before</mat-icon>
+        </button>
+
+        <span *ngIf="pageLength"> от {{pageVariable}} до {{ pageLength }}</span>
+        <button [disabled]="buttonNextDisabled" (click)="onIncrementPage(1)" mat-button>
+          <mat-icon>navigate_next</mat-icon>
+        </button>
+      </div>
+      <button class="distribution-report__button" mat-raised-button
+              matTooltip="Скачать PDF файла с учетом сформированного запроса" (click)="onDownloadPDF( 'pdf' )"
+              color="accent">
+        <mat-icon>insert_drive_file</mat-icon>
+        Скачать PDF
+      </button>
+      <button class="distribution-report__button" mat-raised-button
+              matTooltip="Скачать Word файла с учетом сформированного запроса" (click)="onDownloadPDF( 'doc' )"
+              color="primary">
+        <mat-icon>insert_drive_file</mat-icon>
+        Скачать Word
+      </button>
+      <button class="distribution-report__button _excel" mat-raised-button
+              matTooltip="Скачать Excel файла с учетом сформированного запроса" (click)="onDownloadPDF( 'xls' )"
+              color="primary">
+        <mat-icon>insert_drive_file</mat-icon>
+        Скачать Excel
+      </button>
+    </mat-card>
+  </div>
+
+</div>
