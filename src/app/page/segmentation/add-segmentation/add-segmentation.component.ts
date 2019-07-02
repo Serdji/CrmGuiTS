@@ -131,7 +131,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
-    console.log( formGroup, formControlName );
     const mapFilter = val => {
       if ( val ) {
         return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
