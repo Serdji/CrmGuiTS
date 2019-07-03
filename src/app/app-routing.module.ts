@@ -14,6 +14,7 @@ const routes: Routes = [
       canActivate: [ AuthGuard ],
       children: [
         { path: 'entrance', loadChildren: './page/entrance/entrance.module#EntranceModule', data: { title: 'Главная' } },
+        { path: 'call-center/search-contact-phone/:contactPhone', loadChildren: './page/entrance/entrance.module#EntranceModule', data: { title: 'Главная' } },
         { path: 'adduser', loadChildren: './page/users/add-user/add-user.module#AddUserModule', data: { title: 'Добавить пользователя' } },
         { path: 'listusers', loadChildren: './page/users/list-users/list-users.module#ListUsersModule', data: { title: 'Список пользователей' } },
         { path: 'user/:id', loadChildren: './page/users/user/user.module#UserModule', canActivate: [ AccessRightsUserGuard ], data: { title: 'Пользователь' } },
