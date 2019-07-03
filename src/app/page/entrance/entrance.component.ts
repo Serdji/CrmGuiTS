@@ -28,7 +28,7 @@ export class EntranceComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.cards = this.sidenavService.menu;
-    this.contactPhone = this.route.snapshot.paramMap.get( 'contactphone' );
+    this.contactPhone = this.route.snapshot.paramMap.get( 'contactPhone' );
 
     this.initIsContactPhoneOpenProfile();
     this.sidenavService.closesAccord();
