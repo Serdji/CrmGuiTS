@@ -107,8 +107,7 @@
         </mat-step>
 
         <mat-step *ngIf="
-          formSegmentationStepper.get('eDocTypeS').value === 'T' ||
-          formSegmentationStepper.get('eDocTypeP').value === 'T'
+          formSegmentationStepper.get('eDocTypeS').value === 'T'
         ">
           <ng-template matStepLabel>Билет</ng-template>
           <div class="add-segmentation__content _none-justify">
