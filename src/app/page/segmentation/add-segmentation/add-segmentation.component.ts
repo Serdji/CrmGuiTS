@@ -131,7 +131,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
-    console.log( formGroup, formControlName );
     const mapFilter = val => {
       if ( val ) {
         return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
@@ -246,7 +245,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         } );
 
       _( this[ formGroupName ].getRawValue() ).each( ( values, key ) => {
-        if ( key === 'eDocTypeS' || key === 'eDocTypeP' ) {
+        if ( key === 'eDocTypeS' ) {
           this[ formGroupName ].get( key ).valueChanges
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( params => {
@@ -257,6 +256,29 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               ] )
                 .each( formControlName => {
                   this[ formGroupName ].get( formControlName )[ params !== 'T' ? 'disable' : 'enable' ]();
+                  this[ formGroupName ].get( formControlName ).patchValue( '' );
+                } );
+              _( [
+                'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
+                'departureLocationCodeE', 'arrivalLocationCodeE',
+                'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE'
+              ] )
+                .each( formControlName => {
+                  this[ formGroupName ].get( formControlName )[ params !== 'E' ? 'disable' : 'enable' ]();
+                  this[ formGroupName ].get( formControlName ).patchValue( '' );
+                } );
+            } );
+        } else if( key === 'eDocTypeP'  ) {
+          this[ formGroupName ].get( key ).valueChanges
+            .pipe( takeWhile( _ => this.isActive ) )
+            .subscribe( params => {
+              _( [
+                'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
+                'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
+                'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
+              ] )
+                .each( formControlName => {
+                  this[ formGroupName ].get( formControlName )[ params !== 'T' ? 'disable' : 'disable' ]();
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
               _( [
