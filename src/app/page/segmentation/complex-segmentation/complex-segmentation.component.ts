@@ -5,6 +5,8 @@ import { ISegmentation } from '../../../interface/isegmentation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as R from 'ramda';
+import { ComplexSegmentationService } from './complex-segmentation.service';
+import { IComplexSegmentatio } from '../../../interface/icomplex-segmentatio';
 
 @Component( {
   selector: 'app-complex-segmentation',
@@ -20,11 +22,13 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   public buttonSearch: boolean;
   public buttonSave: boolean;
   public buttonCreate: boolean;
+  public isLoader: boolean;
 
   private isActive: boolean;
 
   constructor(
     private listSegmentationService: ListSegmentationService,
+    private complexSegmentationService: ComplexSegmentationService,
     private fb: FormBuilder
   ) { }
 
@@ -33,13 +37,14 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.buttonSearch = true;
     this.buttonSave = false;
     this.buttonCreate = true;
+    this.isLoader = true;
     this.initSegmentation();
     this.initFormAdd();
   }
 
   private initFormAdd() {
     this.formAdd = this.fb.group( {
-      'title': [ '', Validators.required ],
+      'segmentationTitle': [ '', Validators.required ],
       'segmentation': '',
     } );
   }
@@ -82,6 +87,12 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     return composeFilter( this.segmentation );
   }
 
+  private formFilling( complexSegmentation: IComplexSegmentatio ) {
+    this.formAdd.get( 'segmentationTitle' ).patchValue( complexSegmentation.title );
+    this.selectionSegmentation = complexSegmentation.childSegmentations;
+    this.isLoader = false;
+  }
+
   public onAdd(): void {
     const value = this.formAdd.get( 'segmentation' ).value;
     const isObject = R.is( Object );
@@ -89,6 +100,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       const prependSegmentation = R.prepend( value );
       this.selectionSegmentation = prependSegmentation( this.selectionSegmentation );
       this.formAdd.get( 'segmentation' ).patchValue( '' );
+      this.isLoader = false;
     }
   }
 
@@ -99,16 +111,16 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   public saveForm(): void {
-    const params = {};
-    const lensTitle = R.lensProp( 'title' );
-    const lensSegmentationIds = R.lensProp( 'segmentationIds' );
+    this.isLoader = true;
     const mapSegmentationId = selection => selection.segmentationId;
-    const formTitleValue = this.formAdd.get( 'title' ).value;
-    const arrSegmentationIds = R.map( mapSegmentationId, this.selectionSegmentation );
-    const setTitle = R.set( lensTitle, formTitleValue );
-    const setSegmentationIds = R.set( lensSegmentationIds, arrSegmentationIds );
-    const sendParams = R.compose( setSegmentationIds, setTitle );
-    if ( !this.formAdd.invalid ) console.log( sendParams( params ) );
+    const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
+    const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
+    const params = { segmentationTitle, segmentationsIds };
+    if ( !this.formAdd.invalid ) {
+      this.complexSegmentationService.setComplexSegmentation( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( ( complexSegmentation: IComplexSegmentatio ) => this.formFilling( complexSegmentation ) );
+    }
   }
 
   ngOnDestroy(): void {
