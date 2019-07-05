@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import {
   MatDialog,
   MatPaginator,
@@ -27,6 +27,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   private isActive: boolean;
 
   @Input() private tableDataSource: any;
+  @Output() private emitSegmentationId = new EventEmitter<number>();
 
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
@@ -129,7 +130,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   }
 
   redirectToSegmentation( segmentationId: number ): void {
-    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId } } );
+    this.emitSegmentationId.emit( segmentationId );
   }
 
   disabledCheckbox( eventData ): void {
