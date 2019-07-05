@@ -6,7 +6,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as R from 'ramda';
 import { ComplexSegmentationService } from './complex-segmentation.service';
-import { IComplexSegmentatio } from '../../../interface/icomplex-segmentatio';
+import { IComplexSegmentation } from '../../../interface/icomplex-segmentation';
+import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component( {
   selector: 'app-complex-segmentation',
@@ -28,7 +30,9 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   constructor(
     private listSegmentationService: ListSegmentationService,
+    private addSegmentationServiceL: AddSegmentationService,
     private complexSegmentationService: ComplexSegmentationService,
+    private route: ActivatedRoute,
     private fb: FormBuilder
   ) { }
 
@@ -40,6 +44,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.initSegmentation();
     this.initFormAdd();
+    this.initQueryParams();
   }
 
   private initFormAdd() {
@@ -67,6 +72,24 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       );
   }
 
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( params => {
+        const hasSegmentationId = R.has( 'segmentationId' );
+        if( hasSegmentationId( params ) ) {
+          this.initComplexSegmentation( params.segmentationId );
+        }
+      } );
+  }
+
+  private initComplexSegmentation( segmentationId: number ) {
+    this.isLoader = true;
+    this.addSegmentationServiceL.getSegmentationParams( segmentationId )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( complexSegmentation: IComplexSegmentation ) => this.formFilling( complexSegmentation ) );
+  }
+
   public displayFn( segmentation?: ISegmentation ): string | undefined {
     return segmentation ? segmentation.title : undefined;
   }
@@ -87,7 +110,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     return composeFilter( this.segmentation );
   }
 
-  private formFilling( complexSegmentation: IComplexSegmentatio ) {
+  private formFilling( complexSegmentation: IComplexSegmentation ) {
     this.formAdd.get( 'segmentationTitle' ).patchValue( complexSegmentation.title );
     this.selectionSegmentation = complexSegmentation.childSegmentations;
     this.isLoader = false;
@@ -119,7 +142,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     if ( !this.formAdd.invalid ) {
       this.complexSegmentationService.setComplexSegmentation( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( complexSegmentation: IComplexSegmentatio ) => this.formFilling( complexSegmentation ) );
+        .subscribe( ( complexSegmentation: IComplexSegmentation ) => this.formFilling( complexSegmentation ) );
     }
   }
 
