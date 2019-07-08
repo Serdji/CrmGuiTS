@@ -2,6 +2,6 @@ import { ISegmentation } from './isegmentation';
 
 export interface IComplexSegmentation {
   'segmentationId': number;
-  'title': string;
+  'segmentationTitle': string;
   'childSegmentations': ISegmentation[];
 }

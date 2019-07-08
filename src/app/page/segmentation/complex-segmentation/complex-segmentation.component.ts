@@ -8,7 +8,10 @@ import * as R from 'ramda';
 import { ComplexSegmentationService } from './complex-segmentation.service';
 import { IComplexSegmentation } from '../../../interface/icomplex-segmentation';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { IpagPage } from '../../../interface/ipag-page';
+import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-complex-segmentation',
@@ -25,26 +28,35 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   public buttonSave: boolean;
   public buttonCreate: boolean;
   public isLoader: boolean;
+  public segmentationProfiles: ISegmentationProfile;
+  public isLoaderProfileTable: boolean;
+  public isTableProfileTable: boolean;
 
+  private segmentationId: number;
   private isActive: boolean;
 
   constructor(
     private listSegmentationService: ListSegmentationService,
-    private addSegmentationServiceL: AddSegmentationService,
+    private addSegmentationService: AddSegmentationService,
     private complexSegmentationService: ComplexSegmentationService,
+    private tableAsyncService: TableAsyncService,
     private route: ActivatedRoute,
+    private router: Router,
     private fb: FormBuilder
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.buttonSearch = true;
-    this.buttonSave = false;
     this.buttonCreate = true;
+    this.buttonSave = false;
     this.isLoader = true;
+    this.isLoaderProfileTable = true;
+    this.isTableProfileTable = false;
     this.initSegmentation();
     this.initFormAdd();
     this.initQueryParams();
+    this.initTableProfilePagination();
   }
 
   private initFormAdd() {
@@ -77,15 +89,19 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {
         const hasSegmentationId = R.has( 'segmentationId' );
-        if( hasSegmentationId( params ) ) {
+        if ( hasSegmentationId( params ) ) {
           this.initComplexSegmentation( params.segmentationId );
+          this.segmentationId = params.segmentationId;
+          this.buttonSearch = false;
+          this.buttonCreate = false;
+          this.buttonSave = true;
         }
       } );
   }
 
   private initComplexSegmentation( segmentationId: number ) {
     this.isLoader = true;
-    this.addSegmentationServiceL.getSegmentationParams( segmentationId )
+    this.addSegmentationService.getSegmentationParams( segmentationId )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( complexSegmentation: IComplexSegmentation ) => this.formFilling( complexSegmentation ) );
   }
@@ -111,10 +127,42 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( complexSegmentation: IComplexSegmentation ) {
-    this.formAdd.get( 'segmentationTitle' ).patchValue( complexSegmentation.title );
+    this.formAdd.get( 'segmentationTitle' ).patchValue( complexSegmentation.segmentationTitle );
     this.selectionSegmentation = complexSegmentation.childSegmentations;
     this.isLoader = false;
   }
+
+  private initTableProfilePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          'segmentationId': this.segmentationId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.addSegmentationService.getProfiles( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
+      } );
+  }
+
+  private initTableProfile( id: number ) {
+    const params = {
+      segmentationId: id,
+      from: 0,
+      count: 10
+    };
+    this.addSegmentationService.getProfiles( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
+        this.tableAsyncService.countPage = segmentationProfiles.totalCount;
+        this.segmentationProfiles = segmentationProfiles;
+        this.isLoaderProfileTable = false;
+      } );
+  }
+
 
   public onAdd(): void {
     const value = this.formAdd.get( 'segmentation' ).value;
@@ -133,17 +181,29 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.selectionSegmentation = deleteSelectionSegmentation( this.selectionSegmentation );
   }
 
-  public saveForm(): void {
+  public onSaveForm(): void {
     this.isLoader = true;
     const mapSegmentationId = selection => selection.segmentationId;
     const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
     const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
-    const params = { segmentationTitle, segmentationsIds };
+    const success = ( complexSegmentation: IComplexSegmentation ) => {
+      this.formFilling( complexSegmentation );
+      this.buttonSearch = false;
+      this.buttonCreate = false;
+      this.buttonSave = true;
+      this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
+    };
     if ( !this.formAdd.invalid ) {
-      this.complexSegmentationService.setComplexSegmentation( params )
+      this.complexSegmentationService.setComplexSegmentation( { segmentationTitle, segmentationsIds } )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( complexSegmentation: IComplexSegmentation ) => this.formFilling( complexSegmentation ) );
+        .subscribe( success );
     }
+  }
+
+  public onSearchForm(): void {
+    this.isTableProfileTable = true;
+    this.isLoaderProfileTable = true;
+    this.initTableProfile( this.segmentationId );
   }
 
   ngOnDestroy(): void {
