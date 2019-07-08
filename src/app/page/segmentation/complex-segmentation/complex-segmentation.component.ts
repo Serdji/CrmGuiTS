@@ -186,6 +186,13 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private clearForm() {
+    this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
+    this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { } } );
+    this.buttonSearch = true;
+    this.buttonCreate = true;
+    this.buttonSave = false;
+  }
 
   public onAdd(): void {
     const value = this.formAdd.get( 'segmentation' ).value;
@@ -202,6 +209,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationId = item => item.segmentationId === id;
     const deleteSelectionSegmentation = R.reject( segmentationId );
     this.selectionSegmentation = deleteSelectionSegmentation( this.selectionSegmentation );
+    if( R.isEmpty( this.selectionSegmentation  ) ) this.clearForm();
   }
 
   public onSaveForm(): void {
