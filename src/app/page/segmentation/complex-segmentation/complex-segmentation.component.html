@@ -58,9 +58,13 @@
       </mat-card>
     </form>
 
-    <div class="complex-segmentation__table-complex-segmentation">
-      132
-    </div>
+    <mat-card class="complex-segmentation__table-complex-segmentation">
+      <mat-progress-bar *ngIf="isLoaderComplexSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <mat-card-title> Сложные сегментации </mat-card-title>
+        <app-table-example-complex-segmentation *ngIf="complexSegmentation.length !== 0" [tableDataSource]="complexSegmentation"></app-table-example-complex-segmentation>
+      </ng-template>
+    </mat-card>
 
   </div>
 

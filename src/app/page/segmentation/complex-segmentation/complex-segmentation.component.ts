@@ -21,6 +21,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   public segmentation: ISegmentation[];
+  public complexSegmentation: ISegmentation[];
   public selectionSegmentation: ISegmentation[] = [];
   public segmentationOptions: Observable<ISegmentation[]>;
   public formAdd: FormGroup;
@@ -31,6 +32,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   public segmentationProfiles: ISegmentationProfile;
   public isLoaderProfileTable: boolean;
   public isTableProfileTable: boolean;
+  public isLoaderComplexSegmentationTable: boolean;
 
   private segmentationId: number;
   private isActive: boolean;
@@ -53,6 +55,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.isLoaderProfileTable = true;
     this.isTableProfileTable = false;
+    this.isLoaderComplexSegmentationTable = true;
     this.initSegmentation();
     this.initFormAdd();
     this.initQueryParams();
@@ -67,12 +70,18 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initSegmentation() {
+    const notComplexSegmentation = R.reject( ( s: ISegmentation ) => s.isComplex );
+    const isComplexSegmentation = R.filter( ( s: ISegmentation ) => s.isComplex );
+    const success = segmentation => {
+      this.segmentation = notComplexSegmentation( segmentation );
+      this.complexSegmentation = isComplexSegmentation( segmentation );
+      this.isLoaderComplexSegmentationTable = false;
+      this.initAutocomplete();
+    };
+
     this.listSegmentationService.getSegmentation()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( segmentation => {
-        this.segmentation = segmentation;
-        this.initAutocomplete();
-      } );
+      .subscribe( success );
   }
 
   private initAutocomplete() {
@@ -85,18 +94,20 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initQueryParams() {
+    const success = params => {
+      const hasSegmentationId = R.has( 'segmentationId' );
+      if ( hasSegmentationId( params ) ) {
+        this.initComplexSegmentation( params.segmentationId );
+        this.segmentationId = params.segmentationId;
+        this.buttonSearch = false;
+        this.buttonCreate = false;
+        this.buttonSave = true;
+      }
+    };
+
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( params => {
-        const hasSegmentationId = R.has( 'segmentationId' );
-        if ( hasSegmentationId( params ) ) {
-          this.initComplexSegmentation( params.segmentationId );
-          this.segmentationId = params.segmentationId;
-          this.buttonSearch = false;
-          this.buttonCreate = false;
-          this.buttonSave = true;
-        }
-      } );
+      .subscribe( success );
   }
 
   private initComplexSegmentation( segmentationId: number ) {
