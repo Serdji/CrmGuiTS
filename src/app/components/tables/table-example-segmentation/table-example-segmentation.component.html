@@ -2,7 +2,7 @@
   <mat-form-field class="table__input">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
   </mat-form-field>
-  <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
+  <mat-table class="table" #table [dataSource]="dataSource"  multiTemplateDataRows matSort matSortDirection="asc">
 
     <ng-container matColumnDef="select" sticky>
       <mat-header-cell *matHeaderCellDef>
@@ -35,17 +35,43 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="isComplex">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Статус</mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element"><span>{{element.isComplex ? 'Сложная' : 'Простая'}}</span>
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="segmentationId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon (click)="redirectToSegmentation(element.segmentationId)" >search</mat-icon>
-        <mat-icon routerLink="/crm/addsegmentation/"
-                  [queryParams]="{ segmentationId: element.segmentationId }" >create</mat-icon>
+        <mat-icon (click)="redirectToSegmentation(element.segmentationId)">search</mat-icon>
+        <mat-icon *ngIf="element.isComplex; else addSegmentation" routerLink="/crm/complexsegmentation/"
+                  [queryParams]="{ segmentationId: element.segmentationId }">create
+        </mat-icon>
+        <mat-icon *ngIf="!element.isComplex" routerLink="/crm/addsegmentation/"
+                  [queryParams]="{ segmentationId: element.segmentationId }">create
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let element" [attr.colspan]="displayedColumns.length">
+        <div class="table__detail"
+             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'">
+          <div class="table__distribution-statuses">
+            <span>123</span>
+          </div>
+        </div>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row class="table__row" *matRowDef="let element; columns: displayedColumns;"
+             class="example-element-row"
+             [class.example-expanded-row]="expandedElement === element"
+             (click)="expandedElement = expandedElement === element ? null : element"
+    ></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
   </mat-table>
   <mat-paginator #paginator
                  [pageSize]="10"

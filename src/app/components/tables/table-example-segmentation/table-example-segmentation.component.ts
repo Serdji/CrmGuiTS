@@ -10,11 +10,21 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import { animate, state, style, transition, trigger } from '@angular/animations';
+import { PeriodicElement } from '../table-example-distribution/table-example-distribution.component';
+import { ISegmentation } from '../../../interface/isegmentation';
 
 @Component( {
   selector: 'app-table-example-segmentation',
   templateUrl: './table-example-segmentation.component.html',
   styleUrls: [ './table-example-segmentation.component.styl' ],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ],
 } )
 export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
@@ -23,10 +33,11 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+  public expandedElement: ISegmentation | null;
 
   private isActive: boolean;
 
-  @Input() private tableDataSource: any;
+  @Input() private tableDataSource: ISegmentation[];
   @Output() private emitSegmentationId = new EventEmitter<number>();
 
   @ViewChild( MatSort ) sort: MatSort;
@@ -47,6 +58,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     this.displayedColumns = [
       'select',
       'title',
+      'isComplex',
       'segmentationId',
     ];
   }
