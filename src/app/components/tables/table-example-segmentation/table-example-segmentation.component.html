@@ -45,7 +45,7 @@
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
         <mat-icon (click)="redirectToSegmentation(element.segmentationId)">search</mat-icon>
-        <mat-icon *ngIf="element.isComplex; else addSegmentation" routerLink="/crm/complexsegmentation/"
+        <mat-icon *ngIf="element.isComplex" routerLink="/crm/complexsegmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }">create
         </mat-icon>
         <mat-icon *ngIf="!element.isComplex" routerLink="/crm/addsegmentation/"
