@@ -12,6 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { IpagPage } from '../../../interface/ipag-page';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { TableAsyncService } from '../../../services/table-async.service';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { MatDialog } from '@angular/material';
 
 @Component( {
   selector: 'app-complex-segmentation',
@@ -44,7 +46,8 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private route: ActivatedRoute,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private dialog: MatDialog,
   ) { }
 
   ngOnInit(): void {
@@ -186,6 +189,24 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status: params,
+        params: this.segmentationId,
+        card,
+      },
+    } );
+    if ( !disableTimer ) {
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialog.closeAll();
+        } );
+    }
+  }
+
   private clearForm() {
     this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
     this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { } } );
@@ -239,8 +260,33 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.initTableProfile( this.segmentationId );
   }
 
+  onCreateForm(): void {
+    const mapSegmentationId = selection => selection.segmentationId;
+    const segmentationId = this.segmentationId;
+    const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
+    const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
+    this.complexSegmentationService.putComplexSegmentation( { segmentationId, segmentationTitle, segmentationsIds } )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.windowDialog( `Сегментация успешно изменена`, 'ok' ) );
+  }
+
   ngOnDestroy(): void {
     this.isActive = false;
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

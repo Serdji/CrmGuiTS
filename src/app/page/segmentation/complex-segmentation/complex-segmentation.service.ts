@@ -18,5 +18,8 @@ export class ComplexSegmentationService {
   setComplexSegmentation( params: { segmentationTitle: string, segmentationsIds: number[] } ) {
     return this.http.post<IComplexSegmentation>( `${this.configService.crmApi}/crm/complexSegmentation`, params ).pipe( this.retryRequestService.retry() );
   }
+  putComplexSegmentation( params: { segmentationId: number, segmentationTitle: string, segmentationsIds: number[] } ) {
+    return this.http.put<IComplexSegmentation>( `${this.configService.crmApi}/crm/complexSegmentation`, params ).pipe( this.retryRequestService.retry() );
+  }
 
 }
