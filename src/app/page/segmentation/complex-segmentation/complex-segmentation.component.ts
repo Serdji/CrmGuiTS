@@ -113,6 +113,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       const hasSegmentationId = R.has( 'segmentationId' );
       if ( hasSegmentationId( params ) ) {
         this.initComplexSegmentation( params.segmentationId );
+        this.initSegmentation();
         this.segmentationId = params.segmentationId;
         this.buttonSearch = false;
         this.buttonCreate = false;
@@ -240,11 +241,13 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
     const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
     const success = ( complexSegmentation: IComplexSegmentation ) => {
+      // timer( 100 )
+      //   .pipe( takeWhile( _ => this.isActive ) )
+      //   .subscribe( _ => this.initSegmentation() );
       this.formFilling( complexSegmentation );
       this.buttonSearch = false;
       this.buttonCreate = false;
       this.buttonSave = true;
-      this.isLoaderComplexSegmentationTable = false;
       this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
     };
     if ( !this.formAdd.invalid ) {
