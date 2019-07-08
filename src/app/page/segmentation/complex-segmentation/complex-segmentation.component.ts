@@ -3,7 +3,7 @@ import { map, takeWhile } from 'rxjs/operators';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import * as R from 'ramda';
 import { ComplexSegmentationService } from './complex-segmentation.service';
 import { IComplexSegmentation } from '../../../interface/icomplex-segmentation';
@@ -60,6 +60,9 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.initFormAdd();
     this.initQueryParams();
     this.initTableProfilePagination();
+    this.listSegmentationService.subjectSegmentations
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.refreshSegmentation() );
   }
 
   private initFormAdd() {
@@ -67,6 +70,15 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       'segmentationTitle': [ '', Validators.required ],
       'segmentation': '',
     } );
+  }
+
+  private refreshSegmentation() {
+    timer( 100 )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.isLoaderComplexSegmentationTable = true;
+        this.initSegmentation();
+      } );
   }
 
   private initSegmentation() {
@@ -194,6 +206,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   public onSaveForm(): void {
     this.isLoader = true;
+    this.isLoaderComplexSegmentationTable = true;
     const mapSegmentationId = selection => selection.segmentationId;
     const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
     const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
@@ -202,6 +215,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.buttonSearch = false;
       this.buttonCreate = false;
       this.buttonSave = true;
+      this.isLoaderComplexSegmentationTable = false;
       this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
     };
     if ( !this.formAdd.invalid ) {
