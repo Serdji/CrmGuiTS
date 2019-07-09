@@ -208,14 +208,6 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     }
   }
 
-  private clearForm() {
-    this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
-    this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { } } );
-    this.buttonSearch = true;
-    this.buttonCreate = true;
-    this.buttonSave = false;
-  }
-
   public onAdd(): void {
     const value = this.formAdd.get( 'segmentation' ).value;
     const isObject = R.is( Object );
@@ -231,7 +223,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationId = item => item.segmentationId === id;
     const deleteSelectionSegmentation = R.reject( segmentationId );
     this.selectionSegmentation = deleteSelectionSegmentation( this.selectionSegmentation );
-    if( R.isEmpty( this.selectionSegmentation  ) ) this.clearForm();
+    if( R.isEmpty( this.selectionSegmentation  ) ) this.onClearForm();
   }
 
   public onSaveForm(): void {
@@ -241,14 +233,12 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
     const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
     const success = ( complexSegmentation: IComplexSegmentation ) => {
-      // timer( 100 )
-      //   .pipe( takeWhile( _ => this.isActive ) )
-      //   .subscribe( _ => this.initSegmentation() );
       this.formFilling( complexSegmentation );
       this.buttonSearch = false;
       this.buttonCreate = false;
       this.buttonSave = true;
       this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
+      this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
     };
     if ( !this.formAdd.invalid ) {
       this.complexSegmentationService.setComplexSegmentation( { segmentationTitle, segmentationsIds } )
@@ -271,6 +261,16 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.complexSegmentationService.putComplexSegmentation( { segmentationId, segmentationTitle, segmentationsIds } )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.windowDialog( `Сегментация успешно изменена`, 'ok' ) );
+  }
+
+  private onClearForm() {
+    this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { } } );
+    this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
+    this.formAdd.get( 'segmentationTitle' ).setErrors( null );
+    this.selectionSegmentation = [];
+    this.buttonSearch = true;
+    this.buttonCreate = true;
+    this.buttonSave = false;
   }
 
   ngOnDestroy(): void {

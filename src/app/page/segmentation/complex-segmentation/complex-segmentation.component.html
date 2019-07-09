@@ -25,7 +25,7 @@
         <mat-progress-bar *ngIf="isLoader" mode="buffer"></mat-progress-bar>
         <div *ngIf="!isLoader">
           <mat-card-header>
-            <mat-card-title>Композиция сегментаций</mat-card-title>
+            <mat-card-title>Cегментации</mat-card-title>
           </mat-card-header>
           <mat-divider></mat-divider>
           <mat-card-content class="complex-segmentation__content">
@@ -52,6 +52,10 @@
                     (click)="onCreateForm()" [disabled]="buttonCreate">
               <mat-icon>create</mat-icon>
               Изменить
+            </button>
+            <button class="complex-segmentation__button" mat-raised-button (click)="onClearForm()" color="accent">
+              <mat-icon>clear</mat-icon>
+              Очистить
             </button>
           </div>
         </div>
