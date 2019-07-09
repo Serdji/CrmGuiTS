@@ -1,6 +1,5 @@
 select = 70px
-
-contactId = 50px
+contactId = 100px
 
 
 .table
@@ -27,13 +26,35 @@ contactId = 50px
       display: flex;
       width: 100%;
 
+  &__detail
+    overflow: hidden;
+    display: flex;
+    width: 100%;
+    border-top: 1px solid rgba(0, 0, 0, 0.12);
+
+  &__segmentations
+    padding: 0 101px 0 69px;
+    width: 100%;
+
+    &-child
+      border-left: 1px solid rgba(0, 0, 0, 0.12);
+      border-right: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+
+      &:last-child
+        border-bottom: none;
+
+.mat-list-base
+  padding-top: 0;
+
 .mat-column
 
 
   &-select
     width: select;
 
-  &-title
+  &-title,
+  &-isComplex
     flex: 1;
 
   &-segmentationId
@@ -43,8 +64,12 @@ contactId = 50px
       cursor: pointer
       color: #696969;
       margin-left: auto
+      margin-right: 30px;
 
 
+  &-expandedDetail
+    padding 0
+    width: 100%
 
 mat-table
   display: table;
@@ -65,3 +90,30 @@ mat-cell
 .mat-table-sticky:last-child {
   border-left: 1px solid #e0e0e0;
 }
+
+
+.example-detail-row
+  min-height: 0;
+
+._active
+  cursor: pointer;
+
+._active:not(.example-expanded-row):hover {
+  background: #f5f5f5;
+}
+
+._active:not(.example-expanded-row):active {
+  background: #efefef;
+}
+
+.example-element-row {
+  border-bottom-width: 0;
+}
+
+.mat-badge-content
+  color: white !important;
+  top: calc(50% - 22px / 2) !important;
+  right: -70px !important;
+  width auto !important;
+  padding 0 8px;
+  border-radius: 50px;

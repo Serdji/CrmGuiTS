@@ -23,7 +23,7 @@ const routes: Routes = [
         { path: 'addprofile', loadChildren: './page/profiles/add-profile/add-profile.module#AddProfileModule', data: { title: 'Добавить пассажира' } },
         { path: 'listsegmentation', loadChildren: './page/segmentation/list-segmentation/list-segmentation.module#ListSegmentationModule', data: { title: 'Список сегментаций' } },
         { path: 'addsegmentation', loadChildren: './page/segmentation/add-segmentation/add-segmentation.module#AddSegmentationModule', data: { title: 'Добавить сегментацию' } },
-        { path: 'complexsegmentation', loadChildren: './page/segmentation/complex-segmentation/complex-segmentation.module#ComplexSegmentationModule', data: { title: 'Сложная сегментация' } },
+        { path: 'complexsegmentation', loadChildren: './page/segmentation/complex-segmentation/complex-segmentation.module#ComplexSegmentationModule', data: { title: 'Объединение сегментаций' } },
         { path: 'profilegroup', loadChildren: './page/special-groups/profile-group/profile-group.module#ProfileGroupModule', data: { title: 'Список групп' } },
         { path: 'list-distribution', loadChildren: './page/distribution/list-distribution/list-distribution.module#ListDistributionModule', data: { title: 'Список рассылок' } },
         { path: 'profile-distribution/:id', loadChildren: './page/distribution/profile-distribution/profile-distribution.module#ProfileDistributionModule', canActivate: [ AccessRightsDistributionGuard ], data: { title: 'Рассылка' } },

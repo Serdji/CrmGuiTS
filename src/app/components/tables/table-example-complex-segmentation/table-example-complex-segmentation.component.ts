@@ -10,35 +10,23 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PeriodicElement } from '../table-example-distribution/table-example-distribution.component';
-import { ISegmentation } from '../../../interface/isegmentation';
 
 @Component( {
-  selector: 'app-table-example-segmentation',
-  templateUrl: './table-example-segmentation.component.html',
-  styleUrls: [ './table-example-segmentation.component.styl' ],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0', display: 'none', borderColor: 'rgba(0,0,0,0)'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ],
+  selector: 'app-table-example-complex-segmentation',
+  templateUrl: './table-example-complex-segmentation.component.html',
+  styleUrls: [ './table-example-complex-segmentation.component.styl' ],
 } )
-export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
+export class TableExampleComplexSegmentationComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
-  public expandedElement: ISegmentation | null;
 
   private isActive: boolean;
 
-  @Input() private tableDataSource: ISegmentation[];
-  @Output() private emitSegmentationId = new EventEmitter<number>();
+  @Input() private tableDataSource: any;
 
   @ViewChild( MatSort ) sort: MatSort;
   @ViewChild( MatPaginator ) paginator: MatPaginator;
@@ -58,7 +46,6 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     this.displayedColumns = [
       'select',
       'title',
-      'isComplex',
       'segmentationId',
     ];
   }
@@ -139,10 +126,6 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
       const params = Object.assign( {}, { ids: arrayId } );
       this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'deleteSegmentations' );
     }
-  }
-
-  redirectToSegmentation( segmentationId: number ): void {
-    this.emitSegmentationId.emit( segmentationId );
   }
 
   disabledCheckbox( eventData ): void {

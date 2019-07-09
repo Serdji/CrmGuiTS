@@ -1,55 +1,87 @@
 <div class="complex-segmentation">
-  <form [formGroup]="formAdd" class="complex-segmentation__form">
-    <mat-card class="complex-segmentation__card">
-      <mat-card-content class="complex-segmentation__content">
-        <mat-form-field class="complex-segmentation__input">
-          <input matInput formControlName="title" type="text" placeholder="Название сложной сегментации">
-          <mat-error>Обязательное поле</mat-error>
-        </mat-form-field>
-        <mat-form-field class="complex-segmentation__input">
-          <input (keyup.enter)="onAdd()" matInput formControlName="segmentation" [matAutocomplete]="auto" type="text"
-                 placeholder="Выбор сегментации">
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option (keyup.enter)="onAdd()" (click)="onAdd()"
-                        *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation">
-              {{segmentation.title}}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-      </mat-card-content>
+
+  <div class="complex-segmentation__wrapper">
+    <form [formGroup]="formAdd" class="complex-segmentation__form">
+      <mat-card class="complex-segmentation__card">
+        <mat-card-content class="complex-segmentation__content">
+          <mat-form-field class="complex-segmentation__input">
+            <input matInput formControlName="segmentationTitle" type="text" placeholder="Название сложной сегментации">
+            <mat-error>Обязательное поле</mat-error>
+          </mat-form-field>
+          <mat-form-field class="complex-segmentation__input">
+            <input (keyup.enter)="onAdd()" matInput formControlName="segmentation" [matAutocomplete]="auto" type="text"
+                   placeholder="Выбор сегментации">
+            <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+              <mat-option (keyup.enter)="onAdd()" (click)="onAdd()"
+                          *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation">
+                {{segmentation.title}}
+              </mat-option>
+            </mat-autocomplete>
+          </mat-form-field>
+        </mat-card-content>
+      </mat-card>
+
+      <mat-card *ngIf=" selectionSegmentation.length > 0 " class="complex-segmentation__card">
+        <mat-progress-bar *ngIf="isLoader" mode="buffer"></mat-progress-bar>
+        <div *ngIf="!isLoader">
+          <mat-card-header>
+            <mat-card-title>Cегментации</mat-card-title>
+          </mat-card-header>
+          <mat-divider></mat-divider>
+          <mat-card-content class="complex-segmentation__content">
+            <mat-list role="listitem" *ngFor="let selection of selectionSegmentation let i = index">
+              <div class="complex-segmentation__content-wrapper">
+                <span>{{selection.title}}</span>
+                <mat-icon mat-list-icon (click)="onDeleteSelectionSegmentation(selection.segmentationId)">clear</mat-icon>
+              </div>
+              <mat-divider></mat-divider>
+            </mat-list>
+          </mat-card-content>
+          <div class="complex-segmentation__button-wrapper">
+            <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
+                    (click)="onSaveForm()" color="primary" [disabled]="buttonSave">
+              <mat-icon>save</mat-icon>
+              Сохранить
+            </button>
+            <button appAccessRights="analytics:read" class="complex-segmentation__button" mat-raised-button
+                    (click)="onSearchForm()" color="primary" [disabled]="buttonSearch">
+              <mat-icon>search</mat-icon>
+              Искать
+            </button>
+            <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
+                    (click)="onCreateForm()" [disabled]="buttonCreate">
+              <mat-icon>create</mat-icon>
+              Изменить
+            </button>
+            <button class="complex-segmentation__button" mat-raised-button (click)="onClearForm()" color="accent">
+              <mat-icon>clear</mat-icon>
+              Очистить
+            </button>
+          </div>
+        </div>
+      </mat-card>
+    </form>
+
+    <mat-card class="complex-segmentation__table-complex-segmentation">
+      <mat-progress-bar *ngIf="isLoaderComplexSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <mat-card-title> Сложные сегментации </mat-card-title>
+        <app-table-example-complex-segmentation *ngIf="complexSegmentation.length !== 0" [tableDataSource]="complexSegmentation"></app-table-example-complex-segmentation>
+      </ng-template>
     </mat-card>
 
-    <mat-card *ngIf=" selectionSegmentation.length > 0 " class="complex-segmentation__card">
-      <mat-card-header>
-        <mat-card-title>Композиция сегментаций</mat-card-title>
-      </mat-card-header>
-      <mat-divider></mat-divider>
-      <mat-card-content class="complex-segmentation__content">
-        <mat-list role="listitem" *ngFor="let selection of selectionSegmentation let i = index">
-          <div class="complex-segmentation__wrapper">
-            <h3>{{selection.title}}</h3>
-            <mat-icon mat-list-icon (click)="onDeleteSelectionSegmentation(selection.segmentationId)">clear</mat-icon>
-          </div>
-          <mat-divider></mat-divider>
-        </mat-list>
-      </mat-card-content>
-      <div class="complex-segmentation__button-wrapper">
-        <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
-                (click)="saveForm()" color="primary" [disabled]="buttonSave">
-          <mat-icon>save</mat-icon>
-          Сохранить
-        </button>
-        <button appAccessRights="analytics:read" class="complex-segmentation__button" mat-raised-button
-                (click)="searchForm()" color="primary" [disabled]="buttonSearch">
-          <mat-icon>search</mat-icon>
-          Искать
-        </button>
-        <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
-                (click)="createForm()" [disabled]="buttonCreate">
-          <mat-icon>create</mat-icon>
-          Изменить
-        </button>
-      </div>
-    </mat-card>
-  </form>
+  </div>
+
+
+  <mat-card class="complex-segmentation__table-profile" *ngIf="isTableProfileTable">
+    <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <mat-card-title>{{segmentationProfiles.customers.length !== 0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+      <app-table-async-segmentation-profile
+        *ngIf="segmentationProfiles.customers.length !== 0"
+        [tableDataSource]="segmentationProfiles.customers">
+      </app-table-async-segmentation-profile>
+    </ng-template>
+  </mat-card>
+
 </div>

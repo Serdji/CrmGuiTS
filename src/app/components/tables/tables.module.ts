@@ -21,6 +21,7 @@ import { TableAsyncPromoCodeProfileComponent } from './table-async-promo-code-pr
 import { TableAsyncSearchPromoCodeComponent } from './table-async-search-promo-code/table-async-search-promo-code.component';
 import { RouterModule } from '@angular/router';
 import { MergeProfileModule } from '../merge-profile/merge-profile.module';
+import { TableExampleComplexSegmentationComponent } from './table-example-complex-segmentation/table-example-complex-segmentation.component';
 
 @NgModule({
   imports: [
@@ -47,6 +48,7 @@ import { MergeProfileModule } from '../merge-profile/merge-profile.module';
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
+    TableExampleComplexSegmentationComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -62,6 +64,7 @@ import { MergeProfileModule } from '../merge-profile/merge-profile.module';
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
+    TableExampleComplexSegmentationComponent,
   ],
   providers: [
     TableAsyncService
