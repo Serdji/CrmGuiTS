@@ -54,27 +54,31 @@
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
-        <mat-icon
-          (click)="$event.stopPropagation()"
-          *ngIf="!element.isComplex"
-          routerLink="/crm/addsegmentation/"
-          [queryParams]="{ segmentationId: element.segmentationId }"
+        <mat-icon (click)="$event.stopPropagation()"
+                  *ngIf="!element.isComplex"
+                  routerLink="/crm/addsegmentation/"
+                  [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="expandedDetail">
-      <mat-cell
-        *matCellDef="let element"
-        [attr.colspan]="displayedColumns.length"
+      <mat-cell *matCellDef="let element"
+                [attr.colspan]="displayedColumns.length"
       >
         <div class="table__detail"
              *ngIf="element.isComplex"
              [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
         >
-          <div class="table__distribution-statuses">
-            <span>123</span>
+          <div class="table__segmentations">
+            <mat-nav-list>
+              <mat-list-item class="table__segmentations-child"
+                *ngFor=" let childSegmentation of element.childSegmentations"
+                 routerLink="/crm/addsegmentation/"
+                 [queryParams]="{ segmentationId: childSegmentation.segmentationId }"
+              > {{childSegmentation.title}} </mat-list-item>
+            </mat-nav-list>
           </div>
         </div>
       </mat-cell>
@@ -95,9 +99,12 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
   <div class="table__button-wrapper">
-    <button appAccessRights="analytics:update" class="table__button" mat-raised-button (click)="deleteContact()"
-            [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+    <button appAccessRights="analytics:update"
+            class="table__button" mat-raised-button
+            (click)="deleteContact()"
+            [disabled]="!selection.hasValue() && !isAllSelected()"
+            color="warn"
+    > Удалить
       <mat-icon>delete</mat-icon>
     </button>
   </div>
