@@ -13,17 +13,19 @@ import { takeWhile } from 'rxjs/operators';
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { PeriodicElement } from '../table-example-distribution/table-example-distribution.component';
 import { ISegmentation } from '../../../interface/isegmentation';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-table-example-segmentation',
   templateUrl: './table-example-segmentation.component.html',
   styleUrls: [ './table-example-segmentation.component.styl' ],
   animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0', display: 'none', borderColor: 'rgba(0,0,0,0)'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
+    trigger( 'detailExpand', [
+      state( 'collapsed', style( { height: '0px', minHeight: '0', display: 'none', borderColor: 'rgba(0,0,0,0)' } ) ),
+      state( 'expanded', style( { height: '*' } ) ),
+      transition( 'expanded <=> collapsed', animate( '225ms cubic-bezier(0.4, 0.0, 0.2, 1)' ) ),
+    ] ),
   ],
 } )
 export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
@@ -34,6 +36,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
   public expandedElement: ISegmentation | null;
+  public formCheckbox: FormGroup;
 
   private isActive: boolean;
 
@@ -46,12 +49,22 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initDataSource();
     this.initDisplayedColumns();
+    this.initFormCheckbox();
+    this.initSwitchSegmentation();
+  }
+
+  private initFormCheckbox() {
+    this.formCheckbox = this.fb.group( {
+      simple: true,
+      complicated: true
+    } );
   }
 
   private initDisplayedColumns() {
@@ -61,6 +74,24 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
       'isComplex',
       'segmentationId',
     ];
+  }
+
+  private initSwitchSegmentation() {
+    const isComplex = segmentation => segmentation.isComplex;
+    const segmentationSimple = R.reject( isComplex );
+    const segmentationComplicated = R.filter( isComplex );
+    const success = checkbox => {
+      if ( R.not( checkbox.simple && checkbox.complicated ) ) {
+        this.dataSourceFun( [] );
+        if ( checkbox.simple ) this.dataSourceFun( segmentationSimple( this.tableDataSource ) );
+        if ( checkbox.complicated ) this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
+      } else {
+        this.dataSourceFun( this.tableDataSource );
+      }
+    };
+    this.formCheckbox.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
   }
 
   private initDataSource() {
@@ -137,7 +168,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'deleteSegmentations' );
+      this.windowDialog( `Вы действительно хотите удалить ${arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации'} ?`, 'delete', params, 'deleteSegmentations' );
     }
   }
 
