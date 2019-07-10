@@ -22,6 +22,7 @@ import { TableAsyncSearchPromoCodeComponent } from './table-async-search-promo-c
 import { RouterModule } from '@angular/router';
 import { MergeProfileModule } from '../merge-profile/merge-profile.module';
 import { TableExampleComplexSegmentationComponent } from './table-example-complex-segmentation/table-example-complex-segmentation.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -33,6 +34,7 @@ import { TableExampleComplexSegmentationComponent } from './table-example-comple
     PromoCodeModule,
     MergeProfileModule,
     RouterModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     TableExampleComponent,

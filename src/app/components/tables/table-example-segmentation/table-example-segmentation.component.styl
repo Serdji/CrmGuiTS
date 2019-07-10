@@ -1,8 +1,22 @@
 select = 70px
 contactId = 100px
 
+mat-icon
+  color: #696969;
 
 .table
+
+  &__form
+    padding 1px 0;
+
+    &-label
+      margin-bottom: 15px;
+      font-size: 18px;
+
+    &-checkbox
+      margin-right: 10px;
+      margin-bottom: 15px;
+      display: inline-block;
 
   &__row
     white-space: nowrap;
@@ -44,6 +58,11 @@ contactId = 100px
       &:last-child
         border-bottom: none;
 
+      mat-icon
+        position: absolute;
+        top: 12px;
+        left: -25px;
+
 .mat-list-base
   padding-top: 0;
 
@@ -60,12 +79,19 @@ contactId = 100px
   &-segmentationId
     width: contactId;
     margin-left: auto;
+
     mat-icon
       cursor: pointer
-      color: #696969;
       margin-left: auto
       margin-right: 30px;
 
+  &-isComplex
+    mat-icon
+      cursor: pointer
+      margin-left: 10px;
+      width: 18px;
+      height: 18px;
+      font-size: 18px;
 
   &-expandedDetail
     padding 0

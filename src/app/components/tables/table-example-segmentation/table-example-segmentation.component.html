@@ -2,8 +2,13 @@
   <mat-form-field class="table__input">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
   </mat-form-field>
+  <form class="table__form" [formGroup]="formCheckbox">
+    <div class="table__form-label"> Показать сегментации </div>
+    <mat-checkbox class="table__form-checkbox" formControlName="simple">Простые</mat-checkbox>
+    <mat-checkbox class="table__form-checkbox" formControlName="complicated">Сложные</mat-checkbox>
+    <mat-divider></mat-divider>
+  </form>
   <mat-table class="table" #table [dataSource]="dataSource" multiTemplateDataRows matSort matSortDirection="asc">
-
     <ng-container matColumnDef="select" sticky>
       <mat-header-cell *matHeaderCellDef>
         <mat-checkbox appAccessRights="analytics:update"
@@ -37,7 +42,9 @@
 
     <ng-container matColumnDef="isComplex">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Статус</mat-header-cell>
-      <mat-cell #matCell *matCellDef="let element"><span>{{element.isComplex ? 'Сложная' : 'Простая'}}</span>
+      <mat-cell #matCell *matCellDef="let element">
+        <span>{{element.isComplex ? 'Сложная' : 'Простая'}}</span>
+        <mat-icon *ngIf="element.isComplex">arrow_downward</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -74,10 +81,13 @@
           <div class="table__segmentations">
             <mat-nav-list>
               <mat-list-item class="table__segmentations-child"
-                *ngFor=" let childSegmentation of element.childSegmentations"
-                 routerLink="/crm/addsegmentation/"
-                 [queryParams]="{ segmentationId: childSegmentation.segmentationId }"
-              > {{childSegmentation.title}} </mat-list-item>
+                             *ngFor=" let childSegmentation of element.childSegmentations"
+                             routerLink="/crm/addsegmentation/"
+                             [queryParams]="{ segmentationId: childSegmentation.segmentationId }"
+              >
+                <mat-icon>subdirectory_arrow_right</mat-icon>
+                {{childSegmentation.title}}
+              </mat-list-item>
             </mat-nav-list>
           </div>
         </div>
@@ -109,3 +119,17 @@
     </button>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
