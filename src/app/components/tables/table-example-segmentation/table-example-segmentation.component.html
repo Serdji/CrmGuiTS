@@ -37,7 +37,9 @@
 
     <ng-container matColumnDef="isComplex">
       <mat-header-cell *matHeaderCellDef mat-sort-header> Статус</mat-header-cell>
-      <mat-cell #matCell *matCellDef="let element"><span>{{element.isComplex ? 'Сложная' : 'Простая'}}</span>
+      <mat-cell #matCell *matCellDef="let element">
+        <span>{{element.isComplex ? 'Сложная' : 'Простая'}}</span>
+        <mat-icon *ngIf="element.isComplex">arrow_downward</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -77,7 +79,10 @@
                 *ngFor=" let childSegmentation of element.childSegmentations"
                  routerLink="/crm/addsegmentation/"
                  [queryParams]="{ segmentationId: childSegmentation.segmentationId }"
-              > {{childSegmentation.title}} </mat-list-item>
+              >
+                <mat-icon>subdirectory_arrow_right</mat-icon>
+                {{childSegmentation.title}}
+              </mat-list-item>
             </mat-nav-list>
           </div>
         </div>
@@ -109,3 +114,17 @@
     </button>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
