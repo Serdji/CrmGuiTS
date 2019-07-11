@@ -36,7 +36,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
   public expandedElement: ISegmentation | null;
-  public formCheckbox: FormGroup;
+  public formFilterSegmentation: FormGroup;
 
   private isActive: boolean;
 
@@ -61,9 +61,8 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initFormCheckbox() {
-    this.formCheckbox = this.fb.group( {
-      simple: true,
-      complicated: true
+    this.formFilterSegmentation = this.fb.group( {
+      whichSegmentation: 'all'
     } );
   }
 
@@ -80,16 +79,15 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     const isComplex = segmentation => segmentation.isComplex;
     const segmentationSimple = R.reject( isComplex );
     const segmentationComplicated = R.filter( isComplex );
-    const success = checkbox => {
-      if ( R.not( checkbox.simple && checkbox.complicated ) ) {
-        this.dataSourceFun( [] );
-        if ( checkbox.simple ) this.dataSourceFun( segmentationSimple( this.tableDataSource ) );
-        if ( checkbox.complicated ) this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
-      } else {
-        this.dataSourceFun( this.tableDataSource );
+    const success = ( { whichSegmentation } ) => {
+      switch ( whichSegmentation ) {
+        case 'all': this.dataSourceFun( this.tableDataSource ); break;
+        case 'simple': this.dataSourceFun( segmentationSimple( this.tableDataSource ) ); break;
+        case 'complicated': this.dataSourceFun( segmentationComplicated( this.tableDataSource ) ); break;
       }
     };
-    this.formCheckbox.valueChanges
+
+    this.formFilterSegmentation.valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
   }

@@ -2,10 +2,13 @@
   <mat-form-field class="table__input">
     <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
   </mat-form-field>
-  <form class="table__form" [formGroup]="formCheckbox">
+  <form class="table__form" [formGroup]="formFilterSegmentation">
     <div class="table__form-label"> Показать сегментации </div>
-    <mat-checkbox class="table__form-checkbox" formControlName="simple">Простые</mat-checkbox>
-    <mat-checkbox class="table__form-checkbox" formControlName="complicated">Сложные</mat-checkbox>
+    <mat-radio-group formControlName="whichSegmentation" aria-label="Показать сегментации">
+      <mat-radio-button class="table__form-radio-button" value="all"> Все </mat-radio-button>
+      <mat-radio-button class="table__form-radio-button" value="simple"> Простые </mat-radio-button>
+      <mat-radio-button class="table__form-radio-button" value="complicated"> Сложные </mat-radio-button>
+    </mat-radio-group>
     <mat-divider></mat-divider>
   </form>
   <mat-table class="table" #table [dataSource]="dataSource" multiTemplateDataRows matSort matSortDirection="asc">
