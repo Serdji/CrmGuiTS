@@ -38,8 +38,8 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
 
   @Input() private tableDataSource: any;
 
-  @ViewChild( MatSort ) sort: MatSort;
-  @ViewChild( MatPaginator ) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,

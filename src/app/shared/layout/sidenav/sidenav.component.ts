@@ -15,8 +15,8 @@ import { takeWhile } from 'rxjs/operators';
 } )
 export class SidenavComponent implements OnInit, OnDestroy {
 
-  @ViewChild( 'sidenav' ) sidenav: MatSidenav;
-  @ViewChild( 'accord' ) accord;
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  @ViewChild('accord', { static: true }) accord;
 
   public menu: IMenu[];
   public version: string;

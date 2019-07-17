@@ -55,7 +55,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   private patternPath: string;
   private file: { pdf: BlobFile };
 
-  @ViewChild( 'stepper' ) stepper;
+  @ViewChild('stepper', { static: true }) stepper;
 
   constructor(
     private fb: FormBuilder,

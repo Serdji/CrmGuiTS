@@ -60,8 +60,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
 
-  @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('segmentationChipInput', { static: true }) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('customerGroupChipInput', { static: true }) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,

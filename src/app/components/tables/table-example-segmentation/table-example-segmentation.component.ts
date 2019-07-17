@@ -43,8 +43,8 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   @Input() private tableDataSource: ISegmentation[];
   @Output() private emitSegmentationId = new EventEmitter<number>();
 
-  @ViewChild( MatSort ) sort: MatSort;
-  @ViewChild( MatPaginator ) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,

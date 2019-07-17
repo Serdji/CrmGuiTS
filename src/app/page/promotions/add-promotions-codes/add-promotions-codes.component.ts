@@ -93,12 +93,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private promoCodeId: number;
   private arrCustomerIds: number[] = [];
 
-  @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeRbdListChipInput' ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeCustomerListChipInput' ) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeFlightListChipInput', { static: true }) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeBrandListChipInput', { static: true }) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeRbdListChipInput', { static: true }) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeCustomerListChipInput', { static: true }) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('segmentationChipInput', { static: true }) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('customerGroupChipInput', { static: true }) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
 
   constructor(

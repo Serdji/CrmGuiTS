@@ -51,7 +51,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private autDelay: number = 500;
   private arrFormGroup: string[];
 
-  @ViewChild( 'stepper' ) stepper;
+  @ViewChild('stepper', { static: false }) stepper;
 
   constructor(
     private route: ActivatedRoute,
