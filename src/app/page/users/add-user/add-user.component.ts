@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddUserService } from './add-user.service';
 import { takeWhile } from 'rxjs/operators';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { IlistUsers } from '../../../interface/ilist-users';

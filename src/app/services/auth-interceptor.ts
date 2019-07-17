@@ -11,7 +11,7 @@ import 'rxjs/add/observable/throw';
 import { catchError, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { DialogComponent } from '../shared/dialog/dialog.component';

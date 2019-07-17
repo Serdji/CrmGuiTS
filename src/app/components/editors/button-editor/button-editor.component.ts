@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorComponent } from '../dialog-editor/dialog-editor.component';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';

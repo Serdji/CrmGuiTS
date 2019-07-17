@@ -6,7 +6,7 @@ import { IdistributionProfile } from '../../../interface/idistribution-profile';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditorService } from '../../../components/editors/editor/editor.service';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';

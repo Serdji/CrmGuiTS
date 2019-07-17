@@ -13,7 +13,8 @@ import { ListSegmentationService } from '../../segmentation/list-segmentation/li
 import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { saveAs } from 'file-saver';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../../interface/icustomer-group';

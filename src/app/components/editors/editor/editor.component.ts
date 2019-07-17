@@ -10,7 +10,7 @@ import { ITemplates } from '../../../interface/itemplates';
 import { ITemplate } from '../../../interface/itemplate';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as R from 'ramda';
 

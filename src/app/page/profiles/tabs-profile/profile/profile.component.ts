@@ -7,7 +7,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import * as moment from 'moment';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../../../../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { IprofileNames } from '../../../../interface/iprofile-names';
 
 

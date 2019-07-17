@@ -13,7 +13,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component( {
   selector: 'app-complex-segmentation',

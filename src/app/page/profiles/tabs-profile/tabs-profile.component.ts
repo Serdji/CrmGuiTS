@@ -6,7 +6,7 @@ import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { CurrencyDefaultService } from '../../../services/currency-default.service';
 import { ISettings } from '../../../interface/isettings';
