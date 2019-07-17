@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, pipe, Subject } from 'rxjs';
-import * as R from 'ramda';
 import { map, takeWhile, tap } from 'rxjs/operators';
 import { ConfigService } from '../../services/config-service.service';
 import { RetryRequestService } from '../../services/retry-request.service';
 import { TodoItemNode } from './report-access-rights.component';
+import * as R from 'ramda';
 
 
 @Injectable( {
@@ -19,6 +19,7 @@ export class ReportAccessRightsService {
   private propItem = R.prop( 'item' );
   private propName = R.prop( 'name' );
   private uniqByName = R.uniqBy( this.propItem );
+  // @ts-ignore
   private composeUnnestConfig = R.compose( R.unnest, R.last );
   private reports;
   private mapNameReport = R.map( this.propName );
