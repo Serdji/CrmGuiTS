@@ -276,7 +276,6 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.isActive = false;
   }
-
 }
 
 
