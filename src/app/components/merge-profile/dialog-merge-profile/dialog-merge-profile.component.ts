@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs/operators';
 import { ProfileSearchService } from '../../../page/profiles/profile-search/profile-search.service';
 import { Iprofiles } from '../../../interface/iprofiles';

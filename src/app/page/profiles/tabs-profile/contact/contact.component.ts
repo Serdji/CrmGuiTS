@@ -6,7 +6,7 @@ import { FormBuilder, FormControl, FormGroup } from '@angular/forms';
 import { IcontactType } from '../../../../interface/icontact-type';
 import { DialogComponent } from '../../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component( {
   selector: 'app-contact',

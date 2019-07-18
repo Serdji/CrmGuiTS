@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogPromoCodeComponent } from '../dialog-promo-code/dialog-promo-code.component';
 
 @Component( {

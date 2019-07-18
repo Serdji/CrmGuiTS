@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogMergeProfileComponent } from '../dialog-merge-profile/dialog-merge-profile.component';
 import { ProfileSearchService } from '../../../page/profiles/profile-search/profile-search.service';
 import { Iprofiles } from '../../../interface/iprofiles';

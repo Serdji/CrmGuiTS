@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, pipe } from 'rxjs';
-import * as R from 'ramda';
-import { map } from 'rxjs/operators';
+import { Observable, pipe, Subject } from 'rxjs';
+import { map, takeWhile, tap } from 'rxjs/operators';
 import { ConfigService } from '../../services/config-service.service';
 import { RetryRequestService } from '../../services/retry-request.service';
 import { TodoItemNode } from './report-access-rights.component';
+import * as R from 'ramda';
 
 
 @Injectable( {
@@ -13,19 +13,23 @@ import { TodoItemNode } from './report-access-rights.component';
 } )
 export class ReportAccessRightsService {
 
-  constructor(
-    private http: HttpClient,
-    private configService: ConfigService,
-    private retryRequestService: RetryRequestService
-  ) { }
+  public subjectIsReport = new Subject();
 
   private TREE_DATA: TodoItemNode[] = [];
   private propItem = R.prop( 'item' );
   private propName = R.prop( 'name' );
   private uniqByName = R.uniqBy( this.propItem );
+  // @ts-ignore
   private composeUnnestConfig = R.compose( R.unnest, R.last );
   private reports;
   private mapNameReport = R.map( this.propName );
+
+
+  constructor(
+    private http: HttpClient,
+    private configService: ConfigService,
+    private retryRequestService: RetryRequestService
+  ) { }
 
 
   // Мапируем массив из строк во вложенную структуру
@@ -91,9 +95,14 @@ export class ReportAccessRightsService {
     return funcRecurRecDist( uniqByConfig, unnestConfig );
   };
 
+  private isReportFn = report => !R.isEmpty( report );
+  private tapFn = report =>  this.subjectIsReport.next( this.isReportFn( report ) );
+
   setMaps() {
     return pipe(
       this.retryRequestService.retry(),
+      tap( this.tapFn ),
+      takeWhile( this.isReportFn ),
       map( this.startMap ),
       map( this.mapNameReport ),
       // @ts-ignore

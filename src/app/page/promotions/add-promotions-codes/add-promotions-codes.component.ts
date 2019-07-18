@@ -2,7 +2,9 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { ICity } from '../../../interface/icity';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
@@ -93,12 +95,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private promoCodeId: number;
   private arrCustomerIds: number[] = [];
 
-  @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeRbdListChipInput' ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeCustomerListChipInput' ) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeFlightListChipInput', { static: true }) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeBrandListChipInput', { static: true }) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeRbdListChipInput', { static: true }) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeCustomerListChipInput', { static: true }) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('segmentationChipInput', { static: true }) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('customerGroupChipInput', { static: true }) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
 
   constructor(

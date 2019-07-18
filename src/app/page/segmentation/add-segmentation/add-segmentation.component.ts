@@ -6,7 +6,7 @@ import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
@@ -51,7 +51,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private autDelay: number = 500;
   private arrFormGroup: string[];
 
-  @ViewChild( 'stepper' ) stepper;
+  @ViewChild('stepper', { static: false }) stepper;
 
   constructor(
     private route: ActivatedRoute,

@@ -40,6 +40,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
 
   public isProgressTemplates: boolean;
   public isActive: boolean;
+  public isReport: boolean;
 
   private reportsIds: number[] = [];
 
@@ -58,11 +59,12 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   /** Выбор для контрольного списка */
   checklistSelection = new SelectionModel<TodoItemFlatNode>( true /* multiple */ );
 
-  constructor( private reportAccessRightsService: ReportAccessRightsService) {}
+  constructor( private reportAccessRightsService: ReportAccessRightsService ) {}
 
   ngOnInit(): void {
     this.isActive = true;
     this.isProgressTemplates = true;
+    this.isReport = true;
     this.initTemplates();
 
   }
@@ -80,39 +82,41 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
       }
     };
 
+    this.reportAccessRightsService.subjectIsReport
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( isReport: boolean ) => this.isReport = isReport );
+
     const success = value => {
       this.treeFlattener = new MatTreeFlattener( this.transformer, this.getLevel, this.isExpandable, this.getChildren );
       this.treeControl = new FlatTreeControl<TodoItemFlatNode>( this.getLevel, this.isExpandable );
       this.dataSource = new MatTreeFlatDataSource( this.treeControl, this.treeFlattener );
       const getAdminReport = value[ 0 ];
-      const getMyReport = value[ 1 ];
-      this.sendReportsIds.emit( getMyReport );
-      this.reportsIds = getMyReport;
+      const getCustomerReport = value[ 1 ];
+      this.sendReportsIds.emit( getCustomerReport );
+      this.reportsIds = getCustomerReport;
       this.dataSource.data = this.isDir ? value : getAdminReport;
       this.isProgressTemplates = false;
     };
 
     const oGetAdminReport = this.reportAccessRightsService.getAdminReport()
-      .pipe(
-        takeWhile( _ => this.isActive ),
-      );
-    const oGetMyReport = this.reportAccessRightsService.getCustomerReport( this.loginId )
+      .pipe(takeWhile( _ => this.isActive ));
+    const oGetCustomerReport = this.reportAccessRightsService.getCustomerReport( this.loginId )
       .pipe(
         takeWhile( _ => this.isActive ),
         map( mapMyReports )
       );
-    const getObservablesReports = forkJoin( oGetAdminReport, oGetMyReport );
-    const myReport = _ => this.reportAccessRightsService.getMyReport()
+    const getObservablesReports = forkJoin( oGetAdminReport, oGetCustomerReport );
+    const getMyReport = _ => this.reportAccessRightsService.getMyReport()
       .pipe(
         takeWhile( _ => this.isActive ),
         takeWhile( isNotEmptyArray ),
       )
       .subscribe( success );
-    const collectionReports = _ =>  getObservablesReports.pipe(
-      takeWhile( _ => this.isActive ),
-    ).subscribe( success );
+    const collectionReports = _ => getObservablesReports
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
 
-    const whichTemplate = R.ifElse( _ => this.isDir, myReport, collectionReports  );
+    const whichTemplate = R.ifElse( _ => this.isDir, getMyReport, collectionReports );
     whichTemplate( R.identity );
   }
 
@@ -163,7 +167,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     this.flatNodeMap.set( flatNode, node );
     this.nestedNodeMap.set( node, flatNode );
     const flatNodeSelect = myReportId => myReportId === flatNode.reportId ? this.checklistSelection.select( flatNode ) : null;
-    R.forEach( flatNodeSelect, this.reportsIds );
+    if ( !R.isNil( this.reportsIds ) ) R.forEach( flatNodeSelect, this.reportsIds );
     return flatNode;
   };
 

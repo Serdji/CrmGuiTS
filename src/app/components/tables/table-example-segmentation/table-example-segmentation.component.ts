@@ -1,10 +1,8 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
@@ -36,15 +34,15 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
   public expandedElement: ISegmentation | null;
-  public formCheckbox: FormGroup;
+  public formFilterSegmentation: FormGroup;
 
   private isActive: boolean;
 
   @Input() private tableDataSource: ISegmentation[];
   @Output() private emitSegmentationId = new EventEmitter<number>();
 
-  @ViewChild( MatSort ) sort: MatSort;
-  @ViewChild( MatPaginator ) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
@@ -61,9 +59,8 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initFormCheckbox() {
-    this.formCheckbox = this.fb.group( {
-      simple: true,
-      complicated: true
+    this.formFilterSegmentation = this.fb.group( {
+      whichSegmentation: 'all'
     } );
   }
 
@@ -80,16 +77,15 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     const isComplex = segmentation => segmentation.isComplex;
     const segmentationSimple = R.reject( isComplex );
     const segmentationComplicated = R.filter( isComplex );
-    const success = checkbox => {
-      if ( R.not( checkbox.simple && checkbox.complicated ) ) {
-        this.dataSourceFun( [] );
-        if ( checkbox.simple ) this.dataSourceFun( segmentationSimple( this.tableDataSource ) );
-        if ( checkbox.complicated ) this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
-      } else {
-        this.dataSourceFun( this.tableDataSource );
+    const success = ( { whichSegmentation } ) => {
+      switch ( whichSegmentation ) {
+        case 'all': this.dataSourceFun( this.tableDataSource ); break;
+        case 'simple': this.dataSourceFun( segmentationSimple( this.tableDataSource ) ); break;
+        case 'complicated': this.dataSourceFun( segmentationComplicated( this.tableDataSource ) ); break;
       }
     };
-    this.formCheckbox.valueChanges
+
+    this.formFilterSegmentation.valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
   }

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Location } from '@angular/common';
 import { SwUpdate } from '@angular/service-worker';
-import { MatSnackBar } from '@angular/material';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { SaveUrlServiceService } from './services/save-url-service.service';

@@ -6,9 +6,10 @@ import { IdistributionProfile } from '../../../interface/idistribution-profile';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { EditorService } from '../../../components/editors/editor/editor.service';
 import { TableAsyncService } from '../../../services/table-async.service';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-profile-distribution',
@@ -22,6 +23,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
   public deliteButtonDisabled: boolean;
+  public isDistributionProfile: boolean;
 
   private emailLimits: number;
   private isActive: boolean;
@@ -38,6 +40,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.isLoader = true;
+    this.isDistributionProfile = false;
     this.initQueryParams();
     this.initTableProfilePagination();
     this.initEmailLimits();
@@ -92,6 +95,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
         if ( distributionProfile ) {
           this.tableAsyncService.countPage = distributionProfile.totalCount;
           this.distributionProfile = distributionProfile;
+          if( !R.isNil( this.distributionProfile.customers ) ) this.isDistributionProfile = true;
           this.isLoader = false;
           this.disabledButton( distributionProfile );
         }
