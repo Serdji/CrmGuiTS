@@ -79,7 +79,7 @@
       >
         <div class="table__detail"
              *ngIf="element.isComplex"
-             [@detailExpand]="element == expandedElement ? 'expanded' : 'collapsed'"
+             [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
         >
           <div class="table__segmentations">
             <mat-nav-list>

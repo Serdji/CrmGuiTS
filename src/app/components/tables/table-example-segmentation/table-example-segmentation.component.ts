@@ -8,23 +8,16 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { PeriodicElement } from '../table-example-distribution/table-example-distribution.component';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import * as R from 'ramda';
+import { detailExpand } from '../../../animations/animations';
 
 @Component( {
   selector: 'app-table-example-segmentation',
   templateUrl: './table-example-segmentation.component.html',
   styleUrls: [ './table-example-segmentation.component.styl' ],
-  animations: [
-    trigger( 'detailExpand', [
-      state( 'collapsed', style( { height: '0px', minHeight: '0', display: 'none', borderColor: 'rgba(0,0,0,0)' } ) ),
-      state( 'expanded', style( { height: '*' } ) ),
-      transition( 'expanded <=> collapsed', animate( '225ms cubic-bezier(0.4, 0.0, 0.2, 1)' ) ),
-    ] ),
-  ],
+  animations: [ detailExpand ],
 } )
 export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
@@ -41,8 +34,8 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   @Input() private tableDataSource: ISegmentation[];
   @Output() private emitSegmentationId = new EventEmitter<number>();
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild( MatSort, { static: true } ) sort: MatSort;
+  @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
@@ -79,9 +72,15 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     const segmentationComplicated = R.filter( isComplex );
     const success = ( { whichSegmentation } ) => {
       switch ( whichSegmentation ) {
-        case 'all': this.dataSourceFun( this.tableDataSource ); break;
-        case 'simple': this.dataSourceFun( segmentationSimple( this.tableDataSource ) ); break;
-        case 'complicated': this.dataSourceFun( segmentationComplicated( this.tableDataSource ) ); break;
+        case 'all':
+          this.dataSourceFun( this.tableDataSource );
+          break;
+        case 'simple':
+          this.dataSourceFun( segmentationSimple( this.tableDataSource ) );
+          break;
+        case 'complicated':
+          this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
+          break;
       }
     };
 
