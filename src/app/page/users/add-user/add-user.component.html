@@ -24,6 +24,13 @@
         <mat-form-field class="add-user__input">
           <input matInput formControlName="confirmPassword" type="password" appConfirmEqualValidator="password"
                  placeholder="Повторите пароль">
+          <mat-error *ngIf="formUser.get( 'confirmPassword' ).errors">
+            {{
+            formUser.get( 'confirmPassword' ).errors.ConfirmPassword ?
+              formUser.get( 'confirmPassword' ).errors.ConfirmPassword.mesConfirmPassword :
+              'Обязательное поле'
+            }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="loginName" placeholder="ФИО">
