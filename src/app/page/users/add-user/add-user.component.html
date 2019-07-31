@@ -1,5 +1,5 @@
 <mat-grid-list mat-grid-list cols="1" rowHeight="550px">
-   <mat-grid-tile>
+  <mat-grid-tile>
     <mat-card appAccessRights="users:update" appAccessMessage="true" class="add-user__card">
       <mat-card-title>Добавить пользователя</mat-card-title>
       <form class="add-user__form" [formGroup]="formUser">
@@ -9,10 +9,19 @@
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="password" type="password" placeholder="Пароль">
-          <mat-error>Обязательное поле</mat-error>
+          <mat-error *ngIf="formUser.get( 'password' ).errors">
+            {{
+              formUser.get('password').errors.complexPasswordValidator ?
+              formUser.get('password').errors.complexPasswordValidator.message :
+                formUser.get('password').errors.minlength ?
+                'Пароль должен состоять не менее чем из ' +  formUser.get('password').errors.minlength.requiredLength +' символов. Вы ввели: ' + formUser.get('password').errors.minlength.actualLength :
+                'Обязательное поле'
+            }}
+          </mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
-          <input matInput formControlName="confirmPassword" type="password" appConfirmEqualValidator="password" placeholder="Повторите пароль">
+          <input matInput formControlName="confirmPassword" type="password" appConfirmEqualValidator="password"
+                 placeholder="Повторите пароль">
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="loginName" placeholder="ФИО">
