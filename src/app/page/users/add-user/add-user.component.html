@@ -11,10 +11,12 @@
           <input matInput formControlName="password" type="password" placeholder="Пароль">
           <mat-error *ngIf="formUser.get( 'password' ).errors">
             {{
-              formUser.get('password').errors.complexPasswordValidator ?
+            formUser.get('password').errors.complexPasswordValidator ?
               formUser.get('password').errors.complexPasswordValidator.message :
-                formUser.get('password').errors.minlength ?
-                'Пароль должен состоять не менее чем из ' +  formUser.get('password').errors.minlength.requiredLength +' символов. Вы ввели: ' + formUser.get('password').errors.minlength.actualLength :
+              formUser.get('password').errors.minlength ?
+                'Пароль должен состоять не менее чем из ' +
+                formUser.get('password').errors.minlength.requiredLength + ' ' +
+                'символов. Вы ввели: ' + formUser.get('password').errors.minlength.actualLength :
                 'Обязательное поле'
             }}
           </mat-error>

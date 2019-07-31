@@ -34,8 +34,8 @@ export class AddUserComponent implements OnInit, OnDestroy {
   private initForm() {
     this.formUser = this.fb.group( {
       login: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
-      password: [ '', [ Validators.required, Validators.minLength( 6 ), complexPasswordValidator ] ],
-      confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      password: [ '', [ Validators.required, Validators.minLength( 8 ), complexPasswordValidator ] ],
+      confirmPassword: [ '', [ Validators.required, Validators.minLength( 8 ) ] ],
       email: [ '', [ Validators.email ] ],
       loginName: [ '', [ Validators.required, Validators.minLength( 3 ) ] ],
     });
@@ -49,7 +49,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
   }
 
   sendForm(): void {
-    console.log( this.formUser.get( 'password' ) );
     if ( !this.formUser.invalid ) {
       this.addUserService.createUser( this.formUser.getRawValue() )
         .pipe( takeWhile( _ => this.isActive ) )

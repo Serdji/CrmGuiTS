@@ -52,6 +52,17 @@
           <form class="user__form" [formGroup]="updatePassword">
             <mat-form-field class="user__input">
               <input matInput formControlName="newPassword" type="password" placeholder="Пароль">
+              <mat-error *ngIf="updatePassword.get( 'newPassword' ).errors">
+                {{
+                updatePassword.get('newPassword').errors.complexPasswordValidator ?
+                  updatePassword.get('newPassword').errors.complexPasswordValidator.message :
+                  updatePassword.get('newPassword').errors.minlength ?
+                    'Пароль должен состоять не менее чем из ' +
+                    updatePassword.get('newPassword').errors.minlength.requiredLength + ' ' +
+                    'символов. Вы ввели: ' + updatePassword.get('newPassword').errors.minlength.actualLength :
+                    'Обязательное поле'
+                }}
+              </mat-error>
             </mat-form-field>
             <mat-form-field class="user__input">
               <input matInput formControlName="confirmPassword" type="password"
