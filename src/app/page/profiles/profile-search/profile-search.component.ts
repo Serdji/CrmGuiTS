@@ -268,6 +268,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       ticket: '',
       recloc: '',
       emd: '',
+      airlineLCode: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
