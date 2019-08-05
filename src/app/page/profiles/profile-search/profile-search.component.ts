@@ -23,6 +23,7 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
+import { IAirlineLCode } from '../../../interface/iairline-lcode';
 
 @Component( {
   selector: 'app-profile-search',
@@ -33,8 +34,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
   public airports: IAirport[];
+  public airlineLCode: IAirlineLCode[];
   public airportsFromOptions: Observable<IAirport[]>;
   public airportsToOptions: Observable<IAirport[]>;
+  public airlineLCodeOptions: Observable<IAirlineLCode[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<ISegmentation[]>;
   public profiles: Iprofiles;
@@ -61,8 +64,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
 
-  @ViewChild('segmentationChipInput', { static: true }) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('customerGroupChipInput', { static: true }) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'customerGroupChipInput', { static: true } ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -83,6 +86,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initTableAsync();
     this.initSegmentation();
     this.initCustomerGroup();
+    this.initAirlineLCodes();
     this.initCurrencyDefault();
     this.activeButton();
     this.initQueryParams();
@@ -108,52 +112,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
-  sendForm(): void {
-    if ( !this.formProfileSearch.invalid ) this.creatingObjectForm();
-  }
-
-  clearForm(): void {
-    this.resetForm();
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
-  }
-
-  downloadCsv(): void {
-    this.profileSearchService.downloadCsv( this.sendProfileParams )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( resp => {
-        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
-        saveAs( resp.body, filename );
-      } );
-  }
-
-  private resetForm() {
-    this.segmentationChips = [];
-    this.customerGroupChips = [];
-    for ( const formControlName in this.formProfileSearch.value ) {
-      this.formProfileSearch.get( `${formControlName}` ).patchValue( '' );
-      this.formProfileSearch.get( `${formControlName}` ).setErrors( null );
-    }
-  }
-
-  private activeButton() {
-    const isChips = () => R.length( this.segmentationChips ) === 0 && R.length( this.customerGroupChips ) === 0;
-
-    const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
-    const isFormValOfInv = isFormInvalid( this.formProfileSearch );
-    const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
-    const mapKeyFormObj = R.curry( ( objForm: any, objFormValue ) => _.mapKeys( objFormValue, funcMapKeys( objForm ) ) );
-    const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
-    const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
-    const isActiveButtonSearch = R.compose( isSizeObj, getBooleanObj );
-
-    this.formProfileSearch.valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
-      )
-      .subscribe( isValue => this.buttonSearch = isValue && isChips() );
-  }
-
   private initTableAsync() {
     this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
@@ -170,26 +128,26 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initAirports() {
     this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: IAirport[] ) => {
-        this.airports = value;
-      } );
+      .subscribe( ( airports: IAirport[] ) => this.airports = airports );
   }
 
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( segmentation: ISegmentation[] ) => {
-        this.segmentation = segmentation;
-      } );
+      .subscribe( ( segmentation: ISegmentation[] ) => this.segmentation = segmentation );
   }
 
   private initCustomerGroup() {
     this.profileGroupService.getProfileGroup()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( customerGroup: IcustomerGroup[] ) => {
-        this.customerGroup = customerGroup;
-      } );
+      .subscribe( ( customerGroup: IcustomerGroup[] ) => this.customerGroup = customerGroup );
+  }
+
+  private initAirlineLCodes() {
+    this.profileSearchService.getAirlineCodes()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
   }
 
   private initAutocomplete() {
@@ -197,61 +155,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.airportsToOptions = this.autocomplete( 'arrpoint', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
-  }
-
-  private autocomplete( formControlName: string, options: string ): Observable<any> {
-    return this.formProfileSearch.get( formControlName ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          switch ( options ) {
-            case 'airports':
-              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-            case 'segmentation':
-              return this.segmentation.filter( segmentation => {
-                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
-                }
-              );
-            case 'customerGroup':
-              return this.customerGroup.filter( customerGroup => {
-                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
-                }
-              );
-          }
-        } )
-      );
-  }
-
-  add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
-    if ( ( value || '' ).trim() ) {
-      this[ chips ].push( value.trim() );
-    }
-
-    // Reset the input value
-    if ( input ) {
-      input.value = '';
-    }
-
-    this.formProfileSearch.get( formControlName ).setValue( null );
-  }
-
-  remove( textChip: string, arrayChips: string[], chips ): void {
-    const index = arrayChips.indexOf( textChip );
-
-    if ( index >= 0 ) {
-      this[ chips ].splice( index, 1 );
-    }
-  }
-
-  selected( event: MatAutocompleteSelectedEvent, formControlName: string, chips: string, fruitInput: string ): void {
-    this[ chips ].push( event.option.viewValue );
-    this[ fruitInput ].nativeElement.value = '';
-    this.formProfileSearch.get( formControlName ).setValue( null );
+    this.airlineLCodeOptions = this.autocomplete( 'airlineLCode', 'airlineLCode' );
   }
 
 
@@ -304,6 +208,42 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           this.formProfileSearch.get( 'contactphone' ).patchValue( '' );
         }
       } );
+  }
+
+  public displayFn( option ): string | undefined {
+    return option ? option.title : undefined;
+  }
+
+  private autocomplete( formControlName: string, options: string ): Observable<any> {
+    return this.formProfileSearch.get( formControlName ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( this.autDelay ),
+        map( val => {
+          switch ( options ) {
+            case 'airports':
+              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'segmentation':
+              return this.segmentation.filter( segmentation => {
+                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+            case 'customerGroup':
+              return this.customerGroup.filter( customerGroup => {
+                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+            case 'airlineLCode':
+              return this.airlineLCode.filter( airlineLCode => {
+                  if ( val !== null ) {
+                    console.log(airlineLCode.title.toLowerCase().includes( val.toLowerCase() ));
+                    return airlineLCode.title.toLowerCase().includes( val.toLowerCase() );
+                  }
+                }
+              );
+          }
+        } )
+      );
   }
 
   private forkJoinObservable() {
@@ -451,6 +391,85 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         return key === 'contactsexist';
     }
   }
+
+
+  add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ( ( value || '' ).trim() ) {
+      this[ chips ].push( value.trim() );
+    }
+
+    // Reset the input value
+    if ( input ) {
+      input.value = '';
+    }
+
+    this.formProfileSearch.get( formControlName ).setValue( null );
+  }
+
+  remove( textChip: string, arrayChips: string[], chips ): void {
+    const index = arrayChips.indexOf( textChip );
+
+    if ( index >= 0 ) {
+      this[ chips ].splice( index, 1 );
+    }
+  }
+
+  selected( event: MatAutocompleteSelectedEvent, formControlName: string, chips: string, fruitInput: string ): void {
+    this[ chips ].push( event.option.viewValue );
+    this[ fruitInput ].nativeElement.value = '';
+    this.formProfileSearch.get( formControlName ).setValue( null );
+  }
+
+  sendForm(): void {
+    if ( !this.formProfileSearch.invalid ) this.creatingObjectForm();
+  }
+
+  clearForm(): void {
+    this.resetForm();
+    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
+  }
+
+  downloadCsv(): void {
+    this.profileSearchService.downloadCsv( this.sendProfileParams )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( resp => {
+        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
+        saveAs( resp.body, filename );
+      } );
+  }
+
+  private resetForm() {
+    this.segmentationChips = [];
+    this.customerGroupChips = [];
+    for ( const formControlName in this.formProfileSearch.value ) {
+      this.formProfileSearch.get( `${formControlName}` ).patchValue( '' );
+      this.formProfileSearch.get( `${formControlName}` ).setErrors( null );
+    }
+  }
+
+  private activeButton() {
+    const isChips = () => R.length( this.segmentationChips ) === 0 && R.length( this.customerGroupChips ) === 0;
+
+    const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
+    const isFormValOfInv = isFormInvalid( this.formProfileSearch );
+    const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
+    const mapKeyFormObj = R.curry( ( objForm: any, objFormValue ) => _.mapKeys( objFormValue, funcMapKeys( objForm ) ) );
+    const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
+    const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
+    const isActiveButtonSearch = R.compose( isSizeObj, getBooleanObj );
+
+    this.formProfileSearch.valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
+      )
+      .subscribe( isValue => this.buttonSearch = isValue && isChips() );
+  }
+
 
   ngOnDestroy(): void {
     this.isActive = false;
