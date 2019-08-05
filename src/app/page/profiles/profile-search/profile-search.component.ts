@@ -235,10 +235,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
               );
             case 'airlineLCode':
               return this.airlineLCode.filter( airlineLCode => {
-                  if ( val !== null ) {
-                    console.log(airlineLCode.title.toLowerCase().includes( val.toLowerCase() ));
-                    return airlineLCode.title.toLowerCase().includes( val.toLowerCase() );
-                  }
+                  if ( val !== null ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
                 }
               );
           }

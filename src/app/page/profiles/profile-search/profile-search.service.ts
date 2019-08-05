@@ -35,13 +35,7 @@ export class ProfileSearchService {
         map( ( airlineCodes: IAirlineLCode ) => {
           const airlineCodeTitleFn = airlineCode => {
             const titleLens = R.lensProp( 'title' );
-            const titleFn = () => {
-              if ( airlineCode.lCode === airlineCode.rCode ) {
-                return airlineCode.lCode;
-              } else {
-                return `${airlineCode.lCode} ( ${airlineCode.rCode} )`;
-              }
-            };
+            const titleFn = () => airlineCode.lCode === airlineCode.rCode ? airlineCode.lCode : `${airlineCode.lCode} ( ${airlineCode.rCode} )`;
             return R.set( titleLens, titleFn(), airlineCode );
           };
           return R.map( airlineCodeTitleFn, airlineCodes );
