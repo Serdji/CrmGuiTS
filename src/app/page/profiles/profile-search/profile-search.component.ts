@@ -211,7 +211,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   public displayFn( option ): string | undefined {
-    return option ? option.title : undefined;
+    return R.is( Object, option ) ? option.title : option;
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -235,7 +235,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
               );
             case 'airlineLCode':
               return this.airlineLCode.filter( airlineLCode => {
-                if ( val !== null ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
+                  if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
                 }
               );
           }
@@ -259,7 +259,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( params ) {
-
+    const hasAirlineLCode = R.has( 'airlineLCode' );
 
     if ( Object.keys( params ).length !== 0 ) {
       const newObjectForm = {};
@@ -289,15 +289,22 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
       for ( const key of Object.keys( params ) ) {
         if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = params[ key ];
-        if ( this.isKeys( key, 'airlineLCode' ) ) newObjectForm[ key ] = params[ key ];
         if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
         if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
       }
 
-      console.log(newObjectForm);
-
-      this.formProfileSearch.patchValue( newObjectForm );
-      // if ( this.isQueryParams ) this.creatingObjectForm();
+      if ( hasAirlineLCode( params ) ) {
+        this.profileSearchService.getAirlineCodes()
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( airlineCodes: IAirlineLCode[] ) => {
+            this.formProfileSearch.get( 'airlineLCode' ).patchValue( _.find( airlineCodes, { 'idAirline': +params[ 'airlineLCode' ] } ) );
+            this.formProfileSearch.patchValue( newObjectForm );
+            if ( this.isQueryParams ) this.creatingObjectForm();
+          } );
+      } else {
+        this.formProfileSearch.patchValue( newObjectForm );
+        if ( this.isQueryParams ) this.creatingObjectForm();
+      }
     }
   }
 
@@ -322,7 +329,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     for ( const key of formValue ) {
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
-      if ( this.isKeys( key, 'airlineLCode' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.title}`;
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
         if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
@@ -331,7 +337,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     }
 
     for ( const key of Object.keys( highlightObj ) ) {
-      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) params[ key ] = highlightObj[ key ];
+      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) {
+        params[ key ] = highlightObj[ key ];
+      }
     }
 
     if ( _.size( segmentation ) > 0 ) {
@@ -346,17 +354,20 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private serverRequest( params: IprofileSearch ) {
-    const hasAirlineLCode =  R.has( 'airlineLCode' );
     const airlineLCodeLens = R.lensProp( 'airlineLCode' );
+    const airlineLCodeValue = this.formProfileSearch.get( 'airlineLCode' ).value;
+    const idAirline = airlineLCodeValue.idAirline;
 
     this.isTableCard = true;
     this.isLoader = true;
-    Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+
+    _.merge( params, R.set( airlineLCodeLens, idAirline, params ) );
+    _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+
     this.isQueryParams = false;
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
-    params = hasAirlineLCode( params ) ? R.set( airlineLCodeLens, this.formProfileSearch.get( 'airlineLCode' ).value.idAirline, params ) : params;
     this.sendProfileParams = params;
-    this.profileSearchService.getProfileSearch( params )
+    this.profileSearchService.getProfileSearch( this.sendProfileParams )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profile => {
         this.tableAsyncService.countPage = profile.totalRows;
@@ -394,7 +405,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'bookingcreatedatetoexclude';
       case 'checkbox':
         return key === 'contactsexist';
-        case 'airlineLCode':
+      case 'airlineLCode':
         return key === 'airlineLCode';
     }
   }
