@@ -63,6 +63,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
+  private airlineId: number;
 
   @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'customerGroupChipInput', { static: true } ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
@@ -259,7 +260,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( params ) {
-    const hasAirlineLCode = R.has( 'airlineLCode' );
+    const hasAirlineId = R.has( 'airlineId' );
 
     if ( Object.keys( params ).length !== 0 ) {
       const newObjectForm = {};
@@ -293,14 +294,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
       }
 
-      if ( hasAirlineLCode( params ) ) {
-        this.profileSearchService.getAirlineCodes()
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( airlineCodes: IAirlineLCode[] ) => {
-            this.formProfileSearch.get( 'airlineLCode' ).patchValue( _.find( airlineCodes, { 'idAirline': +params[ 'airlineLCode' ] } ) );
-            this.formProfileSearch.patchValue( newObjectForm );
-            if ( this.isQueryParams ) this.creatingObjectForm();
-          } );
+      if ( hasAirlineId( params ) ) {
+        this.airlineId = params[ 'airlineId' ];
+        this.formProfileSearch.get( 'airlineLCode' ).patchValue( params[ 'airlineLCode' ] );
+        this.formProfileSearch.patchValue( newObjectForm );
+        if ( this.isQueryParams ) this.creatingObjectForm();
       } else {
         this.formProfileSearch.patchValue( newObjectForm );
         if ( this.isQueryParams ) this.creatingObjectForm();
@@ -350,19 +348,25 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       _.set( params, 'customerGroupIds', customerGroup );
     }
 
+
     this.serverRequest( params );
   }
 
   private serverRequest( params: IprofileSearch ) {
     const airlineLCodeLens = R.lensProp( 'airlineLCode' );
+    const airlineIdLens = R.lensProp( 'airlineId' );
     const airlineLCodeValue = this.formProfileSearch.get( 'airlineLCode' ).value;
-    const idAirline = airlineLCodeValue.idAirline;
+    const airlineId = airlineLCodeValue.idAirline || this.airlineId;
+    const airlineCode = airlineLCodeValue.title || airlineLCodeValue;
 
     this.isTableCard = true;
     this.isLoader = true;
 
-    _.merge( params, R.set( airlineLCodeLens, idAirline, params ) );
+    _.merge( params, R.set( airlineIdLens, +airlineId, params ) );
+    _.merge( params, R.set( airlineLCodeLens, airlineCode, params ) );
     _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+
+    params = !airlineCode ? R.omit(  [ 'airlineLCode', 'airlineId' ], params ) : params;
 
     this.isQueryParams = false;
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
