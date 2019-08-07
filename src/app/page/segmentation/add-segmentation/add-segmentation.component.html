@@ -68,7 +68,7 @@
           </div>
           <div class="add-segmentation__stepper-button">
             <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperNext (click)="initAutocomplete( 'formSegmentationStepper' )">Вперед</button>
           </div>
         </mat-step>
 
@@ -111,6 +111,15 @@
         ">
           <ng-template matStepLabel>Билет</ng-template>
           <div class="add-segmentation__content _none-justify">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="airlineLCodeIdT" type="text" placeholder="Код авиакомпании"
+                     [matAutocomplete]="airlineLCodeT">
+              <mat-autocomplete #airlineLCodeT="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsT | async" [value]="airlineLCode">
+                  {{airlineLCode.title}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
             </mat-form-field>
@@ -182,6 +191,15 @@
         ">
           <ng-template matStepLabel>Платные услуги</ng-template>
           <div class="add-segmentation__content _none-justify">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="airlineLCodeIdE" type="text" placeholder="Код авиакомпании"
+                     [matAutocomplete]="airlineLCodeE">
+              <mat-autocomplete #airlineLCodeE="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsE | async" [value]="airlineLCode">
+                  {{airlineLCode.title}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
             </mat-form-field>
@@ -306,10 +324,6 @@
   </div>
 
 
-
-
-
-
   <div class="add-segmentation__change" *ngIf="isFormSegmentation">
     <form class="add-segmentation__form" [formGroup]="formSegmentation">
       <mat-grid-list cols="1" rowHeight="80px">
@@ -355,6 +369,15 @@
           <mat-card class="add-segmentation__card">
             <span class="add-segmentation__content-title">Билеты</span>
             <mat-card-content class="add-segmentation__content _none-justify">
+              <mat-form-field class="profile-search__input">
+                <input matInput formControlName="airlineLCodeIdT" type="text" placeholder="Код авиакомпании"
+                       [matAutocomplete]="airlineLCodeT">
+                <mat-autocomplete #airlineLCodeT="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsT | async" [value]="airlineLCode">
+                    {{airlineLCode.title}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoT">
               </mat-form-field>
@@ -421,6 +444,15 @@
           <mat-card class="add-segmentation__card">
             <span class="add-segmentation__content-title">Платные услуги</span>
             <mat-card-content class="add-segmentation__content _none-justify">
+              <mat-form-field class="profile-search__input">
+                <input matInput formControlName="airlineLCodeIdE" type="text" placeholder="Код авиакомпании"
+                       [matAutocomplete]="airlineLCodeE">
+                <mat-autocomplete #airlineLCodeE="matAutocomplete" [displayWith]="displayFn">
+                  <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsE | async" [value]="airlineLCode">
+                    {{airlineLCode.title}}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <input matInput type="text" placeholder="Номер рейса" formControlName="flightNoE">
               </mat-form-field>
@@ -617,7 +649,7 @@
     <mat-card class="add-segmentation__table" *ngIf="isTable">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <mat-card-title>{{segmentationProfiles.customers.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+        <mat-card-title>{{segmentationProfiles.customers.length !== 0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
         <app-table-async-segmentation-profile
           *ngIf="segmentationProfiles.customers.length !== 0"
           [tableDataSource]="segmentationProfiles.customers">

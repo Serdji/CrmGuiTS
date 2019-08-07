@@ -159,6 +159,39 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.airlineLCodeOptions = this.autocomplete( 'airlineLCode', 'airlineLCode' );
   }
 
+  public displayFn( option ): string | undefined {
+    return R.is( Object, option ) ? option.title : option;
+  }
+
+  private autocomplete( formControlName: string, options: string ): Observable<any> {
+    return this.formProfileSearch.get( formControlName ).valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        delay( this.autDelay ),
+        map( val => {
+          switch ( options ) {
+            case 'airports':
+              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
+            case 'segmentation':
+              return this.segmentation.filter( segmentation => {
+                  if ( !R.isNil( val ) ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+            case 'customerGroup':
+              return this.customerGroup.filter( customerGroup => {
+                  if ( !R.isNil( val ) ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+            case 'airlineLCode':
+              return this.airlineLCode.filter( airlineLCode => {
+                  if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
+                }
+              );
+          }
+        } )
+      );
+  }
+
 
   private initForm() {
     this.formProfileSearch = this.fb.group( {
@@ -211,38 +244,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
-  public displayFn( option ): string | undefined {
-    return R.is( Object, option ) ? option.title : option;
-  }
-
-  private autocomplete( formControlName: string, options: string ): Observable<any> {
-    return this.formProfileSearch.get( formControlName ).valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        delay( this.autDelay ),
-        map( val => {
-          switch ( options ) {
-            case 'airports':
-              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-            case 'segmentation':
-              return this.segmentation.filter( segmentation => {
-                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
-                }
-              );
-            case 'customerGroup':
-              return this.customerGroup.filter( customerGroup => {
-                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
-                }
-              );
-            case 'airlineLCode':
-              return this.airlineLCode.filter( airlineLCode => {
-                  if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
-                }
-              );
-          }
-        } )
-      );
-  }
 
   private forkJoinObservable() {
     const success = value => {

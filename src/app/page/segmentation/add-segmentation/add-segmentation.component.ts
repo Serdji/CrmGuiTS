@@ -15,6 +15,7 @@ import { ProfileSearchService } from '../../profiles/profile-search/profile-sear
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { SaveUrlServiceService } from '../../../services/save-url-service.service';
+import { IAirlineLCode } from '../../../interface/iairline-lcode';
 
 
 @Component( {
@@ -37,6 +38,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
   public airports: IAirport[];
+  public airlineLCode: IAirlineLCode[];
+  public airlineLCodeOptionsT: Observable<IAirlineLCode[]>;
+  public airlineLCodeOptionsE: Observable<IAirlineLCode[]>;
   public airportsFromOptionsT: Observable<IAirport[]>;
   public airportsToOptionsT: Observable<IAirport[]>;
   public airportsFromOptionsE: Observable<IAirport[]>;
@@ -51,7 +55,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private autDelay: number = 500;
   private arrFormGroup: string[];
 
-  @ViewChild('stepper', { static: false }) stepper;
+  @ViewChild( 'stepper', { static: false } ) stepper;
 
   constructor(
     private route: ActivatedRoute,
@@ -82,6 +86,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.formInputDisable();
     this.initTableProfilePagination();
     this.initAirports();
+    this.initAirlineLCodes();
     this.initAutocomplete( 'formSegmentationStepper' );
     this.initAutocomplete( 'formSegmentation' );
     this.addSegmentationService.subjectDeleteSegmentation
@@ -118,21 +123,35 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private initAirports() {
     this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: IAirport[] ) => {
-        this.airports = value;
-      } );
+      .subscribe( ( value: IAirport[] ) => this.airports = value );
   }
 
-  private initAutocomplete( formGroup ) {
+  private initAirlineLCodes() {
+    this.profileSearchService.getAirlineCodes()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
+  }
+
+  public displayFn( option ): string | undefined {
+    return R.is( Object, option ) ? option.title : option;
+  }
+
+  public initAutocomplete( formGroup ) {
     this.airportsFromOptionsT = this.autocomplete( formGroup, 'departureLocationCodeT' );
     this.airportsToOptionsT = this.autocomplete( formGroup, 'arrivalLocationCodeT' );
     this.airportsFromOptionsE = this.autocomplete( formGroup, 'departureLocationCodeE' );
     this.airportsToOptionsE = this.autocomplete( formGroup, 'arrivalLocationCodeE' );
+    this.airlineLCodeOptionsT = this.autocomplete( formGroup, 'airlineLCodeIdT' );
+    this.airlineLCodeOptionsE = this.autocomplete( formGroup, 'airlineLCodeIdE' );
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
     const mapFilter = val => {
       if ( val ) {
+        if ( formControlName === 'airlineLCodeIdT' || formControlName === 'airlineLCodeIdE' ) {
+          console.log( val );
+          return this.airlineLCode.filter( airlineLCode => airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() ) );
+        }
         return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
       }
     };
@@ -185,6 +204,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       segmentsCountToExclude: [ '', Validators.required ],
       eDocTypeS: [ '', Validators.required ],
       currentRange: '',
+      airlineLCodeIdT: '',
       flightNoT: '',
       arrivalDFromIncludeT: '',
       arrivalDToExcludeT: '',
@@ -196,6 +216,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       posGdsT: '',
       posIdT: '',
       posAgencyT: '',
+      airlineLCodeIdE: '',
       flightNoE: '',
       arrivalDFromIncludeE: '',
       arrivalDToExcludeE: '',
@@ -250,7 +271,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( params => {
               _( [
-                'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
+                'airlineLCodeIdT', 'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
                 'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
                 'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
               ] )
@@ -259,7 +280,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
               _( [
-                'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
+                'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
                 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE'
               ] )
@@ -268,12 +289,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
             } );
-        } else if( key === 'eDocTypeP'  ) {
+        } else if ( key === 'eDocTypeP' ) {
           this[ formGroupName ].get( key ).valueChanges
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( params => {
               _( [
-                'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
+                'airlineLCodeIdT', 'flightNoT', 'arrivalDFromIncludeT', 'arrivalDToExcludeT',
                 'departureLocationCodeT', 'arrivalLocationCodeT', 'cabinT',
                 'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT'
               ] )
@@ -282,7 +303,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
               _( [
-                'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
+                'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE', 'arrivalDToExcludeE',
                 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE'
               ] )
