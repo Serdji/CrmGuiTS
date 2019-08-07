@@ -297,7 +297,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
-      if ( hasAirlineId( params ) ) this.airlineId = params[ 'airlineId' ];
+      this.airlineId = params[ 'airlineId' ];
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
   }
@@ -354,7 +354,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.isQueryParams = false;
 
     const airlineLCodeValue = this.formProfileSearch.get( 'airlineLCode' ).value;
-    const airlineId = airlineLCodeValue.idAirline || this.airlineId;
+    const airlineId = airlineLCodeValue.idAirline || this.airlineId || null;
     const airlineCode = airlineLCodeValue.title || airlineLCodeValue;
 
     _.merge( params, { airlineLCode: airlineCode } );
