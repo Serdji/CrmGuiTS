@@ -7,6 +7,8 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-list-segmentation',
@@ -28,6 +30,8 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private tableAsyncService: TableAsyncService,
     private addSegmentationService: AddSegmentationService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
@@ -37,6 +41,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     this.isTableProfileTable = false;
     this.initSegmentation();
     this.initTableProfilePagination();
+    this.initQueryParams();
     this.listSegmentationService.subjectSegmentations
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshSegmentation() );
@@ -48,6 +53,17 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( _ => {
         this.isLoaderSegmentationTable = true;
         this.initSegmentation();
+      } );
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( res => {
+        const isRes = !R.isEmpty( res );
+        if ( isRes ) this.initTableProfile( res.segmentationId );
+        this.isTableProfileTable = isRes;
+        this.isLoaderProfileTable = isRes;
       } );
   }
 
@@ -96,6 +112,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     this.segmentationId = segmentationId;
     this.isTableProfileTable = true;
     this.isLoaderProfileTable = true;
+    this.router.navigate( [ 'crm/listsegmentation' ], { queryParams: { segmentationId } } );
     this.initTableProfile( this.segmentationId );
   }
 
