@@ -322,10 +322,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     }
 
     for ( const key of formValue ) {
-      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
-      if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
+      const valueForm = keys => this.formProfileSearch.get( keys ).value || '';
+      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = valueForm( key ).trim();
+      if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( valueForm( key ) ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
-        if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
+        if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !valueForm( key );
         else delete highlightObj[ key ];
       }
     }
