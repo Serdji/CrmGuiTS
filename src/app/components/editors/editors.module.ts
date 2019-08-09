@@ -2,12 +2,12 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { NgxWigModule } from 'ngx-wig';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { EditorComponent } from './editor/editor.component';
-import { EditorService } from './editor/editor.service';
 import { DialogEditorComponent } from './dialog-editor/dialog-editor.component';
 import { ButtonEditorComponent } from './button-editor/button-editor.component';
 import { SharedModule } from '../../shared/shared.module';
 import { DirectivesModule } from '../../directives/directives.module';
+import { EditorEmailComponent } from './editor-email/editor-email.component';
+import { EditorEmailService } from './editor-email/editor-email.service';
 
 @NgModule( {
   imports: [
@@ -19,17 +19,17 @@ import { DirectivesModule } from '../../directives/directives.module';
     DirectivesModule,
   ],
   declarations: [
-    EditorComponent,
+    EditorEmailComponent,
     DialogEditorComponent,
     ButtonEditorComponent,
   ],
   exports: [
-    EditorComponent,
+    EditorEmailComponent,
     DialogEditorComponent,
     ButtonEditorComponent,
   ],
   entryComponents: [ DialogEditorComponent ],
-  providers: [ EditorService ]
+  providers: [ EditorEmailService ]
 } )
 export class EditorsModule {
 }

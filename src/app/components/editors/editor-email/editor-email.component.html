@@ -1,9 +1,9 @@
-<div class="editor">
+<div class="editor-email">
   <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet" />
-  <form class="editor__form" [formGroup]="formDistribution">
+  <form class="editor-email__form" [formGroup]="formDistribution">
     <mat-grid-list cols="5" rowHeight="500px">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="editor__box mat-elevation-z0">
+        <mat-card class="editor-email__box mat-elevation-z0">
           <mat-card-title>Переменные рассылок</mat-card-title>
           <mat-action-list *ngFor=" let distributionPlaceholder of distributionPlaceholders ">
             <button matRipple mat-list-item (click)="sendVarPlaceholder(distributionPlaceholder.description)"  matTooltip="Пример: {{distributionPlaceholder.example}} ">{{ distributionPlaceholder.description }}</button>
@@ -12,9 +12,9 @@
       </mat-grid-tile>
 
       <mat-grid-tile [colspan]="3" [rowspan]="1">
-        <mat-card class="editor__box mat-elevation-z0">
+        <mat-card class="editor-email__box mat-elevation-z0">
           <mat-card-title>Шаблон рассылок</mat-card-title>
-          <mat-form-field class="editor__input">
+          <mat-form-field class="editor-email__input">
             <input matInput formControlName="subject" type="text" placeholder="Тема">
             <mat-error>Обязательное поле</mat-error>
           </mat-form-field>
@@ -23,27 +23,27 @@
       </mat-grid-tile>
 
       <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-card class="editor__box mat-elevation-z0">
+        <mat-card class="editor-email__box mat-elevation-z0">
           <mat-card-title>Параметры рассылок</mat-card-title>
-          <mat-form-field class="editor__input">
-            <input matInput formControlName="totalCount" class="editor__input-informational" type="text" placeholder="Количество">
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="totalCount" class="editor-email__input-informational" type="text" placeholder="Количество">
           </mat-form-field>
-          <mat-form-field class="editor__input">
-            <input matInput formControlName="emailLimits" class="editor__input-informational" type="text" placeholder="Лимит">
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="emailLimits" class="editor-email__input-informational" type="text" placeholder="Лимит">
           </mat-form-field>
-          <mat-form-field class="editor__input">
+          <mat-form-field class="editor-email__input">
             <input matInput formControlName="dateFrom" placeholder="Дата отправки от"
                    [matDatepicker]="dateFrom">
             <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
           </mat-form-field>
-          <mat-form-field class="editor__input">
+          <mat-form-field class="editor-email__input">
             <input matInput formControlName="dateTo" placeholder="Дата отправки до"
                    [matDatepicker]="dateTo">
             <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
           </mat-form-field>
-          <mat-form-field class="editor__input">
+          <mat-form-field class="editor-email__input">
             <mat-select formControlName="templateId" placeholder="Шаблон">
               <mat-option></mat-option>
               <mat-option *ngFor="let template of templates" [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
@@ -53,7 +53,7 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <button class="editor__button" mat-raised-button color="primary" (click)="saveDistribution()" [disabled]="buttonSave"><mat-icon>save</mat-icon>Сохранить</button>
+  <button class="editor-email__button" mat-raised-button color="primary" (click)="saveDistribution()" [disabled]="buttonSave"><mat-icon>save</mat-icon>Сохранить</button>
 </div>
 
 
