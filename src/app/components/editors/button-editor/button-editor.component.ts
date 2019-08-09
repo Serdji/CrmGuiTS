@@ -15,6 +15,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
   @Input() ids: any;
   @Input() disabled: boolean;
   @Input() totalCount: number;
+  @Input() whatNewsletter: string;
 
   private isActive: boolean;
 
@@ -33,31 +34,30 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
       _.has( this.ids, 'customerGroupIds' )
     ) {
       this.dialog.open( DialogEditorComponent, {
-        width: '80vw',
         data: {
           params: this.ids,
-          totalCount: _.size( this.ids.customerIds || this.ids.customerGroupIds )
+          totalCount: _.size( this.ids.customerIds || this.ids.customerGroupIds ),
+          whatNewsletter: this.whatNewsletter
         }
       } );
     } else {
       this.route.queryParams
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => {
-          console.log( value );
           if ( _.has( value, 'segmentationId' ) ) {
             this.dialog.open( DialogEditorComponent, {
-              width: '80vw',
               data: {
                 params: { 'segmentationIds': [ value.segmentationId ] },
-                totalCount: this.totalCount
+                totalCount: this.totalCount,
+                whatNewsletter: this.whatNewsletter
               }
             } );
           } else {
             this.dialog.open( DialogEditorComponent, {
-              width: '80vw',
               data: {
                 params: value,
-                totalCount: this.totalCount
+                totalCount: this.totalCount,
+                whatNewsletter: this.whatNewsletter
               }
             } );
           }
