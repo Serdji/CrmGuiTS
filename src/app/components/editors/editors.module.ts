@@ -8,6 +8,8 @@ import { SharedModule } from '../../shared/shared.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { EditorEmailComponent } from './editor-email/editor-email.component';
 import { EditorEmailService } from './editor-email/editor-email.service';
+import { EditorSmsComponent } from './editor-sms/editor-sms.component';
+import { EditorSmsService } from './editor-sms/editor-sms.service';
 
 @NgModule( {
   imports: [
@@ -22,14 +24,19 @@ import { EditorEmailService } from './editor-email/editor-email.service';
     EditorEmailComponent,
     DialogEditorComponent,
     ButtonEditorComponent,
+    EditorSmsComponent,
   ],
   exports: [
     EditorEmailComponent,
     DialogEditorComponent,
     ButtonEditorComponent,
+    EditorSmsComponent,
   ],
   entryComponents: [ DialogEditorComponent ],
-  providers: [ EditorEmailService ]
+  providers: [
+    EditorEmailService,
+    EditorSmsService
+  ]
 } )
 export class EditorsModule {
 }

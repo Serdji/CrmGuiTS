@@ -10,4 +10,5 @@
   </form>
 
   <app-editor-email  *ngIf="data.whatNewsletter === 'email'" [params]="data.params" [totalCount]="data.totalCount"></app-editor-email>
+  <app-editor-sms  *ngIf="data.whatNewsletter === 'sms'"></app-editor-sms>
 </div>
