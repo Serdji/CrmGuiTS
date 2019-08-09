@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-editor-sms',
@@ -6,6 +6,10 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./editor-sms.component.styl']
 })
 export class EditorSmsComponent implements OnInit {
+
+  @Input() params: any;
+  @Input() totalCount: number;
+
 
   constructor() { }
 
