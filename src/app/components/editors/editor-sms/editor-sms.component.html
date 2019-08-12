@@ -1,3 +1,31 @@
 <div class="editor-sms">
+  <form class="editor-sms__form" [formGroup]="formSms">
+    <mat-grid-list cols="3" rowHeight="300px">
+      <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <mat-card class="editor-sms__box mat-elevation-z0">
+          <mat-form-field class="editor-sms__input">
+            <input formControlName="title" matInput placeholder="Название">
+          </mat-form-field>
 
+          <mat-form-field class="editor-sms__input">
+            <textarea formControlName="text" matInput rows="9" placeholder="Текст сообщения"></textarea>
+          </mat-form-field>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="editor-sms__box mat-elevation-z0">
+          <mat-form-field class="editor-sms__input">
+            <mat-select formControlName="templateId" placeholder="Шаблон">
+              <mat-option></mat-option>
+              <mat-option value="Шаблон 1"> Шаблон 1 </mat-option>
+              <mat-option value="Шаблон 2"> Шаблон 2 </mat-option>
+              <mat-option value="Шаблон 3"> Шаблон 3 </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <button class="editor-email__button" mat-raised-button color="primary"><mat-icon>save</mat-icon>Сохранить</button>
 </div>

@@ -25,7 +25,6 @@ export class DialogEditorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    console.log( this.data );
     this.initForm();
     this.initSwitchEditor();
   }
