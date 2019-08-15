@@ -38,8 +38,7 @@
     <ng-container  matColumnDef="customerGroupId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon routerLink="/crm/profilesearch"
-                  [queryParams]="{ customerGroupIds: element.customerGroupId }">search</mat-icon>
+        <mat-icon (click)="redirectToCustomerGroupId(element.customerGroupId); $event.stopPropagation()">search</mat-icon>
       </mat-cell>
     </ng-container>
 

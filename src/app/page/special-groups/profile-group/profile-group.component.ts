@@ -5,6 +5,10 @@ import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { timer } from 'rxjs';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Iprofiles } from '../../../interface/iprofiles';
+import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
+import * as R from 'ramda';
 
 @Component( {
   selector: 'app-profile-group',
@@ -18,17 +22,26 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   public isLoader: boolean;
   public formNameProfileGroup: FormGroup;
   public profileGroup: IcustomerGroup[];
+  public isLoaderProfileTable: boolean;
+  public isTableProfileTable: boolean;
+  public profiles: Iprofiles;
 
   constructor(
     private fb: FormBuilder,
     private profileGroupService: ProfileGroupService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private profileSearchService: ProfileSearchService,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.isLoader = true;
+    this.isLoaderProfileTable = true;
+    this.isTableProfileTable = false;
     this.initForm();
     this.initTable();
+    this.initQueryParams();
     this.profileGroupService.subjectDeleteProfileGroups
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshTable() );
@@ -58,6 +71,26 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initProfileSearchTable( params: { customerGroupIds: number, sortvalue: string, from: number, count: number } ) {
+    this.profileSearchService.getProfileSearch( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( profiles => {
+        this.profiles = profiles.result;
+        this.isLoaderProfileTable = false;
+      } );
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( res: { customerGroupIds: number, sortvalue: string, from: number, count: number } ) => {
+        const isRes = !R.isEmpty( res );
+        if ( isRes ) this.initProfileSearchTable( res );
+        this.isTableProfileTable = isRes;
+        this.isLoaderProfileTable = isRes;
+      } );
+  }
+
   private resetForm() {
     _( this.formNameProfileGroup.value ).each( ( value, key ) => {
       this.formNameProfileGroup.get( key ).patchValue( '' );
@@ -76,8 +109,36 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
       } );
   }
 
+  onProfileSearch( id: number ) {
+    console.log( id );
+    const params = {
+      customerGroupIds: id,
+      sortvalue: 'last_name',
+      from: 0,
+      count: 10
+    };
+    this.isTableProfileTable = true;
+    this.isLoaderProfileTable = true;
+    this.router.navigate( [ 'crm/profilegroup' ], { queryParams: params } );
+    this.initProfileSearchTable( params );
+  }
+
   ngOnDestroy(): void {
     this.isActive = false;
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
