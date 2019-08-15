@@ -9,6 +9,9 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Iprofiles } from '../../../interface/iprofiles';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import * as R from 'ramda';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { IpagPage } from '../../../interface/ipag-page';
+import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 
 @Component( {
   selector: 'app-profile-group',
@@ -18,6 +21,7 @@ import * as R from 'ramda';
 export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
+  private customerGroupId: number;
 
   public isLoader: boolean;
   public formNameProfileGroup: FormGroup;
@@ -32,6 +36,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private profileSearchService: ProfileSearchService,
+    private tableAsyncService: TableAsyncService,
   ) { }
 
   ngOnInit(): void {
@@ -42,6 +47,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initTable();
     this.initQueryParams();
+    this.initProfileSearchTablePagination();
     this.profileGroupService.subjectDeleteProfileGroups
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshTable() );
@@ -71,10 +77,28 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initProfileSearchTablePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          customerGroupIds: this.customerGroupId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.profileSearchService.getProfileSearch( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( profiles => this.tableAsyncService.setTableDataSource( profiles.result ) );
+      } );
+  }
+
+
   private initProfileSearchTable( params: { customerGroupIds: number, sortvalue: string, from: number, count: number } ) {
     this.profileSearchService.getProfileSearch( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profiles => {
+        this.tableAsyncService.countPage = profiles.totalRows;
         this.profiles = profiles.result;
         this.isLoaderProfileTable = false;
       } );
@@ -110,9 +134,9 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   }
 
   onProfileSearch( id: number ) {
-    console.log( id );
+    this.customerGroupId = id;
     const params = {
-      customerGroupIds: id,
+      customerGroupIds: this.customerGroupId,
       sortvalue: 'last_name',
       from: 0,
       count: 10
