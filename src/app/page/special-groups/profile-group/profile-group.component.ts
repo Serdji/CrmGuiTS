@@ -93,7 +93,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   }
 
 
-  private initProfileSearchTable( params: { customerGroupIds: number, sortvalue: string, from: number, count: number } ) {
+  private initProfileSearchTable( params: { customerGroupIds: number[], sortvalue: string, from: number, count: number } ) {
     this.profileSearchService.getProfileSearch( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profiles => {
@@ -106,7 +106,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   private initQueryParams() {
     this.route.queryParams
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( res: { customerGroupIds: number, sortvalue: string, from: number, count: number } ) => {
+      .subscribe( ( res: { customerGroupIds: number[], sortvalue: string, from: number, count: number } ) => {
         const isRes = !R.isEmpty( res );
         if ( isRes ) this.initProfileSearchTable( res );
         this.isTableProfileTable = isRes;
@@ -135,7 +135,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   onProfileSearch( id: number ) {
     this.customerGroupId = id;
     const params = {
-      customerGroupIds: this.customerGroupId,
+      customerGroupIds: [ this.customerGroupId ],
       sortvalue: 'last_name',
       from: 0,
       count: 10

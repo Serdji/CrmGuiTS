@@ -43,7 +43,6 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
       this.route.queryParams
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => {
-          console.log( value );
           if ( _.has( value, 'segmentationId' ) ) {
             this.dialog.open( DialogEditorComponent, {
               width: '80vw',
