@@ -11,7 +11,6 @@ import { ProfileSearchService } from '../../profiles/profile-search/profile-sear
 import * as R from 'ramda';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
-import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 
 @Component( {
   selector: 'app-profile-group',
