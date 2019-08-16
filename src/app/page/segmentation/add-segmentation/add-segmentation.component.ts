@@ -179,8 +179,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.formSegmentation.patchValue( value );
         }
       } );
-      if( segmentationParams.ticket ) this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
-      if( segmentationParams.emd ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
+      if ( segmentationParams.ticket ) this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
+      if ( segmentationParams.emd ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
       if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
     };
     const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
@@ -423,7 +423,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           moment( this.formSegmentation.get( 'arrivalDFromIncludeT' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeT: this.formSegmentation.get( 'arrivalDToExcludeT' ).value ?
           moment( this.formSegmentation.get( 'arrivalDToExcludeT' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
-        airlineLCodeIdT: this.formSegmentation.get( 'airlineLCodeIdT' ).value.idAirline,
+        airlineLCodeIdT: _.has( this.formSegmentation.get( 'airlineLCodeIdT' ).value, 'idAirline' ) ?
+          this.formSegmentation.get( 'airlineLCodeIdT' ).value.idAirline :
+          this.formSegmentation.get( 'airlineLCodeIdT' ).value,
         flightNoT: this.formSegmentation.get( 'flightNoT' ).value,
         departureLocationCodeT: this.formSegmentation.get( 'departureLocationCodeT' ).value,
         arrivalLocationCodeT: this.formSegmentation.get( 'arrivalLocationCodeT' ).value,
@@ -439,7 +441,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           moment( this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeE: this.formSegmentation.get( 'arrivalDToExcludeE' ).value ?
           moment( this.formSegmentation.get( 'arrivalDToExcludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
-        airlineLCodeIdE: this.formSegmentation.get( 'airlineLCodeIdE' ).value.idAirline,
+        airlineLCodeIdE: _.has( this.formSegmentation.get( 'airlineLCodeIdE' ).value, 'idAirline' ) ?
+          this.formSegmentation.get( 'airlineLCodeIdE' ).value.idAirline :
+          this.formSegmentation.get( 'airlineLCodeIdE' ).value,
         flightNoE: this.formSegmentation.get( 'flightNoE' ).value,
         departureLocationCodeE: this.formSegmentation.get( 'departureLocationCodeE' ).value,
         arrivalLocationCodeE: this.formSegmentation.get( 'arrivalLocationCodeE' ).value,
