@@ -52,10 +52,14 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
               }
             } );
           } else {
+            const newValue = _.assign( {}, value );
+            if ( _.has( newValue, 'customerGroupIds' ) ) {
+              _.set( newValue, 'customerGroupIds', !_.isArray( newValue.customerGroupIds ) ? _.castArray( newValue.customerGroupIds ) : newValue.customerGroupIds );
+            }
             this.dialog.open( DialogEditorComponent, {
               width: '80vw',
               data: {
-                params: value,
+                params: newValue,
                 totalCount: this.totalCount
               }
             } );

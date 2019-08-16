@@ -13,6 +13,7 @@ import { person } from './person';
 import * as R from 'ramda';
 import { IFoodNode } from '../../../interface/ifood-node';
 import { forkJoin } from 'rxjs';
+import { complexPasswordValidator } from '../../../validators/complexPasswordValidator';
 
 @Component( {
   selector: 'app-user',
@@ -84,8 +85,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private initFormPassword() {
     this.updatePassword = this.fb.group( {
-      newPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      newPassword: [ '', [ Validators.required, Validators.minLength( 8 ), complexPasswordValidator ] ],
+      confirmPassword: [ '', [ Validators.required, Validators.minLength( 8 ) ] ],
     } );
 
   }

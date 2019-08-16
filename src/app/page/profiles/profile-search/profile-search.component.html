@@ -108,6 +108,14 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
+              <input matInput formControlName="airlineLCode" type="text" placeholder="Код авиакомпании" [matAutocomplete]="airlineLCode">
+              <mat-autocomplete #airlineLCode="matAutocomplete" [displayWith]="displayFn">
+                <mat-option *ngFor="let airlineLCode of airlineLCodeOptions | async" [value]="airlineLCode">
+                  {{airlineLCode.title}}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
               <input matInput formControlName="flight" type="text" placeholder="№ рейса">
             </mat-form-field>
             <mat-form-field class="profile-search__input">

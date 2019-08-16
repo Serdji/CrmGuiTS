@@ -22,7 +22,20 @@
   <mat-card class="profile-group__table">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-table-example-profile-group  *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-table-example-profile-group>
+      <app-table-example-profile-group (emitCustomerGroupId)="onProfileSearch( $event )" *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-table-example-profile-group>
+    </ng-template>
+  </mat-card>
+
+
+  <mat-card class="profile-group__table" appAccessRights="customers:read" appAccessMessage="true"
+            *ngIf="isTableProfileTable">
+    <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <mat-card-title>{{profiles.length !== 0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+      <app-table-async-profile
+        [tableDataSource]="profiles"
+      >
+      </app-table-async-profile>
     </ng-template>
   </mat-card>
 </div>
