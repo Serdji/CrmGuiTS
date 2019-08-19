@@ -44,7 +44,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     const mapParamsDynamicForm = R.map( ( paramsDynamicForm: IParamsDynamicForm ) => {
       this.dataObject = R.merge( this.dataObject, {
         [`${paramsDynamicForm.name}`]: {
-          placeholder: paramsDynamicForm.name,
+          placeholder: paramsDynamicForm.prompt,
           value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
           type: typeCheck( paramsDynamicForm.dataType ),
         }
