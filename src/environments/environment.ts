@@ -8,5 +8,5 @@
 
 export const environment = {
   production: false,
-  crmApi: 'https://crm2.sirena-travel.ru/api',
+  crmApi: 'https://10.1.8.155:8080/api2_dev',
 };
