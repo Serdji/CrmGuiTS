@@ -6,29 +6,43 @@
 
     <mat-card class="order__sort mat-elevation-z0">
       <form class="order__form" [formGroup]="formFilter">
-        <div class="order__filter">
+        <div class="order__search">
           <mat-form-field class="order__input">
-            <input matInput formControlName="recloc" type="text" placeholder="Заказ №" [matAutocomplete]="recloc">
-            <mat-autocomplete #recloc="matAutocomplete">
-              <mat-option *ngFor="let recloc of reclocOptions | async" [value]="recloc">{{ recloc }}</mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <div class="order__filter">
-          <mat-form-field class="order__input">
-            <mat-select formControlName="BookingStatus" placeholder="Статус заказа">
+            <mat-select formControlName="switchSearch" placeholder="Поиск по">
               <mat-option></mat-option>
               <mat-option value="Active" >Оформлен</mat-option>
               <mat-option value="Cancelled" >Аннулирован</mat-option>
             </mat-select>
           </mat-form-field>
-        </div>
-        <div  class="order__filter">
           <mat-form-field class="order__input">
-            <input matInput formControlName="createDate" placeholder="Дата создания" [matDatepicker]="createDate">
-            <mat-datepicker-toggle matSuffix [for]="createDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #createDate></mat-datepicker>
+            <input formControlName="textSearch" type="text" placeholder="Поиск" matInput >
           </mat-form-field>
+        </div>
+        <div class="order__filter-wrapper">
+          <div class="order__filter">
+            <mat-form-field class="order__input">
+              <input matInput formControlName="recloc" type="text" placeholder="Заказ №" [matAutocomplete]="recloc">
+              <mat-autocomplete #recloc="matAutocomplete">
+                <mat-option *ngFor="let recloc of reclocOptions | async" [value]="recloc">{{ recloc }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="order__filter">
+            <mat-form-field class="order__input">
+              <mat-select formControlName="BookingStatus" placeholder="Статус заказа">
+                <mat-option></mat-option>
+                <mat-option value="Active" >Оформлен</mat-option>
+                <mat-option value="Cancelled" >Аннулирован</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div  class="order__filter">
+            <mat-form-field class="order__input">
+              <input matInput formControlName="createDate" placeholder="Дата создания" [matDatepicker]="createDate">
+              <mat-datepicker-toggle matSuffix [for]="createDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #createDate></mat-datepicker>
+            </mat-form-field>
+          </div>
         </div>
       </form>
     </mat-card>

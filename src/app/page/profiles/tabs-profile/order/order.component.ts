@@ -51,6 +51,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initFormFilter();
     this.initAutocomplete();
     this.initFilterOrders();
+    this.initSearch();
   }
 
 
@@ -81,7 +82,9 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.controlConfig = {
       'recloc': '',
       'BookingStatus': '',
-      'createDate': ''
+      'createDate': '',
+      'switchSearch': '',
+      'textSearch': ''
     };
   }
 
@@ -121,6 +124,21 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     const generationFilterConfig = R.forEachObjIndexed( valueForm );
     generationFilterConfig( this.controlConfig );
+  }
+
+  private initSearch() {
+
+    // console.log(
+    //   _.filter( this.orders, ( value: any ) => {
+    //     let isBreak: boolean;
+    //     _.some( value.segments, segment => {
+    //       isBreak = segment.arrPoint === 'PWQ';
+    //       console.log( isBreak );
+    //       return isBreak;
+    //     } );
+    //     return isBreak;
+    //   } )
+    // );
   }
 
   sortFilter( title: string ): void {
