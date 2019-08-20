@@ -100,7 +100,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   onDynamicFormEmit(): void {
     const objParserDate = {};
-    const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
+    const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
     R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
     this.dynamicFormEmit.emit( objParserDate );
   }
