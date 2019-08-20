@@ -43,6 +43,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   public isProgressTemplates: boolean;
   public isProgressPdfViewer: boolean;
   public isProgressDynamicForm: boolean;
+  public isProgressButton: boolean;
   public paramsDynamicForm: IParamsDynamicForm[];
   public isDynamicForm: boolean;
 
@@ -54,6 +55,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   private patternPath: string;
   private file: { pdf: BlobFile };
+  private paramsEvent: any;
+  private reportTypeLens = R.lensProp( 'ReportType' );
 
   @ViewChild('stepper', { static: true }) stepper;
 
@@ -69,15 +72,14 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     this.isProgressPdfViewer = false;
     this.isProgressDynamicForm = false;
     this.isDynamicForm = false;
-
+    this.isProgressButton = false;
     this.pageVariable = 1;
     this.buttonPreviousDisabled = true;
     this.buttonNextDisabled = false;
   }
 
 
-
-  private buttonIsDisabled() {
+  private buttonPaginatorIsDisabled() {
     this.buttonPreviousDisabled = this.pageVariable <= 1;
     this.buttonNextDisabled = this.pageVariable >= this.pageLength;
   }
@@ -110,69 +112,72 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
 
   }
 
+  // @ts-ignore
+  composeSplitFileName = R.compose( R.last, R.split( '/' ) );
+  blob = resp => resp.body;
+  fileName = patternPath => this.composeSplitFileName( patternPath );
+  generationFile = ( expansion, resp, patternPath ) => this.file =  R.merge( this.file, { [ expansion ]: { blob: this.blob( resp ), fileName: this.fileName( patternPath ) } } );
+
   onReportGeneration( event ): void {
-    const reportTypeLens = R.lensProp( 'ReportType' );
     this.pageVariable = 1;
     this.isProgressPdfViewer = true;
-    const params = {
+    this.paramsEvent = {
       ReportName: this.patternPath,
       ReportParameters: event,
     };
-    // @ts-ignore
-    const composeSplitFileName = R.compose( R.last, R.split( '/' ) );
-    const fileNameSplit = R.compose(
-      R.nth( -2 ),
-      R.split( '.' ),
-      R.nth( 1 ),
-      R.split( '=' ),
-      R.nth( 1 ),
-      R.split( ';' ),
-    );
 
-    const oPdf = this.statisticsReportService.getParams( R.set( reportTypeLens, 'pdf', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const oWord = this.statisticsReportService.getParams( R.set( reportTypeLens, 'word', params ) ).pipe( takeWhile( _ => this.isActive ) );
-    const oExcel = this.statisticsReportService.getParams( R.set( reportTypeLens, 'excel', params ) ).pipe( takeWhile( _ => this.isActive ) );
-
-    const getObservablesFiles = combineLatest( oPdf, oWord, oExcel  );
-    getObservablesFiles.subscribe( ( respArr: any[] ) => {
-      _.each( respArr, ( resp, index ) => {
-        const blob = resp.body;
-        // const fileName = fileNameSplit( resp.headers.get( 'content-disposition' ) );
-        const fileName = composeSplitFileName( this.patternPath );
-        const creatureFile = expansion => this.file = R.merge( this.file, { [expansion]: { blob, fileName } } );
-        switch ( index ) {
-          case 0:
-            creatureFile( 'pdf' );
-            if ( typeof ( FileReader ) !== 'undefined' ) {
-              const reader = new FileReader();
-              reader.readAsArrayBuffer( resp.body );
-              reader.onload = ( e: any ) => {
-                this.pdfSrc = e.target.result;
-                this.isProgressPdfViewer = false;
-              };
-            }
-            break;
-          case 1: creatureFile( 'doc' ); break;
-          case 2: creatureFile( 'xls' ); break;
+    this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'pdf', this.paramsEvent ) )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( resp => {
+        this.generationFile( 'pdf', resp, this.patternPath );
+        if ( typeof ( FileReader ) !== 'undefined' ) {
+          const reader = new FileReader();
+          reader.readAsArrayBuffer( resp.body );
+          reader.onload = ( e: any ) => {
+            this.pdfSrc = e.target.result;
+            this.isProgressPdfViewer = false;
+          };
         }
+        this.titleService.title = this.file.pdf.fileName;
       } );
-      this.titleService.title = this.file.pdf.fileName;
-    } );
   }
 
   afterLoadComplete( pdf: PDFDocumentProxy ) {
     this.pageLength = pdf.numPages;
-    this.buttonIsDisabled();
+    this.buttonPaginatorIsDisabled();
   }
 
   onIncrementPage( amount: number ): void {
     this.pageVariable += amount;
-    this.buttonIsDisabled();
+    this.buttonPaginatorIsDisabled();
   }
 
   onDownloadPDF( expansion: string ) {
-    const date = moment( ).format( 'DD.MM.YYYY_HH.mm' );
-    saveAs( this.file[expansion].blob, `${this.file[expansion].fileName}_${date}.${expansion}` );
+    this.isProgressButton = true;
+    // @ts-ignore
+    const date = moment().format( 'DD.MM.YYYY_HH.mm' );
+    const success = resp => {
+      this.generationFile( expansion, resp, this.patternPath );
+      saveAs( this.file[ expansion ].blob, `${this.file[ expansion ].fileName}_${date}.${expansion}` );
+      this.isProgressButton = false;
+    };
+
+    switch ( expansion ) {
+      case 'pdf':
+        saveAs( this.file[ expansion ].blob, `${this.file[ expansion ].fileName}_${date}.${expansion}` );
+        this.isProgressButton = false;
+        break;
+      case 'doc':
+        this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'word', this.paramsEvent ) )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( success );
+          break;
+      case 'xls':
+        this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'excel', this.paramsEvent ) )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( success );
+          break;
+    }
   }
 
   ngOnDestroy(): void {

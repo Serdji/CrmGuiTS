@@ -48,24 +48,27 @@
           <mat-icon>navigate_next</mat-icon>
         </button>
       </div>
-      <button class="distribution-report__button" mat-raised-button
-              matTooltip="Скачать PDF файла с учетом сформированного запроса" (click)="onDownloadPDF( 'pdf' )"
-              color="accent">
-        <mat-icon>insert_drive_file</mat-icon>
-        Скачать PDF
-      </button>
-      <button class="distribution-report__button" mat-raised-button
-              matTooltip="Скачать Word файла с учетом сформированного запроса" (click)="onDownloadPDF( 'doc' )"
-              color="primary">
-        <mat-icon>insert_drive_file</mat-icon>
-        Скачать Word
-      </button>
-      <button class="distribution-report__button _excel" mat-raised-button
-              matTooltip="Скачать Excel файла с учетом сформированного запроса" (click)="onDownloadPDF( 'xls' )"
-              color="primary">
-        <mat-icon>insert_drive_file</mat-icon>
-        Скачать Excel
-      </button>
+      <mat-progress-bar class="distribution-report__button-progress" *ngIf="isProgressButton" mode="buffer"></mat-progress-bar>
+      <div *ngIf="!isProgressButton">
+        <button class="distribution-report__button" mat-raised-button
+                matTooltip="Скачать PDF файла с учетом сформированного запроса" (click)="onDownloadPDF( 'pdf' )"
+                color="accent">
+          <mat-icon>insert_drive_file</mat-icon>
+          Скачать PDF
+        </button>
+        <button class="distribution-report__button" mat-raised-button
+                matTooltip="Скачать Word файла с учетом сформированного запроса" (click)="onDownloadPDF( 'doc' )"
+                color="primary">
+          <mat-icon>insert_drive_file</mat-icon>
+          Скачать Word
+        </button>
+        <button class="distribution-report__button _excel" mat-raised-button
+                matTooltip="Скачать Excel файла с учетом сформированного запроса" (click)="onDownloadPDF( 'xls' )"
+                color="primary">
+          <mat-icon>insert_drive_file</mat-icon>
+          Скачать Excel
+        </button>
+      </div>
     </mat-card>
   </div>
 
