@@ -9,7 +9,7 @@
         <div class="order__search">
           <mat-form-field class="order__input">
             <mat-select formControlName="switchSearch" placeholder="Поиск по">
-              <mat-option>-- None --</mat-option>
+              <mat-option></mat-option>
               <mat-optgroup *ngFor="let group of optionGroups" [label]="group.groupName">
                 <mat-option *ngFor="let option of group.option" [value]="option.value">
                   {{option.viewValue}}
@@ -17,8 +17,13 @@
               </mat-optgroup>
             </mat-select>
           </mat-form-field>
-          <mat-form-field class="order__input">
+          <mat-form-field *ngIf="!isData" class="order__input">
             <input formControlName="textSearch" type="text" placeholder="Поиск" matInput >
+          </mat-form-field>
+          <mat-form-field *ngIf="isData" class="order__input">
+            <input matInput formControlName="dateSearch" placeholder="Выбор даты" [matDatepicker]="dateSearch">
+            <mat-datepicker-toggle matSuffix [for]="dateSearch"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dateSearch></mat-datepicker>
           </mat-form-field>
         </div>
         <div class="order__filter-wrapper">

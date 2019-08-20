@@ -1,14 +1,17 @@
+export interface IOptionValue {
+  controlName: string;
+  controlGroupName: string;
+  isDate: boolean;
+}
+
 export interface IOptionGroups {
   groupName: string;
   option: {
-    value: {
-      controlName: string;
-      controlGroupName: string;
-      isDate: boolean;
-    };
+    value: IOptionValue;
     viewValue: string;
   }[];
-};
+}
+
 
 export const optionGroups: IOptionGroups[] = [
   {

@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
-import { optionGroups, IOptionGroups } from './optionGroups';
+import { optionGroups, IOptionGroups, IOptionValue } from './optionGroups';
 
 
 @Component( {
@@ -31,6 +31,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public reclocOptions: Observable<string[]>;
   public recLocCDS: string;
   public optionGroups: IOptionGroups[];
+  public isData: boolean;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -48,14 +49,14 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.progress = true;
     this.isSortFilterReverse = false;
     this.optionGroups = optionGroups;
+    this.isData = false;
     this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();
     this.initFormFilter();
     this.initAutocomplete();
     this.initFilterOrders();
-    this.initSearch();
-    this.formFilter.get('switchSearch').valueChanges.subscribe( value => console.log(value) );
+    this.initSwitchSearch();
   }
 
 
@@ -88,7 +89,8 @@ export class OrderComponent implements OnInit, OnDestroy {
       'BookingStatus': '',
       'createDate': '',
       'switchSearch': '',
-      'textSearch': ''
+      'textSearch': '',
+      'dateSearch': '',
     };
   }
 
@@ -130,7 +132,16 @@ export class OrderComponent implements OnInit, OnDestroy {
     generationFilterConfig( this.controlConfig );
   }
 
-  private initSearch() {
+  private initSwitchSearch() {
+    this.formFilter.get( 'switchSearch' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( option: IOptionValue ) => {
+        this.isData = option.isDate;
+        const formControlName = this.isData ? 'dateSearch' : 'textSearch';
+      } )
+  }
+
+  private initSearch( formControlName: string, option: IOptionValue ) {
 
     // console.log(
     //   _.filter( this.orders, ( value: any ) => {
