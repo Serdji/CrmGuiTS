@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { optionGroups } from './optionGroups';
 
 
 @Component( {
@@ -29,6 +30,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public arrRecloc: string[];
   public reclocOptions: Observable<string[]>;
   public recLocCDS: string;
+  public optionGroups: any;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -45,6 +47,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
+    this.optionGroups = optionGroups;
     this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();

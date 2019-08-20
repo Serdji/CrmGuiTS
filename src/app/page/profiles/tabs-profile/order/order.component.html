@@ -9,9 +9,12 @@
         <div class="order__search">
           <mat-form-field class="order__input">
             <mat-select formControlName="switchSearch" placeholder="Поиск по">
-              <mat-option></mat-option>
-              <mat-option value="Active" >Оформлен</mat-option>
-              <mat-option value="Cancelled" >Аннулирован</mat-option>
+              <mat-option>-- None --</mat-option>
+              <mat-optgroup *ngFor="let group of optionGroups" [label]="group.groupName">
+                <mat-option *ngFor="let option of group.option" [value]="option.value">
+                  {{option.viewValue}}
+                </mat-option>
+              </mat-optgroup>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="order__input">
