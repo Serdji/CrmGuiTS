@@ -9,7 +9,7 @@ import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
-import { optionGroups } from './optionGroups';
+import { optionGroups, IOptionGroups } from './optionGroups';
 
 
 @Component( {
@@ -30,7 +30,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public arrRecloc: string[];
   public reclocOptions: Observable<string[]>;
   public recLocCDS: string;
-  public optionGroups: any;
+  public optionGroups: IOptionGroups[];
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
@@ -55,6 +55,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initFilterOrders();
     this.initSearch();
+    this.formFilter.get('switchSearch').valueChanges.subscribe( value => console.log(value) );
   }
 
 
