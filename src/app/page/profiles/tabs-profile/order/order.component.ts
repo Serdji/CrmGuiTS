@@ -27,6 +27,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public currencyDefault: string;
   public formFilter: FormGroup;
+  public formSearch: FormGroup;
   public arrRecloc: string[];
   public reclocOptions: Observable<string[]>;
   public recLocCDS: string;
@@ -35,7 +36,8 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
-  private controlConfig: any;
+  private filterControlConfig: any;
+  private searchControlConfig: any;
 
   constructor(
     private orderService: OrderService,
@@ -53,7 +55,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();
-    this.initFormFilter();
+    this.initForm();
     this.initAutocomplete();
     this.initFilterOrders();
     this.initSwitchSearch();
@@ -84,18 +86,21 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initControlConfig() {
-    this.controlConfig = {
+    this.filterControlConfig = {
       'recloc': '',
       'BookingStatus': '',
       'createDate': '',
+    };
+    this.searchControlConfig = {
       'switchSearch': '',
       'textSearch': '',
       'dateSearch': '',
     };
   }
 
-  private initFormFilter() {
-    this.formFilter = this.fb.group( this.controlConfig );
+  private initForm() {
+    this.formFilter = this.fb.group( this.filterControlConfig );
+    this.formSearch = this.fb.group( this.searchControlConfig );
   }
 
   private initAutocomplete() {
@@ -129,31 +134,39 @@ export class OrderComponent implements OnInit, OnDestroy {
     };
 
     const generationFilterConfig = R.forEachObjIndexed( valueForm );
-    generationFilterConfig( this.controlConfig );
+    generationFilterConfig( this.filterControlConfig );
   }
 
   private initSwitchSearch() {
-    this.formFilter.get( 'switchSearch' ).valueChanges
+    this.formSearch.get( 'switchSearch' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( option: IOptionValue ) => {
         this.isData = option.isDate;
         const formControlName = this.isData ? 'dateSearch' : 'textSearch';
-      } )
+        this.searchOrders( formControlName, option );
+      } );
   }
 
-  private initSearch( formControlName: string, option: IOptionValue ) {
-
-    // console.log(
-    //   _.filter( this.orders, ( value: any ) => {
-    //     let isBreak: boolean;
-    //     _.some( value.segments, segment => {
-    //       isBreak = segment.arrPoint === 'PWQ';
-    //       console.log( isBreak );
-    //       return isBreak;
-    //     } );
-    //     return isBreak;
-    //   } )
-    // );
+  private searchOrders( formControlName: string, option: IOptionValue ) {
+    this.formSearch.get( formControlName ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( text => {
+        text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
+        text = text || '';
+        const filterOrders = R.filter( ( order: any ) => {
+          let isBreak: boolean;
+          const eachControlGroupName = R.forEach( controlGroupName => {
+            const includes = R.includes( R.__, controlGroupName[ option.controlName ] );
+            // @ts-ignore
+            const isBreakFn = R.compose( includes, R.toUpper );
+            isBreak = isBreakFn( text );
+          } );
+          eachControlGroupName( order[ option.controlGroupName ] );
+          return isBreak;
+        } );
+        this.orders = filterOrders( this.originalOrders );
+        console.log( this.orders );
+      } );
   }
 
   sortFilter( title: string ): void {

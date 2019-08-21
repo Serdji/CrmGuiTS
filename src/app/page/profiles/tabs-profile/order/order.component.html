@@ -4,8 +4,8 @@
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
 
-    <mat-card class="order__sort mat-elevation-z0">
-      <form class="order__form" [formGroup]="formFilter">
+    <mat-card class="order__sort _filter mat-elevation-z0">
+      <form class="order__form" [formGroup]="formSearch">
         <div class="order__search">
           <mat-form-field class="order__input">
             <mat-select formControlName="switchSearch" placeholder="Поиск по">
@@ -18,7 +18,7 @@
             </mat-select>
           </mat-form-field>
           <mat-form-field *ngIf="!isData" class="order__input">
-            <input formControlName="textSearch" type="text" placeholder="Поиск" matInput >
+            <input formControlName="textSearch" type="text" placeholder="Значение" matInput>
           </mat-form-field>
           <mat-form-field *ngIf="isData" class="order__input">
             <input matInput formControlName="dateSearch" placeholder="Выбор даты" [matDatepicker]="dateSearch">
@@ -26,6 +26,8 @@
             <mat-datepicker touchUi="true" #dateSearch></mat-datepicker>
           </mat-form-field>
         </div>
+      </form>
+      <form class="order__form" [formGroup]="formFilter">
         <div class="order__filter-wrapper">
           <div class="order__filter">
             <mat-form-field class="order__input">
@@ -39,12 +41,12 @@
             <mat-form-field class="order__input">
               <mat-select formControlName="BookingStatus" placeholder="Статус заказа">
                 <mat-option></mat-option>
-                <mat-option value="Active" >Оформлен</mat-option>
-                <mat-option value="Cancelled" >Аннулирован</mat-option>
+                <mat-option value="Active">Оформлен</mat-option>
+                <mat-option value="Cancelled">Аннулирован</mat-option>
               </mat-select>
             </mat-form-field>
           </div>
-          <div  class="order__filter">
+          <div class="order__filter">
             <mat-form-field class="order__input">
               <input matInput formControlName="createDate" placeholder="Дата создания" [matDatepicker]="createDate">
               <mat-datepicker-toggle matSuffix [for]="createDate"></mat-datepicker-toggle>
@@ -80,7 +82,7 @@
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="order__filter">
+      <div class="order__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -108,7 +110,7 @@
           <div class="order__title">
             <span>{{order.BookingStatus | fieldTranslation}}</span>
           </div>
-          <div  class="order__title">
+          <div class="order__title">
             <span>{{order.createDate | date:'dd.MM.yyyy'}}</span>
           </div>
         </div>
