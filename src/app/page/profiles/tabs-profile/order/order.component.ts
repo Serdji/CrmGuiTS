@@ -144,21 +144,23 @@ export class OrderComponent implements OnInit, OnDestroy {
     const enableFields = controlName => this.formSearch.get( controlName ).enable();
     // @ts-ignore
     const eventField = R.forEach( R.__, sendSearchControlName );
-
+    const enabledFn = option => {
+      this.isData = option.isDate || false;
+      const formControlName = this.isData ? 'dateSearch' : 'textSearch';
+      this.multiSearchOrders( formControlName, option );
+      eventField( enableFields );
+    };
+    const disabledFn = _ => {
+      eventField( disableFields );
+      eventField( clearFields );
+    };
+    const switchField = R.ifElse( R.isNil, disabledFn, enabledFn );
+    const success = ( option: IOptionValue ) => switchField(option);
     eventField( disableFields );
+
     this.formSearch.get( 'switchSearch' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( option: IOptionValue ) => {
-        if( !R.isNil(option) ) {
-          this.isData = option.isDate || false;
-          const formControlName = this.isData ? 'dateSearch' : 'textSearch';
-          this.multiSearchOrders( formControlName, option );
-          eventField( enableFields );
-        } else {
-          eventField( disableFields );
-          eventField( clearFields );
-        }
-      } );
+      .subscribe( success );
   }
 
   private multiSearchOrders( formControlName: string, option: IOptionValue ) {
