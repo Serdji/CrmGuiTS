@@ -138,35 +138,53 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initSwitchSearch() {
+    const sendSearchControlName = [ 'dateSearch', 'textSearch' ];
+    const clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
+    const disableFields = controlName => this.formSearch.get( controlName ).disable();
+    const enableFields = controlName => this.formSearch.get( controlName ).enable();
+    // @ts-ignore
+    const eventField = R.forEach( R.__, sendSearchControlName );
+
+    eventField( disableFields );
     this.formSearch.get( 'switchSearch' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( option: IOptionValue ) => {
-        this.isData = option.isDate;
-        const formControlName = this.isData ? 'dateSearch' : 'textSearch';
-        this.searchOrders( formControlName, option );
+        if( !R.isNil(option) ) {
+          this.isData = option.isDate || false;
+          const formControlName = this.isData ? 'dateSearch' : 'textSearch';
+          this.multiSearchOrders( formControlName, option );
+          eventField( enableFields );
+        } else {
+          eventField( disableFields );
+          eventField( clearFields );
+        }
       } );
   }
 
-  private searchOrders( formControlName: string, option: IOptionValue ) {
+  private multiSearchOrders( formControlName: string, option: IOptionValue ) {
+    const searchOrders = text => {
+      text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
+      text = text || '';
+      const filterOrders = R.filter( ( order: any ) => {
+        let isBreak: boolean;
+        const eachControlGroupName = R.forEach( controlGroupName => {
+          const includes = R.includes( R.__, controlGroupName[ option.controlName ] );
+          // @ts-ignore
+          const isBreakFn = R.compose( includes, R.toUpper );
+          isBreak = isBreakFn( text );
+        } );
+        eachControlGroupName( order[ option.controlGroupName ] );
+        return isBreak;
+      } );
+      this.orders = filterOrders( this.originalOrders );
+      // console.log( this.orders );
+    };
+
+    console.log( R.isEmpty( this.formSearch.get( formControlName ).value  ) );
+
     this.formSearch.get( formControlName ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( text => {
-        text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
-        text = text || '';
-        const filterOrders = R.filter( ( order: any ) => {
-          let isBreak: boolean;
-          const eachControlGroupName = R.forEach( controlGroupName => {
-            const includes = R.includes( R.__, controlGroupName[ option.controlName ] );
-            // @ts-ignore
-            const isBreakFn = R.compose( includes, R.toUpper );
-            isBreak = isBreakFn( text );
-          } );
-          eachControlGroupName( order[ option.controlGroupName ] );
-          return isBreak;
-        } );
-        this.orders = filterOrders( this.originalOrders );
-        console.log( this.orders );
-      } );
+      .subscribe( searchOrders );
   }
 
   sortFilter( title: string ): void {
