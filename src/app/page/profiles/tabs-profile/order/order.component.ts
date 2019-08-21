@@ -166,21 +166,22 @@ export class OrderComponent implements OnInit, OnDestroy {
       text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
       text = text || '';
       const filterOrders = R.filter( ( order: any ) => {
-        let isBreak: boolean;
+        const controlGroupsName = order[ option.controlGroupName ];
+        let isBreak;
         const eachControlGroupName = R.forEach( controlGroupName => {
-          const includes = R.includes( R.__, controlGroupName[ option.controlName ] );
+          const controlName = R.path( option.controlName, controlGroupName );
+          const controlNameParams = controlName || '';
           // @ts-ignore
+          const includes = R.includes( R.__, controlNameParams );
           const isBreakFn = R.compose( includes, R.toUpper );
           isBreak = isBreakFn( text );
         } );
-        eachControlGroupName( order[ option.controlGroupName ] );
+        if ( !R.isNil( controlGroupsName ) ) eachControlGroupName( controlGroupsName );
         return isBreak;
       } );
-      this.orders = filterOrders( this.originalOrders );
-      // console.log( this.orders );
+      this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
+      console.log( this.orders );
     };
-
-    console.log( R.isEmpty( this.formSearch.get( formControlName ).value  ) );
 
     this.formSearch.get( formControlName ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
