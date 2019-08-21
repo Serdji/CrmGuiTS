@@ -180,7 +180,6 @@ export class OrderComponent implements OnInit, OnDestroy {
         return isBreak;
       } );
       this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
-      console.log( this.orders );
     };
 
     this.formSearch.get( formControlName ).valueChanges

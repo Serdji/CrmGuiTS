@@ -15,6 +15,35 @@ export interface IOptionGroups {
 
 export const optionGroups: IOptionGroups[] = [
   {
+    groupName: 'Точка продажи',
+    option: [
+      {
+        value: { controlName: [ 'distrRecloc', 'recloc' ], controlGroupName: 'pos', isDate: false },
+        viewValue: 'Recloc GDS'
+      },
+      {
+        value: { controlName: [ 'gds' ], controlGroupName: 'pos', isDate: false },
+        viewValue: 'GDS'
+      },
+      {
+        value: { controlName: [ 'posId' ], controlGroupName: 'pos', isDate: false },
+        viewValue: 'POS ID'
+      },
+      {
+        value: { controlName: [ 'agency' ], controlGroupName: 'pos', isDate: false },
+        viewValue: 'Агентство'
+      },
+      {
+        value: { controlName: [ 'termId' ], controlGroupName: 'pos', isDate: false },
+        viewValue: 'Терминал'
+      },
+      {
+        value: { controlName: [ 'country' ], controlGroupName: 'pos', isDate: false },
+        viewValue: 'Страна'
+      },
+    ]
+  },
+  {
     groupName: 'Сегмент',
     option: [
       {
@@ -54,6 +83,22 @@ export const optionGroups: IOptionGroups[] = [
   {
     groupName: 'Билет',
     option: [
+      {
+        value: { controlName: [ 'segment', 'arrPoint' ], controlGroupName: 'tickets', isDate: false },
+        viewValue: 'Аэропорт прилета'
+      },
+      {
+        value: { controlName: [ 'segment', 'depTime' ], controlGroupName: 'tickets', isDate: true },
+        viewValue: 'Дата / время вылета'
+      },
+      {
+        value: { controlName: [ 'segment', 'depPoint' ], controlGroupName: 'tickets', isDate: false },
+        viewValue: 'Аэропорт вылета'
+      },
+      {
+        value: { controlName: [ 'segment', 'arrTime' ], controlGroupName: 'tickets', isDate: true },
+        viewValue: 'Дата / время прилета'
+      },
       {
         value: { controlName: [ 'ticket' ], controlGroupName: 'tickets', isDate: false },
         viewValue: 'Номер билета'
