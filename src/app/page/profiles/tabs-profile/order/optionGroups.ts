@@ -125,6 +125,26 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'Тип SVC'
       },
       {
+        value: { controlName: [ 'segment', 'arrPoint' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'Аэропорт прилета'
+      },
+      {
+        value: { controlName: [ 'segment', 'depTime' ], controlGroupName: 'services', isDate: true },
+        viewValue: 'Дата / время вылета'
+      },
+      {
+        value: { controlName: [ 'segment', 'depPoint' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'Аэропорт вылета'
+      },
+      {
+        value: { controlName: [ 'segment', 'arrTime' ], controlGroupName: 'services', isDate: true },
+        viewValue: 'Дата / время прилета'
+      },
+      {
+        value: { controlName: [ 'segment', 'flight' ], controlGroupName: 'services', isDate: false },
+        viewValue: '№ рейса'
+      },
+      {
         value: { controlName: [ 'status' ], controlGroupName: 'services', isDate: false },
         viewValue: 'Статус услуги'
       },

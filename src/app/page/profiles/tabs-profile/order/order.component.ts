@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { map, takeWhile } from 'rxjs/operators';
+import { delay, map, skipWhile, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
@@ -148,7 +148,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.isData = option.isDate || false;
       const whichFormControl = this.isData ? 'dateSearch' : 'textSearch';
       const clearFormControl = whichFormControl === 'dateSearch' ? 'textSearch' : 'dateSearch';
-      this.formSearch.get( clearFormControl ).patchValue( '' );
+      // this.formSearch.get( clearFormControl ).patchValue( '' );
       this.multiSearchOrders( whichFormControl, option );
       // eventField( enableFields );
     };
@@ -167,13 +167,14 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private multiSearchOrders( whichFormControl: string, option: IOptionValue ) {
     const searchOrders = text => {
-      console.log( text );
+
       text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
       text = text || '';
+      console.log( text, whichFormControl );
       const filterOrders = R.filter( ( order: any ) => {
         const controlGroupsName = order[ option.controlGroupName ];
         let isBreak;
-        const eachControlGroupName = ( ) => _.some( controlGroupsName, controlGroupName => {
+        const someControlGroupName = () => _.some( controlGroupsName, controlGroupName => {
           const controlName = R.path( option.controlName, controlGroupName );
           const controlNameParams = controlName || '';
           // @ts-ignore
@@ -182,16 +183,15 @@ export class OrderComponent implements OnInit, OnDestroy {
           isBreak = isBreakFn( text );
           return isBreak;
         } );
-        if ( !R.isNil( controlGroupsName ) ) eachControlGroupName( );
+        if ( !R.isNil( controlGroupsName ) ) someControlGroupName();
         return isBreak;
       } );
-      console.log( text );
       this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
     };
 
 //119.08.2018
     const formControlValue = this.formSearch.get( whichFormControl ).value;
-    if( !R.isNil( formControlValue ) ) searchOrders( formControlValue );
+    if ( !R.isNil( formControlValue ) ) searchOrders( formControlValue );
 
     this.formSearch.get( whichFormControl ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
