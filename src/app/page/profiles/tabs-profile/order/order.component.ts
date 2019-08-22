@@ -146,45 +146,54 @@ export class OrderComponent implements OnInit, OnDestroy {
     const eventField = R.forEach( R.__, sendSearchControlName );
     const enabledFn = option => {
       this.isData = option.isDate || false;
-      const formControlName = this.isData ? 'dateSearch' : 'textSearch';
-      this.multiSearchOrders( formControlName, option );
-      eventField( enableFields );
+      const whichFormControl = this.isData ? 'dateSearch' : 'textSearch';
+      const clearFormControl = whichFormControl === 'dateSearch' ? 'textSearch' : 'dateSearch';
+      this.formSearch.get( clearFormControl ).patchValue( '' );
+      this.multiSearchOrders( whichFormControl, option );
+      // eventField( enableFields );
     };
     const disabledFn = _ => {
-      eventField( disableFields );
-      eventField( clearFields );
+      // eventField( disableFields );
+      // eventField( clearFields );
     };
     const switchField = R.ifElse( R.isNil, disabledFn, enabledFn );
-    const success = ( option: IOptionValue ) => switchField(option);
-    eventField( disableFields );
+    const success = ( option: IOptionValue ) => switchField( option );
+    // eventField( disableFields );
 
     this.formSearch.get( 'switchSearch' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
   }
 
-  private multiSearchOrders( formControlName: string, option: IOptionValue ) {
+  private multiSearchOrders( whichFormControl: string, option: IOptionValue ) {
     const searchOrders = text => {
+      console.log( text );
       text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
       text = text || '';
       const filterOrders = R.filter( ( order: any ) => {
         const controlGroupsName = order[ option.controlGroupName ];
         let isBreak;
-        const eachControlGroupName = R.forEach( controlGroupName => {
+        const eachControlGroupName = ( ) => _.some( controlGroupsName, controlGroupName => {
           const controlName = R.path( option.controlName, controlGroupName );
           const controlNameParams = controlName || '';
           // @ts-ignore
           const includes = R.includes( R.__, controlNameParams );
           const isBreakFn = R.compose( includes, R.toUpper );
           isBreak = isBreakFn( text );
+          return isBreak;
         } );
-        if ( !R.isNil( controlGroupsName ) ) eachControlGroupName( controlGroupsName );
+        if ( !R.isNil( controlGroupsName ) ) eachControlGroupName( );
         return isBreak;
       } );
+      console.log( text );
       this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
     };
 
-    this.formSearch.get( formControlName ).valueChanges
+//119.08.2018
+    const formControlValue = this.formSearch.get( whichFormControl ).value;
+    if( !R.isNil( formControlValue ) ) searchOrders( formControlValue );
+
+    this.formSearch.get( whichFormControl ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( searchOrders );
   }
