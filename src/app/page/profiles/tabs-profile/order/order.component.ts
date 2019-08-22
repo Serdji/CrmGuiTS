@@ -38,6 +38,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   private isSortFilterReverse: boolean;
   private filterControlConfig: any;
   private searchControlConfig: any;
+  private selectOption: IOptionValue;
 
   constructor(
     private orderService: OrderService,
@@ -59,6 +60,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initAutocomplete();
     this.initFilterOrders();
     this.initSwitchSearch();
+    this.initMultiSearchOrders();
   }
 
 
@@ -137,65 +139,68 @@ export class OrderComponent implements OnInit, OnDestroy {
     generationFilterConfig( this.filterControlConfig );
   }
 
+  private searchOrders = text => {
+    text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
+    text = text || '';
+    const filterOrders = R.filter( ( order: any ) => {
+      const controlGroupsName = order[ this.selectOption.controlGroupName ];
+      let isBreak;
+      const someControlGroupName = () => _.some( controlGroupsName, controlGroupName => {
+        const controlName = R.path( this.selectOption.controlName, controlGroupName );
+        const controlNameParams = controlName || '';
+        // @ts-ignore
+        const includes = R.includes( R.__, controlNameParams );
+        const isBreakFn = R.compose( includes, R.toUpper );
+        isBreak = isBreakFn( text );
+        return isBreak;
+      } );
+      if ( !R.isNil( controlGroupsName ) ) someControlGroupName();
+      return isBreak;
+    } );
+    this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
+  };
+
+  private sendSearchControlName = _ => [ 'dateSearch', 'textSearch' ];
+  private clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
+  private disableFields = controlName => this.formSearch.get( controlName ).disable();
+  private enableFields = controlName => this.formSearch.get( controlName ).enable();
+  // @ts-ignore
+  private eventField = fn => R.forEach( fn, this.sendSearchControlName() );
+
   private initSwitchSearch() {
-    const sendSearchControlName = [ 'dateSearch', 'textSearch' ];
-    const clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
-    const disableFields = controlName => this.formSearch.get( controlName ).disable();
-    const enableFields = controlName => this.formSearch.get( controlName ).enable();
-    // @ts-ignore
-    const eventField = R.forEach( R.__, sendSearchControlName );
+    let countOpen = 0;
     const enabledFn = option => {
+      countOpen++;
+      this.selectOption = option;
       this.isData = option.isDate || false;
       const whichFormControl = this.isData ? 'dateSearch' : 'textSearch';
       const clearFormControl = whichFormControl === 'dateSearch' ? 'textSearch' : 'dateSearch';
-      // this.formSearch.get( clearFormControl ).patchValue( '' );
-      this.multiSearchOrders( whichFormControl, option );
-      // eventField( enableFields );
+      this.formSearch.get( clearFormControl ).patchValue( '' );
+      const formControlValue = this.formSearch.get( whichFormControl ).value;
+      if ( !R.isNil( formControlValue ) ) this.searchOrders( formControlValue );
+      if ( countOpen === 1 ) this.eventField( this.enableFields );
     };
     const disabledFn = _ => {
-      // eventField( disableFields );
-      // eventField( clearFields );
+      countOpen = 0;
+      this.eventField( this.disableFields );
+      this.eventField( this.clearFields );
     };
     const switchField = R.ifElse( R.isNil, disabledFn, enabledFn );
     const success = ( option: IOptionValue ) => switchField( option );
-    // eventField( disableFields );
+    this.eventField( this.disableFields );
 
     this.formSearch.get( 'switchSearch' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( success );
   }
 
-  private multiSearchOrders( whichFormControl: string, option: IOptionValue ) {
-    const searchOrders = text => {
-
-      text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
-      text = text || '';
-      console.log( text, whichFormControl );
-      const filterOrders = R.filter( ( order: any ) => {
-        const controlGroupsName = order[ option.controlGroupName ];
-        let isBreak;
-        const someControlGroupName = () => _.some( controlGroupsName, controlGroupName => {
-          const controlName = R.path( option.controlName, controlGroupName );
-          const controlNameParams = controlName || '';
-          // @ts-ignore
-          const includes = R.includes( R.__, controlNameParams );
-          const isBreakFn = R.compose( includes, R.toUpper );
-          isBreak = isBreakFn( text );
-          return isBreak;
-        } );
-        if ( !R.isNil( controlGroupsName ) ) someControlGroupName();
-        return isBreak;
-      } );
-      this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
-    };
-
-//119.08.2018
-    const formControlValue = this.formSearch.get( whichFormControl ).value;
-    if ( !R.isNil( formControlValue ) ) searchOrders( formControlValue );
-
-    this.formSearch.get( whichFormControl ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( searchOrders );
+  private initMultiSearchOrders() {
+    const sendSearchControlName = [ 'dateSearch', 'textSearch' ];
+    _.each( sendSearchControlName, formControlName => {
+      this.formSearch.get( formControlName ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( this.searchOrders );
+    } );
   }
 
   sortFilter( title: string ): void {
