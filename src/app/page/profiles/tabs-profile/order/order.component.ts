@@ -39,6 +39,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   private filterControlConfig: any;
   private searchControlConfig: any;
   private selectOption: IOptionValue;
+  private saveSearchOrdersParams: IOptionValue = JSON.parse( localStorage.getItem( 'saveSearchOrdersParams' ) );
 
   constructor(
     private orderService: OrderService,
@@ -158,8 +159,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       return isBreak;
     } );
     this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
-  };
-
+  }
   private sendSearchControlName = _ => [ 'dateSearch', 'textSearch' ];
   private clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
   private disableFields = controlName => this.formSearch.get( controlName ).disable();
@@ -168,8 +168,14 @@ export class OrderComponent implements OnInit, OnDestroy {
   private eventField = fn => R.forEach( fn, this.sendSearchControlName() );
 
   private initSwitchSearch() {
+    // timer( 1000 ).subscribe( _ => {
+    //   console.log( this.saveSearchOrdersParams );
+    //   if( this.saveSearchOrdersParams ) this.formSearch.get( 'switchSearch' ).patchValue( {controlName: ["arrPoint"], controlGroupName: "pos", isDate: false} );
+    //   console.log( this.formSearch.get( 'switchSearch' ).value );
+    // } );
     let countOpen = 0;
     const enabledFn = option => {
+      localStorage.setItem( 'saveSearchOrdersParams', JSON.stringify( option ) );
       countOpen++;
       this.selectOption = option;
       this.isData = option.isDate || false;
@@ -182,6 +188,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     };
     const disabledFn = _ => {
       countOpen = 0;
+      localStorage.removeItem( 'saveSearchOrdersParams' );
       this.eventField( this.disableFields );
       this.eventField( this.clearFields );
     };
