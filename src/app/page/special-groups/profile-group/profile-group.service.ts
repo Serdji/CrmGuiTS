@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { Observable, Subject } from 'rxjs';
 import { RetryRequestService } from '../../../services/retry-request.service';
+import { CheckTokenService } from '../../../services/check-token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,10 +16,12 @@ export class ProfileGroupService {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
-    private retryRequestService: RetryRequestService
+    private retryRequestService: RetryRequestService,
+    private CT: CheckTokenService
   ) { }
 
   getProfileGroup( ): Observable<any> {
+    if ( !this.CT.isClaims( 'analytics:read' ) ) return;
     return this.http.get( `${this.configService.crmApi}/crm/customerGroup` ).pipe( this.retryRequestService.retry() );
   }
 
