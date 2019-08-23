@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
 import { CheckTokenService } from '../../../services/check-token.service';
@@ -20,7 +20,7 @@ export class ListSegmentationService {
   ) { }
 
   getSegmentation(): Observable<any> {
-    if ( !this.CT.isClaims( 'analytics:read' ) ) return;
+    if ( !this.CT.isClaims( 'analytics:read' ) ) return of( [] );
     return this.http.get( `${this.configService.crmApi}/crm/segmentation` ).pipe( this.retryRequestService.retry() );
   }
 

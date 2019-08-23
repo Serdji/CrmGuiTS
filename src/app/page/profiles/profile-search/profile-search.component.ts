@@ -356,6 +356,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
+      console.log( this.isQueryParams );
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
   }
