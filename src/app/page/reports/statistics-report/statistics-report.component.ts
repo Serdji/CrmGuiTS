@@ -12,6 +12,7 @@ import { combineLatest } from 'rxjs';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TitleService } from '../../../services/title.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 
 interface FoodNode {
@@ -63,7 +64,8 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   constructor(
     private fb: FormBuilder,
     private statisticsReportService: StatisticsReportService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    private snackBar: MatSnackBar,
   ) { }
 
   ngOnInit(): void {
@@ -116,7 +118,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   composeSplitFileName = R.compose( R.last, R.split( '/' ) );
   blob = resp => resp.body;
   fileName = patternPath => this.composeSplitFileName( patternPath );
-  generationFile = ( expansion, resp, patternPath ) => this.file =  R.merge( this.file, { [ expansion ]: { blob: this.blob( resp ), fileName: this.fileName( patternPath ) } } );
+  generationFile = ( expansion, resp, patternPath ) => this.file = R.merge( this.file, {
+    [ expansion ]: {
+      blob: this.blob( resp ),
+      fileName: this.fileName( patternPath )
+    }
+  } );
 
   onReportGeneration( event ): void {
     this.pageVariable = 1;
@@ -126,20 +133,27 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
       ReportParameters: event,
     };
 
+    const success = resp => {
+      this.generationFile( 'pdf', resp, this.patternPath );
+      if ( typeof ( FileReader ) !== 'undefined' ) {
+        const reader = new FileReader();
+        reader.readAsArrayBuffer( resp.body );
+        reader.onload = ( e: any ) => {
+          this.pdfSrc = e.target.result;
+          this.isProgressPdfViewer = false;
+        };
+      }
+      this.titleService.title = this.file.pdf.fileName;
+    };
+
+    const error = _ => {
+      this.isProgressPdfViewer = false;
+      this.snackBar.open( 'Не удалось сформировать отчет', 'Закрыть', { duration: 3000 } );
+    };
+
     this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'pdf', this.paramsEvent ) )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( resp => {
-        this.generationFile( 'pdf', resp, this.patternPath );
-        if ( typeof ( FileReader ) !== 'undefined' ) {
-          const reader = new FileReader();
-          reader.readAsArrayBuffer( resp.body );
-          reader.onload = ( e: any ) => {
-            this.pdfSrc = e.target.result;
-            this.isProgressPdfViewer = false;
-          };
-        }
-        this.titleService.title = this.file.pdf.fileName;
-      } );
+      .subscribe( success, error );
   }
 
   afterLoadComplete( pdf: PDFDocumentProxy ) {
@@ -171,12 +185,12 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'word', this.paramsEvent ) )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( success );
-          break;
+        break;
       case 'xls':
         this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'excel', this.paramsEvent ) )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( success );
-          break;
+        break;
     }
   }
 
