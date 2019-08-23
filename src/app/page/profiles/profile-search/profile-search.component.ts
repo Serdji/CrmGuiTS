@@ -76,6 +76,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isQueryParams = true;
+    this.buttonSearch = true;
     this.initAirports();
     this.initForm();
     this.initAutocomplete();
@@ -85,8 +87,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initCurrencyDefault();
     this.activeButton();
     this.initQueryParams();
-    this.isQueryParams = true;
-    this.buttonSearch = true;
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
@@ -136,7 +136,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private activeButton() {
     const isChips = () => R.length( this.segmentationChips ) === 0 && R.length( this.customerGroupChips ) === 0;
-
     const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
     const isFormValOfInv = isFormInvalid( this.formProfileSearch );
     const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
@@ -356,7 +355,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
-      console.log( this.isQueryParams );
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
   }
