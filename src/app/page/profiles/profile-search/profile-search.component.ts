@@ -81,6 +81,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isQueryParams = true;
+    this.buttonSearch = true;
     this.initAirports();
     this.initForm();
     this.initAutocomplete();
@@ -91,8 +93,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initCurrencyDefault();
     this.activeButton();
     this.initQueryParams();
-    this.isQueryParams = true;
-    this.buttonSearch = true;
     this.profileSearchService.subjectDeleteProfile
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
