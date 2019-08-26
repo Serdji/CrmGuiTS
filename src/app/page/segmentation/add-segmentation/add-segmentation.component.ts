@@ -114,6 +114,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
           this.initAutocomplete( 'formSegmentation' );
+          this.formSegmentation.get( 'segmentationGranularity' ).disable();
         } else if ( hasSaveFormParams( params ) ) {
           this.saveForm( params );
         }
@@ -193,6 +194,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private initFormControl() {
     this.controlsConfig = {
       segmentationTitle: [ '', Validators.required ],
+      segmentationGranularity: [ '', Validators.required ],
       dobFromInclude: '',
       dobToExclude: '',
       withChild: '',
@@ -393,6 +395,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
     const segmentationParameters = {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
+      segmentationGranularity: this.formSegmentation.get( 'segmentationGranularity' ).value,
       customer: {
         dobFromInclude: this.formSegmentation.get( 'dobFromInclude' ).value ?
           moment( this.formSegmentation.get( 'dobFromInclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
@@ -473,6 +476,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   changeForm(): void {
     this.isFormSegmentation = true;
     this.formSegmentation.patchValue( this.formSegmentationStepper.value );
+    this.formSegmentation.get( 'segmentationGranularity' ).disable();
     this.initAutocomplete( 'formSegmentation' );
   }
 
@@ -519,6 +523,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   clearForm(): void {
+    this.formSegmentation.get( 'segmentationGranularity' ).enabled;
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
