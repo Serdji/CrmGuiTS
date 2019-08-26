@@ -476,7 +476,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   changeForm(): void {
     this.isFormSegmentation = true;
     this.formSegmentation.patchValue( this.formSegmentationStepper.value );
-    this.formSegmentation.get( 'segmentationGranularity' ).disable();
     this.initAutocomplete( 'formSegmentation' );
   }
 
