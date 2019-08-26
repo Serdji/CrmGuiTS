@@ -80,6 +80,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.arrRecloc = getRecloc( this.orders );
       this.progress = false;
       this.recLocCDS = this.data ? this.data.recLocGDS : '';
+      this.loadSearchOrdersParams();
     };
     const error = _ => this.progress = false;
 
@@ -159,7 +160,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       return isBreak;
     } );
     this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
-  }
+  };
   private sendSearchControlName = _ => [ 'dateSearch', 'textSearch' ];
   private clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
   private disableFields = controlName => this.formSearch.get( controlName ).disable();
@@ -167,15 +168,25 @@ export class OrderComponent implements OnInit, OnDestroy {
   // @ts-ignore
   private eventField = fn => R.forEach( fn, this.sendSearchControlName() );
 
+  private saveSearchOrdersParamsFn = ( optionsGroups: IOptionGroups[], optionValue: IOptionValue, parentCount: number = 0, childCount: number = 0 ): number[] => {
+    let isBreak;
+    _.some( optionsGroups, optionGroup => {
+      parentCount++;
+      childCount = 0;
+      _.some( optionGroup.option, option => {
+        childCount++;
+        isBreak = _.eq( option.value, optionValue );
+        return isBreak;
+      } );
+      return isBreak;
+    } );
+    return [ parentCount - 1, childCount - 1 ];
+  };
+
   private initSwitchSearch() {
-    // timer( 1000 ).subscribe( _ => {
-    //   console.log( this.saveSearchOrdersParams );
-    //   if( this.saveSearchOrdersParams ) this.formSearch.get( 'switchSearch' ).patchValue( {controlName: ["arrPoint"], controlGroupName: "pos", isDate: false} );
-    //   console.log( this.formSearch.get( 'switchSearch' ).value );
-    // } );
     let countOpen = 0;
     const enabledFn = option => {
-      localStorage.setItem( 'saveSearchOrdersParams', JSON.stringify( option ) );
+      localStorage.setItem( 'saveSearchOrdersParams', JSON.stringify( this.saveSearchOrdersParamsFn( this.optionGroups, option ) ) );
       countOpen++;
       this.selectOption = option;
       this.isData = option.isDate || false;
@@ -208,6 +219,14 @@ export class OrderComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( this.searchOrders );
     } );
+  }
+
+  private loadSearchOrdersParams() {
+    if ( this.saveSearchOrdersParams ) {
+      const parentParams = this.saveSearchOrdersParams[ 0 ];
+      const childParams = this.saveSearchOrdersParams[ 1 ];
+      this.formSearch.get( 'switchSearch' ).patchValue( this.optionGroups[ parentParams ].option[ childParams ].value );
+    }
   }
 
   sortFilter( title: string ): void {
