@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
@@ -23,6 +23,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
   public ids: any;
 
   @Input() private tableDataSource: any;
+  @Output() private emitCustomerGroupId = new EventEmitter<number>();
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -116,6 +117,10 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
     if ( arrayId.length !== 0 ) {
       this.ids = { customerGroupIds: arrayId };
     }
+  }
+
+  redirectToCustomerGroupId( customerGroupId: number ): void {
+    this.emitCustomerGroupId.emit( customerGroupId );
   }
 
   ngOnDestroy(): void {

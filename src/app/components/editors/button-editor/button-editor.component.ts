@@ -53,9 +53,13 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
               }
             } );
           } else {
+            const newValue = _.assign( {}, value );
+            if ( _.has( newValue, 'customerGroupIds' ) ) {
+              _.set( newValue, 'customerGroupIds', !_.isArray( newValue.customerGroupIds ) ? _.castArray( newValue.customerGroupIds ) : newValue.customerGroupIds );
+            }
             this.dialog.open( DialogEditorComponent, {
               data: {
-                params: value,
+                params: newValue,
                 totalCount: this.totalCount,
                 whatNewsletter: this.whatNewsletter
               }
