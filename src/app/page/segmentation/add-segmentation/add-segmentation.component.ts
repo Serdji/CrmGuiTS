@@ -173,6 +173,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       const airlineLCode = response[ 1 ];
       const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
       this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
+      this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
       _( segmentationParams ).each( ( value, key ) => {
         if ( !_.isNull( value ) && !_.isNaN( value ) ) {
           if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
@@ -186,7 +187,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     };
     const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
     const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( takeWhile( _ => this.isActive ) );
-    const resForkJoin = forkJoin( getSegmentationParams, getAirlineCodes );
+    const resForkJoin = forkJoin( [ getSegmentationParams, getAirlineCodes ] );
 
     resForkJoin.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
   }
