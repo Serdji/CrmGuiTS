@@ -322,6 +322,8 @@ export class OrderService {
         }
       }
     } );
+    this.counterActiveServicesIsEmd = 0;
+    this.counterCancelledServicesIsEmd = 0;
     return appendTotalAmount( orders );
   };
   private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMoneyIsCZeroB, this.ordersMixing, this.orderSort );
