@@ -89,6 +89,14 @@ export class SidenavService {
         ]
       },
       {
+        name: 'События',
+        icon: 'event',
+        link: [
+          { url: '/crm/add-event', title: 'Добавить событие' },
+          { url: '/crm/list-event', title: 'Список событий' },
+        ]
+      },
+      {
         name: 'Настройки',
         icon: 'settings',
         link: [

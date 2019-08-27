@@ -31,6 +31,8 @@ const routes: Routes = [
         { path: 'add-promotions-codes', loadChildren: () => import('./page/promotions/add-promotions-codes/add-promotions-codes.module').then(m => m.AddPromotionsCodesModule), data: { title: 'Добавить промокод' } },
         { path: 'search-promotions-codes', loadChildren: () => import('./page/promotions/search-promotions-codes/search-promotions-codes.module').then(m => m.SearchPromotionsCodesModule), data: { title: 'Поиск промокода' } },
         { path: 'statistics-report', loadChildren: () => import('./page/reports/statistics-report/statistics-report.module').then(m => m.StatisticsReportModule), data: { title: 'Список отчетов' } },
+        { path: 'add-event', loadChildren: () => import('./page/events/add-event/add-event.module').then(m => m.AddEventModule), data: { title: 'Добавить событие' } },
+        { path: 'list-event', loadChildren: () => import('./page/events/list-event/list-event.module').then(m => m.ListEventModule), data: { title: 'Список событий' } },
         { path: 'form-table-async-profile-settings', loadChildren: () => import('./page/settings/form-table-async-profile-settings/form-table-async-profile-settings.module').then(m => m.FormTableAsyncProfileSettingsModule), data: { title: 'Таблицы пассажиров' } },
         { path: 'restart', loadChildren: () => import('./page/settings/restart/restart.module').then(m => m.RestartModule), data: { title: 'Перезагрузка' } },
       ],
@@ -46,3 +48,20 @@ const routes: Routes = [
 } )
 export class AppRoutingModule {
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
