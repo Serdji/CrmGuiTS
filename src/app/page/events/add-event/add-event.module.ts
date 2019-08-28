@@ -12,7 +12,7 @@ import { ComponentsModule } from '../../../components/components.module';
   declarations: [AddEventComponent],
   imports: [
     CommonModule,
-    // ReactiveFormsModule,
+    ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
     AddEventRoutes,
