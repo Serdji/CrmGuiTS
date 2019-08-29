@@ -33,6 +33,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
@@ -114,6 +115,7 @@ const MY_FORMATS = {
     MatSnackBarModule,
     DragDropModule,
     MatTreeModule,
+    MatSliderModule,
   ],
   providers: [
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },

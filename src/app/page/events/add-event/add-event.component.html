@@ -14,15 +14,25 @@
             </mat-option>
           </mat-autocomplete>
         </mat-form-field>
-        <mat-form-field class="add-event__input">
-          <mat-label>Кратность</mat-label>
-          <mat-select formControlName="multiplicity">
-            <mat-option value="5min">5 мин</mat-option>
-            <mat-option value="10min">10 мин</mat-option>
-            <mat-option value="30min">30 мин</mat-option>
-            <mat-option value="60min">60 мин</mat-option>
-          </mat-select>
-        </mat-form-field>
+<!--        <mat-form-field class="add-event__input">-->
+<!--          <mat-label>Кратность</mat-label>-->
+<!--          <mat-select formControlName="multiplicity">-->
+<!--            <mat-option value="5min">5 мин</mat-option>-->
+<!--            <mat-option value="10min">10 мин</mat-option>-->
+<!--            <mat-option value="30min">30 мин</mat-option>-->
+<!--            <mat-option value="60min">60 мин</mat-option>-->
+<!--          </mat-select>-->
+<!--        </mat-form-field>-->
+        <mat-label>Кратность</mat-label>
+        <mat-slider
+          formControlName="multiplicity"
+          class="add-event__input"
+          [displayWith]="formatLabel"
+          thumbLabel
+          step="1"
+          tickInterval="1"
+          min="0"
+          max="10"></mat-slider>
         <mat-form-field class="add-event__input">
           <mat-label>Тип события</mat-label>
           <mat-select formControlName="typeEvent">
