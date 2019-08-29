@@ -34,8 +34,8 @@
     </form>
 
     <mat-card class="add-event__card">
-      <app-editor-email *ngIf="typeEvent === 'email'" [params]="{ 'segmentationIds': [ segmentationId ] }" [totalCount]="totalCount"></app-editor-email>
-      <app-editor-sms  *ngIf="typeEvent === 'sms'" [params]="{ 'segmentationIds': [ segmentationId ] }" [totalCount]="totalCount"></app-editor-sms>
+      <app-editor-email *ngIf="typeEvent === 'email'" [params]="{ 'segmentationIds': [ segmentationId ] }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-email>
+      <app-editor-sms  *ngIf="typeEvent === 'sms'" [params]="{ 'segmentationIds': [ segmentationId ] }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-sms>
     </mat-card>
 
 

@@ -53,7 +53,8 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <button class="editor-email__button" mat-raised-button color="primary" (click)="saveDistribution()" [disabled]="buttonSave"><mat-icon>save</mat-icon>Сохранить</button>
+  <button *ngIf="whichButton === 'save' " class="editor-email__button" mat-raised-button color="primary" (click)="saveDistribution()" [disabled]="buttonDisabled"><mat-icon>save</mat-icon>Сохранить</button>
+  <button *ngIf="whichButton === 'data' " class="editor-email__button" mat-raised-button color="primary" (click)="messageEventFn()" [disabled]="buttonDisabled"><mat-icon>event_available</mat-icon>Создать событие</button>
 </div>
 
 

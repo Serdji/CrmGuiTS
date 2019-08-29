@@ -93,6 +93,10 @@ export class AddEventComponent implements OnInit, OnDestroy {
       .subscribe( event => this.typeEvent = event );
   }
 
+  addEvent( event ): void {
+    console.log( event );
+  }
+
   ngOnDestroy(): void {
     this.isActive = false;
   }

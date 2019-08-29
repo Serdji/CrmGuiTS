@@ -9,6 +9,6 @@
     </mat-form-field>
   </form>
 
-  <app-editor-email  *ngIf="data.whatNewsletter === 'email'" [params]="data.params" [totalCount]="data.totalCount"></app-editor-email>
-  <app-editor-sms  *ngIf="data.whatNewsletter === 'sms'" [params]="data.params" [totalCount]="data.totalCount"></app-editor-sms>
+  <app-editor-email  *ngIf="data.whatNewsletter === 'email'" [params]="data.params" [totalCount]="data.totalCount" whichButton="save"></app-editor-email>
+  <app-editor-sms  *ngIf="data.whatNewsletter === 'sms'" [params]="data.params" [totalCount]="data.totalCount" whichButton="save"></app-editor-sms>
 </div>

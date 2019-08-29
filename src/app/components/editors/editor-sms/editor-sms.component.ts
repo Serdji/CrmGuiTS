@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { EditorSmsService } from './editor-sms.service';
 import { takeWhile } from 'rxjs/operators';
@@ -14,6 +14,9 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   @Input() params: any;
   @Input() totalCount: number;
+  @Input() whichButton: string;
+
+  @Output() private messageEvent = new EventEmitter();
 
   public formSms: FormGroup;
 
@@ -48,6 +51,10 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
           this.formSms.get( 'text' ).patchValue( value );
         }
       } );
+  }
+
+  messageEventFn() {
+    this.messageEvent.emit( '' );
   }
 
   ngOnDestroy(): void {
