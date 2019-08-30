@@ -115,7 +115,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
     console.log( event );
   }
 
-  public formatTime( value: number | null ): string {
+
+
+  public formatTimeFn( value: number | null ): string {
     console.log( this.multiplicityTime );
     switch ( value ) {
       case timePeriods[ '5min' ].index:
