@@ -97,36 +97,16 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private setTimeMultiplicity( time: number ) {
     switch ( time ) {
-      case timePeriods[ '5min' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '5min' ].index );
-        break;
-      case timePeriods[ '10min' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '10min' ].index );
-        break;
-      case timePeriods[ '15min' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '15min' ].index );
-        break;
-      case timePeriods[ '30min' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '30min' ].index );
-        break;
-      case timePeriods[ '60min' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '60min' ].index );
-        break;
-      case timePeriods[ '3hours' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '3hours' ].index );
-        break;
-      case timePeriods[ '6hours' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '6hours' ].index );
-        break;
-      case timePeriods[ '8hours' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '8hours' ].index );
-        break;
-      case timePeriods[ '12hours' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '12hours' ].index );
-        break;
-      case timePeriods[ '24hours' ].seconds:
-        this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '24hours' ].index );
-        break;
+      case timePeriods[ '5min' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '5min' ].index ); break;
+      case timePeriods[ '10min' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '10min' ].index ); break;
+      case timePeriods[ '15min' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '15min' ].index ); break;
+      case timePeriods[ '30min' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '30min' ].index ); break;
+      case timePeriods[ '60min' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '60min' ].index ); break;
+      case timePeriods[ '3hours' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '3hours' ].index ); break;
+      case timePeriods[ '6hours' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '6hours' ].index ); break;
+      case timePeriods[ '8hours' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '8hours' ].index ); break;
+      case timePeriods[ '12hours' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '12hours' ].index ); break;
+      case timePeriods[ '24hours' ].seconds: this.formEvent.get( 'multiplicity' ).patchValue( timePeriods[ '24hours' ].index ); break;
     }
   }
 
