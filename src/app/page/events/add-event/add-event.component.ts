@@ -116,50 +116,23 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
 
-
   public formatTimeFn( value: number | null ): string {
+    const returnFormatTime = ( formatTime: string ): string => {
+      this.multiplicityTime = timePeriods[ formatTime ].seconds;
+      return timePeriods[ formatTime ].formatTime;
+    };
     console.log( this.multiplicityTime );
     switch ( value ) {
-      case timePeriods[ '5min' ].index:
-        this.multiplicityTime = timePeriods[ '5min' ].seconds;
-        return timePeriods[ '5min' ].formatTime;
-        break;
-      case timePeriods[ '10min' ].index:
-        this.multiplicityTime = timePeriods[ '10min' ].seconds;
-        return timePeriods[ '10min' ].formatTime;
-        break;
-      case timePeriods[ '15min' ].index:
-        this.multiplicityTime = timePeriods[ '15min' ].seconds;
-        return timePeriods[ '15min' ].formatTime;
-        break;
-      case timePeriods[ '30min' ].index:
-        this.multiplicityTime = timePeriods[ '30min' ].seconds;
-        return timePeriods[ '30min' ].formatTime;
-        break;
-      case timePeriods[ '60min' ].index:
-        this.multiplicityTime = timePeriods[ '60min' ].seconds;
-        return timePeriods[ '60min' ].formatTime;
-        break;
-      case timePeriods[ '3hours' ].index:
-        this.multiplicityTime = timePeriods[ '3hours' ].seconds;
-        return timePeriods[ '3hours' ].formatTime;
-        break;
-      case timePeriods[ '6hours' ].index:
-        this.multiplicityTime = timePeriods[ '6hours' ].seconds;
-        return timePeriods[ '6hours' ].formatTime;
-        break;
-      case timePeriods[ '8hours' ].index:
-        this.multiplicityTime = timePeriods[ '8hours' ].seconds;
-        return timePeriods[ '8hours' ].formatTime;
-        break;
-      case timePeriods[ '12hours' ].index:
-        this.multiplicityTime = timePeriods[ '12hours' ].seconds;
-        return timePeriods[ '12hours' ].formatTime;
-        break;
-      case timePeriods[ '24hours' ].index:
-        this.multiplicityTime = timePeriods[ '24hours' ].seconds;
-        return timePeriods[ '24hours' ].formatTime;
-        break;
+      case timePeriods[ '5min' ].index: return  returnFormatTime( '5min' ); break;
+      case timePeriods[ '10min' ].index: return returnFormatTime( '10min' ); break;
+      case timePeriods[ '15min' ].index: return returnFormatTime( '15min' ); break;
+      case timePeriods[ '30min' ].index: return returnFormatTime( '30min' ); break;
+      case timePeriods[ '60min' ].index: return returnFormatTime( '60min' ); break;
+      case timePeriods[ '3hours' ].index: return returnFormatTime( '3hours' ); break;
+      case timePeriods[ '6hours' ].index: return returnFormatTime( '6hours' ); break;
+      case timePeriods[ '8hours' ].index: return returnFormatTime( '8hours' ); break;
+      case timePeriods[ '12hours' ].index: return returnFormatTime( '12hours' ); break;
+      case timePeriods[ '24hours' ].index: return returnFormatTime( '24hours' ); break;
     }
   }
 
