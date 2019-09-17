@@ -31,7 +31,7 @@ export class AccessRightsProfileGuard implements CanActivate, OnInit, OnDestroy 
     this.parsTokenService.parsToken = this.token.accessToken;
     const claims = this.parsTokenService.parsToken.Claims;
     return new Promise( resolve => {
-      if ( claims.includes( 'customers:update' ) ) {
+      if ( claims.includes( 'customers:read' ) ) {
         resolve( true );
       } else {
         this.dialog.open( DialogComponent, {
