@@ -10,6 +10,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { optionGroups, IOptionGroups, IOptionValue } from './optionGroups';
+import { logger } from 'codelyzer/util/logger';
 
 
 @Component( {
@@ -62,6 +63,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initFilterOrders();
     this.initSwitchSearch();
     this.initMultiSearchOrders();
+    this.initSuperSearchOrders();
   }
 
 
@@ -98,6 +100,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.searchControlConfig = {
       'switchSearch': '',
       'textSearch': '',
+      'textSuperSearch': '',
       'dateSearch': '',
     };
   }
@@ -140,6 +143,46 @@ export class OrderComponent implements OnInit, OnDestroy {
     const generationFilterConfig = R.forEachObjIndexed( valueForm );
     generationFilterConfig( this.filterControlConfig );
   }
+
+  private initSuperSearchOrders() {
+    const isBreakRec = ( orders: any, text: string ): boolean => {
+      let isBreak;
+      const isString = R.is( String );
+      const isNumber = R.is( Number );
+      const isObject = R.is( Object );
+
+      if ( isObject( orders ) ) {
+        _.some( orders, value => {
+          if ( isString( value ) || isNumber( value ) ) {
+            value = value + '';
+            const includes = R.includes( R.__, value );
+            // @ts-ignore
+            const isBreakFn = R.compose( includes, R.toUpper );
+            isBreak = isBreakFn( text );
+            return isBreak;
+          } else if ( !R.isEmpty( value ) ) {
+            _.some( value, v => {
+              isBreak = isBreak ? isBreak : isBreakRec( v, text );
+              return isBreak;
+            } );
+          }
+        } );
+      }
+      return isBreak;
+    };
+
+    this.formSearch.get( 'textSuperSearch' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( text => {
+        const filterOrders = R.filter( ( order: any ) => {
+          console.log( isBreakRec( order, text ) );
+          return isBreakRec( order, text );
+        } );
+        this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
+        console.log( this.orders );
+      } );
+  }
+
 
   private searchOrders = text => {
     text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
