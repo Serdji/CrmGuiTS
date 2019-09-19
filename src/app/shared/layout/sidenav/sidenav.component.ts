@@ -7,6 +7,7 @@ import { LayoutService } from '../layout.service';
 import {  NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SidenavService } from './sidenav.service';
 import { takeWhile } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'app-sidenav',
@@ -30,6 +31,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private router: Router,
     private sidenavService: SidenavService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -43,6 +45,11 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.layoutService.subjectToggle.pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.toggle() );
     this.sidenavService.getVersion().pipe( takeWhile( _ => this.isActive ) ).subscribe( value => this.version = `2.0.0.${value}` );
     this.AirlineCode = localStorage.getItem( 'AirlineCode' );
+  }
+
+  setLanguage(languageCode: string) {
+    // устанавливаем выбранный язык
+    this.translate.use(languageCode);
   }
 
   private louder() {

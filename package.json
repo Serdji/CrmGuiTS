@@ -28,6 +28,8 @@
     "@angular/router": "8.1.1",
     "@angular/service-worker": "8.1.1",
     "@auth0/angular-jwt": "^2.0.0",
+    "@ngx-translate/core": "^11.0.1",
+    "@ngx-translate/http-loader": "^4.0.0",
     "@types/moment": "2.13.0",
     "@types/ramda": "^0.25.47",
     "core-js": "2.5.7",

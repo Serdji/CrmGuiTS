@@ -4,19 +4,23 @@
       <mat-expansion-panel class="mat-elevation-z0" hideToggle="true" *ngFor="let accord of menu">
         <mat-expansion-panel-header>
           <mat-panel-title class="sidenav__panel-title">
-            {{ accord.name }}
+            {{ accord.name  | translate }}
           </mat-panel-title>
           <mat-panel-description>
             <mat-icon>{{ accord?.icon }}</mat-icon>
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <a *ngFor="let link of accord.link" mat-button routerLink="{{link.url}}"  routerLinkActive="sidenav__link-active">{{link.title}}</a>
+        <a *ngFor="let link of accord.link" mat-button routerLink="{{link.url}}"  routerLinkActive="sidenav__link-active">{{link.title | translate }}</a>
       </mat-expansion-panel>
     </mat-accordion>
     <div class="sidenav__version">
       <div> Версия: {{version}} </div>
       <br>
       <div>Авиакомпания: {{AirlineCode}}</div>
+    </div>
+    <div>
+      <button (click)="setLanguage('ru')">{{ 'languages.russian' | translate }}</button>
+      <button (click)="setLanguage('en')">{{ 'languages.english' | translate }}</button>
     </div>
   </mat-sidenav>
   <mat-sidenav-content class="sidenav__content">

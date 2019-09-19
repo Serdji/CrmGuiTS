@@ -6,6 +6,7 @@ import { timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { SaveUrlServiceService } from './services/save-url-service.service';
 import { TitleService } from './services/title.service';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'app-root',
@@ -21,7 +22,8 @@ export class AppComponent implements OnInit {
     private swUpdate: SwUpdate,
     private snackBar: MatSnackBar,
     private saveUrlServiceService: SaveUrlServiceService,
-    private titleService: TitleService
+    private titleService: TitleService,
+    public translate: TranslateService
   ) { }
 
   ngOnInit(): void {
@@ -30,6 +32,17 @@ export class AppComponent implements OnInit {
     this.updateVersion();
     this.saveUrlServiceService.deleteLocalStorageParams();
     this.titleService.dataTitle();
+    this.initTranslate();
+  }
+
+  private initTranslate() {
+    this.translate.addLangs(['ru', 'en']);
+    this.translate.setDefaultLang('ru');
+
+    this.translate.stream('MENU').subscribe((value) => console.log(value));
+
+    const browserLang = this.translate.getBrowserLang();
+    this.translate.use(browserLang.match(/ru|en/) ? browserLang : 'ru');
   }
 
   private isTokenRedirect() {

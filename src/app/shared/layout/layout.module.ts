@@ -8,13 +8,15 @@ import { MaterialModule } from '../material/material.module';
 import { RouterModule } from '@angular/router';
 import { SidenavService } from './sidenav/sidenav.service';
 import { BreadcrumbsModule } from '../breadcrumbs/breadcrumbs.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
-    BreadcrumbsModule
+    BreadcrumbsModule,
+    TranslateModule
   ],
   declarations: [
     SidenavComponent,
