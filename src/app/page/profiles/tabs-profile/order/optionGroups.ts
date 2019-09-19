@@ -15,6 +15,15 @@ export interface IOptionGroups {
 
 export const optionGroups: IOptionGroups[] = [
   {
+    groupName: 'Поиск по всем параметрам',
+    option: [
+      {
+        value: { controlName: [ 'all' ], controlGroupName: 'all', isDate: false },
+        viewValue: 'Любой'
+      },
+    ]
+  },
+  {
     groupName: 'Точка продажи',
     option: [
       {

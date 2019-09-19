@@ -141,26 +141,64 @@ export class OrderComponent implements OnInit, OnDestroy {
     generationFilterConfig( this.filterControlConfig );
   }
 
+
+  private isBreakFnRec( orders: any, text: string ): boolean {
+    let isBreak;
+    const isString = R.is( String );
+    const isNumber = R.is( Number );
+    const isObject = R.is( Object );
+
+    if ( isObject( orders ) ) {
+      _.some( orders, value => {
+        if ( isString( value ) || isNumber( value ) ) {
+          value = value + '';
+          const includes = R.includes( R.__, value );
+          // @ts-ignore
+          const isBreakFn = R.compose( includes, R.toUpper );
+          isBreak = isBreakFn( text );
+          return isBreak;
+        } else if ( !R.isEmpty( value ) ) {
+          _.some( value, v => {
+            isBreak = isBreak ? isBreak : this.isBreakFnRec( v, text );
+            return isBreak;
+          } );
+        }
+      } );
+    }
+    return isBreak;
+  }
+
+  private isBreakFn( controlGroupsName: IOptionValue, text: string ): boolean {
+    let isBreak;
+    _.some( controlGroupsName, controlGroupName => {
+      const controlName = R.path( this.selectOption.controlName, controlGroupName );
+      const controlNameParams = controlName || '';
+      // @ts-ignore
+      const includes = R.includes( R.__, controlNameParams );
+      const isBreakCompose = R.compose( includes, R.toUpper );
+      isBreak = isBreakCompose( text );
+      return isBreak;
+    } );
+    return isBreak;
+  }
+
   private searchOrders = text => {
+    let isBreak;
     text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
     text = text || '';
     const filterOrders = R.filter( ( order: any ) => {
+      const isAll = this.selectOption.controlGroupName === 'all';
       const controlGroupsName = order[ this.selectOption.controlGroupName ];
-      let isBreak;
-      const someControlGroupName = () => _.some( controlGroupsName, controlGroupName => {
-        const controlName = R.path( this.selectOption.controlName, controlGroupName );
-        const controlNameParams = controlName || '';
-        // @ts-ignore
-        const includes = R.includes( R.__, controlNameParams );
-        const isBreakFn = R.compose( includes, R.toUpper );
-        isBreak = isBreakFn( text );
-        return isBreak;
-      } );
-      if ( !R.isNil( controlGroupsName ) ) someControlGroupName();
+      if ( isAll ) {
+        isBreak = this.isBreakFnRec( order, text );
+      } else if ( !R.isNil( controlGroupsName ) ) {
+        isBreak = this.isBreakFn( controlGroupsName, text );
+      }
       return isBreak;
     } );
     this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
   };
+
   private sendSearchControlName = _ => [ 'dateSearch', 'textSearch' ];
   private clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
   private disableFields = controlName => this.formSearch.get( controlName ).disable();

@@ -114,6 +114,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.segmentationId = +params.segmentationId;
           this.formFilling( this.segmentationId );
           this.initAutocomplete( 'formSegmentation' );
+          this.formSegmentation.get( 'segmentationGranularity' ).disable();
         } else if ( hasSaveFormParams( params ) ) {
           this.saveForm( params );
         }
@@ -172,6 +173,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       const airlineLCode = response[ 1 ];
       const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
       this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
+      this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
       _( segmentationParams ).each( ( value, key ) => {
         if ( !_.isNull( value ) && !_.isNaN( value ) ) {
           if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
@@ -185,7 +187,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     };
     const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
     const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( takeWhile( _ => this.isActive ) );
-    const resForkJoin = forkJoin( getSegmentationParams, getAirlineCodes );
+    const resForkJoin = forkJoin( [ getSegmentationParams, getAirlineCodes ] );
 
     resForkJoin.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
   }
@@ -193,6 +195,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private initFormControl() {
     this.controlsConfig = {
       segmentationTitle: [ '', Validators.required ],
+      segmentationGranularity: [ '', Validators.required ],
       dobFromInclude: '',
       dobToExclude: '',
       withChild: '',
@@ -393,6 +396,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
     const segmentationParameters = {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
+      segmentationGranularity: this.formSegmentation.get( 'segmentationGranularity' ).value,
       customer: {
         dobFromInclude: this.formSegmentation.get( 'dobFromInclude' ).value ?
           moment( this.formSegmentation.get( 'dobFromInclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
@@ -519,6 +523,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   clearForm(): void {
+    this.formSegmentation.get( 'segmentationGranularity' ).enabled;
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
