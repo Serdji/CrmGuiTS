@@ -1,5 +1,12 @@
 {
+	"BREADCRUMBS": {
+		"CUSTOMER": "Пассажир",
+		"DISTRIBUTION": "Рассылка",
+		"HOME": "Главная",
+		"USER": "Пользователь"
+	},
 	"MENU": {
+		"AIRLINE": "Авиакомпания",
 		"CUSTOMER": {
 			"ADD_CUSTOMER": "Добавить пассажира",
 			"GROUP_NAME": "Пассажиры",
@@ -38,6 +45,7 @@
 			"ADD_USERS": "Добавить пользователя",
 			"GROUP_NAME": "Пользователи",
 			"LIST_USERS": "Список пользователей"
-		}
+		},
+		"VERSION": "Версия"
 	}
 }

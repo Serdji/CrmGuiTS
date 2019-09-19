@@ -1,5 +1,12 @@
 {
+	"BREADCRUMBS": {
+		"CUSTOMER": "Passenger",
+		"DISTRIBUTION": "Newsletter",
+		"HOME": "Home",
+		"USER": "User"
+	},
 	"MENU": {
+		"AIRLINE": "Airline",
 		"CUSTOMER": {
 			"ADD_CUSTOMER": "Add Passenger",
 			"GROUP_NAME": "Passengers",
@@ -20,7 +27,7 @@
 			"SEARCH_PROMOTIONS_CODES": "Promo code search"
 		},
 		"REPORTS": {
-			"GROUP_NAME": "reports",
+			"GROUP_NAME": "Reports",
 			"LIST_REPORTS": "Report List"
 		},
 		"SEGMENTATION": {
@@ -38,6 +45,7 @@
 			"ADD_USERS": "Add user",
 			"GROUP_NAME": "Users",
 			"LIST_USERS": "a list of users"
-		}
+		},
+		"VERSION": "Version"
 	}
 }

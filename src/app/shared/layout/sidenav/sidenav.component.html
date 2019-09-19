@@ -14,9 +14,9 @@
       </mat-expansion-panel>
     </mat-accordion>
     <div class="sidenav__version">
-      <div> Версия: {{version}} </div>
+      <div> {{ 'MENU.VERSION' | translate }}: {{version}} </div>
       <br>
-      <div>Авиакомпания: {{AirlineCode}}</div>
+      <div>{{ 'MENU.AIRLINE' | translate }}: {{AirlineCode}}</div>
     </div>
     <div>
       <button (click)="setLanguage('ru')">{{ 'languages.russian' | translate }}</button>

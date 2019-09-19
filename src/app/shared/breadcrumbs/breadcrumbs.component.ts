@@ -36,10 +36,10 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   private setMenuLink() {
     _( this.menuLink )
-      .push( { url: '/crm/entrance', title: 'Главная' } )
-      .push( { url: '/crm/profile-distribution', title: 'Рассылка' } )
-      .push( { url: '/crm/profile', title: 'Пассажир' } )
-      .push( { url: '/crm/user', title: 'Пользователь' } )
+      .push( { url: '/crm/entrance', title: 'BREADCRUMBS.HOME' } )
+      .push( { url: '/crm/profile-distribution', title: 'BREADCRUMBS.DISTRIBUTION' } )
+      .push( { url: '/crm/profile', title: 'BREADCRUMBS.CUSTOMER' } )
+      .push( { url: '/crm/user', title: 'BREADCRUMBS.USER' } )
       .value();
   }
 
