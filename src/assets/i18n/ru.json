@@ -1,66 +1,43 @@
 {
-  "MENU": {
-    "USERS": {
-      "GROUP_NAME": "Пользователи",
-      "LIST_USERS": "Список пользователей",
-      "ADD_USERS": "Добавить пользователя"
-    },
-    "CUSTOMER":  {
-      "GROUP_NAME": "Пассажиры",
-      "SEARCH_CUSTOMER": "Поиск пассажира",
-      "ADD_CUSTOMER": "Добавить пассажира"
-    },
-    "SEGMENTATION": {
-      "GROUP_NAME": "Сегментация",
-      "LIST_SEGMENTATION": "Список сегментаций",
-      "ADD_SEGMENTATION": "Добавить сегментацию",
-      "AGGREGATION_SEGMENTATION": "Объединение сегментаций"
-    },
-    "GROUP_CUSTOMER": {
-      "GROUP_NAME": "Группы пассажиров",
-      "LIST_GROUP_CUSTOMER": "Список групп"
-    },
-    "DISTRIBUTIONS": {
-      "GROUP_NAME": "Рассылки",
-      "LIST_DISTRIBUTIONS": "Список рассылок"
-    },
-    "PROMOTIONS_CODES": {
-      "GROUP_NAME": "Промокоды",
-      "SEARCH_PROMOTIONS_CODES": "Поиск промокода",
-      "ADD_PROMOTIONS_CODES": "Добавить промокод",
-      "ADD_PROMOTIONS": "Добавить промоакцию"
-    },
-    "REPORTS": {
-      "GROUP_NAME": "Отчеты",
-      "LIST_REPORTS": "Список отчетов"
-    },
-    "SETTINGS": {
-      "GROUP_NAME": "Настройки",
-      "TABLE_CUSTOMERS": "Таблицы пассажиров",
-      "RESTART": "Перезагрузка"
-    }
-  }
+	"MENU": {
+		"CUSTOMER": {
+			"ADD_CUSTOMER": "Добавить пассажира",
+			"GROUP_NAME": "Пассажиры",
+			"SEARCH_CUSTOMER": "Поиск пассажира"
+		},
+		"DISTRIBUTIONS": {
+			"GROUP_NAME": "Рассылки",
+			"LIST_DISTRIBUTIONS": "Список рассылок"
+		},
+		"GROUP_CUSTOMER": {
+			"GROUP_NAME": "Группы пассажиров",
+			"LIST_GROUP_CUSTOMER": "Список групп"
+		},
+		"PROMOTIONS_CODES": {
+			"ADD_PROMOTIONS": "Добавить промоакцию",
+			"ADD_PROMOTIONS_CODES": "Добавить промокод",
+			"GROUP_NAME": "Промокоды",
+			"SEARCH_PROMOTIONS_CODES": "Поиск промокода"
+		},
+		"REPORTS": {
+			"GROUP_NAME": "Отчеты",
+			"LIST_REPORTS": "Список отчетов"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": "Добавить сегментацию",
+			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
+			"GROUP_NAME": "Сегментация",
+			"LIST_SEGMENTATION": "Список сегментаций"
+		},
+		"SETTINGS": {
+			"GROUP_NAME": "Настройки",
+			"RESTART": "Перезагрузка",
+			"TABLE_CUSTOMERS": "Таблицы пассажиров"
+		},
+		"USERS": {
+			"ADD_USERS": "Добавить пользователя",
+			"GROUP_NAME": "Пользователи",
+			"LIST_USERS": "Список пользователей"
+		}
+	}
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

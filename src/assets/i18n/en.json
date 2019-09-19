@@ -1,0 +1,43 @@
+{
+	"MENU": {
+		"CUSTOMER": {
+			"ADD_CUSTOMER": "Add Passenger",
+			"GROUP_NAME": "Passengers",
+			"SEARCH_CUSTOMER": "Passenger Search"
+		},
+		"DISTRIBUTIONS": {
+			"GROUP_NAME": "Newsletters",
+			"LIST_DISTRIBUTIONS": "Mailing list"
+		},
+		"GROUP_CUSTOMER": {
+			"GROUP_NAME": "Passenger groups",
+			"LIST_GROUP_CUSTOMER": "List of groups"
+		},
+		"PROMOTIONS_CODES": {
+			"ADD_PROMOTIONS": "Add Promotion",
+			"ADD_PROMOTIONS_CODES": "Add promotional code",
+			"GROUP_NAME": "Promotional codes",
+			"SEARCH_PROMOTIONS_CODES": "Promo code search"
+		},
+		"REPORTS": {
+			"GROUP_NAME": "reports",
+			"LIST_REPORTS": "Report List"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": "Add segmentation",
+			"AGGREGATION_SEGMENTATION": "Segmentation aggregation",
+			"GROUP_NAME": "Segmentation",
+			"LIST_SEGMENTATION": "Segmentation list"
+		},
+		"SETTINGS": {
+			"GROUP_NAME": "Settings",
+			"RESTART": "Reboot",
+			"TABLE_CUSTOMERS": "Passenger Tables"
+		},
+		"USERS": {
+			"ADD_USERS": "Add user",
+			"GROUP_NAME": "Users",
+			"LIST_USERS": "a list of users"
+		}
+	}
+}
