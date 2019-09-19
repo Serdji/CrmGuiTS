@@ -20,9 +20,6 @@
           <mat-form-field *ngIf="!isData" class="order__input">
             <input formControlName="textSearch" type="text" placeholder="Значение" matInput>
           </mat-form-field>
-          <mat-form-field *ngIf="!isData" class="order__input">
-            <input formControlName="textSuperSearch" type="text" placeholder="Супер поиск" matInput>
-          </mat-form-field>
           <mat-form-field *ngIf="isData" class="order__input">
             <input matInput formControlName="dateSearch" placeholder="Выбор даты" [matDatepicker]="dateSearch">
             <mat-datepicker-toggle matSuffix [for]="dateSearch"></mat-datepicker-toggle>
