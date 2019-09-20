@@ -11,7 +11,7 @@ import { ActivityUserService } from '../../../services/activity-user.service';
 import { person } from './person';
 import * as R from 'ramda';
 import { IFoodNode } from '../../../interface/ifood-node';
-import { forkJoin } from 'rxjs';
+import { forkJoin, of } from 'rxjs';
 
 @Component( {
   selector: 'app-user',
@@ -136,6 +136,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   collectObjectReport( event ): void {
+    console.log( this.paramsReport );
     this.paramsReport = {
       loginId: +this.loginId,
       reportsIds: event
@@ -192,7 +193,7 @@ export class UserComponent implements OnInit, OnDestroy {
     };
 
     const oUpdateClaimPermissions = this.userService.updateClaimPermissions( params ).pipe( takeWhile( _ => this.isActive ) );
-    const oSetAdminReports = this.userService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
+    const oSetAdminReports = R.isNil(this.paramsReport) ? of( {} ) : this.userService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
     const permissionsObservable = forkJoin( oUpdateClaimPermissions, oSetAdminReports );
     permissionsObservable.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
   }
