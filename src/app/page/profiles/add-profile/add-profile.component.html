@@ -2,29 +2,29 @@
   <mat-grid-list mat-grid-list cols="1" rowHeight="550px">
     <mat-grid-tile>
       <mat-card appAccessRights="customers:update" appAccessMessage="true" class="add-profile__card">
-        <mat-card-title>{{'PAGE.ADD_PROFILE.TITLE' | translate}}</mat-card-title>
+        <mat-card-title>{{'PAGE.PROFILES.ADD_PROFILE.TITLE' | translate}}</mat-card-title>
         <form class="add-profile__form" [formGroup]="formProfile">
           <mat-form-field class="add-profile__input">
-            <input matInput formControlName="firstName" placeholder="{{'PAGE.ADD_PROFILE.NAME' | translate}}">
+            <input matInput formControlName="firstName" placeholder="{{'PAGE.PROFILES.ADD_PROFILE.NAME' | translate}}">
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
-            <input matInput formControlName="lastName" placeholder="{{'PAGE.ADD_PROFILE.SURNAME' | translate}}">
+            <input matInput formControlName="lastName" placeholder="{{'PAGE.PROFILES.ADD_PROFILE.SURNAME' | translate}}">
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
-            <input matInput formControlName="secondName" placeholder="{{'PAGE.ADD_PROFILE.MIDDLE_NAME' | translate}}">
+            <input matInput formControlName="secondName" placeholder="{{'PAGE.PROFILES.ADD_PROFILE.MIDDLE_NAME' | translate}}">
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
-            <mat-select formControlName="gender" placeholder="{{'PAGE.ADD_PROFILE.GENDER.TITLE' | translate}}">
+            <mat-select formControlName="gender" placeholder="{{'PAGE.PROFILES.ADD_PROFILE.GENDER.TITLE' | translate}}">
               <mat-option></mat-option>
-              <mat-option value="m">{{'PAGE.ADD_PROFILE.GENDER.F' | translate}}</mat-option>
-              <mat-option value="f">{{'PAGE.ADD_PROFILE.GENDER.M' | translate}}</mat-option>
+              <mat-option value="m">{{'PAGE.PROFILES.ADD_PROFILE.GENDER.F' | translate}}</mat-option>
+              <mat-option value="f">{{'PAGE.PROFILES.ADD_PROFILE.GENDER.M' | translate}}</mat-option>
             </mat-select>
           </mat-form-field>
           <mat-form-field class="add-profile__input">
-            <input matInput formControlName="dob" placeholder="{{'PAGE.ADD_PROFILE.DATE' | translate}}" [matDatepicker]="dob">
+            <input matInput formControlName="dob" placeholder="{{'PAGE.PROFILES.ADD_PROFILE.DATE' | translate}}" [matDatepicker]="dob">
             <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dob></mat-datepicker>
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>

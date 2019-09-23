@@ -67,64 +67,67 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
-		"ADD_PROFILE": {
-			"DATE": "dd.mm.yyyy",
-			"GENDER": {
-				"F": "F",
-				"M": "M",
-				"TITLE": "Gender"
-			},
-			"MIDDLE_NAME": "Middle Name",
-			"NAME": "Name",
-			"SURNAME": "Surname",
-			"TITLE": "Add Passenger"
-		},
-		"SEARCH_PROFILE": {
-			"FORM": {
-				"AIRLINE_L_CODE": "Airline code",
-				"ARR_POINT": "Where",
-				"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date from",
-				"BOOKING_CREATE_DATE_TO_EXCLUDE": "Sale Date By",
-				"CAB": "Cabin",
-				"CONTACT_EMAIL": "Email",
-				"CONTACT_PHONE": "Phone",
-				"CONTACT_SEXIST": "Lack of contact",
-				"CUSTOMER_GROUP": "Passenger groups",
-				"CUSTOMER_IDS": "Profile No.",
-				"DEPT_IME_TO_EXCLUDE": "Flight date",
-				"DEP_POINT": "From where",
-				"DEP_TIME_FROM_INCLUDE": "Flight date from",
-				"DOB_FROM_INCLUDE": "Date of birth from",
-				"DOB_TO_EXCLUDE": "Date of birth by",
-				"EMD": "Service No.",
-				"FARE_CODE": "Rate code",
-				"FIRST_NAME": "Name",
-				"FLIGHT": "Flight number",
-				"FLIGHT_DATE_FROM": "",
-				"FLIGHT_DATE_TO": "",
+		"PROFILES": {
+			"ADD_PROFILE": {
+				"DATE": "dd.mm.yyyy",
 				"GENDER": {
 					"F": "F",
-					"M": "m",
-					"TITLE": "floor"
+					"M": "M",
+					"TITLE": "Gender"
 				},
-				"ID": "",
-				"LAST_NAME": "Surname",
-				"MONEY_AMOUNT_FROM_INCLUDE": "Total amount from",
-				"MONEY_AMOUNT_TO_INCLUDE": "Total amount to",
-				"RBD": "Booking class",
-				"REC_LOC": "Reservation number",
-				"SEGMENTATION": "Segmentation groups",
-				"SERVICE_CODE": "Service Code",
-				"TICKET": "Ticket number"
+				"MIDDLE_NAME": "Middle Name",
+				"NAME": "Name",
+				"SURNAME": "Surname",
+				"TITLE": "Add Passenger"
 			},
-			"TABLE": {
-				"CUSTOMER_IDS": "Profile No.",
-				"DATE_OF_BIRTH": "Date of Birth",
-				"FIRST_NAME": "Name",
-				"GENDER": "Gender",
-				"LAST_NAME": "Surname",
-				"MIDDEL_NAME": "Middle Name"
-			}
+			"SEARCH_PROFILE": {
+				"FORM": {
+					"AIRLINE_L_CODE": "Airline code",
+					"ARR_POINT": "Where",
+					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date from",
+					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Sale Date By",
+					"CAB": "Cabin",
+					"CONTACT_EMAIL": "Email",
+					"CONTACT_PHONE": "Phone",
+					"CONTACT_SEXIST": "Lack of contact",
+					"CUSTOMER_GROUP": "Passenger groups",
+					"CUSTOMER_IDS": "Profile No.",
+					"DEPT_IME_TO_EXCLUDE": "Flight date",
+					"DEP_POINT": "From where",
+					"DEP_TIME_FROM_INCLUDE": "Flight date from",
+					"DOB_FROM_INCLUDE": "Date of birth from",
+					"DOB_TO_EXCLUDE": "Date of birth by",
+					"EMD": "Service No.",
+					"FARE_CODE": "Rate code",
+					"FIRST_NAME": "Name",
+					"FLIGHT": "Flight number",
+					"FLIGHT_DATE_FROM": "",
+					"FLIGHT_DATE_TO": "",
+					"GENDER": {
+						"F": "F",
+						"M": "m",
+						"TITLE": "floor"
+					},
+					"ID": "",
+					"LAST_NAME": "Surname",
+					"MONEY_AMOUNT_FROM_INCLUDE": "Total amount from",
+					"MONEY_AMOUNT_TO_INCLUDE": "Total amount to",
+					"RBD": "Booking class",
+					"REC_LOC": "Reservation number",
+					"SEGMENTATION": "Segmentation groups",
+					"SERVICE_CODE": "Service Code",
+					"TICKET": "Ticket number"
+				},
+				"TABLE": {
+					"CUSTOMER_IDS": "Profile No.",
+					"DATE_OF_BIRTH": "Date of Birth",
+					"FIRST_NAME": "Name",
+					"GENDER": "Gender",
+					"LAST_NAME": "Surname",
+					"MIDDEL_NAME": "Middle Name"
+				}
+			},
+			"TITLE": ""
 		},
 		"USERS": {
 			"ADD_USER": {
