@@ -7,7 +7,9 @@
 	},
 	"BUTTON": {
 		"ADD_USER": "Добавить пользователя",
-		"CLEAR_FORM": "Очистить форму"
+		"CLEAR_FORM": "Очистить форму",
+		"DELETE": "Удалить",
+		"EDIT": "Изменить"
 	},
 	"MENU": {
 		"AIRLINE": "Авиакомпания",
@@ -70,11 +72,39 @@
 					"LOGIN": "Логин"
 				},
 				"TITLE": "Список всех пользователей"
+			},
+			"USER": {
+				"ACCESS_RIGHTS": {
+					"ADDITIONAL_RIGHT": "Дополнительные права",
+					"ANALYTICS": "Аналитика",
+					"CUSTOMERS": "Пассажиры",
+					"DISTRIBUTIONS": "Рассылки",
+					"PRIVILEGES": "Льготы",
+					"PROMOTIONS_CODES": "Промокоды",
+					"READ": "Чтение",
+					"REPORTS": "Отчеты",
+					"TITLE": "Права доступа",
+					"UPDATE": "Изменение",
+					"USER": "Пользователи"
+				},
+				"USER": {
+					"CONFIRM_PASSWORD": "Повторите пароль",
+					"EMAIL": "email",
+					"FIO": "ФИО",
+					"LOGIN": "Логин",
+					"PASSWORD": "Пароль",
+					"TABS": {
+						"PASSWORD": "Пароль",
+						"USER": "Пользователь"
+					},
+					"TITLE": "Пользователь",
+					"TITLE_2": "Редактировать"
+				}
 			}
 		}
 	},
 	"TABLE": {
-		"FIRT_PAGE": "Первая страница",
+		"FIRST_PAGE": "Первая страница",
 		"FROM": "из",
 		"ITEMS_PER_PAGE": "Количество на страницу",
 		"LAST_PAGE": "Последняя страница",

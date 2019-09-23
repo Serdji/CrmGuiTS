@@ -7,7 +7,9 @@
 	},
 	"BUTTON": {
 		"ADD_USER": "Add user",
-		"CLEAR_FORM": "Clear form"
+		"CLEAR_FORM": "Clear form",
+		"DELETE": "Delete",
+		"EDIT": "Edit"
 	},
 	"MENU": {
 		"AIRLINE": "Airline",
@@ -70,11 +72,39 @@
 					"LOGIN": "Login"
 				},
 				"TITLE": "List all users"
+			},
+			"USER": {
+				"ACCESS_RIGHTS": {
+					"ADDITIONAL_RIGHT": "Additional rights",
+					"ANALYTICS": "ANALYTICS",
+					"CUSTOMERS": "Passengers",
+					"DISTRIBUTIONS": "Newsletters",
+					"PRIVILEGES": "Privileges",
+					"PROMOTIONS_CODES": "Promotional codes",
+					"READ": "reading",
+					"REPORTS": "Reports",
+					"TITLE": "access rights",
+					"UPDATE": "Change",
+					"USER": "Users"
+				},
+				"USER": {
+					"CONFIRM_PASSWORD": "Confirm password",
+					"EMAIL": "email",
+					"FIO": "Full name",
+					"LOGIN": "Login",
+					"PASSWORD": "Password",
+					"TABS": {
+						"PASSWORD": "Password",
+						"USER": "User"
+					},
+					"TITLE": "User",
+					"TITLE_2": "Edit"
+				}
 			}
 		}
 	},
 	"TABLE": {
-		"FIRT_PAGE": "First page",
+		"FIRST_PAGE": "First page",
 		"FROM": "of",
 		"ITEMS_PER_PAGE": "Items per page",
 		"LAST_PAGE": "Last page",

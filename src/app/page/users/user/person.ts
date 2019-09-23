@@ -1,30 +1,30 @@
 export const person = [
   {
-    title: 'Пользователи',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.USER',
     ids: [ 1, 2 ]
   },
   {
-    title: 'Аналитика',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.ANALYTICS',
     ids: [ 3, 4 ]
   },
   {
-    title: 'Пассажиры',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.CUSTOMERS',
     ids: [ 5, 6 ]
   },
   {
-    title: 'Рассылка',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.DISTRIBUTIONS',
     ids: [ 7, 8 ]
   },
   {
-    title: 'Промокоды',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.PROMOTIONS_CODES',
     ids: [ 9, 10 ]
   },
   {
-    title: 'Льготы',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.PRIVILEGES',
     ids: [ 11, 12 ]
   },
   {
-    title: 'Отчеты',
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.REPORTS',
     ids: [ 13, 14 ]
   },
 ];

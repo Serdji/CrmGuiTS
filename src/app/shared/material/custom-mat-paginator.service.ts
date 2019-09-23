@@ -17,7 +17,7 @@ export class CustomMatPaginatorService extends MatPaginatorIntl {
       this.itemsPerPageLabel = TABLE.ITEMS_PER_PAGE;
       this.nextPageLabel = TABLE.NEXT;
       this.previousPageLabel = TABLE.PREV;
-      this.firstPageLabel = TABLE.FIRT_PAGE;
+      this.firstPageLabel = TABLE.FIRST_PAGE;
       this.lastPageLabel = TABLE.LAST_PAGE;
       this.ofLabel = TABLE.FROM;
     });

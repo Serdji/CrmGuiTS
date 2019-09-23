@@ -3,55 +3,55 @@
     <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>
     <div *ngIf="!progress && !edit">
       <mat-card-header>
-        <h2 class="user__header">Пользователь</h2>
+        <h2 class="user__header">{{'PAGE.USERS.USER.USER.TITLE' | translate}}</h2>
         <mat-icon (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <mat-card-content class="user__content">
         <div class="user__list">
-          <span><b>Логин: </b>{{user.login}}</span>
+          <span><b>{{'PAGE.USERS.USER.USER.LOGIN' | translate}}: </b>{{user.login}}</span>
         </div>
         <div class="user__list">
-          <span><b>ФИО: </b>{{user.loginName}}</span>
+          <span><b>{{'PAGE.USERS.USER.USER.FIO' | translate}}: </b>{{user.loginName}}</span>
         </div>
         <div class="user__list">
-          <span><b>email: </b>{{user.email}}</span>
+          <span><b>{{'PAGE.USERS.USER.USER.EMAIL' | translate}}: </b>{{user.email}}</span>
         </div>
       </mat-card-content>
     </div>
 
     <div *ngIf="edit">
       <mat-card-header>
-        <h2 class="user__header">Редактировать</h2>
+        <h2 class="user__header">{{'PAGE.USERS.USER.USER.TITLE_2' | translate}}</h2>
         <mat-icon (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <mat-tab-group>
-        <mat-tab class="user__tab" label="Пользователь">
+        <mat-tab class="user__tab" label="{{'PAGE.USERS.USER.USER.TABS.USER' | translate}}">
           <form class="user__form" [formGroup]="updateUser">
             <mat-form-field class="user__input">
-              <input matInput formControlName="login" placeholder="Логин">
+              <input matInput formControlName="login" placeholder="{{'PAGE.USERS.USER.USER.LOGIN' | translate}}">
             </mat-form-field>
             <mat-form-field class="user__input">
-              <input matInput formControlName="loginName" placeholder="ФИО">
+              <input matInput formControlName="loginName" placeholder="{{'PAGE.USERS.USER.USER.FIO' | translate}}">
             </mat-form-field>
             <mat-form-field class="user__input">
-              <input matInput type="email" formControlName="email" placeholder="email">
+              <input matInput type="email" formControlName="email" placeholder="{{'PAGE.USERS.USER.USER.EMAIL' | translate}}">
             </mat-form-field>
             <div class="user__button-wrapper">
               <button class="user__button _left-button" mat-raised-button (click)="sendFormUser()" color="primary">
-                Изменить
+                {{'BUTTON.EDIT' | translate}}
               </button>
               <button class="user__button" mat-raised-button (click)="deleteUser()" color="warn">
-                Удалить
+                {{'BUTTON.DELETE' | translate}}
                 <mat-icon>delete</mat-icon>
               </button>
             </div>
           </form>
         </mat-tab>
 
-        <mat-tab class="user__tab" label="Пароль">
+        <mat-tab class="user__tab" label="{{'PAGE.USERS.USER.USER.TABS.PASSWORD' | translate}}">
           <form class="user__form" [formGroup]="updatePassword">
             <mat-form-field class="user__input">
-              <input matInput formControlName="newPassword" type="password" placeholder="Пароль">
+              <input matInput formControlName="newPassword" type="password" placeholder="{{'PAGE.USERS.USER.USER.PASSWORD' | translate}}">
               <mat-error *ngIf="updatePassword.get( 'newPassword' ).errors">
                 {{
                 updatePassword.get('newPassword').errors.complexPasswordValidator ?
@@ -66,7 +66,7 @@
             </mat-form-field>
             <mat-form-field class="user__input">
               <input matInput formControlName="confirmPassword" type="password"
-                     appConfirmEqualValidator="newPassword" placeholder="Повторите пароль">
+                     appConfirmEqualValidator="newPassword" placeholder="{{'PAGE.USERS.USER.USER.CONFIRM_PASSWORD' | translate}}">
               <mat-error *ngIf="updatePassword.get( 'confirmPassword' ).errors">
                 {{
                 updatePassword.get( 'confirmPassword' ).errors.ConfirmPassword ?
@@ -91,26 +91,26 @@
     <mat-spinner class="user__spinner" *ngIf="progress"></mat-spinner>
     <div *ngIf="!progress">
       <mat-card-header>
-        <h2 class="user__header">Права</h2>
+        <h2 class="user__header">{{'PAGE.USERS.USER.ACCESS_RIGHTS.TITLE' | translate}}</h2>
       </mat-card-header>
       <mat-card-content class="user__content">
         <form class="user__form" [formGroup]="formPermission">
           <div class="user__form-wrapper" *ngFor=" let person of persons">
             <div class="user__label">
-              <div class="user__label-title"><b>{{ person.title }}</b></div>
+              <div class="user__label-title"><b>{{ person.title | translate}}</b></div>
               <mat-checkbox
                 class="user__checkbox" *ngFor=" let id of person.ids "
                 [formControlName]="id">
-                {{ id % 2 === 1 ? 'Чтение' : 'Изменение'}}
+                {{ (id % 2 === 1 ? 'PAGE.USERS.USER.ACCESS_RIGHTS.READ' : 'PAGE.USERS.USER.ACCESS_RIGHTS.UPDATE' ) | translate}}
               </mat-checkbox>
             </div>
-            <div class="user__templates" *ngIf=" person.title === 'Отчеты'">
+            <div class="user__templates" *ngIf=" (person.title | translate) === ('PAGE.USERS.USER.ACCESS_RIGHTS.REPORTS' | translate )">
               <mat-progress-bar *ngIf="isProgressTemplates" mode="buffer"></mat-progress-bar>
               <mat-accordion *ngIf="!isProgressTemplates">
                 <mat-expansion-panel class="mat-elevation-z0">
                   <mat-expansion-panel-header>
                     <mat-panel-description>
-                      Дополнительные права
+                      {{'PAGE.USERS.USER.ACCESS_RIGHTS.ADDITIONAL_RIGHT' | translate}}
                     </mat-panel-description>
                   </mat-expansion-panel-header>
 
@@ -123,7 +123,7 @@
           </div>
           <div class="user__button-wrapper">
             <button class="user__button _left-button" mat-raised-button (click)="sendFormPermission()"
-                    color="primary">Изменить
+                    color="primary">{{'BUTTON.EDIT' | translate}}
             </button>
           </div>
         </form>

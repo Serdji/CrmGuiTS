@@ -7,6 +7,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { UserRoutes } from './user.routing';
 import { ComponentsModule } from '../../../components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -15,7 +16,8 @@ import { ComponentsModule } from '../../../components/components.module';
     ReactiveFormsModule,
     DirectivesModule,
     ComponentsModule,
-    UserRoutes
+    UserRoutes,
+    TranslateModule
   ],
   declarations: [ UserComponent ],
   providers: [ UserService ]
