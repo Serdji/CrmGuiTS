@@ -72,5 +72,13 @@
 				"TITLE": "List all users"
 			}
 		}
+	},
+	"TABLE": {
+		"FIRT_PAGE": "First page",
+		"FROM": "of",
+		"ITEMS_PER_PAGE": "Items per page",
+		"LAST_PAGE": "Last page",
+		"NEXT": "Next",
+		"PREV": "Previous"
 	}
 }
