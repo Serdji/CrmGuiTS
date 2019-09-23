@@ -39,7 +39,7 @@ export class AppComponent implements OnInit {
     this.translate.addLangs(['ru', 'en']);
     this.translate.setDefaultLang('ru');
 
-    this.translate.stream('MENU').subscribe((value) => console.log(value));
+    this.translate.stream('MENU').subscribe((value) => console.log(value, this.translate.store.currentLang ));
 
     const browserLang = this.translate.getBrowserLang();
     this.translate.use(browserLang.match(/ru|en/) ? browserLang : 'ru');

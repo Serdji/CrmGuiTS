@@ -6,6 +6,7 @@
 		"USER": "User"
 	},
 	"BUTTON": {
+		"ADD_CUSTOMER": "Add Passenger",
 		"ADD_USER": "Add user",
 		"CLEAR_FORM": "Clear form",
 		"DELETE": "Delete",
@@ -62,6 +63,18 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
+		"ADD_PROFILE": {
+			"DATE": "dd.mm.yyyy",
+			"GENDER": {
+				"F": "F",
+				"M": "M",
+				"TITLE": "Gender"
+			},
+			"MIDDLE_NAME": "Middle Name",
+			"NAME": "Name",
+			"SURNAME": "Surname",
+			"TITLE": "Add Passenger"
+		},
 		"USERS": {
 			"ADD_USER": {
 				"CONFIRM_PASSWORD": "Confirm password",

@@ -6,6 +6,7 @@
 		"USER": "Пользователь"
 	},
 	"BUTTON": {
+		"ADD_CUSTOMER": "Добавить пассажира",
 		"ADD_USER": "Добавить пользователя",
 		"CLEAR_FORM": "Очистить форму",
 		"DELETE": "Удалить",
@@ -62,6 +63,18 @@
 		"VERSION": "Версия"
 	},
 	"PAGE": {
+		"ADD_PROFILE": {
+			"DATE": "дд.мм.гггг",
+			"GENDER": {
+				"F": "Ж",
+				"M": "М",
+				"TITLE": "Пол"
+			},
+			"MIDDLE_NAME": "Отчество",
+			"NAME": "Имя",
+			"SURNAME": "Фамилия",
+			"TITLE": "Добавить пассажира"
+		},
 		"USERS": {
 			"ADD_USER": {
 				"CONFIRM_PASSWORD": "Повторите пароль",
