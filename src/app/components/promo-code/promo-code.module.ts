@@ -6,6 +6,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../shared/shared.module';
 import { DirectivesModule } from '../../directives/directives.module';
 import { DialogPromoCodeService } from './dialog-promo-code/dialog-promo-code.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -13,6 +14,7 @@ import { DialogPromoCodeService } from './dialog-promo-code/dialog-promo-code.se
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
+    TranslateModule,
   ],
   declarations: [
     DialogPromoCodeComponent,

@@ -8,6 +8,7 @@ import { DialogEditorComponent } from './dialog-editor/dialog-editor.component';
 import { ButtonEditorComponent } from './button-editor/button-editor.component';
 import { SharedModule } from '../../shared/shared.module';
 import { DirectivesModule } from '../../directives/directives.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -17,6 +18,7 @@ import { DirectivesModule } from '../../directives/directives.module';
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
+    TranslateModule,
   ],
   declarations: [
     EditorComponent,

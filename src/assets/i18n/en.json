@@ -11,6 +11,9 @@
 		"CLEAR_FORM": "Clear form",
 		"DELETE": "Delete",
 		"EDIT": "Edit",
+		"EDITOR": "Create Newsletter",
+		"MERGE_PROFILE": "Combine passengers",
+		"PROMO_CODE": "Link promotional code",
 		"SEARCH": "Search"
 	},
 	"FIELD": {
