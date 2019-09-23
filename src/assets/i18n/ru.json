@@ -116,6 +116,14 @@
 				"SEGMENTATION": "Группы сегментации",
 				"SERVICE_CODE": "Код услуги",
 				"TICKET": "№ билета"
+			},
+			"TABLE": {
+				"CUSTOMER_IDS": "№ профиля",
+				"DATE_OF_BIRTH": "Дата рождения",
+				"FIRST_NAME": "Имя",
+				"GENDER": "Пол",
+				"LAST_NAME": "Фамилия",
+				"MIDDEL_NAME": "Отчество"
 			}
 		},
 		"USERS": {

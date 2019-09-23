@@ -116,6 +116,14 @@
 				"SEGMENTATION": "Segmentation groups",
 				"SERVICE_CODE": "Service Code",
 				"TICKET": "Ticket number"
+			},
+			"TABLE": {
+				"CUSTOMER_IDS": "Profile No.",
+				"DATE_OF_BIRTH": "Date of Birth",
+				"FIRST_NAME": "Name",
+				"GENDER": "Gender",
+				"LAST_NAME": "Surname",
+				"MIDDEL_NAME": "Middle Name"
 			}
 		},
 		"USERS": {
