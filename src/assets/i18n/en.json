@@ -5,6 +5,10 @@
 		"HOME": "Home",
 		"USER": "User"
 	},
+	"BUTTON": {
+		"ADD_USER": "Add user",
+		"CLEAR_FORM": "Clear form"
+	},
 	"MENU": {
 		"AIRLINE": "Airline",
 		"CUSTOMER": {
@@ -50,6 +54,14 @@
 	},
 	"PAGE": {
 		"USERS": {
+			"ADD_USER": {
+				"CONFIRM_PASSWORD": "Confirm password",
+				"EMAIL": "email",
+				"FIO": "Full name",
+				"LOGIN": "Login",
+				"PASSWORD": "Password",
+				"TITLE": "Add user"
+			},
 			"LIST_USERS": {
 				"TABLE": {
 					"EMAIL": "email",

@@ -1,14 +1,14 @@
 <mat-grid-list mat-grid-list cols="1" rowHeight="550px">
   <mat-grid-tile>
     <mat-card appAccessRights="users:update" appAccessMessage="true" class="add-user__card">
-      <mat-card-title>Добавить пользователя</mat-card-title>
+      <mat-card-title>{{'PAGE.USERS.ADD_USER.TITLE' | translate}}</mat-card-title>
       <form class="add-user__form" [formGroup]="formUser">
         <mat-form-field class="add-user__input">
-          <input matInput formControlName="login" placeholder="Логин">
+          <input matInput formControlName="login" placeholder="{{'PAGE.USERS.ADD_USER.LOGIN' | translate}}">
           <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
-          <input matInput formControlName="password" type="password" placeholder="Пароль">
+          <input matInput formControlName="password" type="password" placeholder="{{'PAGE.USERS.ADD_USER.PASSWORD' | translate}}">
           <mat-error *ngIf="formUser.get( 'password' ).errors">
             {{
             formUser.get('password').errors.complexPasswordValidator ?
@@ -23,7 +23,7 @@
         </mat-form-field>
         <mat-form-field class="add-user__input">
           <input matInput formControlName="confirmPassword" type="password" appConfirmEqualValidator="password"
-                 placeholder="Повторите пароль">
+                 placeholder="{{'PAGE.USERS.ADD_USER.CONFIRM_PASSWORD' | translate}}">
           <mat-error *ngIf="formUser.get( 'confirmPassword' ).errors">
             {{
             formUser.get( 'confirmPassword' ).errors.ConfirmPassword ?
@@ -33,21 +33,21 @@
           </mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
-          <input matInput formControlName="loginName" placeholder="ФИО">
+          <input matInput formControlName="loginName" placeholder="{{'PAGE.USERS.ADD_USER.FIO' | translate}}">
           <mat-error>Обязательное поле</mat-error>
         </mat-form-field>
         <mat-form-field class="add-user__input">
-          <input matInput type="email" formControlName="email" placeholder="email">
+          <input matInput type="email" formControlName="email" placeholder="{{'PAGE.USERS.ADD_USER.EMAIL' | translate}}">
           <mat-error>Некорректно введен email</mat-error>
         </mat-form-field>
         <div class="add-user__button-wrapper">
           <button class="add-user__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
             <mat-icon>person_add</mat-icon>
-            Добавить пользователя
+            {{'BUTTON.ADD_USER' | translate}}
           </button>
           <button class="add-user__button" mat-raised-button (click)="clearForm()">
             <mat-icon>clear</mat-icon>
-            Очистить форму
+            {{'BUTTON.CLEAR_FORM' | translate}}
           </button>
         </div>
       </form>

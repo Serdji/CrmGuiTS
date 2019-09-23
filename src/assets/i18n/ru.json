@@ -5,6 +5,10 @@
 		"HOME": "Главная",
 		"USER": "Пользователь"
 	},
+	"BUTTON": {
+		"ADD_USER": "Добавить пользователя",
+		"CLEAR_FORM": "Очистить форму"
+	},
 	"MENU": {
 		"AIRLINE": "Авиакомпания",
 		"CUSTOMER": {
@@ -50,6 +54,14 @@
 	},
 	"PAGE": {
 		"USERS": {
+			"ADD_USER": {
+				"CONFIRM_PASSWORD": "Повторите пароль",
+				"EMAIL": "email",
+				"FIO": "ФИО",
+				"LOGIN": "Логин",
+				"PASSWORD": "Пароль",
+				"TITLE": "Добавить пользователя"
+			},
 			"LIST_USERS": {
 				"TABLE": {
 					"EMAIL": "email",
