@@ -127,7 +127,21 @@
 					"MIDDEL_NAME": "Middle Name"
 				}
 			},
-			"TITLE": ""
+			"TABS_PROFILE": {
+				"COUNTER_ACTIVE_SERVICES_IS_EMD": "Decorated paid services:",
+				"COUNTER_CANCELLED_SERVICES_IS_EMD": "Canceled paid services:",
+				"COUNT_ACTIVE_TICKET": "Orders placed:",
+				"COUNT_CANCELLED_TICKET": "Canceled Orders:",
+				"CREATE_DATE": "With us:",
+				"CUSTOMER_GROUP": "Passenger groups",
+				"CUSTOMER_ID": "Profile No.:",
+				"DATE_OF_BIRTH": "Date of Birth:",
+				"GENDER": "Gender:",
+				"LUT": "Date of last activity:",
+				"PROFILE": "Profile:",
+				"SEGMENTATION": "Segmentation groups",
+				"TOTAL_AMOUNT": "Issued for the amount:"
+			}
 		},
 		"USERS": {
 			"ADD_USER": {

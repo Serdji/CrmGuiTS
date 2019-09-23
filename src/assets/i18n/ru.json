@@ -127,7 +127,21 @@
 					"MIDDEL_NAME": "Отчество"
 				}
 			},
-			"TITLE": ""
+			"TABS_PROFILE": {
+				"COUNTER_ACTIVE_SERVICES_IS_EMD": "Оформленных платных услуг:",
+				"COUNTER_CANCELLED_SERVICES_IS_EMD": "Аннулированных платных услуг:",
+				"COUNT_ACTIVE_TICKET": "Оформленных заказов:",
+				"COUNT_CANCELLED_TICKET": "Аннулированных заказов:",
+				"CREATE_DATE": "С нами:",
+				"CUSTOMER_GROUP": "Группы пассажиров",
+				"CUSTOMER_ID": "№ профиля:",
+				"DATE_OF_BIRTH": "Дата рождения:",
+				"GENDER": "Пол:",
+				"LUT": "Дата последней активности:",
+				"PROFILE": "Профиль:",
+				"SEGMENTATION": "Группы сегментации",
+				"TOTAL_AMOUNT": "Оформленных на сумму:"
+			}
 		},
 		"USERS": {
 			"ADD_USER": {

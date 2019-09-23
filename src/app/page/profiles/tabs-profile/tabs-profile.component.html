@@ -10,26 +10,26 @@
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content _right-width">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">№ профиля</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.CUSTOMER_ID' | translate}}</span>
                   <span><b> {{profile.customerId}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Профиль</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.PROFILE' | translate}}</span>
                   <span><b> {{profile.lastName}} {{profile.firstName}} {{profile.secondName}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Дата рождения:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.DATE_OF_BIRTH' | translate}}</span>
                   <span><b> {{profile.dob | date:'dd.MM.yyyy' }}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Пол:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.GENDER' | translate}}</span>
                   <span><b> {{profile.gender | fieldTranslation}}</b></span>
                 </div>
               </div>
 
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">С нами:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.CREATE_DATE' | translate}}</span>
                   <span><b *ngIf="orders"> {{orders.createDate | date:'dd.MM.yyyy' }}</b></span>
                 </div>
               </div>
@@ -46,7 +46,7 @@
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content _right-width">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Группы сегментации:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.SEGMENTATION' | translate}}</span>
                 </div>
                 <div
                   *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
@@ -65,7 +65,7 @@
 
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Группы пассажиров:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.CUSTOMER_GROUP' | translate}}</span>
                 </div>
                 <div *ngFor="let takeProfileGroup of profileGroup.takeProfileGroup" class="tabs-profile__content-point">
                   <b>{{takeProfileGroup.customerGroup.customerGroupName}}</b>
@@ -90,14 +90,14 @@
             <div class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Оформленных заказов:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COUNT_ACTIVE_TICKET' | translate}}</span>
                   <span><b *ngIf="orders"> {{orders.countActiveTicket}}</b></span>
                   <span> | </span>
-                  <span class="tabs-profile__content-text">Аннулированных заказов:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COUNT_CANCELLED_TICKET' | translate}}</span>
                   <span><b *ngIf="orders"> {{orders.countCancelledTicket}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Оформленных на сумму:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.TOTAL_AMOUNT' | translate}}</span>
                   <span><b *ngIf="orders">
                     {{ orders.totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
                     {{ orders.totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
@@ -105,14 +105,14 @@
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Оформленных платных услуг:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COUNTER_ACTIVE_SERVICES_IS_EMD' | translate}}</span>
                   <span><b *ngIf="orders"> {{orders.counterActiveServicesIsEmd}}</b></span>
                   <span> | </span>
-                  <span class="tabs-profile__content-text">Аннулированных платных услуг:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COUNTER_CANCELLED_SERVICES_IS_EMD' | translate}}</span>
                   <span><b *ngIf="orders"> {{orders.counterCancelledServicesIsEmd}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Оформленных на сумму:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.TOTAL_AMOUNT' | translate}}</span>
                   <span><b *ngIf="orders">
                     {{ orders.totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
                     {{ orders.totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
@@ -120,7 +120,7 @@
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">Дата последней активности:</span>
+                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.LUT' | translate}}</span>
                   <span><b *ngIf="orders"> {{orders.lut | date:'dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
