@@ -11,6 +11,13 @@
 		"DELETE": "Delete",
 		"EDIT": "Edit"
 	},
+	"FIELD": {
+		"ERROR": {
+			"OBLIGATORY_FIELD": "Obligatory field",
+			"STRONG_PASSWORD": "Password must be at least",
+			"YOU_ENTERED": "characters. You entered"
+		}
+	},
 	"MENU": {
 		"AIRLINE": "Airline",
 		"CUSTOMER": {

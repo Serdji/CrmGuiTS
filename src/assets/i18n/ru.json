@@ -11,6 +11,13 @@
 		"DELETE": "Удалить",
 		"EDIT": "Изменить"
 	},
+	"FIELD": {
+		"ERROR": {
+			"OBLIGATORY_FIELD": "Обязательное поле",
+			"STRONG_PASSWORD": "Пароль должен состоять не менее чем из ",
+			"YOU_ENTERED": "символов. Вы ввели"
+		}
+	},
 	"MENU": {
 		"AIRLINE": "Авиакомпания",
 		"CUSTOMER": {

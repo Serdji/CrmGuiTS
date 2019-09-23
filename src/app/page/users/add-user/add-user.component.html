@@ -14,10 +14,10 @@
             formUser.get('password').errors.complexPasswordValidator ?
               formUser.get('password').errors.complexPasswordValidator.message :
               formUser.get('password').errors.minlength ?
-                'Пароль должен состоять не менее чем из ' +
+                ( 'FIELD.ERROR.STRONG_PASSWORD' | translate ) + ' ' +
                 formUser.get('password').errors.minlength.requiredLength + ' ' +
-                'символов. Вы ввели: ' + formUser.get('password').errors.minlength.actualLength :
-                'Обязательное поле'
+                ('FIELD.ERROR.YOU_ENTERED' | translate) + ': ' + formUser.get('password').errors.minlength.actualLength :
+                ( 'FIELD.ERROR.OBLIGATORY_FIELD' | translate)
             }}
           </mat-error>
         </mat-form-field>
@@ -28,7 +28,7 @@
             {{
             formUser.get( 'confirmPassword' ).errors.ConfirmPassword ?
               formUser.get( 'confirmPassword' ).errors.ConfirmPassword.mesConfirmPassword :
-              'Обязательное поле'
+              ( 'FIELD.ERROR.OBLIGATORY_FIELD' | translate)
             }}
           </mat-error>
         </mat-form-field>

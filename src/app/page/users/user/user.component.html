@@ -57,10 +57,10 @@
                 updatePassword.get('newPassword').errors.complexPasswordValidator ?
                   updatePassword.get('newPassword').errors.complexPasswordValidator.message :
                   updatePassword.get('newPassword').errors.minlength ?
-                    'Пароль должен состоять не менее чем из ' +
+                    ( 'FIELD.ERROR.STRONG_PASSWORD' | translate ) + ' ' +
                     updatePassword.get('newPassword').errors.minlength.requiredLength + ' ' +
-                    'символов. Вы ввели: ' + updatePassword.get('newPassword').errors.minlength.actualLength :
-                    'Обязательное поле'
+                    ('FIELD.ERROR.YOU_ENTERED' | translate) + ': ' + updatePassword.get('newPassword').errors.minlength.actualLength :
+                   ( 'FIELD.ERROR.OBLIGATORY_FIELD' | translate)
                 }}
               </mat-error>
             </mat-form-field>
@@ -71,7 +71,7 @@
                 {{
                 updatePassword.get( 'confirmPassword' ).errors.ConfirmPassword ?
                   updatePassword.get( 'confirmPassword' ).errors.ConfirmPassword.mesConfirmPassword :
-                  'Обязательное поле'
+                  ( 'FIELD.ERROR.OBLIGATORY_FIELD' | translate)
                 }}
               </mat-error>
             </mat-form-field>
