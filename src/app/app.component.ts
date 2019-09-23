@@ -7,11 +7,17 @@ import { Router } from '@angular/router';
 import { SaveUrlServiceService } from './services/save-url-service.service';
 import { TitleService } from './services/title.service';
 import { TranslateService } from '@ngx-translate/core';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
 @Component( {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ],
 } )
 export class AppComponent implements OnInit {
 
@@ -23,7 +29,8 @@ export class AppComponent implements OnInit {
     private snackBar: MatSnackBar,
     private saveUrlServiceService: SaveUrlServiceService,
     private titleService: TitleService,
-    public translate: TranslateService
+    private _adapter: DateAdapter<any>,
+    public translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -39,7 +46,10 @@ export class AppComponent implements OnInit {
     this.translate.addLangs(['ru', 'en']);
     this.translate.setDefaultLang('ru');
 
-    this.translate.stream('MENU').subscribe((value) => console.log(value, this.translate.store.currentLang ));
+    this.translate.stream('MENU').subscribe((value) => {
+      console.log(value, this.translate.store.currentLang );
+      this._adapter.setLocale( this.translate.store.currentLang );
+    });
 
     const browserLang = this.translate.getBrowserLang();
     this.translate.use(browserLang.match(/ru|en/) ? browserLang : 'ru');
