@@ -10,7 +10,8 @@
 		"ADD_USER": "Add user",
 		"CLEAR_FORM": "Clear form",
 		"DELETE": "Delete",
-		"EDIT": "Edit"
+		"EDIT": "Edit",
+		"SEARCH": "Search"
 	},
 	"FIELD": {
 		"ERROR": {
@@ -74,6 +75,45 @@
 			"NAME": "Name",
 			"SURNAME": "Surname",
 			"TITLE": "Add Passenger"
+		},
+		"SEARCH_PROFILE": {
+			"FORM": {
+				"AIRLINE_L_CODE": "Airline code",
+				"ARR_POINT": "Where",
+				"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date from",
+				"BOOKING_CREATE_DATE_TO_EXCLUDE": "Sale Date By",
+				"CAB": "Cabin",
+				"CONTACT_EMAIL": "Email",
+				"CONTACT_PHONE": "Phone",
+				"CONTACT_SEXIST": "Lack of contact",
+				"CUSTOMER_GROUP": "Passenger groups",
+				"CUSTOMER_IDS": "Profile No.",
+				"DEPT_IME_TO_EXCLUDE": "Flight date",
+				"DEP_POINT": "From where",
+				"DEP_TIME_FROM_INCLUDE": "Flight date from",
+				"DOB_FROM_INCLUDE": "Date of birth from",
+				"DOB_TO_EXCLUDE": "Date of birth by",
+				"EMD": "Service No.",
+				"FARE_CODE": "Rate code",
+				"FIRST_NAME": "Name",
+				"FLIGHT": "Flight number",
+				"FLIGHT_DATE_FROM": "",
+				"FLIGHT_DATE_TO": "",
+				"GENDER": {
+					"F": "F",
+					"M": "m",
+					"TITLE": "floor"
+				},
+				"ID": "",
+				"LAST_NAME": "Surname",
+				"MONEY_AMOUNT_FROM_INCLUDE": "Total amount from",
+				"MONEY_AMOUNT_TO_INCLUDE": "Total amount to",
+				"RBD": "Booking class",
+				"REC_LOC": "Reservation number",
+				"SEGMENTATION": "Segmentation groups",
+				"SERVICE_CODE": "Service Code",
+				"TICKET": "Ticket number"
+			}
 		},
 		"USERS": {
 			"ADD_USER": {

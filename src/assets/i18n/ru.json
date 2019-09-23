@@ -10,7 +10,8 @@
 		"ADD_USER": "Добавить пользователя",
 		"CLEAR_FORM": "Очистить форму",
 		"DELETE": "Удалить",
-		"EDIT": "Изменить"
+		"EDIT": "Изменить",
+		"SEARCH": "Искать"
 	},
 	"FIELD": {
 		"ERROR": {
@@ -74,6 +75,45 @@
 			"NAME": "Имя",
 			"SURNAME": "Фамилия",
 			"TITLE": "Добавить пассажира"
+		},
+		"SEARCH_PROFILE": {
+			"FORM": {
+				"AIRLINE_L_CODE": "Код авиокомпании",
+				"ARR_POINT": "Куда",
+				"BOOKING_CREATE_DATE_FROM_INCLUDE": "Дата продажи с",
+				"BOOKING_CREATE_DATE_TO_EXCLUDE": "Дата продажи по",
+				"CAB": "Кабина",
+				"CONTACT_EMAIL": "Электронная почта",
+				"CONTACT_PHONE": "Телефон",
+				"CONTACT_SEXIST": "Отсутствие контакта",
+				"CUSTOMER_GROUP": "Группы пассажиров",
+				"CUSTOMER_IDS": "№ профиля",
+				"DEPT_IME_TO_EXCLUDE": "Дата рейса по",
+				"DEP_POINT": "Откуда",
+				"DEP_TIME_FROM_INCLUDE": "Дата рейса с",
+				"DOB_FROM_INCLUDE": "Дата рождения с",
+				"DOB_TO_EXCLUDE": "Дата рождения по",
+				"EMD": "№ услуги",
+				"FARE_CODE": "Код тарифа",
+				"FIRST_NAME": "Имя",
+				"FLIGHT": "№ рейса",
+				"FLIGHT_DATE_FROM": "",
+				"FLIGHT_DATE_TO": "",
+				"GENDER": {
+					"F": "Ж",
+					"M": "М",
+					"TITLE": "Пол"
+				},
+				"ID": "",
+				"LAST_NAME": "Фамилия",
+				"MONEY_AMOUNT_FROM_INCLUDE": "Общая сумма от",
+				"MONEY_AMOUNT_TO_INCLUDE": "Общая сумма до",
+				"RBD": "Класс бронирования",
+				"REC_LOC": "№ брони",
+				"SEGMENTATION": "Группы сегментации",
+				"SERVICE_CODE": "Код услуги",
+				"TICKET": "№ билета"
+			}
 		},
 		"USERS": {
 			"ADD_USER": {

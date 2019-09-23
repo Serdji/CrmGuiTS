@@ -5,19 +5,19 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="lastname" type="text" placeholder="Фамилия">
+              <input matInput formControlName="lastname" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.LAST_NAME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="firstname" type="text" placeholder="Имя">
+              <input matInput formControlName="firstname" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.FIRST_NAME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="customerids" type="text" placeholder="№ профиля">
+              <input matInput formControlName="customerids" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.CUSTOMER_IDS' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <mat-select formControlName="gender" placeholder="Пол">
+              <mat-select formControlName="gender" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.GENDER.TITLE' | translate}}">
                 <mat-option></mat-option>
-                <mat-option value="m" >М</mat-option>
-                <mat-option value="f" >Ж</mat-option>
+                <mat-option value="m" >{{'PAGE.SEARCH_PROFILE.FORM.GENDER.M' | translate}}</mat-option>
+                <mat-option value="f" >{{'PAGE.SEARCH_PROFILE.FORM.GENDER.F' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -33,7 +33,7 @@
                   <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input
-                  placeholder="Группы сегментации"
+                  placeholder="{{'PAGE.SEARCH_PROFILE.FORM.SEGMENTATION' | translate}}"
                   #segmentationChipInput
                   formControlName="segmentation"
                   [matAutocomplete]="segmentation"
@@ -60,7 +60,7 @@
                   <mat-icon matChipRemove *ngIf="customerGroupRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input
-                  placeholder="Группы пассажиров"
+                  placeholder="{{'PAGE.SEARCH_PROFILE.FORM.CUSTOMER_GROUP' | translate}}"
                   #customerGroupChipInput
                   formControlName="customerGroup"
                   [matAutocomplete]="customerGroup"
@@ -75,12 +75,12 @@
             </mat-form-field>
 
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dobfrominclude" placeholder="Дата рождения с" [matDatepicker]="DobFromInclude">
+              <input matInput formControlName="dobfrominclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DOB_FROM_INCLUDE' | translate}}" [matDatepicker]="DobFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DobFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dobtoexclude" placeholder="Дата рождения по" [matDatepicker]="DobToExclude">
+              <input matInput formControlName="dobtoexclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DOB_TO_EXCLUDE' | translate}}" [matDatepicker]="DobToExclude">
               <mat-datepicker-toggle matSuffix [for]="DobToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobToExclude color="primary"></mat-datepicker>
             </mat-form-field>
@@ -92,13 +92,13 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="ticket" type="text" placeholder="№ билета">
+              <input matInput formControlName="ticket" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.TICKET' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="recloc" type="text" placeholder="№ брони">
+              <input matInput formControlName="recloc" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.REC_LOC' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="emd" type="text" placeholder="№ услуги">
+              <input matInput formControlName="emd" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.EMD' | translate}}">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -108,7 +108,7 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="airlineLCode" type="text" placeholder="Код авиакомпании" [matAutocomplete]="airlineLCode">
+              <input matInput formControlName="airlineLCode" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.AIRLINE_L_CODE' | translate}}" [matAutocomplete]="airlineLCode">
               <mat-autocomplete #airlineLCode="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let airlineLCode of airlineLCodeOptions | async" [value]="airlineLCode">
                   {{airlineLCode.title}}
@@ -116,15 +116,15 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="flight" type="text" placeholder="№ рейса">
+              <input matInput formControlName="flight" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.FLIGHT' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deptimefrominclude" placeholder="Дата рейса с" [matDatepicker]="DepTimeFromIncludeFligth">
+              <input matInput formControlName="deptimefrominclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}" [matDatepicker]="DepTimeFromIncludeFligth">
               <mat-datepicker-toggle matSuffix [for]="DepTimeFromIncludeFligth"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeFromIncludeFligth></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deptimetoexclude" placeholder="Дата рейса по" [matDatepicker]="DepTimeToExcludeFligth">
+              <input matInput formControlName="deptimetoexclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DEPT_IME_TO_EXCLUDE' | translate}}" [matDatepicker]="DepTimeToExcludeFligth">
               <mat-datepicker-toggle matSuffix [for]="DepTimeToExcludeFligth"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeToExcludeFligth></mat-datepicker>
             </mat-form-field>
@@ -136,24 +136,24 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deppoint" type="text" placeholder="Откуда" [matAutocomplete]="airportfrom">
+              <input matInput formControlName="deppoint" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DEP_POINT' | translate}}" [matAutocomplete]="airportfrom">
               <mat-autocomplete #airportfrom="matAutocomplete">
                 <mat-option *ngFor="let airport of airportsFromOptions | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="arrpoint" type="text" placeholder="Куда" [matAutocomplete]="airportto">
+              <input matInput formControlName="arrpoint" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.ARR_POINT' | translate}}" [matAutocomplete]="airportto">
               <mat-autocomplete #airportto="matAutocomplete">
                 <mat-option *ngFor="let airport of airportsToOptions | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deptimefrominclude" placeholder="Дата сегмента с" [matDatepicker]="DepTimeFromInclude">
+              <input matInput formControlName="deptimefrominclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}" [matDatepicker]="DepTimeFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DepTimeFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="deptimetoexclude" placeholder="Дата сегмента по" [matDatepicker]="DepTimeToExclude">
+              <input matInput formControlName="deptimetoexclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.DEPT_IME_TO_EXCLUDE' | translate}}" [matDatepicker]="DepTimeToExclude">
               <mat-datepicker-toggle matSuffix [for]="DepTimeToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeToExclude></mat-datepicker>
             </mat-form-field>
@@ -165,16 +165,16 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="cab" type="text" placeholder="Кабина">
+              <input matInput formControlName="cab" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.CAB' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="rbd" type="text" placeholder="Класс бронирования">
+              <input matInput formControlName="rbd" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.RBD' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="farecode" type="text" placeholder="Код тарифа">
+              <input matInput formControlName="farecode" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.FARE_CODE' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="servicecode" type="text" placeholder="Код услуги">
+              <input matInput formControlName="servicecode" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.SERVICE_CODE' | translate}}">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -184,18 +184,18 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="moneyamountfrominclude" type="text" placeholder="Общая сумма от ({{currencyDefault}})">
+              <input matInput formControlName="moneyamountfrominclude" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.MONEY_AMOUNT_FROM_INCLUDE' | translate}} ({{currencyDefault}})">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="moneyamounttoinclude" type="text" placeholder="Общая сумма до ({{currencyDefault}})">
+              <input matInput formControlName="moneyamounttoinclude" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.MONEY_AMOUNT_TO_INCLUDE' | translate}} ({{currencyDefault}})">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="bookingcreatedatefrominclude" placeholder="Дата продажи с" [matDatepicker]="bookingcreatedatefrominclude">
+              <input matInput formControlName="bookingcreatedatefrominclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.BOOKING_CREATE_DATE_FROM_INCLUDE' | translate}}" [matDatepicker]="bookingcreatedatefrominclude">
               <mat-datepicker-toggle matSuffix [for]="bookingcreatedatefrominclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #bookingcreatedatefrominclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="bookingcreatedatetoexclude" placeholder="Дата продажи по" [matDatepicker]="bookingcreatedatetoexclude">
+              <input matInput formControlName="bookingcreatedatetoexclude" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.BOOKING_CREATE_DATE_TO_EXCLUDE' | translate}}" [matDatepicker]="bookingcreatedatetoexclude">
               <mat-datepicker-toggle matSuffix [for]="bookingcreatedatetoexclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #bookingcreatedatetoexclude></mat-datepicker>
             </mat-form-field>
@@ -207,12 +207,12 @@
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="contactemail" type="email" placeholder="Электронная почта">
+              <input matInput formControlName="contactemail" type="email" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.CONTACT_EMAIL' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="contactphone" type="text" placeholder="Телефон">
+              <input matInput formControlName="contactphone" type="text" placeholder="{{'PAGE.SEARCH_PROFILE.FORM.CONTACT_PHONE' | translate}}">
             </mat-form-field>
-            <mat-checkbox  formControlName="contactsexist">Отсутствие контакта</mat-checkbox>
+            <mat-checkbox  formControlName="contactsexist">{{'PAGE.SEARCH_PROFILE.FORM.CONTACT_SEXIST' | translate}}</mat-checkbox>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -220,7 +220,7 @@
       <div class="profile-search__button-wrapper">
         <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary" [disabled]="buttonSearch">
           <mat-icon>search</mat-icon>
-          Искать
+          {{'BUTTON.SEARCH' | translate}}
         </button>
         <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button matTooltip="Вагрузка SVG файла с учетом поискового запроса" (click)="downloadCsv()" color="accent">
           <mat-icon>insert_drive_file</mat-icon>
@@ -228,7 +228,7 @@
         </button>
         <button class="profile-search__button" mat-raised-button (click)="clearForm()">
           <mat-icon>clear</mat-icon>
-          Очистить форму
+          {{'BUTTON.CLEAR_FORM' | translate}}
         </button>
       </div>
 
