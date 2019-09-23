@@ -47,5 +47,18 @@
 			"LIST_USERS": "a list of users"
 		},
 		"VERSION": "Version"
+	},
+	"PAGE": {
+		"USERS": {
+			"LIST_USERS": {
+				"TABLE": {
+					"EMAIL": "email",
+					"FILTER": "Filter",
+					"FIO": "Full name",
+					"LOGIN": "Login"
+				},
+				"TITLE": "List all users"
+			}
+		}
 	}
 }

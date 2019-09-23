@@ -47,5 +47,18 @@
 			"LIST_USERS": "Список пользователей"
 		},
 		"VERSION": "Версия"
+	},
+	"PAGE": {
+		"USERS": {
+			"LIST_USERS": {
+				"TABLE": {
+					"EMAIL": "email",
+					"FILTER": "Фильтер",
+					"FIO": "ФИО",
+					"LOGIN": "Логин"
+				},
+				"TITLE": "Список всех пользователей"
+			}
+		}
 	}
 }
