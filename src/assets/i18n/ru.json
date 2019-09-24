@@ -182,6 +182,100 @@
 					"TAB_NAME": "Соообщения"
 				},
 				"ORDER": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"STATUS": {
+								"ACTIVE": "Оформлен",
+								"CANCELLED": "Аннулирован",
+								"TITLE": "Статус заказа"
+							}
+						},
+						"TEMPLATE": {
+							"MONETARY_INFO": {
+								"ALL": "Всего по заказу:",
+								"COST_CURRENCY": "Стоимость в валюте:",
+								"TAXES": "Таксы и сборы:",
+								"TICKETS": "По билетам:"
+							},
+							"POS": {
+								"AGENCY": "Агентство:",
+								"COUNTRY": "Страна:",
+								"GDS": "GDS:",
+								"POS_ID": "POS ID:",
+								"REC_LOC": "Recloc GDS:",
+								"TERMINAL": "Терминал:"
+							},
+							"SEGMENTS": {
+								"ARR_POINT": "Аэропорт прилета:",
+								"ARR_TIME": "Дата / время прилета:",
+								"CABIN": "Кабина:",
+								"DEP_POINT": "Аэропорт вылета:",
+								"DEP_TIME": "Дата / время вылета:",
+								"FLIGHT": "№ рейса:",
+								"RBD": "Класс бронирования:",
+								"STATUS": "Статус сегмента:"
+							},
+							"SERVICES": {
+								"ARR_POINT": "Аэропорт прилета:",
+								"ARR_TIME": "Дата / время прилета:",
+								"CONCEPT_MEASURE": "Концепт/мера:",
+								"COST": "Стоимость:",
+								"COUPON": "Номер купона:",
+								"COUPON_STATUS": "Статус:",
+								"DATE": "Дата:",
+								"DEP_POINT": "Аэропорт вылета:",
+								"DEP_TIME": "Дата / время вылета:",
+								"EMD": "EMD:",
+								"EMD_TYPE": "Тип EMD:",
+								"FLIGHT": "№ рейса:",
+								"NOS": {
+									"COMMENT": "Комментарий:",
+									"NAME_SERVICES": "Название услуги:"
+								},
+								"QTTY": "Количество:",
+								"RFISC": "Rfisc:",
+								"SSR": "SSR:",
+								"STATUS": "Статус услуги:",
+								"SVC_TYPE": "Тип SVC:"
+							},
+							"TICKETS": {
+								"ARR_POINT": "Аэропорт прилета:",
+								"ARR_TIME": "Дата / время прилета:",
+								"COUPON": "Номер купона:",
+								"DEP_POINT": "Аэропорт вылета:",
+								"DEP_TIME": "Дата / время вылета:",
+								"FARE_CODE": "Fare basis:",
+								"FLIGHT": "№ рейса:",
+								"NUM_DER_TICKET": "Номер билета:",
+								"STATUS": "Статус:"
+							}
+						}
+					},
+					"FILTER": {
+						"DATE_CREATE": "Дата создания",
+						"DATE_SEARCH": "Выбор даты",
+						"REC_LOC": "Заказ №",
+						"SEARCH": "Поиск по",
+						"STATUS": {
+							"ACTIVE": "Оформлен",
+							"CANCELLED": "Аннулирован",
+							"TITLE": "Статус заказа"
+						},
+						"VALUE": "Значение"
+					},
+					"HEADER": {
+						"DATE_CREATE": "Дата создания",
+						"REC_LOC": "Заказ №",
+						"STATUS": "Статус заказа"
+					},
+					"OPTION_GROUPS": {
+						"ALL": "Любой:",
+						"ALL_SEARCH": "Поиск по всем параметрам",
+						"POS": "Точка продажи",
+						"SEGMENTS": "Сегмент",
+						"SERVICES": "Услуги",
+						"TICKETS": "Билет"
+					},
 					"TAB_NAME": "Заказы"
 				},
 				"PRIVILEGES": {

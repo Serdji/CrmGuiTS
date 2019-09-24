@@ -14,8 +14,8 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'gender': return 'Пол';
       case  'dob': return 'Дата рождения';
       case  'customerIds': return '№ профиля';
-      case  'Active': return 'Оформлен';
-      case  'Cancelled': return 'Аннулирован';
+      case  'Active': return 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.PANEL_HEADER.STATUS.ACTIVE';
+      case  'Cancelled': return 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.PANEL_HEADER.STATUS.CANCELLED';
       case  'Amount': return 'Сумма';
       case  'Percent': return 'Процент';
       case  'm': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M';

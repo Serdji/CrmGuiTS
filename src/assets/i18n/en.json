@@ -182,6 +182,100 @@
 					"TAB_NAME": "Messages"
 				},
 				"ORDER": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"STATUS": {
+								"ACTIVE": "Active",
+								"CANCELLED": "Canceled",
+								"TITLE": "Order Status"
+							}
+						},
+						"TEMPLATE": {
+							"MONETARY_INFO": {
+								"ALL": "Total on order:",
+								"COST_CURRENCY": "Cost in currency:",
+								"TAXES": "Fees and fees:",
+								"TICKETS": "By tickets:"
+							},
+							"POS": {
+								"AGENCY": "Agency:",
+								"COUNTRY": "A country:",
+								"GDS": "GDS:",
+								"POS_ID": "POS ID:",
+								"REC_LOC": "Recloc GDS:",
+								"TERMINAL": "Terminal:"
+							},
+							"SEGMENTS": {
+								"ARR_POINT": "Arrival airport:",
+								"ARR_TIME": "Arrival Date / Time:",
+								"CABIN": "Cabin:",
+								"DEP_POINT": "Departure Airport:",
+								"DEP_TIME": "Departure Date / Time:",
+								"FLIGHT": "Flight no .:",
+								"RBD": "Booking Class:",
+								"STATUS": "Segment Status:"
+							},
+							"SERVICES": {
+								"ARR_POINT": "Arrival airport:",
+								"ARR_TIME": "Arrival Date / Time:",
+								"CONCEPT_MEASURE": "Concept / Measure:",
+								"COST": "Cost: ",
+								"COUPON": "Coupon Number:",
+								"COUPON_STATUS": "Status:",
+								"DATE": "Date of:",
+								"DEP_POINT": "Departure Airport:",
+								"DEP_TIME": "Departure Date / Time:",
+								"EMD": "EMD:",
+								"EMD_TYPE": "EMD Type:",
+								"FLIGHT": "Flight no .:",
+								"NOS": {
+									"COMMENT": "Comment:",
+									"NAME_SERVICES": "Service Name:"
+								},
+								"QTTY": "Amount:",
+								"RFISC": "Rfisc:",
+								"SSR": "SSR:",
+								"STATUS": "Service Status:",
+								"SVC_TYPE": "SVC Type:"
+							},
+							"TICKETS": {
+								"ARR_POINT": "Arrival airport:",
+								"ARR_TIME": "Arrival Date / Time:",
+								"COUPON": "Coupon Number:",
+								"DEP_POINT": "Departure Airport:",
+								"DEP_TIME": "Departure Date / Time:",
+								"FARE_CODE": "Fare basis:",
+								"FLIGHT": "Flight no .:",
+								"NUM_DER_TICKET": "Number of ticket:",
+								"STATUS": "Status:"
+							}
+						}
+					},
+					"FILTER": {
+						"DATE_CREATE": "date of creation",
+						"DATE_SEARCH": "Date picker",
+						"REC_LOC": "Order No.",
+						"SEARCH": "Search by",
+						"STATUS": {
+							"ACTIVE": "Active",
+							"CANCELLED": "Canceled",
+							"TITLE": "Order Status"
+						},
+						"VALUE": "Value"
+					},
+					"HEADER": {
+						"DATE_CREATE": "date of creation",
+						"REC_LOC": "Order No.",
+						"STATUS": "Order Status"
+					},
+					"OPTION_GROUPS": {
+						"ALL": "Any:",
+						"ALL_SEARCH": "Search by all parameters",
+						"POS": "Point of Sale",
+						"SEGMENTS": "Segment",
+						"SERVICES": "Services",
+						"TICKETS": "ticket"
+					},
 					"TAB_NAME": "Orders"
 				},
 				"PRIVILEGES": {
