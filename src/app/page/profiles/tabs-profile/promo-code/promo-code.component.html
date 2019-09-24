@@ -12,7 +12,7 @@
       [ngClass]="{ '_active': nameButton === 'available' }"
       (click)="filterPromoCodes('available')"
     >
-      Доступные
+      {{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.TABS.AVAILABLE' | translate}}
     </button>
     <button
       class="promo-code__menu-button example-ripple-container"
@@ -25,7 +25,7 @@
       [ngClass]="{ '_active': nameButton === 'used' }"
       (click)="filterPromoCodes('used')"
     >
-      Использованные
+      {{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.TABS.USED' | translate}}
     </button>
   </mat-card>
 
@@ -45,7 +45,7 @@
           matRippleRadius="50"
           (click)="sortFilter('code')"
         >
-          <b>Промокод&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.PROMO_CODE' | translate}}&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -57,7 +57,7 @@
           matRippleRadius="50"
           (click)="sortFilter('promotion.promotionName')"
         >
-          <b>Промоакция&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.PROMO' | translate}}&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -69,7 +69,7 @@
           matRippleRadius="50"
           (click)="sortFilter('dateFrom')"
         >
-          <b>Период действия от&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.DATE_FROM' | translate}}&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -81,7 +81,7 @@
           matRippleRadius="50"
           (click)="sortFilter('dateTo')"
         >
-          <b>Период действия до</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.DATE_TO' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -93,7 +93,7 @@
           matRippleRadius="50"
           (click)="sortFilter('usedHostRecLocTotalCount')"
         >
-          <b>Количество</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.QUANTITY' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -134,35 +134,35 @@
 
             <div class="promo-code__info">
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text"> Расчётный код:</span>
+                <span class="promo-code__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.ACCOUT_CODE' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.accountCode}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Величина скидки:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.val}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Тип скидки:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.TITLE' | translate}}</span>
                 <div class="promo-code__info-params">
-                  <span><b>{{ promoCode.promoCodeValTypeId === 1 ? 'Сумма' : 'Процент' }}</b></span>
+                  <span><b>{{ promoCode.promoCodeValTypeId === 1 ? ('PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.SUM' | translate) : ('PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.PERCENT' | translate) }}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Использование для профиля:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.USES_PER_PERSON' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.usesPerPerson}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Общее количество использования:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.USES_TOTAL' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.usesTotal}}</b></span>
                 </div>
@@ -172,42 +172,42 @@
 
             <div class="promo-code__info">
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Номер рейсов:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.PROMO_CODE_FLIGHT_LIST' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span *ngFor="let flightList of promoCode.promoCodeFlightList "><b>{{flightList}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Период реализации от:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.FLIGHT_DATE_FROM' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.flightDateFrom | date:'dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Период реализации до:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.FLIGHT_DATE_TO' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span><b>{{promoCode.flightDateTo | date:'dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Бренды:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.BRAND' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span *ngFor="let brandList of promoCode.promoCodeBrandList"><b>{{brandList}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Класс бронирования:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.RDB' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Направления:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.ROUTE' | translate}}</span>
                 <div class="promo-code__info-params">
                   <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
                     <div
@@ -223,21 +223,21 @@
 
             <div class="promo-code__info">
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Профиль:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.CUSTOMER' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span *ngFor="let customersId of promoCode.customersIds"><b>{{customersId}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Группы сегментации:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.SEGMENTATION' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span *ngFor="let segmentation of promoCode.segmentations"><b>{{segmentation.title}}</b></span>
                 </div>
               </div>
 
               <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Группы пассажиров:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.CUSTOMER_GROUP' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span
                     *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
@@ -245,7 +245,7 @@
               </div>
 
               <div *ngIf="isUsedHostRecLoc" class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">Заказы:</span>
+                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.REC_LOC' | translate}}</span>
                 <div class="promo-code__info-params">
                   <span
                     *ngFor="let usedHostRecLoc of promoCode.usedHostRecLoc"><b>{{usedHostRecLoc.hostRecLoc}} | {{usedHostRecLoc.useDt | date:'HH:mm dd.MM.yyyy'}}</b></span>
@@ -257,7 +257,7 @@
 
 
           <span class="promo-code__link" routerLink="/crm/add-promotions-codes"
-                [queryParams]="{ promoCodeId: promoCode.promoCodeId }">Перейти в промокод</span>
+                [queryParams]="{ promoCodeId: promoCode.promoCodeId }">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.GO_TO' | translate}}</span>
         </mat-card>
       </ng-template>
     </mat-expansion-panel>

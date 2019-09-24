@@ -326,6 +326,41 @@
 					"TAB_NAME": "Profile"
 				},
 				"PROMO_CODE": {
+					"EXPANSION": {
+						"TEMPLATE": {
+							"ACCOUT_CODE": "Settlement Code:",
+							"BRAND": "Brands:",
+							"CUSTOMER": "Profile: ",
+							"CUSTOMER_GROUP": "Passenger groups:",
+							"FLIGHT_DATE_FROM": "Implementation period from:",
+							"FLIGHT_DATE_TO": "Implementation period to:",
+							"GO_TO": "Go to promotional code",
+							"PROMO_CODE_FLIGHT_LIST": "Flight Number:",
+							"RDB": "Booking Class:",
+							"REC_LOC": "Orders:",
+							"ROUTE": "Directions:",
+							"SEGMENTATION": "Segmentation Groups:",
+							"USES_PER_PERSON": "Usage for profile:",
+							"USES_TOTAL": "Total usage:",
+							"VAL": "Discount amount:",
+							"VAL_TYPE": {
+								"PERCENT": "Percent",
+								"SUM": "Amount",
+								"TITLE": "Discount Type:"
+							}
+						}
+					},
+					"HEADER": {
+						"DATE_FROM": "Validity period from",
+						"DATE_TO": "Validity period until",
+						"PROMO": "Promotion",
+						"PROMO_CODE": "Promo Code",
+						"QUANTITY": "Amount"
+					},
+					"TABS": {
+						"AVAILABLE": "Available",
+						"USED": "Used"
+					},
 					"TAB_NAME": "Promotional codes"
 				},
 				"SHOW_HIDE": {
