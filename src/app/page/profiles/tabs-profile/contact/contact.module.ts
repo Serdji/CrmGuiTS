@@ -5,6 +5,7 @@ import { ContactService } from './contact.service';
 import { SharedModule } from '../../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { ComponentsModule } from '../../../../components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { ComponentsModule } from '../../../../components/components.module';
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
+    TranslateModule,
   ],
   declarations: [ ContactComponent ],
   exports: [ ContactComponent ],

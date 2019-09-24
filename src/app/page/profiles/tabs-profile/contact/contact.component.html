@@ -1,12 +1,12 @@
 <div class="contact">
   <mat-card>
     <div class="contact__show">
-      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <span (click)="showHiden()"> {{ showHide ? ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.HIDE' | translate) : ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.SHOW' | translate) }}</span>
       <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
     </div>
     <form *ngIf="showHide" class="contact__form" [formGroup]="formContact">
       <mat-form-field class="contact__input">
-        <mat-select placeholder="Тип контакта" formControlName="contactTypeId">
+        <mat-select placeholder="{{'PAGE.PROFILES.TABS_PROFILE.CONTACT.FORM.CONTACT_TYPE' | translate}}" formControlName="contactTypeId">
           <mat-option></mat-option>
           <mat-option *ngFor="let contactType of contactTypes" [value]="contactType.contactTypeId">
             {{ contactType.contactTypeCode }}
@@ -14,10 +14,10 @@
         </mat-select>
       </mat-form-field>
       <mat-form-field class="contact__input">
-        <input matInput formControlName="contactText" placeholder="Описания к типу контакта">
+        <input matInput formControlName="contactText" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.CONTACT.FORM.CONTACT_TEXT' | translate}}">
       </mat-form-field>
       <button appAccessRights="customers:update" class="contact__button _left-button" mat-raised-button (click)="sendForm()" color="primary">
-        Добавить контакт
+        {{'PAGE.PROFILES.TABS_PROFILE.CONTACT.FORM.TITLE' | translate}}
       </button>
     </form>
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>

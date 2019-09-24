@@ -129,6 +129,17 @@
 			},
 			"TABS_PROFILE": {
 				"CONTACT": {
+					"FORM": {
+						"CONTACT_TEXT": "Contact Type Descriptions",
+						"CONTACT_TYPE": "Contact type",
+						"TITLE": "Add Contact"
+					},
+					"TABLE": {
+						"CONTACT_TEXT": "Value",
+						"CONTACT_TYPE": "Type of",
+						"FILTER": "Filter",
+						"USE_FOR_DISTRIBUTION": "Newsletter Contact"
+					},
 					"TAB_NAME": "contacts"
 				},
 				"DOCUMENT": {
