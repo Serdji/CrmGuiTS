@@ -105,7 +105,7 @@
 					"FLIGHT_DATE_TO": "",
 					"GENDER": {
 						"F": "F",
-						"M": "m",
+						"M": "M",
 						"TITLE": "floor"
 					},
 					"ID": "",
@@ -140,7 +140,7 @@
 						"FILTER": "Filter",
 						"USE_FOR_DISTRIBUTION": "Newsletter Contact"
 					},
-					"TAB_NAME": "contacts"
+					"TAB_NAME": "Contacts"
 				},
 				"DOCUMENT": {
 					"FORM": {
@@ -287,7 +287,28 @@
 					"TAB_NAME": "Orders"
 				},
 				"PRIVILEGES": {
-					"TAB_NAME": "Privileges"
+					"HEADER": {
+						"DATE_OF_CARRIAGE": "Date of carriage",
+						"DATE_OF_SALE": "Date of sale",
+						"DIRECTION_FROM": "Direction from",
+						"DIRECTION_TO": "Direction to",
+						"GDS": "Order (GDS) No.",
+						"ORGANIZATION": "Organization",
+						"STATUS": "status"
+					},
+					"TAB_NAME": "Privileges",
+					"TEMPLATE": {
+						"ARR_LOC_CODE": "Direction to:",
+						"COUPON": "Coupon Number:",
+						"DEP_LOC_CODE": "Direction from:",
+						"DISCOUNT_SUM": "Amount of granted benefits:",
+						"EXTERNAL_DISCOUNT_SOURCE_NAME": "Benefit organization:",
+						"FLIGHT_DATA": "Date of carriage:",
+						"PRICE": "Total cost of transportation:",
+						"SALE_DATE": "Date of provision of benefits (date of sale):",
+						"STATUS_NAME": "Status:",
+						"TICKET": "Number of ticket:"
+					}
 				},
 				"PROFILE": {
 					"CARD": {

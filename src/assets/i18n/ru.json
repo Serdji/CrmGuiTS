@@ -287,7 +287,28 @@
 					"TAB_NAME": "Заказы"
 				},
 				"PRIVILEGES": {
-					"TAB_NAME": "Льготы"
+					"HEADER": {
+						"DATE_OF_CARRIAGE": "Дата перевозки",
+						"DATE_OF_SALE": "Дата продажи",
+						"DIRECTION_FROM": "Направление от",
+						"DIRECTION_TO": "Направление до",
+						"GDS": "Заказ (GDS) №",
+						"ORGANIZATION": "Организация",
+						"STATUS": "Статус"
+					},
+					"TAB_NAME": "Льготы",
+					"TEMPLATE": {
+						"ARR_LOC_CODE": "Направление до:",
+						"COUPON": "Номер купона:",
+						"DEP_LOC_CODE": "Направление от:",
+						"DISCOUNT_SUM": "Сумма предоставляемой льготы:",
+						"EXTERNAL_DISCOUNT_SOURCE_NAME": "Организация предоставляющая льготу:",
+						"FLIGHT_DATA": "Дата перевозки:",
+						"PRICE": "Полная стоимость перевозки:",
+						"SALE_DATE": "Дата предоставления льготы ( дата продажи ):",
+						"STATUS_NAME": "Статус:",
+						"TICKET": "Номер билета:"
+					}
 				},
 				"PROFILE": {
 					"CARD": {

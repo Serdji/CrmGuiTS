@@ -87,7 +87,7 @@
   <div class="table__button-wrapper">
     <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteContact()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+      {{'BUTTON.DELETE' | translate}}
       <mat-icon>delete</mat-icon>
     </button>
   </div>
