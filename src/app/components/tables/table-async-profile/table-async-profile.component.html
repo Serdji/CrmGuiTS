@@ -47,7 +47,7 @@
     </ng-container>
 
     <ng-container  matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.MIDDEL_NAME' | translate}} </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.MIDDLE_NAME' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
       </mat-cell>
@@ -57,7 +57,7 @@
     <ng-container  matColumnDef="gender">
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.GENDER' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.gender | fieldTranslation}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.gender | fieldTranslation | translate}}</span>
       </mat-cell>
     </ng-container>
 

@@ -136,22 +136,22 @@
     color="accent"
     [selectedIndex]="selectedIndex"
   >
-    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.PROFILES.TITLE' | translate}}">
+    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.TAB_NAME' | translate}}">
       <ng-template matTabContent>
         <app-profile [id]="profileId"></app-profile>
       </ng-template>
     </mat-tab>
-    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.CONTACT.TITLE' | translate}}">
+    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.CONTACT.TAB_NAME' | translate}}">
       <ng-template matTabContent>
         <app-contact [id]="profileId"></app-contact>
       </ng-template>
     </mat-tab>
-    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.TITLE' | translate}}">
+    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.TAB_NAME' | translate}}">
       <ng-template matTabContent>
         <app-document [id]="profileId"></app-document>
       </ng-template>
     </mat-tab>
-    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.TITLE' | translate}}">
+    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.TAB_NAME' | translate}}">
       <ng-template matTabContent>
         <app-order
           [id]="profileId"
@@ -160,7 +160,7 @@
       </ng-template>
     </mat-tab>
     <mat-tab
-      label="{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.TITLE' | translate}}"
+      label="{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.TAB_NAME' | translate}}"
       appAccessRights="distributions:read"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledMessages = $event"
@@ -174,7 +174,7 @@
       </ng-template>
     </mat-tab>
     <mat-tab
-      label="{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.TITLE' | translate}}"
+      label="{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.TAB_NAME' | translate}}"
       appAccessRights="promotions:update"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledPromoCode = $event"
@@ -188,7 +188,7 @@
       </ng-template>
     </mat-tab>
     <mat-tab
-      label="{{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TITLE' | translate}}"
+      label="{{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TAB_NAME' | translate}}"
       appAccessRights="externaldiscounts:update"
       [appAccessDisabled]="true"
       (emitAccessDisabled)="accessDisabledPrivileges = $event"

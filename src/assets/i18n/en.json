@@ -124,15 +124,15 @@
 					"FIRST_NAME": "Name",
 					"GENDER": "Gender",
 					"LAST_NAME": "Surname",
-					"MIDDEL_NAME": "Middle Name"
+					"MIDDLE_NAME": "Middle Name"
 				}
 			},
 			"TABS_PROFILE": {
 				"CONTACT": {
-					"TITLE": "contacts"
+					"TAB_NAME": "contacts"
 				},
 				"DOCUMENT": {
-					"TITLE": "Documents"
+					"TAB_NAME": "Documents"
 				},
 				"HEADER": {
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Decorated paid services:",
@@ -150,19 +150,56 @@
 					"TOTAL_AMOUNT": "Issued for the amount:"
 				},
 				"MESSAGES": {
-					"TITLE": "Messages"
+					"TAB_NAME": "Messages"
 				},
 				"ORDER": {
-					"TITLE": "Orders"
+					"TAB_NAME": "Orders"
 				},
 				"PRIVILEGES": {
-					"TITLE": "Privileges"
+					"TAB_NAME": "Privileges"
 				},
-				"PROFILES": {
-					"TITLE": "Profile"
+				"PROFILE": {
+					"CARD": {
+						"COMMENT": "Notes:",
+						"DATE_OF_BIRTH": "Date of Birth:",
+						"FIRST_NAME": "Name:",
+						"GENDER": "Gender:",
+						"LAST_NAME": "Surname:",
+						"MIDDLE_NAME": "Middle Name:",
+						"TITLE": "Passenger main name"
+					},
+					"EDIT": {
+						"COMMENT": "Notes",
+						"DATE_OF_BIRTH": "Date of Birth",
+						"FIRST_NAME": "Name",
+						"GENDER": {
+							"F": "F",
+							"M": "m",
+							"TITLE": "floor"
+						},
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle Name",
+						"TITLE": "Edit"
+					},
+					"FORM": {
+						"FIRST_NAME": "Name",
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle Name",
+						"TITLE": "Add additional name"
+					},
+					"TABLE": {
+						"FIRST_NAME": "Name",
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle Name"
+					},
+					"TAB_NAME": "Profile"
 				},
 				"PROMO_CODE": {
-					"TITLE": "Promotional codes"
+					"TAB_NAME": "Promotional codes"
+				},
+				"SHOW_HIDE": {
+					"HIDE": "Hide add form",
+					"SHOW": "Show upload form"
 				}
 			}
 		},

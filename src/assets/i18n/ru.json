@@ -124,15 +124,15 @@
 					"FIRST_NAME": "Имя",
 					"GENDER": "Пол",
 					"LAST_NAME": "Фамилия",
-					"MIDDEL_NAME": "Отчество"
+					"MIDDLE_NAME": "Отчество"
 				}
 			},
 			"TABS_PROFILE": {
 				"CONTACT": {
-					"TITLE": "Контакты"
+					"TAB_NAME": "Контакты"
 				},
 				"DOCUMENT": {
-					"TITLE": "Документы"
+					"TAB_NAME": "Документы"
 				},
 				"HEADER": {
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Оформленных платных услуг:",
@@ -150,19 +150,56 @@
 					"TOTAL_AMOUNT": "Оформленных на сумму:"
 				},
 				"MESSAGES": {
-					"TITLE": "Соообщения"
+					"TAB_NAME": "Соообщения"
 				},
 				"ORDER": {
-					"TITLE": "Заказы"
+					"TAB_NAME": "Заказы"
 				},
 				"PRIVILEGES": {
-					"TITLE": "Льготы"
+					"TAB_NAME": "Льготы"
 				},
-				"PROFILES": {
-					"TITLE": "Профиль"
+				"PROFILE": {
+					"CARD": {
+						"COMMENT": "Заметки:",
+						"DATE_OF_BIRTH": "Дата рождения:",
+						"FIRST_NAME": "Имя:",
+						"GENDER": "Пол:",
+						"LAST_NAME": "Фамилия:",
+						"MIDDLE_NAME": "Отчество:",
+						"TITLE": "Пассажир основное ФИО"
+					},
+					"EDIT": {
+						"COMMENT": "Заметки",
+						"DATE_OF_BIRTH": "Дата рождения",
+						"FIRST_NAME": "Имя",
+						"GENDER": {
+							"F": "Ж",
+							"M": "М",
+							"TITLE": "Пол"
+						},
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"TITLE": "Редактировать"
+					},
+					"FORM": {
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"TITLE": "Добавить дополнительно ФИО"
+					},
+					"TABLE": {
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество"
+					},
+					"TAB_NAME": "Профиль"
 				},
 				"PROMO_CODE": {
-					"TITLE": "Промокоды"
+					"TAB_NAME": "Промокоды"
+				},
+				"SHOW_HIDE": {
+					"HIDE": "Скрыть форму добавления",
+					"SHOW": "Показать форму добавления"
 				}
 			}
 		},

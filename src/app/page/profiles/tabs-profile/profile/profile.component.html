@@ -3,30 +3,30 @@
     <mat-spinner class="profile__spinner" *ngIf="progress"></mat-spinner>
     <div *ngIf="!progress && !edit">
       <mat-card-header>
-        <h2 class="profile__header">Пассажир основное ФИО</h2>
+        <h2 class="profile__header">{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.TITLE' | translate}}</h2>
         <mat-icon appAccessRights="customers:update" (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <mat-card-content class="profile__content">
         <div class="profile__box _m-r">
           <div class="profile__list">
-            <span><b>Имя: </b>{{profile.firstName}}</span>
+            <span><b>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.FIRST_NAME' | translate}} </b>{{profile.firstName}}</span>
           </div>
           <div class="profile__list">
-            <span><b>Фамилия: </b>{{profile.lastName}}</span>
+            <span><b>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.LAST_NAME' | translate}} </b>{{profile.lastName}}</span>
           </div>
           <div class="profile__list">
-            <span><b>Отчество: </b>{{profile.secondName}}</span>
+            <span><b>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.MIDDLE_NAME' | translate}} </b>{{profile.secondName}}</span>
           </div>
           <div class="profile__list">
-            <span><b>Пол: </b>{{profile.gender | fieldTranslation}}</span>
+            <span><b>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.GENDER' | translate}} </b>{{profile.gender | fieldTranslation | translate}}</span>
           </div>
           <div class="profile__list">
-            <span><b>Дата рождения: </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
+            <span><b>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.DATE_OF_BIRTH' | translate}} </b>{{profile.dob | date:'dd.MM.yyyy' }}</span>
           </div>
         </div>
         <div class="profile__box">
           <div class="profile__list">
-            <span><b>Заметки: </b> {{profile.comment}} </span>
+            <span><b>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.CARD.COMMENT' | translate}} </b> {{profile.comment}} </span>
           </div>
           <div class="profile__distribution">
             <app-button-editor [ids]="{customerIds: [id]}"></app-button-editor>
@@ -38,47 +38,47 @@
 
     <div *ngIf="edit">
       <mat-card-header>
-        <h2 class="profile__header">Редактировать</h2>
+        <h2 class="profile__header">{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.TITLE' | translate}}</h2>
         <mat-icon (click)="toggleEdit()">create</mat-icon>
       </mat-card-header>
       <form class="profile__form" [formGroup]="formUpdateProfile">
         <div class="profile__content">
           <div class="profile__box _m-r">
             <mat-form-field class="profile__input">
-              <input matInput formControlName="firstName" placeholder="Имя">
-              <mat-error>Обязательное поле</mat-error>
+              <input matInput formControlName="firstName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.FIRST_NAME' | translate}}">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="profile__input">
-              <input matInput formControlName="lastName" placeholder="Фамилия">
+              <input matInput formControlName="lastName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.LAST_NAME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile__input">
-              <input matInput formControlName="secondName" placeholder="Отчество">
+              <input matInput formControlName="secondName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.MIDDLE_NAME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile__input">
-              <mat-select formControlName="gender" placeholder="Пол">
-                <mat-option value="m">М</mat-option>
-                <mat-option value="f">Ж</mat-option>
+              <mat-select formControlName="gender" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.GENDER.TITLE' | translate}}">
+                <mat-option value="m">{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.GENDER.M' | translate}}</mat-option>
+                <mat-option value="f">{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.GENDER.F' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="profile__input">
-              <input matInput formControlName="dob" placeholder="Дата рождения" [matDatepicker]="dob">
+              <input matInput formControlName="dob" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.DATE_OF_BIRTH' | translate}}" [matDatepicker]="dob">
               <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dob></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="profile__box">
             <mat-form-field class="profile__input">
-              <textarea rows="15" maxlength="1024" formControlName="comment" matInput placeholder="Заметки"></textarea>
+              <textarea rows="15" maxlength="1024" formControlName="comment" matInput placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.EDIT.COMMENT' | translate}}"></textarea>
             </mat-form-field>
           </div>
         </div>
         <div class="profile__button-wrapper">
           <button class="profile__button _left-button" mat-raised-button (click)="sendFormUpdateProfile()"
                   color="primary">
-            Изменить
+            {{'BUTTON.EDIT' | translate}}
           </button>
           <button class="profile__button" mat-raised-button (click)="deleteProfile()" color="warn">
-            Удалить
+            {{'BUTTON.DELETE' | translate}}
             <mat-icon>delete</mat-icon>
           </button>
         </div>
@@ -89,27 +89,27 @@
 
   <mat-card class="profile__card">
     <div class="profile__show">
-      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <span (click)="showHiden()"> {{ showHide ? ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.HIDE' | translate) : ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.SHOW' | translate) }}</span>
       <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
     </div>
 
     <form *ngIf="showHide" class="profile__form _Add" [formGroup]="formAddProfile">
 
       <mat-form-field class="profile__input">
-        <input matInput formControlName="firstName" placeholder="Имя">
-        <mat-error>Обязательное поле</mat-error>
+        <input matInput formControlName="firstName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.FORM.FIRST_NAME' | translate}}">
+        <mat-error>{{'BUTTON.DELETE' | translate}}</mat-error>
       </mat-form-field>
 
       <mat-form-field class="profile__input">
-        <input matInput formControlName="lastName" placeholder="Фамилия">
+        <input matInput formControlName="lastName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.FORM.LAST_NAME' | translate}}">
       </mat-form-field>
 
       <mat-form-field class="profile__input">
-        <input matInput formControlName="secondName" placeholder="Отчество">
+        <input matInput formControlName="secondName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.FORM.MIDDLE_NAME' | translate}}">
       </mat-form-field>
       <button appAccessRights="customers:update" class="profile__button" mat-raised-button
               (click)="sendFormAddProfile()" color="primary">
-        Добавить дополнительно ФИО
+        {{'PAGE.PROFILES.TABS_PROFILE.PROFILE.FORM.TITLE' | translate}}
       </button>
     </form>
 
