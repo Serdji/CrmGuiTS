@@ -179,7 +179,15 @@
 					"TOTAL_AMOUNT": "Issued for the amount:"
 				},
 				"MESSAGES": {
-					"TAB_NAME": "Messages"
+					"HEADER": {
+						"DATE": "Date and time of distribution",
+						"STATUS": "Current status",
+						"TOPIC_LETTER": "Topic of the letter"
+					},
+					"TAB_NAME": "Messages",
+					"TEMPLATE": {
+						"GO_TO": "Go to the newsletter"
+					}
 				},
 				"ORDER": {
 					"EXPANSION": {
