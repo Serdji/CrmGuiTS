@@ -405,7 +405,7 @@
 					"SEGMENTATION": "Segmentation group",
 					"SIMPLE": "Simple",
 					"STATUS": {
-						"COMPLICATED": "Complex",
+						"COMPLICATED": "Difficult",
 						"SIMPLE": "Simple",
 						"TITLE": "status"
 					},
