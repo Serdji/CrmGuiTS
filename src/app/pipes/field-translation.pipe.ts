@@ -18,10 +18,10 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'Cancelled': return 'Аннулирован';
       case  'Amount': return 'Сумма';
       case  'Percent': return 'Процент';
-      case  'm': return 'M';
-      case  'f': return 'Ж';
-      case  'M': return 'M';
-      case  'F': return 'Ж';
+      case  'm': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M';
+      case  'f': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.F';
+      case  'M': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M';
+      case  'F': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.F';
     }
   }
 }
