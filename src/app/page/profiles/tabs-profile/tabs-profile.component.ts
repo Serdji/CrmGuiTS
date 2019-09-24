@@ -52,7 +52,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.selectedIndex = 1;
+    this.selectedIndex = 2;
     this.initQueryRouter();
     this.initCurrencyDefault();
     this.initTabsControlData();

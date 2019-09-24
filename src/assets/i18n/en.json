@@ -143,6 +143,24 @@
 					"TAB_NAME": "contacts"
 				},
 				"DOCUMENT": {
+					"FORM": {
+						"ADD": "To Add",
+						"DOCUMENT_TYPE": "Document Type",
+						"EXP_DATE": "dd.mm.yyyy",
+						"FIRST_NAME": "Name",
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle Name",
+						"NUM": "Document Number"
+					},
+					"TABLE": {
+						"DOCUMENT_TYPE": "Document Type",
+						"EXP_DATE": "Validity",
+						"FILTER": "Filter",
+						"FIRST_NAME": "Name",
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle Name",
+						"NUM": "Document Number"
+					},
 					"TAB_NAME": "Documents"
 				},
 				"HEADER": {
