@@ -390,6 +390,29 @@
 				}
 			}
 		},
+		"SEGMENTATION": {
+			"LIST_SEGMENTATION": {
+				"PROFILE_SEGMENTATION": {
+					"CUSTOMER_ID": "Profile No.",
+					"FIRST_NAME": "Name",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name"
+				},
+				"TABLE_SEGMENTATION": {
+					"ALL": "Everything",
+					"COMPLICATED": "Difficult",
+					"FILTER": "Filter",
+					"SEGMENTATION": "Segmentation group",
+					"SIMPLE": "Simple",
+					"STATUS": {
+						"COMPLICATED": "Complex",
+						"SIMPLE": "Simple",
+						"TITLE": "status"
+					},
+					"TITLE": "Show segmentation"
+				}
+			}
+		},
 		"USERS": {
 			"ADD_USER": {
 				"CONFIRM_PASSWORD": "Confirm password",
@@ -444,6 +467,10 @@
 		"ITEMS_PER_PAGE": "Items per page",
 		"LAST_PAGE": "Last page",
 		"NEXT": "Next",
-		"PREV": "Previous"
+		"PREV": "Previous",
+		"RESULT": {
+			"ERROR": "No results were found for this request.",
+			"OK": "searching results"
+		}
 	}
 }

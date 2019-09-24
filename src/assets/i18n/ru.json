@@ -390,6 +390,29 @@
 				}
 			}
 		},
+		"SEGMENTATION": {
+			"LIST_SEGMENTATION": {
+				"PROFILE_SEGMENTATION": {
+					"CUSTOMER_ID": "№ профиля",
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество"
+				},
+				"TABLE_SEGMENTATION": {
+					"ALL": "Все",
+					"COMPLICATED": "Сложные",
+					"FILTER": "Фильтр",
+					"SEGMENTATION": "Группа сегментации",
+					"SIMPLE": "Простые",
+					"STATUS": {
+						"COMPLICATED": "Сложная",
+						"SIMPLE": "Простая",
+						"TITLE": "Статус"
+					},
+					"TITLE": "Показать сегментации"
+				}
+			}
+		},
 		"USERS": {
 			"ADD_USER": {
 				"CONFIRM_PASSWORD": "Повторите пароль",
@@ -444,6 +467,10 @@
 		"ITEMS_PER_PAGE": "Количество на страницу",
 		"LAST_PAGE": "Последняя страница",
 		"NEXT": "Следующая",
-		"PREV": "Предыдущая"
+		"PREV": "Предыдущая",
+		"RESULT": {
+			"ERROR": "По этому запросу ничего не найдено",
+			"OK": "Результаты поиска"
+		}
 	}
 }
