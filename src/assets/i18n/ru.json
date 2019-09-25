@@ -509,6 +509,14 @@
 				}
 			}
 		},
+		"SLECIAL_GROUP": {
+			"PROFILE_GROUP": {
+				"TABLE": {
+					"PROFILE_GROUP": "Группа пассажиров"
+				},
+				"TITLE": "Группа пассажиров"
+			}
+		},
 		"USERS": {
 			"ADD_USER": {
 				"CONFIRM_PASSWORD": "Повторите пароль",

@@ -509,6 +509,14 @@
 				}
 			}
 		},
+		"SLECIAL_GROUP": {
+			"PROFILE_GROUP": {
+				"TABLE": {
+					"PROFILE_GROUP": "Passenger group"
+				},
+				"TITLE": "Passenger group"
+			}
+		},
 		"USERS": {
 			"ADD_USER": {
 				"CONFIRM_PASSWORD": "Confirm password",

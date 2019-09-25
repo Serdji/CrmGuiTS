@@ -8,6 +8,7 @@ import { MaterialModule } from '../../../shared/material';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { ProfileGroupRoutes } from './profile-group.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { ProfileGroupRoutes } from './profile-group.routing';
     ReactiveFormsModule,
     ComponentsModule,
     DirectivesModule,
-    ProfileGroupRoutes
+    ProfileGroupRoutes,
+    TranslateModule
   ],
   declarations: [ProfileGroupComponent],
   providers: [ProfileGroupService]
