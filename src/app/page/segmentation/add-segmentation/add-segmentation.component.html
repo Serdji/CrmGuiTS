@@ -7,7 +7,7 @@
           <ng-template matStepLabel>Группа сегментации</ng-template>
           <mat-form-field class="add-segmentation__input">
             <input matInput formControlName="segmentationTitle" type="text" placeholder="Группа сегментации">
-            <mat-error>Обязательное поле</mat-error>
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field class="add-segmentation__input">
             <mat-select formControlName="segmentationGranularity" placeholder="Гранулярность">
@@ -15,10 +15,10 @@
               <mat-option value="2">Заказы</mat-option>
               <mat-option value="3">Купон</mat-option>
             </mat-select>
-            <mat-error>Обязательное поле</mat-error>
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <div>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -42,8 +42,8 @@
             </mat-radio-group>
           </mat-card-content>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -59,24 +59,24 @@
             <div class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
                 <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <mat-select formControlName="eDocTypeS">
                   <mat-option value="T">Билеты</mat-option>
                   <mat-option value="E">Услуги</mat-option>
                 </mat-select>
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
             </div>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext (click)="initAutocomplete( 'formSegmentationStepper' )">Вперед</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext (click)="initAutocomplete( 'formSegmentationStepper' )">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -91,11 +91,11 @@
           <div class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
               <input formControlName="moneyAmountFromInclude" matInput type="text" placeholder="От">
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input formControlName="moneyAmountToExclude" matInput type="text" placeholder="До">
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <input matInput formControlName="currency" type="text" placeholder="Валюта оплаты">
@@ -105,12 +105,12 @@
                 <mat-option value="T">Билеты</mat-option>
                 <mat-option value="E">Услуги</mat-option>
               </mat-select>
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -188,8 +188,8 @@
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -259,8 +259,8 @@
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -281,8 +281,8 @@
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
-            <button mat-button matStepperNext>Вперед</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -323,7 +323,7 @@
             </mat-radio-group>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>Назад</button>
+            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button (click)="changeForm()">Сформировать</button>
           </div>
         </mat-step>
@@ -340,7 +340,7 @@
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
                 <input matInput formControlName="segmentationTitle" type="text" placeholder="Группа сегментации">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <mat-select formControlName="segmentationGranularity" placeholder="Гранулярность">
@@ -348,7 +348,7 @@
                   <mat-option value="2">Заказы</mat-option>
                   <mat-option value="3">Купон</mat-option>
                 </mat-select>
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
             </mat-card-content>
           </mat-card>
@@ -548,18 +548,18 @@
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
                 <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="От">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="До">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <mat-select formControlName="eDocTypeS">
                   <mat-option value="T">Билеты</mat-option>
                   <mat-option value="E">Услуги</mat-option>
                 </mat-select>
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
             </mat-card-content>
           </mat-card>
@@ -612,11 +612,11 @@
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
                 <input formControlName="moneyAmountFromInclude" matInput type="text" placeholder="От">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <input formControlName="moneyAmountToExclude" matInput type="text" placeholder="До">
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <input matInput formControlName="currency" type="text" placeholder="Валюта оплаты">
@@ -626,7 +626,7 @@
                   <mat-option value="T">Билеты</mat-option>
                   <mat-option value="E">Услуги</mat-option>
                 </mat-select>
-                <mat-error>Обязательное поле</mat-error>
+                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
             </mat-card-content>
           </mat-card>

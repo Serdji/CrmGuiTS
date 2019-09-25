@@ -35,17 +35,6 @@ import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-
-const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD MM YYYY',
-  },
-  display: {
-    dateInput: 'DD.MM.YYYY',
-    monthYearLabel: 'MMMM YYYY',
-  },
-};
 
 @NgModule( {
   imports: [
@@ -116,9 +105,6 @@ const MY_FORMATS = {
     MatTreeModule,
   ],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-    { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorService }
   ],
 } )

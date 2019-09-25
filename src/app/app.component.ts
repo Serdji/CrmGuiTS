@@ -10,13 +10,24 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD MM YYYY',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'MMMM YYYY',
+  },
+};
+
 @Component( {
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: [ './app.component.css' ],
   providers: [
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+    { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
   ],
 } )
 export class AppComponent implements OnInit {
@@ -43,16 +54,16 @@ export class AppComponent implements OnInit {
   }
 
   private initTranslate() {
-    this.translate.addLangs(['ru', 'en']);
-    this.translate.setDefaultLang('ru');
+    this.translate.addLangs( [ 'ru', 'en' ] );
+    this.translate.setDefaultLang( 'ru' );
 
-    this.translate.stream('MENU').subscribe((value) => {
-      console.log(value, this.translate.store.currentLang );
+    this.translate.stream( 'MENU' ).subscribe( ( value ) => {
+      console.log( value, this.translate.store.currentLang );
       this._adapter.setLocale( this.translate.store.currentLang );
-    });
+    } );
 
     const browserLang = this.translate.getBrowserLang();
-    this.translate.use(browserLang.match(/ru|en/) ? browserLang : 'ru');
+    this.translate.use( browserLang.match( /ru|en/ ) ? browserLang : 'ru' );
   }
 
   private isTokenRedirect() {
