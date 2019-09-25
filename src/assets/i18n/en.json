@@ -16,7 +16,8 @@
 		"MERGE_PROFILE": "Combine passengers",
 		"PROMO_CODE": "Link promotional code",
 		"SAVE": "Save",
-		"SEARCH": "Search"
+		"SEARCH": "Search",
+		"TO_FROM": ""
 	},
 	"FIELD": {
 		"ERROR": {
@@ -393,6 +394,87 @@
 			}
 		},
 		"SEGMENTATION": {
+			"ADD_SEGMENTATION": {
+				"BUTTON": {
+					"NEXT": "Next",
+					"PREV": "Previous"
+				},
+				"GROUP_SEGMENTATION": {
+					"GRANULARITY": {
+						"COUPON": "Coupon",
+						"ORDERS": "Orders",
+						"PASSENGER": "Passenger",
+						"TITLE": "Granularity"
+					},
+					"GROUP_SEGMENTATION": "Segmentation group"
+				},
+				"NUMBER_SEGMENTS": {
+					"FROM": "From",
+					"SERVICES": "Services",
+					"TICKETS": "Tickets",
+					"TITLE": "Number of segments",
+					"TO": "Before"
+				},
+				"ORDER_AMOUNT": {
+					"CURRENCY": "Payment currency",
+					"FROM": "From",
+					"SERVICES": "Services",
+					"TICKETS": "Tickets",
+					"TITLE": "Order amount",
+					"TO": "Before"
+				},
+				"PROFILE_DETAILS": {
+					"DOB_FROM": "Date of birth from",
+					"DOB_TO": "",
+					"FLIES_WITHOUT_CHILDREN": "Flies without children",
+					"FLIES_WITH_CHILDREN": "Flies with children",
+					"GENDER": {
+						"F": "F",
+						"M": "M",
+						"TITLE": "Gender"
+					},
+					"TITLE": "Profile Details"
+				},
+				"RESERVATION_DATE_RANG": {
+					"DATE_FROM": "Free range from",
+					"DATE_TO": "Free range to",
+					"TITLE": "Reservation Date Range"
+				},
+				"SERVICES": {
+					"AIRLINE_L_CODE": "Airline code",
+					"ARR_D_FROM": "Departure date range from",
+					"ARR_D_TO": "Departure date range by",
+					"ARR_LOC": "Where",
+					"DEP_LOC": "From where",
+					"FLIGHT_NO": "Flight number",
+					"POS_AGENCY": "Agency code (point of sale)",
+					"POS_GDS": "GDS code (point of sale)",
+					"POS_ID": "PPR code (point of sale)",
+					"SERVICE_CODE": "Code",
+					"TITLE": "Paid services"
+				},
+				"SUBJECT_ANALYSIS": {
+					"PAYMENT": "Amount of purchases",
+					"REMOVE": "Reset analysis subject",
+					"SEGMENT": "Number of segments",
+					"TITLE": "Subject of analysis"
+				},
+				"TICKET": {
+					"AIRLINE_L_CODE": "Airline code",
+					"ARR_D_FROM": "Departure date range from",
+					"ARR_D_TO": "Departure date range by",
+					"ARR_LOC": "Where",
+					"CABIN": "Cabin",
+					"DEP_LOC": "From where",
+					"FLIGHT_NO": "Flight number",
+					"POS_AGENCY": "Agency code (point of sale)",
+					"POS_GDS": "GDS code (point of sale)",
+					"POS_ID": "PPR code (point of sale)",
+					"RARE_CODE": "Rate code",
+					"RDB": "Booking class",
+					"TITLE": "Ticket"
+				}
+			},
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Segmentation selection",

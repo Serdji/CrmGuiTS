@@ -16,7 +16,8 @@
 		"MERGE_PROFILE": "Объединить пассажиров",
 		"PROMO_CODE": "Привязать промокод",
 		"SAVE": "Сохранить",
-		"SEARCH": "Искать"
+		"SEARCH": "Искать",
+		"TO_FROM": "Сформировать"
 	},
 	"FIELD": {
 		"ERROR": {
@@ -393,6 +394,87 @@
 			}
 		},
 		"SEGMENTATION": {
+			"ADD_SEGMENTATION": {
+				"BUTTON": {
+					"NEXT": "Следующая",
+					"PREV": "Предыдущая"
+				},
+				"GROUP_SEGMENTATION": {
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
+					"GROUP_SEGMENTATION": "Группа сегментации"
+				},
+				"NUMBER_SEGMENTS": {
+					"FROM": "От",
+					"SERVICES": "Услуги",
+					"TICKETS": "Билеты",
+					"TITLE": "Количество сегментов",
+					"TO": "До"
+				},
+				"ORDER_AMOUNT": {
+					"CURRENCY": "Валюта оплаты",
+					"FROM": "От",
+					"SERVICES": "Услуги",
+					"TICKETS": "Билеты",
+					"TITLE": "Сумма по заказу",
+					"TO": "До"
+				},
+				"PROFILE_DETAILS": {
+					"DOB_FROM": "Дата рождения от",
+					"DOB_TO": "",
+					"FLIES_WITHOUT_CHILDREN": "Летает без детей",
+					"FLIES_WITH_CHILDREN": "Летает с детьми",
+					"GENDER": {
+						"F": "Ж",
+						"M": "М",
+						"TITLE": "Пол"
+					},
+					"TITLE": "Детали профиля"
+				},
+				"RESERVATION_DATE_RANG": {
+					"DATE_FROM": "Свободный диапазон от",
+					"DATE_TO": "Свободный диапазон до",
+					"TITLE": "Диапазон дат бронирования"
+				},
+				"SERVICES": {
+					"AIRLINE_L_CODE": "Код авиакомпании",
+					"ARR_D_FROM": "Диапазон даты вылета с",
+					"ARR_D_TO": "Диапазон даты вылета по",
+					"ARR_LOC": "Куда",
+					"DEP_LOC": "Откуда",
+					"FLIGHT_NO": "Номер рейса",
+					"POS_AGENCY": "Код агентства (точка продажи)",
+					"POS_GDS": "Код ГРС (точка продажи)",
+					"POS_ID": "Код ППР (точка продажи)",
+					"SERVICE_CODE": "Код услути",
+					"TITLE": "Платные услуги"
+				},
+				"SUBJECT_ANALYSIS": {
+					"PAYMENT": "Сумма покупок",
+					"REMOVE": "Сбросить настройки предмета анализа",
+					"SEGMENT": "Количество сегментов",
+					"TITLE": "Предмет анализа"
+				},
+				"TICKET": {
+					"AIRLINE_L_CODE": "Код авиакомпании",
+					"ARR_D_FROM": "Диапазон даты вылета с",
+					"ARR_D_TO": "Диапазон даты вылета по",
+					"ARR_LOC": "Куда",
+					"CABIN": "Кабина",
+					"DEP_LOC": "Откуда",
+					"FLIGHT_NO": "Номер рейса",
+					"POS_AGENCY": "Код агентства (точка продажи)",
+					"POS_GDS": "Код ГРС (точка продажи)",
+					"POS_ID": "Код ППР (точка продажи)",
+					"RARE_CODE": "Код тарифа",
+					"RDB": "Класс бронирования",
+					"TITLE": "Билет"
+				}
+			},
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Выбор сегментации",
