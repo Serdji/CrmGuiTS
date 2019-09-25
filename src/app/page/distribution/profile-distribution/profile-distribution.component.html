@@ -23,19 +23,19 @@
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="1">
             <div class="profile-distribution__grid">
-              <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.notSentNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.sentToGatewayNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.sendToCustomerNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.errorNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.NOT_SENT' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.SENT_TO_GATEWAY' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.SEND_TO_CUSTOMER' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.ERROR' | translate}}</span>
             </div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="1" [rowspan]="1">
             <div class="profile-distribution__grid">
-              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.deliveredNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.readNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.clickedNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.bouncedNameRus}}</span>
-              <span [matBadge]="distributionProfile.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{distributionProfile.distributionStatuses.rejectedNameRus}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.DELIVERED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.READ' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.CLICKED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.BOUNCED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUSES.REJECTED' | translate}}</span>
             </div>
           </mat-grid-tile>
         </mat-grid-list>

@@ -80,15 +80,37 @@
 					"FILTER": "Filter",
 					"LAST_TRY": "Newsletter Creation Date",
 					"STATUS": "status",
+					"STATUSES": {
+						"BOUNCED": "Returned",
+						"CLICKED": "Following a link",
+						"DELIVERED": "Delivered",
+						"ERROR": "Mistake",
+						"NOT_SENT": "Ready to ship",
+						"READ": "Read",
+						"REJECTED": "Unsubscribed",
+						"SEND_TO_CUSTOMER": "Sent to customer",
+						"SENT_TO_GATEWAY": "Sent to mail gateway"
+					},
 					"SUBJECT": "Theme"
 				}
 			},
 			"PROFILE_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
-				"FROM": "From",
+				"FROM": "from",
 				"LAST_TRY": "Date and time the newsletter was created:",
 				"STATUS": "Status:",
+				"STATUSES": {
+					"BOUNCED": "Returned",
+					"CLICKED": "Following a link",
+					"DELIVERED": "Delivered",
+					"ERROR": "Mistake",
+					"NOT_SENT": "Ready to ship",
+					"READ": "Read",
+					"REJECTED": "Unsubscribed",
+					"SEND_TO_CUSTOMER": "Sent to customer",
+					"SENT_TO_GATEWAY": "Sent to mail gateway"
+				},
 				"SUBJECT": "Topic of the letter:",
 				"TABLE": {
 					"ERROR_MESSAGE": "Explanation",
@@ -97,7 +119,7 @@
 					"MIDDLE_NAME": "Middle Name",
 					"STATUS": "status"
 				},
-				"TO": "Before"
+				"TO": "to"
 			}
 		},
 		"PROFILES": {
@@ -443,7 +465,7 @@
 					"SERVICES": "Services",
 					"TICKETS": "Tickets",
 					"TITLE": "Number of segments",
-					"TO": "Before"
+					"TO": "To"
 				},
 				"ORDER_AMOUNT": {
 					"CURRENCY": "Payment currency",
@@ -451,7 +473,7 @@
 					"SERVICES": "Services",
 					"TICKETS": "Tickets",
 					"TITLE": "Order amount",
-					"TO": "Before"
+					"TO": "To"
 				},
 				"PROFILE_DETAILS": {
 					"DOB_FROM": "Date of birth from",
