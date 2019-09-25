@@ -8,12 +8,14 @@
 	"BUTTON": {
 		"ADD_CUSTOMER": "Добавить пассажира",
 		"ADD_USER": "Добавить пользователя",
+		"CLEAR": "Очистить",
 		"CLEAR_FORM": "Очистить форму",
 		"DELETE": "Удалить",
 		"EDIT": "Изменить",
 		"EDITOR": "Создать рассылку",
 		"MERGE_PROFILE": "Объединить пассажиров",
 		"PROMO_CODE": "Привязать промокод",
+		"SAVE": "Сохранить",
 		"SEARCH": "Искать"
 	},
 	"FIELD": {
@@ -391,6 +393,18 @@
 			}
 		},
 		"SEGMENTATION": {
+			"COMPLEX_SEGMENTATION": {
+				"FIELD": {
+					"CHOICE_SEGMENTATION": "Выбор сегментации",
+					"NAME_COMPLEX_SEGMENTATION": "Название сложной сегментации"
+				},
+				"SEGMENTATIONS": "Cегментации",
+				"TABLE": {
+					"FILTER": "Фильтр",
+					"GROUP_SEGMENTATION": "Группа сегментации",
+					"TITLE": "Сложные сегментации"
+				}
+			},
 			"LIST_SEGMENTATION": {
 				"PROFILE_SEGMENTATION": {
 					"CUSTOMER_ID": "№ профиля",

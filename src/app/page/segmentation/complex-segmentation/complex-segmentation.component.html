@@ -5,12 +5,12 @@
       <mat-card class="complex-segmentation__card">
         <mat-card-content class="complex-segmentation__content">
           <mat-form-field class="complex-segmentation__input">
-            <input matInput formControlName="segmentationTitle" type="text" placeholder="Название сложной сегментации">
-            <mat-error>Обязательное поле</mat-error>
+            <input matInput formControlName="segmentationTitle" type="text" placeholder="{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.NAME_COMPLEX_SEGMENTATION' | translate}}">
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field class="complex-segmentation__input">
             <input (keyup.enter)="onAdd()" matInput formControlName="segmentation" [matAutocomplete]="auto" type="text"
-                   placeholder="Выбор сегментации">
+                   placeholder="{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.CHOICE_SEGMENTATION' | translate}}">
             <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
               <mat-option (keyup.enter)="onAdd()" (click)="onAdd()"
                           *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation">
@@ -25,7 +25,7 @@
         <mat-progress-bar *ngIf="isLoader" mode="buffer"></mat-progress-bar>
         <div *ngIf="!isLoader">
           <mat-card-header>
-            <mat-card-title>Cегментации</mat-card-title>
+            <mat-card-title>{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.SEGMENTATIONS' | translate}}</mat-card-title>
           </mat-card-header>
           <mat-divider></mat-divider>
           <mat-card-content class="complex-segmentation__content">
@@ -41,21 +41,21 @@
             <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
                     (click)="onSaveForm()" color="primary" [disabled]="buttonSave">
               <mat-icon>save</mat-icon>
-              Сохранить
+              {{'BUTTON.SAVE' | translate}}
             </button>
             <button appAccessRights="analytics:read" class="complex-segmentation__button" mat-raised-button
                     (click)="onSearchForm()" color="primary" [disabled]="buttonSearch">
               <mat-icon>search</mat-icon>
-              Искать
+              {{'BUTTON.SEARCH' | translate}}
             </button>
             <button appAccessRights="analytics:update" class="complex-segmentation__button" mat-raised-button
                     (click)="onCreateForm()" [disabled]="buttonCreate">
               <mat-icon>create</mat-icon>
-              Изменить
+              {{'BUTTON.EDIT' | translate}}
             </button>
             <button class="complex-segmentation__button" mat-raised-button (click)="onClearForm()" color="accent">
               <mat-icon>clear</mat-icon>
-              Очистить
+              {{'BUTTON.CLEAR' | translate}}
             </button>
           </div>
         </div>
@@ -65,7 +65,7 @@
     <mat-card class="complex-segmentation__table-complex-segmentation">
       <mat-progress-bar *ngIf="isLoaderComplexSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <mat-card-title> Сложные сегментации </mat-card-title>
+        <mat-card-title> {{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.TABLE.TITLE' | translate}} </mat-card-title>
         <app-table-example-complex-segmentation *ngIf="complexSegmentation.length !== 0" [tableDataSource]="complexSegmentation"></app-table-example-complex-segmentation>
       </ng-template>
     </mat-card>
@@ -76,7 +76,7 @@
   <mat-card class="complex-segmentation__table-profile" *ngIf="isTableProfileTable">
     <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <mat-card-title>{{segmentationProfiles.customers.length !== 0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+      <mat-card-title>{{segmentationProfiles.customers.length !== 0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
       <app-table-async-segmentation-profile
         *ngIf="segmentationProfiles.customers.length !== 0"
         [tableDataSource]="segmentationProfiles.customers">

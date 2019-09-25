@@ -8,12 +8,14 @@
 	"BUTTON": {
 		"ADD_CUSTOMER": "Add Passenger",
 		"ADD_USER": "Add user",
+		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
 		"DELETE": "Delete",
 		"EDIT": "Edit",
 		"EDITOR": "Create Newsletter",
 		"MERGE_PROFILE": "Combine passengers",
 		"PROMO_CODE": "Link promotional code",
+		"SAVE": "Save",
 		"SEARCH": "Search"
 	},
 	"FIELD": {
@@ -391,6 +393,18 @@
 			}
 		},
 		"SEGMENTATION": {
+			"COMPLEX_SEGMENTATION": {
+				"FIELD": {
+					"CHOICE_SEGMENTATION": "Segmentation selection",
+					"NAME_COMPLEX_SEGMENTATION": "The name of complex segmentation"
+				},
+				"SEGMENTATIONS": "Segmentation",
+				"TABLE": {
+					"FILTER": "Filter",
+					"GROUP_SEGMENTATION": "Segmentation group",
+					"TITLE": "Complex segmentation"
+				}
+			},
 			"LIST_SEGMENTATION": {
 				"PROFILE_SEGMENTATION": {
 					"CUSTOMER_ID": "Profile No.",
