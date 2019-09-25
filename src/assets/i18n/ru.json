@@ -70,6 +70,18 @@
 		"VERSION": "Версия"
 	},
 	"PAGE": {
+		"DISTRIBUTION": {
+			"LIST_DISTRIBUTION": {
+				"TABLE": {
+					"DATE_FROM": "Дата от",
+					"DATE_TO": "Дата до",
+					"FILTER": "Фильтр",
+					"LAST_TRY": "Дата создания рассылки",
+					"STATUS": "Статус",
+					"SUBJECT": "Тема"
+				}
+			}
+		},
 		"PROFILES": {
 			"ADD_PROFILE": {
 				"DATE": "дд.мм.гггг",

@@ -70,6 +70,18 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
+		"DISTRIBUTION": {
+			"LIST_DISTRIBUTION": {
+				"TABLE": {
+					"DATE_FROM": "Date from",
+					"DATE_TO": "date to",
+					"FILTER": "Filter",
+					"LAST_TRY": "Newsletter Creation Date",
+					"STATUS": "status",
+					"SUBJECT": "Theme"
+				}
+			}
+		},
 		"PROFILES": {
 			"ADD_PROFILE": {
 				"DATE": "dd.mm.yyyy",
