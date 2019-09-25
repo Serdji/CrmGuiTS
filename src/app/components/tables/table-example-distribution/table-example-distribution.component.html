@@ -117,7 +117,7 @@
   <div class="table__button-wrapper">
     <button appAccessRights="distributions:update" class="table__button" mat-raised-button (click)="deleteDisplayed()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+      {{'BUTTON.DELETE' | translate}}
       <mat-icon>delete</mat-icon>
     </button>
   </div>

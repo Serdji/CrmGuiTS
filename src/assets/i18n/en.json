@@ -8,6 +8,7 @@
 	"BUTTON": {
 		"ADD_CUSTOMER": "Add Passenger",
 		"ADD_USER": "Add user",
+		"CANCEL_DISTRIBUTION": "Cancel distribution",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
 		"DELETE": "Delete",
@@ -17,7 +18,8 @@
 		"PROMO_CODE": "Link promotional code",
 		"SAVE": "Save",
 		"SEARCH": "Search",
-		"TO_FROM": ""
+		"SEND_DISTRIBUTION": "Send distribution",
+		"TO_FROM": "To form"
 	},
 	"FIELD": {
 		"ERROR": {
@@ -80,6 +82,22 @@
 					"STATUS": "status",
 					"SUBJECT": "Theme"
 				}
+			},
+			"PROFILE_DISTRIBUTION": {
+				"DATE": "Mailing Dates:",
+				"ERROR_MESSAGE": "Error Message:",
+				"FROM": "From",
+				"LAST_TRY": "Date and time the newsletter was created:",
+				"STATUS": "Status:",
+				"SUBJECT": "Topic of the letter:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Explanation",
+					"FIRST_NAME": "Name",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name",
+					"STATUS": "status"
+				},
+				"TO": "Before"
 			}
 		},
 		"PROFILES": {

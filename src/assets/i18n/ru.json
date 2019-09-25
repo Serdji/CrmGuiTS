@@ -8,6 +8,7 @@
 	"BUTTON": {
 		"ADD_CUSTOMER": "Добавить пассажира",
 		"ADD_USER": "Добавить пользователя",
+		"CANCEL_DISTRIBUTION": "Отменить рассылку",
 		"CLEAR": "Очистить",
 		"CLEAR_FORM": "Очистить форму",
 		"DELETE": "Удалить",
@@ -17,6 +18,7 @@
 		"PROMO_CODE": "Привязать промокод",
 		"SAVE": "Сохранить",
 		"SEARCH": "Искать",
+		"SEND_DISTRIBUTION": "Отправить рассылку",
 		"TO_FROM": "Сформировать"
 	},
 	"FIELD": {
@@ -80,6 +82,22 @@
 					"STATUS": "Статус",
 					"SUBJECT": "Тема"
 				}
+			},
+			"PROFILE_DISTRIBUTION": {
+				"DATE": "Даты рассылок:",
+				"ERROR_MESSAGE": "Сообщение об ошибки:",
+				"FROM": "от",
+				"LAST_TRY": "Дата и время создания рассылки:",
+				"STATUS": "Статус:",
+				"SUBJECT": "Тема письма:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Пояснение",
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"STATUS": "Статус"
+				},
+				"TO": "до"
 			}
 		},
 		"PROFILES": {

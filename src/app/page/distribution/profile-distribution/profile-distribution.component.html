@@ -4,7 +4,7 @@
     <mat-progress-bar *ngIf="isLoader; else loaserEmail" mode="buffer"></mat-progress-bar>
     <ng-template #loaserEmail>
       <mat-card-header class="profile-distribution__header">
-        <mat-card-title>Тема письма: <b>{{ distributionProfile.subject }}</b></mat-card-title>
+        <mat-card-title>{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.SUBJECT' | translate}} <b>{{ distributionProfile.subject }}</b></mat-card-title>
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content class="profile-distribution__content">
@@ -15,10 +15,10 @@
         <mat-grid-list cols="5" rowHeight="200px">
           <mat-grid-tile [colspan]="2" [rowspan]="1">
             <div class="profile-distribution__grid">
-              <span>Даты рассылок: <b> от {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, до {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
-              <span>Дата и время создания рассылки: <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>
-              <span>Статус: <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
-              <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">Сообщение об ошибки: <b> {{ distributionProfile.errorMessage }} </b>  </span>
+              <span>{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.DATE' | translate}} <b> {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.FROM' | translate}} {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.TO' | translate}} {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
+              <span>{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.LAST_TRY' | translate}} <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>
+              <span>{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.STATUS' | translate}} <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
+              <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">{{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.ERROR_MESSAGE' | translate}} <b> {{ distributionProfile.errorMessage }} </b>  </span>
             </div>
           </mat-grid-tile>
           <mat-grid-tile [colspan]="2" [rowspan]="1">
@@ -49,7 +49,7 @@
             appAccessRights="distributions:update"
           >
             <mat-icon>send</mat-icon>
-            Отправить рассылку
+            {{'BUTTON.SEND_DISTRIBUTION' | translate}}
           </button>
           <button
             class="profile-distribution__button"
@@ -60,7 +60,7 @@
             appAccessRights="distributions:update"
           >
             <mat-icon>cancel</mat-icon>
-            Отменить рассылку
+            {{'BUTTON.CANCEL_DISTRIBUTION' | translate}}
           </button>
           <button
             class="profile-distribution__button"
@@ -71,7 +71,7 @@
             appAccessRights="distributions:update"
           >
             <mat-icon>delete</mat-icon>
-            Удалить
+            {{'BUTTON.DELETE' | translate}}
           </button>
         </div>
       </mat-card-actions>
