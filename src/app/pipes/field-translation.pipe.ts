@@ -16,8 +16,8 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'customerIds': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.CUSTOMER_IDS';
       case  'Active': return 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.PANEL_HEADER.STATUS.ACTIVE';
       case  'Cancelled': return 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.PANEL_HEADER.STATUS.CANCELLED';
-      case  'Amount': return 'Сумма';
-      case  'Percent': return 'Процент';
+      case  'Amount': return 'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.PROMOTIONS_CODE_VAL.AMOUT';
+      case  'Percent': return 'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.PROMOTIONS_CODE_VAL.PERCENT';
       case  'm': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M';
       case  'f': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.F';
       case  'M': return 'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M';

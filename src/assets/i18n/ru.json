@@ -473,7 +473,11 @@
 					"FLIGHT_DATA_TO": "Период реализации до",
 					"PROMOTIONS": "Промоакция",
 					"PROMOTIONS_CODE": "Промокод",
-					"PROMOTIONS_CODE_VAL": "Тип скидки",
+					"PROMOTIONS_CODE_VAL": {
+						"AMOUT": "Сумма",
+						"PERCENT": "Процент",
+						"TITLE": "Тип скидки"
+					},
 					"RDD": "Класс бронирования",
 					"REASON": "Основание",
 					"SEGMENTATION": "Группы сегментации",

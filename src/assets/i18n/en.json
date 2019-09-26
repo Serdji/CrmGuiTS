@@ -473,7 +473,11 @@
 					"FLIGHT_DATA_TO": "Implementation period to",
 					"PROMOTIONS": "Promotion",
 					"PROMOTIONS_CODE": "Promo Code",
-					"PROMOTIONS_CODE_VAL": "Discount Type",
+					"PROMOTIONS_CODE_VAL": {
+						"AMOUT": "Amount",
+						"PERCENT": "Percent",
+						"TITLE": "Discount Type"
+					},
 					"RDD": "Booking class",
 					"REASON": "Base",
 					"SEGMENTATION": "Segmentation groups",
