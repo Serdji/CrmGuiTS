@@ -755,6 +755,22 @@
 			}
 		}
 	},
+	"POP_UP": {
+		"DIALOG_MERGE_PROFILE": {
+			"CUSTOMER_IDS": "№ профиля:",
+			"DATE_OF_BIRTH": "Дата рождения:",
+			"FIRST_NAME": "Имя:",
+			"LAST_NAME": "Фамилия:"
+		},
+		"DIALOG_PROMO_CODE": {
+			"ACCOUNT_CODE": "Аккаунт код:",
+			"DATE_FROM": "Срок действия: От",
+			"DATE_TO": "До",
+			"NAME_PROMO_CODE": "Название промокода:",
+			"PROMO_CODE": "Промокод",
+			"T": ""
+		}
+	},
 	"TABLE": {
 		"FIRST_PAGE": "Первая страница",
 		"FROM": "из",

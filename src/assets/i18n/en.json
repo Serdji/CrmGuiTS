@@ -755,6 +755,22 @@
 			}
 		}
 	},
+	"POP_UP": {
+		"DIALOG_MERGE_PROFILE": {
+			"CUSTOMER_IDS": "Profile No.:",
+			"DATE_OF_BIRTH": "Date of Birth:",
+			"FIRST_NAME": "Name:",
+			"LAST_NAME": "Surname:"
+		},
+		"DIALOG_PROMO_CODE": {
+			"ACCOUNT_CODE": "",
+			"DATE_FROM": "",
+			"DATE_TO": "",
+			"NAME_PROMO_CODE": "",
+			"PROMO_CODE": "",
+			"T": ""
+		}
+	},
 	"TABLE": {
 		"FIRST_PAGE": "First page",
 		"FROM": "of",
