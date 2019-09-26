@@ -1,12 +1,12 @@
 <div class="dialog">
-  <h2 mat-dialog-title *ngIf="data.status === 'ok'" class="dialog__ok">{{ data.message }}</h2>
-  <h2 mat-dialog-title *ngIf="data.status === 'error'" class="dialog__error">{{ data.message }}</h2>
-  <h2 mat-dialog-title *ngIf="data.status === 'text'" class="dialog__text">{{ data.message }}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'ok'" class="dialog__ok">{{ data.message  | translate}}}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'error'" class="dialog__error">{{ data.message  | translate}}}</h2>
+  <h2 mat-dialog-title *ngIf="data.status === 'text'" class="dialog__text">{{ data.message  | translate}}}</h2>
   <div *ngIf="data.status === 'delete'">
     <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
     <div class="dialog__button-wrapper">
-      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'PAGE.DIALOG.YES' | translate}}</button>
-      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'PAGE.DIALOG.NO' | translate}}</button>
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'DIALOG.YES' | translate}}</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'DIALOG.NO' | translate}}</button>
     </div>
   </div>
 
@@ -24,14 +24,14 @@
   <div *ngIf="data.status === 'updateProfileName'">
     <form class="dialog__form" [formGroup]="formUpdateProfileName">
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="firstName" placeholder="{{'PAGE.DIALOG.UPDATE_PROFILE.FIRST_NAME' | translate}}">
+        <input matInput formControlName="firstName" placeholder="{{'DIALOG.UPDATE_PROFILE.FIRST_NAME' | translate}}">
         <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="lastName" placeholder="{{'PAGE.DIALOG.UPDATE_PROFILE.LAST_NAME' | translate}}">
+        <input matInput formControlName="lastName" placeholder="{{'DIALOG.UPDATE_PROFILE.LAST_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="secondName" placeholder="{{'PAGE.DIALOG.UPDATE_PROFILE.MIDDLE_NAME' | translate}}">
+        <input matInput formControlName="secondName" placeholder="{{'DIALOG.UPDATE_PROFILE.MIDDLE_NAME' | translate}}">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
         {{'BUTTON.EDIT' | translate}}
@@ -42,19 +42,19 @@
   <div *ngIf="data.status === 'updateDocument'">
     <form class="dialog__form" [formGroup]="formUpdateDocument">
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="num" placeholder="{{'PAGE.DIALOG.DOCUMENT.NUM' | translate}}">
+        <input matInput formControlName="num" placeholder="{{'DIALOG.DOCUMENT.NUM' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="firstName" placeholder="{{'PAGE.DIALOG.DOCUMENT.FIRST_NAME' | translate}}">
+        <input matInput formControlName="firstName" placeholder="{{'DIALOG.DOCUMENT.FIRST_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="lastName" placeholder="{{'PAGE.DIALOG.DOCUMENT.LAST_NAME' | translate}}">
+        <input matInput formControlName="lastName" placeholder="{{'DIALOG.DOCUMENT.LAST_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="secondName" placeholder="{{'PAGE.DIALOG.DOCUMENT.MIDDLE_NAME' | translate}}">
+        <input matInput formControlName="secondName" placeholder="{{'DIALOG.DOCUMENT.MIDDLE_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="expDate" placeholder="{{'PAGE.DIALOG.DOCUMENT.EXP_DATE' | translate}}" [matDatepicker]="expDate">
+        <input matInput formControlName="expDate" placeholder="{{'DIALOG.DOCUMENT.EXP_DATE' | translate}}" [matDatepicker]="expDate">
         <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
         <mat-datepicker touchUi="true" #expDate></mat-datepicker>
       </mat-form-field>
@@ -88,7 +88,7 @@
   <div *ngIf="data.status === 'addProfileGroup'" [ngStyle]="{'width': '1000px'}">
     <form class="dialog__form" [formGroup]="formProfileGroups">
       <mat-form-field class="dialog__input _cost-input">
-        <mat-select formControlName="customerGroupId" placeholder="{{'PAGE.DIALOG.ADD_PROFILE_GROUP.CUSTOMER_GROUP' | translate}}">
+        <mat-select formControlName="customerGroupId" placeholder="{{'DIALOG.ADD_PROFILE_GROUP.CUSTOMER_GROUP' | translate}}">
           <mat-option value="0"></mat-option>
           <mat-option *ngFor="let profileGroup of profileGroups" value="{{profileGroup.customerGroupId}}">
             {{profileGroup.customerGroupName}}
@@ -111,15 +111,15 @@
   <div *ngIf="data.status === 'startDistribution'">
     <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
     <div class="dialog__button-wrapper">
-      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'PAGE.DIALOG.YES' | translate}}</button>
-      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'PAGE.DIALOG.NO' | translate}}</button>
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'DIALOG.YES' | translate}}</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'DIALOG.NO' | translate}}</button>
     </div>
   </div>
 
 
 
   <div *ngIf="data.status === 'intersection'">
-    <h2 mat-dialog-title class="dialog__text">{{'PAGE.DIALOG.INTERSECTION.TITLE' | translate}}</h2>
+    <h2 mat-dialog-title class="dialog__text">{{'DIALOG.INTERSECTION.TITLE' | translate}}</h2>
     <mat-accordion  class="promo-code__accordion" multi="true">
       <mat-expansion-panel class=" mat-elevation-z5" *ngFor=" let promoCode of data.intersection ">
         <mat-expansion-panel-header>
@@ -146,35 +146,35 @@
 
               <div class="promo-code__info">
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text"> {{'PAGE.DIALOG.INTERSECTION.ACCOUNT_CODE' | translate}}</span>
+                  <span class="promo-code__info-text"> {{'DIALOG.INTERSECTION.ACCOUNT_CODE' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.accountCode}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.VAL' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.VAL' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.val}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.TITLE' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.TITLE' | translate}}</span>
                   <div class="promo-code__info-params">
-                    <span><b>{{ promoCode.promoCodeValTypeId === 1 ? ('PAGE.DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.AMOUNT' | translate) : ('PAGE.DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.PERCENT' | translate) }}</b></span>
+                    <span><b>{{ promoCode.promoCodeValTypeId === 1 ? ('DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.AMOUNT' | translate) : ('DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.PERCENT' | translate) }}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.USES_PER' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.USES_PER' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.usesPerPerson}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.USES_TOTAL' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.USES_TOTAL' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.usesTotal}}</b></span>
                   </div>
@@ -184,42 +184,42 @@
 
               <div class="promo-code__info">
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.FLIGHT' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.FLIGHT' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let flightList of promoCode.promoCodeFlightList "><b>{{flightList}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.FLIGHT_DATA_FROM' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.FLIGHT_DATA_FROM' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.flightDateFrom | date:'dd.MM.yyyy'}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.FLIGHT_DATA_TO' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.FLIGHT_DATA_TO' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.flightDateTo | date:'dd.MM.yyyy'}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.BRAND' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.BRAND' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let brandList of promoCode.promoCodeBrandList"><b>{{brandList}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.RDD' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.RDD' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.DIRECTIONS' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.DIRECTIONS' | translate}}</span>
                   <div class="promo-code__info-params">
                     <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
                       <div
@@ -235,21 +235,21 @@
 
               <div class="promo-code__info">
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.CUSTOMER' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.CUSTOMER' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let customersId of promoCode.customersIds"><b>{{customersId}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.SEGMENTATION' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.SEGMENTATION' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let segmentation of promoCode.segmentations"><b>{{segmentation.title}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.CUSTOMER_GROUP' | translate}}</span>
+                  <span class="promo-code__info-text">{{'DIALOG.INTERSECTION.CUSTOMER_GROUP' | translate}}</span>
                   <div class="promo-code__info-params">
                   <span
                     *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
@@ -260,7 +260,7 @@
             </div>
 
             <span class="promo-code__link" (click)="onNoClick()" routerLink="/crm/add-promotions-codes"
-                  [queryParams]="{ promoCodeId: promoCode.promoCodeId }">{{'PAGE.DIALOG.INTERSECTION.GO_TO' | translate}}</span>
+                  [queryParams]="{ promoCodeId: promoCode.promoCodeId }">{{'DIALOG.INTERSECTION.GO_TO' | translate}}</span>
           </mat-card>
         </ng-template>
       </mat-expansion-panel>

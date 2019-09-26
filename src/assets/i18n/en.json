@@ -24,6 +24,51 @@
 		"SEND_DISTRIBUTION": "Send distribution",
 		"TO_FROM": "To form"
 	},
+	"DIALOG": {
+		"ADD_PROFILE_GROUP": {
+			"CUSTOMER_GROUP": "Passenger group"
+		},
+		"DOCUMENT": {
+			"EXP_DATE": "Validity",
+			"FIRST_NAME": "Name",
+			"LAST_NAME": "Surname",
+			"MIDDLE_NAME": "Middle Name",
+			"NUM": "Document Number"
+		},
+		"INTERSECTION": {
+			"ACCOUNT_CODE": "Settlement Code:",
+			"BRAND": "Brands:",
+			"CUSTOMER": "Profile:",
+			"CUSTOMER_GROUP": "Passenger groups:",
+			"DATE_FROM": "Validity period from:",
+			"DATE_TO": "Validity period until:",
+			"DIRECTIONS": "Directions:",
+			"FLIGHT": "Flight numbers:",
+			"FLIGHT_DATA_FROM": "Implementation period from:",
+			"FLIGHT_DATA_TO": "Implementation period to:",
+			"GO_TO": "Go to promotional code",
+			"PROMOTIONS": "Promotion:",
+			"PROMOTIONS_CODE": "Promo Code:",
+			"PROMOTIONS_CODE_VAL": {
+				"AMOUT": "Amount",
+				"PERCENT": "Percent",
+				"TITLE": "Discount Type:"
+			},
+			"RDD": "Booking class:",
+			"SEGMENTATION": "Segmentation groups:",
+			"TITLE": "Promotional code intersection detected",
+			"USES_PER": "Use for profile:",
+			"USES_TOTAL": "Total Usage:",
+			"VAL": "Discount amount:"
+		},
+		"NO": "No",
+		"UPDATE_PROFILE": {
+			"FIRST_NAME": "Name:",
+			"LAST_NAME": "Surname:",
+			"MIDDLE_NAME": "Middle Name:"
+		},
+		"YES": "Yes"
+	},
 	"FIELD": {
 		"ERROR": {
 			"OBLIGATORY_FIELD": "Obligatory field",
@@ -75,51 +120,6 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
-		"DIALOG": {
-			"ADD_PROFILE_GROUP": {
-				"CUSTOMER_GROUP": "Passenger group"
-			},
-			"DOCUMENT": {
-				"EXP_DATE": "Validity",
-				"FIRST_NAME": "Name",
-				"LAST_NAME": "Surname",
-				"MIDDLE_NAME": "Middle Name",
-				"NUM": "Document Number"
-			},
-			"INTERSECTION": {
-				"ACCOUNT_CODE": "Settlement Code:",
-				"BRAND": "Brands:",
-				"CUSTOMER": "Profile:",
-				"CUSTOMER_GROUP": "Passenger groups:",
-				"DATE_FROM": "Validity period from:",
-				"DATE_TO": "Validity period until:",
-				"DIRECTIONS": "Directions:",
-				"FLIGHT": "Flight numbers:",
-				"FLIGHT_DATA_FROM": "Implementation period from:",
-				"FLIGHT_DATA_TO": "Implementation period to:",
-				"GO_TO": "Go to promotional code",
-				"PROMOTIONS": "Promotion:",
-				"PROMOTIONS_CODE": "Promo Code:",
-				"PROMOTIONS_CODE_VAL": {
-					"AMOUT": "Amount",
-					"PERCENT": "Percent",
-					"TITLE": "Discount Type:"
-				},
-				"RDD": "Booking class:",
-				"SEGMENTATION": "Segmentation groups:",
-				"TITLE": "Promotional code intersection detected",
-				"USES_PER": "Use for profile:",
-				"USES_TOTAL": "Total Usage:",
-				"VAL": "Discount amount:"
-			},
-			"NO": "No",
-			"UPDATE_PROFILE": {
-				"FIRST_NAME": "Name:",
-				"LAST_NAME": "Surname:",
-				"MIDDLE_NAME": "Middle Name:"
-			},
-			"YES": "Yes"
-		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {

@@ -24,6 +24,51 @@
 		"SEND_DISTRIBUTION": "Отправить рассылку",
 		"TO_FROM": "Сформировать"
 	},
+	"DIALOG": {
+		"ADD_PROFILE_GROUP": {
+			"CUSTOMER_GROUP": "Группа пассажиров"
+		},
+		"DOCUMENT": {
+			"EXP_DATE": "Срок действия",
+			"FIRST_NAME": "Имя",
+			"LAST_NAME": "Фамилия",
+			"MIDDLE_NAME": "Отчество",
+			"NUM": "Номер документа"
+		},
+		"INTERSECTION": {
+			"ACCOUNT_CODE": "Расчётный код:",
+			"BRAND": "Бренды:",
+			"CUSTOMER": "Профиль:",
+			"CUSTOMER_GROUP": "Группы пассажиров:",
+			"DATE_FROM": "Период действия от:",
+			"DATE_TO": "Период действия до:",
+			"DIRECTIONS": "Направления:",
+			"FLIGHT": "Номера рейсов:",
+			"FLIGHT_DATA_FROM": "Период реализации от:",
+			"FLIGHT_DATA_TO": "Период реализации до:",
+			"GO_TO": "Перейти в промокод",
+			"PROMOTIONS": "Промоакция:",
+			"PROMOTIONS_CODE": "Промокод:",
+			"PROMOTIONS_CODE_VAL": {
+				"AMOUT": "Сумма",
+				"PERCENT": "Процент",
+				"TITLE": "Тип скидки:"
+			},
+			"RDD": "Класс бронирования:",
+			"SEGMENTATION": "Группы сегментации:",
+			"TITLE": "Обнаружено пересечение промокодов",
+			"USES_PER": "Использование для профиля:",
+			"USES_TOTAL": "Общее количество использования:",
+			"VAL": "Величина скидки:"
+		},
+		"NO": "Нет",
+		"UPDATE_PROFILE": {
+			"FIRST_NAME": "Имя:",
+			"LAST_NAME": "Фамилия:",
+			"MIDDLE_NAME": "Отчество:"
+		},
+		"YES": "Да"
+	},
 	"FIELD": {
 		"ERROR": {
 			"OBLIGATORY_FIELD": "Обязательное поле",
@@ -75,51 +120,6 @@
 		"VERSION": "Версия"
 	},
 	"PAGE": {
-		"DIALOG": {
-			"ADD_PROFILE_GROUP": {
-				"CUSTOMER_GROUP": "Группа пассажиров"
-			},
-			"DOCUMENT": {
-				"EXP_DATE": "Срок действия",
-				"FIRST_NAME": "Имя",
-				"LAST_NAME": "Фамилия",
-				"MIDDLE_NAME": "Отчество",
-				"NUM": "Номер документа"
-			},
-			"INTERSECTION": {
-				"ACCOUNT_CODE": "Расчётный код:",
-				"BRAND": "Бренды:",
-				"CUSTOMER": "Профиль:",
-				"CUSTOMER_GROUP": "Группы пассажиров:",
-				"DATE_FROM": "Период действия от:",
-				"DATE_TO": "Период действия до:",
-				"DIRECTIONS": "Направления:",
-				"FLIGHT": "Номера рейсов:",
-				"FLIGHT_DATA_FROM": "Период реализации от:",
-				"FLIGHT_DATA_TO": "Период реализации до:",
-				"GO_TO": "Перейти в промокод",
-				"PROMOTIONS": "Промоакция:",
-				"PROMOTIONS_CODE": "Промокод:",
-				"PROMOTIONS_CODE_VAL": {
-					"AMOUT": "Сумма",
-					"PERCENT": "Процент",
-					"TITLE": "Тип скидки:"
-				},
-				"RDD": "Класс бронирования:",
-				"SEGMENTATION": "Группы сегментации:",
-				"TITLE": "Обнаружено пересечение промокодов",
-				"USES_PER": "Использование для профиля:",
-				"USES_TOTAL": "Общее количество использования:",
-				"VAL": "Величина скидки:"
-			},
-			"NO": "Нет",
-			"UPDATE_PROFILE": {
-				"FIRST_NAME": "Имя:",
-				"LAST_NAME": "Фамилия:",
-				"MIDDLE_NAME": "Отчество:"
-			},
-			"YES": "Да"
-		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
