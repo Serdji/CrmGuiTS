@@ -5,8 +5,8 @@
   <div *ngIf="data.status === 'delete'">
     <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
     <div class="dialog__button-wrapper">
-      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">Да</button>
-      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'PAGE.DIALOG.YES' | translate}}</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'PAGE.DIALOG.NO' | translate}}</button>
     </div>
   </div>
 
@@ -16,7 +16,7 @@
         <input matInput formControlName="contactText" [placeholder]="this.data.params.typeCode">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
-        Изменить
+        {{'BUTTON.EDIT' | translate}}
       </button>
     </form>
   </div>
@@ -24,17 +24,17 @@
   <div *ngIf="data.status === 'updateProfileName'">
     <form class="dialog__form" [formGroup]="formUpdateProfileName">
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="firstName" placeholder="Имя">
-        <mat-error>Обязательное поле</mat-error>
+        <input matInput formControlName="firstName" placeholder="{{'PAGE.DIALOG.UPDATE_PROFILE.FIRST_NAME' | translate}}">
+        <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="lastName" placeholder="Фамилия">
+        <input matInput formControlName="lastName" placeholder="{{'PAGE.DIALOG.UPDATE_PROFILE.LAST_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="secondName" placeholder="Отчество">
+        <input matInput formControlName="secondName" placeholder="{{'PAGE.DIALOG.UPDATE_PROFILE.MIDDLE_NAME' | translate}}">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
-        Изменить
+        {{'BUTTON.EDIT' | translate}}
       </button>
     </form>
   </div>
@@ -42,24 +42,24 @@
   <div *ngIf="data.status === 'updateDocument'">
     <form class="dialog__form" [formGroup]="formUpdateDocument">
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="num" placeholder="Номер документа">
+        <input matInput formControlName="num" placeholder="{{'PAGE.DIALOG.DOCUMENT.NUM' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="firstName" placeholder="Имя">
+        <input matInput formControlName="firstName" placeholder="{{'PAGE.DIALOG.DOCUMENT.FIRST_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="lastName" placeholder="Фамилия">
+        <input matInput formControlName="lastName" placeholder="{{'PAGE.DIALOG.DOCUMENT.LAST_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="secondName" placeholder="Отчество">
+        <input matInput formControlName="secondName" placeholder="{{'PAGE.DIALOG.DOCUMENT.MIDDLE_NAME' | translate}}">
       </mat-form-field>
       <mat-form-field class="dialog__input">
-        <input matInput formControlName="expDate" placeholder="Срок действия" [matDatepicker]="expDate">
+        <input matInput formControlName="expDate" placeholder="{{'PAGE.DIALOG.DOCUMENT.EXP_DATE' | translate}}" [matDatepicker]="expDate">
         <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
         <mat-datepicker touchUi="true" #expDate></mat-datepicker>
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
-        Изменить
+        {{'BUTTON.EDIT' | translate}}
       </button>
     </form>
   </div>
@@ -70,7 +70,7 @@
         <input matInput formControlName="promotionsName">
       </mat-form-field>
       <button appAccessRights="customers:update" mat-raised-button (click)="onYesClick()" color="primary">
-        Изменить
+        {{'BUTTON.EDIT' | translate}}
       </button>
     </form>
   </div>
@@ -88,7 +88,7 @@
   <div *ngIf="data.status === 'addProfileGroup'" [ngStyle]="{'width': '1000px'}">
     <form class="dialog__form" [formGroup]="formProfileGroups">
       <mat-form-field class="dialog__input _cost-input">
-        <mat-select formControlName="customerGroupId" placeholder="Группа пассажиров">
+        <mat-select formControlName="customerGroupId" placeholder="{{'PAGE.DIALOG.ADD_PROFILE_GROUP.CUSTOMER_GROUP' | translate}}">
           <mat-option value="0"></mat-option>
           <mat-option *ngFor="let profileGroup of profileGroups" value="{{profileGroup.customerGroupId}}">
             {{profileGroup.customerGroupName}}
@@ -111,15 +111,15 @@
   <div *ngIf="data.status === 'startDistribution'">
     <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
     <div class="dialog__button-wrapper">
-      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">Да</button>
-      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'PAGE.DIALOG.YES' | translate}}</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'PAGE.DIALOG.NO' | translate}}</button>
     </div>
   </div>
 
 
 
   <div *ngIf="data.status === 'intersection'">
-    <h2 mat-dialog-title class="dialog__text">Обнаружено пересечение промокодов</h2>
+    <h2 mat-dialog-title class="dialog__text">{{'PAGE.DIALOG.INTERSECTION.TITLE' | translate}}</h2>
     <mat-accordion  class="promo-code__accordion" multi="true">
       <mat-expansion-panel class=" mat-elevation-z5" *ngFor=" let promoCode of data.intersection ">
         <mat-expansion-panel-header>
@@ -138,7 +138,6 @@
             </div>
           </div>
         </mat-expansion-panel-header>
-0
 
         <ng-template matExpansionPanelContent>
           <mat-card class="promo-code__card mat-elevation-z0">
@@ -147,35 +146,35 @@
 
               <div class="promo-code__info">
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text"> Расчётный код:</span>
+                  <span class="promo-code__info-text"> {{'PAGE.DIALOG.INTERSECTION.ACCOUNT_CODE' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.accountCode}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Величина скидки:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.VAL' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.val}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Тип скидки:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.TITLE' | translate}}</span>
                   <div class="promo-code__info-params">
-                    <span><b>{{ promoCode.promoCodeValTypeId === 1 ? 'Сумма' : 'Процент' }}</b></span>
+                    <span><b>{{ promoCode.promoCodeValTypeId === 1 ? ('PAGE.DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.AMOUNT' | translate) : ('PAGE.DIALOG.INTERSECTION.PROMOTIONS_CODE_VAL.PERCENT' | translate) }}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Использование для профиля:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.USES_PER' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.usesPerPerson}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Общее количество использования:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.USES_TOTAL' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.usesTotal}}</b></span>
                   </div>
@@ -185,42 +184,42 @@
 
               <div class="promo-code__info">
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Номер рейсов:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.FLIGHT' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let flightList of promoCode.promoCodeFlightList "><b>{{flightList}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Период реализации от:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.FLIGHT_DATA_FROM' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.flightDateFrom | date:'dd.MM.yyyy'}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Период реализации до:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.FLIGHT_DATA_TO' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span><b>{{promoCode.flightDateTo | date:'dd.MM.yyyy'}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Бренды:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.BRAND' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let brandList of promoCode.promoCodeBrandList"><b>{{brandList}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Класс бронирования:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.RDD' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Направления:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.DIRECTIONS' | translate}}</span>
                   <div class="promo-code__info-params">
                     <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
                       <div
@@ -236,21 +235,21 @@
 
               <div class="promo-code__info">
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Профиль:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.CUSTOMER' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let customersId of promoCode.customersIds"><b>{{customersId}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Группы сегментации:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.SEGMENTATION' | translate}}</span>
                   <div class="promo-code__info-params">
                     <span *ngFor="let segmentation of promoCode.segmentations"><b>{{segmentation.title}}</b></span>
                   </div>
                 </div>
 
                 <div class="promo-code__info-wrapper">
-                  <span class="promo-code__info-text">Группы пассажиров:</span>
+                  <span class="promo-code__info-text">{{'PAGE.DIALOG.INTERSECTION.CUSTOMER_GROUP' | translate}}</span>
                   <div class="promo-code__info-params">
                   <span
                     *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
@@ -261,7 +260,7 @@
             </div>
 
             <span class="promo-code__link" (click)="onNoClick()" routerLink="/crm/add-promotions-codes"
-                  [queryParams]="{ promoCodeId: promoCode.promoCodeId }">Перейти в промокод</span>
+                  [queryParams]="{ promoCodeId: promoCode.promoCodeId }">{{'PAGE.DIALOG.INTERSECTION.GO_TO' | translate}}</span>
           </mat-card>
         </ng-template>
       </mat-expansion-panel>

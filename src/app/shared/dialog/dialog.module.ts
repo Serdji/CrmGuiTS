@@ -17,6 +17,7 @@ import { ListDistributionService } from '../../page/distribution/list-distributi
 import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
 import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-codes/add-promotions-codes.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -24,6 +25,7 @@ import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-
     MaterialModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
   ],
   declarations: [ DialogComponent ],
   providers: [
