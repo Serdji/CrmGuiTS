@@ -33,6 +33,7 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatSliderModule } from '@angular/material/slider';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 
@@ -103,6 +104,7 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatSnackBarModule,
     DragDropModule,
     MatTreeModule,
+    MatSliderModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorService }

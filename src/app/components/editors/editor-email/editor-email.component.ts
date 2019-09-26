@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxWigToolbarService } from 'ngx-wig';
 import { takeWhile } from 'rxjs/operators';
@@ -23,12 +23,15 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
 
   @Input() params: any;
   @Input() totalCount: number;
+  @Input() whichButton: string;
+
+  @Output() private messageEvent = new EventEmitter();
 
   public formDistribution: FormGroup;
   public distributionPlaceholders: IDistributionPlaceholder[];
   public templates: ITemplates[];
   public template: ITemplate;
-  public buttonSave: boolean;
+  public buttonDisabled: boolean;
 
   private distributionId: number;
   private isActive: boolean;
@@ -46,7 +49,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.buttonSave = true;
+    this.buttonDisabled = true;
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
@@ -57,7 +60,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   private initIsButtonSave() {
     this.formDistribution.valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.buttonSave = this.formDistribution.invalid );
+      .subscribe( _ => this.buttonDisabled = this.formDistribution.invalid );
   }
 
   private initForm() {
@@ -180,17 +183,15 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     }
   }
 
+  private newParams = () => _( this.formDistribution.getRawValue() )
+    .merge( this.params )
+    .omit( [ 'templateId', 'totalCount', 'emailLimits', 'count', 'from' ] )
+    .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+    .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+    .set( 'text', this.elRef.nativeElement.querySelector( '.nw-editor__res' ).innerHTML )
+    .value();
+
   saveDistribution(): void {
-
-    const editorRes = this.elRef.nativeElement.querySelector( '.nw-editor__res' );
-
-    const newParams = _( this.formDistribution.getRawValue() )
-      .merge( this.params )
-      .omit( [ 'templateId', 'totalCount', 'emailLimits', 'count', 'from' ] )
-      .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
-      .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
-      .set( 'text', editorRes.innerHTML )
-      .value();
 
     if ( !this.formDistribution.invalid ) {
       const success = value => {
@@ -208,11 +209,15 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
         .subscribe( success, error );
 
       const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
-      whichMethod( newParams );
+      whichMethod( this.newParams() );
 
     } else {
       this.windowDialog( 'Не все поля заполнены', 'error' );
     }
+  }
+
+  messageEventFn() {
+    this.messageEvent.emit( this.newParams() );
   }
 
   ngOnDestroy(): void {
