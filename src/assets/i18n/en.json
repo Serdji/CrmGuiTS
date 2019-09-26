@@ -763,12 +763,11 @@
 			"LAST_NAME": "Surname:"
 		},
 		"DIALOG_PROMO_CODE": {
-			"ACCOUNT_CODE": "",
-			"DATE_FROM": "",
-			"DATE_TO": "",
-			"NAME_PROMO_CODE": "",
-			"PROMO_CODE": "",
-			"T": ""
+			"ACCOUNT_CODE": "Account Code:",
+			"DATE_FROM": "Validity: From",
+			"DATE_TO": "To",
+			"NAME_PROMO_CODE": "Promo code name:",
+			"PROMO_CODE": "Promo Code"
 		}
 	},
 	"TABLE": {
