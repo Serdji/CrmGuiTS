@@ -786,6 +786,12 @@
 				"THEME": "Theme",
 				"TITLE": "Mailing Variables",
 				"TOTAL_COUNT": "Amount"
+			},
+			"DIALOG_SMS": {
+				"SYMBOLS_ENTERED": "Symbols entered",
+				"TEMPLATE": "Template",
+				"TEXT": "Message text",
+				"TITLE": "Title"
 			}
 		}
 	},
