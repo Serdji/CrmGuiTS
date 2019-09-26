@@ -445,6 +445,33 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"SEARCH_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Расчётный код",
+					"BRAND": "Бренды",
+					"CUSTOMER_GROUP": "Группы пассажиров",
+					"DATE_FROM": "Период действия от",
+					"DATE_TO": "Период действия до",
+					"FLIGHT": "Номера рейсов",
+					"FLIGHT_DATA_FROM": "Период реализации от",
+					"FLIGHT_DATA_TO": "Период реализации до",
+					"PROMOTIONS": "Промоакция",
+					"PROMOTIONS_CODE": "Промокод",
+					"RDD": "Класс бронирования",
+					"SEGMENTATION": "Группы сегментации"
+				},
+				"TABLE": {
+					"ACCOUNT_CODE": "Расчётный код",
+					"DATE_FROM": "Период действия от",
+					"DATE_TO": "Период действия до",
+					"FLIGHT_DATA_FROM": "Период реализации от",
+					"FLIGHT_DATA_TO": "Период реализации до",
+					"PROMOTIONS": "Промоакция",
+					"PROMOTIONS_CODE": "Промокод"
+				}
+			}
+		},
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {

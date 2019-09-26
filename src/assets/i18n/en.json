@@ -445,6 +445,33 @@
 				}
 			}
 		},
+		"PROMOTIONS": {
+			"SEARCH_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Settlement Code",
+					"BRAND": "Brands",
+					"CUSTOMER_GROUP": "Passenger groups",
+					"DATE_FROM": "Validity period from",
+					"DATE_TO": "Validity period until",
+					"FLIGHT": "Flight numbers",
+					"FLIGHT_DATA_FROM": "Implementation period from",
+					"FLIGHT_DATA_TO": "Implementation period to",
+					"PROMOTIONS": "Promotion",
+					"PROMOTIONS_CODE": "Promo Code",
+					"RDD": "Booking class",
+					"SEGMENTATION": "Segmentation groups"
+				},
+				"TABLE": {
+					"ACCOUNT_CODE": "Settlement Code",
+					"DATE_FROM": "Validity period from",
+					"DATE_TO": "Validity period until",
+					"FLIGHT_DATA_FROM": "Implementation period from",
+					"FLIGHT_DATA_TO": "Implementation period to",
+					"PROMOTIONS": "Promotion",
+					"PROMOTIONS_CODE": "Promo Code"
+				}
+			}
+		},
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
