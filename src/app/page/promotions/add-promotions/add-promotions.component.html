@@ -5,13 +5,13 @@
         <mat-card class="add-promotions__card">
           <mat-card-content class="add-promotions__content">
             <mat-form-field class="add-promotions__input">
-              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция">
+              <input matInput formControlName="promotionName" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS.FIELD.PROMOTIONS' | translate}}">
               <mat-error>Обязательное поле</mat-error>
             </mat-form-field>
             <button appAccessRights="promotions:update" class="add-promotions__button" mat-raised-button
                     (click)="saveForm()" color="primary">
               <mat-icon>save</mat-icon>
-              Сохранить
+              {{'BUTTON.SAVE' | translate}}
             </button>
           </mat-card-content>
         </mat-card>

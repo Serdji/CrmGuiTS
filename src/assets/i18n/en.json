@@ -448,6 +448,14 @@
 			}
 		},
 		"PROMOTIONS": {
+			"ADD_PROMOTIONS": {
+				"FIELD": {
+					"PROMOTIONS": "Promotion"
+				},
+				"TABLE": {
+					"PROMOTIONS": "Promotion"
+				}
+			},
 			"ADD_PROMOTIONS_CODE": {
 				"FIELD": {
 					"ACCOUNT_CODE": "Settlement Code",

@@ -31,7 +31,7 @@
     </ng-container>
 
     <ng-container matColumnDef="promotionName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Промоакция</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.ADD_PROMOTIONS.TABLE.PROMOTIONS' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.promotionName}}</span>
       </mat-cell>
@@ -69,7 +69,7 @@
   <div class="table__button-wrapper">
     <button appAccessRights="promotions:update" class="table__button" mat-raised-button (click)="deleteProfileGroups()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+      {{'BUTTON.DELETE' | translate}}
       <mat-icon>delete</mat-icon>
     </button>
   </div>

@@ -448,6 +448,14 @@
 			}
 		},
 		"PROMOTIONS": {
+			"ADD_PROMOTIONS": {
+				"FIELD": {
+					"PROMOTIONS": "Промоакция"
+				},
+				"TABLE": {
+					"PROMOTIONS": "Промоакция"
+				}
+			},
 			"ADD_PROMOTIONS_CODE": {
 				"FIELD": {
 					"ACCOUNT_CODE": "Расчётный код",
