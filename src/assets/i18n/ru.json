@@ -6,11 +6,13 @@
 		"USER": "Пользователь"
 	},
 	"BUTTON": {
+		"ADD": "Добавить",
 		"ADD_CUSTOMER": "Добавить пассажира",
 		"ADD_USER": "Добавить пользователя",
 		"CANCEL_DISTRIBUTION": "Отменить рассылку",
 		"CLEAR": "Очистить",
 		"CLEAR_FORM": "Очистить форму",
+		"COPY": "Копировать",
 		"DELETE": "Удалить",
 		"EDIT": "Изменить",
 		"EDITOR": "Создать рассылку",
@@ -446,6 +448,38 @@
 			}
 		},
 		"PROMOTIONS": {
+			"ADD_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Расчётный код",
+					"ARR_LOC": "Направление куда",
+					"BRAND": "Бренды",
+					"CUSTOMER": "Профиль",
+					"CUSTOMER_GROUP": "Группы пассажиров",
+					"DATE_FROM": "Период действия от",
+					"DATE_TO": "Период действия до",
+					"DEP_LOC": "Направление откуда",
+					"DESCRIPTION": "Описание промоакции",
+					"FLIGHT": "Номера рейсов",
+					"FLIGHT_DATA_FROM": "Период реализации от",
+					"FLIGHT_DATA_TO": "Период реализации до",
+					"PROMOTIONS": "Промоакция",
+					"PROMOTIONS_CODE": "Промокод",
+					"PROMOTIONS_CODE_VAL": "Тип скидки",
+					"RDD": "Класс бронирования",
+					"REASON": "Основание",
+					"SEGMENTATION": "Группы сегментации",
+					"USED": "Использован:",
+					"USES_PER": "Использование для профиля",
+					"USES_TOTAL": "Общее количество использования",
+					"VAL": "Величина скидки"
+				},
+				"TABLE": {
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
+				}
+			},
 			"SEARCH_PROMOTIONS_CODE": {
 				"FIELD": {
 					"ACCOUNT_CODE": "Расчётный код",

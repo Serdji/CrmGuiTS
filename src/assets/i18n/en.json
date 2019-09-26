@@ -6,11 +6,13 @@
 		"USER": "User"
 	},
 	"BUTTON": {
+		"ADD": "To Add",
 		"ADD_CUSTOMER": "Add Passenger",
 		"ADD_USER": "Add user",
 		"CANCEL_DISTRIBUTION": "Cancel distribution",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
+		"COPY": "Copy",
 		"DELETE": "Delete",
 		"EDIT": "Edit",
 		"EDITOR": "Create Newsletter",
@@ -446,6 +448,38 @@
 			}
 		},
 		"PROMOTIONS": {
+			"ADD_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Settlement Code",
+					"ARR_LOC": "Direction to",
+					"BRAND": "Brands",
+					"CUSTOMER": "Profile",
+					"CUSTOMER_GROUP": "Passenger groups",
+					"DATE_FROM": "Validity period from",
+					"DATE_TO": "Validity period until",
+					"DEP_LOC": "Direction from",
+					"DESCRIPTION": "Promotion Description",
+					"FLIGHT": "Flight numbers",
+					"FLIGHT_DATA_FROM": "Implementation period from",
+					"FLIGHT_DATA_TO": "Implementation period to",
+					"PROMOTIONS": "Promotion",
+					"PROMOTIONS_CODE": "Promo Code",
+					"PROMOTIONS_CODE_VAL": "Discount Type",
+					"RDD": "Booking class",
+					"REASON": "Base",
+					"SEGMENTATION": "Segmentation groups",
+					"USED": "Used:",
+					"USES_PER": "Use for profile",
+					"USES_TOTAL": "Total Usage",
+					"VAL": "Discount amount"
+				},
+				"TABLE": {
+					"FIRST_NAME": "Name",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": ""
+				}
+			},
 			"SEARCH_PROMOTIONS_CODE": {
 				"FIELD": {
 					"ACCOUNT_CODE": "Settlement Code",

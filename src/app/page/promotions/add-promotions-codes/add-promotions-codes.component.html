@@ -7,13 +7,13 @@
         <mat-card class="add-promotions-codes__card">
           <mat-card-content class="add-promotions-codes__content">
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция"
+              <input matInput formControlName="promotionName" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.PROMOTIONS' | translate}}"
                      [matAutocomplete]="promotion">
               <mat-autocomplete #promotion="matAutocomplete">
                 <mat-option *ngFor="let promotion of promotionsOptions | async"
                             [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
               </mat-autocomplete>
-              <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.required" >Обязательное поле</mat-error>
+              <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.required" >{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               <mat-error *ngIf="formPromoCodes.get( 'promotionName' ).errors?.promotionValidator" >{{ formPromoCodes.get( 'promotionName' ).errors?.promotionValidator.message }}</mat-error>
             </mat-form-field>
           </mat-card-content>
@@ -37,7 +37,7 @@
                     <mat-icon matChipRemove *ngIf="promoCodeFlightListRemovable">cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="Номера рейсов"
+                    placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.FLIGHT' | translate}}"
                     #promoCodeFlightListChipInput
                     formControlName="promoCodeFlightList"
                     [matChipInputFor]="chipPromoCodeFlightList"
@@ -47,13 +47,13 @@
                 </mat-chip-list>
               </mat-form-field>
               <mat-form-field class="add-promotions-codes__input">
-                <input matInput formControlName="flightDateFrom" placeholder="Период реализации от"
+                <input matInput formControlName="flightDateFrom" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.FLIGHT_DATA_FROM' | translate}}"
                        [matDatepicker]="flightDateFrom">
                 <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-promotions-codes__input">
-                <input matInput formControlName="flightDateTo" placeholder="Период реализации до"
+                <input matInput formControlName="flightDateTo" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.FLIGHT_DATA_TO' | translate}}"
                        [matDatepicker]="flightDateTo">
                 <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
@@ -70,7 +70,7 @@
                     <mat-icon matChipRemove *ngIf="promoCodeBrandListRemovable">cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="Бренды"
+                    placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.BRAND' | translate}}"
                     #promoCodeBrandListChipInput
                     formControlName="promoCodeBrandList"
                     [matChipInputFor]="chipPromoCodeBrandListList"
@@ -91,7 +91,7 @@
                     <mat-icon matChipRemove *ngIf="promoCodeRbdListRemovable">cancel</mat-icon>
                   </mat-chip>
                   <input
-                    placeholder="Класс бронирования"
+                    placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.RDD' | translate}}"
                     #promoCodeRbdListChipInput
                     formControlName="promoCodeRbdList"
                     [matChipInputFor]="chipPromoCodeRbdListList"
@@ -118,7 +118,7 @@
               </div>
               <div class="add-promotions-codes__date">
                 <mat-form-field class="add-promotions-codes__input _city">
-                  <input matInput formControlName="dep_Location" type="text" placeholder="Направление откуда"
+                  <input matInput formControlName="dep_Location" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.DEP_LOC' | translate}}"
                          [matAutocomplete]="dep_Location">
                   <mat-autocomplete #dep_Location="matAutocomplete">
                     <mat-option *ngFor="let city of citiesFromOptions | async"
@@ -127,14 +127,14 @@
                 </mat-form-field>
                 <mat-icon>arrow_right_alt</mat-icon>
                 <mat-form-field class="add-promotions-codes__input _city">
-                  <input matInput formControlName="arr_Location" type="text" placeholder="Направление куда"
+                  <input matInput formControlName="arr_Location" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.ARR_LOC' | translate}}"
                          [matAutocomplete]="arr_Location">
                   <mat-autocomplete #arr_Location="matAutocomplete">
                     <mat-option *ngFor="let city of citiesToOptions | async"
                                 [value]="city.locationCode">{{ city.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
-                <button (click)="directionAdd()" class="add-promotions-codes__add-city" mat-stroked-button>Добавить</button>
+                <button (click)="directionAdd()" class="add-promotions-codes__add-city" mat-stroked-button>{{'BUTTON.ADD' | translate}}</button>
               </div>
             </mat-card-content>
           </div>
@@ -146,14 +146,14 @@
         <mat-card class="add-promotions-codes__card">
           <mat-card-content class="add-promotions-codes__content _d-b">
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="usesPerPerson" type="text" placeholder="Использование для профиля">
+              <input matInput formControlName="usesPerPerson" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.USES_PER' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="usesTotal" type="text" placeholder="Общее количество использования">
+              <input matInput formControlName="usesTotal" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.USES_TOTAL' | translate}}">
             </mat-form-field>
           </mat-card-content>
           <div class="add-promotions-codes__progress-bar">
-            <span>Использован: </span>
+            <span>{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.USED' | translate}} </span>
             <section class="example-section">
               <mat-progress-bar
                 class="example-margin"
@@ -172,26 +172,26 @@
         <mat-card class="add-promotions-codes__card">
           <mat-card-content class="add-promotions-codes__content">
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="code" type="text" placeholder="Промокод">
+              <input matInput formControlName="code" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.PROMOTIONS_CODE' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="accountCode" type="text" placeholder="Расчётный код">
+              <input matInput formControlName="accountCode" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.ACCOUNT_CODE' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="dateFrom" placeholder="Период действия от" [matDatepicker]="dateFrom">
+              <input matInput formControlName="dateFrom" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.DATE_FROM' | translate}}" [matDatepicker]="dateFrom">
               <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="dateTo" placeholder="Период действия до" [matDatepicker]="dateTo">
+              <input matInput formControlName="dateTo" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.DATE_TO' | translate}}" [matDatepicker]="dateTo">
               <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <input matInput formControlName="val" type="text" placeholder="Величина скидки">
+              <input matInput formControlName="val" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.VAL' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-promotions-cod__input">
-              <mat-select formControlName="promoCodeValTypeId" placeholder="Тип скидки">
+              <mat-select formControlName="promoCodeValTypeId" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.PROMOTIONS_CODE_VAL' | translate}}">
                 <mat-option></mat-option>
                 <mat-option
                   *ngFor="let promoCodeValType of promoCodeValTypes"
@@ -202,10 +202,10 @@
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
               <textarea rows="6" matInput formControlName="description" type="text"
-                        placeholder="Описание промоакции"></textarea>
+                        placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.DESCRIPTION' | translate}}"></textarea>
             </mat-form-field>
             <mat-form-field class="add-promotions-codes__input">
-              <textarea rows="6" matInput formControlName="reason" type="text" placeholder="Основание"></textarea>
+              <textarea rows="6" matInput formControlName="reason" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.REASON' | translate}}"></textarea>
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -227,7 +227,7 @@
                   <mat-icon matChipRemove *ngIf="promoCodeCustomerListRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input
-                  placeholder="Профиль"
+                  placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.CUSTOMER' | translate}}"
                   #promoCodeCustomerListChipInput
                   formControlName="customersIds"
                   [matChipInputFor]="chipPromoCodeCustomerListList"
@@ -249,7 +249,7 @@
                   <mat-icon matChipRemove *ngIf="segmentationRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input
-                  placeholder="Группы сегментации"
+                  placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.SEGMENTATION' | translate}}"
                   #segmentationChipInput
                   formControlName="segmentations"
                   [matAutocomplete]="segmentation"
@@ -276,7 +276,7 @@
                   <mat-icon matChipRemove *ngIf="customerGroupRemovable">cancel</mat-icon>
                 </mat-chip>
                 <input
-                  placeholder="Группы пассажиров"
+                  placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.CUSTOMER_GROUP' | translate}}"
                   #customerGroupChipInput
                   formControlName="customerGroups"
                   [matAutocomplete]="customerGroup"
@@ -298,31 +298,31 @@
         <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
                 (click)="saveForm()" color="primary" [disabled]="buttonSave">
           <mat-icon>save</mat-icon>
-          Сохранить
+          {{'BUTTON.SAVE' | translate}}
         </button>
         <button appAccessRights="promotions:read" class="add-promotions-codes__button" mat-raised-button
                 (click)="searchForm()" color="primary" [disabled]="buttonSearch">
           <mat-icon>search</mat-icon>
-          Искать
+          {{'BUTTON.SEARCH' | translate}}
         </button>
         <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
                 (click)="createForm()" [disabled]="buttonCreate">
           <mat-icon>create</mat-icon>
-          Изменить
+          {{'BUTTON.EDIT' | translate}}
         </button>
         <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
                 (click)="copyForm()" color="warn" [disabled]="buttonCopy">
           <mat-icon>file_copy</mat-icon>
-          Копировать
+          {{'BUTTON.COPY' | translate}}
         </button>
         <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
                 (click)="deletePromoCode()" color="accent" [disabled]="buttonDelete">
           <mat-icon>delete</mat-icon>
-          Удалить
+          {{'BUTTON.DELETE' | translate}}
         </button>
         <button class="add-promotions-codes__button" mat-raised-button (click)="clearForm()">
           <mat-icon>clear</mat-icon>
-          Очистить форму
+          {{'BUTTON.CLEAR_FORM' | translate}}
         </button>
       </div>
     </mat-grid-list>
