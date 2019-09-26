@@ -101,7 +101,7 @@
     {{'BUTTON.DELETE' | translate}}
     <mat-icon>delete</mat-icon>
   </button>
-  <app-button-editor [ids]="ids" [totalCount]="totalCount"></app-button-editor>
+  <app-button-editor whatNewsletter="email" [ids]="ids" [totalCount]="totalCount"></app-button-editor>
   <app-button-promo-code [ids]="ids" [disabled]="!selection.hasValue() && !isAllSelected()"></app-button-promo-code>
   <app-button-merge-profile [ids]="ids" [disabled]="(!selection.hasValue() && !isAllSelected()) || lessThanTwo"></app-button-merge-profile>
 </div>

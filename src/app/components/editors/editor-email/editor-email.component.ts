@@ -4,7 +4,6 @@ import { NgxWigToolbarService } from 'ngx-wig';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
-import { EditorService } from './editor.service';
 import { IDistributionPlaceholder } from '../../../interface/idistribution-placeholder';
 import { ITemplates } from '../../../interface/itemplates';
 import { ITemplate } from '../../../interface/itemplate';
@@ -13,13 +12,14 @@ import { timer } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as R from 'ramda';
+import { EditorEmailService } from './editor-email.service';
 
 @Component( {
-  selector: 'app-editor',
-  templateUrl: './editor.component.html',
-  styleUrls: [ './editor.component.styl' ]
+  selector: 'app-editor-email',
+  templateUrl: './editor-email.component.html',
+  styleUrls: [ './editor-email.component.styl' ]
 } )
-export class EditorComponent implements OnInit, OnDestroy {
+export class EditorEmailComponent implements OnInit, OnDestroy {
 
   @Input() params: any;
   @Input() totalCount: number;
@@ -39,7 +39,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     private ngxWigToolbarService: NgxWigToolbarService,
     private fb: FormBuilder,
     private dialog: MatDialog,
-    private editorService: EditorService,
+    private editorEmailService: EditorEmailService,
     private router: Router,
     private elRef: ElementRef,
   ) {}
@@ -74,7 +74,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   private initTemplates() {
-    this.editorService.getTemplates()
+    this.editorEmailService.getTemplates()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( templates: ITemplates[] ) => {
         this.templates = templates;
@@ -82,7 +82,7 @@ export class EditorComponent implements OnInit, OnDestroy {
   }
 
   private initDistributionPlaceholders() {
-    this.editorService.getDistributionPlaceholders()
+    this.editorEmailService.getDistributionPlaceholders()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( value => {
         this.distributionPlaceholders = value;
@@ -101,7 +101,7 @@ export class EditorComponent implements OnInit, OnDestroy {
     this.formDistribution.get( 'dateTo' ).patchValue( moment().add( 1, 'days' ).format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
     this.formDistribution.get( 'totalCount' ).disable();
-    this.editorService.getEmailLimits()
+    this.editorEmailService.getEmailLimits()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( emailLimits => {
         this.emailLimits = emailLimits;
@@ -116,7 +116,7 @@ export class EditorComponent implements OnInit, OnDestroy {
       .subscribe( value => {
         this.formDistribution.get( 'text' ).patchValue( '' );
         if ( value ) {
-          this.editorService.getTemplate( value )
+          this.editorEmailService.getTemplate( value )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( ( template: ITemplate ) => {
               this.formDistribution.get( 'text' ).patchValue( template.htmlBody );
@@ -200,10 +200,10 @@ export class EditorComponent implements OnInit, OnDestroy {
       };
       const error = _ => this.windowDialog( 'Ошибка при отправки', 'error' );
 
-      const saveDistribution = params => this.editorService.saveDistribution( params )
+      const saveDistribution = params => this.editorEmailService.saveDistribution( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( success, error );
-      const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
+      const saveFromPromoCode = params => this.editorEmailService.saveFromPromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( success, error );
 

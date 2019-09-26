@@ -7,9 +7,9 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
-import { EditorService } from '../../../components/editors/editor/editor.service';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
+import { EditorEmailService } from '../../../components/editors/editor-email/editor-email.service';
 
 @Component( {
   selector: 'app-profile-distribution',
@@ -34,7 +34,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     private profileDistributionService: ProfileDistributionService,
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
-    private editorService: EditorService,
+    private editorEmailService: EditorEmailService,
   ) { }
 
   ngOnInit(): void {
@@ -104,7 +104,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
 
 
   private initEmailLimits() {
-    this.editorService.getEmailLimits()
+    this.editorEmailService.getEmailLimits()
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( emailLimits => {
         this.emailLimits = emailLimits;
