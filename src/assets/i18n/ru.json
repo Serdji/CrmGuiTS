@@ -640,6 +640,13 @@
 				}
 			}
 		},
+		"SETTINGS": {
+			"TABLE_PROFILE": {
+				"COLUMN_DISPLAY": "Отображение столбцов",
+				"COLUMN_ORDER": "Порядок столбцов",
+				"TITLE": "Настройка таблицы пассажиров"
+			}
+		},
 		"SLECIAL_GROUP": {
 			"PROFILE_GROUP": {
 				"TABLE": {

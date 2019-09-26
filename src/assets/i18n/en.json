@@ -640,6 +640,13 @@
 				}
 			}
 		},
+		"SETTINGS": {
+			"TABLE_PROFILE": {
+				"COLUMN_DISPLAY": "Column display",
+				"COLUMN_ORDER": "Column order",
+				"TITLE": "Setting the passenger table"
+			}
+		},
 		"SLECIAL_GROUP": {
 			"PROFILE_GROUP": {
 				"TABLE": {
