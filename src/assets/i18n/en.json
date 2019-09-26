@@ -14,6 +14,7 @@
 		"CLEAR_FORM": "Clear form",
 		"COPY": "Copy",
 		"DELETE": "Delete",
+		"DOWNLOAD": "Download",
 		"EDIT": "Edit",
 		"EDITOR": "Create Newsletter",
 		"MERGE_PROFILE": "Combine passengers",
@@ -512,6 +513,15 @@
 					"PROMOTIONS": "Promotion",
 					"PROMOTIONS_CODE": "Promo Code"
 				}
+			}
+		},
+		"REPORTS": {
+			"STATISTICS_REPORT": {
+				"MES_DOWNLOAD_EXC": "Download Excel file based on the generated request",
+				"MES_DOWNLOAD_PDF": "Download a PDF file taking into account the generated request",
+				"MES_DOWNLOAD_WORD": "Download Word file based on the generated request",
+				"REPORT_PARAMETERS": "Report parameters",
+				"REPORT_SELECTION": "Report selection"
 			}
 		},
 		"SEGMENTATION": {

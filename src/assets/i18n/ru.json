@@ -14,6 +14,7 @@
 		"CLEAR_FORM": "Очистить форму",
 		"COPY": "Копировать",
 		"DELETE": "Удалить",
+		"DOWNLOAD": "Скачать",
 		"EDIT": "Изменить",
 		"EDITOR": "Создать рассылку",
 		"MERGE_PROFILE": "Объединить пассажиров",
@@ -512,6 +513,15 @@
 					"PROMOTIONS": "Промоакция",
 					"PROMOTIONS_CODE": "Промокод"
 				}
+			}
+		},
+		"REPORTS": {
+			"STATISTICS_REPORT": {
+				"MES_DOWNLOAD_EXC": "Скачать Excel файла с учетом сформированного запроса",
+				"MES_DOWNLOAD_PDF": "Скачать PDF файла с учетом сформированного запроса",
+				"MES_DOWNLOAD_WORD": "Скачать Word файла с учетом сформированного запроса",
+				"REPORT_PARAMETERS": "Параметры отчета",
+				"REPORT_SELECTION": "Выбор отчета"
 			}
 		},
 		"SEGMENTATION": {

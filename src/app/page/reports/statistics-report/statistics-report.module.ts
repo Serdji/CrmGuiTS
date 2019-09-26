@@ -7,6 +7,7 @@ import { StatisticsReportComponent } from './statistics-report.component';
 import { StatisticsReportService } from './statistics-report.service';
 import { StatisticsReportRoutes } from './statistics-reportrouting';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -17,6 +18,7 @@ import { PdfViewerModule } from 'ng2-pdf-viewer';
     StatisticsReportRoutes,
     PdfViewerModule,
     ComponentsModule,
+    TranslateModule,
   ],
   declarations: [ StatisticsReportComponent ],
   providers: [ StatisticsReportService ]
