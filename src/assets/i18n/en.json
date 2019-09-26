@@ -13,6 +13,7 @@
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
 		"COPY": "Copy",
+		"CREATE_EVENT": "Create event",
 		"DELETE": "Delete",
 		"DOWNLOAD": "Download",
 		"EDIT": "Edit",
@@ -768,6 +769,24 @@
 			"DATE_TO": "To",
 			"NAME_PROMO_CODE": "Promo code name:",
 			"PROMO_CODE": "Promo Code"
+		},
+		"EDITOR": {
+			"DIALOG_EDITOR": {
+				"TITLE": "Select a mailing form"
+			},
+			"DIALOG_EMAIL": {
+				"DATE_FROM": "Shipping Date From",
+				"DATE_TO": "Dispatch Date",
+				"EXAMPLE": "Example:",
+				"LIMITS": "Limit",
+				"PARAMS": "Newsletter Options",
+				"TEMPLATE": "Template",
+				"TEMPLATE_TITLE": "Newsletter Template",
+				"TEXT": "Text",
+				"THEME": "Theme",
+				"TITLE": "Mailing Variables",
+				"TOTAL_COUNT": "Amount"
+			}
 		}
 	},
 	"TABLE": {

@@ -13,6 +13,7 @@
 		"CLEAR": "Очистить",
 		"CLEAR_FORM": "Очистить форму",
 		"COPY": "Копировать",
+		"CREATE_EVENT": "Создать событие",
 		"DELETE": "Удалить",
 		"DOWNLOAD": "Скачать",
 		"EDIT": "Изменить",
@@ -768,6 +769,24 @@
 			"DATE_TO": "До",
 			"NAME_PROMO_CODE": "Название промокода:",
 			"PROMO_CODE": "Промокод"
+		},
+		"EDITOR": {
+			"DIALOG_EDITOR": {
+				"TITLE": "Выбор формы рассылки"
+			},
+			"DIALOG_EMAIL": {
+				"DATE_FROM": "Дата отправки от",
+				"DATE_TO": "Дата отправки до",
+				"EXAMPLE": "Пример:",
+				"LIMITS": "Лимит",
+				"PARAMS": "Параметры рассылок",
+				"TEMPLATE": "Шаблон",
+				"TEMPLATE_TITLE": "Шаблон рассылок",
+				"TEXT": "Текст",
+				"THEME": "Тема",
+				"TITLE": "Переменные рассылок",
+				"TOTAL_COUNT": "Количество"
+			}
 		}
 	},
 	"TABLE": {
