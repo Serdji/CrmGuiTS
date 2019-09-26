@@ -524,6 +524,9 @@
 				"REPORT_SELECTION": "Выбор отчета"
 			}
 		},
+		"RESET": {
+			"TITLE": "Перезагрузить приложение"
+		},
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {

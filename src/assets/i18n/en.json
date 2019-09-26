@@ -524,6 +524,9 @@
 				"REPORT_SELECTION": "Report selection"
 			}
 		},
+		"RESET": {
+			"TITLE": "Reload application"
+		},
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
