@@ -100,7 +100,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       this.documentService.addDocument( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
-          this.windowDialog( 'Документ успешно добавлен', 'ok' );
+          this.windowDialog( 'DIALOG.OK.DOCUMENT_CHANGED', 'ok' );
           this.resetForm();
           this.refreshTable();
         } );

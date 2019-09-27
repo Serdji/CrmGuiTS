@@ -152,7 +152,7 @@ export class UserComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( user: IlistUsers ) => {
           this.user = user;
-          this.windowDialog( 'Пользователь успешно изменен', 'ok' );
+          this.windowDialog( 'DIALOG.OK.USER_CHANGED', 'ok' );
         } );
     }
   }
@@ -167,7 +167,7 @@ export class UserComponent implements OnInit, OnDestroy {
       Object.assign( params, { loginId: this.loginId } );
       this.userService.putPassword( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
+        .subscribe( _ => this.windowDialog( 'DIALOG.OK.PASSWORD_CHANGED', 'ok' ) );
     }
   }
 
@@ -189,7 +189,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.edit = false;
           } );
       } else {
-        this.windowDialog( 'Права пользователя изменены', 'ok' );
+        this.windowDialog( 'DIALOG.OK.USER_RIGHTS_CHANGED', 'ok' );
       }
     };
 
