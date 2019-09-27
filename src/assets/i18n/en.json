@@ -18,6 +18,7 @@
 		"DOWNLOAD": "Download",
 		"EDIT": "Edit",
 		"EDITOR": "Create Newsletter",
+		"LOGIN": "Log In",
 		"MERGE_PROFILE": "Combine passengers",
 		"PROMO_CODE": "Link promotional code",
 		"SAVE": "Save",
@@ -170,6 +171,15 @@
 				},
 				"TO": "to"
 			}
+		},
+		"LOGIN": {
+			"AIRLINE_CODE": "Airline",
+			"ERROR": "Invalid username or password",
+			"LOGIN": "Login",
+			"PASSWORD": "Password",
+			"REMEMBER_ME": "Remember me",
+			"TITLE": "Authorization",
+			"VERSION": "Version:"
 		},
 		"PROFILES": {
 			"ADD_PROFILE": {
