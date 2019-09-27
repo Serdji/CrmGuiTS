@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { SidenavService } from './sidenav/sidenav.service';
 import { BreadcrumbsModule } from '../breadcrumbs/breadcrumbs.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MaterialModule,
     RouterModule,
     BreadcrumbsModule,
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule,
   ],
   declarations: [
     SidenavComponent,

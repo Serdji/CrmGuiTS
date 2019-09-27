@@ -47,11 +47,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     this.AirlineCode = localStorage.getItem( 'AirlineCode' );
   }
 
-  setLanguage(languageCode: string) {
-    // устанавливаем выбранный язык
-    this.translate.use(languageCode);
-  }
-
   private louder() {
     this.router.events
       .pipe(

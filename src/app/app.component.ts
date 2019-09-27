@@ -56,12 +56,6 @@ export class AppComponent implements OnInit {
   private initTranslate() {
     this.translate.addLangs( [ 'ru', 'en' ] );
     this.translate.setDefaultLang( 'ru' );
-
-    this.translate.stream( 'MENU' ).subscribe( ( value ) => {
-      console.log( value, this.translate.store.currentLang );
-      this._adapter.setLocale( this.translate.store.currentLang );
-    } );
-
     const browserLang = this.translate.getBrowserLang();
     this.translate.use( browserLang.match( /ru|en/ ) ? browserLang : 'ru' );
   }
