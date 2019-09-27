@@ -25,8 +25,7 @@ export class RestartComponent implements OnInit {
   }
 
   restart(): void {
-    const messDialog = `После перезагрузки приложение все ваши настройки будут установлены по умолчанию. Вы действительно хотите перезагрузить приложения?`;
-    this.windowDialog( messDialog, 'delete', 'restart' );
+    this.windowDialog( 'DIALOG.DELETE.SETTING_DEFAULT', 'delete', 'restart' );
   }
 
 }

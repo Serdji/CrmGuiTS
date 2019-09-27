@@ -158,7 +158,7 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   deleteUser(): void {
-    this.windowDialog( `Вы действительно хотите удалить пользователя "${this.user.login}" ?`, 'delete', 'user', true );
+    this.windowDialog( `DIALOG.DELETE.USER`, 'delete', 'user', true );
   }
 
   sendFormPassword(): void {

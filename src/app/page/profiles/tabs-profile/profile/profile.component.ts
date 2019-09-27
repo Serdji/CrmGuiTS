@@ -146,7 +146,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   deleteProfile(): void {
-    this.windowDialog( `Вы действительно хотите удалить пассажира "${ this.profile.firstName }" ?`, 'delete', 'profile', true );
+    this.windowDialog( `DIALOG.DELETE.CUSTOMER`, 'delete', 'profile', true );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {

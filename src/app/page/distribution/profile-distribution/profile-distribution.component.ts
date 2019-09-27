@@ -168,11 +168,11 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
   }
 
   stopDistribution(): void {
-    this.windowDialog( 'Вы действительно хотиту отменить эту рассылку ?', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
+    this.windowDialog( 'DIALOG.DELETE.CANCEL_DISTRIBUTION', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
   }
 
   deleteDistribution(): void {
-    this.windowDialog( 'Вы действительно хотиту удальть эту рассылку ?', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
+    this.windowDialog( 'DIALOG.DELETE.DISTRIBUTION', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {

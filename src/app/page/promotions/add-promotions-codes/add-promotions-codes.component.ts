@@ -583,7 +583,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   deletePromoCode(): void {
-    this.windowDialog( `Вы действительно хотите удалить промокод  "${this.promoCodeParameters().code}" ?`, 'delete', 'promoCode', true );
+    this.windowDialog( `DIALOG.DELETE.PROMO_CODE`, 'delete', 'promoCode', true );
   }
 
   ngOnDestroy(): void {
