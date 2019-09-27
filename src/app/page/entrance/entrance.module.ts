@@ -5,6 +5,7 @@ import { EntranceComponent } from './entrance.component';
 import { RouterModule } from '@angular/router';
 import { SidenavService } from '../../shared/layout/sidenav/sidenav.service';
 import { EntranceRoutes } from './entrance.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { EntranceRoutes } from './entrance.routing';
     SharedModule,
     RouterModule,
     EntranceRoutes,
+    TranslateModule,
   ],
   declarations: [ EntranceComponent ],
   providers: [ SidenavService ]

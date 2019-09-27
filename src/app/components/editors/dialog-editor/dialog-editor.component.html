@@ -1,1 +1,14 @@
-<app-editor [params]="data.params" [totalCount]="data.totalCount"></app-editor>
+<div class="dialog-editor">
+  <form class="dialog-editor__form" *ngIf="data.whatNewsletter === 'choice'" [formGroup]="formChoice">
+    <mat-form-field class="dialog-editor__input">
+      <mat-label>{{'POP_UP.EDITOR.DIALOG_EDITOR.TITLE' | translate}}</mat-label>
+      <mat-select formControlName="choice">
+        <mat-option value="email">email</mat-option>
+        <mat-option value="sms">sms</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+
+  <app-editor-email  *ngIf="data.whatNewsletter === 'email'" [params]="data.params" [totalCount]="data.totalCount" whichButton="save"></app-editor-email>
+  <app-editor-sms  *ngIf="data.whatNewsletter === 'sms'" [params]="data.params" [totalCount]="data.totalCount" whichButton="save"></app-editor-sms>
+</div>

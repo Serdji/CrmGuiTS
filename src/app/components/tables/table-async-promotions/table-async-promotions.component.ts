@@ -150,7 +150,7 @@ export class TableAsyncPromotionsComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'промоакцию' : 'промоакции' } ?`, 'delete', params, 'deletePromotions' );
+      this.windowDialog( `DIALOG.DELETE.PROMOTION`, 'delete', params, 'deletePromotions' );
     }
   }
 

@@ -8,7 +8,7 @@ import { RetryRequestService } from '../../../services/retry-request.service';
 @Injectable( {
   providedIn: 'root'
 } )
-export class EditorService {
+export class EditorEmailService {
 
   constructor(
     private http: HttpClient,

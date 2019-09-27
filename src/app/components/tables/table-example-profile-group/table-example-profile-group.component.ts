@@ -94,7 +94,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу пассажиров' : 'группы пассажиров' } ?`, 'delete', params, 'deleteProfileGroups' );
+      this.windowDialog( `DIALOG.DELETE.PROFILE_GROUP`, 'delete', params, 'deleteProfileGroups' );
     }
   }
 

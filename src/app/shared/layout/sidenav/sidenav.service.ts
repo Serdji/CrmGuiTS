@@ -27,73 +27,81 @@ export class SidenavService {
 
     let menu = [
       {
-        name: 'Пользователи',
+        name: 'MENU.USERS.GROUP_NAME',
         icon: 'person',
         claims: 'users:read',
         link: [
-          { url: '/crm/listusers', title: 'Список пользователей' },
-          { url: '/crm/adduser', title: 'Добавить пользователя' }
+          { url: '/crm/listusers', title: 'MENU.USERS.LIST_USERS' },
+          { url: '/crm/adduser', title: 'MENU.USERS.ADD_USERS' }
         ]
       },
       {
-        name: 'Пассажиры',
+        name: 'MENU.CUSTOMER.GROUP_NAME',
         icon: 'airline_seat_recline_extra',
         claims: 'customers:read',
         link: [
-          { url: '/crm/profilesearch', title: 'Поиск пассажира' },
-          { url: '/crm/addprofile', title: 'Добавить пассажира' }
+          { url: '/crm/profilesearch', title: 'MENU.CUSTOMER.SEARCH_CUSTOMER' },
+          { url: '/crm/addprofile', title: 'MENU.CUSTOMER.ADD_CUSTOMER' }
         ]
       },
       {
-        name: 'Сегментация',
+        name: 'MENU.SEGMENTATION.GROUP_NAME',
         icon: 'group',
         claims: 'analytics:read',
         link: [
-          { url: '/crm/listsegmentation', title: 'Список сегментаций' },
-          { url: '/crm/addsegmentation', title: 'Добавить сегментацию' },
-          { url: '/crm/complexsegmentation', title: 'Объединение сегментаций' },
+          { url: '/crm/listsegmentation', title: 'MENU.SEGMENTATION.LIST_SEGMENTATION' },
+          { url: '/crm/addsegmentation', title: 'MENU.SEGMENTATION.ADD_SEGMENTATION' },
+          { url: '/crm/complexsegmentation', title: 'MENU.SEGMENTATION.AGGREGATION_SEGMENTATION' },
         ]
       },
       {
-        name: 'Группы пассажиров',
+        name: 'MENU.GROUP_CUSTOMER.GROUP_NAME',
         icon: 'group_add',
         claims: 'analytics:read',
         link: [
-          { url: '/crm/profilegroup', title: 'Список групп' },
+          { url: '/crm/profilegroup', title: 'MENU.GROUP_CUSTOMER.LIST_GROUP_CUSTOMER' },
         ]
       },
       {
-        name: 'Рассылки',
+        name: 'MENU.DISTRIBUTIONS.GROUP_NAME',
         icon: 'email',
         claims: 'distributions:read',
         link: [
-          { url: '/crm/list-distribution', title: 'Список рассылок' },
+          { url: '/crm/list-distribution', title: 'MENU.DISTRIBUTIONS.LIST_DISTRIBUTIONS' },
         ]
       },
       {
-        name: 'Промокоды',
+        name: 'MENU.PROMOTIONS_CODES.GROUP_NAME',
         icon: 'receipt',
         claims: 'promotions:read',
         link: [
-          { url: '/crm/search-promotions-codes', title: 'Поиск промокода' },
-          { url: '/crm/add-promotions-codes', title: 'Добавить промокод' },
-          { url: '/crm/add-promotions', title: 'Добавить промоакцию' },
+          { url: '/crm/search-promotions-codes', title: 'MENU.PROMOTIONS_CODES.SEARCH_PROMOTIONS_CODES' },
+          { url: '/crm/add-promotions-codes', title: 'MENU.PROMOTIONS_CODES.ADD_PROMOTIONS_CODES' },
+          { url: '/crm/add-promotions', title: 'MENU.PROMOTIONS_CODES.ADD_PROMOTIONS' },
         ]
       },
       {
-        name: 'Отчеты',
+        name: 'MENU.REPORTS.GROUP_NAME',
         icon: 'graphic_eq',
         claims: 'reports:read',
         link: [
-          { url: '/crm/statistics-report', title: 'Список отчетов' },
+          { url: '/crm/statistics-report', title: 'MENU.REPORTS.LIST_REPORTS' },
         ]
       },
       {
-        name: 'Настройки',
+        name: 'MENU.EVENT.GROUP_NAME',
+        icon: 'event',
+        link: [
+          { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
+          { url: '/crm/list-event', title: 'MENU.EVENT.LIST_EVENT' },
+        ]
+      },
+      {
+        name: 'MENU.SETTINGS.GROUP_NAME',
         icon: 'settings',
         link: [
-          { url: '/crm/form-table-async-profile-settings', title: 'Таблицы пассажиров' },
-          { url: '/crm/restart', title: 'Перезагрузка' },
+          { url: '/crm/form-table-async-profile-settings', title: 'MENU.SETTINGS.TABLE_CUSTOMERS' },
+          { url: '/crm/restart', title: 'MENU.SETTINGS.RESTART' },
         ]
       }
     ];

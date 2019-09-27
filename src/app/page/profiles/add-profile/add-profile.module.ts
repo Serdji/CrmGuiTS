@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { AddProfileService } from './add-profile.service';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { AddProfileRoutes } from './add-profile.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -13,7 +14,8 @@ import { AddProfileRoutes } from './add-profile.routing';
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
-    AddProfileRoutes
+    AddProfileRoutes,
+    TranslateModule
   ],
   declarations: [ AddProfileComponent ],
   providers: [ AddProfileService ]

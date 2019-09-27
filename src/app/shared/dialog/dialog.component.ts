@@ -15,11 +15,11 @@ import { map, takeWhile } from 'rxjs/operators';
 import { ProfileGroupService } from '../../page/special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../interface/icustomer-group';
 import * as _ from 'lodash';
-import { EditorService } from '../../components/editors/editor/editor.service';
 import { ListDistributionService } from '../../page/distribution/list-distribution/list-distribution.service';
 import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
 import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-codes/add-promotions-codes.service';
+import { EditorEmailService } from '../../components/editors/editor-email/editor-email.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -48,7 +48,6 @@ export class DialogComponent implements OnInit, OnDestroy {
     private addSegmentationService: AddSegmentationService,
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
-    private editorService: EditorService,
     private listDistributionService: ListDistributionService,
     private profileDistributionService: ProfileDistributionService,
     private addPromotionsService: AddPromotionsService,

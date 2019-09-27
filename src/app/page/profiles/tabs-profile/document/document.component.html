@@ -1,13 +1,13 @@
 <div class="document">
   <mat-card class="document__card">
     <div class="document__show">
-      <span (click)="showHiden()"> {{ showHide ? 'Скрыть форму добавления' : 'Показать форму добавления' }}</span>
+      <span (click)="showHiden()"> {{ showHide ? ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.HIDE' | translate) : ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.SHOW' | translate) }}</span>
       <mat-icon (click)="showHiden()"> {{ showHide ? 'fullscreen' : 'fullscreen_exit' }}</mat-icon>
     </div>
     <form *ngIf="showHide" class="document__form _additional" [formGroup]="formDocument">
       <div class="document__form-wrapper">
         <mat-form-field class="document__input">
-          <mat-select placeholder="Тип документа" formControlName="documentTypeId">
+          <mat-select placeholder="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.DOCUMENT_TYPE' | translate}}" formControlName="documentTypeId">
             <mat-option></mat-option>
             <mat-option *ngFor="let documentType of documentTypes" [value]="documentType.documentTypeId">
               {{ documentType.documentTypeCode }}
@@ -15,29 +15,29 @@
           </mat-select>
         </mat-form-field>
         <mat-form-field class="document__input _flex">
-          <input matInput formControlName="num" placeholder="Номер документа">
+          <input matInput formControlName="num" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.NUM' | translate}}">
         </mat-form-field>
       </div>
       <div class="document__form-wrapper">
         <mat-form-field class="document__input">
-          <input matInput formControlName="firstName" placeholder="Имя">
+          <input matInput formControlName="firstName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.FIRST_NAME' | translate}}">
         </mat-form-field>
         <mat-form-field class="document__input">
-          <input matInput formControlName="lastName" placeholder="Фамилия">
+          <input matInput formControlName="lastName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.LAST_NAME' | translate}}">
         </mat-form-field>
         <mat-form-field class="document__input">
-          <input matInput formControlName="secondName" placeholder="Отчество">
+          <input matInput formControlName="secondName" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.MIDDLE_NAME' | translate}}">
         </mat-form-field>
         <mat-form-field class="document__input">
-          <input matInput formControlName="expDate" placeholder="дд.мм.гггг" [matDatepicker]="expDate">
-          <mat-error>Обязательное поле</mat-error>
+          <input matInput formControlName="expDate" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.EXP_DATE' | translate}}" [matDatepicker]="expDate">
+          <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           <mat-datepicker-toggle matSuffix [for]="expDate"></mat-datepicker-toggle>
           <mat-datepicker touchUi="true" #expDate></mat-datepicker>
         </mat-form-field>
       </div>
       <div class="document__button-wrapper">
         <button class="document__button _left-button" mat-raised-button (click)="sendFormDocument()" color="primary">
-          Добавить
+          {{'PAGE.PROFILES.TABS_PROFILE.DOCUMENT.FORM.ADD' | translate}}
         </button>
       </div>
     </form>

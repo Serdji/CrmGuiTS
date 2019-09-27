@@ -136,7 +136,7 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'рассылку' : 'рассылки' } ?`, 'delete', params, 'displayeds' );
+      this.windowDialog( `DIALOG.DELETE.DISTRIBUTION`, 'delete', params, 'displayeds' );
     }
   }
 

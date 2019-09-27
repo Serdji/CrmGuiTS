@@ -8,6 +8,7 @@ import { SettingsService } from '../settings.service';
 import { FormTableAsyncProfileSettingsComponent } from './form-table-async-profile-settings.component';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { FormTableAsyncProfileSettingsRoutes } from './form-table-async-profile-settings.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -17,7 +18,8 @@ import { FormTableAsyncProfileSettingsRoutes } from './form-table-async-profile-
     PipesModule,
     DirectivesModule,
     DragulaModule.forRoot(),
-    FormTableAsyncProfileSettingsRoutes
+    FormTableAsyncProfileSettingsRoutes,
+    TranslateModule
   ],
   declarations: [ FormTableAsyncProfileSettingsComponent ],
   providers: [ SettingsService ]

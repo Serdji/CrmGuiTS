@@ -61,7 +61,10 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( res => {
         const isRes = !R.isEmpty( res );
-        if ( isRes ) this.initTableProfile( res.segmentationId );
+        if ( isRes ) {
+          this.initTableProfile( res.segmentationId );
+          this.segmentationId = res.segmentationId;
+        }
         this.isTableProfileTable = isRes;
         this.isLoaderProfileTable = isRes;
       } );

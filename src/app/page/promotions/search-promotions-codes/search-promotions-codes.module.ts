@@ -8,6 +8,7 @@ import { PipesModule } from '../../../pipes/pipes.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { SearchPromotionsCodesRoutes } from './search-promotions-codes.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -17,7 +18,8 @@ import { SearchPromotionsCodesRoutes } from './search-promotions-codes.routing';
     PipesModule,
     ComponentsModule,
     DirectivesModule,
-    SearchPromotionsCodesRoutes
+    SearchPromotionsCodesRoutes,
+    TranslateModule
   ],
   declarations: [ SearchPromotionsCodesComponent ],
   providers: [ SearchPromotionsCodesService ]

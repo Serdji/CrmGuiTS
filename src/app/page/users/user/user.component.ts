@@ -153,13 +153,13 @@ export class UserComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( user: IlistUsers ) => {
           this.user = user;
-          this.windowDialog( 'Пользователь успешно изменен', 'ok' );
+          this.windowDialog( 'DIALOG.OK.USER_CHANGED', 'ok' );
         } );
     }
   }
 
   deleteUser(): void {
-    this.windowDialog( `Вы действительно хотите удалить пользователя "${this.user.login}" ?`, 'delete', 'user', true );
+    this.windowDialog( `DIALOG.DELETE.USER`, 'delete', 'user', true );
   }
 
   sendFormPassword(): void {
@@ -168,7 +168,7 @@ export class UserComponent implements OnInit, OnDestroy {
       Object.assign( params, { loginId: this.loginId } );
       this.userService.putPassword( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
+        .subscribe( _ => this.windowDialog( 'DIALOG.OK.PASSWORD_CHANGED', 'ok' ) );
     }
   }
 
@@ -181,7 +181,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     const success = _ => {
       if ( this.user.login === localStorage.getItem( 'login' ) ) {
-        this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
+        this.windowDialog( 'DIALOG.ERROR.RIGHTS_FOR_YOU_ACCOUNT', 'error', '', true );
         timer( 5000 )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
@@ -190,7 +190,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.edit = false;
           } );
       } else {
-        this.windowDialog( 'Права пользователя изменены', 'ok' );
+        this.windowDialog( 'DIALOG.OK.USER_RIGHTS_CHANGED', 'ok' );
       }
     };
 

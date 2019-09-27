@@ -1,24 +1,24 @@
 <div class="dialog-promo-code">
   <form class="dialog-promo-code__form" [formGroup]="formPromoCod">
     <mat-form-field class="dialog-promo-code__input">
-      <input matInput formControlName="promoCodeId" [matAutocomplete]="promoCodeId" type="text" placeholder="Промокод">
+      <input matInput formControlName="promoCodeId" [matAutocomplete]="promoCodeId" type="text" placeholder="{{'POP_UP.DIALOG_PROMO_CODE.PROMO_CODE' | translate}}">
       <mat-autocomplete #promoCodeId="matAutocomplete">
         <mat-option
           class="dialog-promo-code__option"
           *ngFor="let promoCod of promoCodesOptions | async"
           [value]="promoCod.title"
         >
-          <span>Название промокода: <b>{{promoCod.code}}</b></span> |
-          <span>Аккаунт код: <b>{{promoCod.accountCode}}</b></span> |
-          <span>Срок действия: От <b>{{promoCod.dateFrom | date:'dd.MM.yyyy'}}</b>  До <b>{{promoCod.dateTo | date:'dd.MM.yyyy'}}</b></span>
+          <span>{{'POP_UP.DIALOG_PROMO_CODE.NAME_PROMO_CODE' | translate}} <b>{{promoCod.code}}</b></span> |
+          <span>{{'POP_UP.DIALOG_PROMO_CODE.ACCOUNT_CODE' | translate}} <b>{{promoCod.accountCode}}</b></span> |
+          <span>{{'POP_UP.DIALOG_PROMO_CODE.DATE_FROM' | translate}} <b>{{promoCod.dateFrom | date:'dd.MM.yyyy'}}</b>  {{'POP_UP.DIALOG_PROMO_CODE.DATE_TO' | translate}} <b>{{promoCod.dateTo | date:'dd.MM.yyyy'}}</b></span>
         </mat-option>
       </mat-autocomplete>
-      <mat-error>Обязательное поле</mat-error>
+      <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
     </mat-form-field>
     <button appAccessRights="promotions:update" class="dialog-promo-code__button" mat-raised-button
             (click)="saveForm()" color="primary">
       <mat-icon>save</mat-icon>
-      Добавить
+      {{'BUTTON.ADD' | translate}}
     </button>
   </form>
 </div>
