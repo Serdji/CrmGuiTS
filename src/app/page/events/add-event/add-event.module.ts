@@ -5,6 +5,7 @@ import { AddEventRoutes } from './add-event.routing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -16,6 +17,7 @@ import { ComponentsModule } from '../../../components/components.module';
     SharedModule,
     ComponentsModule,
     AddEventRoutes,
+    TranslateModule,
   ]
 })
 export class AddEventModule { }
