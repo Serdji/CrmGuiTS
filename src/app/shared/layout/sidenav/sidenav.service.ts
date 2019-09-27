@@ -89,11 +89,11 @@ export class SidenavService {
         ]
       },
       {
-        name: 'События',
+        name: 'MENU.EVENT.GROUP_NAME',
         icon: 'event',
         link: [
-          { url: '/crm/add-event', title: 'Добавить событие' },
-          { url: '/crm/list-event', title: 'Список событий' },
+          { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
+          { url: '/crm/list-event', title: 'MENU.EVENT.LIST_EVENT' },
         ]
       },
       {

@@ -128,6 +128,11 @@
 			"GROUP_NAME": "Newsletters",
 			"LIST_DISTRIBUTIONS": "Mailing list"
 		},
+		"EVENT": {
+			"ADD_EVENT": "Add event",
+			"GROUP_NAME": "developments",
+			"LIST_EVENT": "Event list"
+		},
 		"GROUP_CUSTOMER": {
 			"GROUP_NAME": "Passenger groups",
 			"LIST_GROUP_CUSTOMER": "List of groups"

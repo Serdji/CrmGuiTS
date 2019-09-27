@@ -128,6 +128,11 @@
 			"GROUP_NAME": "Рассылки",
 			"LIST_DISTRIBUTIONS": "Список рассылок"
 		},
+		"EVENT": {
+			"ADD_EVENT": "Добавить событие",
+			"GROUP_NAME": "События",
+			"LIST_EVENT": "Список событий"
+		},
 		"GROUP_CUSTOMER": {
 			"GROUP_NAME": "Группы пассажиров",
 			"LIST_GROUP_CUSTOMER": "Список групп"
