@@ -34,15 +34,16 @@
             <input matInput formControlName="emailLimits" class="editor-email__input-informational" type="text"
                    placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.LIMITS' | translate}}">
           </mat-form-field>
-          <mat-form-field class="editor-email__input">
+          <mat-form-field [ngStyle]="{'display' : whichButton === 'data' ? 'none': 'block'}" class="editor-email__input">
             <input matInput formControlName="dateFrom"
                    placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_FROM' | translate}}"
                    [matDatepicker]="dateFrom">
             <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
           </mat-form-field>
-          <mat-form-field class="editor-email__input">
-            <input matInput formControlName="dateTo" placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_TO' | translate}}"
+          <mat-form-field [ngStyle]="{'display' : whichButton === 'data' ? 'none': 'block'}" class="editor-email__input">
+            <input matInput formControlName="dateTo"
+                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_TO' | translate}}"
                    [matDatepicker]="dateTo">
             <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
             <mat-datepicker touchUi="true" #dateTo></mat-datepicker>

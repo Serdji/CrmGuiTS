@@ -20,13 +20,13 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public formEvent: FormGroup;
   public segmentation: ISegmentation[];
   public segmentationOptions: Observable<ISegmentation[]>;
-  public typeEvent: string;
+  public taskType: string;
   public maxSize: number;
 
   private isActive: boolean;
   private segmentationId: number;
   private totalCount: number;
-  private multiplicityTime: number;
+  private frequencySec: number;
 
   constructor(
     private fb: FormBuilder,
@@ -53,8 +53,8 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initFormEvent() {
     this.formEvent = this.fb.group( {
-      titleEvent: [ '', [ Validators.required ] ],
-      typeEvent: '',
+      title: [ '', [ Validators.required ] ],
+      taskType: '',
       multiplicity: '',
       segmentation: ''
     } );
@@ -74,7 +74,6 @@ export class AddEventComponent implements OnInit, OnDestroy {
     this.formEvent.get( 'segmentation' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentation => {
-        console.log( segmentation );
         if ( _.isObject( segmentation ) ) {
           this.segmentationId = segmentation.segmentationId;
           const paramsAndCount = {
@@ -90,9 +89,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   private initSwitchTypeEvent() {
-    this.formEvent.get( 'typeEvent' ).valueChanges
+    this.formEvent.get( 'taskType' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( event => this.typeEvent = event );
+      .subscribe( event => this.taskType = event );
   }
 
   private setTimeMultiplicity( time: number ) {
@@ -111,17 +110,12 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
 
-  addEvent( event ): void {
-    console.log( event );
-  }
-
-
   public formatTimeFn( value: number | null ): string {
     const returnFormatTime = ( formatTime: string ): string => {
-      this.multiplicityTime = timePeriods[ formatTime ].seconds;
+      this.frequencySec = timePeriods[ formatTime ].seconds;
       return timePeriods[ formatTime ].formatTime;
     };
-    console.log( this.multiplicityTime );
+    console.log( this.frequencySec );
     switch ( value ) {
       case timePeriods[ '5min' ].index: return  returnFormatTime( '5min' ); break;
       case timePeriods[ '10min' ].index: return returnFormatTime( '10min' ); break;
@@ -137,8 +131,23 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   public displayFn( segmentation?: ISegmentation ): string | undefined {
-    console.log( this.multiplicityTime );
+    console.log( this.frequencySec );
     return segmentation ? segmentation.title : undefined;
+  }
+
+  addEvent( event ): void {
+    console.log(  this.frequencySec );
+    const omit = R.omit( ['dateFrom', 'dateTo', 'text'] );
+    const mergeParams = R.merge( {
+      title: this.formEvent.get( 'title' ).value,
+      taskType: this.taskType,
+      frequencySec: this.frequencySec,
+      DistributionTemplate: event.text
+    } );
+    // @ts-ignore
+    const paramsCompose = R.compose(  mergeParams, omit );
+    const params = paramsCompose( event );
+    console.log( params );
   }
 
   ngOnDestroy(): void {

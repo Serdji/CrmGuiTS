@@ -219,14 +219,14 @@
 		"EVENTS": {
 			"ADD_EVENT": {
 				"FIELD": {
-					"MULTIPLICITY": {
-						"EMAIL": "email",
-						"SMS": "sms",
-						"TITLE": "Кратность"
-					},
+					"MULTIPLICITY": "Кратность",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Выбор сегментации",
-					"TYPE_EVENT": "Тип события"
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события"
+					}
 				}
 			}
 		},
