@@ -93,7 +93,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   onYesClick(): void {
     this.progress = true;
-    const success = _ => this.windowDialog( `Пассажир успешно объединен`, 'ok' );
+    const success = _ => this.windowDialog( `DIALOG.OK.PASSENGER_COMBINED`, 'ok' );
     const error = _ => this.progress = false;
     const params = this.paramMergeCustomer();
     this.dialogMergeProfileService.mergeCustomer( params )

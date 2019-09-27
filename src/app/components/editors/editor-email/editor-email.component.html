@@ -1,0 +1,70 @@
+<div class="editor-email">
+  <link href="https://cdn.materialdesignicons.com/2.1.19/css/materialdesignicons.min.css" rel="stylesheet"/>
+  <form class="editor-email__form" [formGroup]="formDistribution">
+    <mat-grid-list cols="5" rowHeight="500px">
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="editor-email__box mat-elevation-z0">
+          <mat-card-title>{{'POP_UP.EDITOR.DIALOG_EMAIL.TITLE' | translate}}</mat-card-title>
+          <mat-action-list *ngFor=" let distributionPlaceholder of distributionPlaceholders ">
+            <button matRipple mat-list-item (click)="sendVarPlaceholder(distributionPlaceholder.description)"
+                    matTooltip="{{'POP_UP.EDITOR.DIALOG_EMAIL.EXAMPLE' | translate}} {{distributionPlaceholder.example}} ">{{ distributionPlaceholder.description }}</button>
+          </mat-action-list>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="3" [rowspan]="1">
+        <mat-card class="editor-email__box mat-elevation-z0">
+          <mat-card-title>{{'POP_UP.EDITOR.DIALOG_EMAIL.TEMPLATE_TITLE' | translate}}</mat-card-title>
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="subject" type="text" placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.THEME' | translate}}">
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+          </mat-form-field>
+          <ngx-wig formControlName="text" [placeholder]="'POP_UP.EDITOR.DIALOG_EMAIL.TEXT' | translate"></ngx-wig>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <mat-card class="editor-email__box mat-elevation-z0">
+          <mat-card-title>{{'POP_UP.EDITOR.DIALOG_EMAIL.PARAMS' | translate}}</mat-card-title>
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="totalCount" class="editor-email__input-informational" type="text"
+                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.TOTAL_COUNT' | translate}}">
+          </mat-form-field>
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="emailLimits" class="editor-email__input-informational" type="text"
+                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.LIMITS' | translate}}">
+          </mat-form-field>
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="dateFrom"
+                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_FROM' | translate}}"
+                   [matDatepicker]="dateFrom">
+            <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="editor-email__input">
+            <input matInput formControlName="dateTo" placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_TO' | translate}}"
+                   [matDatepicker]="dateTo">
+            <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
+          </mat-form-field>
+          <mat-form-field class="editor-email__input">
+            <mat-select formControlName="templateId"
+                        placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.TEMPLATE' | translate}}">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let template of templates"
+                          [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>
+  </form>
+  <button *ngIf="whichButton === 'save' " class="editor-email__button" mat-raised-button color="primary"
+          (click)="saveDistribution()" [disabled]="buttonDisabled">
+    <mat-icon>save</mat-icon>
+    {{'BUTTON.SAVE' | translate}}</button>
+  <button *ngIf="whichButton === 'data' " class="editor-email__button" mat-raised-button color="primary"
+          (click)="messageEventFn()" [disabled]="buttonDisabled">
+    <mat-icon>event_available</mat-icon>
+    {{'BUTTON.CREATE_EVENT' | translate}}</button>
+</div>

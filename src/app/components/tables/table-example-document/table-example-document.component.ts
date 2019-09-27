@@ -131,7 +131,7 @@ export class TableExampleDocumentComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'этот документ' : 'эти докомунты' } ?`, 'delete', params, 'documents' );
+      this.windowDialog( `DIALOG.DELETE.DOCUMENT`, 'delete', params, 'documents' );
     }
   }
 

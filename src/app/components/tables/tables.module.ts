@@ -23,6 +23,7 @@ import { RouterModule } from '@angular/router';
 import { MergeProfileModule } from '../merge-profile/merge-profile.module';
 import { TableExampleComplexSegmentationComponent } from './table-example-complex-segmentation/table-example-complex-segmentation.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -35,6 +36,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     MergeProfileModule,
     RouterModule,
     ReactiveFormsModule,
+    TranslateModule,
   ],
   declarations: [
     TableExampleComponent,

@@ -111,7 +111,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( profile => {
           Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
-          this.windowDialog( 'Пассажир успешно изменен', 'ok' );
+          this.windowDialog( 'DIALOG.OK.PASSENGER_CHANGED', 'ok' );
           this.profile = profile;
         } );
     }
@@ -126,7 +126,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.profileService.addAddProfile( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
-          this.windowDialog( 'Дополнительное ФИО успешно добавленно', 'ok' );
+          this.windowDialog( 'DIALOG.OK.ADDITIONAL_NAME', 'ok' );
           timer( 1500 )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( _ => {
@@ -146,7 +146,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   }
 
   deleteProfile(): void {
-    this.windowDialog( `Вы действительно хотите удалить пассажира "${ this.profile.firstName }" ?`, 'delete', 'profile', true );
+    this.windowDialog( `DIALOG.DELETE.CUSTOMER`, 'delete', 'profile', true );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {

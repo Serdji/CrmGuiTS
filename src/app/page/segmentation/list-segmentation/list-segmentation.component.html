@@ -9,7 +9,7 @@
   <mat-card class="list-segmentation__table-profile" *ngIf="isTableProfileTable">
     <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <mat-card-title>{{segmentationProfiles.customers.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+      <mat-card-title>{{segmentationProfiles.customers.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
       <app-table-async-segmentation-profile
         *ngIf="segmentationProfiles.customers.length !== 0"
         [tableDataSource]="segmentationProfiles.customers">

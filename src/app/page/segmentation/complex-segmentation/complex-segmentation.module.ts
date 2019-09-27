@@ -7,6 +7,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { ComplexSegmentationRoutes } from './complex-segmentation.routing';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -16,6 +17,7 @@ import { ListSegmentationService } from '../list-segmentation/list-segmentation.
     DirectivesModule,
     ComponentsModule,
     ComplexSegmentationRoutes,
+    TranslateModule,
   ],
   declarations: [ ComplexSegmentationComponent ],
   providers: [ ListSegmentationService ],

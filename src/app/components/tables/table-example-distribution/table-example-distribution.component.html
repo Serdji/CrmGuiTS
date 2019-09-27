@@ -1,6 +1,6 @@
 <div class="table">
   <mat-form-field class="table__input">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.FILTER' | translate}}">
   </mat-form-field>
   <mat-table class="table" #table [dataSource]="dataSource" multiTemplateDataRows matSort matSortDirection="asc">
 
@@ -29,35 +29,35 @@
     </ng-container>
 
     <ng-container matColumnDef="subject">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Тема</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.SUBJECT' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.subject}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="statusNameRus">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Статус</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUS' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.statusNameRus}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dateFrom">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата от</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.DATE_FROM' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dateTo">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата до</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.DATE_TO' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lastTryDT">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>Дата создания рассылки</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.LAST_TRY' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastTryDT | date:'dd.MM.yyyy, HH:mm'}}</span>
       </mat-cell>
@@ -79,19 +79,19 @@
               <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
               <mat-grid-tile [colspan]="3" [rowspan]="1">
                 <div class="table__grid">
-                  <span [matBadge]="element.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.notSentNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.sentToGatewayNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.sendToCustomerNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.errorNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.NOT_SENT' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.SENT_TO_GATEWAY' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.SEND_TO_CUSTOMER' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.ERROR' | translate}}</span>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="3" [rowspan]="1">
                 <div class="table__grid">
-                  <span [matBadge]="element.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.deliveredNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.readNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.clickedNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.bouncedNameRus}}</span>
-                  <span [matBadge]="element.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{element.distributionStatuses.rejectedNameRus}}</span>
+                  <span [matBadge]="element.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.DELIVERED' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.READ' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.CLICKED' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.BOUNCED' | translate}}</span>
+                  <span [matBadge]="element.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.REJECTED' | translate}}</span>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
@@ -117,7 +117,7 @@
   <div class="table__button-wrapper">
     <button appAccessRights="distributions:update" class="table__button" mat-raised-button (click)="deleteDisplayed()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+      {{'BUTTON.DELETE' | translate}}
       <mat-icon>delete</mat-icon>
     </button>
   </div>

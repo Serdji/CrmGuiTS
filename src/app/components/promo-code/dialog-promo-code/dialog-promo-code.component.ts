@@ -104,7 +104,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
     if ( !this.formPromoCod.invalid ) {
       this.dialogPromoCodeService.savePromoCodeCustomers( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => this.windowDialog( `Промокод успешно привязан`, 'ok' ) );
+        .subscribe( _ => this.windowDialog( `DIALOG.OK.PROMO_CODE_LINKED`, 'ok' ) );
     }
   }
 

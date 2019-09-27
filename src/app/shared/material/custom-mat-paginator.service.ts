@@ -1,14 +1,27 @@
 import { Injectable } from '@angular/core';
 import { MatPaginatorIntl } from '@angular/material/paginator';
+import { TranslateService } from '@ngx-translate/core';
 
 @Injectable()
 export class CustomMatPaginatorService extends MatPaginatorIntl {
-  public itemsPerPageLabel: string = 'Количество на страницу';
-  public nextPageLabel: string = 'Следующая';
-  public previousPageLabel: string = 'Предыдущая';
-  public firstPageLabel: string = 'Первая страница';
-  public lastPageLabel: string = 'Последняя страница';
-  public ofLabel: string = 'из';
+  public itemsPerPageLabel: string;
+  public nextPageLabel: string;
+  public previousPageLabel: string;
+  public firstPageLabel: string;
+  public lastPageLabel: string;
+  public ofLabel: string;
+
+  constructor(public translate: TranslateService ) {
+    super();
+    this.translate.stream('TABLE').subscribe(( TABLE ) => {
+      this.itemsPerPageLabel = TABLE.ITEMS_PER_PAGE;
+      this.nextPageLabel = TABLE.NEXT;
+      this.previousPageLabel = TABLE.PREV;
+      this.firstPageLabel = TABLE.FIRST_PAGE;
+      this.lastPageLabel = TABLE.LAST_PAGE;
+      this.ofLabel = TABLE.FROM;
+    });
+  }
 
   public getRangeLabel = (page: number, pageSize: number, length: number): string => {
     if (length === 0 || pageSize === 0) {

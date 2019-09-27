@@ -238,7 +238,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.buttonCreate = false;
       this.buttonSave = true;
       this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
-      this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+      this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
     };
     if ( !this.formAdd.invalid ) {
       this.complexSegmentationService.setComplexSegmentation( { segmentationTitle, segmentationsIds } )
@@ -260,7 +260,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
     this.complexSegmentationService.putComplexSegmentation( { segmentationId, segmentationTitle, segmentationsIds } )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.windowDialog( `Сегментация успешно изменена`, 'ok' ) );
+      .subscribe( _ => this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' ) );
   }
 
   private onClearForm() {

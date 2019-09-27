@@ -7,28 +7,28 @@
 
 
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Имя</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Фамилия</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.TABLE.LAST_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Отчество</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.TABLE.MIDDLE_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="profileId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> № профиля</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.TABLE.PROFILE' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.profileId}}</span>
       </mat-cell>
@@ -52,6 +52,6 @@
   </mat-paginator>
 
   <div class="table__button-wrapper">
-    <app-button-editor [totalCount]="totalCount"></app-button-editor>
+    <app-button-editor whatNewsletter="email" [totalCount]="totalCount"></app-button-editor>
   </div>
 </div>

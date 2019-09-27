@@ -7,7 +7,7 @@
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'text'">
               <input matInput [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder">
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
 
             <div class="dynamic-form__input" *ngSwitchCase="'radio'">

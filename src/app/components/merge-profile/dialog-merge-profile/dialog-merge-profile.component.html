@@ -9,11 +9,11 @@
           <mat-list-item *ngFor="let customerName of result.customerNames">
             <mat-icon mat-list-icon>how_to_reg</mat-icon>
             <h4 mat-line>
-              <b>Имя:</b> {{customerName.firstName}} |
-              <b>Фамилия:</b> {{customerName.lastName}} |
-              <b>№ профиля</b> {{customerName.customerId}}
+              <b>{{'POP_UP.DIALOG_MERGE_PROFILE.FIRST_NAME' | translate}}</b> {{customerName.firstName}} |
+              <b>{{'POP_UP.DIALOG_MERGE_PROFILE.LAST_NAME' | translate}}</b> {{customerName.lastName}} |
+              <b>{{'POP_UP.DIALOG_MERGE_PROFILE.CUSTOMER_IDS' | translate}}</b> {{customerName.customerId}}
             </h4>
-            <p mat-line><b>Дата рождения:</b> {{result.dob | date:'dd.MM.yyyy'}} </p>
+            <p mat-line><b>{{'POP_UP.DIALOG_MERGE_PROFILE.DATE_OF_BIRTH' | translate}}</b> {{result.dob | date:'dd.MM.yyyy'}} </p>
           </mat-list-item>
         </mat-list>
       </div>
@@ -22,8 +22,8 @@
   </div>
   <div class="dialog-merge-profile__button-wrapper">
     <button class="dialog-merge-profile__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">
-      Да
+      {{'DIALOG.YES' | translate}}
     </button>
-    <button class="dialog-merge-profile__button" mat-stroked-button (click)="onNoClick()" color="primary">Нет</button>
+    <button class="dialog-merge-profile__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'DIALOG.NO' | translate}}</button>
   </div>
 </div>

@@ -1,6 +1,6 @@
 <div class="table">
   <mat-form-field class="table__input">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.CONTACT.TABLE.FILTER' | translate}}">
   </mat-form-field>
   <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
 
@@ -29,7 +29,7 @@
     </ng-container>
 
     <ng-container matColumnDef="contactTypeId">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Тип</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.CONTACT.TABLE.CONTACT_TYPE' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
         <span>{{element.contactType.contactTypeCode}}</span>
@@ -37,7 +37,7 @@
     </ng-container>
 
     <ng-container matColumnDef="useForDistribution">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Контакт для рассылки</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.CONTACT.TABLE.USE_FOR_DISTRIBUTION' | translate}}</mat-header-cell>
       <mat-cell
         class="table__cell"
         *matCellDef="let element"
@@ -55,7 +55,7 @@
     </ng-container>
 
     <ng-container matColumnDef="contactText">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Значение</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.CONTACT.TABLE.CONTACT_TEXT' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactText}}</span>
       </mat-cell>
@@ -87,7 +87,7 @@
   <div class="table__button-wrapper">
     <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteContact()"
             [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+      {{'BUTTON.DELETE' | translate}}
       <mat-icon>delete</mat-icon>
     </button>
   </div>

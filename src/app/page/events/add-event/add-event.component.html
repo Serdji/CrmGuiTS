@@ -1,0 +1,56 @@
+<div class="add-event">
+  <div class="add-event__wrapper">
+    <form [formGroup]="formEvent" class="add-event__form">
+      <mat-card class="add-event__card">
+        <mat-form-field class="add-event__input">
+          <input matInput formControlName="titleEvent" type="text" placeholder="{{'PAGE.EVENTS.ADD_EVENT.FIELD.NAME_EVENT' | translate}}">
+          <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="add-event__input">
+          <input matInput formControlName="segmentation" [matAutocomplete]="auto" type="text" placeholder="{{'PAGE.EVENTS.ADD_EVENT.FIELD.SEGMENTATION' | translate}}">
+          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+            <mat-option *ngFor="let segmentation of segmentationOptions | async" [value]="segmentation">
+              {{segmentation.title}}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+        <mat-label>{{'PAGE.EVENTS.ADD_EVENT.FIELD.MULTIPLICITY.TITLE' | translate}}</mat-label>
+        <mat-slider
+          formControlName="multiplicity"
+          class="add-event__input"
+          [displayWith]="formatTimeFn"
+          thumbLabel
+          step="1"
+          tickInterval="1"
+          min="0"
+          [max]="maxSize"></mat-slider>
+        <mat-form-field class="add-event__input">
+          <mat-label>{{'PAGE.EVENTS.ADD_EVENT.FIELD.TYPE_EVENT' | translate}}</mat-label>
+          <mat-select formControlName="typeEvent">
+            <mat-option value="email">{{'PAGE.EVENTS.ADD_EVENT.FIELD.MULTIPLICITY.EMAIL' | translate}}</mat-option>
+            <mat-option value="sms">{{'PAGE.EVENTS.ADD_EVENT.FIELD.MULTIPLICITY.SMS' | translate}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </mat-card>
+    </form>
+
+    <mat-card class="add-event__card">
+      <app-editor-email *ngIf="typeEvent === 'email'" [params]="{ 'segmentationIds': [ segmentationId ] }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-email>
+      <app-editor-sms  *ngIf="typeEvent === 'sms'" [params]="{ 'segmentationIds': [ segmentationId ] }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-sms>
+    </mat-card>
+
+
+  </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+

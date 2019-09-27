@@ -8,6 +8,7 @@ import { AddSegmentationService } from './add-segmentation.service';
 import { ComponentsModule } from '../../../components/components.module';
 import { AddSegmentationRoutes } from './add-segmentation.routing';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { ProfileSearchService } from '../../profiles/profile-search/profile-sear
     SharedModule,
     DirectivesModule,
     ComponentsModule,
-    AddSegmentationRoutes
+    AddSegmentationRoutes,
+    TranslateModule
   ],
   declarations: [ AddSegmentationComponent ],
   providers: [

@@ -7,6 +7,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { ProfileSearchRoutes } from './profile-search.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -15,7 +16,8 @@ import { ProfileSearchRoutes } from './profile-search.routing';
     SharedModule,
     ComponentsModule,
     DirectivesModule,
-    ProfileSearchRoutes
+    ProfileSearchRoutes,
+    TranslateModule
   ],
   declarations: [ ProfileSearchComponent ],
   providers: [ ProfileSearchService ]

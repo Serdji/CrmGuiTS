@@ -490,7 +490,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( value => {
-            this.windowDialog( `Сегментация успешно сохранена`, 'ok' );
+            this.windowDialog( `DIALOG.OK.PROMO_CODE_SAVE`, 'ok' );
             this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
           } );
       }
@@ -506,7 +506,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
-          this.windowDialog( `Сегментация успешно изменена`, 'ok' );
+          this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' );
           this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
         } );
     }
@@ -519,7 +519,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   deleteSegmentation(): void {
-    this.windowDialog( `Вы действительно хотите удалить группу сегментации  "${this.segmentationParams.segmentationTitle}" ?`, 'delete', 'deleteSegmentation', true );
+    this.windowDialog( `DIALOG.DELETE.SEGMENTATION`, 'delete', 'deleteSegmentation', true );
   }
 
   clearForm(): void {

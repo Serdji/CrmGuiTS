@@ -9,6 +9,7 @@ import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { AddPromotionsCodesRoutes } from './add-promotions-codes.routing';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -18,7 +19,8 @@ import { ProfileSearchService } from '../../profiles/profile-search/profile-sear
     PipesModule,
     ComponentsModule,
     DirectivesModule,
-    AddPromotionsCodesRoutes
+    AddPromotionsCodesRoutes,
+    TranslateModule
   ],
   declarations: [ AddPromotionsCodesComponent ],
   providers: [

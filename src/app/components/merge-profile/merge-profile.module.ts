@@ -5,12 +5,14 @@ import { ButtonMergeProfileComponent } from './button-merge-profile/button-merge
 import { DialogMergeProfileComponent } from './dialog-merge-profile/dialog-merge-profile.component';
 import { FormsModule } from '@angular/forms';
 import { DialogMergeProfileService } from './dialog-merge-profile/dialog-merge-profile.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   imports: [
     CommonModule,
     SharedModule,
     FormsModule,
+    TranslateModule,
   ],
   declarations: [
     ButtonMergeProfileComponent,

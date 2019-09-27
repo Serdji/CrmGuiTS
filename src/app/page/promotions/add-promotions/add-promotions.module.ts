@@ -7,6 +7,7 @@ import { AddPromotionsComponent } from './add-promotions.component';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { AddPromotionsRoutes } from './add-promotions.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -15,7 +16,8 @@ import { AddPromotionsRoutes } from './add-promotions.routing';
     SharedModule,
     ComponentsModule,
     DirectivesModule,
-    AddPromotionsRoutes
+    AddPromotionsRoutes,
+    TranslateModule
   ],
   declarations: [ AddPromotionsComponent ],
   providers: [ AddPromotionsService ]

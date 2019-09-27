@@ -3,7 +3,7 @@
     <div *ngFor="let card of cards">
       <mat-grid-tile [colspan]="1" [rowspan]="1">
         <mat-card class="entrance__card" (click)="openLink()" routerLink='{{ card.link[0].url }}'>
-          <mat-card-title class="entrance__title">{{ card.name }} </mat-card-title>
+          <mat-card-title class="entrance__title">{{ card.name | translate  }} </mat-card-title>
           <mat-card-actions class="entrance__actions">
             <mat-icon class="entrance__icon">{{ card.icon }}</mat-icon>
           </mat-card-actions>
