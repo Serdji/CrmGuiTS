@@ -37,6 +37,12 @@
 			"MIDDLE_NAME": "Middle Name",
 			"NUM": "Document Number"
 		},
+		"ERROR": {
+			"DATA_ENTERED_INCORRECTLY": "Data entered incorrectly!",
+			"NOT_ALL_FIELDS": "Not all fields are filled",
+			"NOT_ENOUGH_RIGHTS": "You do not have enough rights to this action!",
+			"SERVER_IS_NOT_RES": "The server is currently not responding. Try restarting the application and try again a bit later, or contact technical support."
+		},
 		"INTERSECTION": {
 			"ACCOUNT_CODE": "Settlement Code:",
 			"BRAND": "Brands:",
@@ -64,6 +70,21 @@
 			"VAL": "Discount amount:"
 		},
 		"NO": "No",
+		"OK": {
+			"ADDITIONAL_NAME": "Additional name successfully added",
+			"DOCUMENT_CHANGED": "DOCUMENT ADDED SUCCESSFULLY",
+			"PASSENGER_CHANGED": "Passenger successfully changed",
+			"PASSENGER_COMBINED": "Passenger successfully combined",
+			"PASSWORD_CHANGED": "Password successfully changed",
+			"PROMO_CODE_CHANGED": "Promotional code successfully changed",
+			"PROMO_CODE_LINKED": "Promo code successfully linked",
+			"PROMO_CODE_NOT_PERSONALIZED": "This promotional code is NOT personalized, i.e. available for any airline passenger.",
+			"PROMO_CODE_SAVE": "Promo code saved successfully",
+			"SEGMENTATION_CHANGED": "Segmentation changed successfully",
+			"SEGMENTATION_SAVE": "Segmentation saved successfully",
+			"USER_CHANGED": "User changed successfully",
+			"USER_RIGHTS_CHANGED": "User rights changed"
+		},
 		"UPDATE_PROFILE": {
 			"FIRST_NAME": "Name:",
 			"LAST_NAME": "Surname:",

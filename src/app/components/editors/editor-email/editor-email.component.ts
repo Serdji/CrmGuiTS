@@ -212,7 +212,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       whichMethod( this.newParams() );
 
     } else {
-      this.windowDialog( 'Не все поля заполнены', 'error' );
+      this.windowDialog( 'DIALOG.ERROR.NOT_ALL_FIELDS', 'error' );
     }
   }
 
