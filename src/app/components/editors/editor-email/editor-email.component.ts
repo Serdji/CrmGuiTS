@@ -199,7 +199,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
         this.dialog.closeAll();
         this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
       };
-      const error = _ => this.windowDialog( 'Ошибка при отправки', 'error' );
+      const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 
       const saveDistribution = params => this.editorEmailService.saveDistribution( params )
         .pipe( takeWhile( _ => this.isActive ) )

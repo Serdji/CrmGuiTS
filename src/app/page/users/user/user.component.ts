@@ -180,7 +180,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     const success = _ => {
       if ( this.user.login === localStorage.getItem( 'login' ) ) {
-        this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
+        this.windowDialog( 'DIALOG.ERROR.RIGHTS_FOR_YOU_ACCOUNT', 'error', '', true );
         timer( 5000 )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {

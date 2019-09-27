@@ -39,8 +39,10 @@
 		},
 		"ERROR": {
 			"DATA_ENTERED_INCORRECTLY": "Data entered incorrectly!",
+			"ERROR_SENDING": "Error sending",
 			"NOT_ALL_FIELDS": "Not all fields are filled",
 			"NOT_ENOUGH_RIGHTS": "You do not have enough rights to this action!",
+			"RIGHTS_FOR_YOU_ACCOUNT": "You have changed permissions for your account. For the rights to take effect, you need to log into the application again. In a few seconds you will be redirected to the login page!",
 			"SERVER_IS_NOT_RES": "The server is currently not responding. Try restarting the application and try again a bit later, or contact technical support."
 		},
 		"INTERSECTION": {
