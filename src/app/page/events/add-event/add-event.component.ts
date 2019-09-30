@@ -110,12 +110,10 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
 
-  public formatTimeFn( value: number | null ): string {
+  public getFormatTimeFn( value: number | null, key: string = 'formatTime' ): string {
     const returnFormatTime = ( formatTime: string ): string => {
-      this.frequencySec = timePeriods[ formatTime ].seconds;
-      return timePeriods[ formatTime ].formatTime;
+      return R.path( [ formatTime, key ], timePeriods );
     };
-    console.log( this.frequencySec );
     switch ( value ) {
       case timePeriods[ '5min' ].index: return  returnFormatTime( '5min' ); break;
       case timePeriods[ '10min' ].index: return returnFormatTime( '10min' ); break;
@@ -131,23 +129,24 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   public displayFn( segmentation?: ISegmentation ): string | undefined {
-    console.log( this.frequencySec );
     return segmentation ? segmentation.title : undefined;
   }
 
   addEvent( event ): void {
-    console.log(  this.frequencySec );
     const omit = R.omit( ['dateFrom', 'dateTo', 'text'] );
     const mergeParams = R.merge( {
       title: this.formEvent.get( 'title' ).value,
       taskType: this.taskType,
-      frequencySec: this.frequencySec,
-      DistributionTemplate: event.text
+      frequencySec: this.getFormatTimeFn( this.formEvent.get('multiplicity').value, 'seconds' ),
+      DistributionTemplate: event.text,
+      footer: ''
     } );
     // @ts-ignore
     const paramsCompose = R.compose(  mergeParams, omit );
     const params = paramsCompose( event );
-    console.log( params );
+    if ( this.formEvent.status === 'VALID' ) {
+      console.log( params );
+    }
   }
 
   ngOnDestroy(): void {

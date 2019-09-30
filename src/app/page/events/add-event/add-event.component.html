@@ -1,5 +1,4 @@
 <div class="add-event">
-  <div class="add-event__wrapper">
     <form [formGroup]="formEvent" class="add-event__form">
       <mat-card class="add-event__card">
         <mat-form-field class="add-event__input">
@@ -18,7 +17,7 @@
         <mat-slider
           formControlName="multiplicity"
           class="add-event__input"
-          [displayWith]="formatTimeFn"
+          [displayWith]="getFormatTimeFn"
           thumbLabel
           step="1"
           tickInterval="1"
@@ -32,15 +31,12 @@
           </mat-select>
         </mat-form-field>
       </mat-card>
+
+      <mat-card class="add-event__type">
+        <app-editor-email *ngIf="taskType === '1'" [params]="{ 'segmentationId': segmentationId }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-email>
+        <app-editor-sms  *ngIf="taskType === '2'" [params]="{ 'segmentationId': segmentationId }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-sms>
+      </mat-card>
     </form>
-
-    <mat-card class="add-event__card">
-      <app-editor-email *ngIf="taskType === '1'" [params]="{ 'segmentationId': segmentationId }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-email>
-      <app-editor-sms  *ngIf="taskType === '2'" [params]="{ 'segmentationId': segmentationId }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-sms>
-    </mat-card>
-
-
-  </div>
 </div>
 
 
