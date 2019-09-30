@@ -3,6 +3,7 @@ export interface ITask {
   'title': string;
   'taskType': number;
   'segmentationId': number;
+  'segmentation': string;
   'distributionTemplate': string;
   'subject': string;
   'footer': string;

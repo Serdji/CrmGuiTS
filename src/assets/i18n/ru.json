@@ -24,7 +24,8 @@
 		"SAVE": "Сохранить",
 		"SEARCH": "Искать",
 		"SEND_DISTRIBUTION": "Отправить рассылку",
-		"TO_FROM": "Сформировать"
+		"TO_FROM": "Сформировать",
+		"TRIGGER_EVENT": "Запуск события"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {
@@ -218,6 +219,16 @@
 		},
 		"EVENTS": {
 			"ADD_EVENT": {
+				"CARD": {
+					"MULTIPLICITY": "Кратность",
+					"NAME_EVENT": "Название события:",
+					"SEGMENTATION": "Сегментация:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события:"
+					}
+				},
 				"FIELD": {
 					"MULTIPLICITY": "Кратность",
 					"NAME_EVENT": "Название события",

@@ -3,13 +3,14 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditorSmsService } from './editor-sms.service';
 import { takeWhile } from 'rxjs/operators';
 import { ITemplate } from '../../../interface/itemplate';
+import * as R from 'ramda';
 
 
-@Component({
+@Component( {
   selector: 'app-editor-sms',
   templateUrl: './editor-sms.component.html',
-  styleUrls: ['./editor-sms.component.styl']
-})
+  styleUrls: [ './editor-sms.component.styl' ]
+} )
 export class EditorSmsComponent implements OnInit, OnDestroy {
 
   @Input() params: any;
@@ -19,7 +20,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   @Output() private messageEvent = new EventEmitter();
 
   public formSms: FormGroup;
-  public buttonDisabled: boolean
+  public buttonDisabled: boolean;
 
   private isActive: boolean;
 
@@ -38,12 +39,13 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   }
 
   private initFormSms() {
-    this.formSms = this.fb.group({
+    this.formSms = this.fb.group( {
       subject: [ '', [ Validators.required ] ],
       text: [ '', [ Validators.required ] ],
       templateId: ''
-    });
+    } );
   }
+
   private initIsButtonSave() {
     this.formSms.valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
@@ -62,7 +64,8 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   }
 
   messageEventFn() {
-    this.messageEvent.emit( this.formSms.value );
+    const newParams = R.merge( this.params, this.formSms.value );
+    this.messageEvent.emit( newParams );
   }
 
   ngOnDestroy(): void {

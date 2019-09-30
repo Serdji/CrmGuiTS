@@ -6,6 +6,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../../../pipes/pipes.module';
 
 
 
@@ -18,6 +19,7 @@ import { TranslateModule } from '@ngx-translate/core';
     ComponentsModule,
     AddEventRoutes,
     TranslateModule,
+    PipesModule,
   ]
 })
 export class AddEventModule { }

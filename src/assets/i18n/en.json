@@ -24,7 +24,8 @@
 		"SAVE": "Save",
 		"SEARCH": "Search",
 		"SEND_DISTRIBUTION": "Send distribution",
-		"TO_FROM": "To form"
+		"TO_FROM": "To form",
+		"TRIGGER_EVENT": "Trigger event"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {
@@ -218,13 +219,23 @@
 		},
 		"EVENTS": {
 			"ADD_EVENT": {
+				"CARD": {
+					"MULTIPLICITY": "Multiplicity",
+					"NAME_EVENT": "Event Name:",
+					"SEGMENTATION": "Segmentation:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Event Type:"
+					}
+				},
 				"FIELD": {
 					"MULTIPLICITY": "Multiplicity",
 					"NAME_EVENT": "Event Name",
 					"SEGMENTATION": "Segmentation selection",
 					"TYPE_EVENT": {
-						"EMAIL": "Email",
-						"SMS": "SMS",
+						"EMAIL": "email",
+						"SMS": "sms",
 						"TITLE": "Event Type"
 					}
 				}

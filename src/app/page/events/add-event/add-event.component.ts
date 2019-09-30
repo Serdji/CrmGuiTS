@@ -29,7 +29,6 @@ export class AddEventComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   private segmentationId: number;
   private totalCount: number;
-  private frequencySec: number;
 
   constructor(
     private fb: FormBuilder,
@@ -152,10 +151,22 @@ export class AddEventComponent implements OnInit, OnDestroy {
       console.log( params );
       this.addEventService.createTask( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( (task: ITask) => {
-          console.log( task );
+        .subscribe( ( task: ITask ) => {
+          const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), this.segmentation );
+          this.task = R.merge( task, { segmentation:  segmentation.title} );
+          console.log( this.task );
         } );
     }
+  }
+
+  trigger(): void {
+    const send = {
+      TaskId: this.task.taskId,
+      IsActive: true
+    };
+    this.addEventService.tackActivate( send )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe();
   }
 
   ngOnDestroy(): void {
