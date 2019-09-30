@@ -20,8 +20,4 @@ export class AddEventService {
     return this.http.post( this.configService.crmApi + '/crm/task', params ).pipe( this.retryRequestService.retry() );
   }
 
-  tackActivate( send ) {
-    return this.http.post( this.configService.crmApi + '/crm/task/taskActivity', send ).pipe( this.retryRequestService.retry() );
-  }
-
 }

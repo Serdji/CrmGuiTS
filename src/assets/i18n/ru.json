@@ -220,16 +220,6 @@
 		},
 		"EVENTS": {
 			"ADD_EVENT": {
-				"CARD": {
-					"MULTIPLICITY": "Кратность",
-					"NAME_EVENT": "Название события:",
-					"SEGMENTATION": "Сегментация:",
-					"TYPE_EVENT": {
-						"EMAIL": "email",
-						"SMS": "sms",
-						"TITLE": "Тип события:"
-					}
-				},
 				"FIELD": {
 					"MULTIPLICITY": "Кратность",
 					"NAME_EVENT": "Название события",
@@ -238,6 +228,18 @@
 						"EMAIL": "email",
 						"SMS": "sms",
 						"TITLE": "Тип события"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"MULTIPLICITY": "Кратность",
+					"NAME_EVENT": "Название события:",
+					"SEGMENTATION": "Сегментация:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события:"
 					}
 				}
 			}

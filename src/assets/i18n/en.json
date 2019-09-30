@@ -220,16 +220,6 @@
 		},
 		"EVENTS": {
 			"ADD_EVENT": {
-				"CARD": {
-					"MULTIPLICITY": "Multiplicity",
-					"NAME_EVENT": "Event Name:",
-					"SEGMENTATION": "Segmentation:",
-					"TYPE_EVENT": {
-						"EMAIL": "email",
-						"SMS": "sms",
-						"TITLE": "Event Type:"
-					}
-				},
 				"FIELD": {
 					"MULTIPLICITY": "Multiplicity",
 					"NAME_EVENT": "Event Name",
@@ -238,6 +228,18 @@
 						"EMAIL": "email",
 						"SMS": "sms",
 						"TITLE": "Event Type"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"MULTIPLICITY": "Multiplicity",
+					"NAME_EVENT": "Event Name:",
+					"SEGMENTATION": "Segmentation:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Event Type:"
 					}
 				}
 			}

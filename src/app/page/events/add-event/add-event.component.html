@@ -37,33 +37,6 @@
         <app-editor-sms  *ngIf="taskType === '2'" [params]="{ 'segmentationId': segmentationId }" [totalCount]="totalCount" whichButton="data" (messageEvent)="addEvent( $event )"></app-editor-sms>
       </mat-card>
     </form>
-
-  <mat-card *ngIf="task" class="add-event__card">
-    <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
-      <mat-card-title>{{'PAGE.EVENTS.ADD_EVENT.CARD.NAME_EVENT' | translate}} {{task.title}}</mat-card-title>
-      <mat-card-subtitle>{{'PAGE.EVENTS.ADD_EVENT.CARD.SEGMENTATION' | translate}} {{task.segmentation}}</mat-card-subtitle>
-      <mat-card-subtitle>
-        {{'PAGE.EVENTS.ADD_EVENT.CARD.TYPE_EVENT.TITLE' | translate}}
-        {{task.taskType === 1 ? ('PAGE.EVENTS.ADD_EVENT.CARD.TYPE_EVENT.EMAIL' | translate) : ('PAGE.EVENTS.ADD_EVENT.CARD.TYPE_EVENT.SMS' | translate) }}
-      </mat-card-subtitle>
-    </mat-card-header>
-    <mat-card-content>
-      <div class="add-event__template" [innerHtml]="task.distributionTemplate | safeHtml" > </div>
-    </mat-card-content>
-    <mat-card-actions>
-      <button
-        class="add-event__button"
-        mat-raised-button
-        color="primary"
-        (click)="trigger()"
-        appAccessRights="task:update"
-      >
-        {{'BUTTON.TRIGGER_EVENT' | translate}}
-        <mat-icon>send</mat-icon>
-      </button>
-    </mat-card-actions>
-  </mat-card>
 </div>
 
 

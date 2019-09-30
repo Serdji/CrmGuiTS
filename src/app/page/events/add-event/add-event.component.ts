@@ -11,6 +11,7 @@ import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { timePeriods } from './timePeriods';
 import { AddEventService } from './add-event.service';
 import { ITask } from '../../../interface/itask';
+import { Router } from '@angular/router';
 
 @Component( {
   selector: 'app-add-event',
@@ -34,7 +35,8 @@ export class AddEventComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private listSegmentationService: ListSegmentationService,
     private addSegmentationService: AddSegmentationService,
-    private addEventService: AddEventService
+    private addEventService: AddEventService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -152,21 +154,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
       this.addEventService.createTask( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( task: ITask ) => {
-          const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), this.segmentation );
-          this.task = R.merge( task, { segmentation:  segmentation.title} );
-          console.log( this.task );
+          this.router.navigate( [ `/crm/event/${task.taskId}` ] );
         } );
     }
-  }
-
-  trigger(): void {
-    const send = {
-      TaskId: this.task.taskId,
-      IsActive: true
-    };
-    this.addEventService.tackActivate( send )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe();
   }
 
   ngOnDestroy(): void {
