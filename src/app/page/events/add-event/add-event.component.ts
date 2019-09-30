@@ -9,6 +9,8 @@ import { AddSegmentationService } from '../../segmentation/add-segmentation/add-
 import * as _ from 'lodash';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { timePeriods } from './timePeriods';
+import { AddEventService } from './add-event.service';
+import { ITask } from '../../../interface/itask';
 
 @Component( {
   selector: 'app-add-event',
@@ -22,6 +24,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public segmentationOptions: Observable<ISegmentation[]>;
   public taskType: string;
   public maxSize: number;
+  public task: ITask;
 
   private isActive: boolean;
   private segmentationId: number;
@@ -32,6 +35,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private listSegmentationService: ListSegmentationService,
     private addSegmentationService: AddSegmentationService,
+    private addEventService: AddEventService
   ) { }
 
   ngOnInit(): void {
@@ -56,7 +60,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
       title: [ '', [ Validators.required ] ],
       taskType: '',
       multiplicity: '',
-      segmentation: ''
+      segmentation: [ '', [ Validators.required ] ]
     } );
   }
 
@@ -146,6 +150,11 @@ export class AddEventComponent implements OnInit, OnDestroy {
     const params = paramsCompose( event );
     if ( !this.formEvent.invalid ) {
       console.log( params );
+      this.addEventService.createTask( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( (task: ITask) => {
+          console.log( task );
+        } );
     }
   }
 
@@ -154,3 +163,18 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
