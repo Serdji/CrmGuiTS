@@ -40,7 +40,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
       const mapSegmentationName = R.map( ( task: ITask ) => {
         const frequencySecLens = R.lensProp( 'frequencySec' );
         const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), segmentations );
-        task = R.set( frequencySecLens, moment( task.frequencySec, 'ms' ).format( 'HH:mm:ss' ), task );
+        task = R.set( frequencySecLens, moment( task.frequencySec, 'ss' ).format( 'HH:mm:ss' ), task );
         return R.merge( task, { segmentation: segmentation.title } );
       } );
       this.tasks = mapSegmentationName( tasks );
