@@ -242,6 +242,19 @@
 						"TITLE": "Event Type:"
 					}
 				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "Multiplicity",
+					"NAME_EVENT": "Event Name",
+					"SEGMENTATION": "Segmentation",
+					"SUBJECT": "Message Subject",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Event Type"
+					}
+				}
 			}
 		},
 		"LOGIN": {

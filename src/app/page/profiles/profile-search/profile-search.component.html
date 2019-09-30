@@ -239,7 +239,7 @@
     <mat-card appAccessRights="customers:read" appAccessMessage="true" *ngIf="isTableCard">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <mat-card-title>{{profiles.length !==0 ? 'Результаты поиска' : 'По этому запросу ничего не найдено'}}</mat-card-title>
+        <mat-card-title>{{profiles.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
           <app-table-async-profile
             [tableDataSource]="profiles"
           >

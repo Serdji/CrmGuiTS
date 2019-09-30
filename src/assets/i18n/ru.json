@@ -242,6 +242,19 @@
 						"TITLE": "Тип события:"
 					}
 				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "Кратность",
+					"NAME_EVENT": "Название события",
+					"SEGMENTATION": "Сегментации",
+					"SUBJECT": "Тема сообщения",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события"
+					}
+				}
 			}
 		},
 		"LOGIN": {

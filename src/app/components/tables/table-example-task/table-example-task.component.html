@@ -1,0 +1,99 @@
+<div class="table">
+
+  <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
+
+    <!--    <ng-container matColumnDef="select" sticky>-->
+    <!--      <mat-header-cell *matHeaderCellDef>-->
+    <!--        <mat-checkbox appAccessRights="analytics:update"-->
+    <!--                      appAccessDisabled="true"-->
+    <!--                      [disabled]="isDisabled"-->
+    <!--                      (emitAccessDisabled)="disabledCheckbox($event)"-->
+    <!--                      (change)="$event ? masterToggle() : null"-->
+    <!--                      [checked]="selection.hasValue() && isAllSelected()"-->
+    <!--                      [indeterminate]="selection.hasValue() && !isAllSelected()">-->
+    <!--        </mat-checkbox>-->
+    <!--      </mat-header-cell>-->
+    <!--      <mat-cell *matCellDef="let element">-->
+    <!--        <mat-checkbox appAccessRights="analytics:update"-->
+    <!--                      appAccessDisabled="true"-->
+    <!--                      (emitAccessDisabled)="disabledCheckbox($event)"-->
+    <!--                      [disabled]="isDisabled"-->
+    <!--                      [id]="element.customerGroupId"-->
+    <!--                      (click)="$event.stopPropagation()"-->
+    <!--                      (change)="$event ? selection.toggle(element) : null"-->
+    <!--                      (change)="isIds()"-->
+    <!--                      [checked]="selection.isSelected(element)">-->
+    <!--        </mat-checkbox>-->
+    <!--      </mat-cell>-->
+    <!--    </ng-container>-->
+
+
+    <ng-container matColumnDef="title">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.NAME_EVENT' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.title}}</span>
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="segmentation">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.SEGMENTATION' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.segmentation}}</span>
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="subject">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.SUBJECT' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.subject}}</span>
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="taskType">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.TITLE' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" *matCellDef="let element">
+        <span>{{element.taskType === 1 ? ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.EMAIL' | translate) : ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.SMS' | translate)}}</span>
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="frequencySec">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.MULTIPLICITY' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.frequencySec}}</span>
+      </mat-cell>
+
+    </ng-container>
+
+    <ng-container matColumnDef="taskId" stickyEnd>
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element">
+        <mat-icon routerLink="/crm/event/{{element.taskId}}"
+        >remove_red_eye
+        </mat-icon>
+        <mat-icon routerLink="/crm/add-event/" [queryParams]="{ taskId: element.taskId }"
+        >create
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 20, 50, 100]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
+  <!--  <div class="table__button-wrapper">-->
+  <!--    <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteProfileGroups()"-->
+  <!--            [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">-->
+  <!--      {{'BUTTON.DELETE' | translate}}-->
+  <!--      <mat-icon>delete</mat-icon>-->
+  <!--    </button>-->
+  <!--  </div>-->
+</div>
