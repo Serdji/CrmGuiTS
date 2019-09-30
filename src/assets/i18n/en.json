@@ -800,6 +800,7 @@
 					"ANALYTICS": "ANALYTICS",
 					"CUSTOMERS": "Passengers",
 					"DISTRIBUTIONS": "Newsletters",
+					"EVENTS": "Events",
 					"PRIVILEGES": "Privileges",
 					"PROMOTIONS_CODES": "Promotional codes",
 					"READ": "reading",

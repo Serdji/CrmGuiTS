@@ -133,7 +133,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   addEvent( event ): void {
-    const omit = R.omit( ['dateFrom', 'dateTo', 'text'] );
+    const omit = R.omit( ['dateFrom', 'dateTo', 'text', 'templateId'] );
     const mergeParams = R.merge( {
       title: this.formEvent.get( 'title' ).value,
       taskType: this.taskType,

@@ -106,8 +106,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private checkboxDisabled() {
     R.map( id => {
-      if ( id % 2 === 0 ) {
-        this.formPermission.get( `${id}` )[ this.formPermission.get( `${id - 1}` ).value ? 'enable' : 'disable' ]();
+      if ( id % 3 === 0 ) {
+        this.formPermission.get( `${id}` )[ this.formPermission.get( `${id + 1}` ).value ? 'enable' : 'disable' ]();
         this.formPermission.get( `${id - 1}` ).valueChanges
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( value => {
