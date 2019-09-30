@@ -4,13 +4,15 @@
       <mat-grid-tile [colspan]="2" [rowspan]="1">
         <mat-card class="editor-sms__box mat-elevation-z0">
           <mat-form-field class="editor-sms__input">
-            <input formControlName="title" matInput placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TITLE' | translate}}">
+            <input formControlName="subject" matInput placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TITLE' | translate}}">
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
 
           <mat-form-field class="editor-sms__input">
             <textarea #message formControlName="text" matInput rows="8" placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TEXT' | translate}}"></textarea>
             <mat-hint align="start"><strong>{{'POP_UP.EDITOR.DIALOG_SMS.SYMBOLS_ENTERED' | translate}}</strong> </mat-hint>
             <mat-hint align="end">{{message.value.length}}</mat-hint>
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
         </mat-card>
       </mat-grid-tile>
@@ -29,8 +31,8 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <button *ngIf="whichButton === 'save'" class="editor-email__button" mat-raised-button color="primary"><mat-icon>save</mat-icon>{{'BUTTON.SAVE' | translate}}</button>
-  <button *ngIf="whichButton === 'data'" class="editor-email__button" mat-raised-button color="primary" (click)="messageEventFn()"><mat-icon>event_available</mat-icon>{{'BUTTON.CREATE_EVENT' | translate}}</button>
+  <button [disabled]="buttonDisabled" *ngIf="whichButton === 'save'" class="editor-email__button" mat-raised-button color="primary"><mat-icon>save</mat-icon>{{'BUTTON.SAVE' | translate}}</button>
+  <button [disabled]="buttonDisabled" *ngIf="whichButton === 'data'" class="editor-email__button" mat-raised-button color="primary" (click)="messageEventFn()"><mat-icon>event_available</mat-icon>{{'BUTTON.CREATE_EVENT' | translate}}</button>
 </div>
 
 

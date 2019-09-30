@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditorSmsService } from './editor-sms.service';
 import { takeWhile } from 'rxjs/operators';
 import { ITemplate } from '../../../interface/itemplate';
@@ -19,6 +19,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   @Output() private messageEvent = new EventEmitter();
 
   public formSms: FormGroup;
+  public buttonDisabled: boolean
 
   private isActive: boolean;
 
@@ -30,16 +31,23 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.buttonDisabled = true;
     this.initFormSms();
     this.insertTemplate();
+    this.initIsButtonSave();
   }
 
   private initFormSms() {
     this.formSms = this.fb.group({
-      title: '',
-      text: '',
+      subject: [ '', [ Validators.required ] ],
+      text: [ '', [ Validators.required ] ],
       templateId: ''
     });
+  }
+  private initIsButtonSave() {
+    this.formSms.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.buttonDisabled = this.formSms.invalid );
   }
 
   private insertTemplate() {
@@ -54,7 +62,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   }
 
   messageEventFn() {
-    this.messageEvent.emit( '' );
+    this.messageEvent.emit( this.formSms.value );
   }
 
   ngOnDestroy(): void {

@@ -144,7 +144,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     // @ts-ignore
     const paramsCompose = R.compose(  mergeParams, omit );
     const params = paramsCompose( event );
-    if ( this.formEvent.status === 'VALID' ) {
+    if ( !this.formEvent.invalid ) {
       console.log( params );
     }
   }
