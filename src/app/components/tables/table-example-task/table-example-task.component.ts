@@ -43,6 +43,7 @@ export class TableExampleTaskComponent implements OnInit, OnDestroy {
       'subject',
       'taskType',
       'frequencySec',
+      'isActive',
       'taskId',
     ];
   }

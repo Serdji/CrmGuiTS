@@ -249,6 +249,7 @@
 					"MULTIPLICITY": "Multiplicity",
 					"NAME_EVENT": "Event Name",
 					"SEGMENTATION": "Segmentation",
+					"STATUS": "Status",
 					"SUBJECT": "Message Subject",
 					"TYPE_EVENT": {
 						"EMAIL": "email",

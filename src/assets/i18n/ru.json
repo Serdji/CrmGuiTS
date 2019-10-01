@@ -249,6 +249,7 @@
 					"MULTIPLICITY": "Кратность",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Сегментации",
+					"STATUS": "Статус",
 					"SUBJECT": "Тема сообщения",
 					"TYPE_EVENT": {
 						"EMAIL": "email",

@@ -69,6 +69,16 @@
 
     </ng-container>
 
+    <ng-container matColumnDef="isActive">
+      <mat-header-cell *matHeaderCellDef
+                       mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.STATUS' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" *matCellDef="let element">
+        <mat-icon *ngIf="element.isActive" [ngStyle]="{'color': '#43A047'}">play_arrow</mat-icon>
+        <mat-icon *ngIf="!element.isActive" [ngStyle]="{'color': '#F4511E'}">stop</mat-icon>
+      </mat-cell>
+
+    </ng-container>
+
     <ng-container matColumnDef="taskId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
