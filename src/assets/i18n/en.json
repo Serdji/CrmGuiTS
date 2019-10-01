@@ -26,7 +26,7 @@
 		"SAVE": "Save",
 		"SEARCH": "Search",
 		"SEND_DISTRIBUTION": "Send distribution",
-		"START_EVENT": "Trigger event",
+		"START_EVENT": "Start event",
 		"STOP_EVENT": "Stop event",
 		"TO_FROM": "To form"
 	},
@@ -235,7 +235,7 @@
 			},
 			"EVENT": {
 				"CARD": {
-					"EDIT": "EDIT",
+					"EDIT": "Edit",
 					"MULTIPLICITY": "Multiplicity:",
 					"NAME_EVENT": "Event Name:",
 					"SEGMENTATION": "Segmentation:",

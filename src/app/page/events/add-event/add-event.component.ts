@@ -28,7 +28,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public taskType: number;
   public maxSize: number;
   public task: ITask;
-  public whichButtonEditor: string;
+  public whichAction: string;
 
   private taskId: number;
   private isActive: boolean;
@@ -48,7 +48,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.maxSize = _.size( timePeriods );
-    this.whichButtonEditor = 'data';
+    this.whichAction = 'data';
     this.initFormEvent();
     this.initSegmentation();
     this.initAutocomplete();
@@ -70,10 +70,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   private initGetTask( id: number ) {
-    console.log( id );
     this.formEvent.get( 'taskType' ).disable();
     this.formEvent.get( 'segmentation' ).disable();
-    this.whichButtonEditor = 'edit';
+    this.whichAction = 'edit';
 
     const success = ( value ) => {
       const task: ITask = value[ 0 ];
@@ -93,7 +92,6 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( task: ITask ) {
-    console.log( task );
     this.formEvent.patchValue( task );
     this.setTimeMultiplicity( task.frequencySec );
   }
@@ -185,7 +183,27 @@ export class AddEventComponent implements OnInit, OnDestroy {
     return segmentation ? segmentation.title : undefined;
   }
 
+  private createEvent = ( params ) => {
+    this.addEventService.createTask( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( task: ITask ) => {
+        this.router.navigate( [ `/crm/event/${task.taskId}` ] );
+      } );
+  }
+
+  private editEvent = ( params ) => {
+    params = R.merge( params, { taskId: this.taskId } );
+    this.addEventService.updateTask( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( task: ITask ) => {
+        this.router.navigate( [ `/crm/event/${task.taskId}` ] );
+      } );
+  }
+
+  private whichActionFn = () => this.whichAction === 'data';
+
   addEvent( event ): void {
+    const whichMethod = R.ifElse( this.whichActionFn, this.createEvent, this.editEvent );
     const omit = R.omit( ['dateFrom', 'dateTo', 'text', 'templateId'] );
     const mergeParams = R.merge( {
       title: this.formEvent.get( 'title' ).value,
@@ -198,12 +216,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     const paramsCompose = R.compose(  mergeParams, omit );
     const params = paramsCompose( event );
     if ( !this.formEvent.invalid ) {
-      console.log( params );
-      this.addEventService.createTask( params )
-        .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( task: ITask ) => {
-          this.router.navigate( [ `/crm/event/${task.taskId}` ] );
-        } );
+      whichMethod( params );
     }
   }
 

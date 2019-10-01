@@ -20,4 +20,8 @@ export class AddEventService {
     return this.http.post( this.configService.crmApi + '/crm/task', params ).pipe( this.retryRequestService.retry() );
   }
 
+  updateTask( params: ITask ): Observable<any> {
+    return this.http.put( this.configService.crmApi + '/crm/task', params ).pipe( this.retryRequestService.retry() );
+  }
+
 }
