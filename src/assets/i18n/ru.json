@@ -233,7 +233,7 @@
 			},
 			"EVENT": {
 				"CARD": {
-					"MULTIPLICITY": "Кратность",
+					"MULTIPLICITY": "Кратность:",
 					"NAME_EVENT": "Название события:",
 					"SEGMENTATION": "Сегментация:",
 					"TYPE_EVENT": {
