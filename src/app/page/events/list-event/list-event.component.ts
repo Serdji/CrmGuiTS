@@ -7,6 +7,7 @@ import { ISegmentation } from '../../../interface/isegmentation';
 import * as R from 'ramda';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'app-list-event',
@@ -24,6 +25,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
   constructor(
     private listEventService: ListEventService,
     private listSegmentationService: ListSegmentationService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
@@ -40,7 +42,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
       const mapSegmentationName = R.map( ( task: ITask ) => {
         const frequencySecLens = R.lensProp( 'frequencySec' );
         const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), segmentations );
-        task = R.set( frequencySecLens, moment.duration( { 'second': task.frequencySec } ).locale( 'ru' ).humanize(), task );
+        task = R.set( frequencySecLens, moment.duration( { 'second': task.frequencySec } ).locale( this.translate.store.currentLang ).humanize(), task );
         return R.merge( task, { segmentation: segmentation.title } );
       } );
       this.tasks = mapSegmentationName( tasks );
@@ -54,7 +56,8 @@ export class ListEventComponent implements OnInit, OnDestroy {
 
     const listEvent = this.listEventService.getAllTasks();
     const listSegmentation = this.listSegmentationService.getSegmentation();
-    const servicesForkJoin = forkJoin( [ listEvent, listSegmentation ] );
+    const translate = this.translate.get( 'MENU' );
+    const servicesForkJoin = forkJoin( [ listEvent, listSegmentation, translate ] );
 
     servicesForkJoin
       .pipe( takeWhile( _ => this.isActive ) )

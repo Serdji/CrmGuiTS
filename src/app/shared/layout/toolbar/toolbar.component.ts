@@ -17,7 +17,7 @@ export class ToolbarComponent implements OnInit {
   constructor(
     private activityUser: ActivityUserService,
     private layoutService: LayoutService,
-    public translate: TranslateService,
+    private translate: TranslateService,
     private fb: FormBuilder,
   ) { }
 
