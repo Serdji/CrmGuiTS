@@ -28,6 +28,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public taskType: number;
   public maxSize: number;
   public task: ITask;
+  public whichButtonEditor: string;
 
   private taskId: number;
   private isActive: boolean;
@@ -47,6 +48,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.maxSize = _.size( timePeriods );
+    this.whichButtonEditor = 'data';
     this.initFormEvent();
     this.initSegmentation();
     this.initAutocomplete();
@@ -71,6 +73,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     console.log( id );
     // this.formEvent.get( 'taskType' ).disable();
     // this.formEvent.get( 'segmentation' ).disable();
+    this.whichButtonEditor = 'edit';
 
     const success = ( value ) => {
       const task: ITask = value[ 0 ];

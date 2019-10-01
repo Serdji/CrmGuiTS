@@ -60,12 +60,7 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <button *ngIf="whichButton === 'save' " class="editor-email__button" mat-raised-button color="primary"
-          (click)="saveDistribution()" [disabled]="buttonDisabled">
-    <mat-icon>save</mat-icon>
-    {{'BUTTON.SAVE' | translate}}</button>
-  <button *ngIf="whichButton === 'data' " class="editor-email__button" mat-raised-button color="primary"
-          (click)="messageEventFn()" [disabled]="buttonDisabled">
-    <mat-icon>event_available</mat-icon>
-    {{'BUTTON.CREATE_EVENT' | translate}}</button>
+  <button *ngIf="whichButton === 'save' " class="editor-email__button" mat-raised-button color="primary" (click)="saveDistribution()" [disabled]="buttonDisabled">{{'BUTTON.SAVE' | translate}} <mat-icon>save</mat-icon></button>
+  <button *ngIf="whichButton === 'data' " class="editor-email__button" mat-raised-button color="primary" (click)="messageEventFn()" [disabled]="buttonDisabled">{{'BUTTON.CREATE_EVENT' | translate}} <mat-icon>event_available</mat-icon></button>
+  <button *ngIf="whichButton === 'edit' " class="editor-email__button" mat-raised-button color="primary" (click)="messageEventFn()" [disabled]="buttonDisabled">{{'BUTTON.EDIT_EVENT' | translate}} <mat-icon>edit</mat-icon></button>
 </div>
