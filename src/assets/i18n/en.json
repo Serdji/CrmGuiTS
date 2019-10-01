@@ -234,6 +234,7 @@
 			},
 			"EVENT": {
 				"CARD": {
+					"EDIT": "EDIT",
 					"MULTIPLICITY": "Multiplicity:",
 					"NAME_EVENT": "Event Name:",
 					"SEGMENTATION": "Segmentation:",
