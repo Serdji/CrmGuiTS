@@ -71,8 +71,8 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initGetTask( id: number ) {
     console.log( id );
-    // this.formEvent.get( 'taskType' ).disable();
-    // this.formEvent.get( 'segmentation' ).disable();
+    this.formEvent.get( 'taskType' ).disable();
+    this.formEvent.get( 'segmentation' ).disable();
     this.whichButtonEditor = 'edit';
 
     const success = ( value ) => {
@@ -95,7 +95,6 @@ export class AddEventComponent implements OnInit, OnDestroy {
   private formFilling( task: ITask ) {
     console.log( task );
     this.formEvent.patchValue( task );
-    this.formEvent.get('segmentation').patchValue( '123' );
     this.setTimeMultiplicity( task.frequencySec );
   }
 
