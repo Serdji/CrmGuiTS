@@ -824,15 +824,15 @@
 			"USER": {
 				"ACCESS_RIGHTS": {
 					"ADDITIONAL_RIGHT": "Additional rights",
-					"ANALYTICS": "ANALYTICS",
+					"ANALYTICS": "Analytics",
 					"CUSTOMERS": "Passengers",
 					"DISTRIBUTIONS": "Newsletters",
 					"EVENTS": "Events",
 					"PRIVILEGES": "Privileges",
 					"PROMOTIONS_CODES": "Promotional codes",
-					"READ": "reading",
+					"READ": "Reading",
 					"REPORTS": "Reports",
-					"TITLE": "access rights",
+					"TITLE": "Access rights",
 					"UPDATE": "Change",
 					"USER": "Users"
 				},

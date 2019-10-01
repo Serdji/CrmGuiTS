@@ -32,7 +32,6 @@ export class UserComponent implements OnInit, OnDestroy {
   public edit = false;
   public persons: { title: string, ids: number[] }[] = person;
 
-  private checkboxArr: number[];
   private loginId: number;
   private isActive: boolean;
   private paramsReport: { loginId: number, reportsIds: number[] };
@@ -97,25 +96,24 @@ export class UserComponent implements OnInit, OnDestroy {
     const mapIds = R.map( propIds );
     const funcControlConfig = id => formGroup[ id ] = '';
     const mapControlConfig = R.map( funcControlConfig );
-    const funcCheckboxArr = arrIds => this.checkboxArr = arrIds;
-    const tapCheckboxArr = R.tap( funcCheckboxArr );
-    const composeIds = R.compose( mapControlConfig, tapCheckboxArr, R.flatten, mapIds );
+    const composeIds = R.compose( mapControlConfig,  R.flatten, mapIds );
     composeIds( this.persons );
     this.formPermission = this.fb.group( formGroup );
   }
 
   private checkboxDisabled() {
-    R.map( id => {
-      if ( id % 3 === 0 ) {
-        this.formPermission.get( `${id}` )[ this.formPermission.get( `${id + 1}` ).value ? 'enable' : 'disable' ]();
-        this.formPermission.get( `${id - 1}` ).valueChanges
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( value => {
-            this.formPermission.get( `${id}` )[ value ? 'enable' : 'disable' ]();
-            this.formPermission.get( `${id}` ).patchValue( '' );
-          } );
-      }
-    }, this.checkboxArr );
+    const arrIds = persons => persons.ids;
+    const checkboxArr = R.map( arrIds, this.persons );
+    const switchCheckboxPerson = R.map( ids => {
+      this.formPermission.get( `${ids[ 1 ]}` )[ this.formPermission.get( `${ids[ 0 ]}` ).value ? 'enable' : 'disable' ]();
+      this.formPermission.get( `${ids[ 0 ]}`  ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => {
+          this.formPermission.get( `${ids[ 1 ]}`  )[ value ? 'enable' : 'disable' ]();
+          this.formPermission.get( `${ids[ 1 ]}`  ).patchValue( '' );
+        } );
+    } );
+    switchCheckboxPerson( checkboxArr );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
