@@ -20,6 +20,7 @@
         color="primary"
         (click)="start()"
         appAccessRights="task:update"
+        [disabled]="task.isActive"
       >
         <mat-icon>play_arrow</mat-icon>
         {{'BUTTON.START_EVENT' | translate}}
@@ -30,6 +31,7 @@
         color="accent"
         (click)="stop()"
         appAccessRights="task:update"
+        [disabled]="!task.isActive"
       >
         <mat-icon>stop</mat-icon>
         {{'BUTTON.STOP_EVENT' | translate}}

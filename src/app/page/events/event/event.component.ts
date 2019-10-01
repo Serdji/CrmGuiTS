@@ -46,17 +46,16 @@ export class EventComponent implements OnInit, OnDestroy {
 
   private initTask( id: number ) {
     const success = ( value ) => {
-      const tasks: ITask[] = value[ 0 ];
+      const task: ITask = value[ 0 ];
       const frequencySecLens = R.lensProp( 'frequencySec' );
-      this.task = R.find( R.propEq( 'taskId', id ), tasks );
-      this.task = R.set( frequencySecLens, moment.duration( { 'second': this.task.frequencySec } ).locale( this.translate.store.currentLang ).humanize(), this.task );
+      this.task = R.set( frequencySecLens, moment.duration( { 'second': task.frequencySec } ).locale( this.translate.store.currentLang ).humanize(), task );
       this.isProgress = false;
       console.log( this.task );
     };
 
-    const listEventService = this.listEventService.getAllTasks();
+    const eventService = this.eventService.getTask( this.taskId );
     const translate = this.translate.get( 'MENU' );
-    const servicesForkJoin = forkJoin( [ listEventService, translate ] );
+    const servicesForkJoin = forkJoin( [ eventService, translate ] );
 
     servicesForkJoin
       .pipe( takeWhile( _ => this.isActive ) )
