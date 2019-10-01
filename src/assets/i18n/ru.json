@@ -25,8 +25,9 @@
 		"SAVE": "Сохранить",
 		"SEARCH": "Искать",
 		"SEND_DISTRIBUTION": "Отправить рассылку",
-		"TO_FROM": "Сформировать",
-		"TRIGGER_EVENT": "Запуск события"
+		"START_EVENT": "Запуск события",
+		"STOP_EVENT": "Остановить событие",
+		"TO_FROM": "Сформировать"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {

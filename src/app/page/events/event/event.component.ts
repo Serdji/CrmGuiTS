@@ -63,7 +63,7 @@ export class EventComponent implements OnInit, OnDestroy {
       .subscribe( success );
   }
 
-  trigger(): void {
+  start(): void {
     const send = {
       TaskId: this.taskId,
       IsActive: true
@@ -73,6 +73,18 @@ export class EventComponent implements OnInit, OnDestroy {
     //   .pipe( takeWhile( _ => this.isActive ) )
     //   .subscribe();
   }
+
+  stop(): void {
+    const send = {
+      TaskId: this.taskId,
+      IsActive: false
+    };
+    console.log( send );
+    // this.eventService.tackActivate( send )
+    //   .pipe( takeWhile( _ => this.isActive ) )
+    //   .subscribe();
+  }
+
 
   ngOnDestroy(): void {
     this.isActive = false;

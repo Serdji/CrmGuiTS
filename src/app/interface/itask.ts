@@ -8,4 +8,5 @@ export interface ITask {
   'subject': string;
   'footer': string;
   'frequencySec': number;
+  'IsActive': boolean;
 }

@@ -2,7 +2,6 @@
   <mat-progress-bar *ngIf="isProgress; else loaderDisabled" mode="buffer"></mat-progress-bar>
   <ng-template #loaderDisabled>
     <mat-card-header>
-      <div mat-card-avatar class="example-header-image"></div>
       <mat-card-title>{{'PAGE.EVENTS.EVENT.CARD.NAME_EVENT' | translate}} {{task.title}}</mat-card-title>
       <mat-card-subtitle>{{'PAGE.EVENTS.EVENT.CARD.SEGMENTATION' | translate}} {{task.segmentation}}</mat-card-subtitle>
       <mat-card-subtitle>{{'PAGE.EVENTS.EVENT.CARD.MULTIPLICITY' | translate}} {{task.frequencySec}}</mat-card-subtitle>
@@ -16,14 +15,24 @@
     </mat-card-content>
     <mat-card-actions>
       <button
-        class="event__button"
+        class="event__button _play"
         mat-raised-button
         color="primary"
-        (click)="trigger()"
+        (click)="start()"
         appAccessRights="task:update"
       >
-        {{'BUTTON.TRIGGER_EVENT' | translate}}
-        <mat-icon>send</mat-icon>
+        <mat-icon>play_arrow</mat-icon>
+        {{'BUTTON.START_EVENT' | translate}}
+      </button>
+      <button
+        class="event__button"
+        mat-raised-button
+        color="accent"
+        (click)="stop()"
+        appAccessRights="task:update"
+      >
+        <mat-icon>stop</mat-icon>
+        {{'BUTTON.STOP_EVENT' | translate}}
       </button>
     </mat-card-actions>
   </ng-template>

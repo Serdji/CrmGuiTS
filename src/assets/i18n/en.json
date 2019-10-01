@@ -25,8 +25,9 @@
 		"SAVE": "Save",
 		"SEARCH": "Search",
 		"SEND_DISTRIBUTION": "Send distribution",
-		"TO_FROM": "To form",
-		"TRIGGER_EVENT": "Trigger event"
+		"START_EVENT": "Trigger event",
+		"STOP_EVENT": "Stop event",
+		"TO_FROM": "To form"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {
