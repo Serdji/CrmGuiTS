@@ -38,10 +38,10 @@ export class EventComponent implements OnInit, OnDestroy {
     this.isProgress = true;
     this.startButtonDisabled = false;
     this.stopButtonDisabled = false;
-    this.initQueryRouter();
+    this.initParamsRouter();
   }
 
-  private initQueryRouter() {
+  private initParamsRouter() {
     this.route.params
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( params => {

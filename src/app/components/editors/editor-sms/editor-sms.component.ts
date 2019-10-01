@@ -4,6 +4,7 @@ import { EditorSmsService } from './editor-sms.service';
 import { takeWhile } from 'rxjs/operators';
 import { ITemplate } from '../../../interface/itemplate';
 import * as R from 'ramda';
+import * as moment from 'moment';
 
 
 @Component( {
@@ -36,6 +37,14 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.initFormSms();
     this.insertTemplate();
     this.initIsButtonSave();
+    this.formFilling();
+  }
+
+  private formFilling() {
+    if( this.params.task ) {
+      this.formSms.get( 'subject' ).patchValue( this.params.task.subject );
+      this.formSms.get( 'text' ).patchValue( this.params.task.distributionTemplate );
+    }
   }
 
   private initFormSms() {
