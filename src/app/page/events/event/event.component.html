@@ -15,12 +15,12 @@
     </mat-card-content>
     <mat-card-actions>
       <button
-        class="event__button _play"
+        class="event__button"
         mat-raised-button
         color="primary"
         (click)="start()"
         appAccessRights="task:update"
-        [disabled]="task.isActive"
+        [disabled]="startButtonDisabled"
       >
         <mat-icon>play_arrow</mat-icon>
         {{'BUTTON.START_EVENT' | translate}}
@@ -31,7 +31,7 @@
         color="accent"
         (click)="stop()"
         appAccessRights="task:update"
-        [disabled]="!task.isActive"
+        [disabled]="stopButtonDisabled"
       >
         <mat-icon>stop</mat-icon>
         {{'BUTTON.STOP_EVENT' | translate}}

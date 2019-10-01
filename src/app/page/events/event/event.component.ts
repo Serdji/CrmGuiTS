@@ -18,6 +18,8 @@ export class EventComponent implements OnInit, OnDestroy {
 
   public task: ITask;
   public isProgress: boolean;
+  public startButtonDisabled: boolean;
+  public stopButtonDisabled: boolean;
 
   private taskId: number;
   private isActive: boolean;
@@ -26,12 +28,13 @@ export class EventComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private translate: TranslateService,
     private eventService: EventService,
-    private listEventService: ListEventService
   ) { }
 
   ngOnInit() {
     this.isActive = true;
     this.isProgress = true;
+    this.startButtonDisabled = false;
+    this.stopButtonDisabled = false;
     this.initQueryRouter();
   }
 
@@ -50,10 +53,11 @@ export class EventComponent implements OnInit, OnDestroy {
       const frequencySecLens = R.lensProp( 'frequencySec' );
       this.task = R.set( frequencySecLens, moment.duration( { 'second': task.frequencySec } ).locale( this.translate.store.currentLang ).humanize(), task );
       this.isProgress = false;
-      console.log( this.task );
+      this.startButtonDisabled = this.task.isActive;
+      this.stopButtonDisabled = !this.task.isActive;
     };
 
-    const eventService = this.eventService.getTask( this.taskId );
+    const eventService = this.eventService.getTask( id );
     const translate = this.translate.get( 'MENU' );
     const servicesForkJoin = forkJoin( [ eventService, translate ] );
 
@@ -62,26 +66,27 @@ export class EventComponent implements OnInit, OnDestroy {
       .subscribe( success );
   }
 
+
   start(): void {
+    this.startButtonDisabled = true;
     const send = {
       TaskId: this.taskId,
       IsActive: true
     };
-    console.log( send );
-    // this.eventService.tackActivate( send )
-    //   .pipe( takeWhile( _ => this.isActive ) )
-    //   .subscribe();
+    this.eventService.tackActivate( send )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.initTask( this.taskId ) );
   }
 
   stop(): void {
+    this.stopButtonDisabled = true;
     const send = {
       TaskId: this.taskId,
       IsActive: false
     };
-    console.log( send );
-    // this.eventService.tackActivate( send )
-    //   .pipe( takeWhile( _ => this.isActive ) )
-    //   .subscribe();
+    this.eventService.tackActivate( send )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.initTask( this.taskId ) );
   }
 
 
