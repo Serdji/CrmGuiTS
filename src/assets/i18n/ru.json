@@ -2,6 +2,7 @@
 	"BREADCRUMBS": {
 		"CUSTOMER": "Пассажир",
 		"DISTRIBUTION": "Рассылка",
+		"EVENT": "Собитие",
 		"HOME": "Главная",
 		"USER": "Пользователь"
 	},
@@ -18,12 +19,15 @@
 		"DOWNLOAD": "Скачать",
 		"EDIT": "Изменить",
 		"EDITOR": "Создать рассылку",
+		"EDIT_EVENT": "Редактировать событие",
 		"LOGIN": "Авторизоваться",
 		"MERGE_PROFILE": "Объединить пассажиров",
 		"PROMO_CODE": "Привязать промокод",
 		"SAVE": "Сохранить",
 		"SEARCH": "Искать",
 		"SEND_DISTRIBUTION": "Отправить рассылку",
+		"START_EVENT": "Запуск события",
+		"STOP_EVENT": "Остановить событие",
 		"TO_FROM": "Сформировать"
 	},
 	"DIALOG": {
@@ -219,14 +223,41 @@
 		"EVENTS": {
 			"ADD_EVENT": {
 				"FIELD": {
-					"MULTIPLICITY": {
-						"EMAIL": "email",
-						"SMS": "sms",
-						"TITLE": "Кратность"
-					},
+					"MULTIPLICITY": "Кратность",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Выбор сегментации",
-					"TYPE_EVENT": "Тип события"
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"EDIT": "Редактировать",
+					"MULTIPLICITY": "Кратность:",
+					"NAME_EVENT": "Название события:",
+					"SEGMENTATION": "Сегментация:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события:"
+					}
+				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "Кратность",
+					"NAME_EVENT": "Название события",
+					"SEGMENTATION": "Сегментации",
+					"STATUS": "Статус",
+					"SUBJECT": "Тема сообщения",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события"
+					}
 				}
 			}
 		},
@@ -800,6 +831,7 @@
 					"ANALYTICS": "Аналитика",
 					"CUSTOMERS": "Пассажиры",
 					"DISTRIBUTIONS": "Рассылки",
+					"EVENTS": "События",
 					"PRIVILEGES": "Льготы",
 					"PROMOTIONS_CODES": "Промокоды",
 					"READ": "Чтение",

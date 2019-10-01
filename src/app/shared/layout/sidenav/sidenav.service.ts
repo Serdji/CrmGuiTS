@@ -91,6 +91,7 @@ export class SidenavService {
       {
         name: 'MENU.EVENT.GROUP_NAME',
         icon: 'event',
+        claims: 'tasks:read',
         link: [
           { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
           { url: '/crm/list-event', title: 'MENU.EVENT.LIST_EVENT' },

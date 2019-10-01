@@ -490,7 +490,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( value => {
-            this.windowDialog( `DIALOG.OK.PROMO_CODE_SAVE`, 'ok' );
+            this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
             this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
           } );
       }

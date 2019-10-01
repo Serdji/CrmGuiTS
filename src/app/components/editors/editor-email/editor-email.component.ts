@@ -100,6 +100,10 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   }
 
   private formFilling() {
+    if( this.params.task ) {
+      this.formDistribution.get( 'subject' ).patchValue( this.params.task.subject );
+      this.formDistribution.get( 'text' ).patchValue( this.params.task.distributionTemplate );
+    }
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
     this.formDistribution.get( 'dateTo' ).patchValue( moment().add( 1, 'days' ).format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );

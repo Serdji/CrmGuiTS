@@ -2,6 +2,7 @@
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
 		"DISTRIBUTION": "Newsletter",
+		"EVENT": "Event",
 		"HOME": "Home",
 		"USER": "User"
 	},
@@ -18,12 +19,15 @@
 		"DOWNLOAD": "Download",
 		"EDIT": "Edit",
 		"EDITOR": "Create Newsletter",
+		"EDIT_EVENT": "Edit event",
 		"LOGIN": "Log In",
 		"MERGE_PROFILE": "Combine passengers",
 		"PROMO_CODE": "Link promotional code",
 		"SAVE": "Save",
 		"SEARCH": "Search",
 		"SEND_DISTRIBUTION": "Send distribution",
+		"START_EVENT": "Start event",
+		"STOP_EVENT": "Stop event",
 		"TO_FROM": "To form"
 	},
 	"DIALOG": {
@@ -219,14 +223,41 @@
 		"EVENTS": {
 			"ADD_EVENT": {
 				"FIELD": {
-					"MULTIPLICITY": {
-						"EMAIL": "Email",
-						"SMS": "SMS",
-						"TITLE": "Multiplicity"
-					},
+					"MULTIPLICITY": "Multiplicity",
 					"NAME_EVENT": "Event Name",
 					"SEGMENTATION": "Segmentation selection",
-					"TYPE_EVENT": "Event Type"
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Event Type"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"EDIT": "Edit",
+					"MULTIPLICITY": "Multiplicity:",
+					"NAME_EVENT": "Event Name:",
+					"SEGMENTATION": "Segmentation:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Event Type:"
+					}
+				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "Multiplicity",
+					"NAME_EVENT": "Event Name",
+					"SEGMENTATION": "Segmentation",
+					"STATUS": "Status",
+					"SUBJECT": "Message Subject",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Event Type"
+					}
 				}
 			}
 		},
@@ -797,14 +828,15 @@
 			"USER": {
 				"ACCESS_RIGHTS": {
 					"ADDITIONAL_RIGHT": "Additional rights",
-					"ANALYTICS": "ANALYTICS",
+					"ANALYTICS": "Analytics",
 					"CUSTOMERS": "Passengers",
 					"DISTRIBUTIONS": "Newsletters",
+					"EVENTS": "Events",
 					"PRIVILEGES": "Privileges",
 					"PROMOTIONS_CODES": "Promotional codes",
-					"READ": "reading",
+					"READ": "Reading",
 					"REPORTS": "Reports",
-					"TITLE": "access rights",
+					"TITLE": "Access rights",
 					"UPDATE": "Change",
 					"USER": "Users"
 				},

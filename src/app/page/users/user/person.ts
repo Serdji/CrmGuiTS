@@ -27,4 +27,8 @@ export const person = [
     title: 'PAGE.USERS.USER.ACCESS_RIGHTS.REPORTS',
     ids: [ 13, 14 ]
   },
+  {
+    title: 'PAGE.USERS.USER.ACCESS_RIGHTS.EVENTS',
+    ids: [ 16, 17 ]
+  },
 ];

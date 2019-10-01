@@ -32,6 +32,7 @@ const routes: Routes = [
         { path: 'search-promotions-codes', loadChildren: () => import('./page/promotions/search-promotions-codes/search-promotions-codes.module').then(m => m.SearchPromotionsCodesModule), data: { title: 'MENU.PROMOTIONS_CODES.SEARCH_PROMOTIONS_CODES' } },
         { path: 'statistics-report', loadChildren: () => import('./page/reports/statistics-report/statistics-report.module').then(m => m.StatisticsReportModule), data: { title: 'MENU.REPORTS.LIST_REPORTS' } },
         { path: 'add-event', loadChildren: () => import('./page/events/add-event/add-event.module').then(m => m.AddEventModule), data: { title: 'MENU.EVENT.ADD_EVENT' } },
+        { path: 'event/:id', loadChildren: () => import('./page/events/event/event.module').then(m => m.EventModule), data: { title: 'BREADCRUMBS.EVENT' } },
         { path: 'list-event', loadChildren: () => import('./page/events/list-event/list-event.module').then(m => m.ListEventModule), data: { title: 'MENU.EVENT.LIST_EVENT' } },
         { path: 'form-table-async-profile-settings', loadChildren: () => import('./page/settings/form-table-async-profile-settings/form-table-async-profile-settings.module').then(m => m.FormTableAsyncProfileSettingsModule), data: { title: 'MENU.SETTINGS.TABLE_CUSTOMERS' } },
         { path: 'restart', loadChildren: () => import('./page/settings/restart/restart.module').then(m => m.RestartModule), data: { title: 'MENU.SETTINGS.RESTART' } },

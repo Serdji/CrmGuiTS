@@ -1,25 +1,26 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AddEventComponent } from './add-event.component';
-import { AddEventRoutes } from './add-event.routing';
+import { EventComponent } from './event.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { EventRoutes } from './event.routing';
 
 
 
 @NgModule({
-  declarations: [AddEventComponent],
+  declarations: [EventComponent],
   imports: [
+    CommonModule,
     CommonModule,
     ReactiveFormsModule,
     SharedModule,
     ComponentsModule,
-    AddEventRoutes,
+    EventRoutes,
     TranslateModule,
     PipesModule,
   ]
 })
-export class AddEventModule { }
+export class EventModule { }

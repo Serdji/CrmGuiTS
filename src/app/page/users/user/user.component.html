@@ -98,10 +98,11 @@
           <div class="user__form-wrapper" *ngFor=" let person of persons">
             <div class="user__label">
               <div class="user__label-title"><b>{{ person.title | translate}}</b></div>
-              <mat-checkbox
-                class="user__checkbox" *ngFor=" let id of person.ids "
-                [formControlName]="id">
-                {{ (id % 2 === 1 ? 'PAGE.USERS.USER.ACCESS_RIGHTS.READ' : 'PAGE.USERS.USER.ACCESS_RIGHTS.UPDATE' ) | translate}}
+              <mat-checkbox class="user__checkbox" [formControlName]="person.ids[ 0 ]">
+                {{ 'PAGE.USERS.USER.ACCESS_RIGHTS.READ' | translate}}
+              </mat-checkbox>
+              <mat-checkbox class="user__checkbox" [formControlName]="person.ids[ 1 ]">
+                {{ 'PAGE.USERS.USER.ACCESS_RIGHTS.UPDATE' | translate}}
               </mat-checkbox>
             </div>
             <div class="user__templates" *ngIf=" (person.title | translate) === ('PAGE.USERS.USER.ACCESS_RIGHTS.REPORTS' | translate )">

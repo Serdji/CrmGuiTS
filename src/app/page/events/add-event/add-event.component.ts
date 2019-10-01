@@ -3,12 +3,17 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { map, takeWhile } from 'rxjs/operators';
 import { ISegmentation } from '../../../interface/isegmentation';
-import { Observable, timer } from 'rxjs';
+import { forkJoin, Observable, timer } from 'rxjs';
 import * as R from 'ramda';
 import { AddSegmentationService } from '../../segmentation/add-segmentation/add-segmentation.service';
 import * as _ from 'lodash';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { timePeriods } from './timePeriods';
+import { AddEventService } from './add-event.service';
+import { ITask } from '../../../interface/itask';
+import { ActivatedRoute, Router } from '@angular/router';
+import { EventService } from '../event/event.service';
+import * as moment from 'moment';
 
 @Component( {
   selector: 'app-add-event',
@@ -20,29 +25,75 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public formEvent: FormGroup;
   public segmentation: ISegmentation[];
   public segmentationOptions: Observable<ISegmentation[]>;
-  public typeEvent: string;
+  public taskType: number;
   public maxSize: number;
+  public task: ITask;
+  public whichAction: string;
 
+  private taskId: number;
   private isActive: boolean;
   private segmentationId: number;
   private totalCount: number;
-  private multiplicityTime: number;
 
   constructor(
     private fb: FormBuilder,
     private listSegmentationService: ListSegmentationService,
     private addSegmentationService: AddSegmentationService,
+    private addEventService: AddEventService,
+    private eventService: EventService,
+    private router: Router,
+    private route: ActivatedRoute,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.maxSize = _.size( timePeriods );
+    this.whichAction = 'data';
     this.initFormEvent();
     this.initSegmentation();
     this.initAutocomplete();
     this.initTotalCount();
     this.initSwitchTypeEvent();
-    timer( 0 ).subscribe( _ => this.setTimeMultiplicity( timePeriods[ '60min' ].seconds ) );
+    this.setTimeMultiplicity( timePeriods[ '60min' ].seconds )
+    this.initQueryRouter();
+  }
+
+  private initQueryRouter() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( params => {
+        if( !R.isEmpty( params ) ) {
+          this.taskId = +params.taskId;
+          this.initGetTask( this.taskId  );
+        }
+      });
+  }
+
+  private initGetTask( id: number ) {
+    this.formEvent.get( 'taskType' ).disable();
+    this.formEvent.get( 'segmentation' ).disable();
+    this.whichAction = 'edit';
+
+    const success = ( value ) => {
+      const task: ITask = value[ 0 ];
+      const segmentations: ISegmentation[] = value[ 1 ];
+      const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), segmentations );
+      this.task = R.merge( task, { segmentation } );
+      this.formFilling( this.task );
+    };
+
+    const eventService = this.eventService.getTask( id );
+    const listSegmentation = this.listSegmentationService.getSegmentation();
+    const servicesForkJoin = forkJoin( [ eventService, listSegmentation ] );
+
+    servicesForkJoin
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
+  }
+
+  private formFilling( task: ITask ) {
+    this.formEvent.patchValue( task );
+    this.setTimeMultiplicity( task.frequencySec );
   }
 
   private initSegmentation() {
@@ -53,10 +104,10 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initFormEvent() {
     this.formEvent = this.fb.group( {
-      titleEvent: [ '', [ Validators.required ] ],
-      typeEvent: '',
+      title: [ '', [ Validators.required ] ],
+      taskType: '',
       multiplicity: '',
-      segmentation: ''
+      segmentation: [ '', [ Validators.required ] ]
     } );
   }
 
@@ -74,7 +125,6 @@ export class AddEventComponent implements OnInit, OnDestroy {
     this.formEvent.get( 'segmentation' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( segmentation => {
-        console.log( segmentation );
         if ( _.isObject( segmentation ) ) {
           this.segmentationId = segmentation.segmentationId;
           const paramsAndCount = {
@@ -90,9 +140,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   private initSwitchTypeEvent() {
-    this.formEvent.get( 'typeEvent' ).valueChanges
+    this.formEvent.get( 'taskType' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( event => this.typeEvent = event );
+      .subscribe( event =>  this.taskType = event );
   }
 
   private setTimeMultiplicity( time: number ) {
@@ -111,17 +161,10 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
 
-  addEvent( event ): void {
-    console.log( event );
-  }
-
-
-  public formatTimeFn( value: number | null ): string {
+  public getFormatTimeFn( value: number | null, key: string = 'formatTime' ): string {
     const returnFormatTime = ( formatTime: string ): string => {
-      this.multiplicityTime = timePeriods[ formatTime ].seconds;
-      return timePeriods[ formatTime ].formatTime;
+      return R.path( [ formatTime, key ], timePeriods );
     };
-    console.log( this.multiplicityTime );
     switch ( value ) {
       case timePeriods[ '5min' ].index: return  returnFormatTime( '5min' ); break;
       case timePeriods[ '10min' ].index: return returnFormatTime( '10min' ); break;
@@ -137,8 +180,44 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   public displayFn( segmentation?: ISegmentation ): string | undefined {
-    console.log( this.multiplicityTime );
     return segmentation ? segmentation.title : undefined;
+  }
+
+  private createEvent = ( params ) => {
+    this.addEventService.createTask( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( task: ITask ) => {
+        this.router.navigate( [ `/crm/event/${task.taskId}` ] );
+      } );
+  }
+
+  private editEvent = ( params ) => {
+    params = R.merge( params, { taskId: this.taskId } );
+    this.addEventService.updateTask( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( task: ITask ) => {
+        this.router.navigate( [ `/crm/event/${task.taskId}` ] );
+      } );
+  }
+
+  private whichActionFn = () => this.whichAction === 'data';
+
+  addEvent( event ): void {
+    const whichMethod = R.ifElse( this.whichActionFn, this.createEvent, this.editEvent );
+    const omit = R.omit( ['dateFrom', 'dateTo', 'text', 'templateId'] );
+    const mergeParams = R.merge( {
+      title: this.formEvent.get( 'title' ).value,
+      taskType: this.taskType,
+      frequencySec: this.getFormatTimeFn( this.formEvent.get('multiplicity').value, 'seconds' ),
+      DistributionTemplate: event.text,
+      footer: ''
+    } );
+    // @ts-ignore
+    const paramsCompose = R.compose(  mergeParams, omit );
+    const params = paramsCompose( event );
+    if ( !this.formEvent.invalid ) {
+      whichMethod( params );
+    }
   }
 
   ngOnDestroy(): void {
@@ -146,3 +225,18 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,1 +1,11 @@
-<p>list-event works!</p>
+<div class="list-event">
+    <mat-card *ngIf="isTableTask">
+      <mat-progress-bar *ngIf="isProgress; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <app-table-example-task
+          [tableDataSource]="tasks"
+        >
+        </app-table-example-task>
+      </ng-template>
+    </mat-card>
+</div>

@@ -24,6 +24,7 @@ import { MergeProfileModule } from '../merge-profile/merge-profile.module';
 import { TableExampleComplexSegmentationComponent } from './table-example-complex-segmentation/table-example-complex-segmentation.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
+import { TableExampleTaskComponent } from './table-example-task/table-example-task.component';
 
 @NgModule({
   imports: [
@@ -53,6 +54,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
     TableExampleComplexSegmentationComponent,
+    TableExampleTaskComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -69,6 +71,7 @@ import { TranslateModule } from '@ngx-translate/core';
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
     TableExampleComplexSegmentationComponent,
+    TableExampleTaskComponent,
   ],
   providers: [
     TableAsyncService

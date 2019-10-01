@@ -11,17 +11,17 @@ import { SharedModule } from './shared/shared.module';
 import { ServicesModule } from './services/services.module';
 import { ComponentsModule } from './components/components.module';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import {HttpClient, HttpClientModule} from '@angular/common/http';
-import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
-import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 if ( environment.production ) {
   enableProdMode();
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+export function createTranslateLoader( http: HttpClient ) {
+  return new TranslateHttpLoader( http, 'assets/i18n/', '.json' );
 }
 
 @NgModule( {
@@ -35,14 +35,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServicesModule,
     SharedModule.forRoot(),
     ComponentsModule.forRoot(),
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production }),
-    TranslateModule.forRoot({
+    ServiceWorkerModule.register( 'ngsw-worker.js', { enabled: environment.production } ),
+    TranslateModule.forRoot( {
       loader: {
         provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient]
+        useFactory: ( createTranslateLoader ),
+        deps: [ HttpClient ]
       }
-    })
+    } )
   ],
   bootstrap: [ AppComponent ],
 } )
