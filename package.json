@@ -38,6 +38,7 @@
     "file-saver": "^2.0.0-rc.4",
     "hammerjs": "2.0.8",
     "lodash": "^4.17.11",
+    "mdn-polyfills": "^5.18.0",
     "moment": "2.24.0",
     "ng2-dragula": "2.1.0",
     "ng2-pdf-viewer": "^5.2.4",
