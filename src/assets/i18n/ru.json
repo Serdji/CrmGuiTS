@@ -244,6 +244,19 @@
 						"SMS": "sms",
 						"TITLE": "Тип события:"
 					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Дата рождения",
+					"FIELD": {
+						"PROFILE": "Профиль №",
+						"SEARCH": "Поиск по",
+						"VALUE": "Значение"
+					},
+					"FIRST_NAME": "Имя",
+					"GENDER": "Пол",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
 				}
 			},
 			"LIST_EVENT": {
@@ -322,12 +335,12 @@
 					"TICKET": "№ билета"
 				},
 				"TABLE": {
-					"CUSTOMER_IDS": "№ профиля",
 					"DATE_OF_BIRTH": "Дата рождения",
 					"FIRST_NAME": "Имя",
 					"GENDER": "Пол",
 					"LAST_NAME": "Фамилия",
-					"MIDDLE_NAME": "Отчество"
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
 				}
 			},
 			"TABS_PROFILE": {

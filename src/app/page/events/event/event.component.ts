@@ -10,6 +10,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
+import { IpagPage } from '../../../interface/ipag-page';
+import { IPromotions } from '../../../interface/ipromotions';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component( {
   selector: 'app-event',
@@ -31,6 +34,7 @@ export class EventComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private eventService: EventService,
     private listSegmentationService: ListSegmentationService,
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit() {
@@ -39,6 +43,8 @@ export class EventComponent implements OnInit, OnDestroy {
     this.startButtonDisabled = false;
     this.stopButtonDisabled = false;
     this.initParamsRouter();
+    this.initTable();
+    this.initTablePagination();
   }
 
   private initParamsRouter() {
@@ -50,6 +56,35 @@ export class EventComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initTablePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          from: pageIndex,
+          count: value.pageSize
+        };
+        // this.addPromotionsService.getAllPromotions( paramsAndCount )
+        //   .pipe( takeWhile( _ => this.isActive ) )
+        //   .subscribe( ( promotions: IPromotions ) => this.tableAsyncService.setTableDataSource( promotions.result ) );
+      } );
+  }
+
+  private initTable() {
+    const params = {
+      from: 0,
+      count: 10
+    };
+    // this.addPromotionsService.getAllPromotions( params )
+    //   .pipe( takeWhile( _ => this.isActive ) )
+    //   .subscribe( ( promotions: IPromotions ) => {
+    //     this.tableAsyncService.countPage = promotions.totalCount;
+    //     this.promotions = promotions;
+    //     this.isLoader = false;
+    //   } );
+  }
+
   private initTask( id: number ) {
     const success = ( value ) => {
       const task: ITask = value[ 0 ];
@@ -57,7 +92,7 @@ export class EventComponent implements OnInit, OnDestroy {
       const frequencySecLens = R.lensProp( 'frequencySec' );
       const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), segmentations );
       this.task = R.set( frequencySecLens, moment.duration( { 'second': task.frequencySec } ).locale( this.translate.store.currentLang ).humanize(), task );
-      this.task = R.merge( this.task, { segmentation: segmentation.title } );
+      // this.task = R.merge( this.task, { segmentation: segmentation.title } );
       this.isProgress = false;
       this.startButtonDisabled = this.task.isActive;
       this.stopButtonDisabled = !this.task.isActive;
@@ -66,7 +101,7 @@ export class EventComponent implements OnInit, OnDestroy {
     const eventService = this.eventService.getTask( id );
     const listSegmentation = this.listSegmentationService.getSegmentation();
     const translate = this.translate.get( 'MENU' );
-    const servicesForkJoin = forkJoin( [ eventService, listSegmentation, translate ] );
+    const servicesForkJoin = forkJoin( [ eventService, translate ] );
 
     servicesForkJoin
       .pipe( takeWhile( _ => this.isActive ) )

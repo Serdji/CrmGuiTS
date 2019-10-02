@@ -69,7 +69,7 @@
     </ng-container>
 
     <ng-container  matColumnDef="customerIds">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.CUSTOMER_IDS' | translate}} </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.PROFILE' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.customerIds }}</span>
       </mat-cell>

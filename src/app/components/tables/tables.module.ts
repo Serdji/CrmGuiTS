@@ -25,6 +25,7 @@ import { TableExampleComplexSegmentationComponent } from './table-example-comple
 import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TableExampleTaskComponent } from './table-example-task/table-example-task.component';
+import { TableAsyncEventProfileComponent } from './table-async-event-profile/table-async-event-profile.component';
 
 @NgModule({
   imports: [
@@ -55,6 +56,7 @@ import { TableExampleTaskComponent } from './table-example-task/table-example-ta
     TableAsyncSearchPromoCodeComponent,
     TableExampleComplexSegmentationComponent,
     TableExampleTaskComponent,
+    TableAsyncEventProfileComponent
   ],
   exports: [
     TableExampleComponent,
@@ -72,6 +74,7 @@ import { TableExampleTaskComponent } from './table-example-task/table-example-ta
     TableAsyncSearchPromoCodeComponent,
     TableExampleComplexSegmentationComponent,
     TableExampleTaskComponent,
+    TableAsyncEventProfileComponent
   ],
   providers: [
     TableAsyncService

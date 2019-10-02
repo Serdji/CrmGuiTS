@@ -244,6 +244,19 @@
 						"SMS": "sms",
 						"TITLE": "Event Type:"
 					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Date of Birth",
+					"FIELD": {
+						"PROFILE": "Profile No.",
+						"SEARCH": "Search by",
+						"VALUE": "Value"
+					},
+					"FIRST_NAME": "Name",
+					"GENDER": "Gender",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": "Profile No."
 				}
 			},
 			"LIST_EVENT": {
@@ -322,12 +335,12 @@
 					"TICKET": "Ticket number"
 				},
 				"TABLE": {
-					"CUSTOMER_IDS": "Profile No.",
 					"DATE_OF_BIRTH": "Date of Birth",
 					"FIRST_NAME": "Name",
 					"GENDER": "Gender",
 					"LAST_NAME": "Surname",
-					"MIDDLE_NAME": "Middle Name"
+					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": "Profile No."
 				}
 			},
 			"TABS_PROFILE": {
