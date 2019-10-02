@@ -92,7 +92,7 @@ export class EventComponent implements OnInit, OnDestroy {
       const frequencySecLens = R.lensProp( 'frequencySec' );
       const segmentation = R.find( R.propEq( 'segmentationId', task.segmentationId ), segmentations );
       this.task = R.set( frequencySecLens, moment.duration( { 'second': task.frequencySec } ).locale( this.translate.store.currentLang ).humanize(), task );
-      // this.task = R.merge( this.task, { segmentation: segmentation.title } );
+      this.task = R.merge( this.task, { segmentation: segmentation.title } );
       this.isProgress = false;
       this.startButtonDisabled = this.task.isActive;
       this.stopButtonDisabled = !this.task.isActive;
@@ -101,7 +101,7 @@ export class EventComponent implements OnInit, OnDestroy {
     const eventService = this.eventService.getTask( id );
     const listSegmentation = this.listSegmentationService.getSegmentation();
     const translate = this.translate.get( 'MENU' );
-    const servicesForkJoin = forkJoin( [ eventService, translate ] );
+    const servicesForkJoin = forkJoin( [ eventService, listSegmentation, translate ] );
 
     servicesForkJoin
       .pipe( takeWhile( _ => this.isActive ) )
