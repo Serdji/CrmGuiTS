@@ -41,7 +41,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
     this.displayedColumns = [
       'select',
       'customerGroupName',
-      'customerGroupId',
+      // 'customerGroupId',
     ];
   }
 

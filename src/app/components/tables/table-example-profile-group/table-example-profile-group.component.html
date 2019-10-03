@@ -35,13 +35,13 @@
 
     </ng-container>
 
-    <ng-container  matColumnDef="customerGroupId" stickyEnd>
-      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon routerLink="/crm/profilesearch"
-                  [queryParams]="{ customerGroupIds: element.customerGroupId }">search</mat-icon>
-      </mat-cell>
-    </ng-container>
+<!--    <ng-container  matColumnDef="customerGroupId" stickyEnd>-->
+<!--      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>-->
+<!--      <mat-cell #matCell  *matCellDef="let element">-->
+<!--        <mat-icon routerLink="/crm/profilesearch"-->
+<!--                  [queryParams]="{ customerGroupIds: element.customerGroupId }">search</mat-icon>-->
+<!--      </mat-cell>-->
+<!--    </ng-container>-->
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
