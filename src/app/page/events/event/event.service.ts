@@ -23,4 +23,22 @@ export class EventService {
     return this.http.post( this.configService.crmApi + '/crm/task/taskActivity', send ).pipe( this.retryRequestService.retry() );
   }
 
+  getSearchTackLogs( params ): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/crm/taskLog/search', { params} ).pipe( this.retryRequestService.retry() );
+  }
+
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

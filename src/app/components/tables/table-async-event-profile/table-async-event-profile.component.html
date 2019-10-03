@@ -8,12 +8,13 @@
     <div class="table__search">
       <mat-form-field class="table__input">
         <mat-select formControlName="switchSearch" placeholder="{{'PAGE.EVENTS.EVENT.TABLE.FIELD.SEARCH' | translate}}">
-          <mat-option>{{'PAGE.EVENTS.EVENT.TABLE.FIELD.PROFILE' | translate}}</mat-option>
+          <mat-option value="customerId">{{'PAGE.EVENTS.EVENT.TABLE.FIELD.PROFILE' | translate}}</mat-option>
         </mat-select>
       </mat-form-field>
       <mat-form-field class="table__input">
         <input formControlName="textSearch" type="text" placeholder="{{'PAGE.EVENTS.EVENT.TABLE.FIELD.VALUE' | translate}}" matInput>
       </mat-form-field>
+      <button class="table__button-filter" mat-stroked-button color="primary" (click)="filter()">{{'BUTTON.FILTER' | translate}}</button>
     </div>
   </form>
 

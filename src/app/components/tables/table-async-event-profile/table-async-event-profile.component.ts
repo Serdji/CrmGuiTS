@@ -35,8 +35,8 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
 
   @Input() private tableDataSource: any;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild( MatSort, { static: true } ) sort: MatSort;
+  @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
 
   constructor(
     private fb: FormBuilder,
@@ -184,6 +184,14 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
     if ( arrayId.length !== 0 ) {
       this.ids = { customerGroupIds: arrayId };
     }
+  }
+
+  filter(): void {
+    const paramsFilter = {
+      [ this.formSearch.get( 'switchSearch' ).value ]: this.formSearch.get( 'textSearch' ).value
+    };
+    this.tableAsyncService.setParamsFilter( paramsFilter );
+    this.isLoadingResults = true;
   }
 
   ngOnDestroy(): void {
