@@ -328,6 +328,7 @@
 					"LAST_NAME": "Surname",
 					"MONEY_AMOUNT_FROM_INCLUDE": "Total amount from",
 					"MONEY_AMOUNT_TO_INCLUDE": "Total amount to",
+					"PROFILE": "Profile No.",
 					"RBD": "Booking class",
 					"REC_LOC": "Reservation number",
 					"SEGMENTATION": "Segmentation groups",
@@ -648,7 +649,7 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"PROFILE": ""
+					"PROFILE": "Profile No."
 				}
 			},
 			"SEARCH_PROMOTIONS_CODE": {
