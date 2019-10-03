@@ -21,6 +21,7 @@ export class TableExampleTaskComponent implements OnInit, OnDestroy {
   private isActive: boolean;
   public isDisabled: boolean;
   public ids: any;
+  public isCp: boolean = false;
 
   @Input() private tableDataSource: any;
   @Output() private emitCustomerGroupId = new EventEmitter<number>();
@@ -105,6 +106,27 @@ export class TableExampleTaskComponent implements OnInit, OnDestroy {
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
   }
+
+
+  private isChildMore( parentElement ): boolean {
+    const getElemCss = getComputedStyle( parentElement );
+    const parentWidth = parentElement.offsetWidth - parseInt( getElemCss.paddingRight, 10 );
+    const childrenWidth = parentElement.firstElementChild.offsetWidth;
+    return childrenWidth > parentWidth;
+
+  }
+
+  cursorPointer( elem: HTMLElement ): void {
+    this.isCp = this.isChildMore( elem );
+  }
+
+  openText( elem: HTMLElement ): void {
+    if ( this.isCp ) {
+      const text = elem.innerText;
+      this.windowDialog( text, 'text' );
+    }
+  }
+
 
   isIds(): void {
     const arrayId = [];
