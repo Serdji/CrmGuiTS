@@ -48,6 +48,7 @@
   <mat-card class="event__card">
     <mat-progress-bar *ngIf="isLoader; else loaderTable" mode="buffer"></mat-progress-bar>
     <ng-template #loaderTable>
+      <mat-card-title>{{taskLog.result.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
       <app-table-async-event-profile
         *ngIf="taskLog"
         [tableDataSource]="taskLog.result"></app-table-async-event-profile>

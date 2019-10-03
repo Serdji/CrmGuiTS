@@ -23,10 +23,10 @@ import { ITaskLog } from '../../../interface/itask-log';
 export class EventComponent implements OnInit, OnDestroy {
 
   public task: ITask;
+  public taskLog: ITaskLog;
   public isProgress: boolean;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
-  public taskLog: ITaskLog;
   public isLoader: boolean;
 
   private taskId: number;

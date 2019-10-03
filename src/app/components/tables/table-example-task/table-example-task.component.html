@@ -82,6 +82,15 @@
     <ng-container matColumnDef="taskId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
+        <mat-icon
+          routerLink="/crm/list-event"
+          [queryParams]="{
+            taskId: element.taskId,
+            from: 0,
+            count: 10
+          }"
+        >search
+        </mat-icon>
         <mat-icon routerLink="/crm/event/{{element.taskId}}"
         >remove_red_eye
         </mat-icon>
