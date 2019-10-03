@@ -31,7 +31,8 @@
     <ng-container matColumnDef="title">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.NAME_EVENT' | translate}} </mat-header-cell>
-      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.title}}</span>
+      <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell><span>{{element.title}}</span>
       </mat-cell>
 
     </ng-container>
@@ -39,7 +40,8 @@
     <ng-container matColumnDef="segmentation">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.SEGMENTATION' | translate}} </mat-header-cell>
-      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.segmentation}}</span>
+      <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell><span>{{element.segmentation}}</span>
       </mat-cell>
 
     </ng-container>
@@ -47,7 +49,8 @@
     <ng-container matColumnDef="subject">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.SUBJECT' | translate}} </mat-header-cell>
-      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.subject}}</span>
+      <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell><span>{{element.subject}}</span>
       </mat-cell>
 
     </ng-container>
@@ -55,7 +58,8 @@
     <ng-container matColumnDef="taskType">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.TITLE' | translate}} </mat-header-cell>
-      <mat-cell #matCell class="table__cell" *matCellDef="let element">
+      <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell>
         <span>{{element.taskType === 1 ? ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.EMAIL' | translate) : ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.SMS' | translate)}}</span>
       </mat-cell>
 
@@ -64,7 +68,8 @@
     <ng-container matColumnDef="frequencySec">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.MULTIPLICITY' | translate}} </mat-header-cell>
-      <mat-cell #matCell class="table__cell" *matCellDef="let element"><span>{{element.frequencySec}}</span>
+      <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell><span>{{element.frequencySec}}</span>
       </mat-cell>
 
     </ng-container>
@@ -72,7 +77,8 @@
     <ng-container matColumnDef="isActive">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.STATUS' | translate}} </mat-header-cell>
-      <mat-cell #matCell class="table__cell" *matCellDef="let element">
+      <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell>
         <mat-icon *ngIf="element.isActive" [ngStyle]="{'color': '#43A047'}">play_arrow</mat-icon>
         <mat-icon *ngIf="!element.isActive" [ngStyle]="{'color': '#F4511E'}">stop</mat-icon>
       </mat-cell>
@@ -82,6 +88,15 @@
     <ng-container matColumnDef="taskId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
+        <mat-icon
+          routerLink="/crm/list-event"
+          [queryParams]="{
+            taskId: element.taskId,
+            from: 0,
+            count: 10
+          }"
+        >search
+        </mat-icon>
         <mat-icon routerLink="/crm/event/{{element.taskId}}"
         >remove_red_eye
         </mat-icon>

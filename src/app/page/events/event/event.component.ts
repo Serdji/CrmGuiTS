@@ -10,6 +10,10 @@ import { TranslateService } from '@ngx-translate/core';
 import { forkJoin } from 'rxjs';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
+import { IpagPage } from '../../../interface/ipag-page';
+import { IPromotions } from '../../../interface/ipromotions';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { ITaskLog } from '../../../interface/itask-log';
 
 @Component( {
   selector: 'app-event',
@@ -19,9 +23,11 @@ import { ISegmentation } from '../../../interface/isegmentation';
 export class EventComponent implements OnInit, OnDestroy {
 
   public task: ITask;
+  public taskLog: ITaskLog;
   public isProgress: boolean;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
+  public isLoader: boolean;
 
   private taskId: number;
   private isActive: boolean;
@@ -31,6 +37,7 @@ export class EventComponent implements OnInit, OnDestroy {
     private translate: TranslateService,
     private eventService: EventService,
     private listSegmentationService: ListSegmentationService,
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit() {
@@ -38,7 +45,11 @@ export class EventComponent implements OnInit, OnDestroy {
     this.isProgress = true;
     this.startButtonDisabled = false;
     this.stopButtonDisabled = false;
+    this.isLoader = true;
     this.initParamsRouter();
+    this.initTable();
+    this.initTablePagination();
+    this.initTableFilter();
   }
 
   private initParamsRouter() {
@@ -47,6 +58,53 @@ export class EventComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         this.taskId = +params.id;
         this.initTask( this.taskId );
+      } );
+  }
+
+  private initTableFilter() {
+    this.tableAsyncService.subjectFilter
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( paramsFilter => {
+        let params = {
+          taskId: this.taskId,
+          from: 0,
+          count: 10
+        };
+        params = R.merge( params, paramsFilter );
+        this.eventService.getSearchTackLogs( params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
+      } );
+  }
+
+  private initTablePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const params = {
+          taskId: this.taskId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.eventService.getSearchTackLogs( params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
+      } );
+  }
+
+  private initTable() {
+    const params = {
+      taskId: this.taskId,
+      from: 0,
+      count: 10
+    };
+    this.eventService.getSearchTackLogs( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( taskLog: ITaskLog ) => {
+        this.tableAsyncService.countPage = taskLog.totalRows;
+        this.taskLog = taskLog;
+        this.isLoader = false;
       } );
   }
 

@@ -13,7 +13,7 @@ export class FieldTranslationPipe implements PipeTransform {
       case  'prefix': return 'Префикс';
       case  'gender': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.GENDER';
       case  'dob': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.DATE_OF_BIRTH';
-      case  'customerIds': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.CUSTOMER_IDS';
+      case  'customerIds': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.PROFILE';
       case  'Active': return 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.PANEL_HEADER.STATUS.ACTIVE';
       case  'Cancelled': return 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.PANEL_HEADER.STATUS.CANCELLED';
       case  'Amount': return 'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.PROMOTIONS_CODE_VAL.AMOUNT';

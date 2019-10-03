@@ -1,0 +1,928 @@
+{
+	"BREADCRUMBS": {
+		"CUSTOMER": "乗客",
+		"DISTRIBUTION": "ニュースレター",
+		"EVENT": "ソビティ",
+		"HOME": "ホーム",
+		"USER": "ユーザー"
+	},
+	"BUTTON": {
+		"ADD": "追加する",
+		"ADD_CUSTOMER": "乗客を追加",
+		"ADD_USER": "ユーザーを追加",
+		"CANCEL_DISTRIBUTION": "ニュースレターをキャンセル",
+		"CLEAR": "クリア",
+		"CLEAR_FORM": "クリアフォーム",
+		"COPY": "コピーする",
+		"CREATE_EVENT": "イベントを作成",
+		"DELETE": "削除する",
+		"DOWNLOAD": "ダウンロードする",
+		"EDIT": "変更する",
+		"EDITOR": "ニュースレターを作成する",
+		"EDIT_EVENT": "イベントを編集",
+		"FILTER": "フィルター",
+		"LOGIN": "ログイン",
+		"MERGE_PROFILE": "乗客を組み合わせる",
+		"PROMO_CODE": "リンクプロモーションコード",
+		"SAVE": "保存する",
+		"SEARCH": "検索する",
+		"SEND_DISTRIBUTION": "ニュースレターを送信する",
+		"START_EVENT": "トリガーイベント",
+		"STOP_EVENT": "停止イベント",
+		"TO_FROM": "形成する"
+	},
+	"DIALOG": {
+		"ADD_PROFILE_GROUP": {
+			"CUSTOMER_GROUP": "旅客グループ"
+		},
+		"DELETE": {
+			"CANCEL_DISTRIBUTION": "このニュースレターをキャンセルしてもよろしいですか？",
+			"CONTACT": "この連絡先を削除してもよろしいですか？",
+			"CUSTOMER": "乗客を削除してもよろしいですか？",
+			"DISTRIBUTION": "ニュースレターを削除してもよろしいですか？",
+			"DOCUMENT": "このドキュメントまたはドキュメントを削除してもよろしいですか？",
+			"FIO": "この名前またはこれらの名前を削除してもよろしいですか？",
+			"PROFILES": "このプロファイルを削除してもよろしいですか？",
+			"PROFILE_GROUP": "乗客グループまたは乗客グループを削除してもよろしいですか？",
+			"PROMOTION": "プロモーションを削除してもよろしいですか？",
+			"PROMO_CODE": "プロモーションコードを削除してもよろしいですか？",
+			"SEGMENTATION": "セグメンテーショングループを削除してもよろしいですか？",
+			"SEGMENTATIONS": "セグメンテーショングループまたはセグメンテーショングループを削除してもよろしいですか？",
+			"SETTING_DEFAULT": "アプリケーションを再起動すると、すべての設定がデフォルトで設定されます。アプリケーションを再起動してもよろしいですか？",
+			"USER": "ユーザーを削除してもよろしいですか？"
+		},
+		"DOCUMENT": {
+			"EXP_DATE": "有効期限",
+			"FIRST_NAME": "名",
+			"LAST_NAME": "姓",
+			"MIDDLE_NAME": "ミドルネーム",
+			"NUM": "文書番号"
+		},
+		"ERROR": {
+			"DATA_ENTERED_INCORRECTLY": "データが間違って入力されました！",
+			"ERROR_SENDING": "送信エラー",
+			"NOT_ALL_FIELDS": "すべてのフィールドが入力されるわけではありません",
+			"NOT_ENOUGH_RIGHTS": "このアクションに対する十分な権限がありません！",
+			"RIGHTS_FOR_YOU_ACCOUNT": "アカウントの権限を変更しました。権限を有効にするには、アプリケーションに再度ログインする必要があります。数秒でログインページにリダイレクトされます！",
+			"SERVER_IS_NOT_RES": "サーバーは現在応答していません。アプリケーションを再起動してもう一度試してみるか、テクニカルサポートにお問い合わせください。"
+		},
+		"INTERSECTION": {
+			"ACCOUNT_CODE": "決済コード：",
+			"BRAND": "ブランド：",
+			"CUSTOMER": "プロフィール：",
+			"CUSTOMER_GROUP": "乗客グループ：",
+			"DATE_FROM": "有効期間：",
+			"DATE_TO": "有効期限：",
+			"DIRECTIONS": "道順：",
+			"FLIGHT": "フライト番号：",
+			"FLIGHT_DATA_FROM": "実施期間：",
+			"FLIGHT_DATA_TO": "実施期間：",
+			"GO_TO": "プロモーションコードに移動",
+			"PROMOTIONS": "プロモーション：",
+			"PROMOTIONS_CODE": "プロモーションコード：",
+			"PROMOTIONS_CODE_VAL": {
+				"AMOUNT": "金額",
+				"PERCENT": "割合",
+				"TITLE": "割引タイプ："
+			},
+			"RDD": "予約クラス：",
+			"SEGMENTATION": "セグメンテーショングループ：",
+			"TITLE": "プロモーションコードの交差点が検出されました",
+			"USES_PER": "プロファイルの使用法：",
+			"USES_TOTAL": "総使用量：",
+			"VAL": "割引額："
+		},
+		"NO": "いいえ",
+		"OK": {
+			"ADDITIONAL_NAME": "追加の名前が正常に追加されました",
+			"DOCUMENT_CHANGED": "ドキュメントが正常に追加されました",
+			"PASSENGER_CHANGED": "乗客が変更されました",
+			"PASSENGER_COMBINED": "乗客の組み合わせに成功しました",
+			"PASSWORD_CHANGED": "パスワードが正常に変更されました",
+			"PROMO_CODE_CHANGED": "プロモーションコードが正常に変更されました",
+			"PROMO_CODE_LINKED": "プロモーションコードが正常にリンクされました",
+			"PROMO_CODE_NOT_PERSONALIZED": "このプロモーションコードはパーソナライズされていません。航空会社の乗客が利用できます。",
+			"PROMO_CODE_SAVE": "プロモーションコードが正常に保存されました",
+			"SEGMENTATION_CHANGED": "セグメンテーションが正常に変更されました",
+			"SEGMENTATION_SAVE": "セグメンテーションが正常に保存されました",
+			"USER_CHANGED": "ユーザーが正常に変更されました",
+			"USER_RIGHTS_CHANGED": "ユーザー権利が変更されました"
+		},
+		"UPDATE_PROFILE": {
+			"FIRST_NAME": "名：",
+			"LAST_NAME": "姓:",
+			"MIDDLE_NAME": "ミドルネーム："
+		},
+		"YES": "はい"
+	},
+	"FIELD": {
+		"ERROR": {
+			"OBLIGATORY_FIELD": "必須フィールド",
+			"STRONG_PASSWORD": "パスワードは少なくとも",
+			"YOU_ENTERED": "文字。入力しました"
+		}
+	},
+	"MENU": {
+		"AIRLINE": "航空会社",
+		"CUSTOMER": {
+			"ADD_CUSTOMER": "乗客を追加",
+			"GROUP_NAME": "乗客",
+			"SEARCH_CUSTOMER": "旅客検索"
+		},
+		"DISTRIBUTIONS": {
+			"GROUP_NAME": "ニュースレター",
+			"LIST_DISTRIBUTIONS": "メーリングリスト"
+		},
+		"EVENT": {
+			"ADD_EVENT": "イベントを追加",
+			"GROUP_NAME": "イベント",
+			"LIST_EVENT": "イベントリスト"
+		},
+		"GROUP_CUSTOMER": {
+			"GROUP_NAME": "旅客グループ",
+			"LIST_GROUP_CUSTOMER": "グループのリスト"
+		},
+		"PROMOTIONS_CODES": {
+			"ADD_PROMOTIONS": "プロモーションを追加",
+			"ADD_PROMOTIONS_CODES": "プロモーションコードを追加",
+			"GROUP_NAME": "プロモーションコード",
+			"SEARCH_PROMOTIONS_CODES": "プロモーションコード検索"
+		},
+		"REPORTS": {
+			"GROUP_NAME": "報告書",
+			"LIST_REPORTS": "レポート一覧"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": "セグメンテーションを追加",
+			"AGGREGATION_SEGMENTATION": "セグメンテーション集約",
+			"GROUP_NAME": "セグメンテーション",
+			"LIST_SEGMENTATION": "セグメンテーションリスト"
+		},
+		"SETTINGS": {
+			"GROUP_NAME": "設定",
+			"RESTART": "再起動",
+			"TABLE_CUSTOMERS": "乗客用テーブル"
+		},
+		"USERS": {
+			"ADD_USERS": "ユーザーを追加",
+			"GROUP_NAME": "ユーザー",
+			"LIST_USERS": "ユーザーリスト"
+		},
+		"VERSION": "バージョン"
+	},
+	"PAGE": {
+		"DISTRIBUTION": {
+			"LIST_DISTRIBUTION": {
+				"TABLE": {
+					"DATE_FROM": "からの日付",
+					"DATE_TO": "日付",
+					"FILTER": "フィルター",
+					"LAST_TRY": "ニュースレター作成日",
+					"STATUS": "状況",
+					"STATUSES": {
+						"BOUNCED": "返品",
+						"CLICKED": "リンクをたどる",
+						"DELIVERED": "配信済み",
+						"ERROR": "エラー",
+						"NOT_SENT": "発送準備完了",
+						"READ": "読む",
+						"REJECTED": "未登録",
+						"SEND_TO_CUSTOMER": "顧客に送信",
+						"SENT_TO_GATEWAY": "メールゲートウェイに送信"
+					},
+					"SUBJECT": "テーマ"
+				}
+			},
+			"PROFILE_DISTRIBUTION": {
+				"DATE": "郵送日：",
+				"ERROR_MESSAGE": "エラーメッセージ：",
+				"FROM": "から",
+				"LAST_TRY": "ニュースレターが作成された日時：",
+				"STATUS": "ステータス：",
+				"STATUSES": {
+					"BOUNCED": "返品",
+					"CLICKED": "リンクをたどる",
+					"DELIVERED": "配信済み",
+					"ERROR": "エラー",
+					"NOT_SENT": "発送準備完了",
+					"READ": "読む",
+					"REJECTED": "未登録",
+					"SEND_TO_CUSTOMER": "顧客に送信",
+					"SENT_TO_GATEWAY": "メールゲートウェイに送信"
+				},
+				"SUBJECT": "手紙の件名：",
+				"TABLE": {
+					"ERROR_MESSAGE": "解説",
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓",
+					"MIDDLE_NAME": "ミドルネーム",
+					"STATUS": "状況"
+				},
+				"TO": "まで"
+			}
+		},
+		"EVENTS": {
+			"ADD_EVENT": {
+				"FIELD": {
+					"MULTIPLICITY": "多重度",
+					"NAME_EVENT": "イベント名",
+					"SEGMENTATION": "セグメンテーション選択",
+					"TYPE_EVENT": {
+						"EMAIL": "Eメール",
+						"SMS": "SMS",
+						"TITLE": "イベントの種類"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"EDIT": "編集",
+					"MULTIPLICITY": "多重度：",
+					"NAME_EVENT": "イベント名：",
+					"SEGMENTATION": "セグメンテーション：",
+					"TYPE_EVENT": {
+						"EMAIL": "Eメール",
+						"SMS": "SMS",
+						"TITLE": "イベントの種類："
+					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "生年月日",
+					"FIELD": {
+						"PROFILE": "プロフィール番号",
+						"SEARCH": "で検索",
+						"VALUE": "価値"
+					},
+					"FIRST_NAME": "名",
+					"GENDER": "性別",
+					"LAST_NAME": "姓",
+					"MIDDLE_NAME": "ミドルネーム",
+					"PROFILE": "プロフィール番号"
+				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "多重度",
+					"NAME_EVENT": "イベント名",
+					"SEGMENTATION": "セグメンテーション",
+					"STATUS": "状況",
+					"SUBJECT": "件名を投稿",
+					"TYPE_EVENT": {
+						"EMAIL": "Eメール",
+						"SMS": "SMS",
+						"TITLE": "イベントの種類"
+					}
+				}
+			}
+		},
+		"LOGIN": {
+			"AIRLINE_CODE": "航空会社",
+			"ERROR": "無効なユーザー名またはパスワード",
+			"LOGIN": "ログインを入力してください",
+			"PASSWORD": "パスワードを入力してください",
+			"REMEMBER_ME": "私を覚えて",
+			"TITLE": "ログイン",
+			"VERSION": "バージョン："
+		},
+		"PROFILES": {
+			"ADD_PROFILE": {
+				"DATE": "DD.MM.YYYY",
+				"GENDER": {
+					"F": "f",
+					"M": "M",
+					"TITLE": "性別"
+				},
+				"MIDDLE_NAME": "ミドルネーム",
+				"NAME": "名",
+				"SURNAME": "姓",
+				"TITLE": "乗客を追加"
+			},
+			"SEARCH_PROFILE": {
+				"FORM": {
+					"AIRLINE_L_CODE": "航空会社コード",
+					"ARR_POINT": "どこへ",
+					"BOOKING_CREATE_DATE_FROM_INCLUDE": "からの発売日",
+					"BOOKING_CREATE_DATE_TO_EXCLUDE": "販売日",
+					"CAB": "キャビン",
+					"CONTACT_EMAIL": "Eメール",
+					"CONTACT_PHONE": "電話番号",
+					"CONTACT_SEXIST": "接触不足",
+					"CUSTOMER_GROUP": "旅客グループ",
+					"CUSTOMER_IDS": "プロフィール番号",
+					"DEPT_IME_TO_EXCLUDE": "フライト日",
+					"DEP_POINT": "どこから",
+					"DEP_TIME_FROM_INCLUDE": "からのフライト日",
+					"DOB_FROM_INCLUDE": "生年月日",
+					"DOB_TO_EXCLUDE": "生年月日",
+					"EMD": "サービス番号",
+					"FARE_CODE": "レートコード",
+					"FIRST_NAME": "名",
+					"FLIGHT": "便名",
+					"FLIGHT_DATE_FROM": "",
+					"FLIGHT_DATE_TO": "",
+					"GENDER": {
+						"F": "f",
+						"M": "M",
+						"TITLE": "性別"
+					},
+					"ID": "",
+					"LAST_NAME": "姓",
+					"MONEY_AMOUNT_FROM_INCLUDE": "合計金額",
+					"MONEY_AMOUNT_TO_INCLUDE": "合計金額",
+					"PROFILE": "プロフィール番号",
+					"RBD": "予約クラス",
+					"REC_LOC": "予約番号",
+					"SEGMENTATION": "セグメンテーショングループ",
+					"SERVICE_CODE": "サービスコード",
+					"TICKET": "チケット番号"
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "生年月日",
+					"FIRST_NAME": "名",
+					"GENDER": "性別",
+					"LAST_NAME": "姓",
+					"MIDDLE_NAME": "ミドルネーム",
+					"PROFILE": "プロフィール番号"
+				}
+			},
+			"TABS_PROFILE": {
+				"CONTACT": {
+					"FORM": {
+						"CONTACT_TEXT": "連絡先タイプの説明",
+						"CONTACT_TYPE": "コンタクトタイプ",
+						"TITLE": "連絡先を追加"
+					},
+					"TABLE": {
+						"CONTACT_TEXT": "価値",
+						"CONTACT_TYPE": "種類",
+						"FILTER": "フィルター",
+						"USE_FOR_DISTRIBUTION": "ニュースレター"
+					},
+					"TAB_NAME": "お問い合わせ"
+				},
+				"DOCUMENT": {
+					"FORM": {
+						"ADD": "追加する",
+						"DOCUMENT_TYPE": "文書タイプ",
+						"EXP_DATE": "有効期限",
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓",
+						"MIDDLE_NAME": "ミドルネーム",
+						"NUM": "文書番号"
+					},
+					"TABLE": {
+						"DOCUMENT_TYPE": "文書タイプ",
+						"EXP_DATE": "有効期限",
+						"FILTER": "フィルター",
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓",
+						"MIDDLE_NAME": "ミドルネーム",
+						"NUM": "文書番号"
+					},
+					"TAB_NAME": "書類"
+				},
+				"HEADER": {
+					"COUNTER_ACTIVE_SERVICES_IS_EMD": "装飾された有料サービス：",
+					"COUNTER_CANCELLED_SERVICES_IS_EMD": "キャンセルされた有料サービス：",
+					"COUNT_ACTIVE_TICKET": "発注：",
+					"COUNT_CANCELLED_TICKET": "キャンセルされた注文：",
+					"CREATE_DATE": "私たちと：",
+					"CUSTOMER_GROUP": "旅客グループ",
+					"CUSTOMER_ID": "プロファイル番号：",
+					"DATE_OF_BIRTH": "生年月日：",
+					"GENDER": "性別：",
+					"LUT": "最後のアクティビティの日付：",
+					"PROFILE": "プロフィール：",
+					"SEGMENTATION": "セグメンテーショングループ",
+					"TOTAL_AMOUNT": "金額の発行："
+				},
+				"MESSAGES": {
+					"HEADER": {
+						"DATE": "配布日時",
+						"STATUS": "現在の状態",
+						"TOPIC_LETTER": "件名"
+					},
+					"TAB_NAME": "メッセージ",
+					"TEMPLATE": {
+						"GO_TO": "ニュースレターにアクセス"
+					}
+				},
+				"ORDER": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"STATUS": {
+								"ACTIVE": "装飾された",
+								"CANCELLED": "キャンセル済み",
+								"TITLE": "注文状況"
+							}
+						},
+						"TEMPLATE": {
+							"MONETARY_INFO": {
+								"ALL": "ご注文合計：",
+								"COST_CURRENCY": "通貨での費用：",
+								"TAXES": "料金と料金：",
+								"TICKETS": "チケットで："
+							},
+							"POS": {
+								"AGENCY": "代理店：",
+								"COUNTRY": "国：",
+								"GDS": "Gds：",
+								"POS_ID": "POS ID：",
+								"REC_LOC": "Recloc GDS：",
+								"TERMINAL": "ターミナル："
+							},
+							"SEGMENTS": {
+								"ARR_POINT": "到着空港：",
+								"ARR_TIME": "到着日/時間：",
+								"CABIN": "キャビン：",
+								"DEP_POINT": "出発空港：",
+								"DEP_TIME": "出発日/時間：",
+								"FLIGHT": "フライト番号：",
+								"RBD": "予約クラス：",
+								"STATUS": "セグメントステータス："
+							},
+							"SERVICES": {
+								"ARR_POINT": "到着空港：",
+								"ARR_TIME": "到着日/時間：",
+								"CONCEPT_MEASURE": "コンセプト/メジャー：",
+								"COST": "費用：",
+								"COUPON": "クーポン番号：",
+								"COUPON_STATUS": "ステータス：",
+								"DATE": "日付：",
+								"DEP_POINT": "出発空港：",
+								"DEP_TIME": "出発日/時間：",
+								"EMD": "EMD：",
+								"EMD_TYPE": "EMDタイプ：",
+								"FLIGHT": "フライト番号：",
+								"NOS": {
+									"COMMENT": "コメント：",
+									"NAME_SERVICES": "サービス名："
+								},
+								"QTTY": "数量：",
+								"RFISC": "Rfisc：",
+								"SSR": "SSR：",
+								"STATUS": "サービス状況：",
+								"SVC_TYPE": "SVCタイプ："
+							},
+							"TICKETS": {
+								"ARR_POINT": "到着空港：",
+								"ARR_TIME": "到着日/時間：",
+								"COUPON": "クーポン番号：",
+								"DEP_POINT": "出発空港：",
+								"DEP_TIME": "出発日/時間：",
+								"FARE_CODE": "運賃基準：",
+								"FLIGHT": "フライト番号：",
+								"NUM_DER_TICKET": "チケット番号：",
+								"STATUS": "ステータス："
+							}
+						}
+					},
+					"FILTER": {
+						"DATE_CREATE": "作成日",
+						"DATE_SEARCH": "日付ピッカー",
+						"REC_LOC": "注文番号",
+						"SEARCH": "で検索",
+						"STATUS": {
+							"ACTIVE": "装飾された",
+							"CANCELLED": "キャンセル済み",
+							"TITLE": "注文状況"
+						},
+						"VALUE": "価値"
+					},
+					"HEADER": {
+						"DATE_CREATE": "作成日",
+						"REC_LOC": "注文番号",
+						"STATUS": "注文状況"
+					},
+					"OPTION_GROUPS": {
+						"ALL": "任意：",
+						"ALL_SEARCH": "すべてのパラメーターで検索",
+						"POS": "店頭",
+						"SEGMENTS": "セグメント",
+						"SERVICES": "サービス",
+						"TICKETS": "チケット"
+					},
+					"TAB_NAME": "ご注文"
+				},
+				"PRIVILEGES": {
+					"HEADER": {
+						"DATE_OF_CARRIAGE": "運送日",
+						"DATE_OF_SALE": "発売日",
+						"DIRECTION_FROM": "からの方向",
+						"DIRECTION_TO": "への方向",
+						"GDS": "注文（GDS）番号",
+						"ORGANIZATION": "組織",
+						"STATUS": "状況"
+					},
+					"TAB_NAME": "メリット",
+					"TEMPLATE": {
+						"ARR_LOC_CODE": "方向：",
+						"COUPON": "クーポン番号：",
+						"DEP_LOC_CODE": "からの方向：",
+						"DISCOUNT_SUM": "付与された給付額：",
+						"EXTERNAL_DISCOUNT_SOURCE_NAME": "利益組織：",
+						"FLIGHT_DATA": "運送日：",
+						"PRICE": "輸送の総費用：",
+						"SALE_DATE": "特典の提供日（販売日）：",
+						"STATUS_NAME": "ステータス：",
+						"TICKET": "チケット番号："
+					}
+				},
+				"PROFILE": {
+					"CARD": {
+						"COMMENT": "注：",
+						"DATE_OF_BIRTH": "生年月日：",
+						"FIRST_NAME": "名：",
+						"GENDER": "性別：",
+						"LAST_NAME": "姓:",
+						"MIDDLE_NAME": "ミドルネーム：",
+						"TITLE": "乗客のメイン名"
+					},
+					"EDIT": {
+						"COMMENT": "注釈",
+						"DATE_OF_BIRTH": "生年月日",
+						"FIRST_NAME": "名",
+						"GENDER": {
+							"F": "f",
+							"M": "M",
+							"TITLE": "性別"
+						},
+						"LAST_NAME": "姓",
+						"MIDDLE_NAME": "ミドルネーム",
+						"TITLE": "編集"
+					},
+					"FORM": {
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓",
+						"MIDDLE_NAME": "ミドルネーム",
+						"TITLE": "別の名前を追加"
+					},
+					"TABLE": {
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓",
+						"MIDDLE_NAME": "ミドルネーム"
+					},
+					"TAB_NAME": "プロフィール"
+				},
+				"PROMO_CODE": {
+					"EXPANSION": {
+						"TEMPLATE": {
+							"ACCOUT_CODE": "決済コード：",
+							"BRAND": "ブランド：",
+							"CUSTOMER": "プロフィール：",
+							"CUSTOMER_GROUP": "乗客グループ：",
+							"FLIGHT_DATE_FROM": "実施期間：",
+							"FLIGHT_DATE_TO": "実施期間：",
+							"GO_TO": "プロモーションコードに移動",
+							"PROMO_CODE_FLIGHT_LIST": "フライト番号：",
+							"RDB": "予約クラス：",
+							"REC_LOC": "注文：",
+							"ROUTE": "道順：",
+							"SEGMENTATION": "セグメンテーショングループ：",
+							"USES_PER_PERSON": "プロファイルの使用法：",
+							"USES_TOTAL": "総使用量：",
+							"VAL": "割引額：",
+							"VAL_TYPE": {
+								"PERCENT": "割合",
+								"SUM": "金額",
+								"TITLE": "割引タイプ："
+							}
+						}
+					},
+					"HEADER": {
+						"DATE_FROM": "有効期間",
+						"DATE_TO": "有効期限まで",
+						"PROMO": "プロモーション",
+						"PROMO_CODE": "プロモーションコード",
+						"QUANTITY": "数量"
+					},
+					"TABS": {
+						"AVAILABLE": "利用可能",
+						"USED": "中古"
+					},
+					"TAB_NAME": "プロモーションコード"
+				},
+				"SHOW_HIDE": {
+					"HIDE": "フォームを追加を隠す",
+					"SHOW": "アップロードフォームを表示"
+				}
+			}
+		},
+		"PROMOTIONS": {
+			"ADD_PROMOTIONS": {
+				"FIELD": {
+					"PROMOTIONS": "プロモーション"
+				},
+				"TABLE": {
+					"PROMOTIONS": "プロモーション"
+				}
+			},
+			"ADD_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "決済コード",
+					"ARR_LOC": "への方向",
+					"BRAND": "ブランド",
+					"CUSTOMER": "プロフィール",
+					"CUSTOMER_GROUP": "旅客グループ",
+					"DATE_FROM": "有効期間",
+					"DATE_TO": "有効期限まで",
+					"DEP_LOC": "からの方向",
+					"DESCRIPTION": "プロモーションの説明",
+					"FLIGHT": "フライト番号",
+					"FLIGHT_DATA_FROM": "実施期間",
+					"FLIGHT_DATA_TO": "実施期間",
+					"PROMOTIONS": "プロモーション",
+					"PROMOTIONS_CODE": "プロモーションコード",
+					"PROMOTIONS_CODE_VAL": {
+						"AMOUNT": "金額",
+						"PERCENT": "割合",
+						"TITLE": "割引タイプ"
+					},
+					"RDD": "予約クラス",
+					"REASON": "基礎",
+					"SEGMENTATION": "セグメンテーショングループ",
+					"USED": "使用済み：",
+					"USES_PER": "プロファイルに使用",
+					"USES_TOTAL": "総使用量",
+					"VAL": "割引額"
+				},
+				"TABLE": {
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓",
+					"MIDDLE_NAME": "ミドルネーム",
+					"PROFILE": "プロフィール番号"
+				}
+			},
+			"SEARCH_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "決済コード",
+					"BRAND": "ブランド",
+					"CUSTOMER_GROUP": "旅客グループ",
+					"DATE_FROM": "有効期間",
+					"DATE_TO": "有効期限まで",
+					"FLIGHT": "フライト番号",
+					"FLIGHT_DATA_FROM": "実施期間",
+					"FLIGHT_DATA_TO": "実施期間",
+					"PROMOTIONS": "プロモーション",
+					"PROMOTIONS_CODE": "プロモーションコード",
+					"RDD": "予約クラス",
+					"SEGMENTATION": "セグメンテーショングループ"
+				},
+				"TABLE": {
+					"ACCOUNT_CODE": "決済コード",
+					"DATE_FROM": "有効期間",
+					"DATE_TO": "有効期限まで",
+					"FLIGHT_DATA_FROM": "実施期間",
+					"FLIGHT_DATA_TO": "実施期間",
+					"PROMOTIONS": "プロモーション",
+					"PROMOTIONS_CODE": "プロモーションコード"
+				}
+			}
+		},
+		"REPORTS": {
+			"STATISTICS_REPORT": {
+				"MES_DOWNLOAD_EXC": "生成されたリクエストに基づいてExcelファイルをダウンロードする",
+				"MES_DOWNLOAD_PDF": "生成されたリクエストを考慮してPDFファイルをダウンロードします",
+				"MES_DOWNLOAD_WORD": "生成されたリクエストに基づいてWordファイルをダウンロードする",
+				"REPORT_PARAMETERS": "レポートパラメータ",
+				"REPORT_SELECTION": "レポート選択"
+			}
+		},
+		"RESET": {
+			"TITLE": "アプリケーションをリロードする"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": {
+				"BUTTON": {
+					"NEXT": "次へ",
+					"PREV": "前へ"
+				},
+				"GROUP_SEGMENTATION": {
+					"GRANULARITY": {
+						"COUPON": "クーポン",
+						"ORDERS": "ご注文",
+						"PASSENGER": "乗客",
+						"TITLE": "粒度"
+					},
+					"GROUP_SEGMENTATION": "セグメンテーショングループ"
+				},
+				"NUMBER_SEGMENTS": {
+					"FROM": "から",
+					"SERVICES": "サービス",
+					"TICKETS": "チケット",
+					"TITLE": "セグメント数",
+					"TO": "まで"
+				},
+				"ORDER_AMOUNT": {
+					"CURRENCY": "支払通貨",
+					"FROM": "から",
+					"SERVICES": "サービス",
+					"TICKETS": "チケット",
+					"TITLE": "ご注文金額",
+					"TO": "まで"
+				},
+				"PROFILE_DETAILS": {
+					"DOB_FROM": "生年月日",
+					"DOB_TO": "",
+					"FLIES_WITHOUT_CHILDREN": "子供のいないハエ",
+					"FLIES_WITH_CHILDREN": "子供と飛ぶ",
+					"GENDER": {
+						"F": "f",
+						"M": "M",
+						"TITLE": "性別"
+					},
+					"TITLE": "プロファイルの詳細"
+				},
+				"RESERVATION_DATE_RANG": {
+					"DATE_FROM": "無料の範囲",
+					"DATE_TO": "無料の範囲",
+					"TITLE": "予約期間"
+				},
+				"SERVICES": {
+					"AIRLINE_L_CODE": "航空会社コード",
+					"ARR_D_FROM": "出発日範囲",
+					"ARR_D_TO": "出発日範囲",
+					"ARR_LOC": "どこへ",
+					"DEP_LOC": "どこから",
+					"FLIGHT_NO": "便名",
+					"POS_AGENCY": "代理店コード（販売店）",
+					"POS_GDS": "GDSコード（POS）",
+					"POS_ID": "PPRコード（POS）",
+					"SERVICE_CODE": "コード",
+					"TITLE": "有料サービス"
+				},
+				"SUBJECT_ANALYSIS": {
+					"PAYMENT": "購入金額",
+					"REMOVE": "分析対象をリセット",
+					"SEGMENT": "セグメント数",
+					"TITLE": "分析対象"
+				},
+				"TICKET": {
+					"AIRLINE_L_CODE": "航空会社コード",
+					"ARR_D_FROM": "出発日範囲",
+					"ARR_D_TO": "出発日範囲",
+					"ARR_LOC": "どこへ",
+					"CABIN": "キャビン",
+					"DEP_LOC": "どこから",
+					"FLIGHT_NO": "便名",
+					"POS_AGENCY": "代理店コード（販売店）",
+					"POS_GDS": "GDSコード（POS）",
+					"POS_ID": "PPRコード（POS）",
+					"RARE_CODE": "レートコード",
+					"RDB": "予約クラス",
+					"TITLE": "チケット"
+				}
+			},
+			"COMPLEX_SEGMENTATION": {
+				"FIELD": {
+					"CHOICE_SEGMENTATION": "セグメンテーション選択",
+					"NAME_COMPLEX_SEGMENTATION": "複雑なセグメンテーションの名前"
+				},
+				"SEGMENTATIONS": "セグメンテーション",
+				"TABLE": {
+					"FILTER": "フィルター",
+					"GROUP_SEGMENTATION": "セグメンテーショングループ",
+					"TITLE": "複雑なセグメンテーション"
+				}
+			},
+			"LIST_SEGMENTATION": {
+				"PROFILE_SEGMENTATION": {
+					"CUSTOMER_ID": "プロフィール番号",
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓",
+					"MIDDLE_NAME": "ミドルネーム"
+				},
+				"TABLE_SEGMENTATION": {
+					"ALL": "すべての",
+					"COMPLICATED": "難しい",
+					"FILTER": "フィルター",
+					"SEGMENTATION": "セグメンテーショングループ",
+					"SIMPLE": "シンプル",
+					"STATUS": {
+						"COMPLICATED": "難しい",
+						"SIMPLE": "シンプル",
+						"TITLE": "状況"
+					},
+					"TITLE": "セグメンテーションを表示"
+				}
+			}
+		},
+		"SETTINGS": {
+			"TABLE_PROFILE": {
+				"COLUMN_DISPLAY": "列表示",
+				"COLUMN_ORDER": "列の順序",
+				"TITLE": "乗客用テーブルの設定"
+			}
+		},
+		"SLECIAL_GROUP": {
+			"PROFILE_GROUP": {
+				"TABLE": {
+					"PROFILE_GROUP": "旅客グループ"
+				},
+				"TITLE": "旅客グループ"
+			}
+		},
+		"USERS": {
+			"ADD_USER": {
+				"CONFIRM_PASSWORD": "パスワード再入力",
+				"EMAIL": "Eメール",
+				"FIO": "氏名",
+				"LOGIN": "ログイン",
+				"PASSWORD": "パスワード",
+				"TITLE": "ユーザーを追加"
+			},
+			"LIST_USERS": {
+				"TABLE": {
+					"EMAIL": "Eメール",
+					"FILTER": "フィルター",
+					"FIO": "氏名",
+					"LOGIN": "ログイン"
+				},
+				"TITLE": "すべてのユーザーをリストする"
+			},
+			"USER": {
+				"ACCESS_RIGHTS": {
+					"ADDITIONAL_RIGHT": "追加の権利",
+					"ANALYTICS": "分析",
+					"CUSTOMERS": "乗客",
+					"DISTRIBUTIONS": "ニュースレター",
+					"EVENTS": "イベント",
+					"PRIVILEGES": "メリット",
+					"PROMOTIONS_CODES": "プロモーションコード",
+					"READ": "読書",
+					"REPORTS": "報告書",
+					"TITLE": "アクセス権",
+					"UPDATE": "変更",
+					"USER": "ユーザー"
+				},
+				"USER": {
+					"CONFIRM_PASSWORD": "パスワード再入力",
+					"EMAIL": "Eメール",
+					"FIO": "氏名",
+					"LOGIN": "ログイン",
+					"PASSWORD": "パスワード",
+					"TABS": {
+						"PASSWORD": "パスワード",
+						"USER": "ユーザー"
+					},
+					"TITLE": "ユーザー",
+					"TITLE_2": "編集"
+				}
+			}
+		}
+	},
+	"POP_UP": {
+		"DIALOG_MERGE_PROFILE": {
+			"CUSTOMER_IDS": "プロファイル番号：",
+			"DATE_OF_BIRTH": "生年月日：",
+			"FIRST_NAME": "名：",
+			"LAST_NAME": "姓:"
+		},
+		"DIALOG_PROMO_CODE": {
+			"ACCOUNT_CODE": "アカウントコード：",
+			"DATE_FROM": "有効期限：から",
+			"DATE_TO": "まで",
+			"NAME_PROMO_CODE": "プロモーションコード名：",
+			"PROMO_CODE": "プロモーションコード"
+		},
+		"EDITOR": {
+			"DIALOG_EDITOR": {
+				"TITLE": "郵送フォームを選択してください"
+			},
+			"DIALOG_EMAIL": {
+				"DATE_FROM": "発送日",
+				"DATE_TO": "発送日",
+				"EXAMPLE": "例：",
+				"LIMITS": "制限",
+				"PARAMS": "ニュースレターのオプション",
+				"TEMPLATE": "模様",
+				"TEMPLATE_TITLE": "ニュースレターテンプレート",
+				"TEXT": "テキスト",
+				"THEME": "テーマ",
+				"TITLE": "メーリング変数",
+				"TOTAL_COUNT": "数量"
+			},
+			"DIALOG_SMS": {
+				"SYMBOLS_ENTERED": "入力された記号",
+				"TEMPLATE": "模様",
+				"TEXT": "メッセージ本文",
+				"TITLE": "役職"
+			}
+		}
+	},
+	"TABLE": {
+		"FIRST_PAGE": "最初のページ",
+		"FROM": "から",
+		"ITEMS_PER_PAGE": "ページあたりの数量",
+		"LAST_PAGE": "最後のページ",
+		"NEXT": "次へ",
+		"PREV": "前へ",
+		"RESULT": {
+			"ERROR": "このリクエストの結果は見つかりませんでした。",
+			"OK": "検索結果"
+		}
+	},
+	"TOOLBAR": {
+		"GO_OUT": "ログアウトする"
+	}
+}

@@ -17,6 +17,7 @@ import { AddPromotionsCodesService } from '../add-promotions-codes/add-promotion
 import { IPromoCode } from '../../../interface/ipromo-code';
 import * as moment from 'moment';
 import * as R from 'ramda';
+import { TableAsyncSearchPromoCodeService } from '../../../components/tables/table-async-search-promo-code/table-async-search-promo-code.service';
 
 @Component( {
   selector: 'app-search-promotions-codes',
@@ -53,7 +54,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
-    private tableAsyncService: TableAsyncService,
+    private tableAsyncSearchPromoCodeService: TableAsyncSearchPromoCodeService,
   ) { }
 
   ngOnInit() {
@@ -257,7 +258,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private initTableProfilePagination() {
-    this.tableAsyncService.subjectPage
+    this.tableAsyncSearchPromoCodeService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
@@ -269,7 +270,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
         this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncService.setTableDataSource( promoCode.result ) );
+          .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
       } );
   }
 
@@ -297,11 +298,10 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
         if ( val === '' ) paramsOmit.push( key );
       } );
       this.searchParams = _.omit( this.searchParams, paramsOmit );
-
       this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( promoCode: IPromoCode ) => {
-          this.tableAsyncService.countPage = promoCode.totalCount;
+          this.tableAsyncSearchPromoCodeService.countPage = promoCode.totalCount;
           this.promoCode = promoCode;
           this.isLoader = false;
         } );

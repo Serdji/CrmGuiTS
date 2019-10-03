@@ -1,8 +1,33 @@
 select = 70px
-taskId = 150px
+
+customerId = 50px
 
 
 .table
+
+  &__button
+    &-filter
+      height: 36px;
+
+  &__search
+    display: flex;
+    align-items: center;
+
+  &__input
+    width: 200px;
+    margin-right: 10px;
+
+  &__loading-shade
+    position: absolute;
+    top: 56px;
+    left: 0;
+    bottom: 73px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
   &__row
     white-space: nowrap;
@@ -11,16 +36,14 @@ taskId = 150px
     text-overflow: ellipsis;
     display: inline-block;
     min-height auto;
-    padding: 10px 0;
     &._cp
       cursor: pointer
+      padding: 16px;
       &:hover
         background: rgba(63,81,181,.12)
 
-  &__input
-    width: 100%;
-
   &__button
+
     margin-right: 15px;
 
     &-wrapper
@@ -30,26 +53,20 @@ taskId = 150px
 .mat-column
 
 
-  &-select
-    width: select;
 
-  &-title,
-  &-segmentation,
-  &-subject,
-  &-taskType,
-  &-frequencySec,
-  &-isActive
+  &-firstName,
+  &-lastName,
+  &-secondName
     flex: 1;
 
-  &-taskId
-    width: taskId;
+  &-customerId
+    width: customerId;
     margin-left: auto;
     mat-icon
       cursor: pointer
       color: #696969;
       margin-left: auto
       margin-right: 30px;
-
 
 
 

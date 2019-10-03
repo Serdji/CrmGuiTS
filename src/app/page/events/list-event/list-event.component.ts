@@ -8,6 +8,12 @@ import * as R from 'ramda';
 import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
+import { ActivatedRoute } from '@angular/router';
+import { IPromoCode } from '../../../interface/ipromo-code';
+import { IpagPage } from '../../../interface/ipag-page';
+import { ITaskLog } from '../../../interface/itask-log';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { EventService } from '../event/event.service';
 
 @Component( {
   selector: 'app-list-event',
@@ -19,20 +25,86 @@ export class ListEventComponent implements OnInit, OnDestroy {
   public isTableTask: boolean;
   public isProgress: boolean;
   public tasks: ITask[];
+  public taskLog: ITaskLog;
+  public isTableTaskLog: boolean;
+  public isLoaderTaskLog: boolean;
 
   private isActive: boolean;
+  private taskId: number;
 
   constructor(
     private listEventService: ListEventService,
     private listSegmentationService: ListSegmentationService,
     private translate: TranslateService,
+    private route: ActivatedRoute,
+    private tableAsyncService: TableAsyncService,
+    private eventService: EventService,
   ) { }
 
   ngOnInit(): void {
     this.isTableTask = true;
     this.isProgress = true;
     this.isActive = true;
+    this.isTableTaskLog = false;
+    this.isLoaderTaskLog = true;
+    this.initQueryParams();
+    this.initTableFilter();
     this.initTableTasks();
+    this.initTableTableTasksLog();
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( res: { promotionName: number[], from: number, count: number } ) => {
+        const isRes = !R.isEmpty( res );
+        if ( isRes ) this.initTableTasksLog( res );
+      } );
+  }
+  private initTableFilter() {
+    this.tableAsyncService.subjectFilter
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( paramsFilter => {
+        let params = {
+          taskId: this.taskId,
+          from: 0,
+          count: 10
+        };
+        params = R.merge( params, paramsFilter );
+        this.eventService.getSearchTackLogs( params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
+      } );
+  }
+
+  private initTableTasksLog( searchParams ) {
+    this.taskId = +searchParams.taskId;
+    this.isTableTaskLog = true;
+    this.isLoaderTaskLog = true;
+    this.eventService.getSearchTackLogs( searchParams )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( taskLog: ITaskLog ) => {
+        this.tableAsyncService.countPage = taskLog.totalRows;
+        this.taskLog = taskLog;
+        this.isLoaderTaskLog = false;
+      } );
+  }
+
+
+  private initTableTableTasksLog() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          taskId: this.taskId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.eventService.getSearchTackLogs( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
+      } );
   }
 
   initTableTasks() {

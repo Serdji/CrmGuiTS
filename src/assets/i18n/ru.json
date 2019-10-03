@@ -20,6 +20,7 @@
 		"EDIT": "Изменить",
 		"EDITOR": "Создать рассылку",
 		"EDIT_EVENT": "Редактировать событие",
+		"FILTER": "Фильтр",
 		"LOGIN": "Авторизоваться",
 		"MERGE_PROFILE": "Объединить пассажиров",
 		"PROMO_CODE": "Привязать промокод",
@@ -80,7 +81,7 @@
 			"PROMOTIONS": "Промоакция:",
 			"PROMOTIONS_CODE": "Промокод:",
 			"PROMOTIONS_CODE_VAL": {
-				"AMOUT": "Сумма",
+				"AMOUNT": "Сумма",
 				"PERCENT": "Процент",
 				"TITLE": "Тип скидки:"
 			},
@@ -244,6 +245,19 @@
 						"SMS": "sms",
 						"TITLE": "Тип события:"
 					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Дата рождения",
+					"FIELD": {
+						"PROFILE": "Профиль №",
+						"SEARCH": "Поиск по",
+						"VALUE": "Значение"
+					},
+					"FIRST_NAME": "Имя",
+					"GENDER": "Пол",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
 				}
 			},
 			"LIST_EVENT": {
@@ -315,6 +329,7 @@
 					"LAST_NAME": "Фамилия",
 					"MONEY_AMOUNT_FROM_INCLUDE": "Общая сумма от",
 					"MONEY_AMOUNT_TO_INCLUDE": "Общая сумма до",
+					"PROFILE": "№ Профиля",
 					"RBD": "Класс бронирования",
 					"REC_LOC": "№ брони",
 					"SEGMENTATION": "Группы сегментации",
@@ -322,12 +337,12 @@
 					"TICKET": "№ билета"
 				},
 				"TABLE": {
-					"CUSTOMER_IDS": "№ профиля",
 					"DATE_OF_BIRTH": "Дата рождения",
 					"FIRST_NAME": "Имя",
 					"GENDER": "Пол",
 					"LAST_NAME": "Фамилия",
-					"MIDDLE_NAME": "Отчество"
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
 				}
 			},
 			"TABS_PROFILE": {
@@ -619,7 +634,7 @@
 					"PROMOTIONS": "Промоакция",
 					"PROMOTIONS_CODE": "Промокод",
 					"PROMOTIONS_CODE_VAL": {
-						"AMOUT": "Сумма",
+						"AMOUNT": "Сумма",
 						"PERCENT": "Процент",
 						"TITLE": "Тип скидки"
 					},

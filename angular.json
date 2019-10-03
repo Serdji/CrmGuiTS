@@ -48,6 +48,9 @@
               ],
               "serviceWorker": true,
               "ngswConfigPath": "src/ngsw-config.json"
+            },
+            "es5": {
+              "tsConfig": "./tsconfig.es5.app.json"
             }
           }
         },
@@ -59,6 +62,9 @@
           "configurations": {
             "production": {
               "browserTarget": "crm-gui-ts:build:production"
+            },
+            "es5": {
+              "browserTarget": "crm-gui-ts:build:es5"
             }
           }
         },

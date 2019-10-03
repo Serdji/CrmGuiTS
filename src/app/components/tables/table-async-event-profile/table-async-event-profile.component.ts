@@ -9,15 +9,15 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
-import * as _ from 'lodash';
-import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-code.service';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component( {
-  selector: 'app-table-async-search-promo-code',
-  templateUrl: './table-async-search-promo-code.component.html',
-  styleUrls: [ './table-async-search-promo-code.component.styl' ],
+  selector: 'app-table-async-event-profile',
+  templateUrl: './table-async-event-profile.component.html',
+  styleUrls: [ './table-async-event-profile.component.styl' ],
 } )
-export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
+export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -27,67 +27,68 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
   public resultsLength: number;
   public isLoadingResults: boolean = false;
   public totalCount: number;
+  public ids: any;
+  public formSearch: FormGroup;
 
   private isActive: boolean;
 
 
   @Input() private tableDataSource: any;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild( MatSort, { static: true } ) sort: MatSort;
+  @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
 
   constructor(
+    private fb: FormBuilder,
     private dialog: MatDialog,
     private router: Router,
-    private tableAsyncSearchPromoCodeService: TableAsyncSearchPromoCodeService
+    private tableAsyncService: TableAsyncService
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
-    this.initDataSource( this.tableDataSource );
+    this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
     this.initDisplayedColumns();
+    this.initFormSearch();
+  }
+
+  private initFormSearch() {
+    this.formSearch = this.fb.group( {
+      switchSearch: '',
+      textSearch: ''
+    } );
   }
 
   private initDisplayedColumns() {
     this.displayedColumns = [
-      'code',
-      'promotionName',
-      'accountCode',
-      'dateFrom',
-      'dateTo',
-      'flightDateFrom',
-      'flightDateTo',
-      'promoCodeId',
+      'firstName',
+      'lastName',
+      'secondName',
+      'customerId'
     ];
   }
 
-  private initDataSource( tableDataSources ) {
-    _.each( tableDataSources, tableDataSource => {
-      _.chain( tableDataSource )
-        .set( 'promotionName', _.get( tableDataSource, 'promotion.promotionName' ) )
-        .value();
-    } );
-    this.dataSourceFun( tableDataSources );
+  private initDataSource() {
+    this.dataSourceFun( this.tableDataSource );
   }
 
   private initPaginator() {
-    this.resultsLength = this.tableAsyncSearchPromoCodeService.countPage;
-    this.totalCount = this.tableAsyncSearchPromoCodeService.countPage;
+    this.resultsLength = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
-        this.tableAsyncSearchPromoCodeService.setPagPage( value );
+        this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
       } );
   }
 
   private initDataSourceAsync() {
-    this.tableAsyncSearchPromoCodeService.subjectTableDataSource
+    this.tableAsyncService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
-        this.initDataSource( value );
+        this.dataSourceFun( value );
         this.isLoadingResults = false;
       } );
   }
@@ -145,12 +146,53 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  redirectToProfile( promoCodeId: number ): void {
-    this.router.navigate( [ '/crm/add-promotions-codes'], { queryParams: { promoCodeId } } );
+  editCreate( promotionsId: number, promotionsName: string ): void {
+    this.windowDialog( ``, 'updatePromotions', { promotionsId, promotionsName }, 'updatePromotions' );
+  }
+
+  deleteProfileGroups(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      const params = Object.assign( {}, { ids: arrayId } );
+      this.windowDialog( `DIALOG.DELETE.PROMOTION`, 'delete', params, 'deletePromotions' );
+    }
   }
 
   disabledCheckbox( eventData ): void {
     this.isDisabled = eventData;
+  }
+
+  isIds(): void {
+    const arrayId = [];
+    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+    checkbox.forEach( ( el: HTMLInputElement ) => {
+      if ( el.checked ) {
+        const id = el.id.split( '-' );
+        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+      } else {
+        this.ids = {};
+      }
+    } );
+
+    if ( arrayId.length !== 0 ) {
+      this.ids = { customerGroupIds: arrayId };
+    }
+  }
+
+  filter(): void {
+    const paramsFilter = {
+      [ this.formSearch.get( 'switchSearch' ).value ]: this.formSearch.get( 'textSearch' ).value
+    };
+    this.tableAsyncService.setParamsFilter( paramsFilter );
+    this.isLoadingResults = true;
   }
 
   ngOnDestroy(): void {

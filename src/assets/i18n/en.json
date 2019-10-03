@@ -20,6 +20,7 @@
 		"EDIT": "Edit",
 		"EDITOR": "Create Newsletter",
 		"EDIT_EVENT": "Edit event",
+		"FILTER": "Filter",
 		"LOGIN": "Log In",
 		"MERGE_PROFILE": "Combine passengers",
 		"PROMO_CODE": "Link promotional code",
@@ -80,7 +81,7 @@
 			"PROMOTIONS": "Promotion:",
 			"PROMOTIONS_CODE": "Promo Code:",
 			"PROMOTIONS_CODE_VAL": {
-				"AMOUT": "Amount",
+				"AMOUNT": "Amount",
 				"PERCENT": "Percent",
 				"TITLE": "Discount Type:"
 			},
@@ -244,6 +245,19 @@
 						"SMS": "sms",
 						"TITLE": "Event Type:"
 					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Date of Birth",
+					"FIELD": {
+						"PROFILE": "Profile No.",
+						"SEARCH": "Search by",
+						"VALUE": "Value"
+					},
+					"FIRST_NAME": "Name",
+					"GENDER": "Gender",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": "Profile No."
 				}
 			},
 			"LIST_EVENT": {
@@ -315,6 +329,7 @@
 					"LAST_NAME": "Surname",
 					"MONEY_AMOUNT_FROM_INCLUDE": "Total amount from",
 					"MONEY_AMOUNT_TO_INCLUDE": "Total amount to",
+					"PROFILE": "Profile No.",
 					"RBD": "Booking class",
 					"REC_LOC": "Reservation number",
 					"SEGMENTATION": "Segmentation groups",
@@ -322,12 +337,12 @@
 					"TICKET": "Ticket number"
 				},
 				"TABLE": {
-					"CUSTOMER_IDS": "Profile No.",
 					"DATE_OF_BIRTH": "Date of Birth",
 					"FIRST_NAME": "Name",
 					"GENDER": "Gender",
 					"LAST_NAME": "Surname",
-					"MIDDLE_NAME": "Middle Name"
+					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": "Profile No."
 				}
 			},
 			"TABS_PROFILE": {
@@ -619,7 +634,7 @@
 					"PROMOTIONS": "Promotion",
 					"PROMOTIONS_CODE": "Promo Code",
 					"PROMOTIONS_CODE_VAL": {
-						"AMOUT": "Amount",
+						"AMOUNT": "Amount",
 						"PERCENT": "Percent",
 						"TITLE": "Discount Type"
 					},
@@ -635,7 +650,7 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"PROFILE": ""
+					"PROFILE": "Profile No."
 				}
 			},
 			"SEARCH_PROMOTIONS_CODE": {

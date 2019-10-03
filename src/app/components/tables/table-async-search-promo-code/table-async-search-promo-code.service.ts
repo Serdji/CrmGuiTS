@@ -1,13 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { IpagPage } from '../interface/ipag-page';
+import { IpagPage } from '../../../interface/ipag-page';
 
 @Injectable()
-export class TableAsyncService {
+export class TableAsyncSearchPromoCodeService {
 
   public count: number;
   public subjectPage = new Subject();
-  public subjectFilter = new Subject();
   public subjectTableDataSource = new Subject();
 
   constructor() { }
@@ -22,10 +21,6 @@ export class TableAsyncService {
 
   setPagPage( params: IpagPage ) {
     this.subjectPage.next( params );
-  }
-
-  setParamsFilter( paramsFilter ) {
-    this.subjectFilter.next( paramsFilter );
   }
 
   setTableDataSource( params: any ) {
