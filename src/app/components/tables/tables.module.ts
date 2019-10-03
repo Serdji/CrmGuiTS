@@ -26,6 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { TranslateModule } from '@ngx-translate/core';
 import { TableExampleTaskComponent } from './table-example-task/table-example-task.component';
 import { TableAsyncEventProfileComponent } from './table-async-event-profile/table-async-event-profile.component';
+import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-code/table-async-search-promo-code.service';
 
 @NgModule({
   imports: [
@@ -77,7 +78,8 @@ import { TableAsyncEventProfileComponent } from './table-async-event-profile/tab
     TableAsyncEventProfileComponent
   ],
   providers: [
-    TableAsyncService
+    TableAsyncService,
+    TableAsyncSearchPromoCodeService
   ]
 })
 export class TablesModule { }

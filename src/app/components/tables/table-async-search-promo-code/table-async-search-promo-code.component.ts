@@ -9,8 +9,8 @@ import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
-import { TableAsyncService } from '../../../services/table-async.service';
 import * as _ from 'lodash';
+import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-code.service';
 
 @Component( {
   selector: 'app-table-async-search-promo-code',
@@ -39,7 +39,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private tableAsyncService: TableAsyncService
+    private tableAsyncSearchPromoCodeService: TableAsyncSearchPromoCodeService
   ) { }
 
   ngOnInit(): void {
@@ -73,18 +73,18 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
   }
 
   private initPaginator() {
-    this.resultsLength = this.tableAsyncService.countPage;
-    this.totalCount = this.tableAsyncService.countPage;
+    this.resultsLength = this.tableAsyncSearchPromoCodeService.countPage;
+    this.totalCount = this.tableAsyncSearchPromoCodeService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
-        this.tableAsyncService.setPagPage( value );
+        this.tableAsyncSearchPromoCodeService.setPagPage( value );
         this.isLoadingResults = true;
       } );
   }
 
   private initDataSourceAsync() {
-    this.tableAsyncService.subjectTableDataSource
+    this.tableAsyncSearchPromoCodeService.subjectTableDataSource
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: any ) => {
         this.initDataSource( value );

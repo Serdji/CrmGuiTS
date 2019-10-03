@@ -80,7 +80,7 @@
 			"PROMOTIONS": "Промоакция:",
 			"PROMOTIONS_CODE": "Промокод:",
 			"PROMOTIONS_CODE_VAL": {
-				"AMOUT": "Сумма",
+				"AMOUNT": "Сумма",
 				"PERCENT": "Процент",
 				"TITLE": "Тип скидки:"
 			},
@@ -633,7 +633,7 @@
 					"PROMOTIONS": "Промоакция",
 					"PROMOTIONS_CODE": "Промокод",
 					"PROMOTIONS_CODE_VAL": {
-						"AMOUT": "Сумма",
+						"AMOUNT": "Сумма",
 						"PERCENT": "Процент",
 						"TITLE": "Тип скидки"
 					},

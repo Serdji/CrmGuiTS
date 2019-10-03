@@ -80,7 +80,7 @@
 			"PROMOTIONS": "プロモーション：",
 			"PROMOTIONS_CODE": "プロモーションコード：",
 			"PROMOTIONS_CODE_VAL": {
-				"AMOUT": "金額",
+				"AMOUNT": "金額",
 				"PERCENT": "割合",
 				"TITLE": "割引タイプ："
 			},
@@ -633,7 +633,7 @@
 					"PROMOTIONS": "プロモーション",
 					"PROMOTIONS_CODE": "プロモーションコード",
 					"PROMOTIONS_CODE_VAL": {
-						"AMOUT": "金額",
+						"AMOUNT": "金額",
 						"PERCENT": "割合",
 						"TITLE": "割引タイプ"
 					},

@@ -80,7 +80,7 @@
 			"PROMOTIONS": "Förderung:",
 			"PROMOTIONS_CODE": "Aktionscode:",
 			"PROMOTIONS_CODE_VAL": {
-				"AMOUT": "Betrag",
+				"AMOUNT": "Betrag",
 				"PERCENT": "Prozentsatz",
 				"TITLE": "Rabattart:"
 			},
@@ -633,7 +633,7 @@
 					"PROMOTIONS": "Forderung",
 					"PROMOTIONS_CODE": "Aktionscode",
 					"PROMOTIONS_CODE_VAL": {
-						"AMOUT": "Betrag",
+						"AMOUNT": "Betrag",
 						"PERCENT": "Prozentsatz",
 						"TITLE": "Rabattart"
 					},

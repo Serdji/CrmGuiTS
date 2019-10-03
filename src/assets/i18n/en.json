@@ -80,7 +80,7 @@
 			"PROMOTIONS": "Promotion:",
 			"PROMOTIONS_CODE": "Promo Code:",
 			"PROMOTIONS_CODE_VAL": {
-				"AMOUT": "Amount",
+				"AMOUNT": "Amount",
 				"PERCENT": "Percent",
 				"TITLE": "Discount Type:"
 			},
@@ -633,7 +633,7 @@
 					"PROMOTIONS": "Promotion",
 					"PROMOTIONS_CODE": "Promo Code",
 					"PROMOTIONS_CODE_VAL": {
-						"AMOUT": "Amount",
+						"AMOUNT": "Amount",
 						"PERCENT": "Percent",
 						"TITLE": "Discount Type"
 					},
