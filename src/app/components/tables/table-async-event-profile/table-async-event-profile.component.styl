@@ -1,6 +1,6 @@
 select = 70px
 
-promotionId = 100px
+customerId = 50px
 
 
 .table
@@ -19,9 +19,9 @@ promotionId = 100px
 
   &__loading-shade
     position: absolute;
-    top: 72px;
+    top: 56px;
     left: 0;
-    bottom: 108px;
+    bottom: 73px;
     right: 0;
     background: rgba(0, 0, 0, 0.15);
     z-index: 3;
@@ -54,11 +54,13 @@ promotionId = 100px
 
 
 
-  &-promotionName
+  &-firstName,
+  &-lastName,
+  &-secondName
     flex: 1;
 
-  &-promotionId
-    width: promotionId;
+  &-customerId
+    width: customerId;
     margin-left: auto;
     mat-icon
       cursor: pointer

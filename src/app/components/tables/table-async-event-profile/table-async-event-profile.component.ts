@@ -63,9 +63,10 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
 
   private initDisplayedColumns() {
     this.displayedColumns = [
-      // 'select',
-      // 'promotionName',
-      // 'promotionId'
+      'firstName',
+      'lastName',
+      'secondName',
+      'customerId'
     ];
   }
 

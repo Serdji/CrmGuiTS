@@ -20,18 +20,32 @@
 
   <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
 
-    <ng-container matColumnDef="promotionName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> </mat-header-cell>
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.EVENTS.EVENT.TABLE.FIRST_NAME' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.promotionName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="promotionId" stickyEnd>
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.EVENTS.EVENT.TABLE.LAST_NAME' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="secondName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.EVENTS.EVENT.TABLE.MIDDLE_NAME' | translate}} </mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="customerId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
         <mat-icon
-          routerLink="/crm/profile"
+          routerLink="/crm/profile/{{ element.customerId }}"
         >remove_red_eye
         </mat-icon>
       </mat-cell>
