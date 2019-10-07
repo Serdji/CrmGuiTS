@@ -334,7 +334,8 @@
 					"REC_LOC": "Reservierungsnummer",
 					"SEGMENTATION": "Segmentierungsgruppen",
 					"SERVICE_CODE": "Service-Code",
-					"TICKET": "Ticketnummer"
+					"TICKET": "Ticketnummer",
+					"TOLTIP_CSV": "SVG-Datei mit Suchabfrage herunterladen"
 				},
 				"TABLE": {
 					"DATE_OF_BIRTH": "Geburtsdatum",

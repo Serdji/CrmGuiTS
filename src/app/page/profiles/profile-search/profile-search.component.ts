@@ -47,6 +47,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public customerGroup: IcustomerGroup[];
   public currencyDefault: string;
   public buttonSearch: boolean;
+  public buttonCsvDisabled: boolean;
+  public csvLoader: boolean;
 
   readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public segmentationSelectable = true;
@@ -83,6 +85,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isQueryParams = true;
     this.buttonSearch = true;
+    this.buttonCsvDisabled = true;
+    this.csvLoader = false;
     this.initAirports();
     this.initForm();
     this.initAutocomplete();
@@ -371,6 +375,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
+        this.buttonCsvDisabled = false;
       } );
   }
 
@@ -446,15 +451,23 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   clearForm(): void {
     this.resetForm();
+    this.buttonCsvDisabled = true;
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
   }
 
   downloadCsv(): void {
+    this.buttonCsvDisabled = true;
+    this.csvLoader = true;
     this.profileSearchService.downloadCsv( this.sendProfileParams )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( resp => {
         const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
         saveAs( resp.body, filename );
+        this.buttonCsvDisabled = false;
+        this.csvLoader = false;
+      } , _ => {
+        this.buttonCsvDisabled = false;
+        this.csvLoader = false;
       } );
   }
 
