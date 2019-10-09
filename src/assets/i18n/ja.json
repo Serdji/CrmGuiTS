@@ -699,7 +699,6 @@
 					"PREV": "前へ"
 				},
 				"GROUP_SEGMENTATION": {
-					"DISPATCH_TIME": "発送時間",
 					"GRANULARITY": {
 						"COUPON": "クーポン",
 						"ORDERS": "ご注文",
@@ -746,6 +745,7 @@
 					"ARR_D_TO": "出発日範囲",
 					"ARR_LOC": "どこへ",
 					"DEP_LOC": "どこから",
+					"DISPATCH_TIME": "発送時間",
 					"FLIGHT_NO": "便名",
 					"POS_AGENCY": "代理店コード（販売店）",
 					"POS_GDS": "GDSコード（POS）",
@@ -766,6 +766,7 @@
 					"ARR_LOC": "どこへ",
 					"CABIN": "キャビン",
 					"DEP_LOC": "どこから",
+					"DISPATCH_TIME": "発送時間",
 					"FLIGHT_NO": "便名",
 					"POS_AGENCY": "代理店コード（販売店）",
 					"POS_GDS": "GDSコード（POS）",

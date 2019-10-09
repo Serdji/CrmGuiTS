@@ -699,7 +699,6 @@
 					"PREV": "Previous"
 				},
 				"GROUP_SEGMENTATION": {
-					"DISPATCH_TIME": "Dispatch time",
 					"GRANULARITY": {
 						"COUPON": "Coupon",
 						"ORDERS": "Orders",
@@ -746,6 +745,7 @@
 					"ARR_D_TO": "Departure date range by",
 					"ARR_LOC": "Where",
 					"DEP_LOC": "From where",
+					"DISPATCH_TIME": "Dispatch time",
 					"FLIGHT_NO": "Flight number",
 					"POS_AGENCY": "Agency code (point of sale)",
 					"POS_GDS": "GDS code (point of sale)",
@@ -766,6 +766,7 @@
 					"ARR_LOC": "Where",
 					"CABIN": "Cabin",
 					"DEP_LOC": "From where",
+					"DISPATCH_TIME": "Dispatch time",
 					"FLIGHT_NO": "Flight number",
 					"POS_AGENCY": "Agency code (point of sale)",
 					"POS_GDS": "GDS code (point of sale)",

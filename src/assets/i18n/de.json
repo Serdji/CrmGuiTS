@@ -699,7 +699,6 @@
 					"PREV": "Zurück"
 				},
 				"GROUP_SEGMENTATION": {
-					"DISPATCH_TIME": "Versandzeit",
 					"GRANULARITY": {
 						"COUPON": "Gutschein",
 						"ORDERS": "Bestellungen",
@@ -746,6 +745,7 @@
 					"ARR_D_TO": "Datumsbereich der Abreise von",
 					"ARR_LOC": "Wohin",
 					"DEP_LOC": "Woher",
+					"DISPATCH_TIME": "Versandzeit",
 					"FLIGHT_NO": "Flugnummer",
 					"POS_AGENCY": "Agenturcode (Verkaufsstelle)",
 					"POS_GDS": "GDS-Code (Verkaufsstelle)",
@@ -766,6 +766,7 @@
 					"ARR_LOC": "Wohin",
 					"CABIN": "Kabine",
 					"DEP_LOC": "Woher",
+					"DISPATCH_TIME": "Versandzeit",
 					"FLIGHT_NO": "Flugnummer",
 					"POS_AGENCY": "Agenturcode (Verkaufsstelle)",
 					"POS_GDS": "GDS-Code (Verkaufsstelle)",
