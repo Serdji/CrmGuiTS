@@ -797,6 +797,12 @@
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
 					"FILTER": "Фильтр",
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
 					"SEGMENTATION": "Группа сегментации",
 					"SIMPLE": "Простые",
 					"STATUS": {

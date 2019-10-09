@@ -797,6 +797,12 @@
 					"ALL": "Alle die",
 					"COMPLICATED": "schwierig",
 					"FILTER": "Filter",
+					"GRANULARITY": {
+						"COUPON": "Gutschein",
+						"ORDERS": "Bestellungen",
+						"PASSENGER": "Passagier",
+						"TITLE": "Granularität"
+					},
 					"SEGMENTATION": "Segmentierungsgruppe",
 					"SIMPLE": "einfach",
 					"STATUS": {

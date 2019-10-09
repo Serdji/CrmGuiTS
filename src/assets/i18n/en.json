@@ -797,6 +797,12 @@
 					"ALL": "Everything",
 					"COMPLICATED": "Difficult",
 					"FILTER": "Filter",
+					"GRANULARITY": {
+						"COUPON": "Coupon",
+						"ORDERS": "Orders",
+						"PASSENGER": "Passenger",
+						"TITLE": "Granularity"
+					},
 					"SEGMENTATION": "Segmentation group",
 					"SIMPLE": "Simple",
 					"STATUS": {

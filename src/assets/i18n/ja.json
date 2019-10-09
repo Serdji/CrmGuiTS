@@ -797,6 +797,12 @@
 					"ALL": "すべての",
 					"COMPLICATED": "難しい",
 					"FILTER": "フィルター",
+					"GRANULARITY": {
+						"COUPON": "クーポン",
+						"ORDERS": "ご注文",
+						"PASSENGER": "乗客",
+						"TITLE": "粒度"
+					},
 					"SEGMENTATION": "セグメンテーショングループ",
 					"SIMPLE": "シンプル",
 					"STATUS": {
