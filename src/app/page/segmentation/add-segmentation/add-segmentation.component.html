@@ -17,6 +17,10 @@
             </mat-select>
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
+          <mat-form-field class="add-segmentation__input">
+            <input matInput formControlName="dispatchTime" type="time" [value]="selectedTime" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.DISPATCH_TIME' | translate}}">
+            <mat-icon (click)="openClock()" class="add-segmentation__input-icon" >access_time</mat-icon>
+          </mat-form-field>
           <div>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
@@ -332,7 +336,7 @@
 
   <div class="add-segmentation__change" *ngIf="isFormSegmentation">
     <form class="add-segmentation__form" [formGroup]="formSegmentation">
-      <mat-grid-list cols="1" rowHeight="160px">
+      <mat-grid-list cols="1" rowHeight="200px">
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
             <mat-card-content class="add-segmentation__content">
@@ -347,6 +351,10 @@
                   <mat-option value="3">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
                 </mat-select>
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dispatchTime" type="time" [value]="selectedTime" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.DISPATCH_TIME' | translate}}">
+                <mat-icon (click)="openClock()" class="add-segmentation__input-icon" >access_time</mat-icon>
               </mat-form-field>
             </mat-card-content>
           </mat-card>

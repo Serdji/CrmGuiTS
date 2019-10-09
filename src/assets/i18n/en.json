@@ -699,6 +699,7 @@
 					"PREV": "Previous"
 				},
 				"GROUP_SEGMENTATION": {
+					"DISPATCH_TIME": "Dispatch time",
 					"GRANULARITY": {
 						"COUPON": "Coupon",
 						"ORDERS": "Orders",

@@ -16,6 +16,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { SaveUrlServiceService } from '../../../services/save-url-service.service';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
+import { AmazingTimePickerService } from 'amazing-time-picker';
 
 
 @Component( {
@@ -45,6 +46,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public airportsToOptionsT: Observable<IAirport[]>;
   public airportsFromOptionsE: Observable<IAirport[]>;
   public airportsToOptionsE: Observable<IAirport[]>;
+  public selectedTime: string;
 
   private controlsConfig: any;
   private isActive: boolean;
@@ -66,6 +68,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
     private saveUrlServiceService: SaveUrlServiceService,
+    private atp: AmazingTimePickerService,
   ) { }
 
   ngOnInit(): void {
@@ -196,6 +199,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.controlsConfig = {
       segmentationTitle: [ '', Validators.required ],
       segmentationGranularity: [ '', Validators.required ],
+      dispatchTime: '',
       dobFromInclude: '',
       dobToExclude: '',
       withChild: '',
@@ -532,6 +536,22 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.resetForm();
       } );
     this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
+  }
+
+  openClock(): void {
+    const amazingTimePicker = this.atp.open({
+      time:  this.selectedTime,
+      theme: 'dark',
+      animation: 'rotate',
+      changeToMinutes: true,
+      arrowStyle: {
+        background: '#03a9f4',
+        color: 'white'
+      }
+    });
+    amazingTimePicker.afterClose().subscribe(time => {
+      this.selectedTime = time;
+    });
   }
 
   ngOnDestroy(): void {

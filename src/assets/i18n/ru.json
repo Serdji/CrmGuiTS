@@ -699,6 +699,7 @@
 					"PREV": "Предыдущая"
 				},
 				"GROUP_SEGMENTATION": {
+					"DISPATCH_TIME": "Время до вылета",
 					"GRANULARITY": {
 						"COUPON": "Купон",
 						"ORDERS": "Заказы",

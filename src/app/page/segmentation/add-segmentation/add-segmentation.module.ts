@@ -21,9 +21,6 @@ import { TranslateModule } from '@ngx-translate/core';
     TranslateModule
   ],
   declarations: [ AddSegmentationComponent ],
-  providers: [
-    AddSegmentationService,
-    ProfileSearchService
-  ],
+  providers: [ AddSegmentationService ],
 })
 export class AddSegmentationModule { }

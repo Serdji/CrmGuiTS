@@ -699,6 +699,7 @@
 					"PREV": "Zurück"
 				},
 				"GROUP_SEGMENTATION": {
+					"DISPATCH_TIME": "Versandzeit",
 					"GRANULARITY": {
 						"COUPON": "Gutschein",
 						"ORDERS": "Bestellungen",

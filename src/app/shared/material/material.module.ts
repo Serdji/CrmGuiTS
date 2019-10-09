@@ -34,6 +34,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
 import { MatSliderModule } from '@angular/material/slider';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
 
@@ -69,6 +70,7 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     MatRippleModule,
     MatBadgeModule,
     MatStepperModule,
+    AmazingTimePickerModule,
   ],
   exports: [
     MatToolbarModule,
@@ -105,6 +107,7 @@ import { CustomMatPaginatorService } from './custom-mat-paginator.service';
     DragDropModule,
     MatTreeModule,
     MatSliderModule,
+    AmazingTimePickerModule,
   ],
   providers: [
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorService }

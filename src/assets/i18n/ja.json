@@ -699,6 +699,7 @@
 					"PREV": "前へ"
 				},
 				"GROUP_SEGMENTATION": {
+					"DISPATCH_TIME": "発送時間",
 					"GRANULARITY": {
 						"COUPON": "クーポン",
 						"ORDERS": "ご注文",
