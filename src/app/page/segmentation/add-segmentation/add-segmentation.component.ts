@@ -190,8 +190,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.formSegmentation.patchValue( value );
         }
       } );
-      if ( segmentationParams.ticket ) this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
-      if ( segmentationParams.emd ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
+      if ( segmentationParams.ticket ) {
+        this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
+        this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( moment.utc( moment.duration( segmentationParams.ticket.timeBeforeDepartureT, 'm' ).asMilliseconds() ).format( 'HH:mm' ) );
+      }
+      if ( segmentationParams.emd ) {
+        this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
+        this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( moment.utc( moment.duration( segmentationParams.emd.timeBeforeDepartureE, 'm' ).asMilliseconds() ).format( 'HH:mm' ) );
+      }
       if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
     };
     const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
@@ -295,7 +301,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'rbdT', 'fareCodeT', 'posGdsT', 'posIdT', 'posAgencyT', 'timeBeforeDepartureT'
               ] )
                 .each( formControlName => {
-                  this.isIconsClockT =  params === 'T';
+                  this.isIconsClockT = params === 'T';
                   this[ formGroupName ].get( formControlName )[ params !== 'T' ? 'disable' : 'enable' ]();
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
@@ -305,7 +311,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
               ] )
                 .each( formControlName => {
-                  this.isIconsClockE =  params === 'E';
+                  this.isIconsClockE = params === 'E';
                   this[ formGroupName ].get( formControlName )[ params !== 'E' ? 'disable' : 'enable' ]();
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
@@ -329,7 +335,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
               ] )
                 .each( formControlName => {
-                  this.isIconsClockE =  params === 'E';
+                  this.isIconsClockE = params === 'E';
                   this[ formGroupName ].get( formControlName )[ params !== 'E' ? 'disable' : 'enable' ]();
                   this[ formGroupName ].get( formControlName ).patchValue( '' );
                 } );
@@ -341,13 +347,15 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
 
   private initFieldClock() {
-    this.formSegmentation.get( 'timeBeforeDepartureE' ).valueChanges
-      .pipe( takeWhile( _=> this.isActive ) )
-      .subscribe( value => this.selectedTimeE = value );
+    _.each( this.arrFormGroup, formGroup => {
+      this[ formGroup ].get( 'timeBeforeDepartureT' ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => this.selectedTimeT = value );
 
-    this.formSegmentation.get( 'timeBeforeDepartureT' ).valueChanges
-      .pipe( takeWhile( _=> this.isActive ) )
-      .subscribe( value => this.selectedTimeT = value );
+      this[ formGroup ].get( 'timeBeforeDepartureE' ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => this.selectedTimeE = value );
+    } )
   }
 
   private resetForm() {
@@ -419,9 +427,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private segmentationParameters() {
-
-    console.log( this.formSegmentation.get( 'timeBeforeDepartureT' ).value );
-
     const segmentationParameters = {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
       segmentationGranularity: this.formSegmentation.get( 'segmentationGranularity' ).value,
@@ -575,11 +580,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           background: '#03a9f4',
           color: 'white'
         }
-      });
-      amazingTimePickerT.afterClose().subscribe(time => {
+      } );
+      amazingTimePickerT.afterClose().subscribe( time => {
         this.selectedTimeT = time;
-        this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( time );
-      });
+        _.each( this.arrFormGroup, formGroup =>  this[ formGroup ].get( 'timeBeforeDepartureT' ).patchValue( time ) );
+      } );
     } else if ( params === 'E' ) {
       const amazingTimePickerE = this.atp.open( {
         time: this.selectedTimeE,
@@ -590,11 +595,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           background: '#03a9f4',
           color: 'white'
         }
-      });
-      amazingTimePickerE.afterClose().subscribe(time => {
+      } );
+      amazingTimePickerE.afterClose().subscribe( time => {
         this.selectedTimeE = time;
-        this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( time );
-      });
+        _.each( this.arrFormGroup, formGroup =>  this[ formGroup ].get( 'timeBeforeDepartureE' ).patchValue( time ) );
+      } );
     }
 
   }

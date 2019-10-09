@@ -17,10 +17,6 @@
             </mat-select>
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
-          <mat-form-field class="add-segmentation__input">
-            <input matInput formControlName="dispatchTime" type="time" [value]="selectedTime" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.DISPATCH_TIME' | translate}}">
-            <mat-icon (click)="openClock()" class="add-segmentation__input-icon" >access_time</mat-icon>
-          </mat-form-field>
           <div>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
