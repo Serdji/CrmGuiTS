@@ -190,14 +190,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.formSegmentation.patchValue( value );
         }
       } );
-      if ( segmentationParams.ticket ) {
-        this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
-        this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( moment.utc( moment.duration( segmentationParams.ticket.timeBeforeDepartureT, 'm' ).asMilliseconds() ).format( 'HH:mm' ) );
-      }
-      if ( segmentationParams.emd ) {
-        this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
-        this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( moment.utc( moment.duration( segmentationParams.emd.timeBeforeDepartureE, 'm' ).asMilliseconds() ).format( 'HH:mm' ) );
-      }
+      if ( segmentationParams.ticket )this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
+      if ( segmentationParams.emd ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
       if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
     };
     const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
@@ -456,7 +450,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         eDocTypeS: this.formSegmentation.get( 'eDocTypeS' ).value
       },
       ticket: {
-        timeBeforeDepartureT: moment.duration( this.formSegmentation.get( 'timeBeforeDepartureT' ).value ).asMinutes(),
+        timeBeforeDepartureT: this.formSegmentation.get( 'timeBeforeDepartureT' ).value,
         arrivalDFromIncludeT: this.formSegmentation.get( 'arrivalDFromIncludeT' ).value ?
           moment( this.formSegmentation.get( 'arrivalDFromIncludeT' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeT: this.formSegmentation.get( 'arrivalDToExcludeT' ).value ?
@@ -475,7 +469,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         posAgencyT: this.formSegmentation.get( 'posAgencyT' ).value,
       },
       emd: {
-        timeBeforeDepartureE: moment.duration( this.formSegmentation.get( 'timeBeforeDepartureE' ).value ).asMinutes(),
+        timeBeforeDepartureE: this.formSegmentation.get( 'timeBeforeDepartureE' ).value,
         arrivalDFromIncludeE: this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ?
           moment( this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeE: this.formSegmentation.get( 'arrivalDToExcludeE' ).value ?
@@ -567,41 +561,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         this.resetForm();
       } );
     this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
-  }
-
-  openClock( params: string ): void {
-    if ( params === 'T' ) {
-      const amazingTimePickerT = this.atp.open( {
-        time: this.selectedTimeT,
-        theme: 'dark',
-        animation: 'rotate',
-        changeToMinutes: true,
-        arrowStyle: {
-          background: '#03a9f4',
-          color: 'white'
-        }
-      } );
-      amazingTimePickerT.afterClose().subscribe( time => {
-        this.selectedTimeT = time;
-        _.each( this.arrFormGroup, formGroup =>  this[ formGroup ].get( 'timeBeforeDepartureT' ).patchValue( time ) );
-      } );
-    } else if ( params === 'E' ) {
-      const amazingTimePickerE = this.atp.open( {
-        time: this.selectedTimeE,
-        theme: 'dark',
-        animation: 'rotate',
-        changeToMinutes: true,
-        arrowStyle: {
-          background: '#03a9f4',
-          color: 'white'
-        }
-      } );
-      amazingTimePickerE.afterClose().subscribe( time => {
-        this.selectedTimeE = time;
-        _.each( this.arrFormGroup, formGroup =>  this[ formGroup ].get( 'timeBeforeDepartureE' ).patchValue( time ) );
-      } );
-    }
-
   }
 
   ngOnDestroy(): void {
