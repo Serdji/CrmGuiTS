@@ -32,7 +32,6 @@ export class ToolbarComponent implements OnInit {
       lang: ''
     } );
     this.translate.get( 'MENU' ).subscribe( _ => {
-      console.log( this.translate.store.currentLang );
       this.formLang.get( 'lang' ).patchValue( this.translate.store.currentLang );
     } );
   }
