@@ -26,7 +26,7 @@
           [max]="maxSize"></mat-slider>
         <mat-form-field class="add-event__input">
           <mat-label>{{'PAGE.EVENTS.ADD_EVENT.FIELD.TYPE_EVENT.TITLE' | translate}}</mat-label>
-          <mat-select formControlName="taskType">
+          <mat-select formControlName="distributionType">
             <mat-option [value]="1">{{'PAGE.EVENTS.ADD_EVENT.FIELD.TYPE_EVENT.EMAIL' | translate}}</mat-option>
             <mat-option [value]="2">{{'PAGE.EVENTS.ADD_EVENT.FIELD.TYPE_EVENT.SMS' | translate}}</mat-option>
           </mat-select>
@@ -34,10 +34,10 @@
       </mat-card>
 
       <mat-card class="add-event__type">
-        <app-editor-email *ngIf="taskType === 1" [params]="{ 'segmentationId': segmentationId, 'task': task }"
+        <app-editor-email *ngIf="distributionType === 1" [params]="{ 'segmentationId': segmentationId, 'task': task }"
                           [totalCount]="totalCount" [whichButton]="whichAction"
                           (messageEvent)="addEvent( $event )"></app-editor-email>
-        <app-editor-sms *ngIf="taskType === 2" [params]="{ 'segmentationId': segmentationId, 'task': task }"
+        <app-editor-sms *ngIf="distributionType === 2" [params]="{ 'segmentationId': segmentationId, 'task': task }"
                         [totalCount]="totalCount" [whichButton]="whichAction"
                         (messageEvent)="addEvent( $event )"></app-editor-sms>
       </mat-card>
