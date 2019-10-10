@@ -54,10 +54,11 @@ export class AppComponent implements OnInit {
   }
 
   private initTranslate() {
-    this.translate.addLangs( [ 'ru', 'en', 'de', 'ja', 'cs' ] );
+    this.translate.addLangs( [ 'ru', 'en', 'de', 'ja', 'zh', 'cs' ] );
     this.translate.setDefaultLang( 'ru' );
-    const browserLang = this.translate.getBrowserLang();
-    this.translate.use( browserLang.match( /ru|en|'de|ja|cs'/ ) ? browserLang : 'ru' );
+    this.translate.use('zh' );
+    // const browserLang = this.translate.getBrowserLang();
+    // this.translate.use( browserLang.match( /ru|en|'de|ja|zh|cs'/ ) ? browserLang : 'ru' );
   }
 
   private isTokenRedirect() {
