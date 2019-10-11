@@ -155,6 +155,23 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.airlineLCodeOptionsE = this.autocomplete( formGroup, 'airlineLCodeIdE' );
   }
 
+  private invertDate( minutes: number ): string {
+    const day = _.padStart( Math.floor( minutes / 60 / 24 ) + '', 2, '0' );
+    const hour = _.padStart( Math.floor( minutes / 60 % 24 ) + '', 2, '0' );
+    const min = _.padStart( Math.floor( minutes % 60 ) + '', 2, '0' );
+    const date = `${day} ${hour}:${min}`;
+    return date;
+  }
+
+  private invertMinutes( date: string ): number {
+    const day = +_.chain( date ).split( ' ' ).head().value();
+    const time = _.chain( date ).split( ' ' ).last().value();
+    const hour = +_.chain( time ).split( ':' ).head().value();
+    const min = +_.chain( time ).split( ':' ).last().value();
+    const asMinutes = ( day * 24 * 60 ) + ( hour * 60 ) + min;
+    return asMinutes;
+  }
+
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
     const mapFilter = val => {
       if ( val ) {
@@ -190,8 +207,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           this.formSegmentation.patchValue( value );
         }
       } );
-      if ( segmentationParams.ticket )this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
-      if ( segmentationParams.emd ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
+      if ( segmentationParams.ticket ) {
+        this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
+        this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( this.invertDate( segmentationParams.ticket.timeBeforeDepartureT ) );
+      }
+      if ( segmentationParams.emd ) {
+        this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
+        this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( this.invertDate( segmentationParams.emd.timeBeforeDepartureE ) );
+      }
       if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
     };
     const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
@@ -349,7 +372,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       this[ formGroup ].get( 'timeBeforeDepartureE' ).valueChanges
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( value => this.selectedTimeE = value );
-    } )
+    } );
   }
 
   private resetForm() {
@@ -450,7 +473,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         eDocTypeS: this.formSegmentation.get( 'eDocTypeS' ).value
       },
       ticket: {
-        timeBeforeDepartureT: this.formSegmentation.get( 'timeBeforeDepartureT' ).value,
+        timeBeforeDepartureT: this.invertMinutes( this.formSegmentation.get( 'timeBeforeDepartureT' ).value ),
         arrivalDFromIncludeT: this.formSegmentation.get( 'arrivalDFromIncludeT' ).value ?
           moment( this.formSegmentation.get( 'arrivalDFromIncludeT' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeT: this.formSegmentation.get( 'arrivalDToExcludeT' ).value ?
@@ -469,7 +492,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         posAgencyT: this.formSegmentation.get( 'posAgencyT' ).value,
       },
       emd: {
-        timeBeforeDepartureE: this.formSegmentation.get( 'timeBeforeDepartureE' ).value,
+        timeBeforeDepartureE: this.invertMinutes( this.formSegmentation.get( 'timeBeforeDepartureE' ).value ),
         arrivalDFromIncludeE: this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ?
           moment( this.formSegmentation.get( 'arrivalDFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         arrivalDToExcludeE: this.formSegmentation.get( 'arrivalDToExcludeE' ).value ?
