@@ -93,8 +93,8 @@ export class SidenavService {
         icon: 'event',
         claims: 'tasks:read',
         link: [
-          { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
           { url: '/crm/list-event', title: 'MENU.EVENT.LIST_EVENT' },
+          { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
         ]
       },
       {
