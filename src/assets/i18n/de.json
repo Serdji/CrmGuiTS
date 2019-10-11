@@ -334,7 +334,8 @@
 					"REC_LOC": "Reservierungsnummer",
 					"SEGMENTATION": "Segmentierungsgruppen",
 					"SERVICE_CODE": "Service-Code",
-					"TICKET": "Ticketnummer"
+					"TICKET": "Ticketnummer",
+					"TOLTIP_CSV": "SVG-Datei mit Suchabfrage herunterladen"
 				},
 				"TABLE": {
 					"DATE_OF_BIRTH": "Geburtsdatum",
@@ -744,6 +745,7 @@
 					"ARR_D_TO": "Datumsbereich der Abreise von",
 					"ARR_LOC": "Wohin",
 					"DEP_LOC": "Woher",
+					"DISPATCH_TIME": "Versandzeit",
 					"FLIGHT_NO": "Flugnummer",
 					"POS_AGENCY": "Agenturcode (Verkaufsstelle)",
 					"POS_GDS": "GDS-Code (Verkaufsstelle)",
@@ -764,6 +766,7 @@
 					"ARR_LOC": "Wohin",
 					"CABIN": "Kabine",
 					"DEP_LOC": "Woher",
+					"DISPATCH_TIME": "Versandzeit",
 					"FLIGHT_NO": "Flugnummer",
 					"POS_AGENCY": "Agenturcode (Verkaufsstelle)",
 					"POS_GDS": "GDS-Code (Verkaufsstelle)",
@@ -796,6 +799,12 @@
 					"ALL": "Alle die",
 					"COMPLICATED": "schwierig",
 					"FILTER": "Filter",
+					"GRANULARITY": {
+						"COUPON": "Gutschein",
+						"ORDERS": "Bestellungen",
+						"PASSENGER": "Passagier",
+						"TITLE": "Granularität"
+					},
 					"SEGMENTATION": "Segmentierungsgruppe",
 					"SIMPLE": "einfach",
 					"STATUS": {

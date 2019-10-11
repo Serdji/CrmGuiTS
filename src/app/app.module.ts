@@ -14,6 +14,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
 
 
 if ( environment.production ) {
@@ -24,6 +25,8 @@ export function createTranslateLoader( http: HttpClient ) {
   return new TranslateHttpLoader( http, 'assets/i18n/', '.json' );
 }
 
+export let options: Partial<IConfig> | (() => Partial<IConfig>);
+
 @NgModule( {
   declarations: [ AppComponent ],
   imports: [
@@ -33,6 +36,7 @@ export function createTranslateLoader( http: HttpClient ) {
     BrowserAnimationsModule,
     HttpClientModule,
     ServicesModule,
+    NgxMaskModule.forRoot(options),
     SharedModule.forRoot(),
     ComponentsModule.forRoot(),
     ServiceWorkerModule.register( 'ngsw-worker.js', { enabled: environment.production } ),

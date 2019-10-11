@@ -13,6 +13,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as R from 'ramda';
 import { EditorEmailService } from './editor-email.service';
+import { EditorService } from '../editor.service';
 
 @Component( {
   selector: 'app-editor-email',
@@ -43,6 +44,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private dialog: MatDialog,
     private editorEmailService: EditorEmailService,
+    private editorService: EditorService,
     private router: Router,
     private elRef: ElementRef,
   ) {}
@@ -193,6 +195,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
     .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
     .set( 'text', this.elRef.nativeElement.querySelector( '.nw-editor__res' ).innerHTML )
+    .set( 'distributionType', 1 )
     .value();
 
   saveDistribution(): void {
@@ -205,10 +208,10 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       };
       const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 
-      const saveDistribution = params => this.editorEmailService.saveDistribution( params )
+      const saveDistribution = params => this.editorService.saveDistribution( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( success, error );
-      const saveFromPromoCode = params => this.editorEmailService.saveFromPromoCode( params )
+      const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( success, error );
 

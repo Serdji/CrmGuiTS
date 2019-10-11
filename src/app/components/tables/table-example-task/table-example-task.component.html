@@ -55,12 +55,12 @@
 
     </ng-container>
 
-    <ng-container matColumnDef="taskType">
+    <ng-container matColumnDef="distributionType">
       <mat-header-cell *matHeaderCellDef
                        mat-sort-header> {{'PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.TITLE' | translate}} </mat-header-cell>
       <mat-cell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)" #matCell>
-        <span>{{element.taskType === 1 ? ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.EMAIL' | translate) : ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.SMS' | translate)}}</span>
+        <span>{{element.distributionType === 1 ? ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.EMAIL' | translate) : ('PAGE.EVENTS.LIST_EVENT.TABLE.TYPE_EVENT.SMS' | translate)}}</span>
       </mat-cell>
 
     </ng-container>

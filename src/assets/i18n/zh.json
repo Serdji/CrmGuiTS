@@ -1,0 +1,937 @@
+{
+	"BREADCRUMBS": {
+		"CUSTOMER": "客运",
+		"DISTRIBUTION": "时事通讯",
+		"EVENT": "索比",
+		"HOME": "首页",
+		"USER": "用户名"
+	},
+	"BUTTON": {
+		"ADD": "新增",
+		"ADD_CUSTOMER": "添加乘客",
+		"ADD_USER": "新增使用者",
+		"CANCEL_DISTRIBUTION": "取消通讯",
+		"CLEAR": "清除",
+		"CLEAR_FORM": "清除表格",
+		"COPY": "复制",
+		"CREATE_EVENT": "建立活动",
+		"DELETE": "删掉",
+		"DOWNLOAD": "资料下载",
+		"EDIT": "编辑",
+		"EDITOR": "创建时事通讯",
+		"EDIT_EVENT": "编辑活动",
+		"FILTER": "筛选条件",
+		"LOGIN": "登入",
+		"MERGE_PROFILE": "合并乘客",
+		"PROMO_CODE": "链接促销代码",
+		"SAVE": "保存到",
+		"SEARCH": "搜寻",
+		"SEND_DISTRIBUTION": "发送时事通讯",
+		"START_EVENT": "触发事件",
+		"STOP_EVENT": "停止事件",
+		"TO_FROM": "形成"
+	},
+	"DIALOG": {
+		"ADD_PROFILE_GROUP": {
+			"CUSTOMER_GROUP": "旅客团体"
+		},
+		"DELETE": {
+			"CANCEL_DISTRIBUTION": "您确定要取消此新闻通讯吗？",
+			"CONTACT": "您确定要删除此联系人吗？",
+			"CUSTOMER": "您确定要删除乘客吗？",
+			"DISTRIBUTION": "您确定要删除时事通讯吗？",
+			"DOCUMENT": "您确定要删除此文档吗？",
+			"FIO": "您确定要删除此名称还是这些名称？",
+			"PROFILES": "您确定要删除此个人资料吗？",
+			"PROFILE_GROUP": "您确定要删除乘客组或乘客组吗？",
+			"PROMOTION": "您确定要删除促销吗？",
+			"PROMO_CODE": "您确定要删除促销代码吗？",
+			"SEGMENTATION": "您确定要删除细分组吗？",
+			"SEGMENTATIONS": "您确定要删除细分组或细分组吗？",
+			"SETTING_DEFAULT": "重新启动应用程序后，默认情况下将设置所有设置。您确定要重新启动应用程序吗？",
+			"USER": "您确定要删除该用户吗？"
+		},
+		"DOCUMENT": {
+			"EXP_DATE": "到期日",
+			"FIRST_NAME": "名",
+			"LAST_NAME": "姓氏",
+			"MIDDLE_NAME": "中间名",
+			"NUM": "文件编号"
+		},
+		"ERROR": {
+			"DATA_ENTERED_INCORRECTLY": "数据输入错误！",
+			"ERROR_SENDING": "发送错误",
+			"NOT_ALL_FIELDS": "并非所有字段都已填写",
+			"NOT_ENOUGH_RIGHTS": "您没有足够的权限执行此操作！",
+			"RIGHTS_FOR_YOU_ACCOUNT": "您已更改了帐户的权限。为了使权限生效，您需要再次登录该应用程序。几秒钟后，您将被重定向到登录页面！",
+			"SERVER_IS_NOT_RES": "服务器当前无响应。尝试重新启动该应用程序，然后再重试，或联系技术支持。"
+		},
+		"INTERSECTION": {
+			"ACCOUNT_CODE": "结算代码：",
+			"BRAND": "品牌：",
+			"CUSTOMER": "简介：",
+			"CUSTOMER_GROUP": "旅客团体：",
+			"DATE_FROM": "有效期从：",
+			"DATE_TO": "有效期至：",
+			"DIRECTIONS": "方向：",
+			"FLIGHT": "航班号：",
+			"FLIGHT_DATA_FROM": "实施期从：",
+			"FLIGHT_DATA_TO": "实施期为：",
+			"GO_TO": "转到促销代码",
+			"PROMOTIONS": "促销：",
+			"PROMOTIONS_CODE": "促销代码：",
+			"PROMOTIONS_CODE_VAL": {
+				"AMOUNT": "金额",
+				"PERCENT": "百分比",
+				"TITLE": "折扣类型："
+			},
+			"RDD": "预订舱位：",
+			"SEGMENTATION": "细分群体：",
+			"TITLE": "检测到促销代码交集",
+			"USES_PER": "用于个人资料：",
+			"USES_TOTAL": "总用量：",
+			"VAL": "优惠金额："
+		},
+		"NO": "没有啦",
+		"OK": {
+			"ADDITIONAL_NAME": "附加名称已成功添加",
+			"DOCUMENT_CHANGED": "文档添加成功",
+			"PASSENGER_CHANGED": "乘客成功变更",
+			"PASSENGER_COMBINED": "乘客成功合并",
+			"PASSWORD_CHANGED": "密码修改成功",
+			"PROMO_CODE_CHANGED": "促销代码已成功更改",
+			"PROMO_CODE_LINKED": "促销代码已成功链接",
+			"PROMO_CODE_NOT_PERSONALIZED": "此促销代码不是个性化的，即适用于任何航空公司的乘客。",
+			"PROMO_CODE_SAVE": "促销代码成功保存",
+			"SEGMENTATION_CHANGED": "细分成功更改",
+			"SEGMENTATION_SAVE": "细分成功保存",
+			"USER_CHANGED": "用户更改成功",
+			"USER_RIGHTS_CHANGED": "用户权限已更改"
+		},
+		"UPDATE_PROFILE": {
+			"FIRST_NAME": "名:",
+			"LAST_NAME": "姓：",
+			"MIDDLE_NAME": "中间名:"
+		},
+		"YES": "是的"
+	},
+	"FIELD": {
+		"ERROR": {
+			"OBLIGATORY_FIELD": "必填项",
+			"STRONG_PASSWORD": "密码必须至少",
+			"YOU_ENTERED": "字符。您输入了"
+		}
+	},
+	"MENU": {
+		"AIRLINE": "航空公司",
+		"CUSTOMER": {
+			"ADD_CUSTOMER": "添加乘客",
+			"GROUP_NAME": "乘客人数",
+			"SEARCH_CUSTOMER": "旅客搜寻"
+		},
+		"DISTRIBUTIONS": {
+			"GROUP_NAME": "时事通讯",
+			"LIST_DISTRIBUTIONS": "邮件清单"
+		},
+		"EVENT": {
+			"ADD_EVENT": "新增活动",
+			"GROUP_NAME": "大事记",
+			"LIST_EVENT": "活动清单"
+		},
+		"GROUP_CUSTOMER": {
+			"GROUP_NAME": "旅客团体",
+			"LIST_GROUP_CUSTOMER": "组列表"
+		},
+		"PROMOTIONS_CODES": {
+			"ADD_PROMOTIONS": "添加促销",
+			"ADD_PROMOTIONS_CODES": "添加促销代码",
+			"GROUP_NAME": "促销代码",
+			"SEARCH_PROMOTIONS_CODES": "促销代码搜索"
+		},
+		"REPORTS": {
+			"GROUP_NAME": "报告书",
+			"LIST_REPORTS": "报告清单"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": "添加细分",
+			"AGGREGATION_SEGMENTATION": "细分汇总",
+			"GROUP_NAME": "细分",
+			"LIST_SEGMENTATION": "细分列表"
+		},
+		"SETTINGS": {
+			"GROUP_NAME": "设置",
+			"RESTART": "重新开机",
+			"TABLE_CUSTOMERS": "乘客桌"
+		},
+		"USERS": {
+			"ADD_USERS": "新增使用者",
+			"GROUP_NAME": "用户数",
+			"LIST_USERS": "用户清单"
+		},
+		"VERSION": "版本号"
+	},
+	"PAGE": {
+		"DISTRIBUTION": {
+			"LIST_DISTRIBUTION": {
+				"TABLE": {
+					"DATE_FROM": "起始日期",
+					"DATE_TO": "日期至",
+					"FILTER": "筛选条件",
+					"LAST_TRY": "通讯创建日期",
+					"STATUS": "现况",
+					"STATUSES": {
+						"BOUNCED": "已退货",
+						"CLICKED": "跟随链接",
+						"DELIVERED": "已交付",
+						"ERROR": "失误",
+						"NOT_SENT": "准备发货",
+						"READ": "已读",
+						"REJECTED": "取消订阅",
+						"SEND_TO_CUSTOMER": "发送给客户",
+						"SENT_TO_GATEWAY": "发送到邮件网关"
+					},
+					"SUBJECT": "主题"
+				}
+			},
+			"PROFILE_DISTRIBUTION": {
+				"DATE": "邮寄日期：",
+				"ERROR_MESSAGE": "错误讯息：",
+				"FROM": "来自",
+				"LAST_TRY": "新闻稿的创建日期和时间：",
+				"STATUS": "状态：",
+				"STATUSES": {
+					"BOUNCED": "已退货",
+					"CLICKED": "跟随链接",
+					"DELIVERED": "已交付",
+					"ERROR": "失误",
+					"NOT_SENT": "准备发货",
+					"READ": "已读",
+					"REJECTED": "取消订阅",
+					"SEND_TO_CUSTOMER": "发送给客户",
+					"SENT_TO_GATEWAY": "发送到邮件网关"
+				},
+				"SUBJECT": "信的主题：",
+				"TABLE": {
+					"ERROR_MESSAGE": "解说",
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓氏",
+					"MIDDLE_NAME": "中间名",
+					"STATUS": "现况"
+				},
+				"TO": "之前"
+			}
+		},
+		"EVENTS": {
+			"ADD_EVENT": {
+				"FIELD": {
+					"MULTIPLICITY": "多重性",
+					"NAME_EVENT": "活动名称",
+					"SEGMENTATION": "细分选择",
+					"TYPE_EVENT": {
+						"EMAIL": "电邮",
+						"SMS": "短信",
+						"TITLE": "活动类型"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"EDIT": "编辑",
+					"MULTIPLICITY": "多重性：",
+					"NAME_EVENT": "活动名称：",
+					"SEGMENTATION": "细分：",
+					"TYPE_EVENT": {
+						"EMAIL": "电邮",
+						"SMS": "短信",
+						"TITLE": "事件类型："
+					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "出生日期",
+					"FIELD": {
+						"PROFILE": "资料编号",
+						"SEARCH": "搜索依据",
+						"VALUE": "价值"
+					},
+					"FIRST_NAME": "名",
+					"GENDER": "性别",
+					"LAST_NAME": "姓氏",
+					"MIDDLE_NAME": "中间名",
+					"PROFILE": "资料编号"
+				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "多重性",
+					"NAME_EVENT": "活动名称",
+					"SEGMENTATION": "细分",
+					"STATUS": "现况",
+					"SUBJECT": "发布主题",
+					"TYPE_EVENT": {
+						"EMAIL": "电邮",
+						"SMS": "短信",
+						"TITLE": "活动类型"
+					}
+				}
+			}
+		},
+		"LOGIN": {
+			"AIRLINE_CODE": "航空公司",
+			"ERROR": "用户名或密码无效",
+			"LOGIN": "输入您的登录名",
+			"PASSWORD": "输入密码",
+			"REMEMBER_ME": "记住我",
+			"TITLE": "登入",
+			"VERSION": "版本号："
+		},
+		"PROFILES": {
+			"ADD_PROFILE": {
+				"DATE": "DD.MM.YYYY",
+				"GENDER": {
+					"F": "˚F",
+					"M": "中号",
+					"TITLE": "性别"
+				},
+				"MIDDLE_NAME": "中间名",
+				"NAME": "名",
+				"SURNAME": "姓氏",
+				"TITLE": "添加乘客"
+			},
+			"SEARCH_PROFILE": {
+				"FORM": {
+					"AIRLINE_L_CODE": "航空公司代码",
+					"ARR_POINT": "到哪里",
+					"BOOKING_CREATE_DATE_FROM_INCLUDE": "发售日期",
+					"BOOKING_CREATE_DATE_TO_EXCLUDE": "销售日期",
+					"CAB": "客舱",
+					"CONTACT_EMAIL": "电邮地址",
+					"CONTACT_PHONE": "电话号码",
+					"CONTACT_SEXIST": "缺乏联系",
+					"CUSTOMER_GROUP": "旅客团体",
+					"CUSTOMER_IDS": "资料编号",
+					"DEPT_IME_TO_EXCLUDE": "航班日期",
+					"DEP_POINT": "从哪里来",
+					"DEP_TIME_FROM_INCLUDE": "出发日期",
+					"DOB_FROM_INCLUDE": "出生日期",
+					"DOB_TO_EXCLUDE": "出生日期",
+					"EMD": "服务编号",
+					"FARE_CODE": "费率代码",
+					"FIRST_NAME": "名",
+					"FLIGHT": "航班号",
+					"FLIGHT_DATE_FROM": "",
+					"FLIGHT_DATE_TO": "",
+					"GENDER": {
+						"F": "˚F",
+						"M": "中号",
+						"TITLE": "性别"
+					},
+					"ID": "",
+					"LAST_NAME": "姓氏",
+					"MONEY_AMOUNT_FROM_INCLUDE": "来自的总金额",
+					"MONEY_AMOUNT_TO_INCLUDE": "总金额为",
+					"PROFILE": "资料编号",
+					"RBD": "订舱",
+					"REC_LOC": "预约号码",
+					"SEGMENTATION": "细分群体",
+					"SERVICE_CODE": "服务编号",
+					"TICKET": "票号",
+					"TOLTIP_CSV": "使用搜索查询下载SVG文件"
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "出生日期",
+					"FIRST_NAME": "名",
+					"GENDER": "性别",
+					"LAST_NAME": "姓氏",
+					"MIDDLE_NAME": "中间名",
+					"PROFILE": "资料编号"
+				}
+			},
+			"TABS_PROFILE": {
+				"CONTACT": {
+					"FORM": {
+						"CONTACT_TEXT": "触点类型说明",
+						"CONTACT_TYPE": "接触类型",
+						"TITLE": "新增联络人"
+					},
+					"TABLE": {
+						"CONTACT_TEXT": "价值",
+						"CONTACT_TYPE": "型式",
+						"FILTER": "筛选条件",
+						"USE_FOR_DISTRIBUTION": "通讯联络"
+					},
+					"TAB_NAME": "联系我们"
+				},
+				"DOCUMENT": {
+					"FORM": {
+						"ADD": "新增",
+						"DOCUMENT_TYPE": "文件类型",
+						"EXP_DATE": "到期日",
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓氏",
+						"MIDDLE_NAME": "中间名",
+						"NUM": "文件编号"
+					},
+					"TABLE": {
+						"DOCUMENT_TYPE": "文件类型",
+						"EXP_DATE": "到期日",
+						"FILTER": "筛选条件",
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓氏",
+						"MIDDLE_NAME": "中间名",
+						"NUM": "文件编号"
+					},
+					"TAB_NAME": "文件"
+				},
+				"HEADER": {
+					"COUNTER_ACTIVE_SERVICES_IS_EMD": "装饰付费服务：",
+					"COUNTER_CANCELLED_SERVICES_IS_EMD": "取消付费服务：",
+					"COUNT_ACTIVE_TICKET": "下订单：",
+					"COUNT_CANCELLED_TICKET": "取消的订单：",
+					"CREATE_DATE": "与我们一起：",
+					"CUSTOMER_GROUP": "旅客团体",
+					"CUSTOMER_ID": "资料编号：",
+					"DATE_OF_BIRTH": "出生日期:",
+					"GENDER": "性别:",
+					"LUT": "上次活动日期：",
+					"PROFILE": "简介：",
+					"SEGMENTATION": "细分群体",
+					"TOTAL_AMOUNT": "发行金额："
+				},
+				"MESSAGES": {
+					"HEADER": {
+						"DATE": "发行日期和时间",
+						"STATUS": "现况",
+						"TOPIC_LETTER": "主题行"
+					},
+					"TAB_NAME": "留言内容",
+					"TEMPLATE": {
+						"GO_TO": "转到时事通讯"
+					}
+				},
+				"ORDER": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"STATUS": {
+								"ACTIVE": "装饰的",
+								"CANCELLED": "已取消",
+								"TITLE": "订单状态"
+							}
+						},
+						"TEMPLATE": {
+							"MONETARY_INFO": {
+								"ALL": "订单总数：",
+								"COST_CURRENCY": "货币成本：",
+								"TAXES": "费用：",
+								"TICKETS": "凭票："
+							},
+							"POS": {
+								"AGENCY": "代理商：",
+								"COUNTRY": "国家：",
+								"GDS": "Gds：",
+								"POS_ID": "POS ID：",
+								"REC_LOC": "Recloc GDS：",
+								"TERMINAL": "航站楼："
+							},
+							"SEGMENTS": {
+								"ARR_POINT": "到达机场：",
+								"ARR_TIME": "到达日期/时间：",
+								"CABIN": "客舱：",
+								"DEP_POINT": "出发机场：",
+								"DEP_TIME": "出发日期/时间：",
+								"FLIGHT": "航班号：",
+								"RBD": "预订舱位：",
+								"STATUS": "细分状态："
+							},
+							"SERVICES": {
+								"ARR_POINT": "到达机场：",
+								"ARR_TIME": "到达日期/时间：",
+								"CONCEPT_MEASURE": "概念/措施：",
+								"COST": "费用：",
+								"COUPON": "优惠券编号：",
+								"COUPON_STATUS": "状态：",
+								"DATE": "日期：",
+								"DEP_POINT": "出发机场：",
+								"DEP_TIME": "出发日期/时间：",
+								"EMD": "EMD：",
+								"EMD_TYPE": "EMD类型：",
+								"FLIGHT": "航班号：",
+								"NOS": {
+									"COMMENT": "评论：",
+									"NAME_SERVICES": "服务名称："
+								},
+								"QTTY": "数量：",
+								"RFISC": "Rfisc：",
+								"SSR": "SSR：",
+								"STATUS": "服务状态：",
+								"SVC_TYPE": "SVC类型："
+							},
+							"TICKETS": {
+								"ARR_POINT": "到达机场：",
+								"ARR_TIME": "到达日期/时间：",
+								"COUPON": "优惠券编号：",
+								"DEP_POINT": "出发机场：",
+								"DEP_TIME": "出发日期/时间：",
+								"FARE_CODE": "票价依据：",
+								"FLIGHT": "航班号：",
+								"NUM_DER_TICKET": "机票编号：",
+								"STATUS": "状态："
+							}
+						}
+					},
+					"FILTER": {
+						"DATE_CREATE": "建立日期",
+						"DATE_SEARCH": "日期选择器",
+						"REC_LOC": "订单号",
+						"SEARCH": "搜索依据",
+						"STATUS": {
+							"ACTIVE": "装饰的",
+							"CANCELLED": "已取消",
+							"TITLE": "订单状态"
+						},
+						"VALUE": "价值"
+					},
+					"HEADER": {
+						"DATE_CREATE": "建立日期",
+						"REC_LOC": "订单号",
+						"STATUS": "订单状态"
+					},
+					"OPTION_GROUPS": {
+						"ALL": "任何：",
+						"ALL_SEARCH": "按所有参数搜索",
+						"POS": "销售点",
+						"SEGMENTS": "区隔",
+						"SERVICES": "服务项目",
+						"TICKETS": "车票"
+					},
+					"TAB_NAME": "订单"
+				},
+				"PRIVILEGES": {
+					"HEADER": {
+						"DATE_OF_CARRIAGE": "运输日期",
+						"DATE_OF_SALE": "发售日期",
+						"DIRECTION_FROM": "从的方向",
+						"DIRECTION_TO": "前往方向",
+						"GDS": "订单号（GDS）",
+						"ORGANIZATION": "组织机构",
+						"STATUS": "现况"
+					},
+					"TAB_NAME": "好处",
+					"TEMPLATE": {
+						"ARR_LOC_CODE": "前往：",
+						"COUPON": "优惠券编号：",
+						"DEP_LOC_CODE": "方向：",
+						"DISCOUNT_SUM": "授予的福利金额：",
+						"EXTERNAL_DISCOUNT_SOURCE_NAME": "利益组织：",
+						"FLIGHT_DATA": "运输日期：",
+						"PRICE": "运输总费用：",
+						"SALE_DATE": "提供福利的日期（销售日期）：",
+						"STATUS_NAME": "状态：",
+						"TICKET": "机票编号："
+					}
+				},
+				"PROFILE": {
+					"CARD": {
+						"COMMENT": "注意事项：",
+						"DATE_OF_BIRTH": "出生日期:",
+						"FIRST_NAME": "名:",
+						"GENDER": "性别:",
+						"LAST_NAME": "姓：",
+						"MIDDLE_NAME": "中间名:",
+						"TITLE": "旅客姓氏"
+					},
+					"EDIT": {
+						"COMMENT": "注意事项",
+						"DATE_OF_BIRTH": "出生日期",
+						"FIRST_NAME": "名",
+						"GENDER": {
+							"F": "˚F",
+							"M": "中号",
+							"TITLE": "性别"
+						},
+						"LAST_NAME": "姓氏",
+						"MIDDLE_NAME": "中间名",
+						"TITLE": "编辑"
+					},
+					"FORM": {
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓氏",
+						"MIDDLE_NAME": "中间名",
+						"TITLE": "添加其他名称"
+					},
+					"TABLE": {
+						"FIRST_NAME": "名",
+						"LAST_NAME": "姓氏",
+						"MIDDLE_NAME": "中间名"
+					},
+					"TAB_NAME": "个人资料"
+				},
+				"PROMO_CODE": {
+					"EXPANSION": {
+						"TEMPLATE": {
+							"ACCOUT_CODE": "结算代码：",
+							"BRAND": "品牌：",
+							"CUSTOMER": "简介：",
+							"CUSTOMER_GROUP": "旅客团体：",
+							"FLIGHT_DATE_FROM": "实施期从：",
+							"FLIGHT_DATE_TO": "实施期为：",
+							"GO_TO": "转到促销代码",
+							"PROMO_CODE_FLIGHT_LIST": "航班号：",
+							"RDB": "预订舱位：",
+							"REC_LOC": "订单：",
+							"ROUTE": "方向：",
+							"SEGMENTATION": "细分群体：",
+							"USES_PER_PERSON": "用于个人资料：",
+							"USES_TOTAL": "总用量：",
+							"VAL": "优惠金额：",
+							"VAL_TYPE": {
+								"PERCENT": "百分比",
+								"SUM": "金额",
+								"TITLE": "折扣类型："
+							}
+						}
+					},
+					"HEADER": {
+						"DATE_FROM": "有效期从",
+						"DATE_TO": "有效期至",
+						"PROMO": "晋升",
+						"PROMO_CODE": "促销代码",
+						"QUANTITY": "数量"
+					},
+					"TABS": {
+						"AVAILABLE": "可用的",
+						"USED": "二手的"
+					},
+					"TAB_NAME": "促销代码"
+				},
+				"SHOW_HIDE": {
+					"HIDE": "隐藏添加表单",
+					"SHOW": "显示上传表格"
+				}
+			}
+		},
+		"PROMOTIONS": {
+			"ADD_PROMOTIONS": {
+				"FIELD": {
+					"PROMOTIONS": "晋升"
+				},
+				"TABLE": {
+					"PROMOTIONS": "晋升"
+				}
+			},
+			"ADD_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "结算代码",
+					"ARR_LOC": "前往方向",
+					"BRAND": "品牌品牌",
+					"CUSTOMER": "个人资料",
+					"CUSTOMER_GROUP": "旅客团体",
+					"DATE_FROM": "有效期从",
+					"DATE_TO": "有效期至",
+					"DEP_LOC": "从的方向",
+					"DESCRIPTION": "促销说明",
+					"FLIGHT": "航班号",
+					"FLIGHT_DATA_FROM": "实施期从",
+					"FLIGHT_DATA_TO": "实施期至",
+					"PROMOTIONS": "晋升",
+					"PROMOTIONS_CODE": "促销代码",
+					"PROMOTIONS_CODE_VAL": {
+						"AMOUNT": "金额",
+						"PERCENT": "百分比",
+						"TITLE": "折扣类型"
+					},
+					"RDD": "订舱",
+					"REASON": "基金会",
+					"SEGMENTATION": "细分群体",
+					"USED": "二手货：",
+					"USES_PER": "用于个人资料",
+					"USES_TOTAL": "总用量",
+					"VAL": "优惠金额"
+				},
+				"TABLE": {
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓氏",
+					"MIDDLE_NAME": "中间名",
+					"PROFILE": "资料编号"
+				}
+			},
+			"SEARCH_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "结算代码",
+					"BRAND": "品牌品牌",
+					"CUSTOMER_GROUP": "旅客团体",
+					"DATE_FROM": "有效期从",
+					"DATE_TO": "有效期至",
+					"FLIGHT": "航班号",
+					"FLIGHT_DATA_FROM": "实施期从",
+					"FLIGHT_DATA_TO": "实施期至",
+					"PROMOTIONS": "晋升",
+					"PROMOTIONS_CODE": "促销代码",
+					"RDD": "订舱",
+					"SEGMENTATION": "细分群体"
+				},
+				"TABLE": {
+					"ACCOUNT_CODE": "结算代码",
+					"DATE_FROM": "有效期从",
+					"DATE_TO": "有效期至",
+					"FLIGHT_DATA_FROM": "实施期从",
+					"FLIGHT_DATA_TO": "实施期至",
+					"PROMOTIONS": "晋升",
+					"PROMOTIONS_CODE": "促销代码"
+				}
+			}
+		},
+		"REPORTS": {
+			"STATISTICS_REPORT": {
+				"MES_DOWNLOAD_EXC": "根据生成的请求下载Excel文件",
+				"MES_DOWNLOAD_PDF": "考虑生成的请求下载PDF文件",
+				"MES_DOWNLOAD_WORD": "根据生成的请求下载Word文件",
+				"REPORT_PARAMETERS": "报告参数",
+				"REPORT_SELECTION": "报告选择"
+			}
+		},
+		"RESET": {
+			"TITLE": "重新加载应用"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": {
+				"BUTTON": {
+					"NEXT": "下一个",
+					"PREV": "上一个"
+				},
+				"GROUP_SEGMENTATION": {
+					"GRANULARITY": {
+						"COUPON": "优惠券",
+						"ORDERS": "订单",
+						"PASSENGER": "客运",
+						"TITLE": "粒度"
+					},
+					"GROUP_SEGMENTATION": "细分组"
+				},
+				"NUMBER_SEGMENTS": {
+					"FROM": "来自",
+					"SERVICES": "服务项目",
+					"TICKETS": "门票",
+					"TITLE": "段数",
+					"TO": "之前"
+				},
+				"ORDER_AMOUNT": {
+					"CURRENCY": "付款币种",
+					"FROM": "来自",
+					"SERVICES": "服务项目",
+					"TICKETS": "门票",
+					"TITLE": "订单金额",
+					"TO": "之前"
+				},
+				"PROFILE_DETAILS": {
+					"DOB_FROM": "出生日期",
+					"DOB_TO": "",
+					"FLIES_WITHOUT_CHILDREN": "没有孩子的苍蝇",
+					"FLIES_WITH_CHILDREN": "带孩子飞",
+					"GENDER": {
+						"F": "˚F",
+						"M": "中号",
+						"TITLE": "性别"
+					},
+					"TITLE": "个人资料详细信息"
+				},
+				"RESERVATION_DATE_RANG": {
+					"DATE_FROM": "自由范围从",
+					"DATE_TO": "自由范围",
+					"TITLE": "预约日期范围"
+				},
+				"SERVICES": {
+					"AIRLINE_L_CODE": "航空公司代码",
+					"ARR_D_FROM": "出发日期范围从",
+					"ARR_D_TO": "出发日期范围",
+					"ARR_LOC": "到哪里",
+					"DEP_LOC": "从哪里来",
+					"DISPATCH_TIME": "出发时间",
+					"FLIGHT_NO": "航班号",
+					"POS_AGENCY": "代理商代码（销售点）",
+					"POS_GDS": "GDS代码（销售点）",
+					"POS_ID": "PPR代码（销售点）",
+					"SERVICE_CODE": "代号",
+					"TITLE": "付费服务"
+				},
+				"SUBJECT_ANALYSIS": {
+					"PAYMENT": "购买金额",
+					"REMOVE": "重置分析主题",
+					"SEGMENT": "段数",
+					"TITLE": "分析对象"
+				},
+				"TICKET": {
+					"AIRLINE_L_CODE": "航空公司代码",
+					"ARR_D_FROM": "出发日期范围从",
+					"ARR_D_TO": "出发日期范围",
+					"ARR_LOC": "到哪里",
+					"CABIN": "客舱",
+					"DEP_LOC": "从哪里来",
+					"DISPATCH_TIME": "出发时间",
+					"FLIGHT_NO": "航班号",
+					"POS_AGENCY": "代理商代码（销售点）",
+					"POS_GDS": "GDS代码（销售点）",
+					"POS_ID": "PPR代码（销售点）",
+					"RARE_CODE": "费率代码",
+					"RDB": "订舱",
+					"TITLE": "车票"
+				}
+			},
+			"COMPLEX_SEGMENTATION": {
+				"FIELD": {
+					"CHOICE_SEGMENTATION": "细分选择",
+					"NAME_COMPLEX_SEGMENTATION": "复杂分割的名称"
+				},
+				"SEGMENTATIONS": "细分",
+				"TABLE": {
+					"FILTER": "筛选条件",
+					"GROUP_SEGMENTATION": "细分组",
+					"TITLE": "复杂分割"
+				}
+			},
+			"LIST_SEGMENTATION": {
+				"PROFILE_SEGMENTATION": {
+					"CUSTOMER_ID": "资料编号",
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓氏",
+					"MIDDLE_NAME": "中间名"
+				},
+				"TABLE_SEGMENTATION": {
+					"ALL": "全部",
+					"COMPLICATED": "难点",
+					"FILTER": "筛选条件",
+					"GRANULARITY": {
+						"COUPON": "优惠券",
+						"ORDERS": "订单",
+						"PASSENGER": "客运",
+						"TITLE": "粒度"
+					},
+					"SEGMENTATION": "细分组",
+					"SIMPLE": "简单的",
+					"STATUS": {
+						"COMPLICATED": "难点",
+						"SIMPLE": "简单的",
+						"TITLE": "现况"
+					},
+					"TITLE": "显示细分"
+				}
+			}
+		},
+		"SETTINGS": {
+			"TABLE_PROFILE": {
+				"COLUMN_DISPLAY": "列显示",
+				"COLUMN_ORDER": "列顺序",
+				"TITLE": "设置乘客桌"
+			}
+		},
+		"SLECIAL_GROUP": {
+			"PROFILE_GROUP": {
+				"TABLE": {
+					"PROFILE_GROUP": "旅客团体"
+				},
+				"TITLE": "旅客团体"
+			}
+		},
+		"USERS": {
+			"ADD_USER": {
+				"CONFIRM_PASSWORD": "重新输入密码",
+				"EMAIL": "电邮",
+				"FIO": "全名",
+				"LOGIN": "用户名",
+				"PASSWORD": "密码",
+				"TITLE": "新增使用者"
+			},
+			"LIST_USERS": {
+				"TABLE": {
+					"EMAIL": "电邮",
+					"FILTER": "筛选条件",
+					"FIO": "全名",
+					"LOGIN": "用户名"
+				},
+				"TITLE": "列出所有用户"
+			},
+			"USER": {
+				"ACCESS_RIGHTS": {
+					"ADDITIONAL_RIGHT": "附加权利",
+					"ANALYTICS": "分析工具",
+					"CUSTOMERS": "乘客人数",
+					"DISTRIBUTIONS": "时事通讯",
+					"EVENTS": "大事记",
+					"PRIVILEGES": "好处",
+					"PROMOTIONS_CODES": "促销代码",
+					"READ": "读书",
+					"REPORTS": "报告书",
+					"TITLE": "访问权限",
+					"UPDATE": "改变",
+					"USER": "用户数"
+				},
+				"USER": {
+					"CONFIRM_PASSWORD": "重新输入密码",
+					"EMAIL": "电邮",
+					"FIO": "全名",
+					"LOGIN": "用户名",
+					"PASSWORD": "密码",
+					"TABS": {
+						"PASSWORD": "密码",
+						"USER": "用户名"
+					},
+					"TITLE": "用户名",
+					"TITLE_2": "编辑"
+				}
+			}
+		}
+	},
+	"POP_UP": {
+		"DIALOG_MERGE_PROFILE": {
+			"CUSTOMER_IDS": "资料编号：",
+			"DATE_OF_BIRTH": "出生日期:",
+			"FIRST_NAME": "名:",
+			"LAST_NAME": "姓："
+		},
+		"DIALOG_PROMO_CODE": {
+			"ACCOUNT_CODE": "帐号：",
+			"DATE_FROM": "有效期：从",
+			"DATE_TO": "之前",
+			"NAME_PROMO_CODE": "促销代码名称：",
+			"PROMO_CODE": "促销代码"
+		},
+		"EDITOR": {
+			"DIALOG_EDITOR": {
+				"TITLE": "选择邮寄表格"
+			},
+			"DIALOG_EMAIL": {
+				"DATE_FROM": "发货日期",
+				"DATE_TO": "发货日期",
+				"EXAMPLE": "一个例子：",
+				"LIMITS": "极限值",
+				"PARAMS": "通讯选项",
+				"TEMPLATE": "模式",
+				"TEMPLATE_TITLE": "通讯模板",
+				"TEXT": "文字内容",
+				"THEME": "主题",
+				"TITLE": "邮寄变量",
+				"TOTAL_COUNT": "数量"
+			},
+			"DIALOG_SMS": {
+				"SYMBOLS_ENTERED": "输入符号",
+				"TEMPLATE": "模式",
+				"TEXT": "讯息文字",
+				"TITLE": "职称"
+			}
+		}
+	},
+	"TABLE": {
+		"FIRST_PAGE": "第一页",
+		"FROM": "来自",
+		"ITEMS_PER_PAGE": "每页数量",
+		"LAST_PAGE": "最后一页",
+		"NEXT": "下一个",
+		"PREV": "上一个",
+		"RESULT": {
+			"ERROR": "找不到此请求的结果。",
+			"OK": "搜索结果"
+		}
+	},
+	"TOOLBAR": {
+		"GO_OUT": "退出"
+	}
+}

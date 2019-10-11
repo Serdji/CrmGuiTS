@@ -334,7 +334,8 @@
 					"REC_LOC": "Reservation number",
 					"SEGMENTATION": "Segmentation groups",
 					"SERVICE_CODE": "Service Code",
-					"TICKET": "Ticket number"
+					"TICKET": "Ticket number",
+					"TOLTIP_CSV": "Download SVG file with search query"
 				},
 				"TABLE": {
 					"DATE_OF_BIRTH": "Date of Birth",
@@ -744,6 +745,7 @@
 					"ARR_D_TO": "Departure date range by",
 					"ARR_LOC": "Where",
 					"DEP_LOC": "From where",
+					"DISPATCH_TIME": "Dispatch time",
 					"FLIGHT_NO": "Flight number",
 					"POS_AGENCY": "Agency code (point of sale)",
 					"POS_GDS": "GDS code (point of sale)",
@@ -764,6 +766,7 @@
 					"ARR_LOC": "Where",
 					"CABIN": "Cabin",
 					"DEP_LOC": "From where",
+					"DISPATCH_TIME": "Dispatch time",
 					"FLIGHT_NO": "Flight number",
 					"POS_AGENCY": "Agency code (point of sale)",
 					"POS_GDS": "GDS code (point of sale)",
@@ -796,6 +799,12 @@
 					"ALL": "Everything",
 					"COMPLICATED": "Difficult",
 					"FILTER": "Filter",
+					"GRANULARITY": {
+						"COUPON": "Coupon",
+						"ORDERS": "Orders",
+						"PASSENGER": "Passenger",
+						"TITLE": "Granularity"
+					},
 					"SEGMENTATION": "Segmentation group",
 					"SIMPLE": "Simple",
 					"STATUS": {

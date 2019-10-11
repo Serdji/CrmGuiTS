@@ -5,6 +5,12 @@ import { takeWhile } from 'rxjs/operators';
 import { ITemplate } from '../../../interface/itemplate';
 import * as R from 'ramda';
 import * as moment from 'moment';
+import { DialogComponent } from '../../../shared/dialog/dialog.component';
+import { timer } from 'rxjs';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { EditorService } from '../editor.service';
+import * as _ from 'lodash';
 
 
 @Component( {
@@ -24,11 +30,15 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   public buttonDisabled: boolean;
 
   private isActive: boolean;
+  private distributionId: number;
 
 
   constructor(
     private editorSmsService: EditorSmsService,
     private fb: FormBuilder,
+    private dialog: MatDialog,
+    private router: Router,
+    private editorService: EditorService,
   ) { }
 
   ngOnInit(): void {
@@ -53,6 +63,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       text: [ '', [ Validators.required ] ],
       templateId: ''
     } );
+    this.newParams();
   }
 
   private initIsButtonSave() {
@@ -72,9 +83,59 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       } );
   }
 
+
+  private windowDialog( messDialog: string, status: string, params: any = '' ) {
+    this.dialog.open( DialogComponent, {
+      data: {
+        message: messDialog,
+        status,
+        card: status,
+        params
+      },
+    } );
+    if ( status === 'ok' ) {
+      this.formSms.reset();
+      timer( 1500 )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( _ => {
+          this.dialog.closeAll();
+        } );
+    }
+  }
+
+  private newParams = () => _( this.formSms.getRawValue() )
+    .merge( this.params )
+    .omit( [ 'templateId', 'totalCount', 'emailLimits', 'count', 'from' ] )
+    .set( 'distributionType', 2 )
+    .value();
+
+  saveDistribution(): void {
+
+    if ( !this.formSms.invalid ) {
+      const success = value => {
+        this.distributionId = value.distributionId;
+        this.dialog.closeAll();
+        // this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
+      };
+      const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
+
+      const saveDistribution = params => this.editorService.saveDistribution( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( success, error );
+      const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( success, error );
+
+      const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
+      whichMethod( this.newParams() );
+
+    } else {
+      this.windowDialog( 'DIALOG.ERROR.NOT_ALL_FIELDS', 'error' );
+    }
+  }
+
   messageEventFn() {
-    const newParams = R.merge( this.params, this.formSms.value );
-    this.messageEvent.emit( newParams );
+    this.messageEvent.emit( this.newParams() );
   }
 
   ngOnDestroy(): void {

@@ -25,7 +25,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public formEvent: FormGroup;
   public segmentation: ISegmentation[];
   public segmentationOptions: Observable<ISegmentation[]>;
-  public taskType: number;
+  public distributionType: number;
   public maxSize: number;
   public task: ITask;
   public whichAction: string;
@@ -70,7 +70,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   private initGetTask( id: number ) {
-    this.formEvent.get( 'taskType' ).disable();
+    this.formEvent.get( 'distributionType' ).disable();
     this.formEvent.get( 'segmentation' ).disable();
     this.whichAction = 'edit';
 
@@ -105,7 +105,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   private initFormEvent() {
     this.formEvent = this.fb.group( {
       title: [ '', [ Validators.required ] ],
-      taskType: '',
+      distributionType: '',
       multiplicity: '',
       segmentation: [ '', [ Validators.required ] ]
     } );
@@ -140,9 +140,9 @@ export class AddEventComponent implements OnInit, OnDestroy {
   }
 
   private initSwitchTypeEvent() {
-    this.formEvent.get( 'taskType' ).valueChanges
+    this.formEvent.get( 'distributionType' ).valueChanges
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( event =>  this.taskType = event );
+      .subscribe( event =>  this.distributionType = event );
   }
 
   private setTimeMultiplicity( time: number ) {
@@ -207,7 +207,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     const omit = R.omit( ['dateFrom', 'dateTo', 'text', 'templateId'] );
     const mergeParams = R.merge( {
       title: this.formEvent.get( 'title' ).value,
-      taskType: this.taskType,
+      distributionType: this.distributionType,
       frequencySec: this.getFormatTimeFn( this.formEvent.get('multiplicity').value, 'seconds' ),
       DistributionTemplate: event.text,
       footer: ''

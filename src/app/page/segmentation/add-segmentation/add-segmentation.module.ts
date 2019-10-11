@@ -7,8 +7,8 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ComponentsModule } from '../../../components/components.module';
 import { AddSegmentationRoutes } from './add-segmentation.routing';
-import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule({
   imports: [
@@ -18,12 +18,10 @@ import { TranslateModule } from '@ngx-translate/core';
     DirectivesModule,
     ComponentsModule,
     AddSegmentationRoutes,
-    TranslateModule
+    TranslateModule,
+    NgxMaskModule
   ],
   declarations: [ AddSegmentationComponent ],
-  providers: [
-    AddSegmentationService,
-    ProfileSearchService
-  ],
+  providers: [ AddSegmentationService ],
 })
 export class AddSegmentationModule { }

@@ -334,7 +334,8 @@
 					"REC_LOC": "予約番号",
 					"SEGMENTATION": "セグメンテーショングループ",
 					"SERVICE_CODE": "サービスコード",
-					"TICKET": "チケット番号"
+					"TICKET": "チケット番号",
+					"TOLTIP_CSV": "検索クエリでSVGファイルをダウンロードする"
 				},
 				"TABLE": {
 					"DATE_OF_BIRTH": "生年月日",
@@ -744,6 +745,7 @@
 					"ARR_D_TO": "出発日範囲",
 					"ARR_LOC": "どこへ",
 					"DEP_LOC": "どこから",
+					"DISPATCH_TIME": "発送時間",
 					"FLIGHT_NO": "便名",
 					"POS_AGENCY": "代理店コード（販売店）",
 					"POS_GDS": "GDSコード（POS）",
@@ -764,6 +766,7 @@
 					"ARR_LOC": "どこへ",
 					"CABIN": "キャビン",
 					"DEP_LOC": "どこから",
+					"DISPATCH_TIME": "発送時間",
 					"FLIGHT_NO": "便名",
 					"POS_AGENCY": "代理店コード（販売店）",
 					"POS_GDS": "GDSコード（POS）",
@@ -796,6 +799,12 @@
 					"ALL": "すべての",
 					"COMPLICATED": "難しい",
 					"FILTER": "フィルター",
+					"GRANULARITY": {
+						"COUPON": "クーポン",
+						"ORDERS": "ご注文",
+						"PASSENGER": "乗客",
+						"TITLE": "粒度"
+					},
 					"SEGMENTATION": "セグメンテーショングループ",
 					"SIMPLE": "シンプル",
 					"STATUS": {

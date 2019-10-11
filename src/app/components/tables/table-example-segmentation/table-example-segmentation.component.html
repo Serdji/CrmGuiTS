@@ -51,6 +51,15 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="segmentationGranularity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.TITLE' | translate}} </mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element">
+        <span *ngIf="element.segmentationGranularity === 1" > {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.PASSENGER' | translate}} </span>
+        <span *ngIf="element.segmentationGranularity === 2" > {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.ORDERS' | translate}} </span>
+        <span *ngIf="element.segmentationGranularity === 3" > {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.COUPON' | translate}} </span>
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="segmentationId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
