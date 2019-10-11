@@ -60,6 +60,9 @@ export class AppComponent implements OnInit {
     // this.translate.use('ru' );
     // const browserLang = this.translate.getBrowserLang();
     // this.translate.use( browserLang.match( /ru|en|'de|ja|zh|cs'/ ) ? browserLang : 'ru' );
+    this.translate.stream( 'MENU' ).subscribe( _ => {
+      this._adapter.setLocale( this.translate.store.currentLang );
+    } );
   }
 
   private isTokenRedirect() {
