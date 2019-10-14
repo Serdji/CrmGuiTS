@@ -296,7 +296,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.router.navigate( [ '/crm/list-distribution' ] );
+            this.router.navigate( [ '/crm/list-email-distribution' ] );
           } );
         break;
       case 'stopEmailDistribution':
@@ -315,6 +315,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         //     this.dialogRef.close();
         //   } );
         console.log( this.data.params );
+        this.dialogRef.close();
         this.profileSmsDistributionService.profileSmsDistributionSubject.next();
         break;
       case 'displayeds':
@@ -329,7 +330,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         //   .pipe( takeWhile( _ => this.isActive ) )
         //   .subscribe( _ => {
         //     this.dialogRef.close();
-        //     this.router.navigate( [ '/crm/list-distribution' ] );
+        //     this.router.navigate( [ '/crm/list-sms-distribution' ] );
         //   } );
         // break;
       case 'stopSmsDistribution':
