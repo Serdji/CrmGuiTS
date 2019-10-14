@@ -15,11 +15,11 @@ import { map, takeWhile } from 'rxjs/operators';
 import { ProfileGroupService } from '../../page/special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../interface/icustomer-group';
 import * as _ from 'lodash';
-import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
 import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-codes/add-promotions-codes.service';
 import { EditorEmailService } from '../../components/editors/editor-email/editor-email.service';
 import { ListEmailService } from '../../page/distribution/list-email/list-email.service';
+import { ProfileEmailDistributionService } from '../../page/distribution/profile-email-distribution/profile-email-distribution.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -49,7 +49,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
     private listEmailService: ListEmailService,
-    private profileDistributionService: ProfileDistributionService,
+    private profileEmailDistributionService: ProfileEmailDistributionService,
     private addPromotionsService: AddPromotionsService,
     private addPromotionsCodesService: AddPromotionsCodesService,
     private auth: AuthService,
@@ -275,10 +275,10 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'startDistribution':
-        this.profileDistributionService.startDistribution( this.data.params )
+        this.profileEmailDistributionService.startDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
-            this.profileDistributionService.profileDistributionSubject.next();
+            this.profileEmailDistributionService.profileDistributionSubject.next();
             this.dialogRef.close();
           } );
         break;
@@ -298,11 +298,11 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'stopDistribution':
-        this.profileDistributionService.stopDistribution( this.data.params )
+        this.profileEmailDistributionService.stopDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.profileDistributionService.profileDistributionSubject.next();
+            this.profileEmailDistributionService.profileDistributionSubject.next();
           } );
         break;
       case 'deletePromotions':

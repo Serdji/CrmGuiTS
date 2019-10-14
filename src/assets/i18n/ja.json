@@ -1,7 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "乗客",
-		"DISTRIBUTION": "ニュースレター",
+		"EMAIL_DISTRIBUTION": " メールマガジン",
 		"EVENT": "ソビティ",
 		"HOME": "ホーム",
 		"USER": "ユーザー"
@@ -193,7 +193,7 @@
 					"SUBJECT": "テーマ"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "郵送日：",
 				"ERROR_MESSAGE": "エラーメッセージ：",
 				"FROM": "から",

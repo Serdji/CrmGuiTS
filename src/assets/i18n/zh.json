@@ -1,7 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "客运",
-		"DISTRIBUTION": "时事通讯",
+		"EMAIL_DISTRIBUTION": " 电子邮件通讯",
 		"EVENT": "索比",
 		"HOME": "首页",
 		"USER": "用户名"
@@ -193,7 +193,7 @@
 					"SUBJECT": "主题"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "邮寄日期：",
 				"ERROR_MESSAGE": "错误讯息：",
 				"FROM": "来自",

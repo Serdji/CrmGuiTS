@@ -1,7 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passagier",
-		"DISTRIBUTION": "Rundschreiben",
+		"EMAIL_DISTRIBUTION": " E-Mail-Newsletter",
 		"EVENT": "Sobitie",
 		"HOME": "Zuhause",
 		"USER": "Benutzer"
@@ -193,7 +193,7 @@
 					"SUBJECT": "Thema"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Versandtermine:",
 				"ERROR_MESSAGE": "Fehlermeldung:",
 				"FROM": "Von",

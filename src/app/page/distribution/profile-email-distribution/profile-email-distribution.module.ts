@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ProfileDistributionComponent } from './profile-distribution.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
-import { ProfileDistributionService } from './profile-distribution.service';
 import { PipesModule } from '../../../pipes/pipes.module';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { ProfileDistributionRoutes } from './profile-distribution.routing';
 import { TranslateModule } from '@ngx-translate/core';
+import { ProfileEmailDistributionRoutes } from './profile-email-distribution.routing';
+import { ProfileEmailDistributionComponent } from './profile-email-distribution.component';
+import { ProfileEmailDistributionService } from './profile-email-distribution.service';
 
 @NgModule( {
   imports: [
@@ -16,11 +16,11 @@ import { TranslateModule } from '@ngx-translate/core';
     ComponentsModule,
     PipesModule,
     DirectivesModule,
-    ProfileDistributionRoutes,
+    ProfileEmailDistributionRoutes,
     TranslateModule
   ],
-  declarations: [ ProfileDistributionComponent ],
-  providers: [ ProfileDistributionService ]
+  declarations: [ ProfileEmailDistributionComponent ],
+  providers: [ ProfileEmailDistributionService ]
 } )
-export class ProfileDistributionModule {
+export class ProfileEmailDistributionModule {
 }

@@ -1,0 +1,89 @@
+<div class="profile-distribution">
+
+  <mat-card class="profile-distribution__email">
+    <mat-progress-bar *ngIf="isLoader; else loaserEmail" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserEmail>
+      <mat-card-header class="profile-distribution__header">
+        <mat-card-title>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.SUBJECT' | translate}} <b>{{ distributionProfile.subject }}</b></mat-card-title>
+      </mat-card-header>
+      <mat-divider></mat-divider>
+      <mat-card-content class="profile-distribution__content">
+        <div [innerHtml]="distributionProfile.text | safeHtml"></div>
+      </mat-card-content>
+      <mat-divider></mat-divider>
+      <mat-card-actions class="profile-distribution__action">
+        <mat-grid-list cols="5" rowHeight="200px">
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <div class="profile-distribution__grid">
+              <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.DATE' | translate}} <b> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.FROM' | translate}} {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TO' | translate}} {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
+              <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.LAST_TRY' | translate}} <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>
+              <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUS' | translate}} <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
+              <span *ngIf="distributionProfile.errorMessage" class="profile-distribution__error">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.ERROR_MESSAGE' | translate}} <b> {{ distributionProfile.errorMessage }} </b>  </span>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <div class="profile-distribution__grid">
+              <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.NOT_SENT' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.SENT_TO_GATEWAY' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.SEND_TO_CUSTOMER' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.ERROR' | translate}}</span>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <div class="profile-distribution__grid">
+              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.DELIVERED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.READ' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.CLICKED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.BOUNCED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUSES.REJECTED' | translate}}</span>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
+        <div class="profile-distribution__button-wrapper">
+          <button
+            class="profile-distribution__button"
+            mat-raised-button
+            color="primary"
+            (click)="startDistribution()"
+            [disabled]="startButtonDisabled"
+            appAccessRights="distributions:update"
+          >
+            <mat-icon>send</mat-icon>
+            {{'BUTTON.SEND_DISTRIBUTION' | translate}}
+          </button>
+          <button
+            class="profile-distribution__button"
+            mat-raised-button
+            color="accent"
+            (click)="stopDistribution()"
+            [disabled]="stopButtonDisabled"
+            appAccessRights="distributions:update"
+          >
+            <mat-icon>cancel</mat-icon>
+            {{'BUTTON.CANCEL_DISTRIBUTION' | translate}}
+          </button>
+          <button
+            class="profile-distribution__button"
+            color="warn"
+            mat-raised-button
+            (click)="deleteDistribution()"
+            [disabled]="deliteButtonDisabled"
+            appAccessRights="distributions:update"
+          >
+            <mat-icon>delete</mat-icon>
+            {{'BUTTON.DELETE' | translate}}
+          </button>
+        </div>
+      </mat-card-actions>
+    </ng-template>
+  </mat-card>
+
+  <mat-card *ngIf="isDistributionProfile" class="profile-distribution__table">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-table-async-distribution-profile [tableDataSource]="distributionProfile.customers">
+      </app-table-async-distribution-profile>
+    </ng-template>
+  </mat-card>
+
+</div>

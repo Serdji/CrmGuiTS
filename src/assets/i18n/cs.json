@@ -1,7 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Cestující",
-		"DISTRIBUTION": "Informační bulletin",
+		"EMAIL_DISTRIBUTION": " E-mailový zpravodaj",
 		"EVENT": "Sobitie",
 		"HOME": "Domů",
 		"USER": "Uživatel"
@@ -193,7 +193,7 @@
 					"SUBJECT": "Téma"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Termíny zasílání:",
 				"ERROR_MESSAGE": "Chybová zpráva:",
 				"FROM": "z",

@@ -7,7 +7,7 @@ import { RetryRequestService } from '../../../services/retry-request.service';
 @Injectable( {
   providedIn: 'root'
 } )
-export class ProfileDistributionService {
+export class ProfileEmailDistributionService {
 
   public profileDistributionSubject = new Subject();
 

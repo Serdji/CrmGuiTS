@@ -1,7 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
-		"DISTRIBUTION": "Newsletter",
+		"EMAIL_DISTRIBUTION": " Email Newsletter",
 		"EVENT": "Event",
 		"HOME": "Home",
 		"USER": "User"
@@ -193,7 +193,7 @@
 					"SUBJECT": "Theme"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
