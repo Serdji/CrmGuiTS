@@ -3,7 +3,7 @@
     <mat-card>
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <app-table-example-distribution  *ngIf="email.length !== 0" [tableDataSource]="email"></app-table-example-distribution>
+        <app-table-async-email  *ngIf="email.length !== 0" [tableDataSource]="email"></app-table-async-email>
       </ng-template>
     </mat-card>
   </div>

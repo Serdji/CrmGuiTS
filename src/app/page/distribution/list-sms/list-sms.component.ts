@@ -1,4 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { TableAsyncService } from '../../../services/table-async.service';
 
 @Component({
   selector: 'app-list-sms',
@@ -9,7 +11,10 @@ export class ListSmsComponent implements OnInit, OnDestroy {
 
   private isActive: boolean;
 
-  constructor() { }
+  constructor(
+    private route: ActivatedRoute,
+    private tableAsyncService: TableAsyncService,
+  ) { }
 
   ngOnInit(): void {
     this.isActive = true;
