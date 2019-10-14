@@ -9,6 +9,8 @@ import { TableAsyncService } from '../../../services/table-async.service';
 })
 export class ListSmsComponent implements OnInit, OnDestroy {
 
+  public isLoader: boolean;
+
   private isActive: boolean;
 
   constructor(
@@ -18,6 +20,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
+    this.isLoader = true;
   }
 
   ngOnDestroy(): void {
