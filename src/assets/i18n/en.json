@@ -37,11 +37,12 @@
 			"CUSTOMER_GROUP": "Passenger group"
 		},
 		"DELETE": {
-			"CANCEL_DISTRIBUTION": "Are you sure you want to cancel this newsletter?",
+			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel this email newsletter?",
+			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel this sms mailing?",
 			"CONTACT": "Are you sure you want to delete this contact or contacts?",
 			"CUSTOMER": "Are you sure you want to remove the passenger?",
-			"DISTRIBUTION": "Are you sure you want to delete the newsletter or newsletters?",
 			"DOCUMENT": "Are you sure you want to delete this document or docs?",
+			"EMAIL_DISTRIBUTION": "Are you sure you want to delete the email newsletter or newsletters?",
 			"FIO": "Are you sure you want to delete this name or these name?",
 			"PROFILES": "Are you sure you want to delete this profile or profiles?",
 			"PROFILE_GROUP": "Are you sure you want to delete the passenger group or passenger group?",
@@ -50,6 +51,7 @@
 			"SEGMENTATION": "Are you sure you want to delete the segmentation group?",
 			"SEGMENTATIONS": "Are you sure you want to delete the segmentation group or segmentation group?",
 			"SETTING_DEFAULT": "After restarting the application, all your settings will be set by default. Are you sure you want to restart applications?",
+			"SMS_DISTRIBUTION": "Are you sure you want to delete the sms newsletter or newsletters?",
 			"USER": "Are you sure you want to delete the user?"
 		},
 		"DOCUMENT": {
@@ -196,6 +198,33 @@
 				}
 			},
 			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "Mailing Dates:",
+				"ERROR_MESSAGE": "Error Message:",
+				"FROM": "from",
+				"LAST_TRY": "Date and time the newsletter was created:",
+				"STATUS": "Status:",
+				"STATUSES": {
+					"BOUNCED": "Returned",
+					"CLICKED": "Following a link",
+					"DELIVERED": "Delivered",
+					"ERROR": "Mistake",
+					"NOT_SENT": "Ready to ship",
+					"READ": "Read",
+					"REJECTED": "Unsubscribed",
+					"SEND_TO_CUSTOMER": "Sent to customer",
+					"SENT_TO_GATEWAY": "Sent to mail gateway"
+				},
+				"SUBJECT": "Topic of the letter:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Explanation",
+					"FIRST_NAME": "Name",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name",
+					"STATUS": "status"
+				},
+				"TO": "to"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",

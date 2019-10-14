@@ -37,11 +37,12 @@
 			"CUSTOMER_GROUP": "旅客团体"
 		},
 		"DELETE": {
-			"CANCEL_DISTRIBUTION": "您确定要取消此新闻通讯吗？",
+			"CANCEL_EMAIL_DISTRIBUTION": "您确定要取消此电子邮件通讯吗？",
+			"CANCEL_SMS_DISTRIBUTION": "您真的要取消此短信发送吗？",
 			"CONTACT": "您确定要删除此联系人吗？",
 			"CUSTOMER": "您确定要删除乘客吗？",
-			"DISTRIBUTION": "您确定要删除时事通讯吗？",
 			"DOCUMENT": "您确定要删除此文档吗？",
+			"EMAIL_DISTRIBUTION": "您确定要删除电子邮件时事通讯吗？",
 			"FIO": "您确定要删除此名称还是这些名称？",
 			"PROFILES": "您确定要删除此个人资料吗？",
 			"PROFILE_GROUP": "您确定要删除乘客组或乘客组吗？",
@@ -50,6 +51,7 @@
 			"SEGMENTATION": "您确定要删除细分组吗？",
 			"SEGMENTATIONS": "您确定要删除细分组或细分组吗？",
 			"SETTING_DEFAULT": "重新启动应用程序后，默认情况下将设置所有设置。您确定要重新启动应用程序吗？",
+			"SMS_DISTRIBUTION": "您确定要删除短信或时事通讯吗？",
 			"USER": "您确定要删除该用户吗？"
 		},
 		"DOCUMENT": {
@@ -196,6 +198,33 @@
 				}
 			},
 			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "邮寄日期：",
+				"ERROR_MESSAGE": "错误讯息：",
+				"FROM": "来自",
+				"LAST_TRY": "新闻稿的创建日期和时间：",
+				"STATUS": "状态：",
+				"STATUSES": {
+					"BOUNCED": "已退货",
+					"CLICKED": "跟随链接",
+					"DELIVERED": "已交付",
+					"ERROR": "失误",
+					"NOT_SENT": "准备发货",
+					"READ": "已读",
+					"REJECTED": "取消订阅",
+					"SEND_TO_CUSTOMER": "发送给客户",
+					"SENT_TO_GATEWAY": "发送到邮件网关"
+				},
+				"SUBJECT": "信的主题：",
+				"TABLE": {
+					"ERROR_MESSAGE": "解说",
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓氏",
+					"MIDDLE_NAME": "中间名",
+					"STATUS": "现况"
+				},
+				"TO": "之前"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "邮寄日期：",
 				"ERROR_MESSAGE": "错误讯息：",
 				"FROM": "来自",

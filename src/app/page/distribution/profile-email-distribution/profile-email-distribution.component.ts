@@ -19,11 +19,11 @@ import { EditorEmailService } from '../../../components/editors/editor-email/edi
 export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
+  public isDistributionProfile: boolean;
   public distributionProfile: IdistributionProfile;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
   public deliteButtonDisabled: boolean;
-  public isDistributionProfile: boolean;
 
   private emailLimits: number;
   private isActive: boolean;
@@ -168,11 +168,11 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   }
 
   stopDistribution(): void {
-    this.windowDialog( 'DIALOG.DELETE.CANCEL_DISTRIBUTION', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
+    this.windowDialog( 'DIALOG.DELETE.CANCEL_EMAIL_DISTRIBUTION', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
   }
 
   deleteDistribution(): void {
-    this.windowDialog( 'DIALOG.DELETE.DISTRIBUTION', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
+    this.windowDialog( 'DIALOG.DELETE.EMAIL_DISTRIBUTION', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {
