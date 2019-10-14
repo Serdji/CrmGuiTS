@@ -29,6 +29,8 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
   public expandedElement: PeriodicElement | null;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
+  public totalCount: number;
+
 
   private isActive: boolean;
 
@@ -66,6 +68,7 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
+    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {

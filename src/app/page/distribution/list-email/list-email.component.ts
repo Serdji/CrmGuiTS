@@ -14,7 +14,7 @@ import { ITaskLog } from '../../../interface/itask-log';
 } )
 export class ListEmailComponent implements OnInit, OnDestroy {
 
-  public email: IEmail[];
+  public email: IEmail;
   public isLoader: boolean;
 
   private isActive: boolean;
@@ -27,7 +27,8 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.isLoader = true;
-    this.initDistribution();
+    this.initTable();
+    this.initTablePagination();
     this.listEmailService.subjectDistributionDelete
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshDistribution() );
@@ -42,24 +43,24 @@ export class ListEmailComponent implements OnInit, OnDestroy {
           from: pageIndex,
           count: value.pageSize
         };
-        // this.eventService.getSearchTackLogs( params )
-        //   .pipe( takeWhile( _ => this.isActive ) )
-        //   .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
+        this.listEmailService.getAllEmail( params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( email: IEmail ) => this.tableAsyncService.setTableDataSource( email.result ) );
       } );
   }
 
   private initTable() {
     const params = {
       from: 0,
-      count: 10
+      count: 20
     };
-    // this.eventService.getSearchTackLogs( params )
-    //   .pipe( takeWhile( _ => this.isActive ) )
-    //   .subscribe( ( taskLog: ITaskLog ) => {
-    //     this.tableAsyncService.countPage = taskLog.totalRows;
-    //     this.taskLog = taskLog;
-    //     this.isLoader = false;
-    //   } );
+    this.listEmailService.getAllEmail( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( email: IEmail ) => {
+        this.tableAsyncService.countPage = email.totalRows;
+        this.email = email;
+        this.isLoader = false;
+      } );
   }
 
 
@@ -68,18 +69,10 @@ export class ListEmailComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.isLoader = true;
-        this.initDistribution();
+        this.initTable();
       } );
   }
 
-  private initDistribution() {
-    this.listEmailService.getAllEmail()
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( email: IEmail[] ) => {
-        this.email = email;
-        this.isLoader = false;
-      } );
-  }
 
   ngOnDestroy(): void {
     this.isActive = false;

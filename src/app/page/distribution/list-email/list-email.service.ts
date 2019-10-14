@@ -17,8 +17,8 @@ export class ListEmailService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getAllEmail(): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/emailDistribution` ).pipe( this.retryRequestService.retry() );
+  getAllEmail( params ): Observable<any> {
+    return this.http.get( `${this.configService.crmApi}/crm/emailDistribution`, { params } ).pipe( this.retryRequestService.retry() );
   }
 
   deleteEmailDistributions( params ): Observable<any> {
