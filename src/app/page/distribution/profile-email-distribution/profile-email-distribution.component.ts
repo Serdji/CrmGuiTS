@@ -23,7 +23,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   public distributionProfile: IdistributionProfile;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
-  public deliteButtonDisabled: boolean;
+  public deleteButtonDisabled: boolean;
 
   private emailLimits: number;
   private isActive: boolean;
@@ -117,23 +117,23 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
       case 1:
         this.startButtonDisabled = false;
         this.stopButtonDisabled = true;
-        this.deliteButtonDisabled = false;
+        this.deleteButtonDisabled = false;
         break;
       case 2:
       case 3:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = false;
-        this.deliteButtonDisabled = true;
+        this.deleteButtonDisabled = true;
         break;
       case 5:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = true;
-        this.deliteButtonDisabled = true;
+        this.deleteButtonDisabled = true;
         break;
       default:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = true;
-        this.deliteButtonDisabled = true;
+        this.deleteButtonDisabled = true;
     }
   }
 

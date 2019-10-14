@@ -18,7 +18,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   public isDistributionProfile: boolean;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
-  public deliteButtonDisabled: boolean;
+  public deleteButtonDisabled: boolean;
 
 
   private isActive: boolean;
