@@ -131,7 +131,8 @@
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Newsletters",
-			"LIST_EMAIL": "Email"
+			"LIST_EMAIL": "Email",
+			"LIST_SMS": "SMS"
 		},
 		"EVENT": {
 			"ADD_EVENT": "Add event",

@@ -131,7 +131,8 @@
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Informační bulletiny",
-			"LIST_EMAIL": "E-mail"
+			"LIST_EMAIL": "E-mail",
+			"LIST_SMS": "SMS"
 		},
 		"EVENT": {
 			"ADD_EVENT": "Přidat událost",
