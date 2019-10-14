@@ -67,7 +67,7 @@ export class SidenavService {
         icon: 'email',
         claims: 'distributions:read',
         link: [
-          { url: '/crm/list-distribution', title: 'MENU.DISTRIBUTIONS.LIST_DISTRIBUTIONS' },
+          { url: '/crm/list-email', title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' },
         ]
       },
       {

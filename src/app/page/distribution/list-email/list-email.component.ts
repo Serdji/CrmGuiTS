@@ -1,22 +1,22 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Idistribution } from '../../../interface/idistribution';
 import { takeWhile } from 'rxjs/operators';
-import { ListDistributionService } from './list-distribution.service';
+import { ListEmailService } from './list-email.service';
 import { timer } from 'rxjs';
 
 @Component( {
-  selector: 'app-list-distribution',
-  templateUrl: './list-distribution.component.html',
-  styleUrls: [ './list-distribution.component.styl' ]
+  selector: 'app-list-email',
+  templateUrl: './list-email.component.html',
+  styleUrls: [ './list-email.component.styl' ]
 } )
-export class ListDistributionComponent implements OnInit, OnDestroy {
+export class ListEmailComponent implements OnInit, OnDestroy {
 
   public distribution: Idistribution[];
   public isLoader: boolean;
 
   private isActive: boolean;
 
-  constructor( private listDistributionService: ListDistributionService) { }
+  constructor( private listDistributionService: ListEmailService) { }
 
   ngOnInit(): void {
     this.isActive = true;

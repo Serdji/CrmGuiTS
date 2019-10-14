@@ -7,7 +7,7 @@ import { RetryRequestService } from '../../../services/retry-request.service';
 @Injectable( {
   providedIn: 'root'
 } )
-export class ListDistributionService {
+export class ListEmailService {
 
   public subjectDistributionDelete = new Subject();
 

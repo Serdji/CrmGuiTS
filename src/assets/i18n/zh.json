@@ -131,7 +131,7 @@
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "时事通讯",
-			"LIST_DISTRIBUTIONS": "邮件清单"
+			"LIST_EMAIL": "电邮"
 		},
 		"EVENT": {
 			"ADD_EVENT": "新增活动",
