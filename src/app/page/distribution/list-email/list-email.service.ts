@@ -21,7 +21,7 @@ export class ListEmailService {
     return this.http.get( `${this.configService.crmApi}/crm/emailDistribution` ).pipe( this.retryRequestService.retry() );
   }
 
-  deleteDistributions( params ): Observable<any> {
+  deleteEmailDistributions( params ): Observable<any> {
     this.subjectDistributionDelete.next();
     const httpOptions = {
       headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
@@ -29,7 +29,7 @@ export class ListEmailService {
     return this.http.delete( `${this.configService.crmApi}/crm/distributions/deleteDistributions`, httpOptions ).pipe( this.retryRequestService.retry() );
   }
 
-  deleteDistribution( id: number ): Observable<any> {
+  deleteEmailDistribution( id: number ): Observable<any> {
     return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe( this.retryRequestService.retry() );
   }
 

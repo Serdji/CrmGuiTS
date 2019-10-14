@@ -37,12 +37,9 @@
 			"CUSTOMER_GROUP": "Skupina cestujících"
 		},
 		"DELETE": {
-			"CANCEL_EMAIL_DISTRIBUTION": "Opravdu chcete zrušit tento e-mailový zpravodaj?",
-			"CANCEL_SMS_DISTRIBUTION": "Opravdu chcete zrušit tento sms mailing?",
 			"CONTACT": "Opravdu chcete tento kontakt nebo kontakty odstranit?",
 			"CUSTOMER": "Opravdu chcete cestujícího odstranit?",
 			"DOCUMENT": "Opravdu chcete tento dokument nebo dokumenty smazat?",
-			"EMAIL_DISTRIBUTION": "Opravdu chcete odstranit e-mailový zpravodaj nebo zpravodaje?",
 			"FIO": "Opravdu chcete toto jméno nebo toto jméno smazat?",
 			"PROFILES": "Opravdu chcete tento profil nebo profily smazat?",
 			"PROFILE_GROUP": "Opravdu chcete smazat skupinu cestujících nebo skupinu cestujících?",
@@ -51,8 +48,14 @@
 			"SEGMENTATION": "Opravdu chcete odstranit segmentační skupinu?",
 			"SEGMENTATIONS": "Opravdu chcete odstranit segmentační skupinu nebo segmentační skupinu?",
 			"SETTING_DEFAULT": "Po restartování aplikace budou všechna vaše výchozí nastavení nastavena. Opravdu chcete restartovat aplikace?",
-			"SMS_DISTRIBUTION": "Opravdu chcete smazat zpravodaj nebo sms sms?",
 			"USER": "Opravdu chcete uživatele smazat?"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "Opravdu chcete zrušit tento e-mailový zpravodaj?",
+			"CANCEL_SMS_DISTRIBUTION": "Opravdu chcete zrušit tento sms mailing?",
+			"EMAIL_DISTRIBUTION": "Opravdu chcete odstranit e-mailový zpravodaj nebo zpravodaje?",
+			"SEND_DISTRIBUTION": "Odeslat zpravodaj?",
+			"SMS_DISTRIBUTION": "Opravdu chcete smazat zpravodaj nebo sms sms?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Datum vypršení platnosti",

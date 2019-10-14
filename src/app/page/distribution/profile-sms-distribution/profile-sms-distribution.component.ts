@@ -5,6 +5,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs/operators';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
+import { ProfileSmsDistributionService } from './profile-sms-distribution.service';
 
 @Component({
   selector: 'app-profile-sms-distribution',
@@ -27,6 +28,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
+    private profileSmsDistributionService: ProfileSmsDistributionService,
   ) { }
 
   ngOnInit(): void {
@@ -34,6 +36,14 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     this.isLoader = false;
     this.isDistributionProfile = false;
     this.initQueryParams();
+    this.profileSmsDistributionService.profileSmsDistributionSubject
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => {
+        this.stopButtonDisabled = true;
+        this.isActive = true;
+        this.isLoader = true;
+        console.log( 'test' );
+      } );
   }
 
   private initQueryParams() {
@@ -65,25 +75,18 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     }
   }
 
-  startDistribution(): void {
-    // this.windowDialog(
-    //   `По результатам реализации данной отправки лимит сообщений ${this.emailLimits - this.distributionProfile.totalCount}. ` +
-    //   `Подтвердите активацию сохраненной рассылки в количестве ${this.distributionProfile.totalCount} писем ?`,
-    //   'startDistribution',
-    //   'startDistribution',
-    //   this.distributionProfile.distributionId
-    // );
-    console.log( this.smsProfileId );
+  startSmsDistribution(): void {
+    this.windowDialog('DIALOG.DISTRIBUTION.SEND_DISTRIBUTION','startSmsDistribution','startSmsDistribution', this.smsProfileId );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
   }
 
-  stopDistribution(): void {
-    // this.windowDialog( 'DIALOG.DELETE.CANCEL_SMS_DISTRIBUTION', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
+  stopSmsDistribution(): void {
+    // this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_SMS_DISTRIBUTION', 'delete', 'stopSmsDistribution', this.smsProfileId );
   }
 
-  deleteDistribution(): void {
-    // this.windowDialog( 'DIALOG.DELETE.SMS_DISTRIBUTION', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
+  deleteSmsDistribution(): void {
+    // this.windowDialog( 'DIALOG.DISTRIBUTION.SMS_DISTRIBUTION', 'delete', 'deleteSmsDistribution', this.smsProfileId );
   }
 
   ngOnDestroy(): void {

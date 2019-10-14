@@ -37,12 +37,9 @@
 			"CUSTOMER_GROUP": "旅客グループ"
 		},
 		"DELETE": {
-			"CANCEL_EMAIL_DISTRIBUTION": "このメールニュースレターをキャンセルしてもよろしいですか？",
-			"CANCEL_SMS_DISTRIBUTION": "このSMSメールを本当にキャンセルしますか？",
 			"CONTACT": "この連絡先を削除してもよろしいですか？",
 			"CUSTOMER": "乗客を削除してもよろしいですか？",
 			"DOCUMENT": "このドキュメントまたはドキュメントを削除してもよろしいですか？",
-			"EMAIL_DISTRIBUTION": "電子メールニュースレターを削除してもよろしいですか？",
 			"FIO": "この名前またはこれらの名前を削除してもよろしいですか？",
 			"PROFILES": "このプロファイルを削除してもよろしいですか？",
 			"PROFILE_GROUP": "乗客グループまたは乗客グループを削除してもよろしいですか？",
@@ -51,8 +48,14 @@
 			"SEGMENTATION": "セグメンテーショングループを削除してもよろしいですか？",
 			"SEGMENTATIONS": "セグメンテーショングループまたはセグメンテーショングループを削除してもよろしいですか？",
 			"SETTING_DEFAULT": "アプリケーションを再起動すると、すべての設定がデフォルトで設定されます。アプリケーションを再起動してもよろしいですか？",
-			"SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？",
 			"USER": "ユーザーを削除してもよろしいですか？"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "このメールニュースレターをキャンセルしてもよろしいですか？",
+			"CANCEL_SMS_DISTRIBUTION": "このSMSメールを本当にキャンセルしますか？",
+			"EMAIL_DISTRIBUTION": "電子メールニュースレターを削除してもよろしいですか？",
+			"SEND_DISTRIBUTION": "ニュースレターを送信しますか？",
+			"SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "有効期限",

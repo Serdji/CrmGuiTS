@@ -44,7 +44,7 @@
             class="profile-email-distribution__button"
             mat-raised-button
             color="primary"
-            (click)="startDistribution()"
+            (click)="startEmailDistribution()"
             [disabled]="startButtonDisabled"
             appAccessRights="distributions:update"
           >
@@ -55,7 +55,7 @@
             class="profile-email-distribution__button"
             mat-raised-button
             color="accent"
-            (click)="stopDistribution()"
+            (click)="stopEmailDistribution()"
             [disabled]="stopButtonDisabled"
             appAccessRights="distributions:update"
           >
@@ -66,7 +66,7 @@
             class="profile-email-distribution__button"
             color="warn"
             mat-raised-button
-            (click)="deleteDistribution()"
+            (click)="deleteEmailDistribution()"
             [disabled]="deliteButtonDisabled"
             appAccessRights="distributions:update"
           >

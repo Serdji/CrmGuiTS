@@ -108,8 +108,16 @@
     </ng-template>
   </div>
 
-  <div *ngIf="data.status === 'startDistribution'">
+  <div *ngIf="data.status === 'startEmailDistribution'">
     <h2 mat-dialog-title class="dialog__delete">{{ data.message }}</h2>
+    <div class="dialog__button-wrapper">
+      <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'DIALOG.YES' | translate}}</button>
+      <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'DIALOG.NO' | translate}}</button>
+    </div>
+  </div>
+
+  <div *ngIf="data.status === 'startSmsDistribution'">
+    <h2 mat-dialog-title class="dialog__delete">{{ data.message | translate }}</h2>
     <div class="dialog__button-wrapper">
       <button class="dialog__button _left-button" mat-stroked-button (click)="onYesClick()" color="warn">{{'DIALOG.YES' | translate}}</button>
       <button class="dialog__button" mat-stroked-button (click)="onNoClick()" color="primary">{{'DIALOG.NO' | translate}}</button>

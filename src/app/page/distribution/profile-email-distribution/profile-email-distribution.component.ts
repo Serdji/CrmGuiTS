@@ -44,7 +44,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableProfilePagination();
     this.initEmailLimits();
-    this.profileEmailDistributionService.profileDistributionSubject
+    this.profileEmailDistributionService.profileEmailDistributionSubject
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
@@ -155,24 +155,24 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     }
   }
 
-  startDistribution(): void {
+  startEmailDistribution(): void {
     this.windowDialog(
       `По результатам реализации данной отправки лимит сообщений ${this.emailLimits - this.distributionProfile.totalCount}. ` +
       `Подтвердите активацию сохраненной рассылки в количестве ${this.distributionProfile.totalCount} писем ?`,
-      'startDistribution',
-      'startDistribution',
+      'startEmailDistribution',
+      'startEmailDistribution',
       this.distributionProfile.distributionId
     );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
   }
 
-  stopDistribution(): void {
-    this.windowDialog( 'DIALOG.DELETE.CANCEL_EMAIL_DISTRIBUTION', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
+  stopEmailDistribution(): void {
+    this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_EMAIL_DISTRIBUTION', 'delete', 'stopEmailDistribution', this.distributionProfile.distributionId );
   }
 
-  deleteDistribution(): void {
-    this.windowDialog( 'DIALOG.DELETE.EMAIL_DISTRIBUTION', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
+  deleteEmailDistribution(): void {
+    this.windowDialog( 'DIALOG.DISTRIBUTION.EMAIL_DISTRIBUTION', 'delete', 'deleteEmailDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {

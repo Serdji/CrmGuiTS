@@ -37,12 +37,9 @@
 			"CUSTOMER_GROUP": "Passagiergruppe"
 		},
 		"DELETE": {
-			"CANCEL_EMAIL_DISTRIBUTION": "Möchten Sie diesen E-Mail-Newsletter wirklich abbestellen?",
-			"CANCEL_SMS_DISTRIBUTION": "Möchten Sie dieses SMS-Mailing wirklich abbrechen?",
 			"CONTACT": "Möchten Sie diesen Kontakt oder diese Kontakte wirklich löschen?",
 			"CUSTOMER": "Möchten Sie den Passagier wirklich entfernen?",
 			"DOCUMENT": "Möchten Sie dieses oder mehrere Dokumente wirklich löschen?",
-			"EMAIL_DISTRIBUTION": "Möchten Sie den E-Mail-Newsletter oder die Newsletter wirklich löschen?",
 			"FIO": "Möchten Sie diesen Namen oder diese Namen wirklich löschen?",
 			"PROFILES": "Möchten Sie dieses oder mehrere Profile wirklich löschen?",
 			"PROFILE_GROUP": "Möchten Sie die Passagiergruppe oder die Passagiergruppe wirklich löschen?",
@@ -51,8 +48,14 @@
 			"SEGMENTATION": "Möchten Sie die Segmentierungsgruppe wirklich löschen?",
 			"SEGMENTATIONS": "Möchten Sie die Segmentierungsgruppe oder die Segmentierungsgruppe wirklich löschen?",
 			"SETTING_DEFAULT": "Nach dem Neustart der Anwendung werden alle Ihre Einstellungen standardmäßig festgelegt. Möchten Sie die Anwendungen wirklich neu starten?",
-			"SMS_DISTRIBUTION": "Möchten Sie den SMS-Newsletter oder die Newsletter wirklich löschen?",
 			"USER": "Möchten Sie den Benutzer wirklich löschen?"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "Möchten Sie diesen E-Mail-Newsletter wirklich abbestellen?",
+			"CANCEL_SMS_DISTRIBUTION": "Möchten Sie dieses SMS-Mailing wirklich abbrechen?",
+			"EMAIL_DISTRIBUTION": "Möchten Sie den E-Mail-Newsletter oder die Newsletter wirklich löschen?",
+			"SEND_DISTRIBUTION": "Newsletter versenden?",
+			"SMS_DISTRIBUTION": "Möchten Sie den SMS-Newsletter oder die Newsletter wirklich löschen?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Gültigkeit",
