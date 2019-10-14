@@ -1,4 +1,4 @@
-export interface Idistribution {
+export interface IEmail {
   'distributionId': number;
   'status': {
     'distributionStatusId': number;

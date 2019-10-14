@@ -1,9 +1,9 @@
-<div class="list-distribution" appAccessRights="distributions:read" appAccessMessage="true">
-  <div class="list-distribution">
+<div class="list-email" appAccessRights="distributions:read" appAccessMessage="true">
+  <div class="list-email">
     <mat-card>
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <app-table-example-distribution  *ngIf="distribution.length !== 0" [tableDataSource]="distribution"></app-table-example-distribution>
+        <app-table-example-distribution  *ngIf="email.length !== 0" [tableDataSource]="email"></app-table-example-distribution>
       </ng-template>
     </mat-card>
   </div>

@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Idistribution } from '../../../interface/idistribution';
+import { IEmail } from '../../../interface/iemail';
 import { takeWhile } from 'rxjs/operators';
 import { ListEmailService } from './list-email.service';
 import { timer } from 'rxjs';
@@ -11,18 +11,18 @@ import { timer } from 'rxjs';
 } )
 export class ListEmailComponent implements OnInit, OnDestroy {
 
-  public distribution: Idistribution[];
+  public email: IEmail[];
   public isLoader: boolean;
 
   private isActive: boolean;
 
-  constructor( private listDistributionService: ListEmailService) { }
+  constructor( private listEmailService: ListEmailService) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.isLoader = true;
     this.initDistribution();
-    this.listDistributionService.subjectDistributionDelete
+    this.listEmailService.subjectDistributionDelete
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshDistribution() );
   }
@@ -37,10 +37,10 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   }
 
   private initDistribution() {
-    this.listDistributionService.getDistribution()
+    this.listEmailService.getAllEmail()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( distribution: Idistribution[]) => {
-        this.distribution = distribution;
+      .subscribe( ( email: IEmail[]) => {
+        this.email = email;
         this.isLoader = false;
       } );
   }

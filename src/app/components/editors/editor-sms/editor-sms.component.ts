@@ -115,7 +115,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       const success = value => {
         this.distributionId = value.distributionId;
         this.dialog.closeAll();
-        // this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
+        this.router.navigate( [ `/crm/profile-sms-distribution/${value.distributionId}` ] );
       };
       const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 

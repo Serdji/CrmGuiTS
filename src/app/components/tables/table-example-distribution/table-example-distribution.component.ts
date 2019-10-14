@@ -141,7 +141,7 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
   }
 
   redirectToDistribution( id: number ): void {
-    this.router.navigate( [ `/crm/profile-distribution/${id}` ] );
+    this.router.navigate( [ `/crm/profile-email-distribution/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {
