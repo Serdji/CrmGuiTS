@@ -52,7 +52,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   private initTable() {
     const params = {
       from: 0,
-      count: 20
+      count: 10
     };
     this.listEmailService.getAllEmail( params )
       .pipe( takeWhile( _ => this.isActive ) )

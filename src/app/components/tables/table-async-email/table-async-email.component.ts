@@ -68,7 +68,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
 
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
-    this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {
@@ -102,7 +101,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       } );
   }
 
