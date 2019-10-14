@@ -5,7 +5,7 @@ import { ListServiceService } from './list-service.service';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { ListSmsRoutes } from './list-email.routing';
+import { ListSmsRoutes } from './list-sms.routing';
 
 
 
