@@ -99,7 +99,6 @@ export class TableAsyncSmsComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       } );
   }
 
