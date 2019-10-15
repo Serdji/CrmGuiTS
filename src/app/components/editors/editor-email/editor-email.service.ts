@@ -22,7 +22,7 @@ export class EditorEmailService {
   }
 
   getTemplates(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/distribution/templates' ).pipe( this.retryRequestService.retry() );
+    return this.http.get( this.configService.crmApi + '/crm/distribution/templates/email' ).pipe( this.retryRequestService.retry() );
   }
 
   getEmailLimits(): Observable<any> {
