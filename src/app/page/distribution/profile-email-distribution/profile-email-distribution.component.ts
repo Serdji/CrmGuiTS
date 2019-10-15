@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
-import { IdistributionProfile } from '../../../interface/idistribution-profile';
+import { IDistributionProfile } from '../../../interface/idistribution-profile';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
@@ -21,7 +21,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
   public isDistributionProfile: boolean;
-  public distributionProfile: IdistributionProfile;
+  public distributionProfile: IDistributionProfile;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
   public deleteButtonDisabled: boolean;
@@ -80,7 +80,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
         };
         this.profileEmailDistributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
+          .subscribe( ( distributionProfile: IDistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
   }
 
@@ -93,7 +93,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     };
     this.profileEmailDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( distributionProfile: IdistributionProfile ) => {
+      .subscribe( ( distributionProfile: IDistributionProfile ) => {
         if ( distributionProfile ) {
           this.tableAsyncService.countPage = distributionProfile.totalCount;
           this.distributionProfile = distributionProfile;
@@ -113,7 +113,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private disabledButton( distributionProfile: IdistributionProfile ) {
+  private disabledButton( distributionProfile: IDistributionProfile ) {
 
     switch ( distributionProfile.status.distributionStatusId ) {
       case 1:

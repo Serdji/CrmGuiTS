@@ -1,4 +1,4 @@
-export interface IdistributionProfile {
+export interface IDistributionProfile {
   'customers': {
     'customerId': number;
     'distributionCustomerId': number;
@@ -15,32 +15,14 @@ export interface IdistributionProfile {
       'distributionCustomerStatusId': number;
       'statusNameRus': string
     }
-    distributionStatuses: {
-      'bouncedCount': number
-      'bouncedNameRus': string;
-      'clickedCount': number
-      'clickedNameRus': string;
-      'deliveredCount': number
-      'deliveredNameRus': string;
-      'errorCount': number
-      'errorNameRus': string;
-      'notSentCount': number
-      'notSentNameRus': string;
-      'readCount': number
-      'readNameRus': string;
-      'rejectedCount': number
-      'rejectedNameRus': string;
-      'sendToCustomerCount': number
-      'sendToCustomerNameRus': string;
-      'sentToGatewayCount': number
-      'sentToGatewayNameRus': string;
-    };
+    distributionStatuses: IDistributionStatuses;
   }[];
   'distributionId': number;
   'status': {
     'distributionStatusId': number;
     'statusNameRus': string
   };
+  distributionStatuses: IDistributionStatuses;
   'totalCount': number;
   'dateFrom': string;
   'dateTo': string;
@@ -49,4 +31,25 @@ export interface IdistributionProfile {
   'subject': string;
   'text': string;
   'footer': string;
+}
+
+interface IDistributionStatuses {
+  'bouncedCount': number;
+  'bouncedNameRus': string;
+  'clickedCount': number;
+  'clickedNameRus': string;
+  'deliveredCount': number;
+  'deliveredNameRus': string;
+  'errorCount': number;
+  'errorNameRus': string;
+  'notSentCount': number;
+  'notSentNameRus': string;
+  'readCount': number;
+  'readNameRus': string;
+  'rejectedCount': number;
+  'rejectedNameRus': string;
+  'sendToCustomerCount': number;
+  'sendToCustomerNameRus': string;
+  'sentToGatewayCount': number;
+  'sentToGatewayNameRus': string;
 }

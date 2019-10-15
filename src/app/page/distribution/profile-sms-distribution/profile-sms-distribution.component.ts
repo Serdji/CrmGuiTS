@@ -7,7 +7,7 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
 import { ProfileSmsDistributionService } from './profile-sms-distribution.service';
 import { IpagPage } from '../../../interface/ipag-page';
-import { IdistributionProfile } from '../../../interface/idistribution-profile';
+import { IDistributionProfile } from '../../../interface/idistribution-profile';
 import * as R from 'ramda';
 import { DistributionService } from '../distribution.service';
 
@@ -23,7 +23,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
   public deleteButtonDisabled: boolean;
-  public distributionProfile: IdistributionProfile;
+  public distributionProfile: IDistributionProfile;
 
 
   private isActive: boolean;
@@ -75,7 +75,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
         };
         this.profileSmsDistributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
+          .subscribe( ( distributionProfile: IDistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
   }
 
@@ -88,7 +88,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     };
     this.profileSmsDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( distributionProfile: IdistributionProfile ) => {
+      .subscribe( ( distributionProfile: IDistributionProfile ) => {
         if ( distributionProfile ) {
           this.tableAsyncService.countPage = distributionProfile.totalCount;
           this.distributionProfile = distributionProfile;
@@ -99,7 +99,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private disabledButton( distributionProfile: IdistributionProfile ) {
+  private disabledButton( distributionProfile: IDistributionProfile ) {
 
     switch ( distributionProfile.status.distributionStatusId ) {
       case 1:
