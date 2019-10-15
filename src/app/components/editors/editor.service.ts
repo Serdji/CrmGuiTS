@@ -24,4 +24,8 @@ export class EditorService {
   saveFromPromoCode( params: IprofileSearch ): Observable<any> {
     return this.http.post( this.configService.crmApi + '/crm/distribution/createFromPromocode', params ).pipe( this.retryRequestService.retry() );
   }
+
+  getTemplate( id: number ): Observable<any> {
+    return this.http.get( this.configService.crmApi + `/crm/distribution/templates/${id}` ).pipe( this.retryRequestService.retry() );
+  }
 }

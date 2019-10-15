@@ -125,7 +125,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       .subscribe( value => {
         this.formDistribution.get( 'text' ).patchValue( '' );
         if ( value ) {
-          this.editorEmailService.getTemplate( value )
+          this.editorService.getTemplate( value )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( ( template: ITemplate ) => {
               this.formDistribution.get( 'text' ).patchValue( template.text );

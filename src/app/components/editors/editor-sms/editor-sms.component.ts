@@ -11,6 +11,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EditorService } from '../editor.service';
 import * as _ from 'lodash';
+import { ITemplates } from '../../../interface/itemplates';
 
 
 @Component( {
@@ -28,6 +29,8 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   public formSms: FormGroup;
   public buttonDisabled: boolean;
+  public templates: ITemplates[];
+  public template: ITemplate;
 
   private isActive: boolean;
   private distributionId: number;
@@ -48,6 +51,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.insertTemplate();
     this.initIsButtonSave();
     this.formFilling();
+    this.initTemplates();
   }
 
   private formFilling() {
@@ -66,10 +70,12 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.newParams();
   }
 
-  private initIsButtonSave() {
-    this.formSms.valueChanges
+  private initTemplates() {
+    this.editorSmsService.getTemplates()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( _ => this.buttonDisabled = this.formSms.invalid );
+      .subscribe( ( templates: ITemplates[] ) => {
+        this.templates = templates;
+      } );
   }
 
   private insertTemplate() {
@@ -78,11 +84,20 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       .subscribe( value => {
         this.formSms.get( 'text' ).patchValue( '' );
         if ( value ) {
-          this.formSms.get( 'text' ).patchValue( value );
+          this.editorService.getTemplate( value )
+            .pipe( takeWhile( _ => this.isActive ) )
+            .subscribe( ( template: ITemplate ) => {
+              this.formSms.get( 'text' ).patchValue( template.text );
+            } );
         }
       } );
   }
 
+  private initIsButtonSave() {
+    this.formSms.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.buttonDisabled = this.formSms.invalid );
+  }
 
   private windowDialog( messDialog: string, status: string, params: any = '' ) {
     this.dialog.open( DialogComponent, {
