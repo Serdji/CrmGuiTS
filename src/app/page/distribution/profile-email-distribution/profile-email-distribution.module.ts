@@ -7,7 +7,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ProfileEmailDistributionRoutes } from './profile-email-distribution.routing';
 import { ProfileEmailDistributionComponent } from './profile-email-distribution.component';
-import { ProfileEmailDistributionService } from './profile-email-distribution.service';
+import { DistributionService } from '../distribution.service';
 
 @NgModule( {
   imports: [
@@ -20,7 +20,7 @@ import { ProfileEmailDistributionService } from './profile-email-distribution.se
     TranslateModule
   ],
   declarations: [ ProfileEmailDistributionComponent ],
-  providers: [ ProfileEmailDistributionService ]
+  providers: [ DistributionService ]
 } )
 export class ProfileEmailDistributionModule {
 }

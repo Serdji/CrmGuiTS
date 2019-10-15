@@ -6,6 +6,10 @@ import { takeWhile } from 'rxjs/operators';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
 import { ProfileSmsDistributionService } from './profile-sms-distribution.service';
+import { IpagPage } from '../../../interface/ipag-page';
+import { IdistributionProfile } from '../../../interface/idistribution-profile';
+import * as R from 'ramda';
+import { DistributionService } from '../distribution.service';
 
 @Component({
   selector: 'app-profile-sms-distribution',
@@ -19,6 +23,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
   public deleteButtonDisabled: boolean;
+  public distributionProfile: IdistributionProfile;
 
 
   private isActive: boolean;
@@ -28,7 +33,8 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
-    private profileSmsDistributionService: ProfileSmsDistributionService,
+    private distributionService: DistributionService,
+
   ) { }
 
   ngOnInit(): void {
@@ -36,7 +42,8 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     this.isLoader = false;
     this.isDistributionProfile = false;
     this.initQueryParams();
-    this.profileSmsDistributionService.profileSmsDistributionSubject
+    this.initTableProfilePagination();
+    this.distributionService.distributionSubject
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
@@ -52,7 +59,43 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
       .subscribe( params => {
         if ( params.id ) {
           this.smsProfileId = +params.id;
-          console.log( this.smsProfileId );
+          this.initTableProfile( this.smsProfileId );
+        }
+      } );
+  }
+
+  private initTableProfilePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          distributionId: this.smsProfileId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.distributionService.getProfileDistribution( paramsAndCount )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
+      } );
+  }
+
+
+  private initTableProfile( id: number ) {
+    const params = {
+      distributionId: id,
+      from: 0,
+      count: 10
+    };
+    this.distributionService.getProfileDistribution( params )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( distributionProfile: IdistributionProfile ) => {
+        if ( distributionProfile ) {
+          this.tableAsyncService.countPage = distributionProfile.totalCount;
+          this.distributionProfile = distributionProfile;
+          if( !R.isNil( this.distributionProfile.customers ) ) this.isDistributionProfile = true;
+          this.isLoader = false;
+          // this.disabledButton( distributionProfile );
         }
       } );
   }

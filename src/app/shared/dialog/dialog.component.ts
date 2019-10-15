@@ -280,7 +280,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.profileEmailDistributionService.startEmailDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
-            this.profileEmailDistributionService.profileEmailDistributionSubject.next();
+            this.profileEmailDistributionService.distributionSubject.next();
             this.dialogRef.close();
           } );
         break;
@@ -304,7 +304,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.profileEmailDistributionService.profileEmailDistributionSubject.next();
+            this.profileEmailDistributionService.distributionSubject.next();
           } );
         break;
       case 'startSmsDistribution':

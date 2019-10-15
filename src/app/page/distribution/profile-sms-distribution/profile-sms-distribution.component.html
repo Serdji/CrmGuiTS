@@ -81,8 +81,8 @@
   <mat-card *ngIf="isDistributionProfile" class="profile-sms-distribution__table">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-<!--      <app-table-async-distribution-profile [tableDataSource]="distributionProfile.customers">-->
-<!--      </app-table-async-distribution-profile>-->
+      <app-table-async-distribution-profile [tableDataSource]="distributionProfile.customers">
+      </app-table-async-distribution-profile>
     </ng-template>
   </mat-card>
 

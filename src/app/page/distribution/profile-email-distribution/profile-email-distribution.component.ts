@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProfileEmailDistributionService } from './profile-email-distribution.service';
 import { takeWhile } from 'rxjs/operators';
 import { IdistributionProfile } from '../../../interface/idistribution-profile';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -10,6 +9,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { EditorEmailService } from '../../../components/editors/editor-email/editor-email.service';
+import { DistributionService } from '../distribution.service';
 
 @Component( {
   selector: 'app-profile-email-distribution',
@@ -31,7 +31,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private profileEmailDistributionService: ProfileEmailDistributionService,
+    private distributionService: DistributionService,
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
     private editorEmailService: EditorEmailService,
@@ -44,7 +44,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableProfilePagination();
     this.initEmailLimits();
-    this.profileEmailDistributionService.profileEmailDistributionSubject
+    this.distributionService.distributionSubject
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
@@ -76,7 +76,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
           from: pageIndex,
           count: value.pageSize
         };
-        this.profileEmailDistributionService.getProfileDistribution( paramsAndCount )
+        this.distributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
@@ -89,7 +89,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
       from: 0,
       count: 10
     };
-    this.profileEmailDistributionService.getProfileDistribution( params )
+    this.distributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( distributionProfile: IdistributionProfile ) => {
         if ( distributionProfile ) {
