@@ -49,7 +49,6 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
         this.stopButtonDisabled = true;
         this.isActive = true;
         this.isLoader = true;
-        console.log( 'test' );
       } );
   }
 

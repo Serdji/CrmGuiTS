@@ -5,6 +5,7 @@ import { takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
 import { timer } from 'rxjs';
 import { ListSmsService } from './list-sms.service';
+import { ISms } from '../../../interface/isms';
 
 @Component( {
   selector: 'app-list-sms',
@@ -14,7 +15,7 @@ import { ListSmsService } from './list-sms.service';
 export class ListSmsComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
-  public sms: any;
+  public sms: ISms;
 
   private isActive: boolean;
 
@@ -45,7 +46,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
         };
         this.listSmsService.getAllSms( params )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( sms => this.tableAsyncService.setTableDataSource( sms.result ) );
+          .subscribe( ( sms: ISms ) => this.tableAsyncService.setTableDataSource( sms.result ) );
       } );
   }
 
@@ -56,10 +57,9 @@ export class ListSmsComponent implements OnInit, OnDestroy {
     };
     this.listSmsService.getAllSms( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( sms => {
+      .subscribe( ( sms: ISms ) => {
         this.tableAsyncService.countPage = sms.totalRows;
         this.sms = sms;
-        console.log( this.sms );
         this.isLoader = false;
       } );
   }
