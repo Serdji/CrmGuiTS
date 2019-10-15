@@ -167,7 +167,7 @@ export class TableAsyncSmsComponent implements OnInit, OnDestroy {
   }
 
   redirectToDistribution( id: number ): void {
-    this.router.navigate( [ `/crm/profile-email-distribution/${id}` ] );
+    this.router.navigate( [ `/crm/profile-sms-distribution/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {

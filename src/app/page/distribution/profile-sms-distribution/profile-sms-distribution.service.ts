@@ -15,6 +15,6 @@ export class ProfileSmsDistributionService {
   ) { }
 
   getProfileDistribution( params: any ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/distribution/search`, { params } ).pipe( this.retryRequestService.retry() );
+    return this.http.get( `${this.configService.crmApi}/crm/distribution/sms`, { params } ).pipe( this.retryRequestService.retry() );
   }
 }

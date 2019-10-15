@@ -49,6 +49,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
         this.stopButtonDisabled = true;
         this.isActive = true;
         this.isLoader = true;
+        this.initTableProfile( this.smsProfileId );
       } );
   }
 
