@@ -84,19 +84,11 @@
               <mat-grid-tile [colspan]="3" [rowspan]="1">
                 <div class="table__grid">
                   <span [matBadge]="element.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.NOT_SENT' | translate}}</span>
-                  <span [matBadge]="element.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.SENT_TO_GATEWAY' | translate}}</span>
                   <span [matBadge]="element.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.SEND_TO_CUSTOMER' | translate}}</span>
                   <span [matBadge]="element.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.ERROR' | translate}}</span>
                 </div>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="3" [rowspan]="1">
-                <div class="table__grid">
-                  <span [matBadge]="element.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.DELIVERED' | translate}}</span>
-                  <span [matBadge]="element.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.READ' | translate}}</span>
-                  <span [matBadge]="element.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.CLICKED' | translate}}</span>
-                  <span [matBadge]="element.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.BOUNCED' | translate}}</span>
-                  <span [matBadge]="element.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.STATUSES.REJECTED' | translate}}</span>
-                </div>
               </mat-grid-tile>
               <mat-grid-tile [colspan]="1" [rowspan]="1"></mat-grid-tile>
             </mat-grid-list>
