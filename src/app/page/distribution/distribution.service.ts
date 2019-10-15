@@ -21,11 +21,11 @@ export class DistributionService {
     return this.http.get( `${this.configService.crmApi}/crm/distribution/search`, { params } ).pipe( this.retryRequestService.retry() );
   }
 
-  startEmailDistribution( id: number ): Observable<any> {
+  startDistribution( id: number ): Observable<any> {
     return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Start`, { id } ).pipe( this.retryRequestService.retry() );
   }
 
-  stopEmailDistribution( id: number ): Observable<any> {
+  stopDistribution( id: number ): Observable<any> {
     return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Cancel`, { id } ).pipe( this.retryRequestService.retry() );
   }
 }

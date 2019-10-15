@@ -1,44 +1,44 @@
 <div class="profile-sms-distribution">
 
   <mat-card class="profile-sms-distribution__email">
-    <mat-progress-bar *ngIf="isLoader; else loaserEmail" mode="buffer"></mat-progress-bar>
-    <ng-template #loaserEmail>
+    <mat-progress-bar *ngIf="isLoader; else loaserSms" mode="buffer"></mat-progress-bar>
+    <ng-template #loaserSms>
       <mat-card-header class="profile-sms-distribution__header">
-<!--        <mat-card-title>{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.SUBJECT' | translate}} <b>{{ distributionProfile.subject }}</b></mat-card-title>-->
+        <mat-card-title>{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.SUBJECT' | translate}} <b>{{ distributionProfile.subject }}</b></mat-card-title>
       </mat-card-header>
       <mat-divider></mat-divider>
       <mat-card-content class="profile-sms-distribution__content">
-<!--        <div [innerHtml]="distributionProfile.text | safeHtml"></div>-->
+        <div [innerHtml]="distributionProfile.text | safeHtml"></div>
       </mat-card-content>
       <mat-divider></mat-divider>
       <mat-card-actions class="profile-sms-distribution__action">
-<!--        <mat-grid-list cols="5" rowHeight="200px">-->
-<!--          <mat-grid-tile [colspan]="2" [rowspan]="1">-->
-<!--            <div class="profile-sms-distribution__grid">-->
+        <mat-grid-list cols="5" rowHeight="200px">
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <div class="profile-sms-distribution__grid">
 <!--              <span>{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.DATE' | translate}} <b> {{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.FROM' | translate}} {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}, {{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.TO' | translate}} {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>-->
 <!--              <span>{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.LAST_TRY' | translate}} <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>-->
 <!--              <span>{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUS' | translate}} <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>-->
 <!--              <span *ngIf="distributionProfile.errorMessage" class="profile-sms-distribution__error">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.ERROR_MESSAGE' | translate}} <b> {{ distributionProfile.errorMessage }} </b>  </span>-->
-<!--            </div>-->
-<!--          </mat-grid-tile>-->
-<!--          <mat-grid-tile [colspan]="2" [rowspan]="1">-->
-<!--            <div class="profile-sms-distribution__grid">-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.NOT_SENT' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.SENT_TO_GATEWAY' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.SEND_TO_CUSTOMER' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.ERROR' | translate}}</span>-->
-<!--            </div>-->
-<!--          </mat-grid-tile>-->
-<!--          <mat-grid-tile [colspan]="1" [rowspan]="1">-->
-<!--            <div class="profile-sms-distribution__grid">-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.DELIVERED' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.READ' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.CLICKED' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.BOUNCED' | translate}}</span>-->
-<!--              <span [matBadge]="distributionProfile.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.REJECTED' | translate}}</span>-->
-<!--            </div>-->
-<!--          </mat-grid-tile>-->
-<!--        </mat-grid-list>-->
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="2" [rowspan]="1">
+            <div class="profile-sms-distribution__grid">
+              <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.NOT_SENT' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sentToGatewayCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.SENT_TO_GATEWAY' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.sendToCustomerCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.SEND_TO_CUSTOMER' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.ERROR' | translate}}</span>
+            </div>
+          </mat-grid-tile>
+          <mat-grid-tile [colspan]="1" [rowspan]="1">
+            <div class="profile-sms-distribution__grid">
+              <span [matBadge]="distributionProfile.distributionStatuses.deliveredCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.DELIVERED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.readCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.READ' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.clickedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.CLICKED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.bouncedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.BOUNCED' | translate}}</span>
+              <span [matBadge]="distributionProfile.distributionStatuses.rejectedCount" matBadgeOverlap="false" matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.REJECTED' | translate}}</span>
+            </div>
+          </mat-grid-tile>
+        </mat-grid-list>
         <div class="profile-sms-distribution__button-wrapper">
           <button
             class="profile-sms-distribution__button"

@@ -39,7 +39,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.isActive = true;
-    this.isLoader = false;
+    this.isLoader = true;
     this.isDistributionProfile = false;
     this.initQueryParams();
     this.initTableProfilePagination();
@@ -95,9 +95,35 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
           this.distributionProfile = distributionProfile;
           if( !R.isNil( this.distributionProfile.customers ) ) this.isDistributionProfile = true;
           this.isLoader = false;
-          // this.disabledButton( distributionProfile );
+          this.disabledButton( distributionProfile );
         }
       } );
+  }
+
+  private disabledButton( distributionProfile: IdistributionProfile ) {
+
+    switch ( distributionProfile.status.distributionStatusId ) {
+      case 1:
+        this.startButtonDisabled = false;
+        this.stopButtonDisabled = true;
+        this.deleteButtonDisabled = false;
+        break;
+      case 2:
+      case 3:
+        this.startButtonDisabled = true;
+        this.stopButtonDisabled = false;
+        this.deleteButtonDisabled = true;
+        break;
+      case 5:
+        this.startButtonDisabled = true;
+        this.stopButtonDisabled = true;
+        this.deleteButtonDisabled = true;
+        break;
+      default:
+        this.startButtonDisabled = true;
+        this.stopButtonDisabled = true;
+        this.deleteButtonDisabled = true;
+    }
   }
 
   private windowDialog( messDialog: string, status: string, card: string = '', params: any = '' ) {
@@ -125,11 +151,11 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   }
 
   stopSmsDistribution(): void {
-    // this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_SMS_DISTRIBUTION', 'delete', 'stopSmsDistribution', this.smsProfileId );
+    this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_SMS_DISTRIBUTION', 'delete', 'stopSmsDistribution', this.smsProfileId );
   }
 
   deleteSmsDistribution(): void {
-    // this.windowDialog( 'DIALOG.DISTRIBUTION.SMS_DISTRIBUTION', 'delete', 'deleteSmsDistribution', this.smsProfileId );
+    this.windowDialog( 'DIALOG.DISTRIBUTION.SMS_DISTRIBUTION', 'delete', 'deleteSmsDistribution', this.smsProfileId );
   }
 
   ngOnDestroy(): void {

@@ -17,10 +17,8 @@ import { IcustomerGroup } from '../../interface/icustomer-group';
 import * as _ from 'lodash';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
 import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-codes/add-promotions-codes.service';
-import { EditorEmailService } from '../../components/editors/editor-email/editor-email.service';
 import { ListEmailService } from '../../page/distribution/list-email/list-email.service';
-import { ProfileEmailDistributionService } from '../../page/distribution/profile-email-distribution/profile-email-distribution.service';
-import { ProfileSmsDistributionService } from '../../page/distribution/profile-sms-distribution/profile-sms-distribution.service';
+import { DistributionService } from '../../page/distribution/distribution.service';
 
 @Component( {
   selector: 'app-dialog',
@@ -50,8 +48,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     private listSegmentationService: ListSegmentationService,
     private profileGroupService: ProfileGroupService,
     private listEmailService: ListEmailService,
-    private profileEmailDistributionService: ProfileEmailDistributionService,
-    private profileSmsDistributionService: ProfileSmsDistributionService,
+    private distributionService: DistributionService,
     private addPromotionsService: AddPromotionsService,
     private addPromotionsCodesService: AddPromotionsCodesService,
     private auth: AuthService,
@@ -277,10 +274,10 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'startEmailDistribution':
-        this.profileEmailDistributionService.startEmailDistribution( this.data.params )
+        this.distributionService.startDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
-            this.profileEmailDistributionService.distributionSubject.next();
+            this.distributionService.distributionSubject.next();
             this.dialogRef.close();
           } );
         break;
@@ -300,23 +297,20 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'stopEmailDistribution':
-        this.profileEmailDistributionService.stopEmailDistribution( this.data.params )
+        this.distributionService.stopDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.profileEmailDistributionService.distributionSubject.next();
+            this.distributionService.distributionSubject.next();
           } );
         break;
       case 'startSmsDistribution':
-        // this.profileSmsDistributionService.startSmsDistribution( this.data.params )
-        //   .pipe( takeWhile( _ => this.isActive ) )
-        //   .subscribe( _ => {
-        //     this.profileSmsDistributionService.profileSmsDistributionSubject.next();
-        //     this.dialogRef.close();
-        //   } );
-        console.log( this.data.params );
-        this.dialogRef.close();
-        this.profileSmsDistributionService.profileSmsDistributionSubject.next();
+        this.distributionService.startDistribution( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.distributionService.distributionSubject.next();
+            this.dialogRef.close();
+          } );
         break;
       case 'displayeds':
         // this.listEmailService.deleteSmsDistributions( this.data.params )
@@ -324,7 +318,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         //   .subscribe( _ => {
         //     this.dialogRef.close();
         //   } );
-        // break;
+        break;
       case 'deleteSmsDistribution':
         // this.listEmailService.deleteSmsDistribution( this.data.params )
         //   .pipe( takeWhile( _ => this.isActive ) )
@@ -332,15 +326,15 @@ export class DialogComponent implements OnInit, OnDestroy {
         //     this.dialogRef.close();
         //     this.router.navigate( [ '/crm/list-sms-distribution' ] );
         //   } );
-        // break;
+        break;
       case 'stopSmsDistribution':
-        // this.profileSmsDistributionService.stopSmsDistribution( this.data.params )
-        //   .pipe( takeWhile( _ => this.isActive ) )
-        //   .subscribe( _ => {
-        //     this.dialogRef.close();
-        //     this.profileSmsDistributionService.profileSmsDistributionSubject.next();
-        //   } );
-        // break;
+        this.distributionService.stopDistribution( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.distributionService.distributionSubject.next();
+          } );
+        break;
       case 'deletePromotions':
         this.addPromotionsService.deletePromotions( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
