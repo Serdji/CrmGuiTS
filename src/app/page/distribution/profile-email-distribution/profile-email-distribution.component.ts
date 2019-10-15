@@ -160,7 +160,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
       `По результатам реализации данной отправки лимит сообщений ${this.emailLimits - this.distributionProfile.totalCount}. ` +
       `Подтвердите активацию сохраненной рассылки в количестве ${this.distributionProfile.totalCount} писем ?`,
       'startEmailDistribution',
-      'starEmailtDistribution',
+      'starEmailDistribution',
       this.distributionProfile.distributionId
     );
     this.startButtonDisabled = true;
