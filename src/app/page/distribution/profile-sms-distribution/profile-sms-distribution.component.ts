@@ -34,7 +34,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
     private distributionService: DistributionService,
-
+    private profileSmsDistributionService: ProfileSmsDistributionService,
   ) { }
 
   ngOnInit(): void {
@@ -74,7 +74,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
           from: pageIndex,
           count: value.pageSize
         };
-        this.distributionService.getProfileDistribution( paramsAndCount )
+        this.profileSmsDistributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
@@ -87,7 +87,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
       from: 0,
       count: 10
     };
-    this.distributionService.getProfileDistribution( params )
+    this.profileSmsDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( distributionProfile: IdistributionProfile ) => {
         if ( distributionProfile ) {

@@ -43,7 +43,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
           from: pageIndex,
           count: value.pageSize
         };
-        this.listSmsService.getAllEmail( params )
+        this.listSmsService.getAllSms( params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( sms => this.tableAsyncService.setTableDataSource( sms.result ) );
       } );
@@ -54,11 +54,12 @@ export class ListSmsComponent implements OnInit, OnDestroy {
       from: 0,
       count: 10
     };
-    this.listSmsService.getAllEmail( params )
+    this.listSmsService.getAllSms( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( sms => {
         this.tableAsyncService.countPage = sms.totalRows;
         this.sms = sms;
+        console.log( this.sms );
         this.isLoader = false;
       } );
   }

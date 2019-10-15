@@ -8,9 +8,6 @@ import { RetryRequestService } from '../../../services/retry-request.service';
   providedIn: 'root'
 })
 export class ProfileSmsDistributionService {
-
-  public profileSmsDistributionSubject = new Subject();
-
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
@@ -20,13 +17,4 @@ export class ProfileSmsDistributionService {
   getProfileDistribution( params: any ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/distribution/search`, { params } ).pipe( this.retryRequestService.retry() );
   }
-
-  startSmsDistribution( id: number ): Observable<any> {
-    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Start`, { id } ).pipe( this.retryRequestService.retry() );
-  }
-
-  stopSmsDistribution( id: number ): Observable<any> {
-    return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Cancel`, { id } ).pipe( this.retryRequestService.retry() );
-  }
-
 }

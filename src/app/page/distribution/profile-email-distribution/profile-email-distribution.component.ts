@@ -10,6 +10,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { EditorEmailService } from '../../../components/editors/editor-email/editor-email.service';
 import { DistributionService } from '../distribution.service';
+import { ProfileEmailDistributionService } from './profile-email-distribution.service';
 
 @Component( {
   selector: 'app-profile-email-distribution',
@@ -35,6 +36,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
     private editorEmailService: EditorEmailService,
+    private profileEmailDistributionService: ProfileEmailDistributionService
   ) { }
 
   ngOnInit(): void {
@@ -76,7 +78,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
           from: pageIndex,
           count: value.pageSize
         };
-        this.distributionService.getProfileDistribution( paramsAndCount )
+        this.profileEmailDistributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
@@ -89,7 +91,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
       from: 0,
       count: 10
     };
-    this.distributionService.getProfileDistribution( params )
+    this.profileEmailDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( distributionProfile: IdistributionProfile ) => {
         if ( distributionProfile ) {

@@ -17,10 +17,6 @@ export class DistributionService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getProfileDistribution( params: any ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/distribution/search`, { params } ).pipe( this.retryRequestService.retry() );
-  }
-
   startDistribution( id: number ): Observable<any> {
     return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Start`, { id } ).pipe( this.retryRequestService.retry() );
   }
