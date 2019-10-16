@@ -86,12 +86,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
   }
 
   private initDataSource() {
-    _.each( this.tableDataSource, value => {
-      _( value )
-        .set( 'statusNameRus', value.status.statusNameRus )
-        .set( 'distributionStatusId', value.status.distributionStatusId )
-        .value();
-    } );
     this.dataSourceFun( this.tableDataSource );
   }
 
