@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as R from 'ramda';
 import * as moment from 'moment';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-dynamic-form',
@@ -14,6 +15,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public dynamicForm: FormGroup;
   public objectProps: any;
   public splitObjectProps: any;
+  public buttonDisabled: boolean;
 
   private isActive: boolean;
   private dataObject: any = {};
@@ -29,7 +31,9 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.initParameterConversion();
+    this.initButtonDisabled();
   }
+
 
   private initParameterConversion() {
     const typeCheck = ( typeNumber: number ): string => {
@@ -54,6 +58,13 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       this.initSplitObjectProps();
     } );
     mapParamsDynamicForm( this.paramsDynamicForm );
+    this.buttonDisabled = this.dynamicForm.invalid;
+  }
+
+  private initButtonDisabled() {
+    this.dynamicForm.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.buttonDisabled = this.dynamicForm.invalid );
   }
 
   private initDynamicForm() {
@@ -101,11 +112,10 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   }
 
   onDynamicFormEmit(): void {
-    console.log( this.dynamicForm. );
-    // const objParserDate = {};
-    // const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
-    // R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
-    // this.dynamicFormEmit.emit( objParserDate );
+    const objParserDate = {};
+    const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
+    R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
+    this.dynamicFormEmit.emit( objParserDate );
   }
 
   ngOnDestroy(): void {
