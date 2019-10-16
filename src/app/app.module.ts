@@ -14,8 +14,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { NgxMaskModule, IConfig } from 'ngx-mask';
-import { ProfileSmsDistributionComponent } from './page/distribution/profile-sms-distribution/profile-sms-distribution.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 if ( environment.production ) {
@@ -26,7 +25,6 @@ export function createTranslateLoader( http: HttpClient ) {
   return new TranslateHttpLoader( http, 'assets/i18n/', '.json' );
 }
 
-export let options: Partial<IConfig> | (() => Partial<IConfig>);
 
 @NgModule( {
   declarations: [ AppComponent ],
@@ -37,7 +35,7 @@ export let options: Partial<IConfig> | (() => Partial<IConfig>);
     BrowserAnimationsModule,
     HttpClientModule,
     ServicesModule,
-    NgxMaskModule.forRoot(options),
+    NgxMaskModule.forRoot(),
     SharedModule.forRoot(),
     ComponentsModule.forRoot(),
     ServiceWorkerModule.register( 'ngsw-worker.js', { enabled: environment.production } ),
