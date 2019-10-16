@@ -47,6 +47,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
           placeholder: paramsDynamicForm.prompt,
           value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
           type: typeCheck( paramsDynamicForm.dataType ),
+          validators: { required: !paramsDynamicForm.nullable }
         }
       } );
       this.initDynamicForm();
@@ -60,12 +61,13 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     const mapKeys = R.map( objMerge );
     const composeObjProps = R.compose( mapKeys, R.keys );
     this.objectProps = composeObjProps( this.dataObject );
-
     const formGroup = {};
-    const formControls = prop => new FormControl(
-      R.view( R.lensPath( [ prop, 'value' ] ), this.dataObject ) || '',
-      this.mapValidators( R.view( R.lensPath( [ prop, 'validation' ] ), this.dataObject ) )
-    );
+    const formControls = prop => {
+      return new FormControl(
+        R.path([ prop, 'value' ], this.dataObject ) || '',
+        this.mapValidators( R.path( [ prop, 'validators' ], this.dataObject ) )
+      );
+    }
     const setFormGroup = prop => formGroup[ prop ] = formControls( prop );
     const mapPerson = R.map( setFormGroup );
     const composeFormControl = R.compose( mapPerson, R.keys );
@@ -99,10 +101,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   }
 
   onDynamicFormEmit(): void {
-    const objParserDate = {};
-    const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
-    R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
-    this.dynamicFormEmit.emit( objParserDate );
+    console.log( this.dynamicForm. );
+    // const objParserDate = {};
+    // const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
+    // R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
+    // this.dynamicFormEmit.emit( objParserDate );
   }
 
   ngOnDestroy(): void {
