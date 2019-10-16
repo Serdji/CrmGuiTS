@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ListDistributionComponent } from './list-distribution.component';
+import { ListEmailComponent } from './list-email.component';
 import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
-import { ListDistributionService } from './list-distribution.service';
+import { ListEmailService } from './list-email.service';
 import { DirectivesModule } from '../../../directives/directives.module';
-import { ListDistributionRoutes } from './list-distribution.routing';
+import { ListEmailRoutes } from './list-email.routing';
 
 @NgModule( {
   imports: [
@@ -13,10 +13,10 @@ import { ListDistributionRoutes } from './list-distribution.routing';
     SharedModule,
     ComponentsModule,
     DirectivesModule,
-    ListDistributionRoutes
+    ListEmailRoutes
   ],
-  declarations: [ ListDistributionComponent ],
-  providers: [ ListDistributionService ]
+  declarations: [ ListEmailComponent ],
+  providers: [ ListEmailService ]
 } )
-export class ListDistributionModule {
+export class ListEmailModule {
 }

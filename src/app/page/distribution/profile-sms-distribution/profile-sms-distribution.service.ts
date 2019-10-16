@@ -1,21 +1,20 @@
 import { Injectable } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
-import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EditorSmsService {
-
+export class ProfileSmsDistributionService {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
     private retryRequestService: RetryRequestService
   ) { }
 
-  getTemplates(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/distribution/templates/sms' ).pipe( this.retryRequestService.retry() );
+  getProfileDistribution( params: any ): Observable<any> {
+    return this.http.get( `${this.configService.crmApi}/crm/distribution/sms`, { params } ).pipe( this.retryRequestService.retry() );
   }
 }

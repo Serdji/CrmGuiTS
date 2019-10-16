@@ -67,7 +67,8 @@ export class SidenavService {
         icon: 'email',
         claims: 'distributions:read',
         link: [
-          { url: '/crm/list-distribution', title: 'MENU.DISTRIBUTIONS.LIST_DISTRIBUTIONS' },
+          { url: '/crm/list-email', title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' },
+          { url: '/crm/list-sms', title: 'MENU.DISTRIBUTIONS.LIST_SMS' },
         ]
       },
       {
@@ -93,8 +94,8 @@ export class SidenavService {
         icon: 'event',
         claims: 'tasks:read',
         link: [
-          { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
           { url: '/crm/list-event', title: 'MENU.EVENT.LIST_EVENT' },
+          { url: '/crm/add-event', title: 'MENU.EVENT.ADD_EVENT' },
         ]
       },
       {

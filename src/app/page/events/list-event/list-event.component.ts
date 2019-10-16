@@ -9,7 +9,6 @@ import * as moment from 'moment';
 import { forkJoin } from 'rxjs';
 import { TranslateService } from '@ngx-translate/core';
 import { ActivatedRoute } from '@angular/router';
-import { IPromoCode } from '../../../interface/ipromo-code';
 import { IpagPage } from '../../../interface/ipag-page';
 import { ITaskLog } from '../../../interface/itask-log';
 import { TableAsyncService } from '../../../services/table-async.service';
@@ -50,7 +49,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableFilter();
     this.initTableTasks();
-    this.initTableTableTasksLog();
+    this.initTableTasksLog();
   }
 
   private initQueryParams() {
@@ -58,7 +57,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( res: { promotionName: number[], from: number, count: number } ) => {
         const isRes = !R.isEmpty( res );
-        if ( isRes ) this.initTableTasksLog( res );
+        if ( isRes ) this.initTableTasksLogPaginator( res );
       } );
   }
   private initTableFilter() {
@@ -77,7 +76,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initTableTasksLog( searchParams ) {
+  private initTableTasksLogPaginator( searchParams ) {
     this.taskId = +searchParams.taskId;
     this.isTableTaskLog = true;
     this.isLoaderTaskLog = true;
@@ -91,7 +90,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
   }
 
 
-  private initTableTableTasksLog() {
+  private initTableTasksLog() {
     this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( ( value: IpagPage ) => {

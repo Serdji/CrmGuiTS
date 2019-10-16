@@ -1,9 +1,10 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "乗客",
-		"DISTRIBUTION": "ニュースレター",
+		"EMAIL_DISTRIBUTION": " メールマガジン",
 		"EVENT": "ソビティ",
 		"HOME": "ホーム",
+		"SMS_DISTRIBUTION": "SMSメーリング",
 		"USER": "ユーザー"
 	},
 	"BUTTON": {
@@ -36,10 +37,8 @@
 			"CUSTOMER_GROUP": "旅客グループ"
 		},
 		"DELETE": {
-			"CANCEL_DISTRIBUTION": "このニュースレターをキャンセルしてもよろしいですか？",
 			"CONTACT": "この連絡先を削除してもよろしいですか？",
 			"CUSTOMER": "乗客を削除してもよろしいですか？",
-			"DISTRIBUTION": "ニュースレターを削除してもよろしいですか？",
 			"DOCUMENT": "このドキュメントまたはドキュメントを削除してもよろしいですか？",
 			"FIO": "この名前またはこれらの名前を削除してもよろしいですか？",
 			"PROFILES": "このプロファイルを削除してもよろしいですか？",
@@ -50,6 +49,16 @@
 			"SEGMENTATIONS": "セグメンテーショングループまたはセグメンテーショングループを削除してもよろしいですか？",
 			"SETTING_DEFAULT": "アプリケーションを再起動すると、すべての設定がデフォルトで設定されます。アプリケーションを再起動してもよろしいですか？",
 			"USER": "ユーザーを削除してもよろしいですか？"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "このメールニュースレターをキャンセルしてもよろしいですか？",
+			"CANCEL_SMS_DISTRIBUTION": "このSMSメールを本当にキャンセルしますか？",
+			"DELETES_EMAIL_DISTRIBUTION": "電子メールニュースレターを削除してもよろしいですか？",
+			"DELETES_SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？",
+			"DELETE_EMAIL_DISTRIBUTION": "メールニュースレターを削除してもよろしいですか？",
+			"DELETE_SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？",
+			"SEND_EMAIL_DISTRIBUTION": "メールニュースレターを開始してもよろしいですか？",
+			"SEND_SMS_DISTRIBUTION": "SMSメーリングリストを開始してもよろしいですか？"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "有効期限",
@@ -131,7 +140,8 @@
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "ニュースレター",
-			"LIST_DISTRIBUTIONS": "メーリングリスト"
+			"LIST_EMAIL": "Eメール",
+			"LIST_SMS": "SMS"
 		},
 		"EVENT": {
 			"ADD_EVENT": "イベントを追加",
@@ -193,7 +203,34 @@
 					"SUBJECT": "テーマ"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "郵送日：",
+				"ERROR_MESSAGE": "エラーメッセージ：",
+				"FROM": "から",
+				"LAST_TRY": "ニュースレターが作成された日時：",
+				"STATUS": "ステータス：",
+				"STATUSES": {
+					"BOUNCED": "返品",
+					"CLICKED": "リンクをたどる",
+					"DELIVERED": "配信済み",
+					"ERROR": "エラー",
+					"NOT_SENT": "発送準備完了",
+					"READ": "読む",
+					"REJECTED": "未登録",
+					"SEND_TO_CUSTOMER": "顧客に送信",
+					"SENT_TO_GATEWAY": "メールゲートウェイに送信"
+				},
+				"SUBJECT": "手紙の件名：",
+				"TABLE": {
+					"ERROR_MESSAGE": "解説",
+					"FIRST_NAME": "名",
+					"LAST_NAME": "姓",
+					"MIDDLE_NAME": "ミドルネーム",
+					"STATUS": "状況"
+				},
+				"TO": "まで"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "郵送日：",
 				"ERROR_MESSAGE": "エラーメッセージ：",
 				"FROM": "から",

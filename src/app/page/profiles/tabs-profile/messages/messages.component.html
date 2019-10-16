@@ -67,7 +67,7 @@
       <ng-template matExpansionPanelContent>
         <mat-card class="messages__card mat-elevation-z0">
           <div [innerHtml]="message.parsedText | safeHtml" > </div>
-          <span class="messages__link" routerLink="/crm/profile-distribution/{{message.distributionId}}">{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.TEMPLATE.GO_TO' | translate}}</span>
+          <span class="messages__link" routerLink="/crm/profile-email-distribution/{{message.distributionId}}">{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.TEMPLATE.GO_TO' | translate}}</span>
         </mat-card>
       </ng-template>
     </mat-expansion-panel>

@@ -10,14 +10,16 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { detailExpand } from '../../../animations/animations';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { IpagPage } from '../../../interface/ipag-page';
 
 @Component( {
-  selector: 'app-table-example-distribution',
-  templateUrl: './table-example-distribution.component.html',
-  styleUrls: [ './table-example-distribution.component.styl' ],
+  selector: 'app-table-async-sms',
+  templateUrl: './table-async-sms.component.html',
+  styleUrls: [ './table-async-sms.component.styl' ],
   animations: [ detailExpand ],
 } )
-export class TableExampleDistributionComponent implements OnInit, OnDestroy {
+export class TableAsyncSmsComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
@@ -25,6 +27,8 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
   public expandedElement: PeriodicElement | null;
+  public resultsLength: number;
+  public isLoadingResults: boolean = false;
 
   private isActive: boolean;
 
@@ -36,12 +40,16 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private tableAsyncService: TableAsyncService,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initDataSource();
     this.initDisplayedColumns();
+    this.initPaginator();
+    this.initDataSourceAsync();
+
   }
 
   private initDisplayedColumns() {
@@ -56,13 +64,26 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
     ];
   }
 
+  private initPaginator() {
+    this.resultsLength = this.tableAsyncService.countPage;
+    this.paginator.page
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: IpagPage ) => {
+        this.tableAsyncService.setPagPage( value );
+        this.isLoadingResults = true;
+      } );
+  }
+
+  private initDataSourceAsync() {
+    this.tableAsyncService.subjectTableDataSource
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( value: any ) => {
+        this.dataSourceFun( value );
+        this.isLoadingResults = false;
+      } );
+  }
+
   private initDataSource() {
-    _.each( this.tableDataSource, value => {
-      _( value )
-        .set( 'statusNameRus', value.status.statusNameRus )
-        .set( 'distributionStatusId', value.status.distributionStatusId )
-        .value();
-    } );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -72,7 +93,6 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
-        this.dataSource.paginator = this.paginator;
       } );
   }
 
@@ -136,12 +156,12 @@ export class TableExampleDistributionComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `DIALOG.DELETE.DISTRIBUTION`, 'delete', params, 'displayeds' );
+      this.windowDialog( `DIALOG.DISTRIBUTION.DELETES_SMS_DISTRIBUTION`, 'delete', params, 'displayeds' );
     }
   }
 
   redirectToDistribution( id: number ): void {
-    this.router.navigate( [ `/crm/profile-distribution/${id}` ] );
+    this.router.navigate( [ `/crm/profile-sms-distribution/${id}` ] );
   }
 
   disabledCheckbox( eventData ): void {

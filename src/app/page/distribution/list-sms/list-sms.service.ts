@@ -1,13 +1,15 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
-import { Observable } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class EditorSmsService {
+export class ListSmsService {
+
+  public subjectDistributionDelete = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -15,7 +17,7 @@ export class EditorSmsService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getTemplates(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/distribution/templates/sms' ).pipe( this.retryRequestService.retry() );
+  getAllSms( params ): Observable<any> {
+    return this.http.get( `${this.configService.crmApi}/crm/smsDistribution`, { params } ).pipe( this.retryRequestService.retry() );
   }
 }

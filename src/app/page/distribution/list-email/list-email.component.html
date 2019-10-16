@@ -1,0 +1,10 @@
+<div class="list-email" appAccessRights="distributions:read" appAccessMessage="true">
+  <div class="list-email">
+    <mat-card>
+      <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <app-table-async-email  *ngIf="email.result.length !== 0" [tableDataSource]="email.result"></app-table-async-email>
+      </ng-template>
+    </mat-card>
+  </div>
+</div>

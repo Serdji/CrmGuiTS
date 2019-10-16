@@ -1,9 +1,10 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Cestující",
-		"DISTRIBUTION": "Informační bulletin",
+		"EMAIL_DISTRIBUTION": " E-mailový zpravodaj",
 		"EVENT": "Sobitie",
 		"HOME": "Domů",
+		"SMS_DISTRIBUTION": "Zasílání SMS zpráv",
 		"USER": "Uživatel"
 	},
 	"BUTTON": {
@@ -36,10 +37,8 @@
 			"CUSTOMER_GROUP": "Skupina cestujících"
 		},
 		"DELETE": {
-			"CANCEL_DISTRIBUTION": "Opravdu chcete zrušit tento zpravodaj?",
 			"CONTACT": "Opravdu chcete tento kontakt nebo kontakty odstranit?",
 			"CUSTOMER": "Opravdu chcete cestujícího odstranit?",
-			"DISTRIBUTION": "Opravdu chcete odstranit zpravodaj nebo zpravodaje?",
 			"DOCUMENT": "Opravdu chcete tento dokument nebo dokumenty smazat?",
 			"FIO": "Opravdu chcete toto jméno nebo toto jméno smazat?",
 			"PROFILES": "Opravdu chcete tento profil nebo profily smazat?",
@@ -50,6 +49,16 @@
 			"SEGMENTATIONS": "Opravdu chcete odstranit segmentační skupinu nebo segmentační skupinu?",
 			"SETTING_DEFAULT": "Po restartování aplikace budou všechna vaše výchozí nastavení nastavena. Opravdu chcete restartovat aplikace?",
 			"USER": "Opravdu chcete uživatele smazat?"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "Opravdu chcete zrušit tento e-mailový zpravodaj?",
+			"CANCEL_SMS_DISTRIBUTION": "Opravdu chcete zrušit tento sms mailing?",
+			"DELETES_EMAIL_DISTRIBUTION": "Opravdu chcete odstranit e-mailový zpravodaj nebo zpravodaje?",
+			"DELETES_SMS_DISTRIBUTION": "Opravdu chcete smazat zpravodaj nebo sms sms?",
+			"DELETE_EMAIL_DISTRIBUTION": "Opravdu chcete odstranit e-mailový zpravodaj?",
+			"DELETE_SMS_DISTRIBUTION": "Opravdu chcete smazat zpravodaj SMS?",
+			"SEND_EMAIL_DISTRIBUTION": "Opravdu chcete spustit e-mailový zpravodaj?",
+			"SEND_SMS_DISTRIBUTION": "Opravdu chcete spustit seznam e-mailů SMS?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Datum vypršení platnosti",
@@ -131,7 +140,8 @@
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Informační bulletiny",
-			"LIST_DISTRIBUTIONS": "Seznam adresátů"
+			"LIST_EMAIL": "E-mail",
+			"LIST_SMS": "SMS"
 		},
 		"EVENT": {
 			"ADD_EVENT": "Přidat událost",
@@ -193,7 +203,34 @@
 					"SUBJECT": "Téma"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "Termíny zasílání:",
+				"ERROR_MESSAGE": "Chybová zpráva:",
+				"FROM": "z",
+				"LAST_TRY": "Datum a čas vytvoření informačního bulletinu:",
+				"STATUS": "Stav:",
+				"STATUSES": {
+					"BOUNCED": "Vrátil se",
+					"CLICKED": "Klikněte na odkaz",
+					"DELIVERED": "Dodáno",
+					"ERROR": "Chyba",
+					"NOT_SENT": "Připraveno k odeslání",
+					"READ": "Přečtěte si",
+					"REJECTED": "Nepřihlášeno",
+					"SEND_TO_CUSTOMER": "Odesláno zákazníkovi",
+					"SENT_TO_GATEWAY": "Odesláno na poštovní bránu"
+				},
+				"SUBJECT": "Předmět dopisu:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Vysvětlení",
+					"FIRST_NAME": "křestní jméno",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno",
+					"STATUS": "Stav"
+				},
+				"TO": "dříve"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Termíny zasílání:",
 				"ERROR_MESSAGE": "Chybová zpráva:",
 				"FROM": "z",

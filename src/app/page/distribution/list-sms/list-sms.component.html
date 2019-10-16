@@ -1,0 +1,11 @@
+<div class="list-sms" appAccessRights="distributions:read" appAccessMessage="true">
+  <div class="list-sms">
+    <mat-card>
+      <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <app-table-async-sms  *ngIf="sms.result.length !== 0" [tableDataSource]="sms.result"></app-table-async-sms>
+      </ng-template>
+    </mat-card>
+  </div>
+
+</div>

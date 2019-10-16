@@ -1,8 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { ProfileDistributionService } from './profile-distribution.service';
 import { takeWhile } from 'rxjs/operators';
-import { IdistributionProfile } from '../../../interface/idistribution-profile';
+import { IDistributionProfile } from '../../../interface/idistribution-profile';
 import { IpagPage } from '../../../interface/ipag-page';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
@@ -10,20 +9,22 @@ import { MatDialog } from '@angular/material/dialog';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { EditorEmailService } from '../../../components/editors/editor-email/editor-email.service';
+import { DistributionService } from '../distribution.service';
+import { ProfileEmailDistributionService } from './profile-email-distribution.service';
 
 @Component( {
-  selector: 'app-profile-distribution',
-  templateUrl: './profile-distribution.component.html',
-  styleUrls: [ './profile-distribution.component.styl' ]
+  selector: 'app-profile-email-distribution',
+  templateUrl: './profile-email-distribution.component.html',
+  styleUrls: [ './profile-email-distribution.component.styl' ]
 } )
-export class ProfileDistributionComponent implements OnInit, OnDestroy {
+export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
-  public distributionProfile: IdistributionProfile;
+  public isDistributionProfile: boolean;
+  public distributionProfile: IDistributionProfile;
   public startButtonDisabled: boolean;
   public stopButtonDisabled: boolean;
-  public deliteButtonDisabled: boolean;
-  public isDistributionProfile: boolean;
+  public deleteButtonDisabled: boolean;
 
   private emailLimits: number;
   private isActive: boolean;
@@ -31,10 +32,11 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
 
   constructor(
     private route: ActivatedRoute,
-    private profileDistributionService: ProfileDistributionService,
+    private distributionService: DistributionService,
     private tableAsyncService: TableAsyncService,
     private dialog: MatDialog,
     private editorEmailService: EditorEmailService,
+    private profileEmailDistributionService: ProfileEmailDistributionService
   ) { }
 
   ngOnInit(): void {
@@ -44,7 +46,7 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableProfilePagination();
     this.initEmailLimits();
-    this.profileDistributionService.profileDistributionSubject
+    this.distributionService.distributionSubject
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
@@ -76,9 +78,9 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
           from: pageIndex,
           count: value.pageSize
         };
-        this.profileDistributionService.getProfileDistribution( paramsAndCount )
+        this.profileEmailDistributionService.getProfileDistribution( paramsAndCount )
           .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( ( distributionProfile: IdistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
+          .subscribe( ( distributionProfile: IDistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
   }
 
@@ -89,9 +91,9 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       from: 0,
       count: 10
     };
-    this.profileDistributionService.getProfileDistribution( params )
+    this.profileEmailDistributionService.getProfileDistribution( params )
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( distributionProfile: IdistributionProfile ) => {
+      .subscribe( ( distributionProfile: IDistributionProfile ) => {
         if ( distributionProfile ) {
           this.tableAsyncService.countPage = distributionProfile.totalCount;
           this.distributionProfile = distributionProfile;
@@ -111,29 +113,29 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private disabledButton( distributionProfile: IdistributionProfile ) {
+  private disabledButton( distributionProfile: IDistributionProfile ) {
 
     switch ( distributionProfile.status.distributionStatusId ) {
       case 1:
         this.startButtonDisabled = false;
         this.stopButtonDisabled = true;
-        this.deliteButtonDisabled = false;
+        this.deleteButtonDisabled = false;
         break;
       case 2:
       case 3:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = false;
-        this.deliteButtonDisabled = true;
+        this.deleteButtonDisabled = true;
         break;
       case 5:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = true;
-        this.deliteButtonDisabled = true;
+        this.deleteButtonDisabled = true;
         break;
       default:
         this.startButtonDisabled = true;
         this.stopButtonDisabled = true;
-        this.deliteButtonDisabled = true;
+        this.deleteButtonDisabled = true;
     }
   }
 
@@ -155,24 +157,18 @@ export class ProfileDistributionComponent implements OnInit, OnDestroy {
     }
   }
 
-  startDistribution(): void {
-    this.windowDialog(
-      `По результатам реализации данной отправки лимит сообщений ${this.emailLimits - this.distributionProfile.totalCount}. ` +
-      `Подтвердите активацию сохраненной рассылки в количестве ${this.distributionProfile.totalCount} писем ?`,
-      'startDistribution',
-      'startDistribution',
-      this.distributionProfile.distributionId
-    );
+  startEmailDistribution(): void {
+    this.windowDialog('DIALOG.DISTRIBUTION.SEND_EMAIL_DISTRIBUTION', 'startEmailDistribution', 'startEmailDistribution', this.distributionProfile.distributionId );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
   }
 
-  stopDistribution(): void {
-    this.windowDialog( 'DIALOG.DELETE.CANCEL_DISTRIBUTION', 'delete', 'stopDistribution', this.distributionProfile.distributionId );
+  stopEmailDistribution(): void {
+    this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_EMAIL_DISTRIBUTION', 'delete', 'stopEmailDistribution', this.distributionProfile.distributionId );
   }
 
-  deleteDistribution(): void {
-    this.windowDialog( 'DIALOG.DELETE.DISTRIBUTION', 'delete', 'deleteDistribution', this.distributionProfile.distributionId );
+  deleteEmailDistribution(): void {
+    this.windowDialog( 'DIALOG.DISTRIBUTION.DELETE_EMAIL_DISTRIBUTION', 'delete', 'deleteEmailDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {

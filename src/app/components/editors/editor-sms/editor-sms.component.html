@@ -22,9 +22,8 @@
           <mat-form-field class="editor-sms__input">
             <mat-select formControlName="templateId" placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TEMPLATE' | translate}}">
               <mat-option></mat-option>
-              <mat-option value="Шаблон 1"> Шаблон 1 </mat-option>
-              <mat-option value="Шаблон 2"> Шаблон 2 </mat-option>
-              <mat-option value="Шаблон 3"> Шаблон 3 </mat-option>
+              <mat-option *ngFor="let template of templates"
+                          [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
             </mat-select>
           </mat-form-field>
         </mat-card>

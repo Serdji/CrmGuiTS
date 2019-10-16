@@ -7,35 +7,35 @@
 
 
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.TABLE.LAST_NAME' | translate}}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.LAST_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.TABLE.MIDDLE_NAME' | translate}}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.MIDDLE_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="distributionCustomerStatus">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.TABLE.STATUS' | translate}}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUS' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.distributionCustomerStatus.statusNameRus}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="errorMessage">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_DISTRIBUTION.TABLE.ERROR_MESSAGE' | translate}}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.ERROR_MESSAGE' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.errorMessage}}</span>
       </mat-cell>

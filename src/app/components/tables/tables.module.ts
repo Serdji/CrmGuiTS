@@ -12,7 +12,6 @@ import { TableExampleSegmentationComponent } from './table-example-segmentation/
 import { TableAsyncSegmentationProfileComponent } from './table-async-segmentation-profile/table-async-segmentation-profile.component';
 import { TableExampleProfileGroupComponent } from './table-example-profile-group/table-example-profile-group.component';
 import { EditorsModule } from '../editors/editors.module';
-import { TableExampleDistributionComponent } from './table-example-distribution/table-example-distribution.component';
 import { TableAsyncDistributionProfileComponent } from './table-async-distribution-profile/table-async-distribution-profile.component';
 import { TableAsyncPromotionsComponent } from './table-async-promotions/table-async-promotions.component';
 import { PromoCodeModule } from '../promo-code/promo-code.module';
@@ -27,6 +26,8 @@ import { TranslateModule } from '@ngx-translate/core';
 import { TableExampleTaskComponent } from './table-example-task/table-example-task.component';
 import { TableAsyncEventProfileComponent } from './table-async-event-profile/table-async-event-profile.component';
 import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-code/table-async-search-promo-code.service';
+import { TableAsyncEmailComponent } from './table-async-email/table-async-email.component';
+import { TableAsyncSmsComponent } from './table-async-sms/table-async-sms.component';
 
 @NgModule({
   imports: [
@@ -50,7 +51,8 @@ import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-cod
     TableExampleSegmentationComponent,
     TableAsyncSegmentationProfileComponent,
     TableExampleProfileGroupComponent,
-    TableExampleDistributionComponent,
+    TableAsyncEmailComponent,
+    TableAsyncSmsComponent,
     TableAsyncDistributionProfileComponent,
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
@@ -68,7 +70,8 @@ import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-cod
     TableExampleSegmentationComponent,
     TableAsyncSegmentationProfileComponent,
     TableExampleProfileGroupComponent,
-    TableExampleDistributionComponent,
+    TableAsyncEmailComponent,
+    TableAsyncSmsComponent,
     TableAsyncDistributionProfileComponent,
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,

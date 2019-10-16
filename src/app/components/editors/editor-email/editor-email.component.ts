@@ -125,10 +125,10 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       .subscribe( value => {
         this.formDistribution.get( 'text' ).patchValue( '' );
         if ( value ) {
-          this.editorEmailService.getTemplate( value )
+          this.editorService.getTemplate( value )
             .pipe( takeWhile( _ => this.isActive ) )
             .subscribe( ( template: ITemplate ) => {
-              this.formDistribution.get( 'text' ).patchValue( template.htmlBody );
+              this.formDistribution.get( 'text' ).patchValue( template.text );
             } );
         }
       } );
@@ -204,7 +204,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       const success = value => {
         this.distributionId = value.distributionId;
         this.dialog.closeAll();
-        this.router.navigate( [ `/crm/profile-distribution/${value.distributionId}` ] );
+        this.router.navigate( [ `/crm/profile-email-distribution/${value.distributionId}` ] );
       };
       const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 

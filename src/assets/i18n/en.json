@@ -1,9 +1,10 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
-		"DISTRIBUTION": "Newsletter",
+		"EMAIL_DISTRIBUTION": " Email Newsletter",
 		"EVENT": "Event",
 		"HOME": "Home",
+		"SMS_DISTRIBUTION": "SMS mailing",
 		"USER": "User"
 	},
 	"BUTTON": {
@@ -36,10 +37,8 @@
 			"CUSTOMER_GROUP": "Passenger group"
 		},
 		"DELETE": {
-			"CANCEL_DISTRIBUTION": "Are you sure you want to cancel this newsletter?",
 			"CONTACT": "Are you sure you want to delete this contact or contacts?",
 			"CUSTOMER": "Are you sure you want to remove the passenger?",
-			"DISTRIBUTION": "Are you sure you want to delete the newsletter or newsletters?",
 			"DOCUMENT": "Are you sure you want to delete this document or docs?",
 			"FIO": "Are you sure you want to delete this name or these name?",
 			"PROFILES": "Are you sure you want to delete this profile or profiles?",
@@ -50,6 +49,16 @@
 			"SEGMENTATIONS": "Are you sure you want to delete the segmentation group or segmentation group?",
 			"SETTING_DEFAULT": "After restarting the application, all your settings will be set by default. Are you sure you want to restart applications?",
 			"USER": "Are you sure you want to delete the user?"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel this email newsletter?",
+			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel this sms mailing?",
+			"DELETES_EMAIL_DISTRIBUTION": "Are you sure you want to delete the email newsletter or newsletters?",
+			"DELETES_SMS_DISTRIBUTION": "Are you sure you want to delete the sms newsletter or newsletters?",
+			"DELETE_EMAIL_DISTRIBUTION": "Are you sure you want to delete the email newsletter?",
+			"DELETE_SMS_DISTRIBUTION": "Are you sure you want to delete the sms newsletter?",
+			"SEND_EMAIL_DISTRIBUTION": "Are you sure you want to start the email newsletter?",
+			"SEND_SMS_DISTRIBUTION": "Are you sure you want to start the SMS mailing list?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Validity",
@@ -131,7 +140,8 @@
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Newsletters",
-			"LIST_DISTRIBUTIONS": "Mailing list"
+			"LIST_EMAIL": "Email",
+			"LIST_SMS": "SMS"
 		},
 		"EVENT": {
 			"ADD_EVENT": "Add event",
@@ -193,7 +203,34 @@
 					"SUBJECT": "Theme"
 				}
 			},
-			"PROFILE_DISTRIBUTION": {
+			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "Mailing Dates:",
+				"ERROR_MESSAGE": "Error Message:",
+				"FROM": "from",
+				"LAST_TRY": "Date and time the newsletter was created:",
+				"STATUS": "Status:",
+				"STATUSES": {
+					"BOUNCED": "Returned",
+					"CLICKED": "Following a link",
+					"DELIVERED": "Delivered",
+					"ERROR": "Mistake",
+					"NOT_SENT": "Ready to ship",
+					"READ": "Read",
+					"REJECTED": "Unsubscribed",
+					"SEND_TO_CUSTOMER": "Sent to customer",
+					"SENT_TO_GATEWAY": "Sent to mail gateway"
+				},
+				"SUBJECT": "Topic of the letter:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Explanation",
+					"FIRST_NAME": "Name",
+					"LAST_NAME": "Surname",
+					"MIDDLE_NAME": "Middle Name",
+					"STATUS": "status"
+				},
+				"TO": "to"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",

@@ -15,6 +15,7 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { ProfileSmsDistributionComponent } from './page/distribution/profile-sms-distribution/profile-sms-distribution.component';
 
 
 if ( environment.production ) {
