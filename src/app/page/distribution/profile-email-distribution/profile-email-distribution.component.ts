@@ -158,7 +158,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   }
 
   startEmailDistribution(): void {
-    this.windowDialog('DIALOG.DISTRIBUTION.SEND_EMAIL_DISTRIBUTION', 'startEmailDistribution', 'starEmailDistribution', this.distributionProfile.distributionId );
+    this.windowDialog('DIALOG.DISTRIBUTION.SEND_EMAIL_DISTRIBUTION', 'startEmailDistribution', 'startEmailDistribution', this.distributionProfile.distributionId );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
   }
