@@ -33,21 +33,21 @@
     </ng-container>
 
     <ng-container  matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Имя </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.FIRST_NAME' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container  matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Фамилия </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.LAST_NAME' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container  matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Отчество </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.MIDDLE_NAME' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
       </mat-cell>
@@ -55,21 +55,21 @@
 
 
     <ng-container  matColumnDef="gender">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Пол </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.GENDER' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.gender | fieldTranslation}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.gender | fieldTranslation | translate}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container  matColumnDef="dob">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Дата рождения </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.DATE_OF_BIRTH' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dob | date:'dd.MM.yyyy' }}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container  matColumnDef="customerIds">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> № профиля </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.SEARCH_PROFILE.TABLE.PROFILE' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.customerIds }}</span>
       </mat-cell>
@@ -98,10 +98,32 @@
 
 <div class="table__button-wrapper">
   <button appAccessRights="customers:update" class="table__button" mat-raised-button (click)="deleteProfile()" [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-    Удалить
+    {{'BUTTON.DELETE' | translate}}
     <mat-icon>delete</mat-icon>
   </button>
-  <app-button-editor [ids]="ids" [totalCount]="totalCount"></app-button-editor>
+  <app-button-editor whatNewsletter="choice" [ids]="ids" [totalCount]="totalCount"></app-button-editor>
   <app-button-promo-code [ids]="ids" [disabled]="!selection.hasValue() && !isAllSelected()"></app-button-promo-code>
   <app-button-merge-profile [ids]="ids" [disabled]="(!selection.hasValue() && !isAllSelected()) || lessThanTwo"></app-button-merge-profile>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -13,7 +13,8 @@ import { ListSegmentationService } from '../../segmentation/list-segmentation/li
 import { ISegmentation } from '../../../interface/isegmentation';
 import * as _ from 'lodash';
 import { COMMA, ENTER } from '@angular/cdk/keycodes';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
 import { saveAs } from 'file-saver';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
@@ -22,6 +23,7 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
+import { IAirlineLCode } from '../../../interface/iairline-lcode';
 
 @Component( {
   selector: 'app-profile-search',
@@ -32,8 +34,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
   public airports: IAirport[];
+  public airlineLCode: IAirlineLCode[];
   public airportsFromOptions: Observable<IAirport[]>;
   public airportsToOptions: Observable<IAirport[]>;
+  public airlineLCodeOptions: Observable<IAirlineLCode[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<ISegmentation[]>;
   public profiles: Iprofiles;
@@ -43,6 +47,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public customerGroup: IcustomerGroup[];
   public currencyDefault: string;
   public buttonSearch: boolean;
+  public buttonCsvDisabled: boolean;
+  public csvLoader: boolean;
 
   readonly separatorKeysCodes: number[] = [ ENTER, COMMA ];
   public segmentationSelectable = true;
@@ -59,9 +65,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private isActive: boolean = true;
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
+  private airlineId: number;
 
-  @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'customerGroupChipInput', { static: true } ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
   constructor(
     private fb: FormBuilder,
@@ -78,12 +85,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isQueryParams = true;
     this.buttonSearch = true;
+    this.buttonCsvDisabled = true;
+    this.csvLoader = false;
     this.initAirports();
     this.initForm();
     this.initAutocomplete();
     this.initTableAsync();
     this.initSegmentation();
     this.initCustomerGroup();
+    this.initAirlineLCodes();
     this.initCurrencyDefault();
     this.activeButton();
     this.initQueryParams();
@@ -107,51 +117,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
-  sendForm(): void {
-    if ( !this.formProfileSearch.invalid ) this.creatingObjectForm();
-  }
-
-  clearForm(): void {
-    this.resetForm();
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
-  }
-
-  downloadCsv(): void {
-    this.profileSearchService.downloadCsv( this.sendProfileParams )
-      .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( resp => {
-        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
-        saveAs( resp.body, filename );
-      } );
-  }
-
-  private resetForm() {
-    this.segmentationChips = [];
-    this.customerGroupChips = [];
-    for ( const formControlName in this.formProfileSearch.value ) {
-      this.formProfileSearch.get( `${formControlName}` ).patchValue( '' );
-      this.formProfileSearch.get( `${formControlName}` ).setErrors( null );
-    }
-  }
-
-  private activeButton() {
-    const isChips = () => R.length( this.segmentationChips ) === 0 && R.length( this.customerGroupChips ) === 0;
-    const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
-    const isFormValOfInv = isFormInvalid( this.formProfileSearch );
-    const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
-    const mapKeyFormObj = R.curry( ( objForm: any, objFormValue ) => _.mapKeys( objFormValue, funcMapKeys( objForm ) ) );
-    const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
-    const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
-    const isActiveButtonSearch = R.compose( isSizeObj, getBooleanObj );
-
-    this.formProfileSearch.valueChanges
-      .pipe(
-        takeWhile( _ => this.isActive ),
-        map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
-      )
-      .subscribe( isValue => this.buttonSearch = isValue && isChips() );
-  }
-
   private initTableAsync() {
     this.tableAsyncService.subjectPage
       .pipe( takeWhile( _ => this.isActive ) )
@@ -168,26 +133,26 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initAirports() {
     this.profileSearchService.getAirports()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( value: IAirport[] ) => {
-        this.airports = value;
-      } );
+      .subscribe( ( airports: IAirport[] ) => this.airports = airports );
   }
 
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( segmentation: ISegmentation[] ) => {
-        this.segmentation = segmentation;
-      } );
+      .subscribe( ( segmentation: ISegmentation[] ) => this.segmentation = segmentation );
   }
 
   private initCustomerGroup() {
     this.profileGroupService.getProfileGroup()
       .pipe( takeWhile( _ => this.isActive ) )
-      .subscribe( ( customerGroup: IcustomerGroup[] ) => {
-        this.customerGroup = customerGroup;
-      } );
+      .subscribe( ( customerGroup: IcustomerGroup[] ) => this.customerGroup = customerGroup );
+  }
+
+  private initAirlineLCodes() {
+    this.profileSearchService.getAirlineCodes()
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
   }
 
   private initAutocomplete() {
@@ -195,6 +160,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.airportsToOptions = this.autocomplete( 'arrpoint', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
+    this.airlineLCodeOptions = this.autocomplete( 'airlineLCode', 'airlineLCode' );
+  }
+
+  public displayFn( option ): string | undefined {
+    return R.is( Object, option ) ? option.title : option;
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
@@ -208,48 +178,22 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
               return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
             case 'segmentation':
               return this.segmentation.filter( segmentation => {
-                  if ( val !== null ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                  if ( !R.isNil( val ) ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
                 }
               );
             case 'customerGroup':
               return this.customerGroup.filter( customerGroup => {
-                  if ( val !== null ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                  if ( !R.isNil( val ) ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                }
+              );
+            case 'airlineLCode':
+              return this.airlineLCode.filter( airlineLCode => {
+                  if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
                 }
               );
           }
         } )
       );
-  }
-
-  add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
-    const input = event.input;
-    const value = event.value;
-
-    // Add our fruit
-    if ( ( value || '' ).trim() ) {
-      this[ chips ].push( value.trim() );
-    }
-
-    // Reset the input value
-    if ( input ) {
-      input.value = '';
-    }
-
-    this.formProfileSearch.get( formControlName ).setValue( null );
-  }
-
-  remove( textChip: string, arrayChips: string[], chips ): void {
-    const index = arrayChips.indexOf( textChip );
-
-    if ( index >= 0 ) {
-      this[ chips ].splice( index, 1 );
-    }
-  }
-
-  selected( event: MatAutocompleteSelectedEvent, formControlName: string, chips: string, fruitInput: string ): void {
-    this[ chips ].push( event.option.viewValue );
-    this[ fruitInput ].nativeElement.value = '';
-    this.formProfileSearch.get( formControlName ).setValue( null );
   }
 
 
@@ -266,6 +210,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       ticket: '',
       recloc: '',
       emd: '',
+      airlineLCode: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -303,6 +248,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
+
   private forkJoinObservable() {
     const success = value => {
       this.segmentation = value[ 0 ];
@@ -319,10 +265,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( params ) {
-
+    const hasAirlineId = R.has( 'airlineId' );
 
     if ( Object.keys( params ).length !== 0 ) {
-
       const newObjectForm = {};
       const segmentationTitles = [];
       const customerGroupTitles = [];
@@ -352,9 +297,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = params[ key ];
         if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
         if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
+        if ( this.isKeys( key, 'airlineLCode' ) ) newObjectForm[ key ] = params[ key ];
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
+      this.airlineId = params[ 'airlineId' ];
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
   }
@@ -379,16 +326,19 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     }
 
     for ( const key of formValue ) {
-      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = `${this.formProfileSearch.get( key ).value.trim()}`;
-      if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( this.formProfileSearch.get( key ).value ).format( 'DD.MM.YYYY' );
+      const valueForm = keys => this.formProfileSearch.get( keys ).value || '';
+      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = valueForm( key ).trim();
+      if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( valueForm( key ) ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
-        if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !this.formProfileSearch.get( key ).value;
+        if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !valueForm( key );
         else delete highlightObj[ key ];
       }
     }
 
     for ( const key of Object.keys( highlightObj ) ) {
-      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) params[ key ] = highlightObj[ key ];
+      if ( highlightObj[ key ] !== '' && highlightObj[ key ] !== 'Invalid date' && highlightObj[ key ] !== undefined ) {
+        params[ key ] = highlightObj[ key ];
+      }
     }
 
     if ( _.size( segmentation ) > 0 ) {
@@ -399,22 +349,33 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       _.set( params, 'customerGroupIds', customerGroup );
     }
 
+
     this.serverRequest( params );
   }
 
   private serverRequest( params: IprofileSearch ) {
     this.isTableCard = true;
     this.isLoader = true;
-    this.sendProfileParams = params;
-    Object.assign( params, { sortvalue: 'last_name', from: 0, count: 10 } );
     this.isQueryParams = false;
+
+    const airlineLCodeValue = this.formProfileSearch.get( 'airlineLCode' ).value;
+    const airlineId = airlineLCodeValue.idAirline || this.airlineId || null;
+    const airlineCode = airlineLCodeValue.title || airlineLCodeValue;
+
+    _.merge( params, { airlineLCode: airlineCode } );
+    _.merge( params, { airlineId: +airlineId } );
+    _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
+
+    params = airlineCode ? params : _.omit( params, [ 'airlineLCode', 'airlineId' ] );
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
-    this.profileSearchService.getProfileSearch( params )
+    this.sendProfileParams = params;
+    this.profileSearchService.getProfileSearch( this.sendProfileParams )
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( profile => {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
         this.isLoader = false;
+        this.buttonCsvDisabled = false;
       } );
   }
 
@@ -427,6 +388,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'flightdateto'
           && key !== 'segmentation'
           && key !== 'customerGroup'
+          && key !== 'airlineLCode'
           && key !== 'deptimefrominclude'
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
@@ -446,8 +408,97 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'bookingcreatedatetoexclude';
       case 'checkbox':
         return key === 'contactsexist';
+      case 'airlineLCode':
+        return key === 'airlineLCode';
     }
   }
+
+
+  add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
+    const input = event.input;
+    const value = event.value;
+
+    // Add our fruit
+    if ( ( value || '' ).trim() ) {
+      this[ chips ].push( value.trim() );
+    }
+
+    // Reset the input value
+    if ( input ) {
+      input.value = '';
+    }
+
+    this.formProfileSearch.get( formControlName ).setValue( null );
+  }
+
+  remove( textChip: string, arrayChips: string[], chips ): void {
+    const index = arrayChips.indexOf( textChip );
+
+    if ( index >= 0 ) {
+      this[ chips ].splice( index, 1 );
+    }
+  }
+
+  selected( event: MatAutocompleteSelectedEvent, formControlName: string, chips: string, fruitInput: string ): void {
+    this[ chips ].push( event.option.viewValue );
+    this[ fruitInput ].nativeElement.value = '';
+    this.formProfileSearch.get( formControlName ).setValue( null );
+  }
+
+  sendForm(): void {
+    if ( !this.formProfileSearch.invalid ) this.creatingObjectForm();
+  }
+
+  clearForm(): void {
+    this.resetForm();
+    this.buttonCsvDisabled = true;
+    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
+  }
+
+  downloadCsv(): void {
+    this.buttonCsvDisabled = true;
+    this.csvLoader = true;
+    this.profileSearchService.downloadCsv( this.sendProfileParams )
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( resp => {
+        const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
+        saveAs( resp.body, filename );
+        this.buttonCsvDisabled = false;
+        this.csvLoader = false;
+      } , _ => {
+        this.buttonCsvDisabled = false;
+        this.csvLoader = false;
+      } );
+  }
+
+  private resetForm() {
+    this.segmentationChips = [];
+    this.customerGroupChips = [];
+    for ( const formControlName in this.formProfileSearch.value ) {
+      this.formProfileSearch.get( `${formControlName}` ).patchValue( '' );
+      this.formProfileSearch.get( `${formControlName}` ).setErrors( null );
+    }
+  }
+
+  private activeButton() {
+    const isChips = () => R.length( this.segmentationChips ) === 0 && R.length( this.customerGroupChips ) === 0;
+
+    const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
+    const isFormValOfInv = isFormInvalid( this.formProfileSearch );
+    const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
+    const mapKeyFormObj = R.curry( ( objForm: any, objFormValue ) => _.mapKeys( objFormValue, funcMapKeys( objForm ) ) );
+    const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
+    const isSizeObj = objFormValue => _.size( objFormValue ) === 1;
+    const isActiveButtonSearch = R.compose( isSizeObj, getBooleanObj );
+
+    this.formProfileSearch.valueChanges
+      .pipe(
+        takeWhile( _ => this.isActive ),
+        map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
+      )
+      .subscribe( isValue => this.buttonSearch = isValue && isChips() );
+  }
+
 
   ngOnDestroy(): void {
     this.isActive = false;

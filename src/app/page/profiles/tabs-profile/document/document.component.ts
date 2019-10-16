@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { DocumentService } from './document.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import * as moment from 'moment';
 import { takeWhile } from 'rxjs/operators';
 import { IDocumentType } from '../../../../interface/idocument-type';
@@ -100,7 +100,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       this.documentService.addDocument( params )
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( _ => {
-          this.windowDialog( 'Документ успешно добавлен', 'ok' );
+          this.windowDialog( 'DIALOG.OK.DOCUMENT_CHANGED', 'ok' );
           this.resetForm();
           this.refreshTable();
         } );

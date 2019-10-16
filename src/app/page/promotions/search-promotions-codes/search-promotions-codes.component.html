@@ -7,17 +7,17 @@
         <mat-card class="search-promotions-codes__card">
           <mat-card-content class="search-promotions-codes__content">
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция"
+              <input matInput formControlName="promotionName" type="text" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.PROMOTIONS' | translate}}"
                      [matAutocomplete]="promotion">
               <mat-autocomplete #promotion="matAutocomplete">
                 <mat-option *ngFor="let promotion of promotionsOptions | async"
                             [value]="promotion.promotionName">{{ promotion.promotionName }}</mat-option>
               </mat-autocomplete>
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="dialog-promo-cod__input">
               <input matInput formControlName="code" [matAutocomplete]="code" type="text"
-                     placeholder="Промокод">
+                     placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.PROMOTIONS_CODE' | translate}}">
               <mat-autocomplete #code="matAutocomplete">
                 <mat-option
                   class="dialog-promo-cod__option"
@@ -27,18 +27,18 @@
                   {{promoCod.code}}
                 </mat-option>
               </mat-autocomplete>
-              <mat-error>Обязательное поле</mat-error>
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="accountCode" type="text" placeholder="Расчётный код">
+              <input matInput formControlName="accountCode" type="text" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.ACCOUNT_CODE' | translate}}">
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="dateFrom" placeholder="Период действия от" [matDatepicker]="dateFrom">
+              <input matInput formControlName="dateFrom" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.DATE_FROM' | translate}}" [matDatepicker]="dateFrom">
               <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="dateTo" placeholder="Период действия до" [matDatepicker]="dateTo">
+              <input matInput formControlName="dateTo" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.DATE_TO' | translate}}" [matDatepicker]="dateTo">
               <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
             </mat-form-field>
@@ -53,25 +53,25 @@
         <mat-card class="search-promotions-codes__card">
           <mat-card-content class="search-promotions-codes__content">
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promoCodeFlight" placeholder="Номера рейсов">
+              <input matInput formControlName="promoCodeFlight" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.FLIGHT' | translate}}">
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="flightDateFrom" placeholder="Период реализации от"
+              <input matInput formControlName="flightDateFrom" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.FLIGHT_DATA_FROM' | translate}}"
                      [matDatepicker]="flightDateFrom">
               <mat-datepicker-toggle matSuffix [for]="flightDateFrom"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #flightDateFrom></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="flightDateTo" placeholder="Период реализации до"
+              <input matInput formControlName="flightDateTo" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.FLIGHT_DATA_TO' | translate}}"
                      [matDatepicker]="flightDateTo">
               <mat-datepicker-toggle matSuffix [for]="flightDateTo"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #flightDateTo></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promoCodeBrand" placeholder="Бренды">
+              <input matInput formControlName="promoCodeBrand" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.BRAND' | translate}}">
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="promoCodeRbd" placeholder="Класс бронирования">
+              <input matInput formControlName="promoCodeRbd" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.RDD' | translate}}">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
@@ -81,7 +81,7 @@
         <mat-card class="search-promotions-codes__card">
           <mat-card-content class="search-promotions-codes__content">
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="segmentationId" type="text" placeholder="Группы сегментации"
+              <input matInput formControlName="segmentationId" type="text" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.SEGMENTATION' | translate}}"
                      [matAutocomplete]="segmentation">
               <mat-autocomplete #segmentation="matAutocomplete">
                 <mat-option *ngFor="let segmentation of segmentationOptions | async"
@@ -89,7 +89,7 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="search-promotions-codes__input">
-              <input matInput formControlName="customerGroupId" type="text" placeholder="Группы пассажиров"
+              <input matInput formControlName="customerGroupId" type="text" placeholder="{{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.FIELD.CUSTOMER_GROUP' | translate}}"
                      [matAutocomplete]="customerGroup">
               <mat-autocomplete #customerGroup="matAutocomplete">
                 <mat-option *ngFor="let customerGroup of customerGroupOptions | async"
@@ -110,11 +110,11 @@
           [disabled]="buttonSearch"
         >
           <mat-icon>search</mat-icon>
-          Искать
+          {{'BUTTON.SEARCH' | translate}}
         </button>
         <button class="search-promotions-codes__button" mat-raised-button (click)="clearForm()">
           <mat-icon>clear</mat-icon>
-          Очистить форму
+          {{'BUTTON.CLEAR_FORM' | translate}}
         </button>
       </div>
 

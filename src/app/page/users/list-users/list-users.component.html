@@ -1,13 +1,13 @@
 <mat-card appAccessRights="users:read" appAccessMessage="true">
   <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
   <ng-template #loaderDisabled>
-    <mat-card-title>Список всех пользователей</mat-card-title>
+    <mat-card-title>{{'PAGE.USERS.LIST_USERS.TITLE' | translate}}</mat-card-title>
     <app-table-example
       [tableHeader]="[
         ['loginId', 'No.'],
-        ['login', 'Логин'],
-        ['loginName', 'ФИО'],
-        ['email', 'email']
+        ['login', 'PAGE.USERS.LIST_USERS.TABLE.LOGIN'],
+        ['loginName', 'PAGE.USERS.LIST_USERS.TABLE.FIO'],
+        ['email', 'PAGE.USERS.LIST_USERS.TABLE.EMAIL']
       ]"
       [tableDataSource]="users"
     >

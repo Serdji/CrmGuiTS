@@ -3,7 +3,7 @@ import { CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angul
 import { Observable } from 'rxjs';
 import { ParsTokenService } from '../services/pars-token.service';
 import { Itoken } from '../interface/itoken';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { takeWhile } from 'rxjs/operators';

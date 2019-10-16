@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DirectivesModule } from '../../../directives/directives.module';
 import { AddUserRoutes } from './add-user.routing';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -13,7 +14,8 @@ import { AddUserRoutes } from './add-user.routing';
     ReactiveFormsModule,
     SharedModule,
     DirectivesModule,
-    AddUserRoutes
+    AddUserRoutes,
+    TranslateModule
   ],
   declarations: [ AddUserComponent ],
   providers: [ AddUserService ]

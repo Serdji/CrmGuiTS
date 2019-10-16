@@ -1,10 +1,8 @@
 import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-} from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
@@ -28,8 +26,8 @@ export class TableExampleProfileNamesComponent implements OnInit, OnDestroy {
 
   @Input() private tableDataSource: any;
 
-  @ViewChild( MatSort ) sort: MatSort;
-  @ViewChild( MatPaginator ) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
@@ -131,7 +129,7 @@ export class TableExampleProfileNamesComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'это фио' : 'эти фио' } ?`, 'delete', params, 'profileNames' );
+      this.windowDialog( `DIALOG.DELETE.FIO`, 'delete', params, 'profileNames' );
     }
   }
 

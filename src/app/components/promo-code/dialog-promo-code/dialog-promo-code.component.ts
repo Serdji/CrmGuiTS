@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AddPromotionsCodesService } from '../../../page/promotions/add-promotions-codes/add-promotions-codes.service';
 import { delay, map, takeWhile } from 'rxjs/operators';
@@ -104,7 +104,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
     if ( !this.formPromoCod.invalid ) {
       this.dialogPromoCodeService.savePromoCodeCustomers( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => this.windowDialog( `Промокод успешно привязан`, 'ok' ) );
+        .subscribe( _ => this.windowDialog( `DIALOG.OK.PROMO_CODE_LINKED`, 'ok' ) );
     }
   }
 

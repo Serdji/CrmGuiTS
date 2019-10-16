@@ -5,7 +5,7 @@ import { map, takeWhile } from 'rxjs/operators';
 import * as R from 'ramda';
 import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
-import { MatTreeNestedDataSource } from '@angular/material';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
 import { combineLatest } from 'rxjs';
@@ -59,7 +59,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   private paramsEvent: any;
   private reportTypeLens = R.lensProp( 'ReportType' );
 
-  @ViewChild( 'stepper' ) stepper;
+  @ViewChild('stepper', { static: true }) stepper;
 
   constructor(
     private fb: FormBuilder,

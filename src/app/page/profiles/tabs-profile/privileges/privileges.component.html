@@ -16,7 +16,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('recLoc')"
         >
-          <b> Заказ (GDS) №&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.GDS' | translate}}</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -28,7 +28,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('externalDiscountSourceName')"
         >
-          <b> Организация&nbsp;</b>
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.ORGANIZATION' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -40,7 +40,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('arrivalLocationCode')"
         >
-          <b> Направление от&nbsp;</b>
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DIRECTION_FROM' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -52,7 +52,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('departureLocationCode')"
         >
-          <b> Направление до&nbsp;</b>
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DIRECTION_TO' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -64,7 +64,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('saleDate')"
         >
-          <b> Дата продажи </b>
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DATE_OF_SALE' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -76,7 +76,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('flightDate')"
         >
-          <b> Дата перевозки </b>
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DATE_OF_CARRIAGE' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -88,7 +88,7 @@
           matRippleRadius="50"
           (click)="onSortFilter('externalDiscountStatusName')"
         >
-          <b> Статус </b>
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.STATUS' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -129,28 +129,28 @@
 
             <div class="privileges__info">
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Организация предоставляющая льготу: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.EXTERNAL_DISCOUNT_SOURCE_NAME' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.externalDiscountSourceName}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Дата предоставления льготы ( дата продажи ): </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.SALE_DATE' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Номер билета: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.TICKET' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.ticket}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Номер купона: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.COUPON' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.coupon}}</b></span>
                 </div>
@@ -160,28 +160,28 @@
 
             <div class="privileges__info">
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Направление от: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.DEP_LOC_CODE' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.departureLocationCode}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Направление до: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.ARR_LOC_CODE' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.arrivalLocationCode}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Дата перевозки: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.FLIGHT_DATA' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Статус: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.STATUS_NAME' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.externalDiscountStatusName}}</b></span>
                 </div>
@@ -191,14 +191,14 @@
 
             <div class="privileges__info">
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Полная стоимость перевозки: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.PRICE' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.price}}</b></span>
                 </div>
               </div>
 
               <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> Сумма предоставляемой льготы: </span>
+                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.DISCOUNT_SUM' | translate}} </span>
                 <div class="privileges__info-params">
                   <span><b>{{privileges.discountSum}}</b></span>
                 </div>

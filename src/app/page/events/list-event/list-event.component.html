@@ -1,0 +1,21 @@
+<div class="list-event">
+    <mat-card class="list-event__card" *ngIf="isTableTask">
+      <mat-progress-bar *ngIf="isProgress; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <app-table-example-task
+          [tableDataSource]="tasks"
+        >
+        </app-table-example-task>
+      </ng-template>
+    </mat-card>
+
+  <mat-card class="list-event__card" *ngIf="isTableTaskLog" class="event__card">
+    <mat-progress-bar *ngIf="isLoaderTaskLog; else loaderTable" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderTable>
+      <mat-card-title>{{taskLog.result.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
+      <app-table-async-event-profile
+        *ngIf="taskLog"
+        [tableDataSource]="taskLog.result"></app-table-async-event-profile>
+    </ng-template>
+  </mat-card>
+</div>

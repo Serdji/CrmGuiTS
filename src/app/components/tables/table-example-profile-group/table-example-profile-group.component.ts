@@ -1,10 +1,8 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-} from '@angular/material';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { timer } from 'rxjs/observable/timer';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
@@ -25,9 +23,10 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
   public ids: any;
 
   @Input() private tableDataSource: any;
+  @Output() private emitCustomerGroupId = new EventEmitter<number>();
 
-  @ViewChild( MatSort ) sort: MatSort;
-  @ViewChild( MatPaginator ) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor( private dialog: MatDialog ) { }
 
@@ -95,7 +94,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу пассажиров' : 'группы пассажиров' } ?`, 'delete', params, 'deleteProfileGroups' );
+      this.windowDialog( `DIALOG.DELETE.PROFILE_GROUP`, 'delete', params, 'deleteProfileGroups' );
     }
   }
 
@@ -118,6 +117,10 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
     if ( arrayId.length !== 0 ) {
       this.ids = { customerGroupIds: arrayId };
     }
+  }
+
+  redirectToCustomerGroupId( customerGroupId: number ): void {
+    this.emitCustomerGroupId.emit( customerGroupId );
   }
 
   ngOnDestroy(): void {

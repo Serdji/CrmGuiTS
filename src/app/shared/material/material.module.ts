@@ -16,7 +16,9 @@ import { MatPaginatorIntl, MatPaginatorModule } from '@angular/material/paginato
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule, MatStepperModule, MatTooltipModule } from '@angular/material';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE, MatNativeDateModule } from '@angular/material/core';
+import { MatStepperModule } from '@angular/material/stepper';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
@@ -31,19 +33,10 @@ import { MatBadgeModule } from '@angular/material/badge';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { DragDropModule } from '@angular/cdk/drag-drop';
 import { MatTreeModule } from '@angular/material/tree';
+import { MatSliderModule } from '@angular/material/slider';
+import { AmazingTimePickerModule } from 'amazing-time-picker';
 
 import { CustomMatPaginatorService } from './custom-mat-paginator.service';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
-
-const MY_FORMATS = {
-  parse: {
-    dateInput: 'DD MM YYYY',
-  },
-  display: {
-    dateInput: 'DD.MM.YYYY',
-    monthYearLabel: 'MMMM YYYY',
-  },
-};
 
 @NgModule( {
   imports: [
@@ -77,6 +70,7 @@ const MY_FORMATS = {
     MatRippleModule,
     MatBadgeModule,
     MatStepperModule,
+    AmazingTimePickerModule,
   ],
   exports: [
     MatToolbarModule,
@@ -112,11 +106,10 @@ const MY_FORMATS = {
     MatSnackBarModule,
     DragDropModule,
     MatTreeModule,
+    MatSliderModule,
+    AmazingTimePickerModule,
   ],
   providers: [
-    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
-    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
-    { provide: MAT_DATE_LOCALE, useValue: 'ru-ru' },
     { provide: MatPaginatorIntl, useClass: CustomMatPaginatorService }
   ],
 } )

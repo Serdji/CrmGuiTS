@@ -1,5 +1,5 @@
 import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
-import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatDialogRef } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs/operators';
 import { ProfileSearchService } from '../../../page/profiles/profile-search/profile-search.service';
 import { Iprofiles } from '../../../interface/iprofiles';
@@ -93,7 +93,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   onYesClick(): void {
     this.progress = true;
-    const success = _ => this.windowDialog( `Пассажир успешно объединен`, 'ok' );
+    const success = _ => this.windowDialog( `DIALOG.OK.PASSENGER_COMBINED`, 'ok' );
     const error = _ => this.progress = false;
     const params = this.paramMergeCustomer();
     this.dialogMergeProfileService.mergeCustomer( params )

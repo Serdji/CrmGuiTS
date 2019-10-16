@@ -5,6 +5,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { PipesModule } from '../../../../pipes/pipes.module';
 import { MessagesService } from './messages.service';
 import { RouterModule } from '@angular/router';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -12,6 +13,7 @@ import { RouterModule } from '@angular/router';
     SharedModule,
     PipesModule,
     RouterModule,
+    TranslateModule,
   ],
   declarations: [ MessagesComponent ],
   exports: [ MessagesComponent ],

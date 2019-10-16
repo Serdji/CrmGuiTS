@@ -11,7 +11,7 @@ import 'rxjs/add/observable/throw';
 import { catchError, map } from 'rxjs/operators';
 import { Itoken } from '../interface/itoken';
 import { ActivityUserService } from './activity-user.service';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { throwError, timer } from 'rxjs';
 import { Router } from '@angular/router';
 import { DialogComponent } from '../shared/dialog/dialog.component';
@@ -49,17 +49,17 @@ export class AuthInterceptor implements HttpInterceptor {
           catchError( ( err: HttpErrorResponse ) => {
             switch ( err.status ) {
               case 400:
-                this.windowDialog( `Данные введены некорректно!`, 'error' );
+                this.windowDialog( `DIALOG.ERROR.DATA_ENTERED_INCORRECTLY`, 'error' );
                 break;
               case 401:
                 this.refreshToken( idToken.refreshToken );
                 break;
               case 403:
-                this.windowDialog( `У Вас недостаточно прав на это действие!`, 'error' );
+                this.windowDialog( `DIALOG.ERROR.NOT_ENOUGH_RIGHTS`, 'error' );
                 break;
               // case 404: this.router.navigate( [ 'crm/404' ] ); break;
               case 500:
-                this.windowDialog( `В данный момент сервер не отвечает. Попробуйте перезагрузить приложение и повторить попытку чуть позже или обратитесь в службу технической поддержки.`, 'error' );
+                this.windowDialog( `DIALOG.ERROR.SERVER_IS_NOT_RES`, 'error' );
                 break;
             }
             return throwError( err );

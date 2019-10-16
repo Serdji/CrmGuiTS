@@ -5,13 +5,13 @@
         <mat-card class="add-promotions__card">
           <mat-card-content class="add-promotions__content">
             <mat-form-field class="add-promotions__input">
-              <input matInput formControlName="promotionName" type="text" placeholder="Промоакция">
-              <mat-error>Обязательное поле</mat-error>
+              <input matInput formControlName="promotionName" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS.FIELD.PROMOTIONS' | translate}}">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <button appAccessRights="promotions:update" class="add-promotions__button" mat-raised-button
                     (click)="saveForm()" color="primary">
               <mat-icon>save</mat-icon>
-              Сохранить
+              {{'BUTTON.SAVE' | translate}}
             </button>
           </mat-card-content>
         </mat-card>
@@ -20,12 +20,22 @@
   </form>
 
   <mat-card class="add-promotions__table">
-    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaderDisabled>
+    <mat-progress-bar *ngIf="isLoaderPromotions; else tablePromotions" mode="buffer"></mat-progress-bar>
+    <ng-template #tablePromotions>
       <app-table-async-promotions
         *ngIf="promotions.result.length !== 0"
         [tableDataSource]="promotions.result">
       </app-table-async-promotions>
+    </ng-template>
+  </mat-card>
+
+  <mat-card class="add-promotions__table" *ngIf="isTablePromoCode">
+    <mat-progress-bar *ngIf="isLoaderPromoCode; else tablePromoCode" mode="buffer"></mat-progress-bar>
+    <ng-template #tablePromoCode>
+      <app-table-async-search-promo-code
+        *ngIf="promoCode.result.length !== 0"
+        [tableDataSource]="promoCode.result">
+      </app-table-async-search-promo-code>
     </ng-template>
   </mat-card>
 </div>

@@ -1,5 +1,17 @@
 .complex-segmentation
 
+  &__wrapper
+    display: flex;
+    flex-direction: row;
+
+  &__form
+    flex: 1;
+    margin-right: 10px;
+
+  &__table-complex-segmentation
+    flex: 1;
+    margin-bottom: 10px;
+
   &__card
     margin-bottom: 10px;
 
@@ -12,19 +24,21 @@
   &__input
     width: 100%
 
-  &__wrapper
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
+  &__content
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
 
-    h3
-      color: #424242;
-      font-family: Roboto, "Helvetica Neue", sans-serif;
+      span
+        padding 10px 0;
+        color: #424242;
+        font-family: Roboto, "Helvetica Neue", sans-serif;
 
-    mat-icon
-      color: #696969;
-      cursor: pointer;
+      mat-icon
+        color: #696969;
+        cursor: pointer;
 
   &__button
 

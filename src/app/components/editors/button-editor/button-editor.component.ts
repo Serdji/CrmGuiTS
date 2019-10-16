@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { DialogEditorComponent } from '../dialog-editor/dialog-editor.component';
 import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
@@ -15,6 +15,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
   @Input() ids: any;
   @Input() disabled: boolean;
   @Input() totalCount: number;
+  @Input() whatNewsletter: string;
 
   private isActive: boolean;
 
@@ -33,10 +34,10 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
       _.has( this.ids, 'customerGroupIds' )
     ) {
       this.dialog.open( DialogEditorComponent, {
-        width: '80vw',
         data: {
           params: this.ids,
-          totalCount: _.size( this.ids.customerIds || this.ids.customerGroupIds )
+          totalCount: _.size( this.ids.customerIds || this.ids.customerGroupIds ),
+          whatNewsletter: this.whatNewsletter
         }
       } );
     } else {
@@ -45,18 +46,22 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
         .subscribe( value => {
           if ( _.has( value, 'segmentationId' ) ) {
             this.dialog.open( DialogEditorComponent, {
-              width: '80vw',
               data: {
                 params: { 'segmentationIds': [ value.segmentationId ] },
-                totalCount: this.totalCount
+                totalCount: this.totalCount,
+                whatNewsletter: this.whatNewsletter
               }
             } );
           } else {
+            const newValue = _.assign( {}, value );
+            if ( _.has( newValue, 'customerGroupIds' ) ) {
+              _.set( newValue, 'customerGroupIds', !_.isArray( newValue.customerGroupIds ) ? _.castArray( newValue.customerGroupIds ) : newValue.customerGroupIds );
+            }
             this.dialog.open( DialogEditorComponent, {
-              width: '80vw',
               data: {
-                params: value,
-                totalCount: this.totalCount
+                params: newValue,
+                totalCount: this.totalCount,
+                whatNewsletter: this.whatNewsletter
               }
             } );
           }

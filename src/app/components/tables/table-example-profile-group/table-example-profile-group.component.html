@@ -29,19 +29,19 @@
 
 
     <ng-container  matColumnDef="customerGroupName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Группа пассажиров </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SLECIAL_GROUP.PROFILE_GROUP.TABLE.PROFILE_GROUP' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell"  *matCellDef="let element"><span>{{element.customerGroupName}}</span>
       </mat-cell>
 
     </ng-container>
 
-<!--    <ng-container  matColumnDef="customerGroupId" stickyEnd>-->
-<!--      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>-->
-<!--      <mat-cell #matCell  *matCellDef="let element">-->
-<!--        <mat-icon routerLink="/crm/profilesearch"-->
-<!--                  [queryParams]="{ customerGroupIds: element.customerGroupId }">search</mat-icon>-->
-<!--      </mat-cell>-->
-<!--    </ng-container>-->
+    <ng-container  matColumnDef="customerGroupId" stickyEnd>
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell #matCell  *matCellDef="let element">
+        <mat-icon routerLink="/crm/profilesearch"
+                  [queryParams]="{ customerGroupIds: element.customerGroupId }">search</mat-icon>
+      </mat-cell>
+    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>

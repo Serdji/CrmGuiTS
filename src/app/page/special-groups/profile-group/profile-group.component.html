@@ -5,13 +5,13 @@
         <mat-card class="profile-group__card">
           <mat-card-content class="profile-group__content">
             <mat-form-field class="profile-group__input">
-              <input matInput formControlName="CustomerGroupName" type="text" placeholder="Группа пассажиров">
-              <mat-error>Обязательное поле</mat-error>
+              <input matInput formControlName="CustomerGroupName" type="text" placeholder="{{'PAGE.SLECIAL_GROUP.PROFILE_GROUP.TITLE' | translate}}">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
                     (click)="saveForm()" color="primary">
               <mat-icon>save</mat-icon>
-              Сохранить
+              {{'BUTTON.SAVE' | translate}}
             </button>
           </mat-card-content>
         </mat-card>
@@ -22,7 +22,20 @@
   <mat-card class="profile-group__table">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-table-example-profile-group  *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-table-example-profile-group>
+      <app-table-example-profile-group (emitCustomerGroupId)="onProfileSearch( $event )" *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-table-example-profile-group>
+    </ng-template>
+  </mat-card>
+
+
+  <mat-card class="profile-group__table" appAccessRights="customers:read" appAccessMessage="true"
+            *ngIf="isTableProfileTable">
+    <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <mat-card-title>{{profiles.length !== 0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
+      <app-table-async-profile
+        [tableDataSource]="profiles"
+      >
+      </app-table-async-profile>
     </ng-template>
   </mat-card>
 </div>

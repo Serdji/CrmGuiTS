@@ -1,0 +1,974 @@
+{
+	"BREADCRUMBS": {
+		"CUSTOMER": "Cestující",
+		"EMAIL_DISTRIBUTION": " E-mailový zpravodaj",
+		"EVENT": "Sobitie",
+		"HOME": "Domů",
+		"SMS_DISTRIBUTION": "Zasílání SMS zpráv",
+		"USER": "Uživatel"
+	},
+	"BUTTON": {
+		"ADD": "Přidat",
+		"ADD_CUSTOMER": "Přidat cestujícího",
+		"ADD_USER": "Přidat uživatele",
+		"CANCEL_DISTRIBUTION": "Zrušit zpravodaj",
+		"CLEAR": "Jasné",
+		"CLEAR_FORM": "Jasná forma",
+		"COPY": "kopírovat",
+		"CREATE_EVENT": "Vytvořit událost",
+		"DELETE": "Odstranit",
+		"DOWNLOAD": "Stáhnout",
+		"EDIT": "Upravit",
+		"EDITOR": "Vytvořte Newsletter",
+		"EDIT_EVENT": "Upravit událost",
+		"FILTER": "Filtr",
+		"LOGIN": "Přihlaste se",
+		"MERGE_PROFILE": "Kombinujte cestující",
+		"PROMO_CODE": "Propojte propagační kód",
+		"SAVE": "Uložit",
+		"SEARCH": "Hledat",
+		"SEND_DISTRIBUTION": "Odeslat zpravodaj",
+		"START_EVENT": "Spustit událost",
+		"STOP_EVENT": "Zastavit událost",
+		"TO_FROM": "Formovat"
+	},
+	"DIALOG": {
+		"ADD_PROFILE_GROUP": {
+			"CUSTOMER_GROUP": "Skupina cestujících"
+		},
+		"DELETE": {
+			"CONTACT": "Opravdu chcete tento kontakt nebo kontakty odstranit?",
+			"CUSTOMER": "Opravdu chcete cestujícího odstranit?",
+			"DOCUMENT": "Opravdu chcete tento dokument nebo dokumenty smazat?",
+			"FIO": "Opravdu chcete toto jméno nebo toto jméno smazat?",
+			"PROFILES": "Opravdu chcete tento profil nebo profily smazat?",
+			"PROFILE_GROUP": "Opravdu chcete smazat skupinu cestujících nebo skupinu cestujících?",
+			"PROMOTION": "Opravdu chcete smazat promo akci nebo promo akci?",
+			"PROMO_CODE": "Opravdu chcete smazat propagační kód?",
+			"SEGMENTATION": "Opravdu chcete odstranit segmentační skupinu?",
+			"SEGMENTATIONS": "Opravdu chcete odstranit segmentační skupinu nebo segmentační skupinu?",
+			"SETTING_DEFAULT": "Po restartování aplikace budou všechna vaše výchozí nastavení nastavena. Opravdu chcete restartovat aplikace?",
+			"USER": "Opravdu chcete uživatele smazat?"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "Opravdu chcete zrušit tento e-mailový zpravodaj?",
+			"CANCEL_SMS_DISTRIBUTION": "Opravdu chcete zrušit tento sms mailing?",
+			"DELETES_EMAIL_DISTRIBUTION": "Opravdu chcete odstranit e-mailový zpravodaj nebo zpravodaje?",
+			"DELETES_SMS_DISTRIBUTION": "Opravdu chcete smazat zpravodaj nebo sms sms?",
+			"DELETE_EMAIL_DISTRIBUTION": "Opravdu chcete odstranit e-mailový zpravodaj?",
+			"DELETE_SMS_DISTRIBUTION": "Opravdu chcete smazat zpravodaj SMS?",
+			"SEND_EMAIL_DISTRIBUTION": "Opravdu chcete spustit e-mailový zpravodaj?",
+			"SEND_SMS_DISTRIBUTION": "Opravdu chcete spustit seznam e-mailů SMS?"
+		},
+		"DOCUMENT": {
+			"EXP_DATE": "Datum vypršení platnosti",
+			"FIRST_NAME": "křestní jméno",
+			"LAST_NAME": "Příjmení",
+			"MIDDLE_NAME": "Střední jméno",
+			"NUM": "Číslo dokumentu"
+		},
+		"ERROR": {
+			"DATA_ENTERED_INCORRECTLY": "Data byla zadána nesprávně!",
+			"ERROR_SENDING": "Chyba při odesílání",
+			"NOT_ALL_FIELDS": "Ne všechna pole jsou vyplněna",
+			"NOT_ENOUGH_RIGHTS": "Na tuto akci nemáte dostatečná práva!",
+			"RIGHTS_FOR_YOU_ACCOUNT": "Změnili jste oprávnění pro svůj účet. Aby se práva projevila, musíte se do aplikace znovu přihlásit. Za několik sekund budete přesměrováni na přihlašovací stránku!",
+			"SERVER_IS_NOT_RES": "Server aktuálně neodpovídá. Zkuste aplikaci restartovat a zkuste to znovu později nebo kontaktujte technickou podporu."
+		},
+		"INTERSECTION": {
+			"ACCOUNT_CODE": "Kód vypořádání:",
+			"BRAND": "Značky:",
+			"CUSTOMER": "Profil:",
+			"CUSTOMER_GROUP": "Skupiny cestujících:",
+			"DATE_FROM": "Doba platnosti od:",
+			"DATE_TO": "Doba platnosti do:",
+			"DIRECTIONS": "Pokyny:",
+			"FLIGHT": "Letová čísla:",
+			"FLIGHT_DATA_FROM": "Realizační období od:",
+			"FLIGHT_DATA_TO": "Realizační období:",
+			"GO_TO": "Přejít na propagační kód",
+			"PROMOTIONS": "Propagace:",
+			"PROMOTIONS_CODE": "Propagační kód:",
+			"PROMOTIONS_CODE_VAL": {
+				"AMOUNT": "Částka",
+				"PERCENT": "Procento",
+				"TITLE": "Typ slevy:"
+			},
+			"RDD": "Rezervační třída:",
+			"SEGMENTATION": "Skupiny segmentů:",
+			"TITLE": "Byl detekován průnik propagačního kódu",
+			"USES_PER": "Použít pro profil:",
+			"USES_TOTAL": "Celkové využití:",
+			"VAL": "Sleva:"
+		},
+		"NO": "Ne",
+		"OK": {
+			"ADDITIONAL_NAME": "Další název byl úspěšně přidán",
+			"DOCUMENT_CHANGED": "Dokument byl úspěšně přidán",
+			"PASSENGER_CHANGED": "Cestující se úspěšně změnil",
+			"PASSENGER_COMBINED": "Cestující úspěšně kombinován",
+			"PASSWORD_CHANGED": "Heslo bylo úspěšně změněno",
+			"PROMO_CODE_CHANGED": "Propagační kód byl úspěšně změněn",
+			"PROMO_CODE_LINKED": "Propagační kód byl úspěšně propojen",
+			"PROMO_CODE_NOT_PERSONALIZED": "Tento propagační kód NENÍ personalizován, tj. k dispozici pro všechny cestující v letecké dopravě.",
+			"PROMO_CODE_SAVE": "Propagační kód byl úspěšně uložen",
+			"SEGMENTATION_CHANGED": "Segmentace byla úspěšně změněna",
+			"SEGMENTATION_SAVE": "Segmentace byla úspěšně uložena",
+			"USER_CHANGED": "Uživatel se úspěšně změnil",
+			"USER_RIGHTS_CHANGED": "Uživatelská práva byla změněna"
+		},
+		"UPDATE_PROFILE": {
+			"FIRST_NAME": "Jméno:",
+			"LAST_NAME": "Příjmení:",
+			"MIDDLE_NAME": "Střední jméno:"
+		},
+		"YES": "Ano"
+	},
+	"FIELD": {
+		"ERROR": {
+			"OBLIGATORY_FIELD": "Povinné pole",
+			"STRONG_PASSWORD": "Heslo musí být alespoň",
+			"YOU_ENTERED": "postavy. Vstoupil jsi"
+		}
+	},
+	"MENU": {
+		"AIRLINE": "Letecká společnost",
+		"CUSTOMER": {
+			"ADD_CUSTOMER": "Přidat cestujícího",
+			"GROUP_NAME": "Cestující",
+			"SEARCH_CUSTOMER": "Hledání cestujících"
+		},
+		"DISTRIBUTIONS": {
+			"GROUP_NAME": "Informační bulletiny",
+			"LIST_EMAIL": "E-mail",
+			"LIST_SMS": "SMS"
+		},
+		"EVENT": {
+			"ADD_EVENT": "Přidat událost",
+			"GROUP_NAME": "Události",
+			"LIST_EVENT": "Seznam událostí"
+		},
+		"GROUP_CUSTOMER": {
+			"GROUP_NAME": "Skupiny cestujících",
+			"LIST_GROUP_CUSTOMER": "seznam skupin"
+		},
+		"PROMOTIONS_CODES": {
+			"ADD_PROMOTIONS": "Přidat propagaci",
+			"ADD_PROMOTIONS_CODES": "Přidejte propagační kód",
+			"GROUP_NAME": "Propagační kódy",
+			"SEARCH_PROMOTIONS_CODES": "Vyhledávání propagačních kódů"
+		},
+		"REPORTS": {
+			"GROUP_NAME": "ZPRÁVY",
+			"LIST_REPORTS": "Seznam hlášení"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": "Přidat segmentaci",
+			"AGGREGATION_SEGMENTATION": "Agregace segmentace",
+			"GROUP_NAME": "Segmentace",
+			"LIST_SEGMENTATION": "Seznam segmentů"
+		},
+		"SETTINGS": {
+			"GROUP_NAME": "NASTAVENÍ",
+			"RESTART": "Restartujte",
+			"TABLE_CUSTOMERS": "Tabulky pro cestující"
+		},
+		"USERS": {
+			"ADD_USERS": "Přidat uživatele",
+			"GROUP_NAME": "Uživatele",
+			"LIST_USERS": "Seznam uživatelů"
+		},
+		"VERSION": "Verze"
+	},
+	"PAGE": {
+		"DISTRIBUTION": {
+			"LIST_DISTRIBUTION": {
+				"TABLE": {
+					"DATE_FROM": "Datum od",
+					"DATE_TO": "Datum do",
+					"FILTER": "Filtr",
+					"LAST_TRY": "Datum vytvoření informačního bulletinu",
+					"STATUS": "Stav",
+					"STATUSES": {
+						"BOUNCED": "Vrátil se",
+						"CLICKED": "Klikněte na odkaz",
+						"DELIVERED": "Dodáno",
+						"ERROR": "Chyba",
+						"NOT_SENT": "Připraveno k odeslání",
+						"READ": "Přečtěte si",
+						"REJECTED": "Nepřihlášeno",
+						"SEND_TO_CUSTOMER": "Odesláno zákazníkovi",
+						"SENT_TO_GATEWAY": "Odesláno na poštovní bránu"
+					},
+					"SUBJECT": "Téma"
+				}
+			},
+			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "Termíny zasílání:",
+				"ERROR_MESSAGE": "Chybová zpráva:",
+				"FROM": "z",
+				"LAST_TRY": "Datum a čas vytvoření informačního bulletinu:",
+				"STATUS": "Stav:",
+				"STATUSES": {
+					"BOUNCED": "Vrátil se",
+					"CLICKED": "Klikněte na odkaz",
+					"DELIVERED": "Dodáno",
+					"ERROR": "Chyba",
+					"NOT_SENT": "Připraveno k odeslání",
+					"READ": "Přečtěte si",
+					"REJECTED": "Nepřihlášeno",
+					"SEND_TO_CUSTOMER": "Odesláno zákazníkovi",
+					"SENT_TO_GATEWAY": "Odesláno na poštovní bránu"
+				},
+				"SUBJECT": "Předmět dopisu:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Vysvětlení",
+					"FIRST_NAME": "křestní jméno",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno",
+					"STATUS": "Stav"
+				},
+				"TO": "dříve"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
+				"DATE": "Termíny zasílání:",
+				"ERROR_MESSAGE": "Chybová zpráva:",
+				"FROM": "z",
+				"LAST_TRY": "Datum a čas vytvoření informačního bulletinu:",
+				"STATUS": "Stav:",
+				"STATUSES": {
+					"BOUNCED": "Vrátil se",
+					"CLICKED": "Klikněte na odkaz",
+					"DELIVERED": "Dodáno",
+					"ERROR": "Chyba",
+					"NOT_SENT": "Připraveno k odeslání",
+					"READ": "Přečtěte si",
+					"REJECTED": "Nepřihlášeno",
+					"SEND_TO_CUSTOMER": "Odesláno zákazníkovi",
+					"SENT_TO_GATEWAY": "Odesláno na poštovní bránu"
+				},
+				"SUBJECT": "Předmět dopisu:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Vysvětlení",
+					"FIRST_NAME": "křestní jméno",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno",
+					"STATUS": "Stav"
+				},
+				"TO": "dříve"
+			}
+		},
+		"EVENTS": {
+			"ADD_EVENT": {
+				"FIELD": {
+					"MULTIPLICITY": "Násobnost",
+					"NAME_EVENT": "Název události",
+					"SEGMENTATION": "Výběr segmentace",
+					"TYPE_EVENT": {
+						"EMAIL": "E-mail",
+						"SMS": "SMS",
+						"TITLE": "Typ události"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"EDIT": "Upravit",
+					"MULTIPLICITY": "Násobnost:",
+					"NAME_EVENT": "Název události:",
+					"SEGMENTATION": "Segmentace:",
+					"TYPE_EVENT": {
+						"EMAIL": "E-mail",
+						"SMS": "SMS",
+						"TITLE": "Typ události:"
+					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Datum narození",
+					"FIELD": {
+						"PROFILE": "Číslo profilu",
+						"SEARCH": "Hledat podle",
+						"VALUE": "Hodnota"
+					},
+					"FIRST_NAME": "křestní jméno",
+					"GENDER": "Pohlaví",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno",
+					"PROFILE": "Číslo profilu"
+				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "Násobnost",
+					"NAME_EVENT": "Název události",
+					"SEGMENTATION": "Segmentace",
+					"STATUS": "Stav",
+					"SUBJECT": "Předmět příspěvku",
+					"TYPE_EVENT": {
+						"EMAIL": "E-mail",
+						"SMS": "SMS",
+						"TITLE": "Typ události"
+					}
+				}
+			}
+		},
+		"LOGIN": {
+			"AIRLINE_CODE": "Letecká společnost",
+			"ERROR": "neplatné uživatelské jméno nebo heslo",
+			"LOGIN": "Zadejte své přihlašovací údaje",
+			"PASSWORD": "Zadejte své heslo",
+			"REMEMBER_ME": "Pamatujte si mě",
+			"TITLE": "Přihlášení",
+			"VERSION": "Verze:"
+		},
+		"PROFILES": {
+			"ADD_PROFILE": {
+				"DATE": "dd.mm.rrrr",
+				"GENDER": {
+					"F": "F",
+					"M": "M",
+					"TITLE": "Pohlaví"
+				},
+				"MIDDLE_NAME": "Střední jméno",
+				"NAME": "křestní jméno",
+				"SURNAME": "Příjmení",
+				"TITLE": "Přidat cestujícího"
+			},
+			"SEARCH_PROFILE": {
+				"FORM": {
+					"AIRLINE_L_CODE": "Letecký kód",
+					"ARR_POINT": "Kam kde",
+					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Datum prodeje od",
+					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Datum prodeje do",
+					"CAB": "Kabina",
+					"CONTACT_EMAIL": "E-mail",
+					"CONTACT_PHONE": "Telefonní číslo",
+					"CONTACT_SEXIST": "Nedostatek kontaktu",
+					"CUSTOMER_GROUP": "Skupiny cestujících",
+					"CUSTOMER_IDS": "Číslo profilu",
+					"DEPT_IME_TO_EXCLUDE": "Datum letu",
+					"DEP_POINT": "Odkud",
+					"DEP_TIME_FROM_INCLUDE": "Datum letu od",
+					"DOB_FROM_INCLUDE": "Datum narození od",
+					"DOB_TO_EXCLUDE": "Datum narození do",
+					"EMD": "Servisní číslo",
+					"FARE_CODE": "Hodnotící kód",
+					"FIRST_NAME": "křestní jméno",
+					"FLIGHT": "Číslo letu",
+					"FLIGHT_DATE_FROM": "",
+					"FLIGHT_DATE_TO": "",
+					"GENDER": {
+						"F": "F",
+						"M": "M",
+						"TITLE": "Pohlaví"
+					},
+					"ID": "",
+					"LAST_NAME": "Příjmení",
+					"MONEY_AMOUNT_FROM_INCLUDE": "Celková částka od",
+					"MONEY_AMOUNT_TO_INCLUDE": "Celková částka do",
+					"PROFILE": "Číslo profilu",
+					"RBD": "Rezervační třída",
+					"REC_LOC": "Rezervační číslo",
+					"SEGMENTATION": "Segmentační skupiny",
+					"SERVICE_CODE": "Servisní kód",
+					"TICKET": "Číslo lístku",
+					"TOLTIP_CSV": "Stáhněte soubor SVG s vyhledávacím dotazem"
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Datum narození",
+					"FIRST_NAME": "křestní jméno",
+					"GENDER": "Pohlaví",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno",
+					"PROFILE": "Číslo profilu"
+				}
+			},
+			"TABS_PROFILE": {
+				"CONTACT": {
+					"FORM": {
+						"CONTACT_TEXT": "Popisy typu kontaktu",
+						"CONTACT_TYPE": "Typ kontaktu",
+						"TITLE": "Přidat kontakt"
+					},
+					"TABLE": {
+						"CONTACT_TEXT": "Hodnota",
+						"CONTACT_TYPE": "Typ",
+						"FILTER": "Filtr",
+						"USE_FOR_DISTRIBUTION": "Kontakt na informační bulletin"
+					},
+					"TAB_NAME": "Kontaktní údaje"
+				},
+				"DOCUMENT": {
+					"FORM": {
+						"ADD": "Přidat",
+						"DOCUMENT_TYPE": "Typ dokumentu",
+						"EXP_DATE": "Datum vypršení platnosti",
+						"FIRST_NAME": "křestní jméno",
+						"LAST_NAME": "Příjmení",
+						"MIDDLE_NAME": "Střední jméno",
+						"NUM": "Číslo dokumentu"
+					},
+					"TABLE": {
+						"DOCUMENT_TYPE": "Typ dokumentu",
+						"EXP_DATE": "Datum vypršení platnosti",
+						"FILTER": "Filtr",
+						"FIRST_NAME": "křestní jméno",
+						"LAST_NAME": "Příjmení",
+						"MIDDLE_NAME": "Střední jméno",
+						"NUM": "Číslo dokumentu"
+					},
+					"TAB_NAME": "Docs"
+				},
+				"HEADER": {
+					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Zdobené placené služby:",
+					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Zrušené placené služby:",
+					"COUNT_ACTIVE_TICKET": "Objednávky:",
+					"COUNT_CANCELLED_TICKET": "Zrušené objednávky:",
+					"CREATE_DATE": "S námi:",
+					"CUSTOMER_GROUP": "Skupiny cestujících",
+					"CUSTOMER_ID": "Číslo profilu:",
+					"DATE_OF_BIRTH": "Datum narození:",
+					"GENDER": "Pohlaví:",
+					"LUT": "Datum poslední aktivity:",
+					"PROFILE": "Profil:",
+					"SEGMENTATION": "Segmentační skupiny",
+					"TOTAL_AMOUNT": "Vydáno na částku:"
+				},
+				"MESSAGES": {
+					"HEADER": {
+						"DATE": "Datum a čas distribuce",
+						"STATUS": "Aktuální stav",
+						"TOPIC_LETTER": "Řádek předmětu"
+					},
+					"TAB_NAME": "ZPRÁVY",
+					"TEMPLATE": {
+						"GO_TO": "Přejděte do informačního bulletinu"
+					}
+				},
+				"ORDER": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"STATUS": {
+								"ACTIVE": "Zdobené",
+								"CANCELLED": "Zrušeno",
+								"TITLE": "Stav objednávky"
+							}
+						},
+						"TEMPLATE": {
+							"MONETARY_INFO": {
+								"ALL": "Celkem na objednávku:",
+								"COST_CURRENCY": "Cena v měně:",
+								"TAXES": "Poplatky a poplatky:",
+								"TICKETS": "Vstupenkami:"
+							},
+							"POS": {
+								"AGENCY": "Agentura:",
+								"COUNTRY": "Země:",
+								"GDS": "Gds:",
+								"POS_ID": "POS ID:",
+								"REC_LOC": "Recloc GDS:",
+								"TERMINAL": "Terminál:"
+							},
+							"SEGMENTS": {
+								"ARR_POINT": "Příletové letiště:",
+								"ARR_TIME": "Datum / čas příjezdu:",
+								"CABIN": "Kabina:",
+								"DEP_POINT": "Odletové letiště:",
+								"DEP_TIME": "Datum / čas odjezdu:",
+								"FLIGHT": "Let číslo:",
+								"RBD": "Rezervační třída:",
+								"STATUS": "Stav segmentu:"
+							},
+							"SERVICES": {
+								"ARR_POINT": "Příletové letiště:",
+								"ARR_TIME": "Datum / čas příjezdu:",
+								"CONCEPT_MEASURE": "Koncepce / opatření:",
+								"COST": "Cena:",
+								"COUPON": "Číslo kupónu:",
+								"COUPON_STATUS": "Stav:",
+								"DATE": "Datum:",
+								"DEP_POINT": "Odletové letiště:",
+								"DEP_TIME": "Datum / čas odjezdu:",
+								"EMD": "EMD:",
+								"EMD_TYPE": "Typ EMD:",
+								"FLIGHT": "Let číslo:",
+								"NOS": {
+									"COMMENT": "Komentář:",
+									"NAME_SERVICES": "Název služby:"
+								},
+								"QTTY": "Množství:",
+								"RFISC": "Rfisc:",
+								"SSR": "SSR:",
+								"STATUS": "Stav služby:",
+								"SVC_TYPE": "Typ SVC:"
+							},
+							"TICKETS": {
+								"ARR_POINT": "Příletové letiště:",
+								"ARR_TIME": "Datum / čas příjezdu:",
+								"COUPON": "Číslo kupónu:",
+								"DEP_POINT": "Odletové letiště:",
+								"DEP_TIME": "Datum / čas odjezdu:",
+								"FARE_CODE": "Základ tarifu:",
+								"FLIGHT": "Let číslo:",
+								"NUM_DER_TICKET": "Číslo lístku:",
+								"STATUS": "Stav:"
+							}
+						}
+					},
+					"FILTER": {
+						"DATE_CREATE": "Datum vytvoření",
+						"DATE_SEARCH": "Výběr data",
+						"REC_LOC": "Objednací číslo",
+						"SEARCH": "Hledat podle",
+						"STATUS": {
+							"ACTIVE": "Zdobené",
+							"CANCELLED": "Zrušeno",
+							"TITLE": "Stav objednávky"
+						},
+						"VALUE": "Hodnota"
+					},
+					"HEADER": {
+						"DATE_CREATE": "Datum vytvoření",
+						"REC_LOC": "Objednací číslo",
+						"STATUS": "Stav objednávky"
+					},
+					"OPTION_GROUPS": {
+						"ALL": "Jakékoli:",
+						"ALL_SEARCH": "Hledat podle všech parametrů",
+						"POS": "Prodejní místo",
+						"SEGMENTS": "Segment",
+						"SERVICES": "Služby",
+						"TICKETS": "Vstupenka"
+					},
+					"TAB_NAME": "Objednávky"
+				},
+				"PRIVILEGES": {
+					"HEADER": {
+						"DATE_OF_CARRIAGE": "Datum přepravy",
+						"DATE_OF_SALE": "Datum prodeje",
+						"DIRECTION_FROM": "Směr z",
+						"DIRECTION_TO": "Směr na",
+						"GDS": "Číslo objednávky (GDS)",
+						"ORGANIZATION": "Organizace",
+						"STATUS": "Stav"
+					},
+					"TAB_NAME": "Výhody",
+					"TEMPLATE": {
+						"ARR_LOC_CODE": "Směr:",
+						"COUPON": "Číslo kupónu:",
+						"DEP_LOC_CODE": "Směr z:",
+						"DISCOUNT_SUM": "Výše poskytnutých dávek:",
+						"EXTERNAL_DISCOUNT_SOURCE_NAME": "Benefiční organizace:",
+						"FLIGHT_DATA": "Datum přepravy:",
+						"PRICE": "Celkové náklady na dopravu:",
+						"SALE_DATE": "Datum poskytnutí dávek (datum prodeje):",
+						"STATUS_NAME": "Stav:",
+						"TICKET": "Číslo lístku:"
+					}
+				},
+				"PROFILE": {
+					"CARD": {
+						"COMMENT": "Poznámky:",
+						"DATE_OF_BIRTH": "Datum narození:",
+						"FIRST_NAME": "Jméno:",
+						"GENDER": "Pohlaví:",
+						"LAST_NAME": "Příjmení:",
+						"MIDDLE_NAME": "Střední jméno:",
+						"TITLE": "Hlavní jméno cestujícího"
+					},
+					"EDIT": {
+						"COMMENT": "Poznámky",
+						"DATE_OF_BIRTH": "Datum narození",
+						"FIRST_NAME": "křestní jméno",
+						"GENDER": {
+							"F": "F",
+							"M": "M",
+							"TITLE": "Pohlaví"
+						},
+						"LAST_NAME": "Příjmení",
+						"MIDDLE_NAME": "Střední jméno",
+						"TITLE": "Upravit"
+					},
+					"FORM": {
+						"FIRST_NAME": "křestní jméno",
+						"LAST_NAME": "Příjmení",
+						"MIDDLE_NAME": "Střední jméno",
+						"TITLE": "Přidejte další jméno"
+					},
+					"TABLE": {
+						"FIRST_NAME": "křestní jméno",
+						"LAST_NAME": "Příjmení",
+						"MIDDLE_NAME": "Střední jméno"
+					},
+					"TAB_NAME": "Profil"
+				},
+				"PROMO_CODE": {
+					"EXPANSION": {
+						"TEMPLATE": {
+							"ACCOUT_CODE": "Kód vypořádání:",
+							"BRAND": "Značky:",
+							"CUSTOMER": "Profil:",
+							"CUSTOMER_GROUP": "Skupiny cestujících:",
+							"FLIGHT_DATE_FROM": "Realizační období od:",
+							"FLIGHT_DATE_TO": "Realizační období:",
+							"GO_TO": "Přejít na propagační kód",
+							"PROMO_CODE_FLIGHT_LIST": "Číslo letu:",
+							"RDB": "Rezervační třída:",
+							"REC_LOC": "Objednávky:",
+							"ROUTE": "Pokyny:",
+							"SEGMENTATION": "Skupiny segmentů:",
+							"USES_PER_PERSON": "Použít pro profil:",
+							"USES_TOTAL": "Celkové využití:",
+							"VAL": "Sleva:",
+							"VAL_TYPE": {
+								"PERCENT": "Procento",
+								"SUM": "Částka",
+								"TITLE": "Typ slevy:"
+							}
+						}
+					},
+					"HEADER": {
+						"DATE_FROM": "Doba platnosti od",
+						"DATE_TO": "Doba platnosti do",
+						"PROMO": "Propagace",
+						"PROMO_CODE": "Propagační kód",
+						"QUANTITY": "Množství"
+					},
+					"TABS": {
+						"AVAILABLE": "K dispozici",
+						"USED": "Používá se"
+					},
+					"TAB_NAME": "Propagační kódy"
+				},
+				"SHOW_HIDE": {
+					"HIDE": "Skrýt přidat formulář",
+					"SHOW": "Zobrazit formulář pro nahrání"
+				}
+			}
+		},
+		"PROMOTIONS": {
+			"ADD_PROMOTIONS": {
+				"FIELD": {
+					"PROMOTIONS": "Propagace"
+				},
+				"TABLE": {
+					"PROMOTIONS": "Propagace"
+				}
+			},
+			"ADD_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Zúčtovací kód",
+					"ARR_LOC": "Směr na",
+					"BRAND": "Značky",
+					"CUSTOMER": "Profil",
+					"CUSTOMER_GROUP": "Skupiny cestujících",
+					"DATE_FROM": "Doba platnosti od",
+					"DATE_TO": "Doba platnosti do",
+					"DEP_LOC": "Směr z",
+					"DESCRIPTION": "Popis propagace",
+					"FLIGHT": "Letová čísla",
+					"FLIGHT_DATA_FROM": "Prováděcí období od",
+					"FLIGHT_DATA_TO": "Prováděcí období do",
+					"PROMOTIONS": "Propagace",
+					"PROMOTIONS_CODE": "Propagační kód",
+					"PROMOTIONS_CODE_VAL": {
+						"AMOUNT": "Částka",
+						"PERCENT": "Procento",
+						"TITLE": "Typ slevy"
+					},
+					"RDD": "Rezervační třída",
+					"REASON": "Nadace",
+					"SEGMENTATION": "Segmentační skupiny",
+					"USED": "Použité:",
+					"USES_PER": "Použít pro profil",
+					"USES_TOTAL": "Celkové využití",
+					"VAL": "Sleva"
+				},
+				"TABLE": {
+					"FIRST_NAME": "křestní jméno",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno",
+					"PROFILE": "Číslo profilu"
+				}
+			},
+			"SEARCH_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Zúčtovací kód",
+					"BRAND": "Značky",
+					"CUSTOMER_GROUP": "Skupiny cestujících",
+					"DATE_FROM": "Doba platnosti od",
+					"DATE_TO": "Doba platnosti do",
+					"FLIGHT": "Letová čísla",
+					"FLIGHT_DATA_FROM": "Prováděcí období od",
+					"FLIGHT_DATA_TO": "Prováděcí období do",
+					"PROMOTIONS": "Propagace",
+					"PROMOTIONS_CODE": "Propagační kód",
+					"RDD": "Rezervační třída",
+					"SEGMENTATION": "Segmentační skupiny"
+				},
+				"TABLE": {
+					"ACCOUNT_CODE": "Zúčtovací kód",
+					"DATE_FROM": "Doba platnosti od",
+					"DATE_TO": "Doba platnosti do",
+					"FLIGHT_DATA_FROM": "Prováděcí období od",
+					"FLIGHT_DATA_TO": "Prováděcí období do",
+					"PROMOTIONS": "Propagace",
+					"PROMOTIONS_CODE": "Propagační kód"
+				}
+			}
+		},
+		"REPORTS": {
+			"STATISTICS_REPORT": {
+				"MES_DOWNLOAD_EXC": "Stáhněte si soubor Excel na základě vygenerovaného požadavku",
+				"MES_DOWNLOAD_PDF": "Stáhněte si soubor PDF s ohledem na vygenerovaný požadavek",
+				"MES_DOWNLOAD_WORD": "Stáhněte si soubor Word na základě vygenerovaného požadavku",
+				"REPORT_PARAMETERS": "Parametry sestavy",
+				"REPORT_SELECTION": "Výběr zprávy"
+			}
+		},
+		"RESET": {
+			"TITLE": "Znovu načíst aplikaci"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": {
+				"BUTTON": {
+					"NEXT": "další",
+					"PREV": "Předchozí"
+				},
+				"GROUP_SEGMENTATION": {
+					"GRANULARITY": {
+						"COUPON": "Kupón",
+						"ORDERS": "Objednávky",
+						"PASSENGER": "Cestující",
+						"TITLE": "Granularita"
+					},
+					"GROUP_SEGMENTATION": "Segmentační skupina"
+				},
+				"NUMBER_SEGMENTS": {
+					"FROM": "z",
+					"SERVICES": "Služby",
+					"TICKETS": "Vstupenky",
+					"TITLE": "Počet segmentů",
+					"TO": "dříve"
+				},
+				"ORDER_AMOUNT": {
+					"CURRENCY": "Měna platby",
+					"FROM": "z",
+					"SERVICES": "Služby",
+					"TICKETS": "Vstupenky",
+					"TITLE": "Částka objednávky",
+					"TO": "dříve"
+				},
+				"PROFILE_DETAILS": {
+					"DOB_FROM": "Datum narození od",
+					"DOB_TO": "",
+					"FLIES_WITHOUT_CHILDREN": "Mouchy bez dětí",
+					"FLIES_WITH_CHILDREN": "Mouchy s dětmi",
+					"GENDER": {
+						"F": "F",
+						"M": "M",
+						"TITLE": "Pohlaví"
+					},
+					"TITLE": "Detaily profilu"
+				},
+				"RESERVATION_DATE_RANG": {
+					"DATE_FROM": "Volný rozsah od",
+					"DATE_TO": "Volný výběh do",
+					"TITLE": "Časové období rezervace"
+				},
+				"SERVICES": {
+					"AIRLINE_L_CODE": "Letecký kód",
+					"ARR_D_FROM": "Časové období odjezdu od",
+					"ARR_D_TO": "Odletové časové období podle",
+					"ARR_LOC": "Kam kde",
+					"DEP_LOC": "Odkud",
+					"DISPATCH_TIME": "Čas před odjezdem",
+					"FLIGHT_NO": "Číslo letu",
+					"POS_AGENCY": "Kód agentury (místo prodeje)",
+					"POS_GDS": "GDS kód (prodejní místo)",
+					"POS_ID": "PPR kód (prodejní místo)",
+					"SERVICE_CODE": "Kód",
+					"TITLE": "Placené služby"
+				},
+				"SUBJECT_ANALYSIS": {
+					"PAYMENT": "Výše nákupů",
+					"REMOVE": "Obnovte předmět analýzy",
+					"SEGMENT": "Počet segmentů",
+					"TITLE": "Předmět analýzy"
+				},
+				"TICKET": {
+					"AIRLINE_L_CODE": "Letecký kód",
+					"ARR_D_FROM": "Časové období odjezdu od",
+					"ARR_D_TO": "Odletové časové období podle",
+					"ARR_LOC": "Kam kde",
+					"CABIN": "Kabina",
+					"DEP_LOC": "Odkud",
+					"DISPATCH_TIME": "Čas před odjezdem",
+					"FLIGHT_NO": "Číslo letu",
+					"POS_AGENCY": "Kód agentury (místo prodeje)",
+					"POS_GDS": "GDS kód (prodejní místo)",
+					"POS_ID": "PPR kód (prodejní místo)",
+					"RARE_CODE": "Hodnotící kód",
+					"RDB": "Rezervační třída",
+					"TITLE": "Vstupenka"
+				}
+			},
+			"COMPLEX_SEGMENTATION": {
+				"FIELD": {
+					"CHOICE_SEGMENTATION": "Výběr segmentace",
+					"NAME_COMPLEX_SEGMENTATION": "Název složité segmentace"
+				},
+				"SEGMENTATIONS": "Segmentace",
+				"TABLE": {
+					"FILTER": "Filtr",
+					"GROUP_SEGMENTATION": "Segmentační skupina",
+					"TITLE": "Složitá segmentace"
+				}
+			},
+			"LIST_SEGMENTATION": {
+				"PROFILE_SEGMENTATION": {
+					"CUSTOMER_ID": "Číslo profilu",
+					"FIRST_NAME": "křestní jméno",
+					"LAST_NAME": "Příjmení",
+					"MIDDLE_NAME": "Střední jméno"
+				},
+				"TABLE_SEGMENTATION": {
+					"ALL": "Všechny",
+					"COMPLICATED": "Obtížné",
+					"FILTER": "Filtr",
+					"GRANULARITY": {
+						"COUPON": "Kupón",
+						"ORDERS": "Objednávky",
+						"PASSENGER": "Cestující",
+						"TITLE": "Granularita"
+					},
+					"SEGMENTATION": "Segmentační skupina",
+					"SIMPLE": "Jednoduché",
+					"STATUS": {
+						"COMPLICATED": "Obtížné",
+						"SIMPLE": "Jednoduché",
+						"TITLE": "Stav"
+					},
+					"TITLE": "Zobrazit segmentaci"
+				}
+			}
+		},
+		"SETTINGS": {
+			"TABLE_PROFILE": {
+				"COLUMN_DISPLAY": "Zobrazení sloupců",
+				"COLUMN_ORDER": "Pořadí sloupců",
+				"TITLE": "Nastavení stolu pro cestující"
+			}
+		},
+		"SLECIAL_GROUP": {
+			"PROFILE_GROUP": {
+				"TABLE": {
+					"PROFILE_GROUP": "Skupina cestujících"
+				},
+				"TITLE": "Skupina cestujících"
+			}
+		},
+		"USERS": {
+			"ADD_USER": {
+				"CONFIRM_PASSWORD": "Zadejte znovu heslo",
+				"EMAIL": "E-mail",
+				"FIO": "Celé jméno",
+				"LOGIN": "Uživatelské jméno",
+				"PASSWORD": "Heslo",
+				"TITLE": "Přidat uživatele"
+			},
+			"LIST_USERS": {
+				"TABLE": {
+					"EMAIL": "E-mail",
+					"FILTER": "Filtr",
+					"FIO": "Celé jméno",
+					"LOGIN": "Uživatelské jméno"
+				},
+				"TITLE": "Seznam všech uživatelů"
+			},
+			"USER": {
+				"ACCESS_RIGHTS": {
+					"ADDITIONAL_RIGHT": "Dodatečná práva",
+					"ANALYTICS": "ANALYTICS",
+					"CUSTOMERS": "Cestující",
+					"DISTRIBUTIONS": "Informační bulletiny",
+					"EVENTS": "Události",
+					"PRIVILEGES": "Výhody",
+					"PROMOTIONS_CODES": "Propagační kódy",
+					"READ": "Čtení",
+					"REPORTS": "ZPRÁVY",
+					"TITLE": "Přístupová práva",
+					"UPDATE": "Změnit",
+					"USER": "Uživatele"
+				},
+				"USER": {
+					"CONFIRM_PASSWORD": "Zadejte znovu heslo",
+					"EMAIL": "E-mail",
+					"FIO": "Celé jméno",
+					"LOGIN": "Uživatelské jméno",
+					"PASSWORD": "Heslo",
+					"TABS": {
+						"PASSWORD": "Heslo",
+						"USER": "Uživatel"
+					},
+					"TITLE": "Uživatel",
+					"TITLE_2": "Upravit"
+				}
+			}
+		}
+	},
+	"POP_UP": {
+		"DIALOG_MERGE_PROFILE": {
+			"CUSTOMER_IDS": "Číslo profilu:",
+			"DATE_OF_BIRTH": "Datum narození:",
+			"FIRST_NAME": "Jméno:",
+			"LAST_NAME": "Příjmení:"
+		},
+		"DIALOG_PROMO_CODE": {
+			"ACCOUNT_CODE": "Kód účtu:",
+			"DATE_FROM": "Platnost: Od",
+			"DATE_TO": "dříve",
+			"NAME_PROMO_CODE": "Promo kódové jméno:",
+			"PROMO_CODE": "Propagační kód"
+		},
+		"EDITOR": {
+			"DIALOG_EDITOR": {
+				"TITLE": "Vyberte poštovní formulář"
+			},
+			"DIALOG_EMAIL": {
+				"DATE_FROM": "Datum dodání od",
+				"DATE_TO": "Datum odeslání",
+				"EXAMPLE": "Příklad:",
+				"LIMITS": "Limit",
+				"PARAMS": "Možnosti zpravodaje",
+				"TEMPLATE": "Vzor",
+				"TEMPLATE_TITLE": "Šablona informačního bulletinu",
+				"TEXT": "Text",
+				"THEME": "Téma",
+				"TITLE": "Proměnné zasílání",
+				"TOTAL_COUNT": "Množství"
+			},
+			"DIALOG_SMS": {
+				"SYMBOLS_ENTERED": "Zadané symboly",
+				"TEMPLATE": "Vzor",
+				"TEXT": "Text zprávy",
+				"TITLE": "název"
+			}
+		}
+	},
+	"TABLE": {
+		"FIRST_PAGE": "První stránka",
+		"FROM": "z",
+		"ITEMS_PER_PAGE": "Množství na stránku",
+		"LAST_PAGE": "Poslední stránka",
+		"NEXT": "další",
+		"PREV": "Předchozí",
+		"RESULT": {
+			"ERROR": "Pro tento požadavek nebyly nalezeny žádné výsledky.",
+			"OK": "Výsledky vyhledávání"
+		}
+	},
+	"TOOLBAR": {
+		"GO_OUT": "Jděte ven"
+	}
+}

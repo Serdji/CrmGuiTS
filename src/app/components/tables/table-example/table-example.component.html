@@ -1,9 +1,9 @@
 <mat-form-field class="table__input">
-  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
+  <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'PAGE.USERS.LIST_USERS.TABLE.FILTER' | translate}}">
 </mat-form-field>
 <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
   <ng-container *ngFor="let cell of tableHeader" matColumnDef="{{cell[0]}}">
-    <mat-header-cell [ngClass]="{ '_hidden' : cell[0] === 'loginId' }" *matHeaderCellDef mat-sort-header> {{cell[1]}}</mat-header-cell>
+    <mat-header-cell [ngClass]="{ '_hidden' : cell[0] === 'loginId' }" *matHeaderCellDef mat-sort-header> {{cell[1] | translate}}</mat-header-cell>
     <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp, '_hidden' : cell[0] === 'loginId' }" *matCellDef="let element"
               (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element[cell[0]]}}</span>
     </mat-cell>

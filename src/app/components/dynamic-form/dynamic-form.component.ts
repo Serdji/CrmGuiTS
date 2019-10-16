@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as R from 'ramda';
 import * as moment from 'moment';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
+import { takeWhile } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-dynamic-form',
@@ -14,6 +15,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public dynamicForm: FormGroup;
   public objectProps: any;
   public splitObjectProps: any;
+  public buttonDisabled: boolean;
 
   private isActive: boolean;
   private dataObject: any = {};
@@ -29,7 +31,9 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isActive = true;
     this.initParameterConversion();
+    this.initButtonDisabled();
   }
+
 
   private initParameterConversion() {
     const typeCheck = ( typeNumber: number ): string => {
@@ -47,12 +51,20 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
           placeholder: paramsDynamicForm.prompt,
           value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
           type: typeCheck( paramsDynamicForm.dataType ),
+          validators: { required: !paramsDynamicForm.nullable }
         }
       } );
       this.initDynamicForm();
       this.initSplitObjectProps();
     } );
     mapParamsDynamicForm( this.paramsDynamicForm );
+    this.buttonDisabled = this.dynamicForm.invalid;
+  }
+
+  private initButtonDisabled() {
+    this.dynamicForm.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( _ => this.buttonDisabled = this.dynamicForm.invalid );
   }
 
   private initDynamicForm() {
@@ -60,12 +72,13 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     const mapKeys = R.map( objMerge );
     const composeObjProps = R.compose( mapKeys, R.keys );
     this.objectProps = composeObjProps( this.dataObject );
-
     const formGroup = {};
-    const formControls = prop => new FormControl(
-      R.view( R.lensPath( [ prop, 'value' ] ), this.dataObject ) || '',
-      this.mapValidators( R.view( R.lensPath( [ prop, 'validation' ] ), this.dataObject ) )
-    );
+    const formControls = prop => {
+      return new FormControl(
+        R.path([ prop, 'value' ], this.dataObject ) || '',
+        this.mapValidators( R.path( [ prop, 'validators' ], this.dataObject ) )
+      );
+    }
     const setFormGroup = prop => formGroup[ prop ] = formControls( prop );
     const mapPerson = R.map( setFormGroup );
     const composeFormControl = R.compose( mapPerson, R.keys );

@@ -5,6 +5,7 @@ export interface IprofileSearch {
   booknum?: string;
   emdnum?: string;
   flightnum?: string;
+  airlineId?: string;
   flightdatefrom?: string;
   flightdateto?: string;
   cityfrom?: string;

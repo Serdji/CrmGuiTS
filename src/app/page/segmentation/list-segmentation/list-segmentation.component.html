@@ -1,8 +1,19 @@
 <div class="list-segmentation" appAccessRights="analytics:read" appAccessMessage="true">
-  <mat-card>
-    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+  <mat-card class="list-segmentation__table-segmentation">
+    <mat-progress-bar *ngIf="isLoaderSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-table-example-segmentation  *ngIf="segmentation.length !== 0" [tableDataSource]="segmentation"></app-table-example-segmentation>
+      <app-table-example-segmentation *ngIf="segmentation.length !== 0" [tableDataSource]="segmentation" (emitSegmentationId)="onProfileSearch( $event )"></app-table-example-segmentation>
+    </ng-template>
+  </mat-card>
+
+  <mat-card class="list-segmentation__table-profile" *ngIf="isTableProfileTable">
+    <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <mat-card-title>{{segmentationProfiles.customers.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
+      <app-table-async-segmentation-profile
+        *ngIf="segmentationProfiles.customers.length !== 0"
+        [tableDataSource]="segmentationProfiles.customers">
+      </app-table-async-segmentation-profile>
     </ng-template>
   </mat-card>
 </div>

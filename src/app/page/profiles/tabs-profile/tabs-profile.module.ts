@@ -15,6 +15,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { PromoCodeModule } from './promo-code/promo-code.module';
 import { TabsProfileRoutes } from './tabs-profile.routing';
 import { PrivilegesModule } from './privileges/privileges.module';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule( {
   imports: [
@@ -31,7 +32,8 @@ import { PrivilegesModule } from './privileges/privileges.module';
     DirectivesModule,
     PromoCodeModule,
     PrivilegesModule,
-    TabsProfileRoutes
+    TabsProfileRoutes,
+    TranslateModule
   ],
   declarations: [ TabsProfileComponent ],
   providers: [ OrderService ]

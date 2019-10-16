@@ -1,0 +1,91 @@
+select = 70px
+
+customerId = 50px
+
+
+.table
+
+  &__button
+    &-filter
+      height: 36px;
+
+  &__search
+    display: flex;
+    align-items: center;
+
+  &__input
+    width: 200px;
+    margin-right: 10px;
+
+  &__loading-shade
+    position: absolute;
+    top: 56px;
+    left: 0;
+    bottom: 73px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  &__row
+    white-space: nowrap;
+
+  &__cell
+    text-overflow: ellipsis;
+    display: inline-block;
+    min-height auto;
+    &._cp
+      cursor: pointer
+      padding: 16px;
+      &:hover
+        background: rgba(63,81,181,.12)
+
+  &__button
+
+    margin-right: 15px;
+
+    &-wrapper
+      display: flex;
+      width: 100%;
+
+.mat-column
+
+
+
+  &-firstName,
+  &-lastName,
+  &-secondName
+    flex: 1;
+
+  &-customerId
+    width: customerId;
+    margin-left: auto;
+    mat-icon
+      cursor: pointer
+      color: #696969;
+      margin-left: auto
+      margin-right: 30px;
+
+
+
+mat-table
+  display: table;
+  width: 100%;
+
+mat-header-cell,
+mat-cell
+  padding: 0 16px;
+  width: auto
+  flex: none;
+  box-sizing: border-box;
+
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}

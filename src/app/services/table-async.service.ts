@@ -7,6 +7,7 @@ export class TableAsyncService {
 
   public count: number;
   public subjectPage = new Subject();
+  public subjectFilter = new Subject();
   public subjectTableDataSource = new Subject();
 
   constructor() { }
@@ -21,6 +22,10 @@ export class TableAsyncService {
 
   setPagPage( params: IpagPage ) {
     this.subjectPage.next( params );
+  }
+
+  setParamsFilter( paramsFilter ) {
+    this.subjectFilter.next( paramsFilter );
   }
 
   setTableDataSource( params: any ) {

@@ -111,6 +111,7 @@ export class OrderService {
     const AmountEurLens = R.lensProp( 'AmountEur' );
     const AmountUsdLens = R.lensProp( 'AmountUsd' );
     const setAmount = lens => R.set( lens, 0 );
+    // @ts-ignore
     const setAmountCompose = R.compose( setAmount( AmountLens ), setAmount( AmountCurLens ), setAmount( AmountEurLens ), setAmount( AmountUsdLens ) );
 
     // --------------------------- Груперовка валют по ticket и emd ---------------------------

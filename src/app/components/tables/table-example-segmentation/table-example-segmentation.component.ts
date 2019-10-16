@@ -1,20 +1,23 @@
-import { Component, Input, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import {
-  MatDialog,
-  MatPaginator,
-  MatSort,
-  MatTableDataSource,
-} from '@angular/material';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
+import { ISegmentation } from '../../../interface/isegmentation';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import * as R from 'ramda';
+import { detailExpand } from '../../../animations/animations';
 
 @Component( {
   selector: 'app-table-example-segmentation',
   templateUrl: './table-example-segmentation.component.html',
   styleUrls: [ './table-example-segmentation.component.styl' ],
+  animations: [ detailExpand ],
 } )
 export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
@@ -23,31 +26,68 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
+  public expandedElement: ISegmentation | null;
+  public formFilterSegmentation: FormGroup;
 
   private isActive: boolean;
 
-  @Input() private tableDataSource: any;
+  @Input() private tableDataSource: ISegmentation[];
+  @Output() private emitSegmentationId = new EventEmitter<number>();
 
-  @ViewChild( MatSort ) sort: MatSort;
-  @ViewChild( MatPaginator ) paginator: MatPaginator;
+  @ViewChild( MatSort, { static: true } ) sort: MatSort;
+  @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
     this.isActive = true;
     this.initDataSource();
     this.initDisplayedColumns();
+    this.initFormCheckbox();
+    this.initSwitchSegmentation();
+  }
+
+  private initFormCheckbox() {
+    this.formFilterSegmentation = this.fb.group( {
+      whichSegmentation: 'all'
+    } );
   }
 
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
       'title',
+      'isComplex',
+      'segmentationGranularity',
       'segmentationId',
     ];
+  }
+
+  private initSwitchSegmentation() {
+    const isComplex = segmentation => segmentation.isComplex;
+    const segmentationSimple = R.reject( isComplex );
+    const segmentationComplicated = R.filter( isComplex );
+    const success = ( { whichSegmentation } ) => {
+      switch ( whichSegmentation ) {
+        case 'all':
+          this.dataSourceFun( this.tableDataSource );
+          break;
+        case 'simple':
+          this.dataSourceFun( segmentationSimple( this.tableDataSource ) );
+          break;
+        case 'complicated':
+          this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
+          break;
+      }
+    };
+
+    this.formFilterSegmentation.valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
   }
 
   private initDataSource() {
@@ -124,12 +164,12 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `Вы действительно хотите удалить ${ arrayId.length === 1 ? 'группу сегментации' : 'группы сегментации' } ?`, 'delete', params, 'deleteSegmentations' );
+      this.windowDialog( `DIALOG.DELETE.SEGMENTATIONS`, 'delete', params, 'deleteSegmentations' );
     }
   }
 
   redirectToSegmentation( segmentationId: number ): void {
-    this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId } } );
+    this.emitSegmentationId.emit( segmentationId );
   }
 
   disabledCheckbox( eventData ): void {

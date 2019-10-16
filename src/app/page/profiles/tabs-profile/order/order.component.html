@@ -4,31 +4,55 @@
   </mat-card>
   <mat-accordion *ngIf="!progress" multi="true">
 
-    <mat-card class="order__sort mat-elevation-z0">
-      <form class="order__form" [formGroup]="formFilter">
-        <div class="order__filter">
+    <mat-card class="order__sort _filter mat-elevation-z0">
+      <form class="order__form" [formGroup]="formSearch">
+        <div class="order__search">
           <mat-form-field class="order__input">
-            <input matInput formControlName="recloc" type="text" placeholder="Заказ №" [matAutocomplete]="recloc">
-            <mat-autocomplete #recloc="matAutocomplete">
-              <mat-option *ngFor="let recloc of reclocOptions | async" [value]="recloc">{{ recloc }}</mat-option>
-            </mat-autocomplete>
-          </mat-form-field>
-        </div>
-        <div class="order__filter">
-          <mat-form-field class="order__input">
-            <mat-select formControlName="BookingStatus" placeholder="Статус заказа">
+            <mat-select formControlName="switchSearch" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.SEARCH' | translate}}">
               <mat-option></mat-option>
-              <mat-option value="Active" >Оформлен</mat-option>
-              <mat-option value="Cancelled" >Аннулирован</mat-option>
+              <mat-optgroup *ngFor="let group of optionGroups" [label]="group.groupName | translate">
+                <mat-option *ngFor="let option of group.option" [value]="option.value">
+                  {{option.viewValue | translate}}
+                </mat-option>
+              </mat-optgroup>
             </mat-select>
           </mat-form-field>
-        </div>
-        <div  class="order__filter">
-          <mat-form-field class="order__input">
-            <input matInput formControlName="createDate" placeholder="Дата создания" [matDatepicker]="createDate">
-            <mat-datepicker-toggle matSuffix [for]="createDate"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #createDate></mat-datepicker>
+          <mat-form-field *ngIf="!isData" class="order__input">
+            <input formControlName="textSearch" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.VALUE' | translate}}" matInput>
           </mat-form-field>
+          <mat-form-field *ngIf="isData" class="order__input">
+            <input matInput formControlName="dateSearch" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.DATE_SEARCH' | translate}}" [matDatepicker]="dateSearch">
+            <mat-datepicker-toggle matSuffix [for]="dateSearch"></mat-datepicker-toggle>
+            <mat-datepicker touchUi="true" #dateSearch></mat-datepicker>
+          </mat-form-field>
+        </div>
+      </form>
+      <form class="order__form" [formGroup]="formFilter">
+        <div class="order__filter-wrapper">
+          <div class="order__filter">
+            <mat-form-field class="order__input">
+              <input matInput formControlName="recloc" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.REC_LOC' | translate}}" [matAutocomplete]="recloc">
+              <mat-autocomplete #recloc="matAutocomplete">
+                <mat-option *ngFor="let recloc of reclocOptions | async" [value]="recloc">{{ recloc }}</mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+          </div>
+          <div class="order__filter">
+            <mat-form-field class="order__input">
+              <mat-select formControlName="BookingStatus" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.STATUS.TITLE' | translate}}">
+                <mat-option></mat-option>
+                <mat-option value="Active">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.STATUS.ACTIVE' | translate}}</mat-option>
+                <mat-option value="Cancelled">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.STATUS.CANCELLED' | translate}}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="order__filter">
+            <mat-form-field class="order__input">
+              <input matInput formControlName="createDate" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.ORDER.FILTER.DATE_CREATE' | translate}}" [matDatepicker]="createDate">
+              <mat-datepicker-toggle matSuffix [for]="createDate"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #createDate></mat-datepicker>
+            </mat-form-field>
+          </div>
         </div>
       </form>
     </mat-card>
@@ -42,7 +66,7 @@
           matRippleRadius="50"
           (click)="sortFilter('recloc')"
         >
-          <b>Заказ №&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.ORDER.HEADER.REC_LOC' | translate}}&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -54,11 +78,11 @@
           matRippleRadius="50"
           (click)="sortFilter('BookingStatus')"
         >
-          <b>Статус заказа&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.ORDER.HEADER.STATUS' | translate}}&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
-      <div  class="order__filter">
+      <div class="order__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -66,7 +90,7 @@
           matRippleRadius="50"
           (click)="sortFilter('createDate')"
         >
-          <b>Дата создания&nbsp;</b>
+          <b>{{'PAGE.PROFILES.TABS_PROFILE.ORDER.HEADER.DATE_CREATE' | translate}}&nbsp;</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
       </div>
@@ -84,9 +108,9 @@
             <span>{{order.recloc}}</span>
           </div>
           <div class="order__title">
-            <span>{{order.BookingStatus | fieldTranslation}}</span>
+            <span>{{order.BookingStatus | fieldTranslation | translate}}</span>
           </div>
-          <div  class="order__title">
+          <div class="order__title">
             <span>{{order.createDate | date:'dd.MM.yyyy'}}</span>
           </div>
         </div>
@@ -100,15 +124,15 @@
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
-                      <div class="order__content-ticket">Recloc GDS: <b> {{pos.distrRecloc.recloc}} </b></div>
-                      <div class="order__content-ticket">GDS: <b> {{pos.gds}} </b></div>
-                      <div class="order__content-ticket">POS ID: <b> {{pos.posId}} </b></div>
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.REC_LOC' | translate}} <b> {{pos.distrRecloc.recloc}} </b></div>
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.GDS' | translate}} <b> {{pos.gds}} </b></div>
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.POS_ID' | translate}} <b> {{pos.posId}} </b></div>
                     </div>
 
                     <div class="order__content">
-                      <div class="order__content-ticket">Агентство: <b> {{pos.agency}} </b></div>
-                      <div class="order__content-ticket">Терминал: <b> {{pos.termId}} </b></div>
-                      <div class="order__content-ticket">Страна: <b> {{pos.country}} </b></div>
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.AGENCY' | translate}} <b> {{pos.agency}} </b></div>
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.TERMINAL' | translate}} <b> {{pos.termId}} </b></div>
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.COUNTRY' | translate}} <b> {{pos.country}} </b></div>
                     </div>
                   </div>
                 </mat-card>
@@ -120,38 +144,38 @@
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
                       <div class="order__content-point">
-                        <span class="order__content-text">Аэропорт вылета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.DEP_POINT' | translate}}</span>
                         <span><b> {{segment.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата / время вылета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.DEP_TIME' | translate}}</span>
                         <span><b> {{segment.depTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Аэропорт прилета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.ARR_POINT' | translate}}</span>
                         <span><b> {{segment.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата / время прилета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.ARR_TIME' | translate}}</span>
                         <span><b> {{segment.arrTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
                     </div>
 
                     <div class="order__content">
                       <div class="order__content-point">
-                        <span class="order__content-text">№ рейса:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.FLIGHT' | translate}}</span>
                         <span><b> {{segment.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Кабина:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.CABIN' | translate}}</span>
                         <span><b> {{segment.cabin}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Класс бронирования:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.RBD' | translate}}</span>
                         <span><b> {{segment.rbd}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Статус сегмента:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.STATUS' | translate}}</span>
                         <span><b> {{segment.status}}</b></span>
                       </div>
                     </div>
@@ -168,11 +192,11 @@
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _none-justify">
-                      <div class="order__content-ticket"><b>Стоимость в валюте:</b></div>
+                      <div class="order__content-ticket"><b>{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.MONETARY_INFO.COST_CURRENCY' | translate}}</b></div>
 
                       <div *ngFor="let MonetaryInfo of order.MonetaryInfo">
                         <div *ngIf="MonetaryInfo.Code === 'TG'" class="order__content-point">
-                          <span class="order__content-text">Всего по заказу:</span>
+                          <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.MONETARY_INFO.ALL' | translate}}</span>
                           <span><b>
                             {{ MonetaryInfo.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
@@ -180,7 +204,7 @@
                           </b></span>
                         </div>
                         <div *ngIf="MonetaryInfo.Code === 'TS'" class="order__content-point">
-                          <span class="order__content-text">Таксы и сборы:</span>
+                          <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.MONETARY_INFO.TAXES' | translate}}</span>
                           <span><b>
                             {{ MonetaryInfo.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountEur | currency:'EUR':'symbol-narrow'}} |
@@ -188,7 +212,7 @@
                           </b></span>
                         </div>
                         <div *ngIf="MonetaryInfo.Code === 'TT'" class="order__content-point">
-                          <span class="order__content-text">По билетам:</span>
+                          <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.MONETARY_INFO.TICKETS' | translate}}</span>
                           <span><b>
                             {{ MonetaryInfo.Amount | currency:MonetaryInfo.Currency:'symbol-narrow'}} |
                             {{ MonetaryInfo.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
@@ -207,42 +231,42 @@
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
                       <div class="order__content-point">
-                        <span class="order__content-text">Номер билета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.NUM_DER_TICKET' | translate}}</span>
                         <span><b> {{ticket.ticket}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Аэропорт вылета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.DEP_POINT' | translate}}</span>
                         <span><b> {{ticket.segment?.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата / время вылета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.DEP_TIME' | translate}}</span>
                         <span><b> {{ticket.segment?.depTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Аэропорт прилета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.ARR_POINT' | translate}}</span>
                         <span><b> {{ticket.segment?.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата / время прилета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.ARR_TIME' | translate}}</span>
                         <span><b> {{ticket.segment?.arrTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
                     </div>
 
                     <div class="order__content">
                       <div class="order__content-point">
-                        <span class="order__content-text">Номер купона:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.COUPON' | translate}}</span>
                         <span><b> {{ticket.coupon}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">№ рейса:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.FLIGHT' | translate}}</span>
                         <span><b> {{ticket.segment?.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Fare basis:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.FARE_CODE' | translate}}</span>
                         <span><b> {{ticket.FareCode}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Статус:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.STATUS' | translate}}</span>
                         <span><b> {{ticket.couponStatus}}</b></span>
                       </div>
                     </div>
@@ -260,80 +284,80 @@
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
                       <div class="order__content-point">
-                        <span class="order__content-text">Тип SVC:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SVC_TYPE' | translate}}</span>
                         <span><b>  {{ service.emdType}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Аэропорт вылета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DEP_POINT' | translate}}</span>
                         <span><b> {{service.segment?.depPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата / время вылета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DEP_TIME' | translate}}</span>
                         <span><b> {{service.segment?.depTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Аэропорт прилета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ARR_POINT' | translate}}</span>
                         <span><b> {{service.segment?.arrPoint}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата / время прилета:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ARR_TIME' | translate}}</span>
                         <span><b> {{service.segment?.arrTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">№ рейса:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.FLIGHT' | translate}}</span>
                         <span><b> {{service.segment?.flight}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Статус услуги:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.STATUS' | translate}}</span>
                         <span><b> {{service.status}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Стоимость:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.COST' | translate}}</span>
                         <span><b>
                           {{ service.emd?.amount | currency:service.emd?.Currency:'symbol-narrow'}} |
                           {{ service.emd?.AmountCur | currency:currencyDefault:'symbol-narrow'}}
                         </b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">{{ service.nos ? 'Название услуги:' : 'Комментарий:'}}</span>
+                        <span class="order__content-text">{{ service.nos ? ('PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.NOS.NAME_SERVICES' | translate) : ('PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.NOS.COMMENT' | translate)}}</span>
                         <span><b> {{ service.nos || service.text }}</b></span>
                       </div>
                     </div>
 
                     <div class="order__content">
                       <div class="order__content-point">
-                        <span class="order__content-text">Дата:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE' | translate}}</span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Rfisc:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.RFISC' | translate}}</span>
                         <span><b> {{service.rfisc}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">SSR:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SSR' | translate}}</span>
                         <span><b> {{service.ssr}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Тип EMD:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.EMD_TYPE' | translate}}</span>
                         <span><b> {{service.emdType}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Номер купона:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.COUPON' | translate}}</span>
                         <span><b> {{service.emd?.coupon}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Статус:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.COUPON_STATUS' | translate}}</span>
                         <span><b> {{service.couponStatus}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">EMD:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.EMD' | translate}}</span>
                         <span><b> {{service.emd?.num}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Количество:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.QTTY' | translate}}</span>
                         <span><b> {{service.qtty}}</b></span>
                       </div>
                       <div class="order__content-point">
-                        <span class="order__content-text">Концепт/мера:</span>
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.CONCEPT_MEASURE' | translate}}</span>
                       </div>
                     </div>
                   </div>

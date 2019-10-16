@@ -7,49 +7,49 @@
 
 
     <ng-container matColumnDef="code">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Промокод</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.PROMOTIONS_CODE' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.code}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="promotionName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Промоакция</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.PROMOTIONS' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.promotionName}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="accountCode">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Расчётный код</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.ACCOUNT_CODE' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.accountCode}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dateFrom">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Период действия от</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.DATE_FROM' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dateTo">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Период действия до</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.DATE_TO' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="flightDateFrom">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Период реализации от</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.FLIGHT_DATA_FROM' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.flightDateFrom | date:'dd.MM.yyyy'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="flightDateTo">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Период реализации до</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROMOTIONS.SEARCH_PROMOTIONS_CODE.TABLE.FLIGHT_DATA_TO' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.flightDateTo | date:'dd.MM.yyyy'}}</span>
       </mat-cell>

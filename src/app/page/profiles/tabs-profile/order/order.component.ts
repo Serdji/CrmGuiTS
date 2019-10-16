@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { map, takeWhile } from 'rxjs/operators';
+import { delay, map, skipWhile, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
+import { optionGroups, IOptionGroups, IOptionValue } from './optionGroups';
 
 
 @Component( {
@@ -26,13 +27,19 @@ export class OrderComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public currencyDefault: string;
   public formFilter: FormGroup;
+  public formSearch: FormGroup;
   public arrRecloc: string[];
   public reclocOptions: Observable<string[]>;
   public recLocCDS: string;
+  public optionGroups: IOptionGroups[];
+  public isData: boolean;
 
   private isActive: boolean;
   private isSortFilterReverse: boolean;
-  private controlConfig: any;
+  private filterControlConfig: any;
+  private searchControlConfig: any;
+  private selectOption: IOptionValue;
+  private saveSearchOrdersParams: IOptionValue = JSON.parse( localStorage.getItem( 'saveSearchOrdersParams' ) );
 
   constructor(
     private orderService: OrderService,
@@ -45,12 +52,16 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.isActive = true;
     this.progress = true;
     this.isSortFilterReverse = false;
+    this.optionGroups = optionGroups;
+    this.isData = false;
     this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();
-    this.initFormFilter();
+    this.initForm();
     this.initAutocomplete();
     this.initFilterOrders();
+    this.initSwitchSearch();
+    this.initMultiSearchOrders();
   }
 
 
@@ -69,6 +80,7 @@ export class OrderComponent implements OnInit, OnDestroy {
       this.arrRecloc = getRecloc( this.orders );
       this.progress = false;
       this.recLocCDS = this.data ? this.data.recLocGDS : '';
+      this.loadSearchOrdersParams();
     };
     const error = _ => this.progress = false;
 
@@ -78,15 +90,21 @@ export class OrderComponent implements OnInit, OnDestroy {
   }
 
   private initControlConfig() {
-    this.controlConfig = {
+    this.filterControlConfig = {
       'recloc': '',
       'BookingStatus': '',
-      'createDate': ''
+      'createDate': '',
+    };
+    this.searchControlConfig = {
+      'switchSearch': '',
+      'textSearch': '',
+      'dateSearch': '',
     };
   }
 
-  private initFormFilter() {
-    this.formFilter = this.fb.group( this.controlConfig );
+  private initForm() {
+    this.formFilter = this.fb.group( this.filterControlConfig );
+    this.formSearch = this.fb.group( this.searchControlConfig );
   }
 
   private initAutocomplete() {
@@ -120,7 +138,133 @@ export class OrderComponent implements OnInit, OnDestroy {
     };
 
     const generationFilterConfig = R.forEachObjIndexed( valueForm );
-    generationFilterConfig( this.controlConfig );
+    generationFilterConfig( this.filterControlConfig );
+  }
+
+
+  private isBreakFnRec( orders: any, text: string ): boolean {
+    let isBreak;
+    const isString = R.is( String );
+    const isNumber = R.is( Number );
+    const isObject = R.is( Object );
+
+    if ( isObject( orders ) ) {
+      _.some( orders, value => {
+        if ( isString( value ) || isNumber( value ) ) {
+          value = value + '';
+          const includes = R.includes( R.__, value );
+          // @ts-ignore
+          const isBreakFn = R.compose( includes, R.toUpper );
+          isBreak = isBreakFn( text );
+          return isBreak;
+        } else if ( !R.isEmpty( value ) ) {
+          _.some( value, v => {
+            isBreak = isBreak ? isBreak : this.isBreakFnRec( v, text );
+            return isBreak;
+          } );
+        }
+      } );
+    }
+    return isBreak;
+  }
+
+  private isBreakFn( controlGroupsName: IOptionValue, text: string ): boolean {
+    let isBreak;
+    _.some( controlGroupsName, controlGroupName => {
+      const controlName = R.path( this.selectOption.controlName, controlGroupName );
+      const controlNameParams = controlName || '';
+      // @ts-ignore
+      const includes = R.includes( R.__, controlNameParams );
+      const isBreakCompose = R.compose( includes, R.toUpper );
+      isBreak = isBreakCompose( text );
+      return isBreak;
+    } );
+    return isBreak;
+  }
+
+  private searchOrders = text => {
+    let isBreak;
+    text = moment.isMoment( text ) || moment.isDate( text ) ? moment( text ).format( 'YYYYMMDD' ) : text;
+    text = text || '';
+    const filterOrders = R.filter( ( order: any ) => {
+      const isAll = this.selectOption.controlGroupName === 'all';
+      const controlGroupsName = order[ this.selectOption.controlGroupName ];
+      if ( isAll ) {
+        isBreak = this.isBreakFnRec( order, text );
+      } else if ( !R.isNil( controlGroupsName ) ) {
+        isBreak = this.isBreakFn( controlGroupsName, text );
+      }
+      return isBreak;
+    } );
+    this.orders = R.isEmpty( text ) ? this.originalOrders : filterOrders( this.originalOrders );
+  };
+
+  private sendSearchControlName = _ => [ 'dateSearch', 'textSearch' ];
+  private clearFields = controlName => this.formSearch.get( controlName ).patchValue( '' );
+  private disableFields = controlName => this.formSearch.get( controlName ).disable();
+  private enableFields = controlName => this.formSearch.get( controlName ).enable();
+  // @ts-ignore
+  private eventField = fn => R.forEach( fn, this.sendSearchControlName() );
+
+  private saveSearchOrdersParamsFn = ( optionsGroups: IOptionGroups[], optionValue: IOptionValue, parentCount: number = 0, childCount: number = 0 ): number[] => {
+    let isBreak;
+    _.some( optionsGroups, optionGroup => {
+      parentCount++;
+      childCount = 0;
+      _.some( optionGroup.option, option => {
+        childCount++;
+        isBreak = _.eq( option.value, optionValue );
+        return isBreak;
+      } );
+      return isBreak;
+    } );
+    return [ parentCount - 1, childCount - 1 ];
+  };
+
+  private initSwitchSearch() {
+    let countOpen = 0;
+    const enabledFn = option => {
+      localStorage.setItem( 'saveSearchOrdersParams', JSON.stringify( this.saveSearchOrdersParamsFn( this.optionGroups, option ) ) );
+      countOpen++;
+      this.selectOption = option;
+      this.isData = option.isDate || false;
+      const whichFormControl = this.isData ? 'dateSearch' : 'textSearch';
+      const clearFormControl = whichFormControl === 'dateSearch' ? 'textSearch' : 'dateSearch';
+      this.formSearch.get( clearFormControl ).patchValue( '' );
+      const formControlValue = this.formSearch.get( whichFormControl ).value;
+      if ( !R.isNil( formControlValue ) ) this.searchOrders( formControlValue );
+      if ( countOpen === 1 ) this.eventField( this.enableFields );
+    };
+    const disabledFn = _ => {
+      countOpen = 0;
+      localStorage.removeItem( 'saveSearchOrdersParams' );
+      this.eventField( this.disableFields );
+      this.eventField( this.clearFields );
+    };
+    const switchField = R.ifElse( R.isNil, disabledFn, enabledFn );
+    const success = ( option: IOptionValue ) => switchField( option );
+    this.eventField( this.disableFields );
+
+    this.formSearch.get( 'switchSearch' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( success );
+  }
+
+  private initMultiSearchOrders() {
+    const sendSearchControlName = [ 'dateSearch', 'textSearch' ];
+    _.each( sendSearchControlName, formControlName => {
+      this.formSearch.get( formControlName ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( this.searchOrders );
+    } );
+  }
+
+  private loadSearchOrdersParams() {
+    if ( this.saveSearchOrdersParams ) {
+      const parentParams = this.saveSearchOrdersParams[ 0 ];
+      const childParams = this.saveSearchOrdersParams[ 1 ];
+      this.formSearch.get( 'switchSearch' ).patchValue( this.optionGroups[ parentParams ].option[ childParams ].value );
+    }
   }
 
   sortFilter( title: string ): void {

@@ -4,6 +4,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { IprofileSearch } from '../../../interface/iprofile-search';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
+import { map } from 'rxjs/operators';
+import * as R from 'ramda';
+import { IAirlineLCode } from '../../../interface/iairline-lcode';
 
 @Injectable()
 export class ProfileSearchService {
@@ -25,6 +28,21 @@ export class ProfileSearchService {
     return this.http.get( this.configService.crmApi + '/crm/airport' ).pipe( this.retryRequestService.retry() );
   }
 
+  getAirlineCodes(): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/crm/airline' )
+      .pipe(
+        this.retryRequestService.retry(),
+        map( ( airlineCodes: IAirlineLCode ) => {
+          const airlineCodeTitleFn = airlineCode => {
+            const titleLens = R.lensProp( 'title' );
+            const titleFn = () => airlineCode.lCode === airlineCode.rCode ? airlineCode.lCode : `${airlineCode.lCode} ( ${airlineCode.rCode} )`;
+            return R.set( titleLens, titleFn(), airlineCode );
+          };
+          return R.map( airlineCodeTitleFn, airlineCodes );
+        } )
+      );
+  }
+
   getCities(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/city' ).pipe( this.retryRequestService.retry() );
   }
@@ -43,7 +61,11 @@ export class ProfileSearchService {
   }
 
   downloadCsv( params ): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/customer/searchCsv', { params, responseType: 'blob', observe: 'response' } ).pipe(this.retryRequestService.retry());
+    return this.http.get( this.configService.crmApi + '/crm/customer/searchCsv', {
+      params,
+      responseType: 'blob',
+      observe: 'response'
+    } ).pipe( this.retryRequestService.retry() );
   }
 
 }

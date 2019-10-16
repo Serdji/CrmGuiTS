@@ -3,7 +3,8 @@ import { ActivatedRoute } from '@angular/router';
 import { IlistUsers } from '../../../interface/ilist-users';
 import { UserService } from './user.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatTreeNestedDataSource } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
+import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { takeWhile } from 'rxjs/operators';
@@ -12,6 +13,7 @@ import { person } from './person';
 import * as R from 'ramda';
 import { IFoodNode } from '../../../interface/ifood-node';
 import { forkJoin, of } from 'rxjs';
+import { complexPasswordValidator } from '../../../validators/complexPasswordValidator';
 
 @Component( {
   selector: 'app-user',
@@ -30,7 +32,6 @@ export class UserComponent implements OnInit, OnDestroy {
   public edit = false;
   public persons: { title: string, ids: number[] }[] = person;
 
-  private checkboxArr: number[];
   private loginId: number;
   private isActive: boolean;
   private paramsReport: { loginId: number, reportsIds: number[] };
@@ -83,8 +84,8 @@ export class UserComponent implements OnInit, OnDestroy {
 
   private initFormPassword() {
     this.updatePassword = this.fb.group( {
-      newPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
-      confirmPassword: [ '', [ Validators.required, Validators.minLength( 6 ) ] ],
+      newPassword: [ '', [ Validators.required, Validators.minLength( 8 ), complexPasswordValidator ] ],
+      confirmPassword: [ '', [ Validators.required, Validators.minLength( 8 ) ] ],
     } );
 
   }
@@ -95,25 +96,24 @@ export class UserComponent implements OnInit, OnDestroy {
     const mapIds = R.map( propIds );
     const funcControlConfig = id => formGroup[ id ] = '';
     const mapControlConfig = R.map( funcControlConfig );
-    const funcCheckboxArr = arrIds => this.checkboxArr = arrIds;
-    const tapCheckboxArr = R.tap( funcCheckboxArr );
-    const composeIds = R.compose( mapControlConfig, tapCheckboxArr, R.flatten, mapIds );
+    const composeIds = R.compose( mapControlConfig,  R.flatten, mapIds );
     composeIds( this.persons );
     this.formPermission = this.fb.group( formGroup );
   }
 
   private checkboxDisabled() {
-    R.map( id => {
-      if ( id % 2 === 0 ) {
-        this.formPermission.get( `${id}` )[ this.formPermission.get( `${id - 1}` ).value ? 'enable' : 'disable' ]();
-        this.formPermission.get( `${id - 1}` ).valueChanges
-          .pipe( takeWhile( _ => this.isActive ) )
-          .subscribe( value => {
-            this.formPermission.get( `${id}` )[ value ? 'enable' : 'disable' ]();
-            this.formPermission.get( `${id}` ).patchValue( '' );
-          } );
-      }
-    }, this.checkboxArr );
+    const arrIds = persons => persons.ids;
+    const checkboxArr = R.map( arrIds, this.persons );
+    const switchCheckboxPerson = R.map( ids => {
+      this.formPermission.get( `${ids[ 1 ]}` )[ this.formPermission.get( `${ids[ 0 ]}` ).value ? 'enable' : 'disable' ]();
+      this.formPermission.get( `${ids[ 0 ]}`  ).valueChanges
+        .pipe( takeWhile( _ => this.isActive ) )
+        .subscribe( value => {
+          this.formPermission.get( `${ids[ 1 ]}`  )[ value ? 'enable' : 'disable' ]();
+          this.formPermission.get( `${ids[ 1 ]}`  ).patchValue( '' );
+        } );
+    } );
+    switchCheckboxPerson( checkboxArr );
   }
 
   private windowDialog( messDialog: string, params: string, card: string = '', disableTimer: boolean = false ) {
@@ -151,13 +151,13 @@ export class UserComponent implements OnInit, OnDestroy {
         .pipe( takeWhile( _ => this.isActive ) )
         .subscribe( ( user: IlistUsers ) => {
           this.user = user;
-          this.windowDialog( 'Пользователь успешно изменен', 'ok' );
+          this.windowDialog( 'DIALOG.OK.USER_CHANGED', 'ok' );
         } );
     }
   }
 
   deleteUser(): void {
-    this.windowDialog( `Вы действительно хотите удалить пользователя "${this.user.login}" ?`, 'delete', 'user', true );
+    this.windowDialog( `DIALOG.DELETE.USER`, 'delete', 'user', true );
   }
 
   sendFormPassword(): void {
@@ -166,7 +166,7 @@ export class UserComponent implements OnInit, OnDestroy {
       Object.assign( params, { loginId: this.loginId } );
       this.userService.putPassword( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( _ => this.windowDialog( 'Пароль успешно изменен', 'ok' ) );
+        .subscribe( _ => this.windowDialog( 'DIALOG.OK.PASSWORD_CHANGED', 'ok' ) );
     }
   }
 
@@ -179,7 +179,7 @@ export class UserComponent implements OnInit, OnDestroy {
 
     const success = _ => {
       if ( this.user.login === localStorage.getItem( 'login' ) ) {
-        this.windowDialog( 'Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!', 'error', '', true );
+        this.windowDialog( 'DIALOG.ERROR.RIGHTS_FOR_YOU_ACCOUNT', 'error', '', true );
         timer( 5000 )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
@@ -188,7 +188,7 @@ export class UserComponent implements OnInit, OnDestroy {
             this.edit = false;
           } );
       } else {
-        this.windowDialog( 'Права пользователя изменены', 'ok' );
+        this.windowDialog( 'DIALOG.OK.USER_RIGHTS_CHANGED', 'ok' );
       }
     };
 

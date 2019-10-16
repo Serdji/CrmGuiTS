@@ -12,11 +12,11 @@ import { DocumentService } from '../../page/profiles/tabs-profile/document/docum
 import { AddSegmentationService } from '../../page/segmentation/add-segmentation/add-segmentation.service';
 import { ListSegmentationService } from '../../page/segmentation/list-segmentation/list-segmentation.service';
 import { ProfileGroupService } from '../../page/special-groups/profile-group/profile-group.service';
-import { EditorService } from '../../components/editors/editor/editor.service';
-import { ListDistributionService } from '../../page/distribution/list-distribution/list-distribution.service';
-import { ProfileDistributionService } from '../../page/distribution/profile-distribution/profile-distribution.service';
 import { AddPromotionsService } from '../../page/promotions/add-promotions/add-promotions.service';
 import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-codes/add-promotions-codes.service';
+import { TranslateModule } from '@ngx-translate/core';
+import { ListEmailService } from '../../page/distribution/list-email/list-email.service';
+import { ProfileEmailDistributionService } from '../../page/distribution/profile-email-distribution/profile-email-distribution.service';
 
 @NgModule( {
   imports: [
@@ -24,6 +24,7 @@ import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-
     MaterialModule,
     ReactiveFormsModule,
     RouterModule,
+    TranslateModule,
   ],
   declarations: [ DialogComponent ],
   providers: [
@@ -35,9 +36,8 @@ import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-
     AddSegmentationService,
     ListSegmentationService,
     ProfileGroupService,
-    EditorService,
-    ListDistributionService,
-    ProfileDistributionService,
+    ListEmailService,
+    ProfileEmailDistributionService,
     AddPromotionsService,
     AddPromotionsCodesService,
   ]

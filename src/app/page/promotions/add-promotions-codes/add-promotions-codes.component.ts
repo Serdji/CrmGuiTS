@@ -2,7 +2,9 @@ import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/co
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
 import { delay, map, takeWhile } from 'rxjs/operators';
-import { MatAutocompleteSelectedEvent, MatChipInputEvent, MatDialog } from '@angular/material';
+import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
+import { MatChipInputEvent } from '@angular/material/chips';
+import { MatDialog } from '@angular/material/dialog';
 import { ICity } from '../../../interface/icity';
 import { AddPromotionsService } from '../add-promotions/add-promotions.service';
 import { IPromotions } from '../../../interface/ipromotions';
@@ -93,12 +95,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private promoCodeId: number;
   private arrCustomerIds: number[] = [];
 
-  @ViewChild( 'promoCodeFlightListChipInput' ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeBrandListChipInput' ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeRbdListChipInput' ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'promoCodeCustomerListChipInput' ) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'segmentationChipInput' ) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild( 'customerGroupChipInput' ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeFlightListChipInput', { static: true }) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeBrandListChipInput', { static: true }) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeRbdListChipInput', { static: true }) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('promoCodeCustomerListChipInput', { static: true }) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
+  @ViewChild('segmentationChipInput', { static: true }) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild('customerGroupChipInput', { static: true }) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
 
   constructor(
@@ -539,7 +541,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     if ( !this.formPromoCodes.invalid || isQueryParams ) {
       this.addPromotionsCodesService.savePromoCode( isQueryParams ? saveFormParams : this.promoCodeParameters() )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно сохранен' ) );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_SAVE' ) );
     }
   }
 
@@ -550,7 +552,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       this.isLoader = true;
       this.initTableProfile( this.promoCodeId );
     };
-    const stopSearch = () => this.windowDialog( 'Данный промокод НЕ персонализированный, т.е. доступен для любого пассажира авиакомпании.', 'ok', '_', true );
+    const stopSearch = () => this.windowDialog( 'DIALOG.OK.PROMO_CODE_NOT_PERSONALIZED', 'ok', '_', true );
     const search = R.ifElse( isEmptyInput, stopSearch, startSearch );
 
     search( R.identity );
@@ -562,7 +564,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
         .pipe( takeWhile( _ => this.isActive ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'Промокод успешно изменен' ) );
+        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_CHANGED' ) );
     }
   }
 
@@ -581,7 +583,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   deletePromoCode(): void {
-    this.windowDialog( `Вы действительно хотите удалить промокод  "${this.promoCodeParameters().code}" ?`, 'delete', 'promoCode', true );
+    this.windowDialog( `DIALOG.DELETE.PROMO_CODE`, 'delete', 'promoCode', true );
   }
 
   ngOnDestroy(): void {

@@ -5,7 +5,7 @@ import { ParsTokenService } from '../services/pars-token.service';
 import { Itoken } from '../interface/itoken';
 import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../shared/dialog/dialog.component';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs/operators';
 
 @Injectable( {

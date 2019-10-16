@@ -1,9 +1,17 @@
 <div class="table">
   <mat-form-field class="table__input">
-    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Фильтр">
+    <input matInput (keyup)="applyFilter($event.target.value)" placeholder="{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.FILTER' | translate}}">
   </mat-form-field>
-  <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
-
+  <form class="table__form" [formGroup]="formFilterSegmentation">
+    <div class="table__form-label"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.TITLE' | translate}} </div>
+    <mat-radio-group formControlName="whichSegmentation" aria-label="Показать сегментации">
+      <mat-radio-button class="table__form-radio-button" value="all"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.ALL' | translate}} </mat-radio-button>
+      <mat-radio-button class="table__form-radio-button" value="simple"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.SIMPLE' | translate}} </mat-radio-button>
+      <mat-radio-button class="table__form-radio-button" value="complicated"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.COMPLICATED' | translate}} </mat-radio-button>
+    </mat-radio-group>
+    <mat-divider></mat-divider>
+  </form>
+  <mat-table class="table" #table [dataSource]="dataSource" multiTemplateDataRows matSort matSortDirection="asc">
     <ng-container matColumnDef="select" sticky>
       <mat-header-cell *matHeaderCellDef>
         <mat-checkbox appAccessRights="analytics:update"
@@ -29,21 +37,83 @@
     </ng-container>
 
     <ng-container matColumnDef="title">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Группа сегментации</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.SEGMENTATION' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.title}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="isComplex">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.TITLE' | translate}} </mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element">
+        <span>{{element.isComplex ? ('PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.COMPLICATED' | translate) : ('PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.SIMPLE'  | translate)}}</span>
+        <mat-icon *ngIf="element.isComplex">arrow_downward</mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="segmentationGranularity">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.TITLE' | translate}} </mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element">
+        <span *ngIf="element.segmentationGranularity === 1" > {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.PASSENGER' | translate}} </span>
+        <span *ngIf="element.segmentationGranularity === 2" > {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.ORDERS' | translate}} </span>
+        <span *ngIf="element.segmentationGranularity === 3" > {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.GRANULARITY.COUPON' | translate}} </span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="segmentationId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon (click)="redirectToSegmentation(element.segmentationId)" >remove_red_eye</mat-icon>
+        <mat-icon
+          (click)="redirectToSegmentation(element.segmentationId); $event.stopPropagation()"
+        >search
+        </mat-icon>
+        <mat-icon (click)="$event.stopPropagation()"
+                  *ngIf="element.isComplex"
+                  routerLink="/crm/complexsegmentation/"
+                  [queryParams]="{ segmentationId: element.segmentationId }"
+        >create
+        </mat-icon>
+        <mat-icon (click)="$event.stopPropagation()"
+                  *ngIf="!element.isComplex"
+                  routerLink="/crm/addsegmentation/"
+                  [queryParams]="{ segmentationId: element.segmentationId }"
+        >create
+        </mat-icon>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="expandedDetail">
+      <mat-cell *matCellDef="let element"
+                [attr.colspan]="displayedColumns.length"
+      >
+        <div class="table__detail"
+             *ngIf="element.isComplex"
+             [@detailExpand]="element === expandedElement ? 'expanded' : 'collapsed'"
+        >
+          <div class="table__segmentations">
+            <mat-nav-list>
+              <mat-list-item class="table__segmentations-child"
+                             *ngFor=" let childSegmentation of element.childSegmentations"
+                             routerLink="/crm/addsegmentation/"
+                             [queryParams]="{ segmentationId: childSegmentation.segmentationId }"
+              >
+                <mat-icon>subdirectory_arrow_right</mat-icon>
+                {{childSegmentation.title}}
+              </mat-list-item>
+            </mat-nav-list>
+          </div>
+        </div>
       </mat-cell>
     </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-    <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-row class="table__row example-element-row"
+             [ngClass]=" {'_active': element.isComplex} "
+             *matRowDef="let element; columns: displayedColumns;"
+             [class.example-expanded-row]="expandedElement === element"
+             (click)="expandedElement = expandedElement === element ? null : element"
+    ></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']" class="example-detail-row"></mat-row>
   </mat-table>
   <mat-paginator #paginator
                  [pageSize]="10"
@@ -51,10 +121,27 @@
                  [showFirstLastButtons]="true">
   </mat-paginator>
   <div class="table__button-wrapper">
-    <button appAccessRights="analytics:update" class="table__button" mat-raised-button (click)="deleteContact()"
-            [disabled]="!selection.hasValue() && !isAllSelected()" color="warn">
-      Удалить
+    <button appAccessRights="analytics:update"
+            class="table__button" mat-raised-button
+            (click)="deleteContact()"
+            [disabled]="!selection.hasValue() && !isAllSelected()"
+            color="warn"
+    > {{'BUTTON.DELETE' | translate}}
       <mat-icon>delete</mat-icon>
     </button>
   </div>
 </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+

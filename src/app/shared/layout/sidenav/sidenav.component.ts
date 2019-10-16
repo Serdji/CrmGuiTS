@@ -7,6 +7,7 @@ import { LayoutService } from '../layout.service';
 import {  NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SidenavService } from './sidenav.service';
 import { takeWhile } from 'rxjs/operators';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component( {
   selector: 'app-sidenav',
@@ -15,8 +16,8 @@ import { takeWhile } from 'rxjs/operators';
 } )
 export class SidenavComponent implements OnInit, OnDestroy {
 
-  @ViewChild( 'sidenav' ) sidenav: MatSidenav;
-  @ViewChild( 'accord' ) accord;
+  @ViewChild('sidenav', { static: true }) sidenav: MatSidenav;
+  @ViewChild('accord', { static: true }) accord;
 
   public menu: IMenu[];
   public version: string;
@@ -30,6 +31,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
     private layoutService: LayoutService,
     private router: Router,
     private sidenavService: SidenavService,
+    private translate: TranslateService,
   ) { }
 
   ngOnInit(): void {
