@@ -3,17 +3,26 @@
   <div class="add-segmentation__stepper" *ngIf="!isFormSegmentation">
     <form [formGroup]="formSegmentationStepper">
       <mat-vertical-stepper linear #stepper>
-        <mat-step [completed]="!formSegmentationStepper.get('segmentationTitle').invalid">
-          <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GROUP_SEGMENTATION' | translate}}</ng-template>
+        <mat-step
+          [completed]="
+          !formSegmentationStepper.get('segmentationTitle').invalid &&
+          !formSegmentationStepper.get('segmentationGranularity').invalid">
+          <ng-template
+            matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GROUP_SEGMENTATION' | translate}}</ng-template>
           <mat-form-field class="add-segmentation__input">
-            <input matInput formControlName="segmentationTitle" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GROUP_SEGMENTATION' | translate}}">
+            <input matInput formControlName="segmentationTitle" type="text"
+                   placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GROUP_SEGMENTATION' | translate}}">
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
           <mat-form-field class="add-segmentation__input">
-            <mat-select formControlName="segmentationGranularity" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.TITLE' | translate}}">
-              <mat-option value="1">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
-              <mat-option value="2">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.ORDERS' | translate}}</mat-option>
-              <mat-option value="3">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.COUPON' | translate}}</mat-option>
+            <mat-select formControlName="segmentationGranularity"
+                        placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.TITLE' | translate}}">
+              <mat-option
+                value="1">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
+              <mat-option
+                value="2">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.ORDERS' | translate}}</mat-option>
+              <mat-option
+                value="3">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.COUPON' | translate}}</mat-option>
             </mat-select>
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
@@ -23,9 +32,11 @@
         </mat-step>
 
         <mat-step [completed]="formSegmentationStepper.get('subjectAnalysis').value !== ''">
-          <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.TITLE' | translate}}</ng-template>
+          <ng-template
+            matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.TITLE' | translate}}</ng-template>
           <div class="add-segmentation__content-title-wrapper">
-            <mat-icon *ngIf="resetRadioButtonFood" matTooltip="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.REMOVE' | translate}}"
+            <mat-icon *ngIf="resetRadioButtonFood"
+                      matTooltip="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.REMOVE' | translate}}"
                       (click)="resetRadioButton('subjectAnalysis')">remove_circle_outline
             </mat-icon>
           </div>
@@ -33,16 +44,19 @@
             <mat-radio-group class="add-segmentation__input" formControlName="subjectAnalysis">
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
-                  <mat-radio-button class="add-segmentation__input-radio" value="segment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.SEGMENT' | translate}}
+                  <mat-radio-button class="add-segmentation__input-radio"
+                                    value="segment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.SEGMENT' | translate}}
                   </mat-radio-button>
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" value="payment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.PAYMENT' | translate}}
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                    value="payment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.PAYMENT' | translate}}
                   </mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>
           </mat-card-content>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
@@ -54,29 +68,36 @@
             !formSegmentationStepper.get('segmentsCountToExclude').invalid &&
             !formSegmentationStepper.get('eDocTypeS').invalid"
         >
-          <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TITLE' | translate}}</ng-template>
+          <ng-template
+            matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TITLE' | translate}}</ng-template>
           <div>
             <div class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.FROM' | translate}}">
+                <input formControlName="segmentsCountFromInclude" matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.FROM' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TO' | translate}}">
+                <input formControlName="segmentsCountToExclude" matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TO' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <mat-select formControlName="eDocTypeS">
-                  <mat-option value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TICKETS' | translate}}</mat-option>
-                  <mat-option value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.SERVICES' | translate}}</mat-option>
+                  <mat-option
+                    value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TICKETS' | translate}}</mat-option>
+                  <mat-option
+                    value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.SERVICES' | translate}}</mat-option>
                 </mat-select>
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
             </div>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
-            <button mat-button matStepperNext (click)="initAutocomplete( 'formSegmentationStepper' )">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button matStepperNext
+                    (click)="initAutocomplete( 'formSegmentationStepper' )">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -87,29 +108,36 @@
             !formSegmentationStepper.get('moneyAmountToExclude').invalid &&
             !formSegmentationStepper.get('eDocTypeP').invalid"
         >
-          <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TITLE' | translate}}</ng-template>
+          <ng-template
+            matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TITLE' | translate}}</ng-template>
           <div class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="moneyAmountFromInclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.FROM' | translate}}">
+              <input formControlName="moneyAmountFromInclude" matInput type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.FROM' | translate}}">
               <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="moneyAmountToExclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TO' | translate}}">
+              <input formControlName="moneyAmountToExclude" matInput type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TO' | translate}}">
               <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="currency" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.CURRENCY' | translate}}">
+              <input matInput formControlName="currency" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.CURRENCY' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
               <mat-select formControlName="eDocTypeP">
-                <mat-option value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TICKETS' | translate}}</mat-option>
-                <mat-option value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.SERVICES' | translate}}</mat-option>
+                <mat-option
+                  value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TICKETS' | translate}}</mat-option>
+                <mat-option
+                  value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.SERVICES' | translate}}</mat-option>
               </mat-select>
               <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
@@ -120,10 +148,13 @@
           <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.TITLE' | translate}}</ng-template>
           <div class="add-segmentation__content _none-justify">
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="timeBeforeDepartureT" mask="d0 Hh:m0" [dropSpecialCharacters]="false" [showMaskTyped]="true"  placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DISPATCH_TIME' | translate}}">
+              <input matInput formControlName="timeBeforeDepartureT" mask="d0 Hh:m0" [dropSpecialCharacters]="false"
+                     [showMaskTyped]="true"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DISPATCH_TIME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="airlineLCodeIdT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.AIRLINE_L_CODE' | translate}}"
+              <input matInput formControlName="airlineLCodeIdT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.AIRLINE_L_CODE' | translate}}"
                      [matAutocomplete]="airlineLCodeT">
               <mat-autocomplete #airlineLCodeT="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsT | async" [value]="airlineLCode">
@@ -132,22 +163,27 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.FLIGHT_NO' | translate}}" formControlName="flightNoT">
+              <input matInput type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.FLIGHT_NO' | translate}}"
+                     formControlName="flightNoT">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDFromIncludeT" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_FROM' | translate}}"
+              <input formControlName="arrivalDFromIncludeT" matInput
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_FROM' | translate}}"
                      [matDatepicker]="arrivalDFromIncludeT">
               <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeT"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #arrivalDFromIncludeT></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDToExcludeT" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_TO' | translate}}"
+              <input formControlName="arrivalDToExcludeT" matInput
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_TO' | translate}}"
                      [matDatepicker]="arrivalDToExcludeT">
               <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeT"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="departureLocationCodeT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DEP_LOC' | translate}}"
+              <input matInput formControlName="departureLocationCodeT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DEP_LOC' | translate}}"
                      [matAutocomplete]="airportfromT">
               <mat-autocomplete #airportfromT="matAutocomplete">
                 <mat-option *ngFor="let airport of airportsFromOptionsT | async"
@@ -155,7 +191,8 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_LOC' | translate}}"
+              <input matInput formControlName="arrivalLocationCodeT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_LOC' | translate}}"
                      [matAutocomplete]="airporttoT">
               <mat-autocomplete #airporttoT="matAutocomplete">
                 <mat-option *ngFor="let airport of airportsToOptionsT | async"
@@ -163,16 +200,20 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="cabinT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.CABIN' | translate}}">
+              <input matInput formControlName="cabinT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.CABIN' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="rbdT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RDB' | translate}}">
+              <input matInput formControlName="rbdT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RDB' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="fareCodeT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RARE_CODE' | translate}}">
+              <input matInput formControlName="fareCodeT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RARE_CODE' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posGdsT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_GDS' | translate}}">
+              <input matInput formControlName="posGdsT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_GDS' | translate}}">
             </mat-form-field>
             <!--<mat-form-field class="add-segmentation__input">-->
             <!--<input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">-->
@@ -184,14 +225,17 @@
             <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
             <!--</mat-form-field>-->
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posIdT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_ID' | translate}}">
+              <input matInput formControlName="posIdT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_ID' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posAgencyT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_AGENCY' | translate}}">
+              <input matInput formControlName="posAgencyT" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_AGENCY' | translate}}">
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
@@ -203,10 +247,13 @@
           <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.TITLE' | translate}}</ng-template>
           <div class="add-segmentation__content _none-justify">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="timeBeforeDepartureE" mask="d0 Hh:m0" [dropSpecialCharacters]="false" [showMaskTyped]="true"  placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DISPATCH_TIME' | translate}}">
+              <input matInput formControlName="timeBeforeDepartureE" mask="d0 Hh:m0" [dropSpecialCharacters]="false"
+                     [showMaskTyped]="true"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DISPATCH_TIME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="airlineLCodeIdE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.AIRLINE_L_CODE' | translate}}"
+              <input matInput formControlName="airlineLCodeIdE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.AIRLINE_L_CODE' | translate}}"
                      [matAutocomplete]="airlineLCodeE">
               <mat-autocomplete #airlineLCodeE="matAutocomplete" [displayWith]="displayFn">
                 <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsE | async" [value]="airlineLCode">
@@ -215,22 +262,27 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.FLIGHT_NO' | translate}}" formControlName="flightNoE">
+              <input matInput type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.FLIGHT_NO' | translate}}"
+                     formControlName="flightNoE">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDFromIncludeE" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_FROM' | translate}}"
+              <input formControlName="arrivalDFromIncludeE" matInput
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_FROM' | translate}}"
                      [matDatepicker]="arrivalDFromIncludeE">
               <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeE"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #arrivalDFromIncludeE></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="arrivalDToExcludeE" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_TO' | translate}}"
+              <input formControlName="arrivalDToExcludeE" matInput
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_TO' | translate}}"
                      [matDatepicker]="arrivalDToExcludeE">
               <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeE"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="departureLocationCodeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DEP_LOC' | translate}}"
+              <input matInput formControlName="departureLocationCodeE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DEP_LOC' | translate}}"
                      [matAutocomplete]="airportfromE">
               <mat-autocomplete #airportfromE="matAutocomplete">
                 <mat-option *ngFor="let airport of airportsFromOptionsE | async"
@@ -238,7 +290,8 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_LOC' | translate}}"
+              <input matInput formControlName="arrivalLocationCodeE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_LOC' | translate}}"
                      [matAutocomplete]="airporttoE">
               <mat-autocomplete #airporttoE="matAutocomplete">
                 <mat-option *ngFor="let airport of airportsToOptionsE | async"
@@ -246,10 +299,12 @@
               </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="serviceCodeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SERVICE_CODE' | translate}}">
+              <input matInput formControlName="serviceCodeE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SERVICE_CODE' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posGdsE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_GDS' | translate}}">
+              <input matInput formControlName="posGdsE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_GDS' | translate}}">
             </mat-form-field>
             <!--<mat-form-field class="add-segmentation__input">-->
             <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
@@ -258,58 +313,71 @@
             <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
             <!--</mat-form-field>-->
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posIdE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_ID' | translate}}">
+              <input matInput formControlName="posIdE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_ID' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="posAgencyE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
+              <input matInput formControlName="posAgencyE" type="text"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
         <mat-step>
-          <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.TITLE' | translate}}</ng-template>
+          <ng-template
+            matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.TITLE' | translate}}</ng-template>
           <div class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateFromInclude" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_FROM' | translate}}"
+              <input formControlName="bookingCreateDateFromInclude" matInput
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_FROM' | translate}}"
                      [matDatepicker]="bookingCreateDateFromInclude">
               <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input formControlName="bookingCreateDateToExclude" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_TO' | translate}}"
+              <input formControlName="bookingCreateDateToExclude" matInput
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_TO' | translate}}"
                      [matDatepicker]="bookingCreateDateToExclude">
               <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
             </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
         <mat-step>
-          <ng-template matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.TITLE' | translate}}</ng-template>
+          <ng-template
+            matStepLabel>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.TITLE' | translate}}</ng-template>
           <div class="add-segmentation__content">
             <mat-form-field class="add-segmentation__input">
-              <mat-select formControlName="gender" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
+              <mat-select formControlName="gender"
+                          placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
                 <mat-option></mat-option>
-                <mat-option value="M">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.M' | translate}}</mat-option>
-                <mat-option value="F">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.F' | translate}}</mat-option>
+                <mat-option
+                  value="M">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.M' | translate}}</mat-option>
+                <mat-option
+                  value="F">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.F' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="dobFromInclude" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_FROM' | translate}}"
+              <input matInput formControlName="dobFromInclude"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_FROM' | translate}}"
                      [matDatepicker]="dobFromInclude">
               <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="dobToExclude" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_TO' | translate}}"
+              <input matInput formControlName="dobToExclude"
+                     placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_TO' | translate}}"
                      [matDatepicker]="dobToExclude">
               <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
@@ -317,18 +385,21 @@
             <mat-radio-group formControlName="withChild" class="add-segmentation__input">
               <div class="add-segmentation__input-radio-wrapper">
                 <div class="add-segmentation__input-radio-group">
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="true">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITH_CHILDREN' | translate}}
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                    [value]="true">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITH_CHILDREN' | translate}}
                   </mat-radio-button>
                 </div>
                 <div class="add-segmentation__input-radio-group _right">
-                  <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="false">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITHOUT_CHILDREN' | translate}}
+                  <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                    [value]="false">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITHOUT_CHILDREN' | translate}}
                   </mat-radio-button>
                 </div>
               </div>
             </mat-radio-group>
           </div>
           <div class="add-segmentation__stepper-button">
-            <button mat-button matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
+            <button mat-button
+                    matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
             <button mat-button (click)="changeForm()">{{'BUTTON.TO_FROM' | translate}}</button>
           </div>
         </mat-step>
@@ -343,14 +414,19 @@
           <mat-card class="add-segmentation__card">
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="segmentationTitle" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GROUP_SEGMENTATION' | translate}}">
+                <input matInput formControlName="segmentationTitle" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GROUP_SEGMENTATION' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <mat-select formControlName="segmentationGranularity" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.TITLE' | translate}}">
-                  <mat-option value="1">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
-                  <mat-option value="2">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.ORDERS' | translate}}</mat-option>
-                  <mat-option value="3">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
+                <mat-select formControlName="segmentationGranularity"
+                            placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.TITLE' | translate}}">
+                  <mat-option
+                    value="1">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
+                  <mat-option
+                    value="2">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.ORDERS' | translate}}</mat-option>
+                  <mat-option
+                    value="3">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.GROUP_SEGMENTATION.GRANULARITY.PASSENGER' | translate}}</mat-option>
                 </mat-select>
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
@@ -364,8 +440,10 @@
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
             <div class="add-segmentation__content-title-wrapper">
-              <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.TITLE' | translate}}</span>
-              <mat-icon *ngIf="resetRadioButtonFood" matTooltip="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.REMOVE' | translate}}"
+              <span
+                class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.TITLE' | translate}}</span>
+              <mat-icon *ngIf="resetRadioButtonFood"
+                        matTooltip="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.REMOVE' | translate}}"
                         (click)="resetRadioButton('subjectAnalysis')">remove_circle_outline
               </mat-icon>
             </div>
@@ -373,9 +451,11 @@
               <mat-radio-group class="add-segmentation__input" formControlName="subjectAnalysis">
                 <div class="add-segmentation__input-radio-wrapper">
                   <div class="add-segmentation__input-radio-group">
-                    <mat-radio-button class="add-segmentation__input-radio" value="segment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.SEGMENT' | translate}}
+                    <mat-radio-button class="add-segmentation__input-radio"
+                                      value="segment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.SEGMENT' | translate}}
                     </mat-radio-button>
-                    <mat-radio-button class="add-segmentation__input-radio _margin-none" value="payment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.PAYMENT' | translate}}
+                    <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                      value="payment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.PAYMENT' | translate}}
                     </mat-radio-button>
                   </div>
                 </div>
@@ -387,13 +467,17 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="3">
           <mat-card class="add-segmentation__card">
-            <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.TITLE' | translate}}</span>
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.TITLE' | translate}}</span>
             <mat-card-content class="add-segmentation__content _none-justify">
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="timeBeforeDepartureT" mask="d0 Hh:m0" [dropSpecialCharacters]="false" [showMaskTyped]="true"  placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DISPATCH_TIME' | translate}}">
+                <input matInput formControlName="timeBeforeDepartureT" mask="d0 Hh:m0" [dropSpecialCharacters]="false"
+                       [showMaskTyped]="true"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DISPATCH_TIME' | translate}}">
               </mat-form-field>
               <mat-form-field class="profile-search__input">
-                <input matInput formControlName="airlineLCodeIdT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.AIRLINE_L_CODE' | translate}}"
+                <input matInput formControlName="airlineLCodeIdT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.AIRLINE_L_CODE' | translate}}"
                        [matAutocomplete]="airlineLCodeT">
                 <mat-autocomplete #airlineLCodeT="matAutocomplete" [displayWith]="displayFn">
                   <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsT | async" [value]="airlineLCode">
@@ -402,22 +486,27 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.FLIGHT_NO' | translate}}" formControlName="flightNoT">
+                <input matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.FLIGHT_NO' | translate}}"
+                       formControlName="flightNoT">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="arrivalDFromIncludeT" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_FROM' | translate}}"
+                <input formControlName="arrivalDFromIncludeT" matInput
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_FROM' | translate}}"
                        [matDatepicker]="arrivalDFromIncludeT">
                 <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeT"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #arrivalDFromIncludeT></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="arrivalDToExcludeT" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_TO' | translate}}"
+                <input formControlName="arrivalDToExcludeT" matInput
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_D_TO' | translate}}"
                        [matDatepicker]="arrivalDToExcludeT">
                 <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeT"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #arrivalDToExcludeT></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="departureLocationCodeT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DEP_LOC' | translate}}"
+                <input matInput formControlName="departureLocationCodeT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.DEP_LOC' | translate}}"
                        [matAutocomplete]="airportfromT">
                 <mat-autocomplete #airportfromT="matAutocomplete">
                   <mat-option *ngFor="let airport of airportsFromOptionsT | async"
@@ -425,7 +514,8 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="arrivalLocationCodeT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_LOC' | translate}}"
+                <input matInput formControlName="arrivalLocationCodeT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.ARR_LOC' | translate}}"
                        [matAutocomplete]="airporttoT">
                 <mat-autocomplete #airporttoT="matAutocomplete">
                   <mat-option *ngFor="let airport of airportsToOptionsT | async"
@@ -433,16 +523,20 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="cabinT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.CABIN' | translate}}">
+                <input matInput formControlName="cabinT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.CABIN' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="rbdT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RDB' | translate}}">
+                <input matInput formControlName="rbdT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RDB' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="fareCodeT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RARE_CODE' | translate}}">
+                <input matInput formControlName="fareCodeT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.RARE_CODE' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="posGdsT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_GDS' | translate}}">
+                <input matInput formControlName="posGdsT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_GDS' | translate}}">
               </mat-form-field>
               <!--<mat-form-field class="add-segmentation__input">-->
               <!--<input matInput formControlName="serviceCodeT" type="text" placeholder="Код услути">-->
@@ -454,10 +548,12 @@
               <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
               <!--</mat-form-field>-->
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="posIdT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_ID' | translate}}">
+                <input matInput formControlName="posIdT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_ID' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="posAgencyT" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_AGENCY' | translate}}">
+                <input matInput formControlName="posAgencyT" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.POS_AGENCY' | translate}}">
               </mat-form-field>
             </mat-card-content>
           </mat-card>
@@ -465,13 +561,17 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="3">
           <mat-card class="add-segmentation__card">
-            <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.TITLE' | translate}}</span>
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.TITLE' | translate}}</span>
             <mat-card-content class="add-segmentation__content _none-justify">
               <mat-form-field class="profile-search__input">
-                <input matInput formControlName="timeBeforeDepartureE" mask="d0 Hh:m0" [dropSpecialCharacters]="false" [showMaskTyped]="true" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DISPATCH_TIME' | translate}}">
+                <input matInput formControlName="timeBeforeDepartureE" mask="d0 Hh:m0" [dropSpecialCharacters]="false"
+                       [showMaskTyped]="true"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DISPATCH_TIME' | translate}}">
               </mat-form-field>
               <mat-form-field class="profile-search__input">
-                <input matInput formControlName="airlineLCodeIdE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.AIRLINE_L_CODE' | translate}}"
+                <input matInput formControlName="airlineLCodeIdE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.AIRLINE_L_CODE' | translate}}"
                        [matAutocomplete]="airlineLCodeE">
                 <mat-autocomplete #airlineLCodeE="matAutocomplete" [displayWith]="displayFn">
                   <mat-option *ngFor="let airlineLCode of airlineLCodeOptionsE | async" [value]="airlineLCode">
@@ -480,22 +580,27 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.FLIGHT_NO' | translate}}" formControlName="flightNoE">
+                <input matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.FLIGHT_NO' | translate}}"
+                       formControlName="flightNoE">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="arrivalDFromIncludeE" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_FROM' | translate}}"
+                <input formControlName="arrivalDFromIncludeE" matInput
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_FROM' | translate}}"
                        [matDatepicker]="arrivalDFromIncludeE">
                 <mat-datepicker-toggle matSuffix [for]="arrivalDFromIncludeE"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #arrivalDFromIncludeE></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="arrivalDToExcludeE" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_TO' | translate}}"
+                <input formControlName="arrivalDToExcludeE" matInput
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_D_TO' | translate}}"
                        [matDatepicker]="arrivalDToExcludeE">
                 <mat-datepicker-toggle matSuffix [for]="arrivalDToExcludeE"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #arrivalDToExcludeE></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="departureLocationCodeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DEP_LOC' | translate}}"
+                <input matInput formControlName="departureLocationCodeE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DEP_LOC' | translate}}"
                        [matAutocomplete]="airportfromE">
                 <mat-autocomplete #airportfromE="matAutocomplete">
                   <mat-option *ngFor="let airport of airportsFromOptionsE | async"
@@ -503,7 +608,8 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="arrivalLocationCodeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_LOC' | translate}}"
+                <input matInput formControlName="arrivalLocationCodeE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.ARR_LOC' | translate}}"
                        [matAutocomplete]="airporttoE">
                 <mat-autocomplete #airporttoE="matAutocomplete">
                   <mat-option *ngFor="let airport of airportsToOptionsE | async"
@@ -511,10 +617,12 @@
                 </mat-autocomplete>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="serviceCodeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SERVICE_CODE' | translate}}">
+                <input matInput formControlName="serviceCodeE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SERVICE_CODE' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="posGdsE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_GDS' | translate}}">
+                <input matInput formControlName="posGdsE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_GDS' | translate}}">
               </mat-form-field>
               <!--<mat-form-field class="add-segmentation__input">-->
               <!--<input matInput type="text" placeholder="Код страны (точка продажи)">-->
@@ -523,10 +631,12 @@
               <!--<input matInput type="text" placeholder="Код порта/города (точка продажи)">-->
               <!--</mat-form-field>-->
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="posIdE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_ID' | translate}}">
+                <input matInput formControlName="posIdE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_ID' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="posAgencyE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
+                <input matInput formControlName="posAgencyE" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
               </mat-form-field>
             </mat-card-content>
           </mat-card>
@@ -534,16 +644,19 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
-            <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.TITLE' | translate}}</span>
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.TITLE' | translate}}</span>
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="bookingCreateDateFromInclude" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_FROM' | translate}}"
+                <input formControlName="bookingCreateDateFromInclude" matInput
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_FROM' | translate}}"
                        [matDatepicker]="bookingCreateDateFromInclude">
                 <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="bookingCreateDateToExclude" matInput placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_TO' | translate}}"
+                <input formControlName="bookingCreateDateToExclude" matInput
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_TO' | translate}}"
                        [matDatepicker]="bookingCreateDateToExclude">
                 <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
@@ -554,20 +667,25 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
-            <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TITLE' | translate}}</span>
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TITLE' | translate}}</span>
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="segmentsCountFromInclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.FROM' | translate}}">
+                <input formControlName="segmentsCountFromInclude" matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.FROM' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="segmentsCountToExclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TO' | translate}}">
+                <input formControlName="segmentsCountToExclude" matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TO' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <mat-select formControlName="eDocTypeS">
-                  <mat-option value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TICKETS' | translate}}</mat-option>
-                  <mat-option value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.SERVICES' | translate}}</mat-option>
+                  <mat-option
+                    value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TICKETS' | translate}}</mat-option>
+                  <mat-option
+                    value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.SERVICES' | translate}}</mat-option>
                 </mat-select>
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
@@ -578,22 +696,28 @@
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
             <mat-card-content class="add-segmentation__content">
-              <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.TITLE' | translate}}</span>
+              <span
+                class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.TITLE' | translate}}</span>
               <mat-form-field class="add-segmentation__input">
-                <mat-select formControlName="gender" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
+                <mat-select formControlName="gender"
+                            placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
                   <mat-option></mat-option>
-                  <mat-option value="M">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.M' | translate}}</mat-option>
-                  <mat-option value="F">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.F' | translate}}</mat-option>
+                  <mat-option
+                    value="M">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.M' | translate}}</mat-option>
+                  <mat-option
+                    value="F">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.F' | translate}}</mat-option>
                 </mat-select>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="dobFromInclude" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_FROM' | translate}}"
+                <input matInput formControlName="dobFromInclude"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_FROM' | translate}}"
                        [matDatepicker]="dobFromInclude">
                 <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="dobToExclude" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_TO' | translate}}"
+                <input matInput formControlName="dobToExclude"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_TO' | translate}}"
                        [matDatepicker]="dobToExclude">
                 <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
                 <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
@@ -601,11 +725,14 @@
               <mat-radio-group formControlName="withChild" class="add-segmentation__input">
                 <div class="add-segmentation__input-radio-wrapper">
                   <div class="add-segmentation__input-radio-group">
-                    <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="true">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITH_CHILDREN' | translate}}
+                    <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                      [value]="true">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITH_CHILDREN' | translate}}
                     </mat-radio-button>
                   </div>
                   <div class="add-segmentation__input-radio-group _right">
-                    <mat-radio-button class="add-segmentation__input-radio _margin-none" [value]="false">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITHOUT_CHILDREN' | translate}}ей
+                    <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                      [value]="false">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITHOUT_CHILDREN' | translate}}
+                      ей
                     </mat-radio-button>
                   </div>
                 </div>
@@ -617,23 +744,29 @@
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
-            <span class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TITLE' | translate}}</span>
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TITLE' | translate}}</span>
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="moneyAmountFromInclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.FROM' | translate}}">
+                <input formControlName="moneyAmountFromInclude" matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.FROM' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input formControlName="moneyAmountToExclude" matInput type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TO' | translate}}">
+                <input formControlName="moneyAmountToExclude" matInput type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TO' | translate}}">
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="currency" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.CURRENCY' | translate}}">
+                <input matInput formControlName="currency" type="text"
+                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.CURRENCY' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
                 <mat-select formControlName="eDocTypeP">
-                  <mat-option value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TICKETS' | translate}}</mat-option>
-                  <mat-option value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.SERVICES' | translate}}</mat-option>
+                  <mat-option
+                    value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TICKETS' | translate}}</mat-option>
+                  <mat-option
+                    value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.SERVICES' | translate}}</mat-option>
                 </mat-select>
                 <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
               </mat-form-field>
