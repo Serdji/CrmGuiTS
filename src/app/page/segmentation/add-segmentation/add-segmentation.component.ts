@@ -160,16 +160,16 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const hour = _.padStart( Math.floor( minutes / 60 % 24 ) + '', 2, '0' );
     const min = _.padStart( Math.floor( minutes % 60 ) + '', 2, '0' );
     const date = `${day} ${hour}:${min}`;
-    return date;
+    return R.isNil(minutes) ? '' : date;
   }
 
-  private invertMinutes( date: string ): number {
+  private invertMinutes( date: string ): number | string {
     const day = +_.chain( date ).split( ' ' ).head().value();
     const time = _.chain( date ).split( ' ' ).last().value();
     const hour = +_.chain( time ).split( ':' ).head().value();
     const min = +_.chain( time ).split( ':' ).last().value();
     const asMinutes = ( day * 24 * 60 ) + ( hour * 60 ) + min;
-    return asMinutes;
+    return asMinutes !== 0 ? asMinutes : '';
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
