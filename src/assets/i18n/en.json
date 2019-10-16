@@ -53,9 +53,12 @@
 		"DISTRIBUTION": {
 			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel this email newsletter?",
 			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel this sms mailing?",
-			"EMAIL_DISTRIBUTION": "Are you sure you want to delete the email newsletter or newsletters?",
-			"SEND_DISTRIBUTION": "Send newsletter?",
-			"SMS_DISTRIBUTION": "Are you sure you want to delete the sms newsletter or newsletters?"
+			"DELETES_EMAIL_DISTRIBUTION": "Are you sure you want to delete the email newsletter or newsletters?",
+			"DELETES_SMS_DISTRIBUTION": "Are you sure you want to delete the sms newsletter or newsletters?",
+			"DELETE_EMAIL_DISTRIBUTION": "Are you sure you want to delete the email newsletter?",
+			"DELETE_SMS_DISTRIBUTION": "Are you sure you want to delete the sms newsletter?",
+			"SEND_EMAIL_DISTRIBUTION": "Are you sure you want to start the email newsletter?",
+			"SEND_SMS_DISTRIBUTION": "Are you sure you want to start the SMS mailing list?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Validity",

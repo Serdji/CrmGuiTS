@@ -53,9 +53,12 @@
 		"DISTRIBUTION": {
 			"CANCEL_EMAIL_DISTRIBUTION": "Möchten Sie diesen E-Mail-Newsletter wirklich abbestellen?",
 			"CANCEL_SMS_DISTRIBUTION": "Möchten Sie dieses SMS-Mailing wirklich abbrechen?",
-			"EMAIL_DISTRIBUTION": "Möchten Sie den E-Mail-Newsletter oder die Newsletter wirklich löschen?",
-			"SEND_DISTRIBUTION": "Newsletter versenden?",
-			"SMS_DISTRIBUTION": "Möchten Sie den SMS-Newsletter oder die Newsletter wirklich löschen?"
+			"DELETES_EMAIL_DISTRIBUTION": "Möchten Sie den E-Mail-Newsletter oder die Newsletter wirklich löschen?",
+			"DELETES_SMS_DISTRIBUTION": "Möchten Sie den SMS-Newsletter oder die Newsletter wirklich löschen?",
+			"DELETE_EMAIL_DISTRIBUTION": "Möchten Sie den E-Mail-Newsletter wirklich löschen?",
+			"DELETE_SMS_DISTRIBUTION": "Möchten Sie den SMS-Newsletter wirklich löschen?",
+			"SEND_EMAIL_DISTRIBUTION": "Möchten Sie den E-Mail-Newsletter wirklich starten?",
+			"SEND_SMS_DISTRIBUTION": "Möchten Sie die SMS-Mailingliste wirklich starten?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Gültigkeit",

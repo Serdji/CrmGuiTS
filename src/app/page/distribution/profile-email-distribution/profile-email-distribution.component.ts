@@ -158,13 +158,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   }
 
   startEmailDistribution(): void {
-    this.windowDialog(
-      `По результатам реализации данной отправки лимит сообщений ${this.emailLimits - this.distributionProfile.totalCount}. ` +
-      `Подтвердите активацию сохраненной рассылки в количестве ${this.distributionProfile.totalCount} писем ?`,
-      'startEmailDistribution',
-      'starEmailDistribution',
-      this.distributionProfile.distributionId
-    );
+    this.windowDialog('DIALOG.DISTRIBUTION.SEND_EMAIL_DISTRIBUTION', 'startEmailDistribution', 'starEmailDistribution', this.distributionProfile.distributionId );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
   }
@@ -174,7 +168,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   }
 
   deleteEmailDistribution(): void {
-    this.windowDialog( 'DIALOG.DISTRIBUTION.EMAIL_DISTRIBUTION', 'delete', 'deleteEmailDistribution', this.distributionProfile.distributionId );
+    this.windowDialog( 'DIALOG.DISTRIBUTION.DELETE_EMAIL_DISTRIBUTION', 'delete', 'deleteEmailDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {

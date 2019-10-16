@@ -53,9 +53,12 @@
 		"DISTRIBUTION": {
 			"CANCEL_EMAIL_DISTRIBUTION": "Вы действительно хотиту отменить эту email рассылку ?",
 			"CANCEL_SMS_DISTRIBUTION": "Вы действительно хотиту отменить эту sms рассылку ?",
-			"EMAIL_DISTRIBUTION": "Вы действительно хотите удалить email  рассылку или рассылки ?",
-			"SEND_DISTRIBUTION": "Отправить рассылку ?",
-			"SMS_DISTRIBUTION": "Вы действительно хотите удалить sms  рассылку или рассылки ?"
+			"DELETES_EMAIL_DISTRIBUTION": "Вы действительно хотите удалить email  рассылку или рассылки ?",
+			"DELETES_SMS_DISTRIBUTION": "Вы действительно хотите удалить sms  рассылку или рассылки?",
+			"DELETE_EMAIL_DISTRIBUTION": "Вы действительно хотите удалить email  рассылку ?",
+			"DELETE_SMS_DISTRIBUTION": "Вы действительно хотите удалить sms  рассылку ?",
+			"SEND_EMAIL_DISTRIBUTION": "Вы действительно хотите запустить рассылку email ?",
+			"SEND_SMS_DISTRIBUTION": "Вы действительно хотите запустить рассылку смс ?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Срок действия",

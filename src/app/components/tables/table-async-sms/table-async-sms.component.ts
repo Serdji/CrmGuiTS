@@ -162,7 +162,7 @@ export class TableAsyncSmsComponent implements OnInit, OnDestroy {
 
     if ( arrayId.length !== 0 ) {
       const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `DIALOG.DELETE.DISTRIBUTION`, 'delete', params, 'displayeds' );
+      this.windowDialog( `DIALOG.DISTRIBUTION.DELETES_SMS_DISTRIBUTION`, 'delete', params, 'displayeds' );
     }
   }
 

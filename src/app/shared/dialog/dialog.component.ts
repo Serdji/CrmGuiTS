@@ -282,18 +282,18 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'displayeds':
-        this.listEmailService.deleteEmailDistributions( this.data.params )
+        this.distributionService.deleteDistributions( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteEmailDistribution':
-        this.listEmailService.deleteEmailDistribution( this.data.params )
+        this.distributionService.deleteDistribution( this.data.params )
           .pipe( takeWhile( _ => this.isActive ) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.router.navigate( [ '/crm/list-email-distribution' ] );
+            this.router.navigate( [ '/crm/list-email' ] );
           } );
         break;
       case 'stopEmailDistribution':
@@ -313,19 +313,19 @@ export class DialogComponent implements OnInit, OnDestroy {
           } );
         break;
       case 'displayeds':
-        // this.listEmailService.deleteSmsDistributions( this.data.params )
-        //   .pipe( takeWhile( _ => this.isActive ) )
-        //   .subscribe( _ => {
-        //     this.dialogRef.close();
-        //   } );
+        this.distributionService.deleteDistributions( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+          } );
         break;
       case 'deleteSmsDistribution':
-        // this.listEmailService.deleteSmsDistribution( this.data.params )
-        //   .pipe( takeWhile( _ => this.isActive ) )
-        //   .subscribe( _ => {
-        //     this.dialogRef.close();
-        //     this.router.navigate( [ '/crm/list-sms-distribution' ] );
-        //   } );
+        this.distributionService.deleteDistribution( this.data.params )
+          .pipe( takeWhile( _ => this.isActive ) )
+          .subscribe( _ => {
+            this.dialogRef.close();
+            this.router.navigate( [ '/crm/list-sms' ] );
+          } );
         break;
       case 'stopSmsDistribution':
         this.distributionService.stopDistribution( this.data.params )

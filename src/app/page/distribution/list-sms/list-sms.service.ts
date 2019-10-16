@@ -20,17 +20,4 @@ export class ListSmsService {
   getAllSms( params ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/smsDistribution`, { params } ).pipe( this.retryRequestService.retry() );
   }
-
-  deleteSmsDistributions( params ): Observable<any> {
-    this.subjectDistributionDelete.next();
-    const httpOptions = {
-      headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
-    };
-    return this.http.delete( `${this.configService.crmApi}/crm/distributions/deleteDistributions`, httpOptions ).pipe( this.retryRequestService.retry() );
-  }
-
-  deleteSmsDistribution( id: number ): Observable<any> {
-    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe( this.retryRequestService.retry() );
-  }
-
 }

@@ -53,9 +53,12 @@
 		"DISTRIBUTION": {
 			"CANCEL_EMAIL_DISTRIBUTION": "您确定要取消此电子邮件通讯吗？",
 			"CANCEL_SMS_DISTRIBUTION": "您真的要取消此短信发送吗？",
-			"EMAIL_DISTRIBUTION": "您确定要删除电子邮件时事通讯吗？",
-			"SEND_DISTRIBUTION": "发送通讯？",
-			"SMS_DISTRIBUTION": "您确定要删除短信或时事通讯吗？"
+			"DELETES_EMAIL_DISTRIBUTION": "您确定要删除电子邮件时事通讯吗？",
+			"DELETES_SMS_DISTRIBUTION": "您确定要删除短信或时事通讯吗？",
+			"DELETE_EMAIL_DISTRIBUTION": "您确定要删除电子邮件时事通讯吗？",
+			"DELETE_SMS_DISTRIBUTION": "您确定要删除短信吗？",
+			"SEND_EMAIL_DISTRIBUTION": "您确定要启动电子邮件时事通讯吗？",
+			"SEND_SMS_DISTRIBUTION": "您确定要启动SMS邮件列表吗？"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "到期日",

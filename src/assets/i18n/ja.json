@@ -53,9 +53,12 @@
 		"DISTRIBUTION": {
 			"CANCEL_EMAIL_DISTRIBUTION": "このメールニュースレターをキャンセルしてもよろしいですか？",
 			"CANCEL_SMS_DISTRIBUTION": "このSMSメールを本当にキャンセルしますか？",
-			"EMAIL_DISTRIBUTION": "電子メールニュースレターを削除してもよろしいですか？",
-			"SEND_DISTRIBUTION": "ニュースレターを送信しますか？",
-			"SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？"
+			"DELETES_EMAIL_DISTRIBUTION": "電子メールニュースレターを削除してもよろしいですか？",
+			"DELETES_SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？",
+			"DELETE_EMAIL_DISTRIBUTION": "メールニュースレターを削除してもよろしいですか？",
+			"DELETE_SMS_DISTRIBUTION": "SMSニュースレターを削除してもよろしいですか？",
+			"SEND_EMAIL_DISTRIBUTION": "メールニュースレターを開始してもよろしいですか？",
+			"SEND_SMS_DISTRIBUTION": "SMSメーリングリストを開始してもよろしいですか？"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "有効期限",

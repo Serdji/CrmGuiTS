@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../services/config-service.service';
 import { RetryRequestService } from '../../services/retry-request.service';
 
@@ -10,6 +10,7 @@ import { RetryRequestService } from '../../services/retry-request.service';
 export class DistributionService {
 
   public distributionSubject = new Subject();
+  public subjectDistributionDelete = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -23,5 +24,17 @@ export class DistributionService {
 
   stopDistribution( id: number ): Observable<any> {
     return this.http.post( this.configService.crmApi + `/crm/distribution/${id}/Cancel`, { id } ).pipe( this.retryRequestService.retry() );
+  }
+
+  deleteDistributions( params ): Observable<any> {
+    this.subjectDistributionDelete.next();
+    const httpOptions = {
+      headers: new HttpHeaders( { 'Content-Type': 'application/json' } ), body: params
+    };
+    return this.http.delete( `${this.configService.crmApi}/crm/distributions/deleteDistributions`, httpOptions ).pipe( this.retryRequestService.retry() );
+  }
+
+  deleteDistribution( id: number ): Observable<any> {
+    return this.http.delete( `${this.configService.crmApi}/crm/distributions/${id}` ).pipe( this.retryRequestService.retry() );
   }
 }

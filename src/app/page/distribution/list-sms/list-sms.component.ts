@@ -6,6 +6,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { timer } from 'rxjs';
 import { ListSmsService } from './list-sms.service';
 import { ISms } from '../../../interface/isms';
+import { DistributionService } from '../distribution.service';
 
 @Component( {
   selector: 'app-list-sms',
@@ -23,6 +24,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private tableAsyncService: TableAsyncService,
     private listSmsService: ListSmsService,
+    private distributionService: DistributionService
   ) { }
 
   ngOnInit(): void {
@@ -30,7 +32,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.initTable();
     this.initTablePagination();
-    this.listSmsService.subjectDistributionDelete
+    this.distributionService.subjectDistributionDelete
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshDistribution() );
   }

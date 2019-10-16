@@ -6,6 +6,7 @@ import { timer } from 'rxjs';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { ITaskLog } from '../../../interface/itask-log';
+import { DistributionService } from '../distribution.service';
 
 @Component( {
   selector: 'app-list-email',
@@ -22,6 +23,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   constructor(
     private listEmailService: ListEmailService,
     private tableAsyncService: TableAsyncService,
+    private distributionService: DistributionService,
   ) { }
 
   ngOnInit(): void {
@@ -29,7 +31,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.initTable();
     this.initTablePagination();
-    this.listEmailService.subjectDistributionDelete
+    this.distributionService.subjectDistributionDelete
       .pipe( takeWhile( _ => this.isActive ) )
       .subscribe( _ => this.refreshDistribution() );
   }

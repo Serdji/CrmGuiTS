@@ -145,17 +145,17 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   }
 
   startSmsDistribution(): void {
-    this.windowDialog('DIALOG.DISTRIBUTION.SEND_DISTRIBUTION','startSmsDistribution','startSmsDistribution', this.smsProfileId );
+    this.windowDialog('DIALOG.DISTRIBUTION.SEND_SMS_DISTRIBUTION', 'startSmsDistribution', 'startSmsDistribution', this.distributionProfile.distributionId );
     this.startButtonDisabled = true;
     this.stopButtonDisabled = false;
   }
 
   stopSmsDistribution(): void {
-    this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_SMS_DISTRIBUTION', 'delete', 'stopSmsDistribution', this.smsProfileId );
+    this.windowDialog( 'DIALOG.DISTRIBUTION.CANCEL_SMS_DISTRIBUTION', 'delete', 'stopSmsDistribution', this.distributionProfile.distributionId );
   }
 
   deleteSmsDistribution(): void {
-    this.windowDialog( 'DIALOG.DISTRIBUTION.SMS_DISTRIBUTION', 'delete', 'deleteSmsDistribution', this.smsProfileId );
+    this.windowDialog( 'DIALOG.DISTRIBUTION.DELETE_SMS_DISTRIBUTION', 'delete', 'deleteSmsDistribution', this.distributionProfile.distributionId );
   }
 
   ngOnDestroy(): void {
