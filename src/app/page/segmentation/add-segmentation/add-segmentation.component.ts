@@ -169,7 +169,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const hour = +_.chain( time ).split( ':' ).head().value();
     const min = +_.chain( time ).split( ':' ).last().value();
     const asMinutes = ( day * 24 * 60 ) + ( hour * 60 ) + min;
-    return date !== '' ? asMinutes : '';
+    return date === '' ? '' : asMinutes;
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
