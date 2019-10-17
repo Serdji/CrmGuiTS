@@ -169,8 +169,9 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private formFilling( complexSegmentation: IComplexSegmentation ) {
+    const segmentationGranularity = complexSegmentation.childSegmentations[ 0 ].segmentationGranularity;
     this.formAdd.get( 'segmentationTitle' ).patchValue( complexSegmentation.segmentationTitle );
-    this.formAdd.get( 'segmentationGranularity' ).patchValue( complexSegmentation.childSegmentations[ 0 ].segmentationGranularity );
+    this.formAdd.get( 'segmentationGranularity' ).patchValue( segmentationGranularity + '');
     this.selectionSegmentation = complexSegmentation.childSegmentations;
     this.isLoader = false;
   }
