@@ -816,6 +816,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Segmentation selection",
+					"GRANULARITY": {
+						"COUPON": "Coupon",
+						"ORDERS": "Orders",
+						"PASSENGER": "Passenger",
+						"TITLE": "Granularity"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "The name of complex segmentation"
 				},
 				"SEGMENTATIONS": "Segmentation",

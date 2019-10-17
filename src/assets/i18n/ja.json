@@ -816,6 +816,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "セグメンテーション選択",
+					"GRANULARITY": {
+						"COUPON": "クーポン",
+						"ORDERS": "ご注文",
+						"PASSENGER": "乗客",
+						"TITLE": "粒度"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "複雑なセグメンテーションの名前"
 				},
 				"SEGMENTATIONS": "セグメンテーション",

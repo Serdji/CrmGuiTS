@@ -816,6 +816,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Auswahl der Segmentierung",
+					"GRANULARITY": {
+						"COUPON": "Gutschein",
+						"ORDERS": "Bestellungen",
+						"PASSENGER": "Passagier",
+						"TITLE": "Granularität"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "Der Name der komplexen Segmentierung"
 				},
 				"SEGMENTATIONS": "Segmentierung",

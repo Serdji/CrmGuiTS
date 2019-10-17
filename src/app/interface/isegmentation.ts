@@ -3,4 +3,5 @@ export interface ISegmentation {
   title: string;
   isComplex: boolean;
   childSegmentations: ISegmentation[];
+  segmentationGranularity: number;
 }
