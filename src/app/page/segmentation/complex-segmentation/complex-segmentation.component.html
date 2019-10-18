@@ -8,6 +8,18 @@
             <input matInput formControlName="segmentationTitle" type="text" placeholder="{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.NAME_COMPLEX_SEGMENTATION' | translate}}">
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
+          <mat-form-field class="add-segmentation__input">
+            <mat-select formControlName="segmentationGranularity"
+                        placeholder="{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.GRANULARITY.TITLE' | translate}}">
+              <mat-option
+                value="1">{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.GRANULARITY.PASSENGER' | translate}}</mat-option>
+              <mat-option
+                value="2">{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.GRANULARITY.ORDERS' | translate}}</mat-option>
+              <mat-option
+                value="3">{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.GRANULARITY.COUPON' | translate}}</mat-option>
+            </mat-select>
+            <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+          </mat-form-field>
           <mat-form-field class="complex-segmentation__input">
             <input (keyup.enter)="onAdd()" matInput formControlName="segmentation" [matAutocomplete]="auto" type="text"
                    placeholder="{{'PAGE.SEGMENTATION.COMPLEX_SEGMENTATION.FIELD.CHOICE_SEGMENTATION' | translate}}">

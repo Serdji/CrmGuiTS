@@ -784,10 +784,11 @@
 					"DEP_LOC": "どこから",
 					"DISPATCH_TIME": "発送時間",
 					"FLIGHT_NO": "便名",
+					"NOT_SERVICE_CODE": "サービスコードが含まれていません",
 					"POS_AGENCY": "代理店コード（販売店）",
 					"POS_GDS": "GDSコード（POS）",
 					"POS_ID": "PPRコード（POS）",
-					"SERVICE_CODE": "コード",
+					"SERVICE_CODE": "サービスコード",
 					"TITLE": "有料サービス"
 				},
 				"SUBJECT_ANALYSIS": {
@@ -816,6 +817,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "セグメンテーション選択",
+					"GRANULARITY": {
+						"COUPON": "クーポン",
+						"ORDERS": "ご注文",
+						"PASSENGER": "乗客",
+						"TITLE": "粒度"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "複雑なセグメンテーションの名前"
 				},
 				"SEGMENTATIONS": "セグメンテーション",

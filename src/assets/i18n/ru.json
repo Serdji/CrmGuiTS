@@ -784,10 +784,11 @@
 					"DEP_LOC": "Откуда",
 					"DISPATCH_TIME": "Время до вылета",
 					"FLIGHT_NO": "Номер рейса",
+					"NOT_SERVICE_CODE": "Не содержит кода услуги",
 					"POS_AGENCY": "Код агентства (точка продажи)",
 					"POS_GDS": "Код ГРС (точка продажи)",
 					"POS_ID": "Код ППР (точка продажи)",
-					"SERVICE_CODE": "Код услути",
+					"SERVICE_CODE": "Код услуги",
 					"TITLE": "Платные услуги"
 				},
 				"SUBJECT_ANALYSIS": {
@@ -816,6 +817,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Выбор сегментации",
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "Название сложной сегментации"
 				},
 				"SEGMENTATIONS": "Cегментации",

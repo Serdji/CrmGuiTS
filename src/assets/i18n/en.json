@@ -784,10 +784,11 @@
 					"DEP_LOC": "From where",
 					"DISPATCH_TIME": "Dispatch time",
 					"FLIGHT_NO": "Flight number",
+					"NOT_SERVICE_CODE": "Does not contain a service code",
 					"POS_AGENCY": "Agency code (point of sale)",
 					"POS_GDS": "GDS code (point of sale)",
 					"POS_ID": "PPR code (point of sale)",
-					"SERVICE_CODE": "Code",
+					"SERVICE_CODE": "Service Code",
 					"TITLE": "Paid services"
 				},
 				"SUBJECT_ANALYSIS": {
@@ -816,6 +817,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Segmentation selection",
+					"GRANULARITY": {
+						"COUPON": "Coupon",
+						"ORDERS": "Orders",
+						"PASSENGER": "Passenger",
+						"TITLE": "Granularity"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "The name of complex segmentation"
 				},
 				"SEGMENTATIONS": "Segmentation",

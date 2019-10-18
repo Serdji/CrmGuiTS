@@ -265,6 +265,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       departureLocationCodeE: '',
       arrivalLocationCodeE: '',
       serviceCodeE: '',
+      notServiceCodeE: '',
       posGdsE: '',
       posIdE: '',
       posAgencyE: ''
@@ -325,7 +326,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               _( [
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
-                'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
+                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -349,7 +350,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               _( [
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
-                'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
+                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -504,6 +505,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         departureLocationCodeE: this.formSegmentation.get( 'departureLocationCodeE' ).value,
         arrivalLocationCodeE: this.formSegmentation.get( 'arrivalLocationCodeE' ).value,
         serviceCodeE: this.formSegmentation.get( 'serviceCodeE' ).value,
+        notServiceCodeE: this.formSegmentation.get( 'notServiceCodeE' ).value,
         posGdsE: this.formSegmentation.get( 'posGdsE' ).value,
         posIdE: this.formSegmentation.get( 'posIdE' ).value,
         posAgencyE: this.formSegmentation.get( 'posAgencyE' ).value
