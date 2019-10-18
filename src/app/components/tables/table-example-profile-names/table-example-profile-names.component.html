@@ -29,7 +29,7 @@
     </ng-container>
 
     <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.PROFILE.TABS_PROFILE.PROFILE.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
                 (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
       </mat-cell>
