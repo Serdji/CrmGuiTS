@@ -784,10 +784,11 @@
 					"DEP_LOC": "Odkud",
 					"DISPATCH_TIME": "Čas před odjezdem",
 					"FLIGHT_NO": "Číslo letu",
+					"NOT_SERVICE_CODE": "Neobsahuje žádný kód servisního menu",
 					"POS_AGENCY": "Kód agentury (místo prodeje)",
 					"POS_GDS": "GDS kód (prodejní místo)",
 					"POS_ID": "PPR kód (prodejní místo)",
-					"SERVICE_CODE": "Kód",
+					"SERVICE_CODE": "Servisní kód",
 					"TITLE": "Placené služby"
 				},
 				"SUBJECT_ANALYSIS": {

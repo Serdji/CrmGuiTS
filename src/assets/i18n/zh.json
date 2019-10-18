@@ -784,10 +784,11 @@
 					"DEP_LOC": "从哪里来",
 					"DISPATCH_TIME": "出发时间",
 					"FLIGHT_NO": "航班号",
+					"NOT_SERVICE_CODE": "不包含服务代码",
 					"POS_AGENCY": "代理商代码（销售点）",
 					"POS_GDS": "GDS代码（销售点）",
 					"POS_ID": "PPR代码（销售点）",
-					"SERVICE_CODE": "代号",
+					"SERVICE_CODE": "服务编号",
 					"TITLE": "付费服务"
 				},
 				"SUBJECT_ANALYSIS": {
