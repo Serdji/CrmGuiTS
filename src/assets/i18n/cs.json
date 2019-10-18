@@ -816,6 +816,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Výběr segmentace",
+					"GRANULARITY": {
+						"COUPON": "Kupón",
+						"ORDERS": "Objednávky",
+						"PASSENGER": "Cestující",
+						"TITLE": "Granularita"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "Název složité segmentace"
 				},
 				"SEGMENTATIONS": "Segmentace",

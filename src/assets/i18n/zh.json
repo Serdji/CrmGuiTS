@@ -816,6 +816,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "细分选择",
+					"GRANULARITY": {
+						"COUPON": "优惠券",
+						"ORDERS": "订单",
+						"PASSENGER": "客运",
+						"TITLE": "粒度"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "复杂分割的名称"
 				},
 				"SEGMENTATIONS": "细分",

@@ -24,6 +24,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   public segmentation: ISegmentation[];
   public complexSegmentation: ISegmentation[];
+  public segmentationGranularity: ISegmentation[];
   public selectionSegmentation: ISegmentation[] = [];
   public segmentationOptions: Observable<ISegmentation[]>;
   public formAdd: FormGroup;
@@ -59,8 +60,8 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.isLoaderProfileTable = true;
     this.isTableProfileTable = false;
     this.isLoaderComplexSegmentationTable = true;
-    this.initSegmentation();
     this.initFormAdd();
+    this.initSegmentation();
     this.initQueryParams();
     this.initTableProfilePagination();
     this.listSegmentationService.subjectSegmentations
@@ -71,8 +72,10 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   private initFormAdd() {
     this.formAdd = this.fb.group( {
       'segmentationTitle': [ '', Validators.required ],
+      'segmentationGranularity': [ '', Validators.required ],
       'segmentation': '',
     } );
+    this.formAdd.get( 'segmentation' ).disable();
   }
 
   private refreshSegmentation() {
@@ -84,6 +87,16 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private witchGranularity() {
+    this.formAdd.get( 'segmentationGranularity' ).valueChanges
+      .pipe( takeWhile( _ => this.isActive ) )
+      .subscribe( ( granularity: number ) => {
+        // @ts-ignore
+        this.segmentationGranularity = R.filter( R.propEq( 'segmentationGranularity', +granularity ), this.segmentation );
+        this.formAdd.get( 'segmentation' ).enable();
+      } );
+  }
+
   private initSegmentation() {
     const notComplexSegmentation = R.reject( ( s: ISegmentation ) => s.isComplex );
     const isComplexSegmentation = R.filter( ( s: ISegmentation ) => s.isComplex );
@@ -91,6 +104,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.segmentation = notComplexSegmentation( segmentation );
       this.complexSegmentation = isComplexSegmentation( segmentation );
       this.isLoaderComplexSegmentationTable = false;
+      this.witchGranularity();
       this.initAutocomplete();
     };
 
@@ -114,6 +128,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       if ( hasSegmentationId( params ) ) {
         this.initComplexSegmentation( params.segmentationId );
         this.initSegmentation();
+        this.formAdd.get( 'segmentationGranularity' ).disable();
         this.segmentationId = params.segmentationId;
         this.buttonSearch = false;
         this.buttonCreate = false;
@@ -150,11 +165,13 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const differenceSegmentation = this.differenceSegmentationFn();
     const composeFilter = R.compose( filterSegmentation, differenceSegmentation );
     // @ts-ignore
-    return composeFilter( this.segmentation );
+    return composeFilter( this.segmentationGranularity );
   }
 
   private formFilling( complexSegmentation: IComplexSegmentation ) {
+    const segmentationGranularity = complexSegmentation.childSegmentations[ 0 ].segmentationGranularity;
     this.formAdd.get( 'segmentationTitle' ).patchValue( complexSegmentation.segmentationTitle );
+    this.formAdd.get( 'segmentationGranularity' ).patchValue( segmentationGranularity + '');
     this.selectionSegmentation = complexSegmentation.childSegmentations;
     this.isLoader = false;
   }
@@ -223,7 +240,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationId = item => item.segmentationId === id;
     const deleteSelectionSegmentation = R.reject( segmentationId );
     this.selectionSegmentation = deleteSelectionSegmentation( this.selectionSegmentation );
-    if( R.isEmpty( this.selectionSegmentation  ) ) this.onClearForm();
+    if ( R.isEmpty( this.selectionSegmentation ) ) this.onClearForm();
   }
 
   public onSaveForm(): void {
@@ -264,31 +281,18 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private onClearForm() {
-    this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { } } );
+    this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: {} } );
     this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
     this.formAdd.get( 'segmentationTitle' ).setErrors( null );
     this.selectionSegmentation = [];
     this.buttonSearch = true;
     this.buttonCreate = true;
     this.buttonSave = false;
+    this.formAdd.get( 'segmentationGranularity' ).enable();
+    this.formAdd.get( 'segmentation' ).disable();
   }
 
   ngOnDestroy(): void {
     this.isActive = false;
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

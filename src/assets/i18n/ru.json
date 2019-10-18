@@ -816,6 +816,12 @@
 			"COMPLEX_SEGMENTATION": {
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Выбор сегментации",
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
 					"NAME_COMPLEX_SEGMENTATION": "Название сложной сегментации"
 				},
 				"SEGMENTATIONS": "Cегментации",
