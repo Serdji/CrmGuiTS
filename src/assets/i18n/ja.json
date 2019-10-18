@@ -784,10 +784,11 @@
 					"DEP_LOC": "どこから",
 					"DISPATCH_TIME": "発送時間",
 					"FLIGHT_NO": "便名",
+					"NOT_SERVICE_CODE": "サービスコードが含まれていません",
 					"POS_AGENCY": "代理店コード（販売店）",
 					"POS_GDS": "GDSコード（POS）",
 					"POS_ID": "PPRコード（POS）",
-					"SERVICE_CODE": "コード",
+					"SERVICE_CODE": "サービスコード",
 					"TITLE": "有料サービス"
 				},
 				"SUBJECT_ANALYSIS": {
