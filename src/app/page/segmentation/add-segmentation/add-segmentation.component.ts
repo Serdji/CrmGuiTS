@@ -326,7 +326,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               _( [
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
-                'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
+                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -350,7 +350,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               _( [
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
-                'serviceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
+                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
