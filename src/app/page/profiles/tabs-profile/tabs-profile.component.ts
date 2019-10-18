@@ -35,7 +35,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public currencyDefault: string;
   public selectedIndex: number;
   public dataOrder: { recLocGDS: string };
-  public dataMessage: { distributionId: number };
+  public distributionId: { distributionId: number };
   public dataPromoCode: { promoCodeId: number };
 
   private isActive: boolean;
@@ -84,7 +84,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           .subscribe( _ => {
             this.selectedIndex = tabsControlData.selectedIndex;
             this.dataOrder = tabsControlData.order;
-            this.dataMessage = tabsControlData.message;
+            this.distributionId = tabsControlData.message;
             this.dataPromoCode = tabsControlData.promoCode;
           } );
       } );
