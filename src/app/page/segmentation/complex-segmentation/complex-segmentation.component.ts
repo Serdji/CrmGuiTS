@@ -233,6 +233,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.selectionSegmentation = prependSegmentation( this.selectionSegmentation );
       this.formAdd.get( 'segmentation' ).patchValue( '' );
       this.isLoader = false;
+      this.formAdd.get( 'segmentationGranularity' ).disable();
     }
   }
 
