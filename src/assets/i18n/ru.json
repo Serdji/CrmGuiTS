@@ -956,7 +956,7 @@
 				"TOTAL_COUNT": "Количество"
 			},
 			"DIALOG_SMS": {
-				"SYMBOLS_ENTERED": "Введенных симвалов",
+				"SYMBOLS_ENTERED": "Введенных символов",
 				"TEMPLATE": "Шаблон",
 				"TEXT": "Текст сообщения",
 				"TITLE": "Название"
