@@ -29,7 +29,7 @@
 
 
     <ng-container  matColumnDef="customerGroupName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SLECIAL_GROUP.PROFILE_GROUP.TABLE.PROFILE_GROUP' | translate}} </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> Группа пассажиров </mat-header-cell>
       <mat-cell #matCell class="table__cell"  *matCellDef="let element"><span>{{element.customerGroupName}}</span>
       </mat-cell>
 
@@ -38,8 +38,7 @@
     <ng-container  matColumnDef="customerGroupId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell  *matCellDef="let element">
-        <mat-icon routerLink="/crm/profilesearch"
-                  [queryParams]="{ customerGroupIds: element.customerGroupId }">search</mat-icon>
+        <mat-icon (click)="redirectToCustomerGroupId(element.customerGroupId); $event.stopPropagation()">search</mat-icon>
       </mat-cell>
     </ng-container>
 
@@ -57,6 +56,6 @@
       Удалить
       <mat-icon>delete</mat-icon>
     </button>
-    <app-button-editor [ids]="ids" [disabled]="!selection.hasValue() && !isAllSelected()"></app-button-editor>
+    <app-button-editor whatNewsletter="choice" [ids]="ids" [disabled]="!selection.hasValue() && !isAllSelected()"></app-button-editor>
   </div>
 </div>
