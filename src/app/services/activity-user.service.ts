@@ -3,11 +3,12 @@ import { fromEvent } from 'rxjs/observable/fromEvent';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import { AuthService } from './auth.service';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Injectable()
 export class ActivityUserService implements OnInit, OnDestroy {
 
-  private isActive: boolean;
+
 
   constructor(
     private auth: AuthService,
@@ -15,12 +16,12 @@ export class ActivityUserService implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
   }
 
   logout() {
     const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
-    this.auth.revokeRefreshToken( token.refreshToken ).pipe( takeWhile( _ => this.isActive ) ).subscribe();
+    this.auth.revokeRefreshToken( token.refreshToken ).pipe( untilDestroyed(this) ).subscribe();
     localStorage.removeItem( 'saveSeismic' );
     localStorage.removeItem( 'paramsToken' );
     localStorage.removeItem( 'login' );
@@ -50,8 +51,6 @@ export class ActivityUserService implements OnInit, OnDestroy {
     return min * ( 60 * 1000 );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

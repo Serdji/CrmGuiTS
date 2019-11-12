@@ -5,6 +5,8 @@ import { ProfileSearchService } from '../../../page/profiles/profile-search/prof
 import { Iprofiles } from '../../../interface/iprofiles';
 import { takeWhile } from 'rxjs/operators';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component({
   selector: 'app-button-merge-profile',
   templateUrl: './button-merge-profile.component.html',
@@ -15,7 +17,7 @@ export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
   @Input() ids: any;
   @Input() disabled: boolean;
 
-  private isActive: boolean;
+
 
 
   constructor(
@@ -23,7 +25,7 @@ export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
   }
 
   openDialog(): void {
@@ -35,9 +37,7 @@ export class ButtonMergeProfileComponent implements OnInit, OnDestroy {
     } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 
 }

@@ -15,6 +15,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { EventService } from '../event/event.service';
 import * as moment from 'moment';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-add-event',
   templateUrl: './add-event.component.html',
@@ -31,7 +33,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   public whichAction: string;
 
   private taskId: number;
-  private isActive: boolean;
+
   private segmentationId: number;
   private totalCount: number;
 
@@ -46,7 +48,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.maxSize = _.size( timePeriods );
     this.whichAction = 'data';
     this.initFormEvent();
@@ -60,7 +62,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initQueryRouter() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => {
         if( !R.isEmpty( params ) ) {
           this.taskId = +params.taskId;
@@ -87,7 +89,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     const servicesForkJoin = forkJoin( [ eventService, listSegmentation ] );
 
     servicesForkJoin
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
@@ -98,7 +100,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( segmentation => this.segmentation = segmentation );
   }
 
@@ -115,7 +117,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   private initAutocomplete() {
     this.segmentationOptions = this.formEvent.get( 'segmentation' ).valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         map( value => typeof value === 'string' ? value : value.title ),
         map( title => this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( title.toLowerCase() ) ) )
       );
@@ -123,7 +125,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initTotalCount() {
     this.formEvent.get( 'segmentation' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( segmentation => {
         if ( _.isObject( segmentation ) ) {
           this.segmentationId = segmentation.segmentationId;
@@ -133,7 +135,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
             count: 1
           };
           this.addSegmentationService.getProfiles( paramsAndCount )
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed(this) )
             .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.totalCount = segmentationProfiles.totalCount );
         }
       } );
@@ -141,7 +143,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private initSwitchTypeEvent() {
     this.formEvent.get( 'distributionType' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( event =>  this.distributionType = event );
   }
 
@@ -185,7 +187,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
 
   private createEvent = ( params ) => {
     this.addEventService.createTask( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( task: ITask ) => {
         this.router.navigate( [ `/crm/event/${task.taskId}` ] );
       } );
@@ -194,7 +196,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
   private editEvent = ( params ) => {
     params = R.merge( params, { taskId: this.taskId } );
     this.addEventService.updateTask( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( task: ITask ) => {
         this.router.navigate( [ `/crm/event/${task.taskId}` ] );
       } );
@@ -220,9 +222,7 @@ export class AddEventComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

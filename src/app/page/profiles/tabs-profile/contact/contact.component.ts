@@ -8,6 +8,8 @@ import { DialogComponent } from '../../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { MatDialog } from '@angular/material/dialog';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-contact',
   templateUrl: './contact.component.html',
@@ -16,7 +18,7 @@ import { MatDialog } from '@angular/material/dialog';
 export class ContactComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
-  private isActive: boolean = true;
+
 
   public formContact: FormGroup;
   public contactTypes: IcontactType[];
@@ -35,16 +37,16 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.initFormContact();
     this.initContactType();
     this.contactService.subjectDeleteContact
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshTable() );
     this.contactService.subjectPutContact
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshTable() );
   }
 
   private initContact() {
     this.contactService.getContact( this.id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: Icontact[] ) => {
         this.contacts = value;
         this.isLoader = false;
@@ -53,7 +55,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   private initContactType() {
     this.contactService.getContactType()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IcontactType[] ) => {
         this.contactTypes = value;
       } );
@@ -68,7 +70,7 @@ export class ContactComponent implements OnInit, OnDestroy {
 
   private refreshTable() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initContact();
@@ -86,7 +88,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     const params: any = {};
     Object.assign( params, this.formContact.getRawValue(), { customerId: this.id } );
     this.contactService.addContact( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dialog.open( DialogComponent, {
           data: {
@@ -95,7 +97,7 @@ export class ContactComponent implements OnInit, OnDestroy {
           },
         } );
         timer( 1500 )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialog.closeAll();
             this.refreshTable();
@@ -108,8 +110,6 @@ export class ContactComponent implements OnInit, OnDestroy {
     this.showHide = !this.showHide;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

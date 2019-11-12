@@ -14,6 +14,8 @@ import { TabsProfileService } from '../../../services/tabs-profile.service';
 import { ITabsControlData } from '../../../interface/itabs-control-data';
 import { timer } from 'rxjs';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-tabs-profile',
   templateUrl: './tabs-profile.component.html',
@@ -38,7 +40,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public distributionId: { distributionId: number };
   public dataPromoCode: { promoCodeId: number };
 
-  private isActive: boolean;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -51,7 +53,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.selectedIndex = 0;
     this.initQueryRouter();
     this.initCurrencyDefault();
@@ -63,7 +65,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     const tabsControlData = this.tabsProfileService.getControlTabsData;
     if ( tabsControlData ) {
       timer( 0 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => this.tabsProfileService.subjectControlTabsData.next( tabsControlData ) );
       this.tabsProfileService.setControlTabsData = null;
     }
@@ -71,16 +73,16 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   private initSubjects() {
     this.profileGroupService.subjectProfileGroup
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.initProfile( this.profileId );
       } );
     this.tabsProfileService.subjectControlTabsData
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( tabsControlData: ITabsControlData ) => {
         this.selectedIndex = 0;
         timer( 0 )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.selectedIndex = tabsControlData.selectedIndex;
             this.dataOrder = tabsControlData.order;
@@ -92,7 +94,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   private initQueryRouter() {
     this.route.params
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => {
         this.profileId = params.id;
         this.initProfile( this.profileId );
@@ -102,7 +104,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
@@ -111,7 +113,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.profileProgress = true;
     this.profileSegmentationProgress = true;
     this.orderService.getBooking( id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe(
         orders => {
           this.orders = _.last( orders );
@@ -127,7 +129,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   private initProfile( id: number ) {
     this.profileService.getProfile( id )
       .pipe(
-        takeWhile( _ => this.isActive )
+        untilDestroyed(this)
       )
       .subscribe( ( profile ) => {
         this.initProfileSegmentation( profile );
@@ -176,8 +178,6 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

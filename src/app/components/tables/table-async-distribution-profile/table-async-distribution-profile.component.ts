@@ -13,6 +13,8 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
 import * as R from 'ramda';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-async-distribution-profile',
   templateUrl: './table-async-distribution-profile.component.html',
@@ -28,7 +30,7 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
   public resultsLength: number;
   public isLoadingResults: boolean = false;
 
-  private isActive: boolean;
+
 
 
   @Input() private tableDataSource: any;
@@ -45,7 +47,7 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
@@ -70,7 +72,7 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
     this.paginator.page
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
@@ -79,7 +81,7 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
 
   private initDataSourceAsync() {
     this.tableAsyncService.subjectTableDataSource
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );
         this.isLoadingResults = false;
@@ -89,7 +91,7 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
       } );
@@ -158,9 +160,7 @@ export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy
     this.isDisabled = eventData;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

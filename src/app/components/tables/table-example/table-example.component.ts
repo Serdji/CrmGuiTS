@@ -8,6 +8,8 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-example',
   templateUrl: './table-example.component.html',
@@ -19,7 +21,7 @@ export class TableExampleComponent implements OnInit, OnDestroy {
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
 
-  private isActive: boolean;
+
 
   @Input() public tableHeader: string[];
   @Input() private tableDataSource: any;
@@ -33,7 +35,7 @@ export class TableExampleComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDisplayedColumns();
     this.initDataSource();
   }
@@ -47,7 +49,7 @@ export class TableExampleComponent implements OnInit, OnDestroy {
   private initDataSource() {
     this.dataSource = new MatTableDataSource( this.tableDataSource );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
       this.dataSource.sort = this.sort;
       this.dataSource.paginator = this.paginator;
@@ -88,8 +90,6 @@ export class TableExampleComponent implements OnInit, OnDestroy {
     this.router.navigate( [ `/crm/user/${id}` ] );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

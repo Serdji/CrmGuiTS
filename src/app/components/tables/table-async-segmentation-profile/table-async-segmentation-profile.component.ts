@@ -12,6 +12,8 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-async-segmentation-profile',
   templateUrl: './table-async-segmentation-profile.component.html',
@@ -28,7 +30,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
   public isLoadingResults: boolean = false;
   public totalCount: number;
 
-  private isActive: boolean;
+
 
 
   @Input() private tableDataSource: any;
@@ -43,7 +45,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
@@ -68,7 +70,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
     this.resultsLength = this.tableAsyncService.countPage;
     this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
@@ -77,7 +79,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
 
   private initDataSourceAsync() {
     this.tableAsyncService.subjectTableDataSource
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );
         this.isLoadingResults = false;
@@ -94,7 +96,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
 
     this.dataSource = new MatTableDataSource( newParams );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
       } );
@@ -152,9 +154,7 @@ export class TableAsyncSegmentationProfileComponent implements OnInit, OnDestroy
     this.isDisabled = eventData;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

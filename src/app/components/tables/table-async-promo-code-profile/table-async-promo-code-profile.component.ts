@@ -13,6 +13,8 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import * as _ from 'lodash';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-async-promo-code-profile',
   templateUrl: './table-async-promo-code-profile.component.html',
@@ -29,7 +31,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
   public isLoadingResults: boolean = false;
   public totalCount: number;
 
-  private isActive: boolean;
+
 
 
   @Input() private tableDataSource: any;
@@ -46,7 +48,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource( this.tableDataSource );
     this.initDataSourceAsync();
     this.initPaginator();
@@ -80,7 +82,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
     this.resultsLength = this.tableAsyncService.countPage;
     this.totalCount = this.tableAsyncService.countPage;
     this.paginator.page
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
@@ -89,7 +91,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
 
   private initDataSourceAsync() {
     this.tableAsyncService.subjectTableDataSource
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: any ) => {
         this.initDataSource( value );
         this.isLoadingResults = false;
@@ -99,7 +101,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
       } );
@@ -152,7 +154,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
   redirectToProfile( id: number ): void {
     this.router.navigate( [ `/crm/profile/${id}` ] );
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( queryParams => {
         const promoCodeId = +queryParams.promoCodeId;
         const params = {
@@ -169,9 +171,7 @@ export class TableAsyncPromoCodeProfileComponent implements OnInit, OnDestroy {
     this.isDisabled = eventData;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

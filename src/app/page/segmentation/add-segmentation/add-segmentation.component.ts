@@ -19,6 +19,8 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { AmazingTimePickerService } from 'amazing-time-picker';
 
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-add-segmentation',
   templateUrl: './add-segmentation.component.html',
@@ -52,7 +54,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public isIconsClockE: boolean;
 
   private controlsConfig: any;
-  private isActive: boolean;
+
   private segmentationId: number;
   private segmentationParams: any;
   private saveSegmentationParams: any = {};
@@ -75,7 +77,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonDelete = true;
@@ -99,10 +101,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initAutocomplete( 'formSegmentation' );
     this.initFieldClock();
     this.addSegmentationService.subjectDeleteSegmentation
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.clearForm() );
     this.saveUrlServiceService.subjectEvent401
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
       } );
@@ -110,7 +112,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => {
         const hasSaveFormParams = R.has( 'saveFormParams' );
         const hasSegmentationId = R.has( 'segmentationId' );
@@ -132,13 +134,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initAirports() {
     this.profileSearchService.getAirports()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IAirport[] ) => this.airports = value );
   }
 
   private initAirlineLCodes() {
     this.profileSearchService.getAirlineCodes()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
   }
 
@@ -184,7 +186,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const whichForm = whichFormGroup => {
       return this[ whichFormGroup ].get( formControlName ).valueChanges
         .pipe(
-          takeWhile( _ => this.isActive ),
+          untilDestroyed(this),
           delay( this.autDelay ),
           map( mapFilter )
         );
@@ -217,11 +219,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       }
       if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
     };
-    const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( takeWhile( _ => this.isActive ) );
-    const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( takeWhile( _ => this.isActive ) );
+    const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed(this) );
+    const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( untilDestroyed(this) );
     const resForkJoin = forkJoin( [ getSegmentationParams, getAirlineCodes ] );
 
-    resForkJoin.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
+    resForkJoin.pipe( untilDestroyed(this) ).subscribe( success );
   }
 
   private initFormControl() {
@@ -291,7 +293,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .each( values => this[ formGroupName ].get( values ).disable() );
 
       this[ formGroupName ].get( 'subjectAnalysis' ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( params => {
           _( this[ formGroupName ].getRawValue() ).each( () => {
             _( [ 'moneyAmountFromInclude', 'moneyAmountToExclude', 'currency', 'eDocTypeP' ] )
@@ -311,7 +313,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       _( this[ formGroupName ].getRawValue() ).each( ( values, key ) => {
         if ( key === 'eDocTypeS' ) {
           this[ formGroupName ].get( key ).valueChanges
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed(this) )
             .subscribe( params => {
               _( [
                 'airlineLCodeIdT', 'flightNoT', 'arrivalDFromIncludeT',
@@ -336,7 +338,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             } );
         } else if ( key === 'eDocTypeP' ) {
           this[ formGroupName ].get( key ).valueChanges
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed(this) )
             .subscribe( params => {
               _( [
                 'airlineLCodeIdT', 'flightNoT', 'arrivalDFromIncludeT',
@@ -367,11 +369,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private initFieldClock() {
     _.each( this.arrFormGroup, formGroup => {
       this[ formGroup ].get( 'timeBeforeDepartureT' ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( value => this.selectedTimeT = value );
 
       this[ formGroup ].get( 'timeBeforeDepartureE' ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( value => this.selectedTimeE = value );
     } );
   }
@@ -396,7 +398,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -405,7 +407,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
@@ -417,7 +419,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.addSegmentationService.getProfiles( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
         this.tableAsyncService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
@@ -437,7 +439,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -542,7 +544,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       _( this.saveSegmentationParams ).assign( isQueryParams ? saveFormParams : this.segmentationParameters() ).value();
       if ( !R.isEmpty( this.saveSegmentationParams ) ) {
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( value => {
             this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
             this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
@@ -558,7 +560,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .set( 'segmentationId', this.segmentationId )
         .value();
       this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' );
           this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
@@ -581,15 +583,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.resetForm();
       } );
     this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

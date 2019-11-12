@@ -5,6 +5,8 @@ import { takeWhile } from 'rxjs/operators';
 import { IPrivileges } from '../../../../interface/iprivileges';
 import { TabsProfileService } from '../../../../services/tabs-profile.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-privileges',
   templateUrl: './privileges.component.html',
@@ -15,7 +17,7 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public privileges: IPrivileges;
 
-  private isActive: boolean;
+
   private isSortFilterReverse: boolean;
 
   @Input() id: number;
@@ -28,7 +30,7 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.progress = true;
     this.isSortFilterReverse = false;
-    this.isActive = true;
+
     this.initPrivileges();
   }
 
@@ -39,7 +41,7 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
       this.progress = false;
     };
     this.privilegesService.getPrivileges( this.id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
@@ -65,8 +67,6 @@ export class PrivilegesComponent implements OnInit, OnDestroy {
     this.tabsProfileService.subjectControlTabsData.next( params );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

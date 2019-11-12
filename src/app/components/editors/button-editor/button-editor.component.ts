@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-button-editor',
   templateUrl: './button-editor.component.html',
@@ -17,7 +19,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
   @Input() totalCount: number;
   @Input() whatNewsletter: string;
 
-  private isActive: boolean;
+
 
   constructor(
     public dialog: MatDialog,
@@ -25,7 +27,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
   }
 
   openDialog(): void {
@@ -42,7 +44,7 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
       } );
     } else {
       this.route.queryParams
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( value => {
           if ( _.has( value, 'segmentationId' ) ) {
             this.dialog.open( DialogEditorComponent, {
@@ -69,8 +71,6 @@ export class ButtonEditorComponent implements OnInit, OnDestroy {
     }
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

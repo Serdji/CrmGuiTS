@@ -6,6 +6,8 @@ import * as _ from 'lodash';
 import * as R from 'ramda';
 import { timer } from 'rxjs';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-promo-code',
   templateUrl: './promo-code.component.html',
@@ -23,13 +25,13 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   public isPromoCodNull: boolean;
   public promoCodeId: number;
 
-  private isActive: boolean;
+
   private isSortFilterReverse: boolean;
 
   constructor( private promoCodeService: PromoCodeService ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.progress = true;
     this.isSortFilterReverse = false;
     this.isPromoCodNull = false;
@@ -69,10 +71,10 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
     };
 
     const availableByCustomer = id => this.promoCodeService.availableByCustomer( id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
     const usedByCustomer = id => this.promoCodeService.usedByCustomer( id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
 
     const whichButton = nameButton => () => nameButton === 'available';
@@ -104,7 +106,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   onOpenPanel( id: number ): void {
     timer( 0 )
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         takeWhile( _ => !!this.data ),
         takeWhile( _ => this.data.promoCodeId !== 0 ),
       )
@@ -116,8 +118,6 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

@@ -15,6 +15,8 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-complex-segmentation',
   templateUrl: './complex-segmentation.component.html',
@@ -38,7 +40,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   public isLoaderComplexSegmentationTable: boolean;
 
   private segmentationId: number;
-  private isActive: boolean;
+
 
   constructor(
     private listSegmentationService: ListSegmentationService,
@@ -52,7 +54,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.buttonSearch = true;
     this.buttonCreate = true;
     this.buttonSave = false;
@@ -65,7 +67,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableProfilePagination();
     this.listSegmentationService.subjectSegmentations
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshSegmentation() );
   }
 
@@ -80,7 +82,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   private refreshSegmentation() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoaderComplexSegmentationTable = true;
         this.initSegmentation();
@@ -89,7 +91,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   private witchGranularity() {
     this.formAdd.get( 'segmentationGranularity' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( granularity: number ) => {
         // @ts-ignore
         this.segmentationGranularity = R.filter( R.propEq( 'segmentationGranularity', +granularity ), this.segmentation );
@@ -109,14 +111,14 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     };
 
     this.listSegmentationService.getSegmentation()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
   private initAutocomplete() {
     this.segmentationOptions = this.formAdd.get( 'segmentation' ).valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         map( value => typeof value === 'string' ? value : value.title ),
         map( title => this._filter( title ) )
       );
@@ -137,14 +139,14 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     };
 
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
   private initComplexSegmentation( segmentationId: number ) {
     this.isLoader = true;
     this.addSegmentationService.getSegmentationParams( segmentationId )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( complexSegmentation: IComplexSegmentation ) => this.formFilling( complexSegmentation ) );
   }
 
@@ -178,7 +180,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -187,7 +189,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
@@ -199,7 +201,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.addSegmentationService.getProfiles( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
         this.tableAsyncService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
@@ -218,7 +220,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -260,7 +262,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     };
     if ( !this.formAdd.invalid ) {
       this.complexSegmentationService.setComplexSegmentation( { segmentationTitle, segmentationsIds } )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( success );
     }
   }
@@ -277,7 +279,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     const segmentationTitle = this.formAdd.get( 'segmentationTitle' ).value;
     const segmentationsIds = R.map( mapSegmentationId, this.selectionSegmentation );
     this.complexSegmentationService.putComplexSegmentation( { segmentationId, segmentationTitle, segmentationsIds } )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' ) );
   }
 
@@ -293,7 +295,5 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
     this.formAdd.get( 'segmentation' ).disable();
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

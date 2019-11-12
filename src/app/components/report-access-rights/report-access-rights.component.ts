@@ -26,6 +26,8 @@ export class TodoItemFlatNode {
 }
 
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-report-access-rights',
   templateUrl: './report-access-rights.component.html',
@@ -62,7 +64,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
   constructor( private reportAccessRightsService: ReportAccessRightsService ) {}
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isProgressTemplates = true;
     this.isReport = true;
     this.initTemplates();
@@ -83,7 +85,7 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     };
 
     this.reportAccessRightsService.subjectIsReport
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( isReport: boolean ) => this.isReport = isReport );
 
     const success = value => {
@@ -99,21 +101,21 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     };
 
     const oGetAdminReport = this.reportAccessRightsService.getAdminReport()
-      .pipe(takeWhile( _ => this.isActive ));
+      .pipe(untilDestroyed(this));
     const oGetCustomerReport = this.reportAccessRightsService.getCustomerReport( this.loginId )
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         map( mapMyReports )
       );
     const getObservablesReports = forkJoin( oGetAdminReport, oGetCustomerReport );
     const getMyReport = _ => this.reportAccessRightsService.getMyReport()
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         takeWhile( isNotEmptyArray ),
       )
       .subscribe( success );
     const collectionReports = _ => getObservablesReports
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
 
     const whichTemplate = R.ifElse( _ => this.isDir, getMyReport, collectionReports );
@@ -262,8 +264,6 @@ export class ReportAccessRightsComponent implements OnInit, OnDestroy {
     this.sendTemplate.emit( item );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
