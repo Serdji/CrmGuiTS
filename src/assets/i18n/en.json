@@ -145,7 +145,7 @@
 		},
 		"EVENT": {
 			"ADD_EVENT": "Add event",
-			"GROUP_NAME": "developments",
+			"GROUP_NAME": "Event",
 			"LIST_EVENT": "Event list"
 		},
 		"GROUP_CUSTOMER": {
