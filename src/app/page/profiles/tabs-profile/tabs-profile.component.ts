@@ -28,6 +28,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public profileProgress: boolean;
   public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
+  public isProfileCreateDate: boolean;
   public orders;
   public profileSegmentation: any;
   public profileGroup: any;
@@ -118,10 +119,12 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         orders => {
           this.orders = _.last( orders );
           this.ordersProgress = false;
+          this.isProfileCreateDate = false;
         },
         error => {
           this.initProfile( id );
           this.ordersProgress = false;
+          this.isProfileCreateDate = true;
         }
       );
   }

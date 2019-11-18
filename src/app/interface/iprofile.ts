@@ -11,6 +11,7 @@ export interface Iprofile {
   secondName: string;
   dob: string;
   comment: string;
+  createDate: string;
   segmentations: ISegmentation[];
   customerGroupRelations: IcustomerGroupRelations[];
 }
