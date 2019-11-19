@@ -99,11 +99,13 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   private mapValidators( validators ) {
     const formValidators = [];
     const mapValidationFunc = validation => {
-      switch ( validation ) {
-        case 'required': formValidators.push( Validators.required ); break;
-        case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
-        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
-        case 'email': formValidators.push( Validators.email ); break;
+      if ( validators[ validation ] ) {
+        switch ( validation ) {
+          case 'required': formValidators.push( Validators.required ); break;
+          case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
+          case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
+          case 'email': formValidators.push( Validators.email ); break;
+        }
       }
     };
     const mapValidation = R.map( mapValidationFunc );
