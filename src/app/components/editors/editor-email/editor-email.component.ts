@@ -16,7 +16,7 @@ import { EditorService } from '../editor.service';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { TranslateService } from '@ngx-translate/core';
-import { OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import { DateTimeAdapter, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 
 
 @Component( {
@@ -51,6 +51,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     private editorService: EditorService,
     private router: Router,
     private elRef: ElementRef,
+    private dateTimeAdapter: DateTimeAdapter<any>,
     public translate: TranslateService,
   ) {}
 
@@ -62,7 +63,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     this.insertTemplate();
     this.initIsButtonSave();
     this.translate.stream( 'MENU' ).subscribe( _ => {
-
+      this.dateTimeAdapter.setLocale( this.translate.store.currentLang );
     } );
     this.formDistribution.get( 'dateFrom' ).valueChanges.subscribe( val => console.log( val ) );
   }
