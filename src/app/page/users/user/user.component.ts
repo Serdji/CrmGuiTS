@@ -138,7 +138,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   collectObjectReport( event ): void {
-    console.log( this.paramsReport );
     this.paramsReport = {
       loginId: +this.loginId,
       reportsIds: event
