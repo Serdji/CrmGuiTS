@@ -224,8 +224,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
         .subscribe( success, error );
 
       const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
-      // whichMethod( this.newParams() );
-      console.log( this.newParams() );
+      whichMethod( this.newParams() );
     } else {
       this.windowDialog( 'DIALOG.ERROR.NOT_ALL_FIELDS', 'error' );
     }
