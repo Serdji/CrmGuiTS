@@ -11,9 +11,8 @@ import { EditorEmailComponent } from './editor-email/editor-email.component';
 import { EditorEmailService } from './editor-email/editor-email.service';
 import { EditorSmsComponent } from './editor-sms/editor-sms.component';
 import { EditorSmsService } from './editor-sms/editor-sms.service';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeIntl, OwlDateTimeModule } from 'ng-pick-datetime';
-import { OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
-import { FORMATS_DATE_TIME, DefaultIntl } from './pick-date-time-option';
+import { OwlDateTimeIntl, OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { DefaultIntl } from './pick-date-time-option';
 
 @NgModule( {
   imports: [
@@ -25,7 +24,7 @@ import { FORMATS_DATE_TIME, DefaultIntl } from './pick-date-time-option';
     DirectivesModule,
     TranslateModule,
     OwlDateTimeModule,
-    OwlMomentDateTimeModule
+    OwlNativeDateTimeModule,
   ],
   declarations: [
     EditorEmailComponent,
@@ -43,8 +42,6 @@ import { FORMATS_DATE_TIME, DefaultIntl } from './pick-date-time-option';
   providers: [
     EditorEmailService,
     EditorSmsService,
-    { provide: OWL_DATE_TIME_FORMATS, useValue: FORMATS_DATE_TIME },
-    { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: { useUtc: false } },
     { provide: OwlDateTimeIntl, useClass: DefaultIntl },
   ]
 } )
