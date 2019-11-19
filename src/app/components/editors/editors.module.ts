@@ -11,18 +11,9 @@ import { EditorEmailComponent } from './editor-email/editor-email.component';
 import { EditorEmailService } from './editor-email/editor-email.service';
 import { EditorSmsComponent } from './editor-sms/editor-sms.component';
 import { EditorSmsService } from './editor-sms/editor-sms.service';
-import { OWL_DATE_TIME_FORMATS, OwlDateTimeModule } from 'ng-pick-datetime';
+import { OWL_DATE_TIME_FORMATS, OwlDateTimeIntl, OwlDateTimeModule } from 'ng-pick-datetime';
 import { OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, OwlMomentDateTimeModule } from 'ng-pick-datetime-moment';
-
-export const MY_FORMATS = {
-  parseInput: 'DD.MM.YYYY | HH:mm',
-  fullPickerInput: 'DD.MM.YYYY | HH:mm',
-  datePickerInput: 'DD.MM.YYYY',
-  timePickerInput: 'HH:mm',
-  monthYearLabel: 'MMM YYYY',
-  dateA11yLabel: 'LL',
-  monthYearA11yLabel: 'MMMM YYYY',
-};
+import { FORMATS_DATE_TIME, DefaultIntl } from './pick-date-time-option';
 
 @NgModule( {
   imports: [
@@ -52,8 +43,9 @@ export const MY_FORMATS = {
   providers: [
     EditorEmailService,
     EditorSmsService,
-    { provide: OWL_DATE_TIME_FORMATS, useValue: MY_FORMATS },
-    { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+    { provide: OWL_DATE_TIME_FORMATS, useValue: FORMATS_DATE_TIME },
+    { provide: OWL_MOMENT_DATE_TIME_ADAPTER_OPTIONS, useValue: { useUtc: false } },
+    { provide: OwlDateTimeIntl, useClass: DefaultIntl },
   ]
 } )
 export class EditorsModule {

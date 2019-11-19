@@ -65,7 +65,6 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     this.translate.stream( 'MENU' ).subscribe( _ => {
       this.dateTimeAdapter.setLocale( this.translate.store.currentLang );
     } );
-    this.formDistribution.get( 'dateFrom' ).valueChanges.subscribe( val => console.log( val ) );
   }
 
   private initIsButtonSave() {
@@ -116,7 +115,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       this.formDistribution.get( 'text' ).patchValue( this.params.task.distributionTemplate );
     }
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
-    this.formDistribution.get( 'dateTo' ).patchValue( moment().add( 1, 'days' ).format() );
+    this.formDistribution.get( 'dateTo' ).patchValue( moment().add( { days: 1, hour: 23 } ).format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
     this.formDistribution.get( 'totalCount' ).disable();
     this.editorEmailService.getEmailLimits()
@@ -201,8 +200,8 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   private newParams = () => _( this.formDistribution.getRawValue() )
     .merge( this.params )
     .omit( [ 'templateId', 'totalCount', 'emailLimits', 'count', 'from' ] )
-    .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
-    .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+    .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DDTHH:mm:ss' ) : '' )
+    .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DDTHH:mm:ss' ) : '' )
     .set( 'text', this.elRef.nativeElement.querySelector( '.nw-editor__res' ).innerHTML )
     .set( 'distributionType', 1 )
     .value();
@@ -225,8 +224,8 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
         .subscribe( success, error );
 
       const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
-      whichMethod( this.newParams() );
-
+      // whichMethod( this.newParams() );
+      console.log( this.newParams() );
     } else {
       this.windowDialog( 'DIALOG.ERROR.NOT_ALL_FIELDS', 'error' );
     }
