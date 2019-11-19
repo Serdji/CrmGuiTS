@@ -30,7 +30,10 @@
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CREATE_DATE' | translate}}</span>
-                  <span><b *ngIf="orders"> {{orders.createDate | date:'dd.MM.yyyy' }}</b></span>
+                  <span>
+                    <b *ngIf="orders && !isProfileCreateDate" > {{orders.createDate | date:'dd.MM.yyyy' }}</b>
+                    <b *ngIf="isProfileCreateDate" > {{profile.createDate | date:'dd.MM.yyyy' }}</b>
+                  </span>
                 </div>
               </div>
             </div>

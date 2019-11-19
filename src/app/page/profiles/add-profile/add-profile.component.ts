@@ -10,6 +10,8 @@ import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { ProfileService } from '../tabs-profile/profile/profile.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-add-profile',
   templateUrl: './add-profile.component.html',
@@ -19,7 +21,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
 
   public formProfile: FormGroup;
 
-  private isActive: boolean = true;
+
 
 
   constructor(
@@ -50,7 +52,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
   //   const items = [ 'firstName', 'lastName', 'secondName' ];
   //   for ( const item of items ) {
   //     this.formProfile.get( item ).valueChanges
-  //       .pipe( takeWhile( _ => this.isActive ) )
+  //       .pipe( untilDestroyed(this) )
   //       .subscribe( value => {
   //         if ( value.length > 0 ) {
   //           for ( const item2 of items ) {
@@ -76,7 +78,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { dob: moment( this.formProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
 
       this.addProfileService.addProfile( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( ( profile: Iprofile ) => {
           this.dialog.open( DialogComponent, {
             data: {
@@ -86,7 +88,7 @@ export class AddProfileComponent implements OnInit, OnDestroy {
           } );
           this.resetForm();
           timer( 1500 )
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed(this) )
             .subscribe( _ => {
               this.router.navigate( [ `/crm/profile/${profile.customerId}` ] );
               this.dialog.closeAll();
@@ -107,7 +109,5 @@ export class AddProfileComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

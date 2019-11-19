@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
 import { takeWhile } from 'rxjs/operators';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-dynamic-form',
   templateUrl: './dynamic-form.component.html',
@@ -17,7 +19,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public splitObjectProps: any;
   public buttonDisabled: boolean;
 
-  private isActive: boolean;
+
   private dataObject: any = {};
 
   @Input() cols: number;
@@ -29,7 +31,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initParameterConversion();
     this.initButtonDisabled();
   }
@@ -63,7 +65,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   private initButtonDisabled() {
     this.dynamicForm.valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.buttonDisabled = this.dynamicForm.invalid );
   }
 
@@ -97,11 +99,13 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   private mapValidators( validators ) {
     const formValidators = [];
     const mapValidationFunc = validation => {
-      switch ( validation ) {
-        case 'required': formValidators.push( Validators.required ); break;
-        case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
-        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
-        case 'email': formValidators.push( Validators.email ); break;
+      if ( validators[ validation ] ) {
+        switch ( validation ) {
+          case 'required': formValidators.push( Validators.required ); break;
+          case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
+          case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
+          case 'email': formValidators.push( Validators.email ); break;
+        }
       }
     };
     const mapValidation = R.map( mapValidationFunc );
@@ -118,8 +122,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.dynamicFormEmit.emit( objParserDate );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

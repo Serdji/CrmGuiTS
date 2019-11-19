@@ -9,6 +9,8 @@ import { SidenavService } from './sidenav.service';
 import { takeWhile } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-sidenav',
   templateUrl: './sidenav.component.html',
@@ -24,7 +26,7 @@ export class SidenavComponent implements OnInit, OnDestroy {
   public AirlineCode: string;
   public loader: boolean;
 
-  private isActive: boolean;
+
 
   constructor(
     private activityUser: ActivityUserService,
@@ -35,22 +37,22 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.activityUser.idleLogout();
     this.autoOpenAccord();
     this.autoOpenSidena();
     this.louder();
     this.loader = false;
     this.menu = this.sidenavService.menu;
-    this.layoutService.subjectToggle.pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.toggle() );
-    this.sidenavService.getVersion().pipe( takeWhile( _ => this.isActive ) ).subscribe( value => this.version = `2.0.0.${value}` );
+    this.layoutService.subjectToggle.pipe( untilDestroyed(this) ).subscribe( _ => this.sidenav.toggle() );
+    this.sidenavService.getVersion().pipe( untilDestroyed(this) ).subscribe( value => this.version = `2.0.0.${value}` );
     this.AirlineCode = localStorage.getItem( 'AirlineCode' );
   }
 
   private louder() {
     this.router.events
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
       )
       .subscribe( ( event ) => {
         if ( event instanceof NavigationStart ) this.loader = true;
@@ -59,18 +61,18 @@ export class SidenavComponent implements OnInit, OnDestroy {
   }
 
   private autoOpenSidena() {
-    this.sidenavService.subjectClosesAccord.pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => {
-      timer( 0 ).pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.close() );
+    this.sidenavService.subjectClosesAccord.pipe( untilDestroyed(this) ).subscribe( _ => {
+      timer( 0 ).pipe( untilDestroyed(this) ).subscribe( _ => this.sidenav.close() );
     } );
-    this.sidenavService.subjectOpenAccord.pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => {
+    this.sidenavService.subjectOpenAccord.pipe( untilDestroyed(this) ).subscribe( _ => {
       this.autoOpenAccord();
-      timer( 0 ).pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.open() );
+      timer( 0 ).pipe( untilDestroyed(this) ).subscribe( _ => this.sidenav.open() );
     } );
-    timer( 0 ).pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => this.sidenav.open() );
+    timer( 0 ).pipe( untilDestroyed(this) ).subscribe( _ => this.sidenav.open() );
   }
 
   private autoOpenAccord() {
-    timer( 0 ).pipe( takeWhile( _ => this.isActive ) ).subscribe( _ => {
+    timer( 0 ).pipe( untilDestroyed(this) ).subscribe( _ => {
       const aElement = this.accord.nativeElement.querySelectorAll( 'a' );
       const href = '#' + this.router.url.split( '?' )[ 0 ];
       for ( const a of aElement ) {
@@ -83,8 +85,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
     } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

@@ -12,6 +12,8 @@ import { DOCUMENT } from '@angular/common';
 import { optionGroups, IOptionGroups, IOptionValue } from './optionGroups';
 
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-order',
   templateUrl: './order.component.html',
@@ -34,7 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public optionGroups: IOptionGroups[];
   public isData: boolean;
 
-  private isActive: boolean;
+
   private isSortFilterReverse: boolean;
   private filterControlConfig: any;
   private searchControlConfig: any;
@@ -49,7 +51,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.progress = true;
     this.isSortFilterReverse = false;
     this.optionGroups = optionGroups;
@@ -67,7 +69,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
@@ -85,7 +87,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     const error = _ => this.progress = false;
 
     this.orderService.getBooking( this.id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
   }
 
@@ -114,7 +116,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   private autocomplete( formControlName: string ): Observable<any> {
     return this.formFilter.get( formControlName ).valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         map( val => this.arrRecloc.filter( recloc => recloc.toLowerCase().includes( val.toLowerCase() ) ) )
       );
   }
@@ -133,7 +135,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     const valueForm = ( val, formControl ) => {
       this.formFilter.get( formControl ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( success( formControl ) );
     };
 
@@ -246,7 +248,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.eventField( this.disableFields );
 
     this.formSearch.get( 'switchSearch' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
@@ -254,7 +256,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     const sendSearchControlName = [ 'dateSearch', 'textSearch' ];
     _.each( sendSearchControlName, formControlName => {
       this.formSearch.get( formControlName ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( this.searchOrders );
     } );
   }
@@ -282,7 +284,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   onOpenPanel( id: string ): void {
     timer( 0 )
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         takeWhile( _ => !!this.data ),
         takeWhile( _ => this.data.recLocGDS !== '' ),
       )
@@ -293,8 +295,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

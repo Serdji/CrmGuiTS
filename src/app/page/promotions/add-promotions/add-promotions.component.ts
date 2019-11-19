@@ -13,6 +13,8 @@ import { ActivatedRoute } from '@angular/router';
 import { IPromoCode } from '../../../interface/ipromo-code';
 import { TableAsyncSearchPromoCodeService } from '../../../components/tables/table-async-search-promo-code/table-async-search-promo-code.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-add-promotions',
   templateUrl: './add-promotions.component.html',
@@ -27,7 +29,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
   public promotions: IPromotions;
   public promoCode: IPromoCode;
 
-  private isActive: boolean;
+
   private promotionName: string;
 
   constructor(
@@ -40,7 +42,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoaderPromotions = true;
     this.isLoaderPromoCode = true;
     this.isTablePromoCode = false;
@@ -50,11 +52,11 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.initTablePromoCodePagination();
     this.initQueryParams();
     this.addPromotionsService.subjectDeletePromotions
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoaderPromotions = true;
         timer( 300 )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => this.initTablePromotions() );
       } );
   }
@@ -62,7 +64,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( res: { promotionName: number[], from: number, count: number } ) => {
         const isRes = !R.isEmpty( res );
         if ( isRes ) this.initProfileCodes( res );
@@ -74,7 +76,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.isTablePromoCode = true;
     this.isLoaderPromoCode = true;
     this.searchPromotionsCodesService.getSearchPromotionsCodes( searchParams )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( promoCode: IPromoCode ) => {
         this.tableAsyncSearchPromoCodeService.countPage = promoCode.totalCount;
         this.promoCode = promoCode;
@@ -85,7 +87,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
 
   private initTablePromoCodePagination() {
     this.tableAsyncSearchPromoCodeService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -94,7 +96,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.searchPromotionsCodesService.getSearchPromotionsCodes( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
       } );
   }
@@ -107,7 +109,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
 
   private initTablePromotionsPagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -115,7 +117,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.addPromotionsService.getAllPromotions( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( promotions: IPromotions ) => this.tableAsyncService.setTableDataSource( promotions.result ) );
       } );
   }
@@ -126,7 +128,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.addPromotionsService.getAllPromotions( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( promotions: IPromotions ) => {
         this.tableAsyncService.countPage = promotions.totalCount;
         this.promotions = promotions;
@@ -137,16 +139,14 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
   saveForm(): void {
     this.isLoaderPromotions = true;
     this.addPromotionsService.savePromotions( this.formPromotions.getRawValue() )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.formPromotions.get( 'promotionName' ).patchValue( '' );
         this.initTablePromotions();
       } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

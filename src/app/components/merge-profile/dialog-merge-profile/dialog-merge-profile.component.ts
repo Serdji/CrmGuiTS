@@ -9,6 +9,8 @@ import { DialogMergeProfileService } from './dialog-merge-profile.service';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-dialog-merge-profile',
   templateUrl: './dialog-merge-profile.component.html',
@@ -18,7 +20,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
 
   public progress: boolean;
 
-  private isActive: boolean;
+
   private profiles: Iprofiles[] = [];
 
   constructor(
@@ -30,7 +32,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.progress = true;
     this.initProfiles();
   }
@@ -50,7 +52,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     };
     const mapIds = customerIds => {
       this.profileSearchService.getProfileSearch( objParams( customerIds ) )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( success );
     };
     const profilePush = R.map( mapIds );
@@ -71,7 +73,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialogMergeProfileService.subjectMergeCustomer.next();
           this.dialog.closeAll();
@@ -97,7 +99,7 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     const error = _ => this.progress = false;
     const params = this.paramMergeCustomer();
     this.dialogMergeProfileService.mergeCustomer( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
 
   }
@@ -106,8 +108,6 @@ export class DialogMergeProfileComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

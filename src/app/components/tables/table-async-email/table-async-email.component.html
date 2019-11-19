@@ -49,14 +49,14 @@
     <ng-container matColumnDef="dateFrom">
       <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.DATE_FROM' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom | date:'dd.MM.yyyy'}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateFrom | date:'dd.MM.yyyy, HH:mm'}}</span>
       </mat-cell>
     </ng-container>
 
     <ng-container matColumnDef="dateTo">
       <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.DATE_TO' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo | date:'dd.MM.yyyy'}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.dateTo | date:'dd.MM.yyyy, HH:mm'}}</span>
       </mat-cell>
     </ng-container>
 

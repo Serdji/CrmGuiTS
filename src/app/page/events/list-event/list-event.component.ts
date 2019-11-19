@@ -14,6 +14,8 @@ import { ITaskLog } from '../../../interface/itask-log';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { EventService } from '../event/event.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-list-event',
   templateUrl: './list-event.component.html',
@@ -28,7 +30,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
   public isTableTaskLog: boolean;
   public isLoaderTaskLog: boolean;
 
-  private isActive: boolean;
+
   private taskId: number;
 
   constructor(
@@ -43,7 +45,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.isTableTask = true;
     this.isProgress = true;
-    this.isActive = true;
+
     this.isTableTaskLog = false;
     this.isLoaderTaskLog = true;
     this.initQueryParams();
@@ -54,7 +56,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( res: { promotionName: number[], from: number, count: number } ) => {
         const isRes = !R.isEmpty( res );
         if ( isRes ) this.initTableTasksLogPaginator( res );
@@ -62,7 +64,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
   }
   private initTableFilter() {
     this.tableAsyncService.subjectFilter
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( paramsFilter => {
         let params = {
           taskId: this.taskId,
@@ -71,7 +73,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
         };
         params = R.merge( params, paramsFilter );
         this.eventService.getSearchTackLogs( params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
       } );
   }
@@ -81,7 +83,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
     this.isTableTaskLog = true;
     this.isLoaderTaskLog = true;
     this.eventService.getSearchTackLogs( searchParams )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( taskLog: ITaskLog ) => {
         this.tableAsyncService.countPage = taskLog.totalRows;
         this.taskLog = taskLog;
@@ -92,7 +94,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
 
   private initTableTasksLog() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -101,7 +103,7 @@ export class ListEventComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.eventService.getSearchTackLogs( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( taskLog: ITaskLog ) => this.tableAsyncService.setTableDataSource( taskLog.result ) );
       } );
   }
@@ -131,11 +133,9 @@ export class ListEventComponent implements OnInit, OnDestroy {
     const servicesForkJoin = forkJoin( [ listEvent, listSegmentation, translate ] );
 
     servicesForkJoin
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

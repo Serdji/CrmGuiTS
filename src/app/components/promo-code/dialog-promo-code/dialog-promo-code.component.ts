@@ -9,6 +9,8 @@ import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { IPromoCode } from '../../../interface/ipromo-code';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-dialog-promo-code',
   templateUrl: './dialog-promo-code.component.html',
@@ -20,7 +22,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
   public formPromoCod: FormGroup;
   public promoCodesOptions: Observable<IPromoCode>;
 
-  private isActive: boolean;
+
   private autDelay: number;
 
   constructor(
@@ -33,7 +35,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.autDelay = 500;
     this.initForm();
     this.initPromoCodes();
@@ -46,7 +48,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
       count: 10000
     };
     this.addPromotionsCodesService.getAllPromoCodes( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
   }
 
@@ -71,7 +73,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
           this.dialogRef.close();
@@ -83,7 +85,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
   private autocomplete( formControlName: string, options: string ): Observable<any> {
     return this.formPromoCod.get( formControlName ).valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
@@ -103,13 +105,11 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
     };
     if ( !this.formPromoCod.invalid ) {
       this.dialogPromoCodeService.savePromoCodeCustomers( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => this.windowDialog( `DIALOG.OK.PROMO_CODE_LINKED`, 'ok' ) );
     }
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

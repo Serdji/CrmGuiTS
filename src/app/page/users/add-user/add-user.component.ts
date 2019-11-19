@@ -9,6 +9,8 @@ import { IlistUsers } from '../../../interface/ilist-users';
 import { Router } from '@angular/router';
 import { complexPasswordValidator } from '../../../validators/complexPasswordValidator';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-users',
   templateUrl: './add-user.component.html',
@@ -17,7 +19,7 @@ import { complexPasswordValidator } from '../../../validators/complexPasswordVal
 export class AddUserComponent implements OnInit, OnDestroy {
 
   public formUser: FormGroup;
-  private isActive: boolean = true;
+
 
   constructor(
     private fb: FormBuilder,
@@ -51,7 +53,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
   sendForm(): void {
     if ( !this.formUser.invalid ) {
       this.addUserService.createUser( this.formUser.getRawValue() )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe(
           ( user: IlistUsers ) => {
             this.dialog.open( DialogComponent, {
@@ -62,7 +64,7 @@ export class AddUserComponent implements OnInit, OnDestroy {
             } );
             this.resetForm();
             timer( 1500 )
-              .pipe( takeWhile( _ => this.isActive ) )
+              .pipe( untilDestroyed(this) )
               .subscribe( _ => {
                 this.router.navigate( [ `/crm/user/${user.loginId}` ] );
                 this.dialog.closeAll();
@@ -76,8 +78,6 @@ export class AddUserComponent implements OnInit, OnDestroy {
     this.resetForm();
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

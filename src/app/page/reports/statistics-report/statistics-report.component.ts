@@ -26,6 +26,8 @@ interface BlobFile {
 }
 
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-distribution-report',
   templateUrl: './statistics-report.component.html',
@@ -36,7 +38,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   treeControl = new NestedTreeControl<FoodNode>( node => node.children );
   dataSource = new MatTreeNestedDataSource<FoodNode>();
 
-  private isActive: boolean;
+
 
   public dynamicForm: FormGroup;
   public person: any;
@@ -69,7 +71,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isProgressTemplates = true;
     this.isProgressPdfViewer = false;
     this.isProgressDynamicForm = false;
@@ -109,7 +111,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     };
 
     this.statisticsReportService.getParamsDynamicForm( patternPath )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
 
   }
@@ -152,7 +154,7 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
     };
 
     this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'pdf', this.paramsEvent ) )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success, error );
   }
 
@@ -183,19 +185,17 @@ export class StatisticsReportComponent implements OnInit, OnDestroy {
         break;
       case 'doc':
         this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'word', this.paramsEvent ) )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( success );
         break;
       case 'xls':
         this.statisticsReportService.getParams( R.set( this.reportTypeLens, 'excel', this.paramsEvent ) )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( success );
         break;
     }
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

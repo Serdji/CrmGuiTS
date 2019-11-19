@@ -6,6 +6,8 @@ import * as _ from 'lodash';
 import { timer } from 'rxjs';
 import * as R from 'ramda';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-messages',
   templateUrl: './messages.component.html',
@@ -20,13 +22,13 @@ export class MessagesComponent implements OnInit, OnDestroy {
   public progress: boolean;
   public distributionId: number;
 
-  private isActive: boolean;
+
   private isSortFilterReverse: boolean;
 
   constructor( private messagesService: MessagesService ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.progress = true;
     this.isSortFilterReverse = false;
     this.intiMessages();
@@ -34,7 +36,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
 
   private intiMessages() {
     this.messagesService.getMessages( this.id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( messages: IMessages[] ) => {
 
         const setUpperFirst = ( obj, path ) => _.set( obj, path, _.upperFirst( _.get( obj, path ) ) );
@@ -59,7 +61,7 @@ export class MessagesComponent implements OnInit, OnDestroy {
   onOpenPanel( id: number ): void {
     timer( 0 )
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         takeWhile( _ => !!this.data ),
         takeWhile( _ => this.data.distributionId !== 0 ),
       )
@@ -70,8 +72,6 @@ export class MessagesComponent implements OnInit, OnDestroy {
       } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

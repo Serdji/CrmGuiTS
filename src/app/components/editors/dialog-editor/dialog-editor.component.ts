@@ -3,6 +3,8 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { takeWhile } from 'rxjs/operators';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-dialog-editor',
   templateUrl: './dialog-editor.component.html',
@@ -11,7 +13,7 @@ import { takeWhile } from 'rxjs/operators';
 export class DialogEditorComponent implements OnInit, OnDestroy {
 
   private formChoice: FormGroup;
-  private isActive: boolean;
+
 
   constructor(
     public dialogRef: MatDialogRef<DialogEditorComponent>,
@@ -24,7 +26,7 @@ export class DialogEditorComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initForm();
     this.initSwitchEditor();
   }
@@ -35,12 +37,10 @@ export class DialogEditorComponent implements OnInit, OnDestroy {
 
   private initSwitchEditor() {
     this.formChoice.get( 'choice' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( editor => this.data.whatNewsletter = editor );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

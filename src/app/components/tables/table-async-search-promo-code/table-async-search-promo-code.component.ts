@@ -12,6 +12,8 @@ import { IpagPage } from '../../../interface/ipag-page';
 import * as _ from 'lodash';
 import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-code.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-async-search-promo-code',
   templateUrl: './table-async-search-promo-code.component.html',
@@ -28,7 +30,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
   public isLoadingResults: boolean = false;
   public totalCount: number;
 
-  private isActive: boolean;
+
 
 
   @Input() private tableDataSource: any;
@@ -43,7 +45,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource( this.tableDataSource );
     this.initDataSourceAsync();
     this.initPaginator();
@@ -76,7 +78,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
     this.resultsLength = this.tableAsyncSearchPromoCodeService.countPage;
     this.totalCount = this.tableAsyncSearchPromoCodeService.countPage;
     this.paginator.page
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         this.tableAsyncSearchPromoCodeService.setPagPage( value );
         this.isLoadingResults = true;
@@ -85,7 +87,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
 
   private initDataSourceAsync() {
     this.tableAsyncSearchPromoCodeService.subjectTableDataSource
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: any ) => {
         this.initDataSource( value );
         this.isLoadingResults = false;
@@ -95,7 +97,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
       } );
@@ -153,9 +155,7 @@ export class TableAsyncSearchPromoCodeComponent implements OnInit, OnDestroy {
     this.isDisabled = eventData;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

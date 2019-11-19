@@ -5,6 +5,8 @@ import * as _ from 'lodash';
 import { SidenavService } from '../layout/sidenav/sidenav.service';
 import { IMenuLink } from '../../interface/imenu-link';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
@@ -14,7 +16,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   public breadcrumbs: IMenuLink[] = [];
 
-  private isActive: boolean;
+
   private currentUrl: string;
   private menuLink: IMenuLink[];
   private counter: number;
@@ -26,7 +28,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.menuLink = this.sidenavService.menuLink;
     this.counter = 0;
     this.setMenuLink();
@@ -101,7 +103,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   private getBreadcrumbs() {
     this.router.events
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         filter( event => event instanceof NavigationEnd )
       )
       .subscribe( ( event: NavigationEnd ) => {
@@ -110,7 +112,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
         this.initBreadcrumbs( this.currentUrl );
       } );
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.currentUrl = '';
         this.currentUrl = this.router.url;
@@ -128,8 +130,6 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     this.counter = 0;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

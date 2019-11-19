@@ -12,6 +12,8 @@ import * as _ from 'lodash';
 import { ContactService } from '../../../page/profiles/tabs-profile/contact/contact.service';
 import { Icontact } from '../../../interface/icontact';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-example-contact',
   templateUrl: './table-example-contact.component.html',
@@ -25,7 +27,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
 
-  private isActive: boolean;
+
 
   @Input() private tableDataSource: any;
 
@@ -39,7 +41,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource();
     this.initDisplayedColumns();
   }
@@ -61,7 +63,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -90,7 +92,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
     const isSubjectNext = false;
     _.set( params, 'useForDistribution', !params.useForDistribution );
     this.contactService.putContact( params, isSubjectNext )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( contact: Icontact ) => {
         _.chain( this.tableDataSource )
           .find( [ 'contactId', contact.contactId ] )
@@ -152,9 +154,7 @@ export class TableExampleContactComponent implements OnInit, OnDestroy {
     this.isDisabled = eventData;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

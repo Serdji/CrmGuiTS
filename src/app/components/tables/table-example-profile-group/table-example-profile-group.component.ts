@@ -8,6 +8,8 @@ import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-example-profile-group',
   templateUrl: './table-example-profile-group.component.html',
@@ -18,7 +20,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public selection = new SelectionModel<any>( true, [] );
-  private isActive: boolean;
+
   public isDisabled: boolean;
   public ids: any;
 
@@ -31,7 +33,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
   constructor( private dialog: MatDialog ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource();
     this.initDisplayedColumns();
   }
@@ -51,7 +53,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -123,9 +125,7 @@ export class TableExampleProfileGroupComponent implements OnInit, OnDestroy {
     this.emitCustomerGroupId.emit( customerGroupId );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

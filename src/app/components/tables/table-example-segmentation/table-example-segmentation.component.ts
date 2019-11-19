@@ -13,6 +13,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import * as R from 'ramda';
 import { detailExpand } from '../../../animations/animations';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-example-segmentation',
   templateUrl: './table-example-segmentation.component.html',
@@ -29,7 +31,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   public expandedElement: ISegmentation | null;
   public formFilterSegmentation: FormGroup;
 
-  private isActive: boolean;
+
 
   @Input() private tableDataSource: ISegmentation[];
   @Output() private emitSegmentationId = new EventEmitter<number>();
@@ -44,7 +46,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource();
     this.initDisplayedColumns();
     this.initFormCheckbox();
@@ -86,7 +88,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     };
 
     this.formFilterSegmentation.valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
@@ -97,7 +99,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
@@ -176,9 +178,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
     this.isDisabled = eventData;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

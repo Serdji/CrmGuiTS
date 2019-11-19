@@ -7,6 +7,7 @@ import { timer } from 'rxjs/observable/timer';
 import { DialogComponent } from '../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { takeWhile } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Injectable( {
   providedIn: 'root',
@@ -14,7 +15,7 @@ import { takeWhile } from 'rxjs/operators';
 export class AccessRightsUserGuard implements CanActivate, OnInit, OnDestroy {
 
   private token: Itoken = JSON.parse( localStorage.getItem( 'paramsToken' ) );
-  private isActive: boolean;
+
 
   constructor(
     private parsTokenService: ParsTokenService,
@@ -22,7 +23,7 @@ export class AccessRightsUserGuard implements CanActivate, OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.isActive = true;
+
   }
 
   canActivate(
@@ -42,7 +43,7 @@ export class AccessRightsUserGuard implements CanActivate, OnInit, OnDestroy {
           },
         } );
         timer( 1500 )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialog.closeAll();
           } );
@@ -51,7 +52,5 @@ export class AccessRightsUserGuard implements CanActivate, OnInit, OnDestroy {
     } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

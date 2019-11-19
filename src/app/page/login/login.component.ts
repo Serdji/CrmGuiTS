@@ -7,6 +7,8 @@ import { LoginService } from './login.service';
 import { ParsTokenService } from '../../services/pars-token.service';
 import { SettingsService } from '../settings/settings.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -17,7 +19,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public version: string;
   public isErrorAuth: boolean = false;
   public formLogin: FormGroup;
-  private isActive: boolean = true;
+
   private saveTableLogin: boolean;
 
   constructor(
@@ -51,13 +53,13 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   private initVersion() {
     this.loginService.getVersion()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: string ) => this.version = `2.0.0.${value}` );
   }
 
   private saveLogin() {
     this.formLogin.get( 'save' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( value => {
         this.saveTableLogin = value;
         if ( value ) localStorage.setItem( 'saveSeismic', JSON.stringify( this.saveTableLogin ) );
@@ -69,7 +71,7 @@ export class LoginComponent implements OnInit, OnDestroy {
     if ( !this.formLogin.invalid ) {
       localStorage.setItem( 'AirlineCode', this.formLogin.get( 'AirlineCode' ).value );
       this.auth.getToken( this.formLogin.getRawValue() )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe(
           ( value ) => {
             this.parsTokenService.parsToken = value.accessToken;
@@ -87,7 +89,5 @@ export class LoginComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

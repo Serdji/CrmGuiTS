@@ -8,6 +8,8 @@ import { ListSmsService } from './list-sms.service';
 import { ISms } from '../../../interface/isms';
 import { DistributionService } from '../distribution.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-list-sms',
   templateUrl: './list-sms.component.html',
@@ -18,7 +20,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
   public isLoader: boolean;
   public sms: ISms;
 
-  private isActive: boolean;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -28,18 +30,18 @@ export class ListSmsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoader = true;
     this.initTable();
     this.initTablePagination();
     this.distributionService.subjectDistributionDelete
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshDistribution() );
   }
 
   private initTablePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const params = {
@@ -47,7 +49,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.listSmsService.getAllSms( params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( sms: ISms ) => this.tableAsyncService.setTableDataSource( sms.result ) );
       } );
   }
@@ -58,7 +60,7 @@ export class ListSmsComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.listSmsService.getAllSms( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( sms: ISms ) => {
         this.tableAsyncService.countPage = sms.totalRows;
         this.sms = sms;
@@ -69,15 +71,13 @@ export class ListSmsComponent implements OnInit, OnDestroy {
 
   private refreshDistribution() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initTable();
       } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
