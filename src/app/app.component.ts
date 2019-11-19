@@ -10,6 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD MM YYYY',
@@ -19,8 +21,6 @@ const MY_FORMATS = {
     monthYearLabel: 'MMMM YYYY',
   },
 };
-
-import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {
   selector: 'app-root',

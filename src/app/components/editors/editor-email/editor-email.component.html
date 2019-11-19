@@ -36,17 +36,21 @@
           </mat-form-field>
           <mat-form-field [ngStyle]="{'display' : whichButton === 'data' ? 'none': 'block'}" class="editor-email__input">
             <input matInput formControlName="dateFrom"
-                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_FROM' | translate}}"
-                   [matDatepicker]="dateFrom">
-            <mat-datepicker-toggle matSuffix [for]="dateFrom"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #dateFrom></mat-datepicker>
+                   [owlDateTime]="dateFrom"
+                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_FROM' | translate}}">
+            <span class="trigger" [owlDateTimeTrigger]="dateFrom">
+              <mat-icon class="editor-email__input-icon">calendar_today</mat-icon>
+            </span>
+            <owl-date-time #dateFrom></owl-date-time>
           </mat-form-field>
           <mat-form-field [ngStyle]="{'display' : whichButton === 'data' ? 'none': 'block'}" class="editor-email__input">
             <input matInput formControlName="dateTo"
-                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_TO' | translate}}"
-                   [matDatepicker]="dateTo">
-            <mat-datepicker-toggle matSuffix [for]="dateTo"></mat-datepicker-toggle>
-            <mat-datepicker touchUi="true" #dateTo></mat-datepicker>
+                   [owlDateTime]="dateTo"
+                   placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DATE_TO' | translate}}">
+            <span class="trigger" [owlDateTimeTrigger]="dateTo">
+              <mat-icon class="editor-email__input-icon">calendar_today</mat-icon>
+            </span>
+            <owl-date-time #dateTo></owl-date-time>
           </mat-form-field>
           <mat-form-field class="editor-email__input">
             <mat-select formControlName="templateId"
