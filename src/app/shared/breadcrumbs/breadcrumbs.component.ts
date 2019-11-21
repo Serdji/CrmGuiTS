@@ -96,6 +96,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       .reverse()
       .uniqBy( 'title' )
       .reverse()
+      .takeRight(10)
       .value();
     localStorage.setItem( 'breadcrumbs', JSON.stringify( this.breadcrumbs ) );
   }
