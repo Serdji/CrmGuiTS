@@ -1,0 +1,982 @@
+{
+	"BREADCRUMBS": {
+		"CUSTOMER": "Пассажир",
+		"EMAIL_DISTRIBUTION": " Email рассылка",
+		"EVENT": "Событие",
+		"HOME": "Главная",
+		"SMS_DISTRIBUTION": "SMS рассылка",
+		"USER": "Пользователь"
+	},
+	"BUTTON": {
+		"ADD": "Добавить",
+		"ADD_CUSTOMER": "Добавить пассажира",
+		"ADD_USER": "Добавить пользователя",
+		"CANCEL": "Отмена",
+		"CANCEL_DISTRIBUTION": "Отменить рассылку",
+		"CLEAR": "Очистить",
+		"CLEAR_FORM": "Очистить форму",
+		"COPY": "Копировать",
+		"CREATE_EVENT": "Создать событие",
+		"DELETE": "Удалить",
+		"DOWNLOAD": "Скачать",
+		"EDIT": "Изменить",
+		"EDITOR": "Создать рассылку",
+		"EDIT_EVENT": "Управление событием",
+		"FILTER": "Фильтр",
+		"LOGIN": "Авторизоваться",
+		"MERGE_PROFILE": "Объединить пассажиров",
+		"PROMO_CODE": "Привязать промокод",
+		"SAVE": "Сохранить",
+		"SEARCH": "Искать",
+		"SEND_DISTRIBUTION": "Отправить рассылку",
+		"START_EVENT": "Запуск события",
+		"STOP_EVENT": "Остановить событие",
+		"TO_FROM": "Сформировать"
+	},
+	"DIALOG": {
+		"ADD_PROFILE_GROUP": {
+			"CUSTOMER_GROUP": "Группа пассажиров"
+		},
+		"DELETE": {
+			"CONTACT": "Вы действительно хотите удалить этот контакт или контакты ?",
+			"CUSTOMER": "Вы действительно хотите удалить пассажира ?",
+			"DOCUMENT": "Вы действительно хотите удалить этот документ или докомунты ?",
+			"FIO": "Вы действительно хотите удалить это фио или эти фио ?",
+			"PROFILES": "Вы действительно хотите удалить этот профиль или профили ?",
+			"PROFILE_GROUP": "Вы действительно хотите удалить группу пассажиров или группы пассажиров ?",
+			"PROMOTION": "Вы действительно хотите удалить промоакцию или промоакции ?",
+			"PROMO_CODE": "Вы действительно хотите удалить промокод ?",
+			"SEGMENTATION": "Вы действительно хотите удалить группу сегментации ?",
+			"SEGMENTATIONS": "Вы действительно хотите удалить группу сегментации или группы сегментации ?",
+			"SETTING_DEFAULT": "После перезагрузки приложение все ваши настройки будут установлены по умолчанию. Вы действительно хотите перезагрузить приложения?",
+			"USER": "Вы действительно хотите удалить пользователя ?"
+		},
+		"DISTRIBUTION": {
+			"CANCEL_EMAIL_DISTRIBUTION": "Вы действительно хотиту отменить эту email рассылку ?",
+			"CANCEL_SMS_DISTRIBUTION": "Вы действительно хотиту отменить эту sms рассылку ?",
+			"DELETES_EMAIL_DISTRIBUTION": "Вы действительно хотите удалить email  рассылку или рассылки ?",
+			"DELETES_SMS_DISTRIBUTION": "Вы действительно хотите удалить sms  рассылку или рассылки?",
+			"DELETE_EMAIL_DISTRIBUTION": "Вы действительно хотите удалить email  рассылку ?",
+			"DELETE_SMS_DISTRIBUTION": "Вы действительно хотите удалить sms  рассылку ?",
+			"SEND_EMAIL_DISTRIBUTION": "Вы действительно хотите запустить рассылку email ?",
+			"SEND_SMS_DISTRIBUTION": "Вы действительно хотите запустить рассылку смс ?"
+		},
+		"DOCUMENT": {
+			"EXP_DATE": "Срок действия",
+			"FIRST_NAME": "Имя",
+			"LAST_NAME": "Фамилия",
+			"MIDDLE_NAME": "Отчество",
+			"NUM": "Номер документа"
+		},
+		"ERROR": {
+			"DATA_ENTERED_INCORRECTLY": "Данные введены некорректно!",
+			"ERROR_SENDING": "Ошибка при отправки",
+			"NOT_ALL_FIELDS": "Не все поля заполнены",
+			"NOT_ENOUGH_RIGHTS": "У Вас недостаточно прав на это действие!",
+			"RIGHTS_FOR_YOU_ACCOUNT": "Вы изменили права для своей учетной записи. Чтобы права вступили в силу Вам нужно зайти в приложение заново. Через несколько секунд Вы будете перенаправлены на страницу авторизации!",
+			"SERVER_IS_NOT_RES": "В данный момент сервер не отвечает. Попробуйте перезагрузить приложение и повторить попытку чуть позже или обратитесь в службу технической поддержки."
+		},
+		"INTERSECTION": {
+			"ACCOUNT_CODE": "Расчётный код:",
+			"BRAND": "Бренды:",
+			"CUSTOMER": "Профиль:",
+			"CUSTOMER_GROUP": "Группы пассажиров:",
+			"DATE_FROM": "Период действия от:",
+			"DATE_TO": "Период действия до:",
+			"DIRECTIONS": "Направления:",
+			"FLIGHT": "Номера рейсов:",
+			"FLIGHT_DATA_FROM": "Период реализации от:",
+			"FLIGHT_DATA_TO": "Период реализации до:",
+			"GO_TO": "Перейти в промокод",
+			"PROMOTIONS": "Промоакция:",
+			"PROMOTIONS_CODE": "Промокод:",
+			"PROMOTIONS_CODE_VAL": {
+				"AMOUNT": "Сумма",
+				"PERCENT": "Процент",
+				"TITLE": "Тип скидки:"
+			},
+			"RDD": "Класс бронирования:",
+			"SEGMENTATION": "Группы сегментации:",
+			"TITLE": "Обнаружено пересечение промокодов",
+			"USES_PER": "Использование для профиля:",
+			"USES_TOTAL": "Общее количество использования:",
+			"VAL": "Величина скидки:"
+		},
+		"NO": "Нет",
+		"OK": {
+			"ADDITIONAL_NAME": "Дополнительное ФИО успешно добавленно",
+			"DOCUMENT_CHANGED": "Документ успешно добавлен",
+			"PASSENGER_CHANGED": "Пассажир успешно изменен",
+			"PASSENGER_COMBINED": "Пассажир успешно объединен",
+			"PASSWORD_CHANGED": "Пароль успешно изменен",
+			"PROMO_CODE_CHANGED": "Промокод успешно изменен",
+			"PROMO_CODE_LINKED": "Промокод успешно привязан",
+			"PROMO_CODE_NOT_PERSONALIZED": "Данный промокод НЕ персонализированный, т.е. доступен для любого пассажира авиакомпании.",
+			"PROMO_CODE_SAVE": "Промокод успешно сохранен",
+			"SEGMENTATION_CHANGED": "Сегментация успешно изменена",
+			"SEGMENTATION_SAVE": "Сегментация успешно сохранена",
+			"USER_CHANGED": "Пользователь успешно изменен",
+			"USER_RIGHTS_CHANGED": "Права пользователя изменены"
+		},
+		"UPDATE_PROFILE": {
+			"FIRST_NAME": "Имя:",
+			"LAST_NAME": "Фамилия:",
+			"MIDDLE_NAME": "Отчество:"
+		},
+		"YES": "Да"
+	},
+	"FIELD": {
+		"ERROR": {
+			"OBLIGATORY_FIELD": "Обязательное поле",
+			"STRONG_PASSWORD": "Пароль должен состоять не менее чем из ",
+			"YOU_ENTERED": "символов. Вы ввели"
+		}
+	},
+	"MENU": {
+		"AIRLINE": "Авиакомпания",
+		"CUSTOMER": {
+			"ADD_CUSTOMER": "Добавить пассажира",
+			"GROUP_NAME": "Пассажиры",
+			"SEARCH_CUSTOMER": "Поиск пассажира"
+		},
+		"DISTRIBUTIONS": {
+			"GROUP_NAME": "Рассылки",
+			"LIST_EMAIL": "Email",
+			"LIST_SMS": "SMS"
+		},
+		"EVENT": {
+			"ADD_EVENT": "Добавить событие",
+			"GROUP_NAME": "События",
+			"LIST_EVENT": "Список событий"
+		},
+		"GROUP_CUSTOMER": {
+			"GROUP_NAME": "Группы пассажиров",
+			"LIST_GROUP_CUSTOMER": "Список групп"
+		},
+		"PROMOTIONS_CODES": {
+			"ADD_PROMOTIONS": "Добавить промоакцию",
+			"ADD_PROMOTIONS_CODES": "Добавить промокод",
+			"GROUP_NAME": "Промокоды",
+			"SEARCH_PROMOTIONS_CODES": "Поиск промокода"
+		},
+		"REPORTS": {
+			"GROUP_NAME": "Отчеты",
+			"LIST_REPORTS": "Список отчетов"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": "Добавить сегментацию",
+			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
+			"GROUP_NAME": "Сегментация",
+			"LIST_SEGMENTATION": "Список сегментаций"
+		},
+		"SETTINGS": {
+			"GROUP_NAME": "Настройки",
+			"RESTART": "Перезагрузка",
+			"TABLE_CUSTOMERS": "Таблицы пассажиров"
+		},
+		"USERS": {
+			"ADD_USERS": "Добавить пользователя",
+			"GROUP_NAME": "Пользователи",
+			"LIST_USERS": "Список пользователей"
+		},
+		"VERSION": "Версия"
+	},
+	"PAGE": {
+		"DISTRIBUTION": {
+			"LIST_DISTRIBUTION": {
+				"TABLE": {
+					"DATE_FROM": "Дата от",
+					"DATE_TO": "Дата до",
+					"FILTER": "Фильтр",
+					"LAST_TRY": "Дата создания рассылки",
+					"STATUS": "Статус",
+					"STATUSES": {
+						"BOUNCED": "Возвращено",
+						"CLICKED": "Переход по ссылке",
+						"DELIVERED": "Доставлено",
+						"ERROR": "Ошибка",
+						"NOT_SENT": "Готово к отправке",
+						"READ": "Прочитано",
+						"REJECTED": "Отписался",
+						"SEND_TO_CUSTOMER": "Отправлено клиенту",
+						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
+					},
+					"SUBJECT": "Тема"
+				}
+			},
+			"PROFILE_EMAIL_DISTRIBUTION": {
+				"DATE": "Даты рассылок:",
+				"ERROR_MESSAGE": "Сообщение об ошибки:",
+				"FROM": "от",
+				"LAST_TRY": "Дата и время создания рассылки:",
+				"STATUS": "Статус:",
+				"STATUSES": {
+					"BOUNCED": "Возвращено",
+					"CLICKED": "Переход по ссылке",
+					"DELIVERED": "Доставлено",
+					"ERROR": "Ошибка",
+					"NOT_SENT": "Готово к отправке",
+					"READ": "Прочитано",
+					"REJECTED": "Отписался",
+					"SEND_TO_CUSTOMER": "Отправлено клиенту",
+					"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
+				},
+				"SUBJECT": "Тема письма:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Пояснение",
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"STATUS": "Статус"
+				},
+				"TO": "до"
+			},
+			"PROFILE_SMS_DISTRIBUTION": {
+				"DATE": "Даты рассылок:",
+				"ERROR_MESSAGE": "Сообщение об ошибки:",
+				"FROM": "от",
+				"LAST_TRY": "Дата и время создания рассылки:",
+				"STATUS": "Статус:",
+				"STATUSES": {
+					"BOUNCED": "Возвращено",
+					"CLICKED": "Переход по ссылке",
+					"DELIVERED": "Доставлено",
+					"ERROR": "Ошибка",
+					"NOT_SENT": "Готово к отправке",
+					"READ": "Прочитано",
+					"REJECTED": "Отписался",
+					"SEND_TO_CUSTOMER": "Отправлено клиенту",
+					"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
+				},
+				"SUBJECT": "Тема письма:",
+				"TABLE": {
+					"ERROR_MESSAGE": "Пояснение",
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"STATUS": "Статус"
+				},
+				"TO": "до"
+			}
+		},
+		"EVENTS": {
+			"ADD_EVENT": {
+				"FIELD": {
+					"MULTIPLICITY": "Кратность",
+					"NAME_EVENT": "Название события",
+					"SEGMENTATION": "Выбор сегментации",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события"
+					}
+				}
+			},
+			"EVENT": {
+				"CARD": {
+					"EDIT": "Редактировать",
+					"MULTIPLICITY": "Кратность:",
+					"NAME_EVENT": "Название события:",
+					"SEGMENTATION": "Сегментация:",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события:"
+					}
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Дата рождения",
+					"FIELD": {
+						"PROFILE": "Профиль №",
+						"SEARCH": "Поиск по",
+						"VALUE": "Значение"
+					},
+					"FIRST_NAME": "Имя",
+					"GENDER": "Пол",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
+				}
+			},
+			"LIST_EVENT": {
+				"TABLE": {
+					"MULTIPLICITY": "Кратность",
+					"NAME_EVENT": "Название события",
+					"SEGMENTATION": "Сегментации",
+					"STATUS": "Статус",
+					"SUBJECT": "Тема сообщения",
+					"TYPE_EVENT": {
+						"EMAIL": "email",
+						"SMS": "sms",
+						"TITLE": "Тип события"
+					}
+				}
+			}
+		},
+		"LOGIN": {
+			"AIRLINE_CODE": "Авиакомпания",
+			"ERROR": "Неверное имя пользователя или пароль",
+			"LOGIN": "Введите свой логин",
+			"PASSWORD": "Введите свой пароль",
+			"REMEMBER_ME": "Запомнить меня",
+			"TITLE": "Авторизация",
+			"VERSION": "Версия:"
+		},
+		"PROFILES": {
+			"ADD_PROFILE": {
+				"DATE": "дд.мм.гггг",
+				"GENDER": {
+					"F": "Ж",
+					"M": "М",
+					"TITLE": "Пол"
+				},
+				"MIDDLE_NAME": "Отчество",
+				"NAME": "Имя",
+				"SURNAME": "Фамилия",
+				"TITLE": "Добавить пассажира"
+			},
+			"SEARCH_PROFILE": {
+				"FORM": {
+					"AIRLINE_L_CODE": "Код авиокампании",
+					"ARR_POINT": "Куда",
+					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Дата продажи с",
+					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Дата продажи по",
+					"CAB": "Кабина",
+					"CONTACT_EMAIL": "Электронная почта",
+					"CONTACT_PHONE": "Телефон",
+					"CONTACT_SEXIST": "Отсутствие контакта",
+					"CUSTOMER_GROUP": "Группы пассажиров",
+					"CUSTOMER_IDS": "№ профиля",
+					"DEPT_IME_TO_EXCLUDE": "Дата рейса по",
+					"DEP_POINT": "Откуда",
+					"DEP_TIME_FROM_INCLUDE": "Дата рейса с",
+					"DOB_FROM_INCLUDE": "Дата рождения с",
+					"DOB_TO_EXCLUDE": "Дата рождения по",
+					"EMD": "№ услуги",
+					"FARE_CODE": "Код тарифа",
+					"FIRST_NAME": "Имя",
+					"FLIGHT": "№ рейса",
+					"FLIGHT_DATE_FROM": "",
+					"FLIGHT_DATE_TO": "",
+					"GENDER": {
+						"F": "Ж",
+						"M": "М",
+						"TITLE": "Пол"
+					},
+					"ID": "",
+					"LAST_NAME": "Фамилия",
+					"MONEY_AMOUNT_FROM_INCLUDE": "Общая сумма от",
+					"MONEY_AMOUNT_TO_INCLUDE": "Общая сумма до",
+					"PROFILE": "№ Профиля",
+					"RBD": "Класс бронирования",
+					"REC_LOC": "№ брони",
+					"SEGMENTATION": "Группы сегментации",
+					"SERVICE_CODE": "Код услуги",
+					"TICKET": "№ билета",
+					"TOLTIP_CSV": "Вагрузка SVG файла с учетом поискового запроса"
+				},
+				"TABLE": {
+					"DATE_OF_BIRTH": "Дата рождения",
+					"FIRST_NAME": "Имя",
+					"GENDER": "Пол",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
+				}
+			},
+			"TABS_PROFILE": {
+				"CONTACT": {
+					"FORM": {
+						"CONTACT_TEXT": "Описания к типу контакта",
+						"CONTACT_TYPE": "Тип контакта",
+						"TITLE": "Добавить контакт"
+					},
+					"TABLE": {
+						"CONTACT_TEXT": "Значение",
+						"CONTACT_TYPE": "Тип",
+						"FILTER": "Фильтр",
+						"USE_FOR_DISTRIBUTION": "Контакт для рассылки"
+					},
+					"TAB_NAME": "Контакты"
+				},
+				"DOCUMENT": {
+					"FORM": {
+						"ADD": "Добавить",
+						"DOCUMENT_TYPE": "Тип документа",
+						"EXP_DATE": "Срок действия",
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"NUM": "Номер документа"
+					},
+					"TABLE": {
+						"DOCUMENT_TYPE": "Тип документа",
+						"EXP_DATE": "Срок действия",
+						"FILTER": "Фильтр",
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"NUM": "Номер документа"
+					},
+					"TAB_NAME": "Документы"
+				},
+				"HEADER": {
+					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Оформленных платных услуг:",
+					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Аннулированных платных услуг:",
+					"COUNT_ACTIVE_TICKET": "Оформленных заказов:",
+					"COUNT_CANCELLED_TICKET": "Аннулированных заказов:",
+					"CREATE_DATE": "С нами:",
+					"CUSTOMER_GROUP": "Группы пассажиров",
+					"CUSTOMER_ID": "№ профиля:",
+					"DATE_OF_BIRTH": "Дата рождения:",
+					"GENDER": "Пол:",
+					"LUT": "Дата последней активности:",
+					"PROFILE": "Профиль:",
+					"SEGMENTATION": "Группы сегментации",
+					"TOTAL_AMOUNT": "Оформленных на сумму:"
+				},
+				"MESSAGES": {
+					"HEADER": {
+						"DATE": "Дата и время рассылки",
+						"STATUS": "Текущий статус",
+						"TOPIC_LETTER": "Тема письма"
+					},
+					"TAB_NAME": "Соообщения",
+					"TEMPLATE": {
+						"GO_TO": "Перейти в рассылку сообщения"
+					}
+				},
+				"ORDER": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"STATUS": {
+								"ACTIVE": "Оформлен",
+								"CANCELLED": "Аннулирован",
+								"TITLE": "Статус заказа"
+							}
+						},
+						"TEMPLATE": {
+							"MONETARY_INFO": {
+								"ALL": "Всего по заказу:",
+								"COST_CURRENCY": "Стоимость в валюте:",
+								"TAXES": "Таксы и сборы:",
+								"TICKETS": "По билетам:"
+							},
+							"POS": {
+								"AGENCY": "Агентство:",
+								"COUNTRY": "Страна:",
+								"GDS": "GDS:",
+								"POS_ID": "POS ID:",
+								"REC_LOC": "Recloc GDS:",
+								"TERMINAL": "Терминал:"
+							},
+							"SEGMENTS": {
+								"ARR_POINT": "Аэропорт прилета:",
+								"ARR_TIME": "Дата / время прилета:",
+								"CABIN": "Кабина:",
+								"DEP_POINT": "Аэропорт вылета:",
+								"DEP_TIME": "Дата / время вылета:",
+								"FLIGHT": "№ рейса:",
+								"RBD": "Класс бронирования:",
+								"STATUS": "Статус сегмента:"
+							},
+							"SERVICES": {
+								"ARR_POINT": "Аэропорт прилета:",
+								"ARR_TIME": "Дата / время прилета:",
+								"CONCEPT_MEASURE": "Концепт/мера:",
+								"COST": "Стоимость:",
+								"COUPON": "Номер купона:",
+								"COUPON_STATUS": "Статус:",
+								"DATE": "Дата:",
+								"DEP_POINT": "Аэропорт вылета:",
+								"DEP_TIME": "Дата / время вылета:",
+								"EMD": "EMD:",
+								"EMD_TYPE": "Тип EMD:",
+								"FLIGHT": "№ рейса:",
+								"NOS": {
+									"COMMENT": "Комментарий:",
+									"NAME_SERVICES": "Название услуги:"
+								},
+								"QTTY": "Количество:",
+								"RFISC": "Rfisc:",
+								"SSR": "SSR:",
+								"STATUS": "Статус услуги:",
+								"SVC_TYPE": "Тип SVC:"
+							},
+							"TICKETS": {
+								"ARR_POINT": "Аэропорт прилета:",
+								"ARR_TIME": "Дата / время прилета:",
+								"COUPON": "Номер купона:",
+								"DEP_POINT": "Аэропорт вылета:",
+								"DEP_TIME": "Дата / время вылета:",
+								"FARE_CODE": "Fare basis:",
+								"FLIGHT": "№ рейса:",
+								"NUM_DER_TICKET": "Номер билета:",
+								"STATUS": "Статус:"
+							}
+						}
+					},
+					"FILTER": {
+						"DATE_CREATE": "Дата создания",
+						"DATE_SEARCH": "Выбор даты",
+						"REC_LOC": "Заказ №",
+						"SEARCH": "Поиск по",
+						"STATUS": {
+							"ACTIVE": "Оформлен",
+							"CANCELLED": "Аннулирован",
+							"TITLE": "Статус заказа"
+						},
+						"VALUE": "Значение"
+					},
+					"HEADER": {
+						"DATE_CREATE": "Дата создания",
+						"REC_LOC": "Заказ №",
+						"STATUS": "Статус заказа"
+					},
+					"OPTION_GROUPS": {
+						"ALL": "Любой:",
+						"ALL_SEARCH": "Поиск по всем параметрам",
+						"POS": "Точка продажи",
+						"SEGMENTS": "Сегмент",
+						"SERVICES": "Услуги",
+						"TICKETS": "Билет"
+					},
+					"TAB_NAME": "Заказы"
+				},
+				"PRIVILEGES": {
+					"HEADER": {
+						"DATE_OF_CARRIAGE": "Дата перевозки",
+						"DATE_OF_SALE": "Дата продажи",
+						"DIRECTION_FROM": "Направление от",
+						"DIRECTION_TO": "Направление до",
+						"GDS": "Заказ (GDS) №",
+						"ORGANIZATION": "Организация",
+						"STATUS": "Статус"
+					},
+					"TAB_NAME": "Льготы",
+					"TEMPLATE": {
+						"ARR_LOC_CODE": "Направление до:",
+						"COUPON": "Номер купона:",
+						"DEP_LOC_CODE": "Направление от:",
+						"DISCOUNT_SUM": "Сумма предоставляемой льготы:",
+						"EXTERNAL_DISCOUNT_SOURCE_NAME": "Организация предоставляющая льготу:",
+						"FLIGHT_DATA": "Дата перевозки:",
+						"PRICE": "Полная стоимость перевозки:",
+						"SALE_DATE": "Дата предоставления льготы ( дата продажи ):",
+						"STATUS_NAME": "Статус:",
+						"TICKET": "Номер билета:"
+					}
+				},
+				"PROFILE": {
+					"CARD": {
+						"COMMENT": "Заметки:",
+						"DATE_OF_BIRTH": "Дата рождения:",
+						"FIRST_NAME": "Имя:",
+						"GENDER": "Пол:",
+						"LAST_NAME": "Фамилия:",
+						"MIDDLE_NAME": "Отчество:",
+						"TITLE": "Пассажир основное ФИО"
+					},
+					"EDIT": {
+						"COMMENT": "Заметки",
+						"DATE_OF_BIRTH": "Дата рождения",
+						"FIRST_NAME": "Имя",
+						"GENDER": {
+							"F": "Ж",
+							"M": "М",
+							"TITLE": "Пол"
+						},
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"TITLE": "Редактировать"
+					},
+					"FORM": {
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"TITLE": "Добавить дополнительное ФИО"
+					},
+					"TABLE": {
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество"
+					},
+					"TAB_NAME": "Профиль"
+				},
+				"PROMO_CODE": {
+					"EXPANSION": {
+						"TEMPLATE": {
+							"ACCOUT_CODE": "Расчётный код:",
+							"BRAND": "Бренды:",
+							"CUSTOMER": "Профиль:",
+							"CUSTOMER_GROUP": "Группы пассажиров:",
+							"FLIGHT_DATE_FROM": "Период реализации от:",
+							"FLIGHT_DATE_TO": "Период реализации до:",
+							"GO_TO": "Перейти в промокод",
+							"PROMO_CODE_FLIGHT_LIST": "Номер рейсов:",
+							"RDB": "Класс бронирования:",
+							"REC_LOC": "Заказы:",
+							"ROUTE": "Направления:",
+							"SEGMENTATION": "Группы сегментации:",
+							"USES_PER_PERSON": "Использование для профиля:",
+							"USES_TOTAL": "Общее количество использования:",
+							"VAL": "Величина скидки:",
+							"VAL_TYPE": {
+								"PERCENT": "Процент",
+								"SUM": "Сумма",
+								"TITLE": "Тип скидки:"
+							}
+						}
+					},
+					"HEADER": {
+						"DATE_FROM": "Период действия от",
+						"DATE_TO": "Период действия до",
+						"PROMO": "Промоакция",
+						"PROMO_CODE": "Промокод",
+						"QUANTITY": "Количество"
+					},
+					"TABS": {
+						"AVAILABLE": "Доступные",
+						"USED": "Использованные"
+					},
+					"TAB_NAME": "Промокоды"
+				},
+				"SHOW_HIDE": {
+					"HIDE": "Скрыть форму добавления",
+					"SHOW": "Показать форму добавления"
+				}
+			}
+		},
+		"PROMOTIONS": {
+			"ADD_PROMOTIONS": {
+				"FIELD": {
+					"PROMOTIONS": "Промоакция"
+				},
+				"TABLE": {
+					"PROMOTIONS": "Промоакция"
+				}
+			},
+			"ADD_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Расчётный код",
+					"ARR_LOC": "Направление куда",
+					"BRAND": "Бренды",
+					"CUSTOMER": "Профиль",
+					"CUSTOMER_GROUP": "Группы пассажиров",
+					"DATE_FROM": "Период действия от",
+					"DATE_TO": "Период действия до",
+					"DEP_LOC": "Направление откуда",
+					"DESCRIPTION": "Описание промоакции",
+					"FLIGHT": "Номера рейсов",
+					"FLIGHT_DATA_FROM": "Период реализации от",
+					"FLIGHT_DATA_TO": "Период реализации до",
+					"PROMOTIONS": "Промоакция",
+					"PROMOTIONS_CODE": "Промокод",
+					"PROMOTIONS_CODE_VAL": {
+						"AMOUNT": "Сумма",
+						"PERCENT": "Процент",
+						"TITLE": "Тип скидки"
+					},
+					"RDD": "Класс бронирования",
+					"REASON": "Основание",
+					"SEGMENTATION": "Группы сегментации",
+					"USED": "Использован:",
+					"USES_PER": "Использование для профиля",
+					"USES_TOTAL": "Общее количество использования",
+					"VAL": "Величина скидки"
+				},
+				"TABLE": {
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля"
+				}
+			},
+			"SEARCH_PROMOTIONS_CODE": {
+				"FIELD": {
+					"ACCOUNT_CODE": "Расчётный код",
+					"BRAND": "Бренды",
+					"CUSTOMER_GROUP": "Группы пассажиров",
+					"DATE_FROM": "Период действия от",
+					"DATE_TO": "Период действия до",
+					"FLIGHT": "Номера рейсов",
+					"FLIGHT_DATA_FROM": "Период реализации от",
+					"FLIGHT_DATA_TO": "Период реализации до",
+					"PROMOTIONS": "Промоакция",
+					"PROMOTIONS_CODE": "Промокод",
+					"RDD": "Класс бронирования",
+					"SEGMENTATION": "Группы сегментации"
+				},
+				"TABLE": {
+					"ACCOUNT_CODE": "Расчётный код",
+					"DATE_FROM": "Период действия от",
+					"DATE_TO": "Период действия до",
+					"FLIGHT_DATA_FROM": "Период реализации от",
+					"FLIGHT_DATA_TO": "Период реализации до",
+					"PROMOTIONS": "Промоакция",
+					"PROMOTIONS_CODE": "Промокод"
+				}
+			}
+		},
+		"REPORTS": {
+			"STATISTICS_REPORT": {
+				"MES_DOWNLOAD_EXC": "Скачать Excel файла с учетом сформированного запроса",
+				"MES_DOWNLOAD_PDF": "Скачать PDF файла с учетом сформированного запроса",
+				"MES_DOWNLOAD_WORD": "Скачать Word файла с учетом сформированного запроса",
+				"REPORT_PARAMETERS": "Параметры отчета",
+				"REPORT_SELECTION": "Выбор отчета"
+			}
+		},
+		"RESET": {
+			"TITLE": "Перезагрузить приложение"
+		},
+		"SEGMENTATION": {
+			"ADD_SEGMENTATION": {
+				"BUTTON": {
+					"NEXT": "Следующая",
+					"PREV": "Предыдущая"
+				},
+				"GROUP_SEGMENTATION": {
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
+					"GROUP_SEGMENTATION": "Группа сегментации"
+				},
+				"NUMBER_SEGMENTS": {
+					"FROM": "От",
+					"SERVICES": "Услуги",
+					"TICKETS": "Билеты",
+					"TITLE": "Количество сегментов",
+					"TO": "До"
+				},
+				"ORDER_AMOUNT": {
+					"CURRENCY": "Валюта оплаты",
+					"FROM": "От",
+					"SERVICES": "Услуги",
+					"TICKETS": "Билеты",
+					"TITLE": "Сумма по заказу",
+					"TO": "До"
+				},
+				"PROFILE_DETAILS": {
+					"DOB_FROM": "Дата рождения от",
+					"DOB_TO": "",
+					"FLIES_WITHOUT_CHILDREN": "Летает без детей",
+					"FLIES_WITH_CHILDREN": "Летает с детьми",
+					"GENDER": {
+						"F": "Ж",
+						"M": "М",
+						"TITLE": "Пол"
+					},
+					"TITLE": "Детали профиля"
+				},
+				"RESERVATION_DATE_RANG": {
+					"DATE_FROM": "Свободный диапазон от",
+					"DATE_TO": "Свободный диапазон до",
+					"TITLE": "Диапазон дат бронирования"
+				},
+				"SERVICES": {
+					"AIRLINE_L_CODE": "Код авиакомпании",
+					"ARR_D_FROM": "Диапазон даты вылета с",
+					"ARR_D_TO": "Диапазон даты вылета по",
+					"ARR_LOC": "Куда",
+					"DEP_LOC": "Откуда",
+					"DISPATCH_TIME": "Время до вылета",
+					"FLIGHT_NO": "Номер рейса",
+					"NOT_SERVICE_CODE": "Не содержит кода услуги",
+					"POS_AGENCY": "Код агентства (точка продажи)",
+					"POS_GDS": "Код ГРС (точка продажи)",
+					"POS_ID": "Код ППР (точка продажи)",
+					"SERVICE_CODE": "Код услуги",
+					"TITLE": "Платные услуги"
+				},
+				"SUBJECT_ANALYSIS": {
+					"PAYMENT": "Сумма покупок",
+					"REMOVE": "Сбросить настройки предмета анализа",
+					"SEGMENT": "Количество сегментов",
+					"TITLE": "Предмет анализа"
+				},
+				"TICKET": {
+					"AIRLINE_L_CODE": "Код авиакомпании",
+					"ARR_D_FROM": "Диапазон даты вылета с",
+					"ARR_D_TO": "Диапазон даты вылета по",
+					"ARR_LOC": "Куда",
+					"CABIN": "Кабина",
+					"DEP_LOC": "Откуда",
+					"DISPATCH_TIME": "Время до вылета",
+					"FLIGHT_NO": "Номер рейса",
+					"POS_AGENCY": "Код агентства (точка продажи)",
+					"POS_GDS": "Код ГРС (точка продажи)",
+					"POS_ID": "Код ППР (точка продажи)",
+					"RARE_CODE": "Код тарифа",
+					"RDB": "Класс бронирования",
+					"TITLE": "Билет"
+				}
+			},
+			"COMPLEX_SEGMENTATION": {
+				"FIELD": {
+					"CHOICE_SEGMENTATION": "Выбор сегментации",
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
+					"NAME_COMPLEX_SEGMENTATION": "Название сложной сегментации"
+				},
+				"SEGMENTATIONS": "Cегментации",
+				"TABLE": {
+					"FILTER": "Фильтр",
+					"GROUP_SEGMENTATION": "Группа сегментации",
+					"TITLE": "Сложные сегментации"
+				}
+			},
+			"LIST_SEGMENTATION": {
+				"PROFILE_SEGMENTATION": {
+					"CUSTOMER_ID": "№ профиля",
+					"FIRST_NAME": "Имя",
+					"LAST_NAME": "Фамилия",
+					"MIDDLE_NAME": "Отчество"
+				},
+				"TABLE_SEGMENTATION": {
+					"ALL": "Все",
+					"COMPLICATED": "Сложные",
+					"FILTER": "Фильтр",
+					"GRANULARITY": {
+						"COUPON": "Купон",
+						"ORDERS": "Заказы",
+						"PASSENGER": "Пассажир",
+						"TITLE": "Гранулярность"
+					},
+					"SEGMENTATION": "Группа сегментации",
+					"SIMPLE": "Простые",
+					"STATUS": {
+						"COMPLICATED": "Сложная",
+						"SIMPLE": "Простая",
+						"TITLE": "Статус"
+					},
+					"TITLE": "Показать сегментации"
+				}
+			}
+		},
+		"SETTINGS": {
+			"TABLE_PROFILE": {
+				"COLUMN_DISPLAY": "Отображение столбцов",
+				"COLUMN_ORDER": "Порядок столбцов",
+				"TITLE": "Настройка таблицы пассажиров"
+			}
+		},
+		"SLECIAL_GROUP": {
+			"PROFILE_GROUP": {
+				"TABLE": {
+					"PROFILE_GROUP": "Группа пассажиров"
+				},
+				"TITLE": "Группа пассажиров"
+			}
+		},
+		"USERS": {
+			"ADD_USER": {
+				"CONFIRM_PASSWORD": "Повторите пароль",
+				"EMAIL": "email",
+				"FIO": "ФИО",
+				"LOGIN": "Логин",
+				"PASSWORD": "Пароль",
+				"TITLE": "Добавить пользователя"
+			},
+			"LIST_USERS": {
+				"TABLE": {
+					"EMAIL": "email",
+					"FILTER": "Фильтр",
+					"FIO": "ФИО",
+					"LOGIN": "Логин"
+				},
+				"TITLE": "Список всех пользователей"
+			},
+			"USER": {
+				"ACCESS_RIGHTS": {
+					"ADDITIONAL_RIGHT": "Дополнительные права",
+					"ANALYTICS": "Аналитика",
+					"CUSTOMERS": "Пассажиры",
+					"DISTRIBUTIONS": "Рассылки",
+					"EVENTS": "События",
+					"PRIVILEGES": "Льготы",
+					"PROMOTIONS_CODES": "Промокоды",
+					"READ": "Чтение",
+					"REPORTS": "Отчеты",
+					"TITLE": "Права доступа",
+					"UPDATE": "Изменение",
+					"USER": "Пользователи"
+				},
+				"USER": {
+					"CONFIRM_PASSWORD": "Повторите пароль",
+					"EMAIL": "email",
+					"FIO": "ФИО",
+					"LOGIN": "Логин",
+					"PASSWORD": "Пароль",
+					"TABS": {
+						"PASSWORD": "Пароль",
+						"USER": "Пользователь"
+					},
+					"TITLE": "Пользователь",
+					"TITLE_2": "Редактировать"
+				}
+			}
+		}
+	},
+	"POP_UP": {
+		"DIALOG_MERGE_PROFILE": {
+			"CUSTOMER_IDS": "№ профиля:",
+			"DATE_OF_BIRTH": "Дата рождения:",
+			"FIRST_NAME": "Имя:",
+			"LAST_NAME": "Фамилия:"
+		},
+		"DIALOG_PROMO_CODE": {
+			"ACCOUNT_CODE": "Аккаунт код:",
+			"DATE_FROM": "Срок действия: От",
+			"DATE_TO": "До",
+			"NAME_PROMO_CODE": "Название промокода:",
+			"PROMO_CODE": "Промокод"
+		},
+		"EDITOR": {
+			"DIALOG_EDITOR": {
+				"TITLE": "Выбор формы рассылки"
+			},
+			"DIALOG_EMAIL": {
+				"DATE_FROM": "Дата отправки от",
+				"DATE_TO": "Дата отправки до",
+				"EXAMPLE": "Пример:",
+				"LIMITS": "Лимит",
+				"PARAMS": "Параметры рассылок",
+				"TEMPLATE": "Шаблон",
+				"TEMPLATE_TITLE": "Шаблон рассылок",
+				"TEXT": "Текст",
+				"THEME": "Тема",
+				"TITLE": "Переменные рассылок",
+				"TOTAL_COUNT": "Количество"
+			},
+			"DIALOG_SMS": {
+				"SYMBOLS_ENTERED": "Введенных символов",
+				"TEMPLATE": "Шаблон",
+				"TEXT": "Текст сообщения",
+				"TITLE": "Название"
+			}
+		}
+	},
+	"TABLE": {
+		"FIRST_PAGE": "Первая страница",
+		"FROM": "из",
+		"ITEMS_PER_PAGE": "Количество на страницу",
+		"LAST_PAGE": "Последняя страница",
+		"NEXT": "Следующая",
+		"PREV": "Предыдущая",
+		"RESULT": {
+			"ERROR": "По этому запросу ничего не найдено",
+			"OK": "Результаты поиска"
+		}
+	},
+	"TOOLBAR": {
+		"GO_OUT": "Выйти"
+	}
+}
