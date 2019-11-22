@@ -11,6 +11,7 @@
 		"ADD": "Add",
 		"ADD_CUSTOMER": "Add passenger",
 		"ADD_USER": "Add user",
+		"CANCEL": "",
 		"CANCEL_DISTRIBUTION": "Cancel distribution",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
@@ -870,7 +871,7 @@
 		"SLECIAL_GROUP": {
 			"PROFILE_GROUP": {
 				"TABLE": {
-					"PROFILE_GROUP": "Passenger group"
+					"PROFILE_GROUP": "Group name"
 				},
 				"TITLE": "Passenger group"
 			}
