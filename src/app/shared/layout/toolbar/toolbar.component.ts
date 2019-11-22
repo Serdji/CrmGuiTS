@@ -39,7 +39,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   private switchLang() {
-    this.formLang.get( 'lang' ).valueChanges.subscribe( ( lang: string ) => this.translate.use( lang ) );
+    this.formLang.get( 'lang' ).valueChanges.subscribe( ( lang: string ) => {
+      localStorage.setItem( 'language', lang );
+      this.translate.use( lang );
+    } );
   }
 
   goOut(): void {
