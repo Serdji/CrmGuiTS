@@ -9,6 +9,8 @@ import { DialogComponent } from '../../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { IDocument } from '../../../../interface/idocument';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-document',
   templateUrl: './document.component.html',
@@ -24,7 +26,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
   public isLoader: boolean = true;
   public showHide: boolean;
 
-  private isActive: boolean = true;
+
 
   constructor(
     private documentService: DocumentService,
@@ -37,22 +39,22 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.initFormDocument();
     this.initDocuments();
     this.documentService.subjectDeleteDocuments
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshTable() );
     this.documentService.subjectPutDocuments
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshTable() );
   }
 
   private initDocumentTypes() {
     this.documentService.getDocumentTypes()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( value => this.documentTypes = value );
   }
 
   private initDocuments() {
     this.documentService.getDocuments( this.id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IDocument[] ) => {
         this.documents = value;
         this.isLoader = false;
@@ -61,7 +63,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
 
   private refreshTable() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initDocuments();
@@ -98,7 +100,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
       Object.assign( params, { expDate: moment( this.formDocument.get( 'expDate' ).value ).format( 'YYYY-MM-DD' ) } );
       console.log( params );
       this.documentService.addDocument( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.windowDialog( 'DIALOG.OK.DOCUMENT_CHANGED', 'ok' );
           this.resetForm();
@@ -118,7 +120,7 @@ export class DocumentComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -129,8 +131,6 @@ export class DocumentComponent implements OnInit, OnDestroy {
     this.showHide = !this.showHide;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

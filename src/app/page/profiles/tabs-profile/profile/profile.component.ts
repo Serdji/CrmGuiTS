@@ -11,7 +11,10 @@ import { MatDialog } from '@angular/material/dialog';
 import { IprofileNames } from '../../../../interface/iprofile-names';
 
 
-@Component( {
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
+@Component
+( {
   selector: 'app-profile',
   templateUrl: './profile.component.html',
   styleUrls: [ './profile.component.styl' ]
@@ -29,7 +32,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public isLoader: boolean = true;
   public showHide: boolean;
 
-  private isActive: boolean = true;
+
 
   constructor(
     private route: ActivatedRoute,
@@ -43,7 +46,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.initFormProfile();
     this.initFormAddProfile();
     this.profileService.subjectDeleteProfileNames
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshTableProfileNames() );
     this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames() );
   }
@@ -51,7 +54,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private initProfile() {
     this.progress = true;
     this.profileService.getProfile( this.id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value ) => {
         Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
         this.formUpdateProfile.patchValue( value );
@@ -64,7 +67,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private initProfileNames( id: number ) {
     this.profileService.getAllProfileNames( id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( value => {
         this.profileNames = value;
         this.isLoader = false;
@@ -73,7 +76,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private refreshTableProfileNames() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initProfileNames( this.profile.customerId );
@@ -108,7 +111,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, customerNameId: this.profile.customerNameId } );
       Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( profile => {
           Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
           this.windowDialog( 'DIALOG.OK.PASSENGER_CHANGED', 'ok' );
@@ -124,11 +127,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAddProfile.getRawValue() );
       this.profileService.addAddProfile( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.windowDialog( 'DIALOG.OK.ADDITIONAL_NAME', 'ok' );
           timer( 1500 )
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed(this) )
             .subscribe( _ => {
               this.refreshTableProfileNames();
               this.resetForm();
@@ -160,7 +163,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
           this.edit = false;
@@ -172,9 +175,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.edit = !this.edit;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
   showHiden(): void {
     this.showHide = !this.showHide;

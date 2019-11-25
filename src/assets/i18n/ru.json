@@ -2,7 +2,7 @@
 	"BREADCRUMBS": {
 		"CUSTOMER": "Пассажир",
 		"EMAIL_DISTRIBUTION": " Email рассылка",
-		"EVENT": "Собитие",
+		"EVENT": "Событие",
 		"HOME": "Главная",
 		"SMS_DISTRIBUTION": "SMS рассылка",
 		"USER": "Пользователь"
@@ -11,6 +11,7 @@
 		"ADD": "Добавить",
 		"ADD_CUSTOMER": "Добавить пассажира",
 		"ADD_USER": "Добавить пользователя",
+		"CANCEL": "Отмена",
 		"CANCEL_DISTRIBUTION": "Отменить рассылку",
 		"CLEAR": "Очистить",
 		"CLEAR_FORM": "Очистить форму",
@@ -20,7 +21,7 @@
 		"DOWNLOAD": "Скачать",
 		"EDIT": "Изменить",
 		"EDITOR": "Создать рассылку",
-		"EDIT_EVENT": "Редактировать событие",
+		"EDIT_EVENT": "Управление событием",
 		"FILTER": "Фильтр",
 		"LOGIN": "Авторизоваться",
 		"MERGE_PROFILE": "Объединить пассажиров",
@@ -336,7 +337,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
-					"AIRLINE_L_CODE": "Код авиокомпании",
+					"AIRLINE_L_CODE": "Код авиокампании",
 					"ARR_POINT": "Куда",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Дата продажи с",
 					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Дата продажи по",
@@ -593,7 +594,7 @@
 						"FIRST_NAME": "Имя",
 						"LAST_NAME": "Фамилия",
 						"MIDDLE_NAME": "Отчество",
-						"TITLE": "Добавить дополнительно ФИО"
+						"TITLE": "Добавить дополнительное ФИО"
 					},
 					"TABLE": {
 						"FIRST_NAME": "Имя",
@@ -887,7 +888,7 @@
 			"LIST_USERS": {
 				"TABLE": {
 					"EMAIL": "email",
-					"FILTER": "Фильтер",
+					"FILTER": "Фильтр",
 					"FIO": "ФИО",
 					"LOGIN": "Логин"
 				},
@@ -956,7 +957,7 @@
 				"TOTAL_COUNT": "Количество"
 			},
 			"DIALOG_SMS": {
-				"SYMBOLS_ENTERED": "Введенных симвалов",
+				"SYMBOLS_ENTERED": "Введенных символов",
 				"TEMPLATE": "Шаблон",
 				"TEXT": "Текст сообщения",
 				"TITLE": "Название"

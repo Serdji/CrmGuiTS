@@ -19,6 +19,8 @@ import * as moment from 'moment';
 import * as R from 'ramda';
 import { TableAsyncSearchPromoCodeService } from '../../../components/tables/table-async-search-promo-code/table-async-search-promo-code.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-search-promotions-codes',
   templateUrl: './search-promotions-codes.component.html',
@@ -41,7 +43,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCode: IPromoCode;
   public buttonSearch: boolean;
 
-  private isActive: boolean;
+
   private autDelay: number;
   private searchParams: any;
 
@@ -58,7 +60,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isActive = true;
+
     this.isLoader = true;
     this.isQueryParams = true;
     this.buttonSearch = true;
@@ -76,7 +78,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => {
         if ( _.size( params ) > 0 ) {
           this.formFilling( params );
@@ -90,7 +92,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       count: 10000
     };
     this.addPromotionsService.getAllPromotions( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
   }
 
@@ -100,13 +102,13 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       count: 10000
     };
     this.addPromotionsCodesService.getAllPromoCodes( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
   }
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( segmentation: ISegmentation[] ) => {
         this.segmentation = segmentation;
       } );
@@ -114,7 +116,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initCustomerGroup() {
     this.profileGroupService.getProfileGroup()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( customerGroup: IcustomerGroup[] ) => {
         this.customerGroup = customerGroup;
       } );
@@ -131,7 +133,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
     this.formSearchPromoCodes.valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         map( () => isActiveButtonSearch( this.formSearchPromoCodes.value ) )
       )
       .subscribe( isValue => this.buttonSearch = isValue );
@@ -165,7 +167,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     if ( !!params.segmentationId || !!params.customerGroupId ) {
       this.listSegmentationService.getSegmentation()
         .pipe(
-          takeWhile( _ => this.isActive ),
+          untilDestroyed(this),
           takeWhile( _ => !!params.segmentationId ),
           map( ( segmentation: ISegmentation[] ) => _.set( formParams, 'segmentationId', _.chain( segmentation ).find( [ 'segmentationId', +params.segmentationId ] ).get( 'title' ).value() ) )
         )
@@ -173,7 +175,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
       this.profileGroupService.getProfileGroup()
         .pipe(
-          takeWhile( _ => this.isActive ),
+          untilDestroyed(this),
           takeWhile( _ => !!params.customerGroupId ),
           map( ( customerGroup: IcustomerGroup[] ) => _.set( formParams, 'customerGroupId', _.chain( customerGroup ).find( [ 'customerGroupId', +params.customerGroupId ] ).get( 'customerGroupName' ).value() ) )
         )
@@ -181,7 +183,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
       timer( 1000 )
         .pipe(
-          takeWhile( _ => this.isActive ),
+          untilDestroyed(this),
           takeWhile( _ => this.isQueryParams )
         )
         .subscribe( _ => this.searchForm() );
@@ -233,7 +235,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   private autocomplete( formControlName: string, options: string ): Observable<any> {
     return this.formSearchPromoCodes.get( formControlName ).valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
@@ -259,7 +261,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncSearchPromoCodeService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
 
@@ -269,7 +271,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
           .value();
 
         this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
       } );
   }
@@ -299,7 +301,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       } );
       this.searchParams = _.omit( this.searchParams, paramsOmit );
       this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( ( promoCode: IPromoCode ) => {
           this.tableAsyncSearchPromoCodeService.countPage = promoCode.totalCount;
           this.promoCode = promoCode;
@@ -315,8 +317,6 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     this.router.navigate( [ '/crm/search-promotions-codes' ], { queryParams: {} } );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

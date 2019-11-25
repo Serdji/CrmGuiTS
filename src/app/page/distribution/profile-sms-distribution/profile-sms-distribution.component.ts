@@ -11,6 +11,8 @@ import { IDistributionProfile } from '../../../interface/idistribution-profile';
 import * as R from 'ramda';
 import { DistributionService } from '../distribution.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component({
   selector: 'app-profile-sms-distribution',
   templateUrl: './profile-sms-distribution.component.html',
@@ -26,7 +28,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   public distributionProfile: IDistributionProfile;
 
 
-  private isActive: boolean;
+
   private smsProfileId: number;
 
   constructor(
@@ -38,16 +40,16 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoader = true;
     this.isDistributionProfile = false;
     this.initQueryParams();
     this.initTableProfilePagination();
     this.distributionService.distributionSubject
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
-        this.isActive = true;
+
         this.isLoader = true;
         this.initTableProfile( this.smsProfileId );
       } );
@@ -55,7 +57,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.params
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => {
         if ( params.id ) {
           this.smsProfileId = +params.id;
@@ -66,7 +68,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -75,7 +77,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.profileSmsDistributionService.getProfileDistribution( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( distributionProfile: IDistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
   }
@@ -88,7 +90,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.profileSmsDistributionService.getProfileDistribution( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( distributionProfile: IDistributionProfile ) => {
         if ( distributionProfile ) {
           this.tableAsyncService.countPage = distributionProfile.totalCount;
@@ -137,7 +139,7 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     } );
     if ( status === 'ok' ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -158,8 +160,6 @@ export class ProfileSmsDistributionComponent implements OnInit, OnDestroy {
     this.windowDialog( 'DIALOG.DISTRIBUTION.DELETE_SMS_DISTRIBUTION', 'delete', 'deleteSmsDistribution', this.distributionProfile.distributionId );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

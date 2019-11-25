@@ -12,6 +12,8 @@ import * as R from 'ramda';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-profile-group',
   templateUrl: './profile-group.component.html',
@@ -19,7 +21,7 @@ import { IpagPage } from '../../../interface/ipag-page';
 } )
 export class ProfileGroupComponent implements OnInit, OnDestroy {
 
-  private isActive: boolean;
+
   private customerGroupId: number;
 
   public isLoader: boolean;
@@ -39,7 +41,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoader = true;
     this.isLoaderProfileTable = true;
     this.isTableProfileTable = false;
@@ -48,7 +50,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initProfileSearchTablePagination();
     this.profileGroupService.subjectDeleteProfileGroups
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.refreshTable() );
   }
 
@@ -60,7 +62,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private refreshTable() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initTable();
@@ -69,7 +71,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private initTable() {
     this.profileGroupService.getProfileGroup()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( value => {
         this.profileGroup = value;
         this.isLoader = false;
@@ -78,7 +80,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private initProfileSearchTablePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -87,7 +89,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.profileSearchService.getProfileSearch( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( profiles => this.tableAsyncService.setTableDataSource( profiles.result ) );
       } );
   }
@@ -95,7 +97,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private initProfileSearchTable( params: { customerGroupIds: number[], sortvalue: string, from: number, count: number } ) {
     this.profileSearchService.getProfileSearch( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( profiles => {
         this.tableAsyncService.countPage = profiles.totalRows;
         this.profiles = profiles.result;
@@ -105,7 +107,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( res: { customerGroupIds: number[], sortvalue: string, from: number, count: number } ) => {
         const isRes = !R.isEmpty( res );
         if ( isRes ) this.initProfileSearchTable( res );
@@ -124,7 +126,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
   saveForm(): void {
     const params = this.formNameProfileGroup.getRawValue();
     this.profileGroupService.addProfileGroup( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( () => {
         this.isLoader = true;
         this.resetForm();
@@ -146,9 +148,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
     this.initProfileSearchTable( params );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

@@ -12,6 +12,8 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-table-async-event-profile',
   templateUrl: './table-async-event-profile.component.html',
@@ -30,7 +32,7 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
   public ids: any;
   public formSearch: FormGroup;
 
-  private isActive: boolean;
+
 
 
   @Input() private tableDataSource: any;
@@ -46,7 +48,7 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.initDataSource();
     this.initDataSourceAsync();
     this.initPaginator();
@@ -77,7 +79,7 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
   private initPaginator() {
     this.resultsLength = this.tableAsyncService.countPage;
     this.paginator.page
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         this.tableAsyncService.setPagPage( value );
         this.isLoadingResults = true;
@@ -86,7 +88,7 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
 
   private initDataSourceAsync() {
     this.tableAsyncService.subjectTableDataSource
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: any ) => {
         this.dataSourceFun( value );
         this.isLoadingResults = false;
@@ -96,7 +98,7 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.dataSource.sort = this.sort;
       } );
@@ -195,9 +197,7 @@ export class TableAsyncEventProfileComponent implements OnInit, OnDestroy {
     this.isLoadingResults = true;
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

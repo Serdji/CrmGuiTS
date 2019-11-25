@@ -12,6 +12,8 @@ import { EditorEmailService } from '../../../components/editors/editor-email/edi
 import { DistributionService } from '../distribution.service';
 import { ProfileEmailDistributionService } from './profile-email-distribution.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-profile-email-distribution',
   templateUrl: './profile-email-distribution.component.html',
@@ -27,7 +29,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   public deleteButtonDisabled: boolean;
 
   private emailLimits: number;
-  private isActive: boolean;
+
   private distributionProfileId: number;
 
   constructor(
@@ -40,17 +42,17 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoader = true;
     this.isDistributionProfile = false;
     this.initQueryParams();
     this.initTableProfilePagination();
     this.initEmailLimits();
     this.distributionService.distributionSubject
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.stopButtonDisabled = true;
-        this.isActive = true;
+
         this.isLoader = true;
         this.initTableProfile( this.distributionProfileId );
       } );
@@ -58,7 +60,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.params
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => {
         if ( params.id ) {
           this.distributionProfileId = +params.id;
@@ -70,7 +72,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -79,7 +81,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.profileEmailDistributionService.getProfileDistribution( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( distributionProfile: IDistributionProfile ) => this.tableAsyncService.setTableDataSource( distributionProfile.customers ) );
       } );
   }
@@ -92,7 +94,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.profileEmailDistributionService.getProfileDistribution( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( distributionProfile: IDistributionProfile ) => {
         if ( distributionProfile ) {
           this.tableAsyncService.countPage = distributionProfile.totalCount;
@@ -107,7 +109,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
 
   private initEmailLimits() {
     this.editorEmailService.getEmailLimits()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( emailLimits => {
         this.emailLimits = emailLimits;
       } );
@@ -150,7 +152,7 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     } );
     if ( status === 'ok' ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -171,8 +173,6 @@ export class ProfileEmailDistributionComponent implements OnInit, OnDestroy {
     this.windowDialog( 'DIALOG.DISTRIBUTION.DELETE_EMAIL_DISTRIBUTION', 'delete', 'deleteEmailDistribution', this.distributionProfile.distributionId );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

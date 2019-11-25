@@ -4,6 +4,8 @@ import { LayoutService } from '../layout.service';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-toolbar',
   templateUrl: './toolbar.component.html',
@@ -37,7 +39,10 @@ export class ToolbarComponent implements OnInit {
   }
 
   private switchLang() {
-    this.formLang.get( 'lang' ).valueChanges.subscribe( ( lang: string ) => this.translate.use( lang ) );
+    this.formLang.get( 'lang' ).valueChanges.subscribe( ( lang: string ) => {
+      localStorage.setItem( 'language', lang );
+      this.translate.use( lang );
+    } );
   }
 
   goOut(): void {

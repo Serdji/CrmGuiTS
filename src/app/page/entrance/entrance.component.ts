@@ -6,6 +6,8 @@ import { takeWhile } from 'rxjs/operators';
 import { ProfileSearchService } from '../profiles/profile-search/profile-search.service';
 import * as R from 'ramda';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-entrance',
   templateUrl: './entrance.component.html',
@@ -13,7 +15,7 @@ import * as R from 'ramda';
 } )
 export class EntranceComponent implements OnInit, OnDestroy {
 
-  private isActive: boolean;
+
   private contactPhone: string;
 
   public cards: IMenu[];
@@ -26,7 +28,7 @@ export class EntranceComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.cards = this.sidenavService.menu;
     this.contactPhone = this.route.snapshot.paramMap.get( 'contactPhone' );
 
@@ -51,7 +53,7 @@ export class EntranceComponent implements OnInit, OnDestroy {
       const success = profile => whereRedirect( profile.result );
 
       this.profileSearchService.getProfileSearch( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( success );
     }
   }
@@ -61,8 +63,6 @@ export class EntranceComponent implements OnInit, OnDestroy {
     this.sidenavService.openAccord();
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

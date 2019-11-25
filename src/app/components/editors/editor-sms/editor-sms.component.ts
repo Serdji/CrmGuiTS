@@ -14,6 +14,8 @@ import * as _ from 'lodash';
 import { ITemplates } from '../../../interface/itemplates';
 
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-editor-sms',
   templateUrl: './editor-sms.component.html',
@@ -32,7 +34,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   public templates: ITemplates[];
   public template: ITemplate;
 
-  private isActive: boolean;
+
   private distributionId: number;
 
 
@@ -45,7 +47,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.buttonDisabled = true;
     this.initFormSms();
     this.insertTemplate();
@@ -72,7 +74,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   private initTemplates() {
     this.editorSmsService.getTemplates()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( templates: ITemplates[] ) => {
         this.templates = templates;
       } );
@@ -80,12 +82,12 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   private insertTemplate() {
     this.formSms.get( 'templateId' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( value => {
         this.formSms.get( 'text' ).patchValue( '' );
         if ( value ) {
           this.editorService.getTemplate( value )
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed(this) )
             .subscribe( ( template: ITemplate ) => {
               this.formSms.get( 'text' ).patchValue( template.text );
             } );
@@ -95,7 +97,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   private initIsButtonSave() {
     this.formSms.valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.buttonDisabled = this.formSms.invalid );
   }
 
@@ -111,7 +113,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     if ( status === 'ok' ) {
       this.formSms.reset();
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -135,10 +137,10 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 
       const saveDistribution = params => this.editorService.saveDistribution( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( success, error );
       const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( success, error );
 
       const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
@@ -153,7 +155,5 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.messageEvent.emit( this.newParams() );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

@@ -10,6 +10,8 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 const MY_FORMATS = {
   parse: {
     dateInput: 'DD MM YYYY',
@@ -54,11 +56,14 @@ export class AppComponent implements OnInit {
   }
 
   private initTranslate() {
-    this.translate.addLangs( [ 'ru', 'en', 'de', 'ja', 'zh', 'cs' ] );
+    this.translate.addLangs( [ 'ru', 'en' ] );
     this.translate.setDefaultLang( 'ru' );
-    this.translate.use('ru' );
     const browserLang = this.translate.getBrowserLang();
-    this.translate.use( browserLang.match( /ru|en|'de|ja|zh|cs'/ ) ? browserLang : 'ru' );
+    const loadingLanguage = localStorage.getItem( 'language' );
+
+    if ( loadingLanguage ) this.translate.use( loadingLanguage );
+    else this.translate.use( browserLang.match( /ru|en'/ ) ? browserLang : 'en' );
+
     this.translate.stream( 'MENU' ).subscribe( _ => {
       this._adapter.setLocale( this.translate.store.currentLang );
     } );

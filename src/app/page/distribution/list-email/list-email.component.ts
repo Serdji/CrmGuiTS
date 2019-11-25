@@ -8,6 +8,8 @@ import { IpagPage } from '../../../interface/ipag-page';
 import { ITaskLog } from '../../../interface/itask-log';
 import { DistributionService } from '../distribution.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-list-email',
   templateUrl: './list-email.component.html',
@@ -18,7 +20,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   public email: IEmail;
   public isLoader: boolean;
 
-  private isActive: boolean;
+
 
   constructor(
     private listEmailService: ListEmailService,
@@ -27,18 +29,18 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoader = true;
     this.initTable();
     this.initTablePagination();
     this.distributionService.subjectDistributionDelete
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshDistribution() );
   }
 
   private initTablePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const params = {
@@ -46,7 +48,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.listEmailService.getAllEmail( params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( email: IEmail ) => this.tableAsyncService.setTableDataSource( email.result ) );
       } );
   }
@@ -57,7 +59,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.listEmailService.getAllEmail( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( email: IEmail ) => {
         this.tableAsyncService.countPage = email.totalRows;
         this.email = email;
@@ -68,7 +70,7 @@ export class ListEmailComponent implements OnInit, OnDestroy {
 
   private refreshDistribution() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initTable();
@@ -76,7 +78,5 @@ export class ListEmailComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 }

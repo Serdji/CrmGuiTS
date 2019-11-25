@@ -25,6 +25,8 @@ import * as R from 'ramda';
 import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-profile-search',
   templateUrl: './profile-search.component.html',
@@ -62,7 +64,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public customerGroupChips: string[] = [];
 
   private autDelay: number = 500;
-  private isActive: boolean = true;
+
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
   private airlineId: number;
@@ -98,33 +100,33 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.activeButton();
     this.initQueryParams();
     this.profileSearchService.subjectDeleteProfile
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
     this.dialogMergeProfileService.subjectMergeCustomer
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.creatingObjectForm() );
   }
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( params => this.formFilling( params ) );
   }
 
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
   private initTableAsync() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
         this.profileSearchService.getProfileSearch( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( profile: Iprofiles ) => this.tableAsyncService.setTableDataSource( profile.result ) );
       } );
   }
@@ -132,26 +134,26 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private initAirports() {
     this.profileSearchService.getAirports()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( airports: IAirport[] ) => this.airports = airports );
   }
 
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( segmentation: ISegmentation[] ) => this.segmentation = segmentation );
   }
 
   private initCustomerGroup() {
     this.profileGroupService.getProfileGroup()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( customerGroup: IcustomerGroup[] ) => this.customerGroup = customerGroup );
   }
 
   private initAirlineLCodes() {
     this.profileSearchService.getAirlineCodes()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
   }
 
@@ -170,7 +172,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private autocomplete( formControlName: string, options: string ): Observable<any> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
@@ -237,7 +239,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private switchCheckbox() {
     this.formProfileSearch.get( 'contactsexist' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( value => {
         this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
         this.formProfileSearch.get( 'contactphone' )[ value ? 'disable' : 'enable' ]();
@@ -260,7 +262,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       this.listSegmentationService.getSegmentation(),
       this.profileGroupService.getProfileGroup()
     )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( success );
   }
 
@@ -370,7 +372,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
     this.sendProfileParams = params;
     this.profileSearchService.getProfileSearch( this.sendProfileParams )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( profile => {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
@@ -459,7 +461,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.buttonCsvDisabled = true;
     this.csvLoader = true;
     this.profileSearchService.downloadCsv( this.sendProfileParams )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( resp => {
         const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
         saveAs( resp.body, filename );
@@ -493,15 +495,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     this.formProfileSearch.valueChanges
       .pipe(
-        takeWhile( _ => this.isActive ),
+        untilDestroyed(this),
         map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
       )
       .subscribe( isValue => this.buttonSearch = isValue && isChips() );
   }
 
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

@@ -5,6 +5,8 @@ import { DragulaService } from 'ng2-dragula';
 import { takeWhile } from 'rxjs/operators';
 import { SettingsService } from '../settings.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-form-table-async-profile-settings',
   templateUrl: './form-table-async-profile-settings.component.html',
@@ -19,7 +21,7 @@ export class FormTableAsyncProfileSettingsComponent implements OnInit, OnDestroy
   public itemsTableAsyncProfile: string[] = JSON.parse( localStorage.getItem( 'tableAsyncProfile' ) );
   public defaultCheckbox: string[];
 
-  private isActive: boolean = true;
+
 
   constructor(
     private fb: FormBuilder,
@@ -47,7 +49,7 @@ export class FormTableAsyncProfileSettingsComponent implements OnInit, OnDestroy
   private saveParamsTableAsyncProfile() {
     this.formTableAsyncProfile.valueChanges
       .pipe(
-        takeWhile( _ => this.isActive )
+        untilDestroyed(this)
       )
       .subscribe( checkbox => {
         const saveTableAsyncProfile = [];
@@ -62,7 +64,7 @@ export class FormTableAsyncProfileSettingsComponent implements OnInit, OnDestroy
       } );
     this.subs.add( this.dragulaService.dropModel( this.MANY_ITEMS )
       .pipe(
-        takeWhile( _ => this.isActive )
+        untilDestroyed(this)
       )
       .subscribe( ( { el, target, source, sourceModel } ) => {
         if ( this.itemsTableAsyncProfile.length !== sourceModel.length ) {
@@ -75,9 +77,7 @@ export class FormTableAsyncProfileSettingsComponent implements OnInit, OnDestroy
     );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

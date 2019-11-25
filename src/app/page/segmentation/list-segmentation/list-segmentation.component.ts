@@ -10,6 +10,8 @@ import { AddSegmentationService } from '../add-segmentation/add-segmentation.ser
 import { ActivatedRoute, Router } from '@angular/router';
 import * as R from 'ramda';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-list-segmentation',
   templateUrl: './list-segmentation.component.html',
@@ -24,7 +26,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
   public segmentationProfiles: ISegmentationProfile;
 
   private segmentationId: number;
-  private isActive: boolean;
+
 
   constructor(
     private listSegmentationService: ListSegmentationService,
@@ -35,7 +37,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoaderSegmentationTable = true;
     this.isLoaderProfileTable = true;
     this.isTableProfileTable = false;
@@ -43,13 +45,13 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     this.initTableProfilePagination();
     this.initQueryParams();
     this.listSegmentationService.subjectSegmentations
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.refreshSegmentation() );
   }
 
   private refreshSegmentation() {
     timer( 100 )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.isLoaderSegmentationTable = true;
         this.initSegmentation();
@@ -58,7 +60,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( res => {
         const isRes = !R.isEmpty( res );
         if ( isRes ) {
@@ -72,7 +74,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( segmentation => {
         this.segmentation = segmentation;
         this.isLoaderSegmentationTable = false;
@@ -81,7 +83,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -90,7 +92,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
@@ -102,7 +104,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.addSegmentationService.getProfiles( params )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
         this.tableAsyncService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
@@ -119,8 +121,6 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     this.initTableProfile( this.segmentationId );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

@@ -20,6 +20,8 @@ import { AddPromotionsCodesService } from '../../page/promotions/add-promotions-
 import { ListEmailService } from '../../page/distribution/list-email/list-email.service';
 import { DistributionService } from '../../page/distribution/distribution.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
@@ -36,7 +38,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   public isLoader: boolean;
   public paramsProfileGroup: any;
 
-  private isActive: boolean;
+
 
   constructor(
     private userService: UserService,
@@ -59,7 +61,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.isActive = true;
+
     this.isLoader = true;
     this.initForm();
     this.initGetAway();
@@ -102,7 +104,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'addProfileGroup':
         this.formProfileGroups.get( 'customerGroupId' ).valueChanges
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( id => {
             if ( +id !== 0 ) {
               const params = {
@@ -110,7 +112,7 @@ export class DialogComponent implements OnInit, OnDestroy {
                 customerId: this.data.params.profileId
               };
               this.profileGroupService.addProfileGroupRelation( params )
-                .pipe( takeWhile( _ => this.isActive ) )
+                .pipe( untilDestroyed(this) )
                 .subscribe( _ => {
                   this.initGetAway();
                 } );
@@ -126,7 +128,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.isLoader = true;
         this.profileService.getProfile( this.data.params.profileId )
           .pipe(
-            takeWhile( _ => this.isActive ),
+            untilDestroyed(this),
             map( resp => resp.customerGroupRelations )
           )
           .subscribe( value => {
@@ -135,7 +137,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
             this.profileGroupService.getProfileGroup()
               .pipe(
-                takeWhile( _ => this.isActive ),
+                untilDestroyed(this),
                 map( resp => _.differenceBy( resp, this.paramsProfileGroup, 'customerGroupId' ) )
               )
               .subscribe( ( profileGroups: any ) => {
@@ -153,7 +155,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     switch ( this.data.card ) {
       case 'user':
         this.userService.deleteUser( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/listusers/' ] );
@@ -161,14 +163,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'profiles':
         this.profileSearchService.deleteProfiles( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'profile':
         this.profileService.deleteProfile( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/profilesearch' ] );
@@ -176,7 +178,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'contacts':
         this.contactService.deleteContacts( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -189,14 +191,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           'ContactText': this.formUpdateContact.get( 'contactText' ).value
         };
         this.contactService.putContact( paramsContact )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'profileNames':
         this.profileService.deleteProfileNames( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -211,14 +213,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           'secondName': this.formUpdateProfileName.get( 'secondName' ).value,
         };
         this.profileService.putProfileName( paramsProfileName )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'documents':
         this.documentService.deleteDocuments( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -235,14 +237,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           'expDate': moment( this.formUpdateDocument.get( 'expDate' ).value ).format( 'YYYY-MM-DD' ),
         };
         this.documentService.putDocument( paramsDocument )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteSegmentation':
         this.addSegmentationService.deleteSegmentation( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addSegmentationService.subjectDeleteSegmentation.next();
@@ -250,7 +252,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'deleteSegmentations':
         this.listSegmentationService.deleteSegmentations( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -258,7 +260,7 @@ export class DialogComponent implements OnInit, OnDestroy {
       case 'restart':
         const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
         this.auth.revokeRefreshToken( token.refreshToken )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             localStorage.clear();
             this.dialogRef.close();
@@ -268,14 +270,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'deleteProfileGroups':
         this.profileGroupService.deleteCustomerGroups( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'startEmailDistribution':
         this.distributionService.startDistribution( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.distributionService.distributionSubject.next();
             this.dialogRef.close();
@@ -283,14 +285,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'displayeds':
         this.distributionService.deleteDistributions( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteEmailDistribution':
         this.distributionService.deleteDistribution( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/list-email' ] );
@@ -298,7 +300,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'stopEmailDistribution':
         this.distributionService.stopDistribution( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.distributionService.distributionSubject.next();
@@ -306,7 +308,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'startSmsDistribution':
         this.distributionService.startDistribution( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.distributionService.distributionSubject.next();
             this.dialogRef.close();
@@ -314,14 +316,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'displayeds':
         this.distributionService.deleteDistributions( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteSmsDistribution':
         this.distributionService.deleteDistribution( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/list-sms' ] );
@@ -329,7 +331,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'stopSmsDistribution':
         this.distributionService.stopDistribution( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.distributionService.distributionSubject.next();
@@ -337,7 +339,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'deletePromotions':
         this.addPromotionsService.deletePromotions( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsService.subjectDeletePromotions.next();
@@ -349,7 +351,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           'promotionName': this.formUpdatePromotions.get( 'promotionsName' ).value
         };
         this.addPromotionsService.updatePromotions( paramsPromotions )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsService.subjectDeletePromotions.next();
@@ -357,7 +359,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'promoCode':
         this.addPromotionsCodesService.deletePromoCode( this.data.params )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsCodesService.subjectDeletePromotionsCodes.next();
@@ -368,7 +370,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   deleteProfileGroup( id ): void {
     this.profileGroupService.deleteProfileGroupRelation( id )
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => {
         this.initGetAway();
         this.profileGroupService.subjectProfileGroup.next();
@@ -384,9 +386,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.dialogRef.close();
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }
 

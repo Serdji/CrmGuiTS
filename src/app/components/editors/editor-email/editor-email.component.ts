@@ -1,7 +1,6 @@
 import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { NgxWigToolbarService } from 'ngx-wig';
-import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
 import { IDistributionPlaceholder } from '../../../interface/idistribution-placeholder';
@@ -15,10 +14,15 @@ import * as R from 'ramda';
 import { EditorEmailService } from './editor-email.service';
 import { EditorService } from '../editor.service';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { TranslateService } from '@ngx-translate/core';
+import { DateTimeAdapter, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+
+
 @Component( {
   selector: 'app-editor-email',
   templateUrl: './editor-email.component.html',
-  styleUrls: [ './editor-email.component.styl' ]
+  styleUrls: [ './editor-email.component.styl' ],
 } )
 export class EditorEmailComponent implements OnInit, OnDestroy {
 
@@ -35,7 +39,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   public buttonDisabled: boolean;
 
   private distributionId: number;
-  private isActive: boolean;
+
   private emailLimits: number;
 
 
@@ -47,21 +51,25 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     private editorService: EditorService,
     private router: Router,
     private elRef: ElementRef,
+    private dateTimeAdapter: DateTimeAdapter<any>,
+    public translate: TranslateService,
   ) {}
 
   ngOnInit(): void {
-    this.isActive = true;
     this.buttonDisabled = true;
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
     this.insertTemplate();
     this.initIsButtonSave();
+    this.translate.stream( 'MENU' ).subscribe( _ => {
+      this.dateTimeAdapter.setLocale( this.translate.store.currentLang );
+    } );
   }
 
   private initIsButtonSave() {
     this.formDistribution.valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.buttonDisabled = this.formDistribution.invalid );
   }
 
@@ -74,13 +82,13 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       dateTo: '',
       totalCount: '',
       emailLimits: '',
-    });
+    } );
     this.formFilling();
   }
 
   private initTemplates() {
     this.editorEmailService.getTemplates()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( templates: ITemplates[] ) => {
         this.templates = templates;
       } );
@@ -88,7 +96,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
 
   private initDistributionPlaceholders() {
     this.editorEmailService.getDistributionPlaceholders()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( value => {
         this.distributionPlaceholders = value;
       } );
@@ -102,16 +110,16 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   }
 
   private formFilling() {
-    if( this.params.task ) {
+    if ( this.params.task ) {
       this.formDistribution.get( 'subject' ).patchValue( this.params.task.subject );
       this.formDistribution.get( 'text' ).patchValue( this.params.task.distributionTemplate );
     }
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
-    this.formDistribution.get( 'dateTo' ).patchValue( moment().add( 1, 'days' ).format() );
+    this.formDistribution.get( 'dateTo' ).patchValue( moment().add( { days: 1, hour: 23 } ).format() );
     this.formDistribution.get( 'totalCount' ).patchValue( this.totalCount );
     this.formDistribution.get( 'totalCount' ).disable();
     this.editorEmailService.getEmailLimits()
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( emailLimits => {
         this.emailLimits = emailLimits;
         this.formDistribution.get( 'emailLimits' ).patchValue( emailLimits );
@@ -121,12 +129,12 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
 
   private insertTemplate() {
     this.formDistribution.get( 'templateId' ).valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( value => {
         this.formDistribution.get( 'text' ).patchValue( '' );
         if ( value ) {
           this.editorService.getTemplate( value )
-            .pipe( takeWhile( _ => this.isActive ) )
+            .pipe( untilDestroyed( this ) )
             .subscribe( ( template: ITemplate ) => {
               this.formDistribution.get( 'text' ).patchValue( template.text );
             } );
@@ -182,7 +190,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     if ( status === 'ok' ) {
       this.resetForm();
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -192,8 +200,8 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   private newParams = () => _( this.formDistribution.getRawValue() )
     .merge( this.params )
     .omit( [ 'templateId', 'totalCount', 'emailLimits', 'count', 'from' ] )
-    .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
-    .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '' )
+    .set( 'dateFrom', this.formDistribution.get( 'dateFrom' ).value ? moment( this.formDistribution.get( 'dateFrom' ).value ).format( 'YYYY-MM-DDTHH:mm:ss' ) : '' )
+    .set( 'dateTo', this.formDistribution.get( 'dateTo' ).value ? moment( this.formDistribution.get( 'dateTo' ).value ).format( 'YYYY-MM-DDTHH:mm:ss' ) : '' )
     .set( 'text', this.elRef.nativeElement.querySelector( '.nw-editor__res' ).innerHTML )
     .set( 'distributionType', 1 )
     .value();
@@ -209,15 +217,14 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 
       const saveDistribution = params => this.editorService.saveDistribution( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( success, error );
       const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( success, error );
 
       const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );
       whichMethod( this.newParams() );
-
     } else {
       this.windowDialog( 'DIALOG.ERROR.NOT_ALL_FIELDS', 'error' );
     }
@@ -227,8 +234,6 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     this.messageEvent.emit( this.newParams() );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

@@ -15,6 +15,8 @@ import { IFoodNode } from '../../../interface/ifood-node';
 import { forkJoin, of } from 'rxjs';
 import { complexPasswordValidator } from '../../../validators/complexPasswordValidator';
 
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
 @Component( {
   selector: 'app-user',
   templateUrl: './user.component.html',
@@ -33,7 +35,7 @@ export class UserComponent implements OnInit, OnDestroy {
   public persons: { title: string, ids: number[] }[] = person;
 
   private loginId: number;
-  private isActive: boolean;
+
   private paramsReport: { loginId: number, reportsIds: number[] };
 
   constructor(
@@ -45,7 +47,7 @@ export class UserComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.isActive = true;
+
 
     this.initUser();
     this.initFormUser();
@@ -57,7 +59,7 @@ export class UserComponent implements OnInit, OnDestroy {
   private initUser() {
     this.progress = true;
     this.route.params
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( ( params ) => {
         this.loginId = params.id;
         this.userService.getUser( params.id ).subscribe( ( user: IlistUsers ) => {
@@ -107,7 +109,7 @@ export class UserComponent implements OnInit, OnDestroy {
     const switchCheckboxPerson = R.map( ids => {
       this.formPermission.get( `${ids[ 1 ]}` )[ this.formPermission.get( `${ids[ 0 ]}` ).value ? 'enable' : 'disable' ]();
       this.formPermission.get( `${ids[ 0 ]}`  ).valueChanges
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( value => {
           this.formPermission.get( `${ids[ 1 ]}`  )[ value ? 'enable' : 'disable' ]();
           this.formPermission.get( `${ids[ 1 ]}`  ).patchValue( '' );
@@ -127,7 +129,7 @@ export class UserComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.dialog.closeAll();
           this.edit = false;
@@ -136,7 +138,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
   collectObjectReport( event ): void {
-    console.log( this.paramsReport );
     this.paramsReport = {
       loginId: +this.loginId,
       reportsIds: event
@@ -148,7 +149,7 @@ export class UserComponent implements OnInit, OnDestroy {
       const params = this.updateUser.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
       this.userService.putUser( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( ( user: IlistUsers ) => {
           this.user = user;
           this.windowDialog( 'DIALOG.OK.USER_CHANGED', 'ok' );
@@ -165,7 +166,7 @@ export class UserComponent implements OnInit, OnDestroy {
       const params = this.updatePassword.getRawValue();
       Object.assign( params, { loginId: this.loginId } );
       this.userService.putPassword( params )
-        .pipe( takeWhile( _ => this.isActive ) )
+        .pipe( untilDestroyed(this) )
         .subscribe( _ => this.windowDialog( 'DIALOG.OK.PASSWORD_CHANGED', 'ok' ) );
     }
   }
@@ -181,7 +182,7 @@ export class UserComponent implements OnInit, OnDestroy {
       if ( this.user.login === localStorage.getItem( 'login' ) ) {
         this.windowDialog( 'DIALOG.ERROR.RIGHTS_FOR_YOU_ACCOUNT', 'error', '', true );
         timer( 5000 )
-          .pipe( takeWhile( _ => this.isActive ) )
+          .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialog.closeAll();
             this.activityUserService.logout();
@@ -192,10 +193,10 @@ export class UserComponent implements OnInit, OnDestroy {
       }
     };
 
-    const oUpdateClaimPermissions = this.userService.updateClaimPermissions( params ).pipe( takeWhile( _ => this.isActive ) );
-    const oSetAdminReports = R.isNil(this.paramsReport) ? of( {} ) : this.userService.setAdminReports( this.paramsReport ).pipe( takeWhile( _ => this.isActive ) );
+    const oUpdateClaimPermissions = this.userService.updateClaimPermissions( params ).pipe( untilDestroyed(this) );
+    const oSetAdminReports = R.isNil(this.paramsReport) ? of( {} ) : this.userService.setAdminReports( this.paramsReport ).pipe( untilDestroyed(this) );
     const permissionsObservable = forkJoin( oUpdateClaimPermissions, oSetAdminReports );
-    permissionsObservable.pipe( takeWhile( _ => this.isActive ) ).subscribe( success );
+    permissionsObservable.pipe( untilDestroyed(this) ).subscribe( success );
   }
 
   toggleEdit(): void {
@@ -203,8 +204,6 @@ export class UserComponent implements OnInit, OnDestroy {
   }
 
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

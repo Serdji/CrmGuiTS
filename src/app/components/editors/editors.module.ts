@@ -11,6 +11,8 @@ import { EditorEmailComponent } from './editor-email/editor-email.component';
 import { EditorEmailService } from './editor-email/editor-email.service';
 import { EditorSmsComponent } from './editor-sms/editor-sms.component';
 import { EditorSmsService } from './editor-sms/editor-sms.service';
+import { OwlDateTimeIntl, OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { DefaultIntl } from './pick-date-time-option';
 
 @NgModule( {
   imports: [
@@ -21,6 +23,8 @@ import { EditorSmsService } from './editor-sms/editor-sms.service';
     SharedModule,
     DirectivesModule,
     TranslateModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule,
   ],
   declarations: [
     EditorEmailComponent,
@@ -37,7 +41,8 @@ import { EditorSmsService } from './editor-sms/editor-sms.service';
   entryComponents: [ DialogEditorComponent ],
   providers: [
     EditorEmailService,
-    EditorSmsService
+    EditorSmsService,
+    { provide: OwlDateTimeIntl, useClass: DefaultIntl },
   ]
 } )
 export class EditorsModule {

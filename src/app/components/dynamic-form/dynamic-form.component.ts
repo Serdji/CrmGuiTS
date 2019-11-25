@@ -1,9 +1,11 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import * as R from 'ramda';
 import * as moment from 'moment';
+import * as _ from 'lodash';
 import { IParamsDynamicForm } from '../../interface/iparams-dynamic-form';
-import { takeWhile } from 'rxjs/operators';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+import { timer } from 'rxjs';
 
 @Component( {
   selector: 'app-dynamic-form',
@@ -17,7 +19,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public splitObjectProps: any;
   public buttonDisabled: boolean;
 
-  private isActive: boolean;
+
   private dataObject: any = {};
 
   @Input() cols: number;
@@ -26,12 +28,12 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   @Input() splitInput: number;
   @Output() dynamicFormEmit: EventEmitter<any> = new EventEmitter<any>();
 
-  constructor() { }
+  constructor(private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.isActive = true;
     this.initParameterConversion();
     this.initButtonDisabled();
+    this.autoFocusAndBlur( );
   }
 
 
@@ -63,7 +65,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
   private initButtonDisabled() {
     this.dynamicForm.valueChanges
-      .pipe( takeWhile( _ => this.isActive ) )
+      .pipe( untilDestroyed(this) )
       .subscribe( _ => this.buttonDisabled = this.dynamicForm.invalid );
   }
 
@@ -87,21 +89,34 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.dynamicForm = new FormGroup( formGroup );
   }
 
+
   private initSplitObjectProps() {
     const splitInput = this.splitInput || R.length( this.objectProps );
     const splitEvery = R.splitEvery( splitInput );
     this.splitObjectProps = splitEvery( this.objectProps );
   }
 
+  private autoFocusAndBlur( ): void {
+    _.each( this.dynamicForm.getRawValue() , ( val, key ) => {
+      timer( 0 )
+        .pipe( untilDestroyed( this ) )
+        .subscribe( _ =>  {
+          this.renderer.selectRootElement( `#${ key }` ).focus();
+          this.renderer.selectRootElement( `#${ key }` ).blur();
+        } );
+    } );
+  }
 
   private mapValidators( validators ) {
     const formValidators = [];
     const mapValidationFunc = validation => {
-      switch ( validation ) {
-        case 'required': formValidators.push( Validators.required ); break;
-        case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
-        case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
-        case 'email': formValidators.push( Validators.email ); break;
+      if ( validators[ validation ] ) {
+        switch ( validation ) {
+          case 'required': formValidators.push( Validators.required ); break;
+          case 'max': formValidators.push( Validators.max( validators[ validation ] ) ); break;
+          case 'min': formValidators.push( Validators.min( validators[ validation ] ) ); break;
+          case 'email': formValidators.push( Validators.email ); break;
+        }
       }
     };
     const mapValidation = R.map( mapValidationFunc );
@@ -118,8 +133,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     this.dynamicFormEmit.emit( objParserDate );
   }
 
-  ngOnDestroy(): void {
-    this.isActive = false;
-  }
+  ngOnDestroy(): void {}
 
 }

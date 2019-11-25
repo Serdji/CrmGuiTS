@@ -7,19 +7,19 @@
           <div [ngSwitch]="prop.type">
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'text'">
-              <input matInput [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder">
+              <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder">
               <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
             </mat-form-field>
 
             <div class="dynamic-form__input" *ngSwitchCase="'radio'">
-              <mat-radio-group [formControlName]="prop.key">
+              <mat-radio-group [id]="prop.key" [formControlName]="prop.key">
                 <mat-radio-button class="dynamic-form__radio" *ngFor="let option of prop.options"
                                   [value]="option.value">{{option.placeholder}}</mat-radio-button>
               </mat-radio-group>
             </div>
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'select'">
-              <mat-select [formControlName]="prop.key">
+              <mat-select [id]="prop.key" [formControlName]="prop.key">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let option of prop.options" [value]="option.value">
                   {{ option.placeholder }}
@@ -28,13 +28,13 @@
             </mat-form-field>
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'date'">
-              <input matInput [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
+              <input matInput [id]="prop.key" [formControlName]="prop.key" [placeholder]="prop.placeholder" [matDatepicker]="picker">
               <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #picker></mat-datepicker>
             </mat-form-field>
 
             <div class="dynamic-form__input" *ngSwitchCase="'checkbox'">
-              <mat-checkbox [formControlName]="prop.key">{{prop.placeholder}}</mat-checkbox>
+              <mat-checkbox [id]="prop.key" [formControlName]="prop.key">{{prop.placeholder}}</mat-checkbox>
             </div>
           </div>
         </div>
