@@ -337,7 +337,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
-					"AIRLINE_L_CODE": "Код авиокампании",
+					"AIRLINE_L_CODE": "Код авиакомпании",
 					"ARR_POINT": "Куда",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Дата продажи с",
 					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Дата продажи по",
