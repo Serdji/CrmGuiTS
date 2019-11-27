@@ -29,7 +29,7 @@
 
 
     <ng-container  matColumnDef="customerGroupName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header> Группа пассажиров </mat-header-cell>
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SLECIAL_GROUP.PROFILE_GROUP.TABLE.PROFILE_GROUP' | translate}} </mat-header-cell>
       <mat-cell #matCell class="table__cell"  *matCellDef="let element"><span>{{element.customerGroupName}}</span>
       </mat-cell>
 

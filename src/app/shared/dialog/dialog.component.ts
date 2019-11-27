@@ -21,11 +21,26 @@ import { ListEmailService } from '../../page/distribution/list-email/list-email.
 import { DistributionService } from '../../page/distribution/distribution.service';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MomentDateAdapter } from '@angular/material-moment-adapter';
+
+const MY_FORMATS = {
+  parse: {
+    dateInput: 'DD MM YYYY',
+  },
+  display: {
+    dateInput: 'DD.MM.YYYY',
+    monthYearLabel: 'MMMM YYYY',
+  },
+};
 
 @Component( {
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: [ './dialog.component.styl' ],
+  styleUrls: [ './dialog.component.styl' ],  providers: [
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
+  ],
 } )
 export class DialogComponent implements OnInit, OnDestroy {
 

@@ -17,8 +17,8 @@
           <mat-grid-tile [colspan]="2" [rowspan]="1">
             <div class="profile-email-distribution__grid">
               <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.DATE' | translate}}
-                <b> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.FROM' | translate}} {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}
-                  , {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TO' | translate}} {{ distributionProfile.dateTo | date:'dd.MM.yyyy' }} </b>  </span>
+                <b> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.FROM' | translate}} {{ distributionProfile.dateFrom | date:'dd.MM.yyyy HH:mm' }}
+                  , {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TO' | translate}} {{ distributionProfile.dateTo | date:'dd.MM.yyyy HH:mm' }} </b>  </span>
               <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.LAST_TRY' | translate}}
                 <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>
               <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUS' | translate}}

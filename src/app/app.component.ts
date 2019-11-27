@@ -51,15 +51,20 @@ export class AppComponent implements OnInit {
     this.isTokenRedirect();
     this.updateVersion();
     this.saveUrlServiceService.deleteLocalStorageParams();
+
     this.titleService.dataTitle();
     this.initTranslate();
   }
 
   private initTranslate() {
-    this.translate.addLangs( [ 'ru' ] );
+    this.translate.addLangs( [ 'ru', 'en' ] );
     this.translate.setDefaultLang( 'ru' );
     const browserLang = this.translate.getBrowserLang();
-    // this.translate.use( browserLang.match( /ru|en'/ ) ? browserLang : 'ru' );
+    const loadingLanguage = localStorage.getItem( 'language' );
+
+    if ( loadingLanguage ) this.translate.use( loadingLanguage );
+    else this.translate.use( browserLang.match( /ru|en'/ ) ? browserLang : 'en' );
+
     this.translate.stream( 'MENU' ).subscribe( _ => {
       this._adapter.setLocale( this.translate.store.currentLang );
     } );

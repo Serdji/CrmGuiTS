@@ -1,5 +1,6 @@
 @import '~@angular/material/theming';
 @import '/date-time-picker';
+@import '/assets/iconfont/material-icons';
 @include mat-core();
 
 $background: mat-color($mat-brown, 50);
