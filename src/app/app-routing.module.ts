@@ -23,6 +23,7 @@ const routes: Routes = [
         { path: 'add-profile', loadChildren: () => import('./page/profiles/add-profile/add-profile.module').then(m => m.AddProfileModule), data: { title: 'MENU.CUSTOMER.ADD_CUSTOMER' } },
         { path: 'list-segmentation', loadChildren: () => import('./page/segmentation/list-segmentation/list-segmentation.module').then(m => m.ListSegmentationModule), data: { title: 'MENU.SEGMENTATION.LIST_SEGMENTATION' } },
         { path: 'add-segmentation', loadChildren: () => import('./page/segmentation/add-segmentation/add-segmentation.module').then(m => m.AddSegmentationModule), data: { title: 'MENU.SEGMENTATION.ADD_SEGMENTATION' } },
+        { path: 'edit-segmentation', loadChildren: () => import('./page/segmentation/add-segmentation/add-segmentation.module').then(m => m.AddSegmentationModule), data: { title: 'BREADCRUMBS.EDIT_SEGMENTATION' } },
         { path: 'complex-segmentation', loadChildren: () => import('./page/segmentation/complex-segmentation/complex-segmentation.module').then(m => m.ComplexSegmentationModule), data: { title: 'MENU.SEGMENTATION.AGGREGATION_SEGMENTATION' } },
         { path: 'profile-group', loadChildren: () => import('./page/special-groups/profile-group/profile-group.module').then(m => m.ProfileGroupModule), data: { title: 'MENU.GROUP_CUSTOMER.LIST_GROUP_CUSTOMER' } },
         { path: 'list-email', loadChildren: () => import('./page/distribution/list-email/list-email.module').then(m => m.ListEmailModule), data: { title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' } },

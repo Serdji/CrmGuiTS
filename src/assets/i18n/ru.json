@@ -1,6 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Пассажир",
+		"EDIT_SEGMENTATION": "Редактировать сегментацию",
 		"EMAIL_DISTRIBUTION": " Email рассылка",
 		"EVENT": "Событие",
 		"HOME": "Главная",

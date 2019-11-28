@@ -1,6 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
+		"EDIT_SEGMENTATION": "Edit segmentation",
 		"EMAIL_DISTRIBUTION": "Email distributions",
 		"EVENT": "Event",
 		"HOME": "Main page",
