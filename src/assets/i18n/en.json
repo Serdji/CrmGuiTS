@@ -11,7 +11,6 @@
 		"ADD": "Add",
 		"ADD_CUSTOMER": "Add passenger",
 		"ADD_USER": "Add user",
-		"CANCEL": "Cancel",
 		"CANCEL_DISTRIBUTION": "Cancel distribution",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
@@ -77,7 +76,7 @@
 			"SERVER_IS_NOT_RES": "The server is currently not responding. Please restart the application and try again later, or contact support service."
 		},
 		"INTERSECTION": {
-			"ACCOUNT_CODE": "Account code:",
+			"ACCOUNT_CODE": "Accounting code:",
 			"BRAND": "Brands:",
 			"CUSTOMER": "Profile:",
 			"CUSTOMER_GROUP": "Passenger groups:",
@@ -145,7 +144,7 @@
 			"LIST_SMS": "SMS"
 		},
 		"EVENT": {
-			"ADD_EVENT": "Add new event",
+			"ADD_EVENT": "Add event",
 			"GROUP_NAME": "Events",
 			"LIST_EVENT": "List of events"
 		},
@@ -154,8 +153,8 @@
 			"LIST_GROUP_CUSTOMER": "List of groups"
 		},
 		"PROMOTIONS_CODES": {
-			"ADD_PROMOTIONS": "Add new promo offer",
-			"ADD_PROMOTIONS_CODES": "Add new promo code",
+			"ADD_PROMOTIONS": "Promo offers",
+			"ADD_PROMOTIONS_CODES": "Add promo code",
 			"GROUP_NAME": "Promo codes",
 			"SEARCH_PROMOTIONS_CODES": "Promo code search"
 		},
@@ -429,12 +428,10 @@
 					"CUSTOMER_GROUP": "Passenger groups:",
 					"CUSTOMER_ID": "Profile ID:",
 					"DATE_OF_BIRTH": "Date of birth:",
-					"EDIT_LIST_CUSTOMER_GROUPS": "Edit the list of passengers groups",
 					"GENDER": "Sex:",
 					"LUT": "Last activity:",
 					"PROFILE": "Name:",
 					"SEGMENTATION": "Segmentations:",
-					"SHOW_ALL_GROUPS": "Show all groups",
 					"TOTAL_AMOUNT": "Total cost:"
 				},
 				"MESSAGES": {
@@ -608,7 +605,7 @@
 				"PROMO_CODE": {
 					"EXPANSION": {
 						"TEMPLATE": {
-							"ACCOUT_CODE": "Account code:",
+							"ACCOUT_CODE": "Accounting code:",
 							"BRAND": "Brands:",
 							"CUSTOMER": "Profile: ",
 							"CUSTOMER_GROUP": "Passenger groups:",
@@ -660,14 +657,14 @@
 			},
 			"ADD_PROMOTIONS_CODE": {
 				"FIELD": {
-					"ACCOUNT_CODE": "Account code",
-					"ARR_LOC": "Travelling to",
+					"ACCOUNT_CODE": "Accounting code",
+					"ARR_LOC": "Travel to",
 					"BRAND": "Brands",
 					"CUSTOMER": "Passenger profile ID",
 					"CUSTOMER_GROUP": "Passenger groups",
 					"DATE_FROM": "Effective date",
 					"DATE_TO": "Discontinue date",
-					"DEP_LOC": "Travelling from",
+					"DEP_LOC": "Travel from",
 					"DESCRIPTION": "Promo code description",
 					"FLIGHT": "Flight numbers",
 					"FLIGHT_DATA_FROM": "Travel date after",
@@ -696,11 +693,11 @@
 			},
 			"SEARCH_PROMOTIONS_CODE": {
 				"FIELD": {
-					"ACCOUNT_CODE": "Account code",
+					"ACCOUNT_CODE": "Accounting code",
 					"BRAND": "Brands",
 					"CUSTOMER_GROUP": "Passenger groups",
-					"DATE_FROM": "Effective date",
-					"DATE_TO": "Discontinue date",
+					"DATE_FROM": "Effective date on/after",
+					"DATE_TO": "Discontinue date on/before",
 					"FLIGHT": "Flight numbers",
 					"FLIGHT_DATA_FROM": "Travel date after",
 					"FLIGHT_DATA_TO": "Travel date before",
@@ -710,7 +707,7 @@
 					"SEGMENTATION": "Segmentations"
 				},
 				"TABLE": {
-					"ACCOUNT_CODE": "Account code",
+					"ACCOUNT_CODE": "Accounting code",
 					"DATE_FROM": "Effective date",
 					"DATE_TO": "Discontinue date",
 					"FLIGHT_DATA_FROM": "Travel date after",
@@ -722,9 +719,9 @@
 		},
 		"REPORTS": {
 			"STATISTICS_REPORT": {
-				"MES_DOWNLOAD_EXC": "Download report in an *.xls file",
-				"MES_DOWNLOAD_PDF": "Download report in a *.pdf file",
-				"MES_DOWNLOAD_WORD": "Download report in a *.doc file",
+				"MES_DOWNLOAD_EXC": "Download report in *.xls file",
+				"MES_DOWNLOAD_PDF": "Download report in *.pdf file",
+				"MES_DOWNLOAD_WORD": "Download report in *.doc file",
 				"REPORT_PARAMETERS": "Report settings",
 				"REPORT_SELECTION": "Report type"
 			}
@@ -765,8 +762,8 @@
 				"PROFILE_DETAILS": {
 					"DOB_FROM": "Date of birth on/after",
 					"DOB_TO": "",
-					"FLIES_WITHOUT_CHILDREN": "Never travelled with assigned child/infant",
-					"FLIES_WITH_CHILDREN": "Travelled with assigned child/infant at least once",
+					"FLIES_WITHOUT_CHILDREN": "Never travelled with child/infant",
+					"FLIES_WITH_CHILDREN": "Travelled with child/infant at least once",
 					"GENDER": {
 						"F": "Female",
 						"M": "Male",
@@ -788,9 +785,9 @@
 					"DISPATCH_TIME": "Time before departure",
 					"FLIGHT_NO": "Flight number",
 					"NOT_SERVICE_CODE": "No service code",
-					"POS_AGENCY": "Travel agency code (point of sale)",
-					"POS_GDS": "GDS code (point of sale)",
-					"POS_ID": " Travel agency user ID (point of sale)",
+					"POS_AGENCY": "Pseudo ID / 1Н agency ID",
+					"POS_GDS": "Booking source",
+					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP)",
 					"SERVICE_CODE": "SSR/RFISC",
 					"TITLE": "Paid services"
 				},
@@ -809,9 +806,9 @@
 					"DEP_LOC": "Point of origin",
 					"DISPATCH_TIME": "Time before departure",
 					"FLIGHT_NO": "Flight number",
-					"POS_AGENCY": "Travel agency code (point of sale)",
-					"POS_GDS": "GDS code (point of sale)",
-					"POS_ID": "Terminal ID (point of sale)",
+					"POS_AGENCY": "Pseudo ID / 1Н agency ID",
+					"POS_GDS": "Booking source",
+					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP",
 					"RARE_CODE": "Fare code",
 					"RDB": "RBD",
 					"TITLE": "Ticket"
@@ -935,7 +932,7 @@
 			"LAST_NAME": "Surname:"
 		},
 		"DIALOG_PROMO_CODE": {
-			"ACCOUNT_CODE": "Account Code:",
+			"ACCOUNT_CODE": "Accounting code:",
 			"DATE_FROM": "Effective date",
 			"DATE_TO": "Discontinue date",
 			"NAME_PROMO_CODE": "Promo code name:",
