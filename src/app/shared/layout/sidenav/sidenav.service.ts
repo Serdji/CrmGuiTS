@@ -31,8 +31,8 @@ export class SidenavService {
         icon: 'person',
         claims: 'users:read',
         link: [
-          { url: '/crm/listusers', title: 'MENU.USERS.LIST_USERS' },
-          { url: '/crm/adduser', title: 'MENU.USERS.ADD_USERS' }
+          { url: '/crm/list-users', title: 'MENU.USERS.LIST_USERS' },
+          { url: '/crm/add-user', title: 'MENU.USERS.ADD_USERS' }
         ]
       },
       {
@@ -40,8 +40,8 @@ export class SidenavService {
         icon: 'airline_seat_recline_extra',
         claims: 'customers:read',
         link: [
-          { url: '/crm/profilesearch', title: 'MENU.CUSTOMER.SEARCH_CUSTOMER' },
-          { url: '/crm/addprofile', title: 'MENU.CUSTOMER.ADD_CUSTOMER' }
+          { url: '/crm/profile-search', title: 'MENU.CUSTOMER.SEARCH_CUSTOMER' },
+          { url: '/crm/add-profile', title: 'MENU.CUSTOMER.ADD_CUSTOMER' }
         ]
       },
       {
@@ -49,9 +49,9 @@ export class SidenavService {
         icon: 'group',
         claims: 'analytics:read',
         link: [
-          { url: '/crm/listsegmentation', title: 'MENU.SEGMENTATION.LIST_SEGMENTATION' },
-          { url: '/crm/addsegmentation', title: 'MENU.SEGMENTATION.ADD_SEGMENTATION' },
-          { url: '/crm/complexsegmentation', title: 'MENU.SEGMENTATION.AGGREGATION_SEGMENTATION' },
+          { url: '/crm/list-segmentation', title: 'MENU.SEGMENTATION.LIST_SEGMENTATION' },
+          { url: '/crm/add-segmentation', title: 'MENU.SEGMENTATION.ADD_SEGMENTATION' },
+          { url: '/crm/complex-segmentation', title: 'MENU.SEGMENTATION.AGGREGATION_SEGMENTATION' },
         ]
       },
       {
@@ -59,7 +59,7 @@ export class SidenavService {
         icon: 'group_add',
         claims: 'analytics:read',
         link: [
-          { url: '/crm/profilegroup', title: 'MENU.GROUP_CUSTOMER.LIST_GROUP_CUSTOMER' },
+          { url: '/crm/profile-group', title: 'MENU.GROUP_CUSTOMER.LIST_GROUP_CUSTOMER' },
         ]
       },
       {

@@ -144,7 +144,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
     };
     this.isTableProfileTable = true;
     this.isLoaderProfileTable = true;
-    this.router.navigate( [ 'crm/profilegroup' ], { queryParams: params } );
+    this.router.navigate( [ 'crm/profile-group' ], { queryParams: params } );
     this.initProfileSearchTable( params );
   }
 

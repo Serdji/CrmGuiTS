@@ -117,7 +117,7 @@ export class ListSegmentationComponent implements OnInit, OnDestroy {
     this.segmentationId = segmentationId;
     this.isTableProfileTable = true;
     this.isLoaderProfileTable = true;
-    this.router.navigate( [ 'crm/listsegmentation' ], { queryParams: { segmentationId } } );
+    this.router.navigate( [ 'crm/list-segmentation' ], { queryParams: { segmentationId } } );
     this.initTableProfile( this.segmentationId );
   }
 

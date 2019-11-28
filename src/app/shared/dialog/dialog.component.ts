@@ -173,7 +173,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.router.navigate( [ '/crm/listusers/' ] );
+            this.router.navigate( [ '/crm/list-users/' ] );
           } );
         break;
       case 'profiles':
@@ -188,7 +188,7 @@ export class DialogComponent implements OnInit, OnDestroy {
           .pipe( untilDestroyed(this) )
           .subscribe( _ => {
             this.dialogRef.close();
-            this.router.navigate( [ '/crm/profilesearch' ] );
+            this.router.navigate( [ '/crm/profile-search' ] );
           } );
         break;
       case 'contacts':
@@ -393,7 +393,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   }
 
   openSegmentation( id ): void {
-    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { id } } );
+    this.router.navigate( [ '/crm/add-segmentation' ], { queryParams: { id } } );
     this.dialogRef.close();
   }
 
