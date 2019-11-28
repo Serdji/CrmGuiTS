@@ -60,7 +60,7 @@
                 <mat-icon
                   *ngIf="this.profileSegmentation.isPointer"
                   class="_pointer"
-                  matTooltip="Показать все группы"
+                  matTooltip="{{'PAGE.PROFILES.TABS_PROFILE.HEADER.SHOW_ALL_GROUPS' | translate}}"
                   (click)="openListSegmentation()"
                 >aspect_ratio
                 </mat-icon>
@@ -75,7 +75,7 @@
                 </div>
                 <mat-icon
                   class="_pointer"
-                  matTooltip="Редактирование списка групп пассажиров"
+                  matTooltip="{{'PAGE.PROFILES.TABS_PROFILE.HEADER.EDIT_LIST_CUSTOMER_GROUPS' | translate}}"
                   (click)="addProfileGroup()"
                 >create
                 </mat-icon>

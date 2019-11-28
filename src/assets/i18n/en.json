@@ -11,6 +11,7 @@
 		"ADD": "Add",
 		"ADD_CUSTOMER": "Add passenger",
 		"ADD_USER": "Add user",
+		"CANCEL": "Cancel",
 		"CANCEL_DISTRIBUTION": "Cancel distribution",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
@@ -428,10 +429,12 @@
 					"CUSTOMER_GROUP": "Passenger groups:",
 					"CUSTOMER_ID": "Profile ID:",
 					"DATE_OF_BIRTH": "Date of birth:",
+					"EDIT_LIST_CUSTOMER_GROUPS": "Edit the list of passengers groups",
 					"GENDER": "Sex:",
 					"LUT": "Last activity:",
 					"PROFILE": "Name:",
 					"SEGMENTATION": "Segmentations:",
+					"SHOW_ALL_GROUPS": "Show all groups",
 					"TOTAL_AMOUNT": "Total cost:"
 				},
 				"MESSAGES": {

@@ -429,10 +429,12 @@
 					"CUSTOMER_GROUP": "Группы пассажиров",
 					"CUSTOMER_ID": "№ профиля:",
 					"DATE_OF_BIRTH": "Дата рождения:",
+					"EDIT_LIST_CUSTOMER_GROUPS": "Редактирование списка групп пассажиров",
 					"GENDER": "Пол:",
 					"LUT": "Дата последней активности:",
 					"PROFILE": "Профиль:",
 					"SEGMENTATION": "Группы сегментации",
+					"SHOW_ALL_GROUPS": "Показать все группы",
 					"TOTAL_AMOUNT": "Оформленных на сумму:"
 				},
 				"MESSAGES": {
