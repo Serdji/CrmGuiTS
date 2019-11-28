@@ -54,6 +54,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
   public profilePromoCode: IProfilePromoCode;
+  public customPatterns : { [ character: string ]: { pattern: RegExp, optional?: boolean } };
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -97,12 +98,12 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private promoCodeId: number;
   private arrCustomerIds: number[] = [];
 
-  @ViewChild('promoCodeFlightListChipInput', { static: true }) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
-  @ViewChild('promoCodeBrandListChipInput', { static: true }) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
-  @ViewChild('promoCodeRbdListChipInput', { static: true }) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
-  @ViewChild('promoCodeCustomerListChipInput', { static: true }) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
-  @ViewChild('segmentationChipInput', { static: true }) segmentationFruitInput: ElementRef<HTMLInputElement>;
-  @ViewChild('customerGroupChipInput', { static: true }) customerGroupFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeFlightListChipInput', { static: true } ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeBrandListChipInput', { static: true } ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeRbdListChipInput', { static: true } ) promoCodeRbdListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'promoCodeCustomerListChipInput', { static: true } ) promoCodeCustomerListInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
+  @ViewChild( 'customerGroupChipInput', { static: true } ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
 
 
   constructor(
@@ -125,6 +126,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonDelete = true;
     this.buttonSearch = true;
+    this.customPatterns = { 'A': { pattern: new RegExp('\[A-Z0-9\]')} };
 
     this.isLoader = true;
     this.autDelay = 500;
@@ -138,10 +140,10 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.initTableProfilePagination();
     this.addPromotionsCodesService.subjectDeletePromotionsCodes
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.clearForm() );
     this.saveUrlServiceService.subjectEvent401
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { saveFormParams: JSON.stringify( this.promoCodeParameters() ) } } );
       } );
@@ -151,7 +153,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     const hasSaveFormParams = R.has( 'saveFormParams' );
     const hasPromoCodeId = R.has( 'promoCodeId' );
     this.route.queryParams
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( params => {
         if ( hasPromoCodeId( params ) ) {
           this.buttonSave = true;
@@ -169,7 +171,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initCities() {
     this.profileSearchService.getCities()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( cities: ICity[] ) => {
         this.cities = cities;
       } );
@@ -177,7 +179,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( segmentation: ISegmentation[] ) => {
         this.segmentation = segmentation;
       } );
@@ -185,7 +187,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initCustomerGroup() {
     this.profileGroupService.getProfileGroup()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( customerGroup: IcustomerGroup[] ) => {
         this.customerGroup = customerGroup;
       } );
@@ -193,7 +195,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initPromoCodeValTypes() {
     this.addPromotionsCodesService.getPromoCodeValTypes()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
   }
 
@@ -203,14 +205,14 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       count: 10000
     };
     this.addPromotionsService.getAllPromotions( params )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( promotions: IPromotions ) => this.promotions = promotions );
   }
 
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -220,7 +222,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
           sortvalue: 'last_name'
         };
         this.addPromotionsCodesService.getProfiles( paramsAndCount )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( ( profilePromoCode: IProfilePromoCode ) => this.tableAsyncService.setTableDataSource( profilePromoCode.result ) );
       } );
   }
@@ -233,7 +235,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       sortvalue: 'last_name'
     };
     this.addPromotionsCodesService.getProfiles( params )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( profilePromoCode: IProfilePromoCode ) => {
         this.tableAsyncService.countPage = profilePromoCode.totalCount;
         this.profilePromoCode = profilePromoCode;
@@ -253,7 +255,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -262,7 +264,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private formFilling( promoCodeId: number ) {
     this.addPromotionsCodesService.getPromoCode( +promoCodeId )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( promoCod: IPromoCode ) => {
         _.set( promoCod, 'promotionName', _.get( promoCod, 'promotion.promotionName' ) );
         _.each( promoCod, ( value: any, key: string ) => {
@@ -359,7 +361,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private autocomplete( formControlName: string, options: string ): Observable<any> {
     return this.formPromoCodes.get( formControlName ).valueChanges
       .pipe(
-        untilDestroyed(this),
+        untilDestroyed( this ),
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
@@ -412,7 +414,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
     this.profileSearchService.getProfileSearch( params )
       .pipe(
-        untilDestroyed(this),
+        untilDestroyed( this ),
         map( customerResult ),
         map( newCustomerName )
       )
@@ -542,7 +544,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     const saveFormParams = isQueryParams ? JSON.parse( queryParams.saveFormParams ) : '';
     if ( !this.formPromoCodes.invalid || isQueryParams ) {
       this.addPromotionsCodesService.savePromoCode( isQueryParams ? saveFormParams : this.promoCodeParameters() )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_SAVE' ) );
     }
   }
@@ -565,7 +567,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       const params = this.promoCodeParameters();
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_CHANGED' ) );
     }
   }

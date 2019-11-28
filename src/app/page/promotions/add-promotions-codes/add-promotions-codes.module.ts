@@ -10,6 +10,7 @@ import { DirectivesModule } from '../../../directives/directives.module';
 import { AddPromotionsCodesRoutes } from './add-promotions-codes.routing';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { TranslateModule } from '@ngx-translate/core';
+import { NgxMaskModule } from 'ngx-mask';
 
 @NgModule( {
   imports: [
@@ -20,7 +21,8 @@ import { TranslateModule } from '@ngx-translate/core';
     ComponentsModule,
     DirectivesModule,
     AddPromotionsCodesRoutes,
-    TranslateModule
+    TranslateModule,
+    NgxMaskModule,
   ],
   declarations: [ AddPromotionsCodesComponent ],
   providers: [
