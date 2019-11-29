@@ -126,7 +126,10 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonDelete = true;
     this.buttonSearch = true;
-    this.customPatterns = { 'A': { pattern: new RegExp('\[A-Z0-9\]')} };
+    this.customPatterns = {
+      'A': { pattern: new RegExp( '\[a-zA-Z0-9\]') },
+      'B': { pattern: new RegExp( '[a-zA-Z0-9\](?!\d)?$') },
+    };
 
     this.isLoader = true;
     this.autDelay = 500;
@@ -429,7 +432,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     // Add our fruit
     if ( ( value || '' ).trim() ) {
       if ( chips === 'promoCodeCustomerListChips' ) this.searchCustomerName( value.trim() );
-      else this[ chips ].push( value.trim() );
+      else if ( _.size( value ) >= 3 ) this[ chips ].push( value.trim().toUpperCase() );
     }
 
     // Reset the input value
