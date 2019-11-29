@@ -1,6 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
+		"EDIT_SEGMENTATION": "Edit segmentation",
 		"EMAIL_DISTRIBUTION": "Email distributions",
 		"EVENT": "Event",
 		"HOME": "Main page",
@@ -11,6 +12,7 @@
 		"ADD": "Add",
 		"ADD_CUSTOMER": "Add passenger",
 		"ADD_USER": "Add user",
+		"CANCEL": "Cancel",
 		"CANCEL_DISTRIBUTION": "Cancel distribution",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
@@ -428,10 +430,12 @@
 					"CUSTOMER_GROUP": "Passenger groups:",
 					"CUSTOMER_ID": "Profile ID:",
 					"DATE_OF_BIRTH": "Date of birth:",
+					"EDIT_LIST_CUSTOMER_GROUPS": "Edit list of passengers groups",
 					"GENDER": "Sex:",
 					"LUT": "Last activity:",
 					"PROFILE": "Name:",
 					"SEGMENTATION": "Segmentations:",
+					"SHOW_ALL_GROUPS": "Show all groups",
 					"TOTAL_AMOUNT": "Total cost:"
 				},
 				"MESSAGES": {
@@ -464,8 +468,8 @@
 							"POS": {
 								"AGENCY": "Travel agency:",
 								"COUNTRY": "Country:",
-								"GDS": "GDS:",
-								"POS_ID": "POS ID:",
+								"GDS": "Booking source:",
+								"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP:",
 								"REC_LOC": "GDS Recloc:",
 								"TERMINAL": "Terminal ID:"
 							},
@@ -649,7 +653,7 @@
 		"PROMOTIONS": {
 			"ADD_PROMOTIONS": {
 				"FIELD": {
-					"PROMOTIONS": "Add new promo offer"
+					"PROMOTIONS": "Promo offers"
 				},
 				"TABLE": {
 					"PROMOTIONS": "Promo offer name"
@@ -787,7 +791,7 @@
 					"NOT_SERVICE_CODE": "No service code",
 					"POS_AGENCY": "Pseudo ID / 1Н agency ID",
 					"POS_GDS": "Booking source",
-					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP)",
+					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP",
 					"SERVICE_CODE": "SSR/RFISC",
 					"TITLE": "Paid services"
 				},
@@ -943,8 +947,8 @@
 				"TITLE": "Select a mailing form"
 			},
 			"DIALOG_EMAIL": {
-				"DATE_FROM": "Sending date after",
-				"DATE_TO": "Sending date before",
+				"DATE_FROM": "Sending start date",
+				"DATE_TO": "Sending end date",
 				"EXAMPLE": "Example:",
 				"LIMITS": "Limit",
 				"PARAMS": "Distribution settings",
@@ -959,7 +963,7 @@
 				"SYMBOLS_ENTERED": "Symbols entered",
 				"TEMPLATE": "Template",
 				"TEXT": "Message text",
-				"TITLE": "Name"
+				"TITLE": "Title"
 			}
 		}
 	},
@@ -971,7 +975,7 @@
 		"NEXT": "Next",
 		"PREV": "Previous",
 		"RESULT": {
-			"ERROR": "Nothing found. Try another search.",
+			"ERROR": "Nothing found. Try another search",
 			"OK": "Search results"
 		}
 	},
