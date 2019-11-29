@@ -429,37 +429,16 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
     const input = event.input;
     const value = event.value;
+    const regexp = new RegExp( '^\\w+-\\d{1,6}([a-zA-Z](?!\\d))?$' );
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
       if ( chips === 'promoCodeCustomerListChips' ) {
         this.searchCustomerName( value.trim() );
         this.resetInputChipInput( formControlName );
-      } else if ( _.size( value ) >= 3 ) {
-        const lastSymbol = _.chain( value )
-          .split( '-' )
-          .last()
-          .split( '' )
-          .value();
-
-        const acc = [];
-        console.log( _.some( lastSymbol, ( val ) => {
-
-          acc.push( val );
-
-          const accSplitTwo = _.takeRight( acc, 2 );
-
-          const symbolOne = accSplitTwo[0];
-          const symbolTwo = accSplitTwo[2];
-
-          console.log( _.isNaN(+symbolOne) && _.isNaN(+symbolTwo) );
-
-          return false;
-        }, ) );
-
-
-        this[ chips ].push( value.trim().toUpperCase() );
-        this.resetInputChipInput( formControlName );
+      } else if ( _.size( value ) >= 3 && regexp.test( value ) ) {
+          this[ chips ].push( value.trim().toUpperCase() );
+          this.resetInputChipInput( formControlName );
       }
     }
 
