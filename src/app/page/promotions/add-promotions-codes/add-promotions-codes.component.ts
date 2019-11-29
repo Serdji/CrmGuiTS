@@ -54,7 +54,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
   public profilePromoCode: IProfilePromoCode;
-  public customPatterns : { [ character: string ]: { pattern: RegExp, optional?: boolean } };
+  public customPatterns: { [ character: string ]: { pattern: RegExp, optional?: boolean } };
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -126,10 +126,10 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonDelete = true;
     this.buttonSearch = true;
-    this.customPatterns = {
-      'A': { pattern: new RegExp( '\[a-zA-Z0-9\]') },
-      'B': { pattern: new RegExp( '[a-zA-Z0-9\](?!\d)?$') },
-    };
+    // this.customPatterns = {
+    //   'A': { pattern: new RegExp( '\[a-zA-Z0-9\]') },
+    //   'B': { pattern: new RegExp( '[a-zA-Z0-9\](?!\d)?$') },
+    // };
 
     this.isLoader = true;
     this.autDelay = 500;
@@ -424,21 +424,45 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       .subscribe( success );
   }
 
+  private resetInputChipInput = ( formControlName: string, ): void => this.formPromoCodes.get( formControlName ).setValue( null );
+
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
     const input = event.input;
     const value = event.value;
 
-
     // Add our fruit
     if ( ( value || '' ).trim() ) {
-      if ( chips === 'promoCodeCustomerListChips' ) this.searchCustomerName( value.trim() );
-      else if ( _.size( value ) >= 3 ) this[ chips ].push( value.trim().toUpperCase() );
+      if ( chips === 'promoCodeCustomerListChips' ) {
+        this.searchCustomerName( value.trim() );
+        this.resetInputChipInput( formControlName );
+      } else if ( _.size( value ) >= 3 ) {
+        const lastSymbol = _.chain( value )
+          .split( '-' )
+          .last()
+          .split( '' )
+          .value();
+
+        const acc = [];
+        console.log( _.some( lastSymbol, ( val ) => {
+
+          acc.push( val );
+
+          const accSplitTwo = _.takeRight( acc, 2 );
+
+          const symbolOne = accSplitTwo[0];
+          const symbolTwo = accSplitTwo[2];
+
+          console.log( _.isNaN(+symbolOne) && _.isNaN(+symbolTwo) );
+
+          return false;
+        }, ) );
+
+
+        this[ chips ].push( value.trim().toUpperCase() );
+        this.resetInputChipInput( formControlName );
+      }
     }
 
-    // Reset the input value
-    if ( input ) input.value = '';
-
-    this.formPromoCodes.get( formControlName ).setValue( null );
   }
 
   remove( textChip: string, arrayChips: string[], chips ): void {
