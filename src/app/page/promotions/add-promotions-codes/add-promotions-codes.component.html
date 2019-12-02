@@ -37,6 +37,7 @@
                     <mat-icon matChipRemove *ngIf="promoCodeFlightListRemovable">cancel</mat-icon>
                   </mat-chip>
                   <input
+                    mask="AA-AAAAAA"
                     placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.FLIGHT' | translate}}"
                     #promoCodeFlightListChipInput
                     formControlName="promoCodeFlightList"
