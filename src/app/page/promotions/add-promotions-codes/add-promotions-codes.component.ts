@@ -97,6 +97,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private autDelay: number;
   private promoCodeId: number;
   private arrCustomerIds: number[] = [];
+  private promoCodeFlightListRegexp: RegExp = new RegExp( '^\\w+-\\d{1,6}([a-zA-Z](?!\\d))?$' );
 
   @ViewChild( 'promoCodeFlightListChipInput', { static: true } ) promoCodeFlightListInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'promoCodeBrandListChipInput', { static: true } ) promoCodeBrandListInput: ElementRef<HTMLInputElement>;
@@ -126,10 +127,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonDelete = true;
     this.buttonSearch = true;
-    // this.customPatterns = {
-    //   'A': { pattern: new RegExp( '\[a-zA-Z0-9\]') },
-    //   'B': { pattern: new RegExp( '[a-zA-Z0-9\](?!\d)?$') },
-    // };
 
     this.isLoader = true;
     this.autDelay = 500;
@@ -429,16 +426,22 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
     const input = event.input;
     const value = event.value;
-    const regexp = new RegExp( '^\\w+-\\d{1,6}([a-zA-Z](?!\\d))?$' );
 
     // Add our fruit
     if ( ( value || '' ).trim() ) {
       if ( chips === 'promoCodeCustomerListChips' ) {
         this.searchCustomerName( value.trim() );
         this.resetInputChipInput( formControlName );
-      } else if ( _.size( value ) >= 3 && regexp.test( value ) ) {
-          this[ chips ].push( value.trim().toUpperCase() );
-          this.resetInputChipInput( formControlName );
+      }
+
+      if (
+        formControlName === 'promoCodeFlightList'
+        && _.size( value ) >= 3
+        && this.promoCodeFlightListRegexp.test( value )
+      ) {
+        this[ chips ].push( value.trim().toUpperCase() );
+        this.resetInputChipInput( formControlName );
+        console.log( this.formPromoCodes.get( formControlName ) );
       }
     }
 
