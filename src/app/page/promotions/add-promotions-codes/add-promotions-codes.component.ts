@@ -441,7 +441,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       ) {
         this[ chips ].push( value.trim().toUpperCase() );
         this.resetInputChipInput( formControlName );
-        console.log( this.formPromoCodes.get( formControlName ) );
       }
     }
 
