@@ -1,11 +1,56 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import construct = Reflect.construct;
 
 @Pipe({
   name: 'fieldTranslation'
 })
 export class FieldTranslationPipe implements PipeTransform {
 
+
   transform(value: string): string {
+
+    enum EmailStatusDistribution {
+      None,
+      Created,
+      Active,
+      SendingFinished,
+      Completed,
+      Cancelled,
+      Finished,
+      Error,
+    }
+
+    enum SmsStatusDistribution {
+      None,
+      Created,
+      Active,
+      SendingFinished,
+      Cancelled,
+      Error,
+    }
+
+    enum EmailStatusMessages {
+      None,
+      NotSent,
+      SentGateway,
+      SendCustomer,
+      Delivered,
+      Read,
+      ClickedLink,
+      Bounced,
+      Unsubscribed,
+      Error,
+    }
+
+    enum SmsStatusMessages {
+      None,
+      NotSent,
+      Error,
+      SendCustomer,
+    }
+
+
+
     switch ( value ) {
       case  'firstName': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.FIRST_NAME';
       case  'lastName': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.LAST_NAME';
