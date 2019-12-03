@@ -1,0 +1,81 @@
+select = 70px
+
+distributionCustomerId = 50px
+
+
+.table
+
+  &__loading-shade
+    position: absolute;
+    top: 72px;
+    left: 0;
+    bottom: 72px;
+    right: 0;
+    background: rgba(0, 0, 0, 0.15);
+    z-index: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+  &__row
+    white-space: nowrap;
+
+  &__cell
+    text-overflow: ellipsis;
+    display: inline-block;
+    min-height auto;
+    &._cp
+      cursor: pointer
+      padding: 16px;
+      &:hover
+        background: rgba(63,81,181,.12)
+
+  &__input
+    width: 100%;
+
+  &__button
+
+    &-wrapper
+      display: flex;
+      width: 100%;
+
+.mat-column
+
+
+
+  &-firstName,
+  &-lastName,
+  &-secondName,
+  &-distributionCustomerStatus,
+  &-errorMessage
+    flex: 1;
+
+  &-distributionCustomerId
+    width: distributionCustomerId;
+    margin-left: auto;
+    mat-icon
+      cursor: pointer
+      color: #696969;
+      margin-left: auto
+
+
+
+mat-table
+  display: table;
+  width: 100%;
+
+mat-header-cell,
+mat-cell
+  padding: 0 16px;
+  width: auto
+  flex: none;
+  box-sizing: border-box;
+
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}
