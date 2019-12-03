@@ -55,7 +55,7 @@
             <span>{{message.parsedSubject}}</span>
           </div>
           <div class="messages__title">
-            <span>{{message.distributionCustomerStatus.statusNameRus}}</span>
+            <span>{{message.distributionCustomerStatus.distributionCustomerStatusId | emailMessagesTranslation | translate}}</span>
           </div>
           <div class="messages__title">
             <span>{{message.lastTryDT | date: 'dd.MM.yyyy, HH:mm'}}</span>
