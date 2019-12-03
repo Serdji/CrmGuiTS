@@ -5,9 +5,8 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { filter, takeWhile } from 'rxjs/operators';
 import { IpagPage } from '../../../interface/ipag-page';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
@@ -16,11 +15,11 @@ import * as R from 'ramda';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {
-  selector: 'app-table-async-distribution-profile',
-  templateUrl: './table-async-distribution-profile.component.html',
-  styleUrls: [ './table-async-distribution-profile.component.styl' ],
+  selector: 'app-table-async-email-distribution-profile',
+  templateUrl: './table-async-email-distribution-profile.component.html',
+  styleUrls: [ './table-async-email-distribution-profile.component.styl' ],
 } )
-export class TableAsyncDistributionProfileComponent implements OnInit, OnDestroy {
+export class TableAsyncEmailDistributionProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
