@@ -22,6 +22,10 @@ import { SmsMessagesTranslationPipe } from './sms-messages-translation.pipe';
   exports: [
     FieldTranslationPipe,
     SafeHtmlPipe,
+    EmailDistributionTranslationPipe,
+    SmsDistributionTranslationPipe,
+    EmailMessagesTranslationPipe,
+    SmsMessagesTranslationPipe,
   ],
 } )
 export class PipesModule {

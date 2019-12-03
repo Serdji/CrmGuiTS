@@ -6,24 +6,30 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class EmailMessagesTranslationPipe implements PipeTransform {
 
   transform( value: string | number ): string {
-
-
-    enum SmsStatusDistribution {
+    enum EmailStatusMessages {
       None,
-      Created,
-      Active,
-      SendingFinished,
-      Cancelled,
+      NotSent,
+      SentGateway,
+      SendCustomer,
+      Delivered,
+      Read,
+      ClickedLink,
+      Bounced,
+      Unsubscribed,
       Error,
     }
 
-
     switch ( value ) {
-      case SmsStatusDistribution.Created: return 'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.EMAIL_STATUSES.CREATED';
-      case SmsStatusDistribution.Active: return 'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.EMAIL_STATUSES.ACTIVE';
-      case SmsStatusDistribution.SendingFinished: return 'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.EMAIL_STATUSES.SENDING_FINISHED';
-      case SmsStatusDistribution.Cancelled: return 'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.EMAIL_STATUSES.CANCELLED';
-      case SmsStatusDistribution.Error: return 'PAGE.DISTRIBUTION.LIST_DISTRIBUTION.TABLE.EMAIL_STATUSES.ERROR';
+      case EmailStatusMessages.NotSent: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.NOT_SENT';
+      case EmailStatusMessages.SentGateway: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.SENT_GATEWAY';
+      case EmailStatusMessages.SendCustomer: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.SEND_CUSTOMER';
+      case EmailStatusMessages.Delivered: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.DELIVERED';
+      case EmailStatusMessages.Read: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.READ';
+      case EmailStatusMessages.ClickedLink: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.CLICKED_LINK';
+      case EmailStatusMessages.Bounced: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.BOUNCED';
+      case EmailStatusMessages.Unsubscribed: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.UNSUBSCRIBED';
+      case EmailStatusMessages.Error: return 'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.STATUSES.ERROR';
     }
+
   }
 }

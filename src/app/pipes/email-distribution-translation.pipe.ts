@@ -6,7 +6,6 @@ import { Pipe, PipeTransform } from '@angular/core';
 export class EmailDistributionTranslationPipe implements PipeTransform {
 
   transform(value: string | number): string {
-
     enum EmailStatusDistribution {
       None,
       Created,
