@@ -244,7 +244,18 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "Status"
+					"STATUS": "Status",
+					"STATUSES": {
+						"BOUNCED": "Bounced",
+						"CLICKED_LINK": "Clicked on the link",
+						"DELIVERED": "Delivered",
+						"ERROR": "Error",
+						"NOT_SENT": "Not sent",
+						"READ": "Read",
+						"SEND_CUSTOMER": "Send to customer",
+						"SENT_GATEWAY": "Sent to gateway",
+						"UNSUBSCRIBED": "Unsubscribed"
+					}
 				},
 				"TO": "to"
 			},
@@ -271,7 +282,12 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "status"
+					"STATUS": "status",
+					"STATUSES": {
+						"ERROR": "Error",
+						"NOT_SENT": "Not sent",
+						"SEND_CUSTOMER": "Send to customer"
+					}
 				},
 				"TO": "to"
 			}

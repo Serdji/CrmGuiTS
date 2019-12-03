@@ -244,7 +244,18 @@
 					"FIRST_NAME": "Имя",
 					"LAST_NAME": "Фамилия",
 					"MIDDLE_NAME": "Отчество",
-					"STATUS": "Статус"
+					"STATUS": "Статус",
+					"STATUSES": {
+						"BOUNCED": "Возвращено",
+						"CLICKED_LINK": "Переход по ссылке",
+						"DELIVERED": "Доставлено",
+						"ERROR": "Ошибка ",
+						"NOT_SENT": "Готово к отправке",
+						"READ": "Прочитано ",
+						"SEND_CUSTOMER": "Отправлено клиенту",
+						"SENT_GATEWAY": "Отправлено в почтовый шлюз",
+						"UNSUBSCRIBED": "Отписался "
+					}
 				},
 				"TO": "до"
 			},
@@ -271,7 +282,12 @@
 					"FIRST_NAME": "Имя",
 					"LAST_NAME": "Фамилия",
 					"MIDDLE_NAME": "Отчество",
-					"STATUS": "Статус"
+					"STATUS": "Статус",
+					"STATUSES": {
+						"ERROR": "Ошибка ",
+						"NOT_SENT": "Готово к отправке",
+						"SEND_CUSTOMER": "Отправлено клиенту"
+					}
 				},
 				"TO": "до"
 			}
