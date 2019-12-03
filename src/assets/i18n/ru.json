@@ -186,12 +186,7 @@
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
-					"DATE_FROM": "Дата от",
-					"DATE_TO": "Дата до",
-					"FILTER": "Фильтр",
-					"LAST_TRY": "Дата создания рассылки",
-					"STATUS": "Статус",
-					"STATUSES": {
+					"COUNT_STATUSES": {
 						"BOUNCED": "Возвращено",
 						"CLICKED": "Переход по ссылке",
 						"DELIVERED": "Доставлено",
@@ -202,6 +197,27 @@
 						"SEND_TO_CUSTOMER": "Отправлено клиенту",
 						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
 					},
+					"DATE_FROM": "Дата от",
+					"DATE_TO": "Дата до",
+					"EMAIL_STATUSES": {
+						"ACTIVE": "Выполняется ",
+						"CANCELLED": "Завершена ",
+						"COMPLETED": "Отменена ",
+						"CREATED": "Создана",
+						"ERROR": "Ошибка ",
+						"FINISHED": "Завершена ",
+						"SENDING_FINISHED": "Отправка завершена "
+					},
+					"FILTER": "Фильтр",
+					"LAST_TRY": "Дата создания рассылки",
+					"SMS_STATUSES": {
+						"ACTIVE": "Выполняется ",
+						"CANCELLED": "Завершена ",
+						"CREATED": "Создана",
+						"ERROR": "Ошибка ",
+						"SENDING_FINISHED": "Отправка завершена "
+					},
+					"STATUS": "Статус",
 					"SUBJECT": "Тема"
 				}
 			},
