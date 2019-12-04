@@ -2,10 +2,10 @@
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
 		"EDIT_SEGMENTATION": "Edit segmentation",
-		"EMAIL_DISTRIBUTION": "Email distributions",
+		"EMAIL_DISTRIBUTION": "Email campaigns",
 		"EVENT": "Event",
 		"HOME": "Main page",
-		"SMS_DISTRIBUTION": "SMS distributions",
+		"SMS_DISTRIBUTION": "SMS campaigns",
 		"USER": "User"
 	},
 	"BUTTON": {
@@ -13,7 +13,7 @@
 		"ADD_CUSTOMER": "Add passenger",
 		"ADD_USER": "Add user",
 		"CANCEL": "Cancel",
-		"CANCEL_DISTRIBUTION": "Cancel distribution",
+		"CANCEL_DISTRIBUTION": "Cancel campaign",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
 		"COPY": "Duplicate",
@@ -21,7 +21,7 @@
 		"DELETE": "Delete",
 		"DOWNLOAD": "Download",
 		"EDIT": "Save changes",
-		"EDITOR": "Add distribution",
+		"EDITOR": "New campaign",
 		"EDIT_EVENT": "Edit event",
 		"FILTER": "Filter",
 		"LOGIN": "Log in",
@@ -29,7 +29,7 @@
 		"PROMO_CODE": "Attach promo code",
 		"SAVE": "Save",
 		"SEARCH": "Search",
-		"SEND_DISTRIBUTION": "Send distribution",
+		"SEND_DISTRIBUTION": "Send campaign",
 		"START_EVENT": "Run event",
 		"STOP_EVENT": "Stop event",
 		"TO_FROM": "Generate"
@@ -53,14 +53,14 @@
 			"USER": "Are you sure you want to delete selected user(s)?"
 		},
 		"DISTRIBUTION": {
-			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel selected E-mail distribution?",
-			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel selected SMS distribution?",
-			"DELETES_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected E-mail distribution(s)?",
-			"DELETES_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS distribution(s)?",
-			"DELETE_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected SMS distribution?",
-			"DELETE_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS distribution?",
-			"SEND_EMAIL_DISTRIBUTION": "Are you sure you want to run selected E-mail distribution?",
-			"SEND_SMS_DISTRIBUTION": "Are you sure you want to run selected SMS distribution?"
+			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel selected E-mail campaign(s)?",
+			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel selected SMS campaign(s)?",
+			"DELETES_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected E-mail campaign(s)?",
+			"DELETES_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS campaign(s)?",
+			"DELETE_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected SMS campaign?",
+			"DELETE_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS campaign?",
+			"SEND_EMAIL_DISTRIBUTION": "Are you sure you want to run selected E-mail campaign?",
+			"SEND_SMS_DISTRIBUTION": "Are you sure you want to run selected SMS campaign?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Valid till",
@@ -141,7 +141,7 @@
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
 		"DISTRIBUTIONS": {
-			"GROUP_NAME": "Distributions",
+			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",
 			"LIST_SMS": "SMS"
 		},
@@ -186,7 +186,12 @@
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
-					"COUNT_STATUSES": {
+					"DATE_FROM": "Effective date",
+					"DATE_TO": "Discontinue date",
+					"FILTER": "Filter",
+					"LAST_TRY": "Creation time",
+					"STATUS": "Status",
+					"STATUSES": {
 						"BOUNCED": "Returned",
 						"CLICKED": "Link followed",
 						"DELIVERED": "Delivered",
@@ -197,27 +202,6 @@
 						"SEND_TO_CUSTOMER": "Sent to customer",
 						"SENT_TO_GATEWAY": "Sent to mail gateway"
 					},
-					"DATE_FROM": "Effective date",
-					"DATE_TO": "Discontinue date",
-					"EMAIL_STATUSES": {
-						"ACTIVE": "Active",
-						"CANCELLED": "Completed",
-						"COMPLETED": "Canceled",
-						"CREATED": "Created",
-						"ERROR": "Error",
-						"FINISHED": "Finished",
-						"SENDING_FINISHED": "Sending finished"
-					},
-					"FILTER": "Filter",
-					"LAST_TRY": "Creation time",
-					"SMS_STATUSES": {
-						"ACTIVE": "Active",
-						"CANCELLED": "Completed",
-						"CREATED": "Created",
-						"ERROR": "Error",
-						"SENDING_FINISHED": "Sending finished"
-					},
-					"STATUS": "Status",
 					"SUBJECT": "Subject"
 				}
 			},
@@ -225,7 +209,7 @@
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
-				"LAST_TRY": "Date and time when distribution was created:",
+				"LAST_TRY": "Date and time when campaign was created:",
 				"STATUS": "Status:",
 				"STATUSES": {
 					"BOUNCED": "Returned",
@@ -244,18 +228,7 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "Status",
-					"STATUSES": {
-						"BOUNCED": "Bounced",
-						"CLICKED_LINK": "Clicked on the link",
-						"DELIVERED": "Delivered",
-						"ERROR": "Error",
-						"NOT_SENT": "Not sent",
-						"READ": "Read",
-						"SEND_CUSTOMER": "Send to customer",
-						"SENT_GATEWAY": "Sent to gateway",
-						"UNSUBSCRIBED": "Unsubscribed"
-					}
+					"STATUS": "Status"
 				},
 				"TO": "to"
 			},
@@ -263,7 +236,7 @@
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
-				"LAST_TRY": "Date and time when distribution was created:",
+				"LAST_TRY": "Date and time when campaign was created:",
 				"STATUS": "Status:",
 				"STATUSES": {
 					"BOUNCED": "Returned",
@@ -282,12 +255,7 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "status",
-					"STATUSES": {
-						"ERROR": "Error",
-						"NOT_SENT": "Not sent",
-						"SEND_CUSTOMER": "Send to customer"
-					}
+					"STATUS": "status"
 				},
 				"TO": "to"
 			}
@@ -428,7 +396,7 @@
 						"CONTACT_TEXT": "Value",
 						"CONTACT_TYPE": "Type",
 						"FILTER": "Filter",
-						"USE_FOR_DISTRIBUTION": "Distribution contact"
+						"USE_FOR_DISTRIBUTION": "Campaign contact"
 					},
 					"TAB_NAME": "Contacts"
 				},
@@ -478,7 +446,7 @@
 					},
 					"TAB_NAME": "Messages",
 					"TEMPLATE": {
-						"GO_TO": "Manage distribution"
+						"GO_TO": "Manage campaign"
 					}
 				},
 				"ORDER": {
@@ -934,7 +902,7 @@
 					"ADDITIONAL_RIGHT": "Additional rights",
 					"ANALYTICS": "Segmentations",
 					"CUSTOMERS": "Passengers",
-					"DISTRIBUTIONS": "Distributions",
+					"DISTRIBUTIONS": "Campaigns",
 					"EVENTS": "Events",
 					"PRIVILEGES": "Benefits",
 					"PROMOTIONS_CODES": "Promo codes",
@@ -983,9 +951,9 @@
 				"DATE_TO": "Sending end date",
 				"EXAMPLE": "Example:",
 				"LIMITS": "Limit",
-				"PARAMS": "Distribution settings",
+				"PARAMS": "Campaign settings",
 				"TEMPLATE": "Template",
-				"TEMPLATE_TITLE": "Distribution template",
+				"TEMPLATE_TITLE": "Campaign template",
 				"TEXT": "Text",
 				"THEME": "Subject",
 				"TITLE": "Mailing settings",
@@ -995,7 +963,7 @@
 				"SYMBOLS_ENTERED": "Symbols entered",
 				"TEMPLATE": "Template",
 				"TEXT": "Message text",
-				"TITLE": "Title"
+				"TITLE": "Subject"
 			}
 		}
 	},
