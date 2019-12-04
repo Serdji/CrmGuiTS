@@ -186,12 +186,7 @@
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
-					"DATE_FROM": "Effective date",
-					"DATE_TO": "Discontinue date",
-					"FILTER": "Filter",
-					"LAST_TRY": "Creation time",
-					"STATUS": "Status",
-					"STATUSES": {
+					"COUNT_STATUSES": {
 						"BOUNCED": "Returned",
 						"CLICKED": "Link followed",
 						"DELIVERED": "Delivered",
@@ -202,6 +197,27 @@
 						"SEND_TO_CUSTOMER": "Sent to customer",
 						"SENT_TO_GATEWAY": "Sent to mail gateway"
 					},
+					"DATE_FROM": "Effective date",
+					"DATE_TO": "Discontinue date",
+					"EMAIL_STATUSES": {
+						"ACTIVE": "Active",
+						"CANCELLED": "Completed",
+						"COMPLETED": "Canceled",
+						"CREATED": "Created",
+						"ERROR": "Error",
+						"FINISHED": "Finished",
+						"SENDING_FINISHED": "Sending finished"
+					},
+					"FILTER": "Filter",
+					"LAST_TRY": "Creation time",
+					"SMS_STATUSES": {
+						"ACTIVE": "Active",
+						"CANCELLED": "Completed",
+						"CREATED": "Created",
+						"ERROR": "Error",
+						"SENDING_FINISHED": "Sending finished"
+					},
+					"STATUS": "Status",
 					"SUBJECT": "Subject"
 				}
 			},
@@ -228,7 +244,18 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "Status"
+					"STATUS": "Status",
+					"STATUSES": {
+						"BOUNCED": "Bounced",
+						"CLICKED_LINK": "Clicked on the link",
+						"DELIVERED": "Delivered",
+						"ERROR": "Error",
+						"NOT_SENT": "Not sent",
+						"READ": "Read",
+						"SEND_CUSTOMER": "Send to customer",
+						"SENT_GATEWAY": "Sent to gateway",
+						"UNSUBSCRIBED": "Unsubscribed"
+					}
 				},
 				"TO": "to"
 			},
@@ -255,7 +282,12 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "status"
+					"STATUS": "status",
+					"STATUSES": {
+						"ERROR": "Error",
+						"NOT_SENT": "Not sent",
+						"SEND_CUSTOMER": "Send to customer"
+					}
 				},
 				"TO": "to"
 			}
