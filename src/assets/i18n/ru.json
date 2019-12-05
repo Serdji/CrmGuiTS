@@ -1,6 +1,7 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Пассажир",
+		"EDIT_SEGMENTATION": "Редактировать сегментацию",
 		"EMAIL_DISTRIBUTION": " Email рассылка",
 		"EVENT": "Событие",
 		"HOME": "Главная",
@@ -185,12 +186,7 @@
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
-					"DATE_FROM": "Дата от",
-					"DATE_TO": "Дата до",
-					"FILTER": "Фильтр",
-					"LAST_TRY": "Дата создания рассылки",
-					"STATUS": "Статус",
-					"STATUSES": {
+					"COUNT_STATUSES": {
 						"BOUNCED": "Возвращено",
 						"CLICKED": "Переход по ссылке",
 						"DELIVERED": "Доставлено",
@@ -201,6 +197,27 @@
 						"SEND_TO_CUSTOMER": "Отправлено клиенту",
 						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
 					},
+					"DATE_FROM": "Дата от",
+					"DATE_TO": "Дата до",
+					"EMAIL_STATUSES": {
+						"ACTIVE": "Выполняется ",
+						"CANCELLED": "Завершена ",
+						"COMPLETED": "Отменена ",
+						"CREATED": "Создана",
+						"ERROR": "Ошибка ",
+						"FINISHED": "Завершена ",
+						"SENDING_FINISHED": "Отправка завершена "
+					},
+					"FILTER": "Фильтр",
+					"LAST_TRY": "Дата создания рассылки",
+					"SMS_STATUSES": {
+						"ACTIVE": "Выполняется ",
+						"CANCELLED": "Завершена ",
+						"CREATED": "Создана",
+						"ERROR": "Ошибка ",
+						"SENDING_FINISHED": "Отправка завершена "
+					},
+					"STATUS": "Статус",
 					"SUBJECT": "Тема"
 				}
 			},
@@ -227,7 +244,18 @@
 					"FIRST_NAME": "Имя",
 					"LAST_NAME": "Фамилия",
 					"MIDDLE_NAME": "Отчество",
-					"STATUS": "Статус"
+					"STATUS": "Статус",
+					"STATUSES": {
+						"BOUNCED": "Возвращено",
+						"CLICKED_LINK": "Переход по ссылке",
+						"DELIVERED": "Доставлено",
+						"ERROR": "Ошибка ",
+						"NOT_SENT": "Готово к отправке",
+						"READ": "Прочитано ",
+						"SEND_CUSTOMER": "Отправлено клиенту",
+						"SENT_GATEWAY": "Отправлено в почтовый шлюз",
+						"UNSUBSCRIBED": "Отписался "
+					}
 				},
 				"TO": "до"
 			},
@@ -254,7 +282,12 @@
 					"FIRST_NAME": "Имя",
 					"LAST_NAME": "Фамилия",
 					"MIDDLE_NAME": "Отчество",
-					"STATUS": "Статус"
+					"STATUS": "Статус",
+					"STATUSES": {
+						"ERROR": "Ошибка ",
+						"NOT_SENT": "Готово к отправке",
+						"SEND_CUSTOMER": "Отправлено клиенту"
+					}
 				},
 				"TO": "до"
 			}
@@ -429,10 +462,12 @@
 					"CUSTOMER_GROUP": "Группы пассажиров",
 					"CUSTOMER_ID": "№ профиля:",
 					"DATE_OF_BIRTH": "Дата рождения:",
+					"EDIT_LIST_CUSTOMER_GROUPS": "Редактирование списка групп пассажиров",
 					"GENDER": "Пол:",
 					"LUT": "Дата последней активности:",
 					"PROFILE": "Профиль:",
 					"SEGMENTATION": "Группы сегментации",
+					"SHOW_ALL_GROUPS": "Показать все группы",
 					"TOTAL_AMOUNT": "Оформленных на сумму:"
 				},
 				"MESSAGES": {

@@ -12,7 +12,6 @@ import { TableExampleSegmentationComponent } from './table-example-segmentation/
 import { TableAsyncSegmentationProfileComponent } from './table-async-segmentation-profile/table-async-segmentation-profile.component';
 import { TableExampleProfileGroupComponent } from './table-example-profile-group/table-example-profile-group.component';
 import { EditorsModule } from '../editors/editors.module';
-import { TableAsyncDistributionProfileComponent } from './table-async-distribution-profile/table-async-distribution-profile.component';
 import { TableAsyncPromotionsComponent } from './table-async-promotions/table-async-promotions.component';
 import { PromoCodeModule } from '../promo-code/promo-code.module';
 import { TableAsyncService } from '../../services/table-async.service';
@@ -28,6 +27,8 @@ import { TableAsyncEventProfileComponent } from './table-async-event-profile/tab
 import { TableAsyncSearchPromoCodeService } from './table-async-search-promo-code/table-async-search-promo-code.service';
 import { TableAsyncEmailComponent } from './table-async-email/table-async-email.component';
 import { TableAsyncSmsComponent } from './table-async-sms/table-async-sms.component';
+import { TableAsyncEmailDistributionProfileComponent } from './table-async-email-distribution-profile/table-async-email-distribution-profile.component';
+import { TableAsyncSmsDistributionProfileComponent } from './table-async-sms-distribution-profile/table-async-sms-distribution-profile.component';
 
 @NgModule({
   imports: [
@@ -53,7 +54,8 @@ import { TableAsyncSmsComponent } from './table-async-sms/table-async-sms.compon
     TableExampleProfileGroupComponent,
     TableAsyncEmailComponent,
     TableAsyncSmsComponent,
-    TableAsyncDistributionProfileComponent,
+    TableAsyncEmailDistributionProfileComponent,
+    TableAsyncSmsDistributionProfileComponent,
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
@@ -72,7 +74,8 @@ import { TableAsyncSmsComponent } from './table-async-sms/table-async-sms.compon
     TableExampleProfileGroupComponent,
     TableAsyncEmailComponent,
     TableAsyncSmsComponent,
-    TableAsyncDistributionProfileComponent,
+    TableAsyncEmailDistributionProfileComponent,
+    TableAsyncSmsDistributionProfileComponent,
     TableAsyncPromotionsComponent,
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,

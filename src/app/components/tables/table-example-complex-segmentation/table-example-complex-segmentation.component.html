@@ -38,7 +38,7 @@
     <ng-container matColumnDef="segmentationId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon routerLink="/crm/complexsegmentation"
+        <mat-icon routerLink="/crm/complex-segmentation"
                   [queryParams]="{ segmentationId: element.segmentationId }" >create</mat-icon>
       </mat-cell>
     </ng-container>

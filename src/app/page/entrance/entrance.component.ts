@@ -48,7 +48,7 @@ export class EntranceComponent implements OnInit, OnDestroy {
 
       const whatResult = result => R.length( result ) === 1;
       const redirectProfile = result => this.router.navigate( ['crm/profile', result[0].customerId] );
-      const redirectProfileSearch = _ => this.router.navigate( ['crm/profilesearch'], { queryParams: params } );
+      const redirectProfileSearch = _ => this.router.navigate( ['crm/profile-search'], { queryParams: params } );
       const whereRedirect = R.ifElse( whatResult, redirectProfile, redirectProfileSearch );
       const success = profile => whereRedirect( profile.result );
 

@@ -369,7 +369,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
 
     params = airlineCode ? params : _.omit( params, [ 'airlineLCode', 'airlineId' ] );
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
+    this.router.navigate( [ '/crm/profile-search' ], { queryParams: params } );
     this.sendProfileParams = params;
     this.profileSearchService.getProfileSearch( this.sendProfileParams )
       .pipe( untilDestroyed(this) )
@@ -454,7 +454,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   clearForm(): void {
     this.resetForm();
     this.buttonCsvDisabled = true;
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
+    this.router.navigate( [ '/crm/profile-search' ], { queryParams: {} } );
   }
 
   downloadCsv(): void {

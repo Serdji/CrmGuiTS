@@ -106,7 +106,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.saveUrlServiceService.subjectEvent401
       .pipe( untilDestroyed(this) )
       .subscribe( _ => {
-        this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
+        this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
       } );
   }
 
@@ -541,13 +541,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const isQueryParams = hasSaveFormParams( queryParams );
     const saveFormParams = isQueryParams ? JSON.parse( queryParams.saveFormParams ) : '';
     if ( !this.formSegmentation.invalid || isQueryParams ) {
-      _( this.saveSegmentationParams ).assign( isQueryParams ? saveFormParams : this.segmentationParameters() ).value();
+      this.saveSegmentationParams = isQueryParams ? saveFormParams : this.segmentationParameters();
       if ( !R.isEmpty( this.saveSegmentationParams ) ) {
+        console.log( this.saveSegmentationParams );
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
           .pipe( untilDestroyed(this) )
           .subscribe( value => {
             this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
-            this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
+            this.router.navigate( [ `/crm/edit-segmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
           } );
       }
     }
@@ -555,15 +556,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   createForm(): void {
     if ( !this.formSegmentation.invalid ) {
-      _( this.createSegmentationParams )
-        .assign( this.segmentationParameters() )
-        .set( 'segmentationId', this.segmentationId )
-        .value();
+      this.createSegmentationParams = this.segmentationParameters();
+     _( this.createSegmentationParams ).set( 'segmentationId', this.segmentationId ).value();
       this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
         .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' );
-          this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
+          this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
         } );
     }
   }
@@ -587,7 +586,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( _ => {
         this.resetForm();
       } );
-    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
+    this.router.navigate( [ '/crm/add-segmentation' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {}
