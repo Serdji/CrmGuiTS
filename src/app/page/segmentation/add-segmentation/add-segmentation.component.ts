@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { delay, map, takeWhile } from 'rxjs/operators';
+import { delay, map, takeWhile, tap } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';

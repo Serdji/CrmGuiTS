@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { takeWhile, map, delay } from 'rxjs/operators';
+import {  map, delay } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -258,9 +258,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       this.initQueryParams();
     };
 
-    forkJoin(
+    forkJoin([
       this.listSegmentationService.getSegmentation(),
       this.profileGroupService.getProfileGroup()
+      ]
     )
       .pipe( untilDestroyed(this) )
       .subscribe( success );
