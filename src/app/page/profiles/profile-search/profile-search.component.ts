@@ -24,7 +24,6 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
-
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {
