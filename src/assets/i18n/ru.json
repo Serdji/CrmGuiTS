@@ -768,8 +768,8 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
-					"NEXT": "Следующая",
-					"PREV": "Предыдущая"
+					"NEXT": "Назад",
+					"PREV": "Далее"
 				},
 				"GROUP_SEGMENTATION": {
 					"GRANULARITY": {
