@@ -798,8 +798,8 @@
 				"PROFILE_DETAILS": {
 					"DOB_FROM": "Дата рождения от",
 					"DOB_TO": "",
-					"FLIES_WITHOUT_CHILDREN": "Летает без детей",
-					"FLIES_WITH_CHILDREN": "Летает с детьми",
+					"FLIES_WITHOUT_CHILDREN": "Нет ни одного перелёта с детьми",
+					"FLIES_WITH_CHILDREN": "Есть хотя бы один перелёт с детьми",
 					"GENDER": {
 						"F": "Ж",
 						"M": "М",
