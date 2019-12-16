@@ -778,7 +778,7 @@
 						"PASSENGER": "Пассажир",
 						"TITLE": "Детализация"
 					},
-					"GROUP_SEGMENTATION": "Группа сегментации"
+					"GROUP_SEGMENTATION": "Сегментация"
 				},
 				"NUMBER_SEGMENTS": {
 					"FROM": "От",
@@ -864,7 +864,7 @@
 				"SEGMENTATIONS": "Cегментации",
 				"TABLE": {
 					"FILTER": "Фильтр",
-					"GROUP_SEGMENTATION": "Группа сегментации",
+					"GROUP_SEGMENTATION": "Сегментация",
 					"TITLE": "Сложные сегментации"
 				}
 			},
@@ -885,7 +885,7 @@
 						"PASSENGER": "Пассажир",
 						"TITLE": "Детализация"
 					},
-					"SEGMENTATION": "Группа сегментации",
+					"SEGMENTATION": "Сегментация",
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
