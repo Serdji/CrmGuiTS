@@ -393,7 +393,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   }
 
   openSegmentation( id ): void {
-    this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { id } } );
+    this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { segmentationId: id } } );
     this.dialogRef.close();
   }
 
