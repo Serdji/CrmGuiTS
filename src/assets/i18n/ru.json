@@ -768,8 +768,8 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
-					"NEXT": "Следующая",
-					"PREV": "Предыдущая"
+					"NEXT": "Назад",
+					"PREV": "Далее"
 				},
 				"GROUP_SEGMENTATION": {
 					"GRANULARITY": {
@@ -797,7 +797,7 @@
 				},
 				"PROFILE_DETAILS": {
 					"DOB_FROM": "Дата рождения от",
-					"DOB_TO": "",
+					"DOB_TO": "Дата рождения до",
 					"FLIES_WITHOUT_CHILDREN": "Нет ни одного перелёта с детьми",
 					"FLIES_WITH_CHILDREN": "Есть хотя бы один перелёт с детьми",
 					"GENDER": {
