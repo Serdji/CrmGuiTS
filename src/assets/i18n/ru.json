@@ -295,7 +295,7 @@
 		"EVENTS": {
 			"ADD_EVENT": {
 				"FIELD": {
-					"MULTIPLICITY": "Кратность",
+					"MULTIPLICITY": "Кратность (1/x)",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Выбор сегментации",
 					"TYPE_EVENT": {
@@ -308,7 +308,7 @@
 			"EVENT": {
 				"CARD": {
 					"EDIT": "Редактировать",
-					"MULTIPLICITY": "Кратность:",
+					"MULTIPLICITY": "Кратность (1/x):",
 					"NAME_EVENT": "Название события:",
 					"SEGMENTATION": "Сегментация:",
 					"TYPE_EVENT": {
@@ -333,7 +333,7 @@
 			},
 			"LIST_EVENT": {
 				"TABLE": {
-					"MULTIPLICITY": "Кратность",
+					"MULTIPLICITY": "Кратность (1/x)",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Сегментации",
 					"STATUS": "Статус",
