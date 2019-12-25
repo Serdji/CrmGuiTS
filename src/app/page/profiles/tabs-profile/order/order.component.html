@@ -314,8 +314,9 @@
                       <div class="order__content-point">
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.COST' | translate}}</span>
                         <span><b>
-                          {{ service.emd?.amount | currency:service.emd?.Currency:'symbol-narrow'}} |
-                          {{ service.emd?.AmountCur | currency:currencyDefault:'symbol-narrow'}}
+                          {{ service.emd?.AmountCur | currency:currencyDefault:'symbol-narrow'}} |
+                          {{ service.emd?.AmountEur | currency:'EUR':'symbol-narrow'}} |
+                          {{ service.emd?.AmountUsd | currency:'USD':'symbol-narrow'}}
                         </b></span>
                       </div>
                       <div class="order__content-point">

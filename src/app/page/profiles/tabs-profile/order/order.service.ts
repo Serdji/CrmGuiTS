@@ -23,7 +23,7 @@ export class OrderService {
   ) { }
 
 
-//---------------------------------- Суммирования валюты -----------------------------------
+// ---------------------------------- Суммирования валюты -----------------------------------
   private sumTEB = R.curry( ( moneyInfo: IMonetaryInfo, ticketOrEmd: string, code: string, amount: string ): number => {
     return _( moneyInfo )
       .filter( ticketOrEmd )
@@ -31,10 +31,10 @@ export class OrderService {
       .sumBy( amount );
   } );
 
-//-------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 
-//---------- Возвращает T E или B в зависимости от условия для суммирования валюты ----------
+// ---------- Возвращает T E или B в зависимости от условия для суммирования валюты ----------
   private isTEB = R.curry( ( moneyInfo: IMonetaryInfo, ticketOrEmd: string ): string => {
     const isT = _( moneyInfo ).filter( ticketOrEmd ).filter( [ 'Code', 'T' ] ).filter( 'Amount' ).size() !== 0;
     const isE = _( moneyInfo ).filter( ticketOrEmd ).filter( [ 'Code', 'E' ] ).filter( 'Amount' ).size() !== 0;
@@ -46,10 +46,10 @@ export class OrderService {
     if ( !isT && !isE ) return 'B';
   } );
 
-//-------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
 
-//------------- Суммирования по всем заказам с учетам только активных заказов ---------------
+// ------------- Суммирования по всем заказам с учетам только активных заказов ---------------
   private sumAllTEB = R.curry( ( orders: any, code: string, amount: string ): number => {
     return _( orders )
       .filter( [ 'BookingStatus', 'Active' ] )
@@ -59,7 +59,7 @@ export class OrderService {
       .sumBy( amount );
   } );
 
-//-------------------------------------------------------------------------------------------
+// -------------------------------------------------------------------------------------------
 
   private sortByLut = R.sortBy( R.prop( 'lut' ) );
   // @ts-ignore
@@ -101,8 +101,9 @@ export class OrderService {
     } );
     return orders;
   } );
+  
+  // ------------------------------------------ Обнуление валют в коде B если есть C ------------------------------------------
   private ordersMoneyIsCZeroB = ( orders: any ) => {
-    // ------------------------------------------ Обнуление валют в коде B если есть C ------------------------------------------
 
     const propEqB = R.propEq( 'Code', 'B' );
     const propEqC = R.propEq( 'Code', 'C' );
@@ -171,8 +172,9 @@ export class OrderService {
 
     return orders;
   };
+  
+  // ------------------------------------------ Пересчет валют в заказе ------------------------------------------
   private ordersMonetaryInfo = R.map( ( orders: any ) => {
-    // ------------------------------------------ Пересчет валют в заказе ------------------------------------------
     if ( orders.MonetaryInfo ) {
 
       const money = orders.MonetaryInfo;
@@ -284,18 +286,19 @@ export class OrderService {
     const sumAll = this.sumAllTEB( orders );
     const sumAllTG = sumAll( 'TG' );
     const sumAllTE = sumAll( 'TE' );
-    //------------ Общая сумма по всем заказам из ticket с условием TEB ------------
+    
+    // ------------ Общая сумма по всем заказам из ticket с условием TEB ------------
     const ticketCur = sumAllTG( 'AmountCur' );
     const ticketEur = sumAllTG( 'AmountEur' );
     const ticketUsd = sumAllTG( 'AmountUsd' );
-    //------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------
 
 
-    //-------------- Общая сумма по всем заказам из emd с условием TEB -------------
+    // -------------- Общая сумма по всем заказам из emd с условием TEB -------------
     const emdCur = sumAllTE( 'AmountCur' );
     const emdEur = sumAllTE( 'AmountEur' );
     const emdUsd = sumAllTE( 'AmountUsd' );
-    //------------------------------------------------------------------------------
+    // ------------------------------------------------------------------------------
 
 
     const countActiveTicket = _( orders ).filter( [ 'BookingStatus', 'Active' ] ).size();
@@ -327,6 +330,7 @@ export class OrderService {
     this.counterCancelledServicesIsEmd = 0;
     return appendTotalAmount( orders );
   };
+
   private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMoneyIsCZeroB, this.ordersMixing, this.orderSort );
 
   getBooking( id: number ): Observable<any> {
