@@ -16,6 +16,10 @@ export class OrderService {
   public counterActiveServicesIsEmd = 0;
   public counterCancelledServicesIsEmd = 0;
 
+  private voidSumAmountCurEmd = 0;
+  private voidSumAmountEurEmd = 0;
+  private voidSumAmountUsdEmd = 0;
+
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
@@ -79,8 +83,31 @@ export class OrderService {
     }
 
     if ( orders.BookingStatus === 'Active' ) {
+
+      // ---------------------------Сумма аннулированных услуг, стату V-----------------------------
+      const sumAmountFn = ( amount: string ): number => {
+        const mapAmountFn = ( service: { emd: {}, couponStatus: string } ): number => {
+          if ( !R.isEmpty( service.couponStatus ) && service.couponStatus === 'V' ) return service.emd[ amount ];
+          else return 0;
+        };
+        return R.compose( R.sum, R.map( mapAmountFn ) )( orders.services );
+      };
+
+      this.voidSumAmountCurEmd = sumAmountFn( 'AmountCur' );
+      this.voidSumAmountEurEmd = sumAmountFn( 'AmountEur' );
+      this.voidSumAmountUsdEmd = sumAmountFn( 'AmountUsd' );
+      // -------------------------------------------------------------------------------------------
+
       _.map( orders.services, service => {
-        if ( service.emd ) ++this.counterActiveServicesIsEmd;
+        if ( !R.isEmpty( service.emd ) && !R.isNil( service.emd ) ) {
+          ++this.counterActiveServicesIsEmd;
+          // -----------При статусе Void "V" вычитать платную услугу и добавлять анулированую-----------
+          if ( !R.isEmpty( service.couponStatus ) && service.couponStatus === 'V' ) {
+            --this.counterActiveServicesIsEmd;
+            ++this.counterCancelledServicesIsEmd;
+          }
+          // -------------------------------------------------------------------------------------------
+        }
       } );
     }
 
@@ -101,7 +128,7 @@ export class OrderService {
     } );
     return orders;
   } );
-  
+
   // ------------------------------------------ Обнуление валют в коде B если есть C ------------------------------------------
   private ordersMoneyIsCZeroB = ( orders: any ) => {
 
@@ -172,7 +199,7 @@ export class OrderService {
 
     return orders;
   };
-  
+
   // ------------------------------------------ Пересчет валют в заказе ------------------------------------------
   private ordersMonetaryInfo = R.map( ( orders: any ) => {
     if ( orders.MonetaryInfo ) {
@@ -286,7 +313,7 @@ export class OrderService {
     const sumAll = this.sumAllTEB( orders );
     const sumAllTG = sumAll( 'TG' );
     const sumAllTE = sumAll( 'TE' );
-    
+
     // ------------ Общая сумма по всем заказам из ticket с условием TEB ------------
     const ticketCur = sumAllTG( 'AmountCur' );
     const ticketEur = sumAllTG( 'AmountEur' );
@@ -295,11 +322,16 @@ export class OrderService {
 
 
     // -------------- Общая сумма по всем заказам из emd с условием TEB -------------
-    const emdCur = sumAllTE( 'AmountCur' );
-    const emdEur = sumAllTE( 'AmountEur' );
-    const emdUsd = sumAllTE( 'AmountUsd' );
+    let emdCur = sumAllTE( 'AmountCur' );
+    let emdEur = sumAllTE( 'AmountEur' );
+    let emdUsd = sumAllTE( 'AmountUsd' );
     // ------------------------------------------------------------------------------
 
+    // ----------------------Вычитаем аннулированные услуг---------------------------
+    emdCur -= this.voidSumAmountCurEmd;
+    emdEur -= this.voidSumAmountEurEmd;
+    emdUsd -= this.voidSumAmountUsdEmd;
+    // ------------------------------------------------------------------------------
 
     const countActiveTicket = _( orders ).filter( [ 'BookingStatus', 'Active' ] ).size();
     const countCancelledTicket = _( orders ).filter( [ 'BookingStatus', 'Cancelled' ] ).size();
