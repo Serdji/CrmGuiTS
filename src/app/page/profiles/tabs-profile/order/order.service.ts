@@ -82,9 +82,24 @@ export class OrderService {
       }
     }
 
+    _.map( orders.segments, segment => {
+      _.map( orders.tickets, ticket => {
+        if ( segment.segNum === ticket.segNum ) _.merge( ticket, { segment } );
+      } );
+
+      _.map( orders.services, service => {
+        if ( segment.segNum === service.segNum ) _.merge( service, { segment } );
+      } );
+    } );
+    return orders;
+  } );
+
+
+  // -----------------------------------------------Сумма аннулированных услуг, стату V----------------------------------------
+  private voidSumAmountEmd = R.map( ( orders: any ) => {
     if ( orders.BookingStatus === 'Active' ) {
 
-      // ---------------------------Сумма аннулированных услуг, стату V-----------------------------
+      // -------------------------Подсчет суммы аннулированных услуг, стату V-------------------------
       const sumAmountFn = ( amount: string ): number => {
         const mapAmountFn = ( service: { emd: {}, couponStatus: string } ): number => {
           if ( !R.isEmpty( service.couponStatus ) && service.couponStatus === 'V' ) return service.emd[ amount ];
@@ -101,6 +116,7 @@ export class OrderService {
       _.map( orders.services, service => {
         if ( !R.isEmpty( service.emd ) && !R.isNil( service.emd ) ) {
           ++this.counterActiveServicesIsEmd;
+
           // -----------При статусе Void "V" вычитать платную услугу и добавлять анулированую-----------
           if ( !R.isEmpty( service.couponStatus ) && service.couponStatus === 'V' ) {
             --this.counterActiveServicesIsEmd;
@@ -108,6 +124,7 @@ export class OrderService {
           }
           // -------------------------------------------------------------------------------------------
         }
+
       } );
     }
 
@@ -116,20 +133,11 @@ export class OrderService {
         if ( service.emd ) ++this.counterCancelledServicesIsEmd;
       } );
     }
-
-    _.map( orders.segments, segment => {
-      _.map( orders.tickets, ticket => {
-        if ( segment.segNum === ticket.segNum ) _.merge( ticket, { segment } );
-      } );
-
-      _.map( orders.services, service => {
-        if ( segment.segNum === service.segNum ) _.merge( service, { segment } );
-      } );
-    } );
     return orders;
   } );
+  // --------------------------------------------------------------------------------------------------------------------------
 
-  // ------------------------------------------ Обнуление валют в коде B если есть C ------------------------------------------
+  // ------------------------------------------ Обнуление валют в коде B если есть C -----------------------------------------
   private ordersMoneyIsCZeroB = ( orders: any ) => {
 
     const propEqB = R.propEq( 'Code', 'B' );
@@ -363,7 +371,14 @@ export class OrderService {
     return appendTotalAmount( orders );
   };
 
-  private ordersComposeMap = R.compose( this.ordersAmount, this.ordersMonetaryInfo, this.ordersMoneyIsCZeroB, this.ordersMixing, this.orderSort );
+  private ordersComposeMap = R.compose(
+    this.ordersAmount,
+    this.ordersMonetaryInfo,
+    this.ordersMoneyIsCZeroB,
+    this.voidSumAmountEmd,
+    this.ordersMixing,
+    this.orderSort
+  );
 
   getBooking( id: number ): Observable<any> {
     return this.http.get( `${this.configService.crmApi}/crm/customer/${id}/booking` )
