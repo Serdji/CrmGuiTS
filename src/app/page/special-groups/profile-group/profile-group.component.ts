@@ -4,7 +4,7 @@ import { ProfileGroupService } from './profile-group.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
-import { timer } from 'rxjs';
+import { forkJoin, timer } from 'rxjs';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Iprofiles } from '../../../interface/iprofiles';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
@@ -85,6 +85,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
           customerGroupIds: this.customerGroupId,
+          sortvalue: 'last_name',
           from: pageIndex,
           count: value.pageSize
         };
@@ -96,6 +97,7 @@ export class ProfileGroupComponent implements OnInit, OnDestroy {
 
 
   private initProfileSearchTable( params: { customerGroupIds: number[], sortvalue: string, from: number, count: number } ) {
+    this.customerGroupId = +params.customerGroupIds;
     this.profileSearchService.getProfileSearch( params )
       .pipe( untilDestroyed( this ) )
       .subscribe( profiles => {
