@@ -22,7 +22,7 @@
               <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.LAST_TRY' | translate}}
                 <b> {{ distributionProfile.lastTryDT | date:'dd.MM.yyyy, HH:mm' }} </b>  </span>
               <span>{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.STATUS' | translate}}
-                <b> {{ distributionProfile.status.statusNameRus}} </b>  </span>
+                <b> {{ distributionProfile.status.distributionStatusId | emailDistributionTranslation | translate}} </b>  </span>
               <span *ngIf="distributionProfile.errorMessage"
                     class="profile-email-distribution__error">{{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.ERROR_MESSAGE' | translate}}
                 <b> {{ distributionProfile.errorMessage }} </b>  </span>
@@ -97,8 +97,8 @@
   <mat-card *ngIf="isDistributionProfile" class="profile-email-distribution__table">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
     <ng-template #loaderDisabled>
-      <app-table-async-distribution-profile [tableDataSource]="distributionProfile.customers">
-      </app-table-async-distribution-profile>
+      <app-table-async-email-distribution-profile [tableDataSource]="distributionProfile.customers">
+      </app-table-async-email-distribution-profile>
     </ng-template>
   </mat-card>
 

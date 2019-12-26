@@ -44,6 +44,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       .push( { url: '/crm/profile', title: 'BREADCRUMBS.CUSTOMER' } )
       .push( { url: '/crm/user', title: 'BREADCRUMBS.USER' } )
       .push( { url: '/crm/event', title: 'BREADCRUMBS.EVENT' } )
+      .push( { url: '/crm/edit-segmentation', title: 'BREADCRUMBS.EDIT_SEGMENTATION' } )
       .value();
   }
 

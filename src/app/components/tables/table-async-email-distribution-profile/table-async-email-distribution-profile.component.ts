@@ -5,38 +5,34 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
-import { takeWhile } from 'rxjs/operators';
-import * as _ from 'lodash';
-import { detailExpand } from '../../../animations/animations';
-import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { TabsProfileService } from '../../../services/tabs-profile.service';
+import * as R from 'ramda';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {
-  selector: 'app-table-async-email',
-  templateUrl: './table-async-email.component.html',
-  styleUrls: [ './table-async-email.component.styl' ],
-  animations: [ detailExpand ],
+  selector: 'app-table-async-email-distribution-profile',
+  templateUrl: './table-async-email-distribution-profile.component.html',
+  styleUrls: [ './table-async-email-distribution-profile.component.styl' ],
 } )
-export class TableAsyncEmailComponent implements OnInit, OnDestroy {
+export class TableAsyncEmailDistributionProfileComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
-  public expandedElement: PeriodicElement | null;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
-  public totalCount: number;
 
 
 
 
-  @Input() private tableDataSource: PeriodicElement[];
+  @Input() private tableDataSource: any;
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -44,28 +40,32 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
   constructor(
     private dialog: MatDialog,
     private router: Router,
+    private route: ActivatedRoute,
     private tableAsyncService: TableAsyncService,
+    private tabsProfileService: TabsProfileService,
   ) { }
 
   ngOnInit(): void {
 
     this.initDataSource();
-    this.initDisplayedColumns();
-    this.initPaginator();
     this.initDataSourceAsync();
-
+    this.initPaginator();
+    this.initDisplayedColumns();
   }
 
   private initDisplayedColumns() {
     this.displayedColumns = [
-      'select',
-      'subject',
-      'distributionStatusId',
-      'dateFrom',
-      'dateTo',
-      'lastTryDT',
-      'distributionId',
+      'firstName',
+      'lastName',
+      'secondName',
+      'distributionCustomerStatus',
+      'errorMessage',
+      'distributionCustomerId',
     ];
+  }
+
+  private initDataSource() {
+    this.dataSourceFun( this.tableDataSource );
   }
 
   private initPaginator() {
@@ -85,10 +85,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
         this.dataSourceFun( value );
         this.isLoadingResults = false;
       } );
-  }
-
-  private initDataSource() {
-    this.dataSourceFun( this.tableDataSource );
   }
 
   private dataSourceFun( params ) {
@@ -130,10 +126,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
     }
   }
 
-  applyFilter( filterValue: string ): void {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-  }
-
 
   public isAllSelected() {
     const numSelected = this.selection.selected.length;
@@ -148,24 +140,19 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
       this.dataSource.data.forEach( row => this.selection.select( row ) );
   }
 
-  deleteDisplayed(): void {
-    const arrayId = [];
-    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
-    checkbox.forEach( ( el: HTMLInputElement ) => {
-      if ( el.checked ) {
-        const id = el.id.split( '-' );
-        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+  redirectToDisplayed( id: number ): void {
+    this.router.navigate( [ `/crm/profile/${id}` ] );
+    const splitUrl = R.split( '/' );
+    // @ts-ignore
+    const lastParamsUrl = R.compose( R.last, splitUrl );
+    const distributionId = +lastParamsUrl( this.router.url );
+    const params = {
+      selectedIndex: 4,
+      message: {
+        distributionId
       }
-    } );
-
-    if ( arrayId.length !== 0 ) {
-      const params = Object.assign( {}, { ids: arrayId } );
-      this.windowDialog( `DIALOG.DISTRIBUTION.DELETES_EMAIL_DISTRIBUTION`, 'delete', params, 'displayeds' );
-    }
-  }
-
-  redirectToDistribution( id: number ): void {
-    this.router.navigate( [ `/crm/profile-email-distribution/${id}` ] );
+    };
+    this.tabsProfileService.setControlTabsData = params;
   }
 
   disabledCheckbox( eventData ): void {
@@ -174,18 +161,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-}
-
-export interface PeriodicElement {
-  status: any;
-  select: any;
-  subject: string;
-  statusNameRus: string;
-  dateFrom: string;
-  dateTo: string;
-  lastTryDT: string;
-  distributionId: number;
-  distributionStatuses: any;
 }
 
 

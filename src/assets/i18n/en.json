@@ -1,26 +1,27 @@
 {
 	"BREADCRUMBS": {
 		"CUSTOMER": "Passenger",
-		"EMAIL_DISTRIBUTION": "Email distributions",
+		"EDIT_SEGMENTATION": "Edit segmentation",
+		"EMAIL_DISTRIBUTION": "Email campaigns",
 		"EVENT": "Event",
 		"HOME": "Main page",
-		"SMS_DISTRIBUTION": "SMS distributions",
+		"SMS_DISTRIBUTION": "SMS campaigns",
 		"USER": "User"
 	},
 	"BUTTON": {
 		"ADD": "Add",
 		"ADD_CUSTOMER": "Add passenger",
 		"ADD_USER": "Add user",
-		"CANCEL": "",
-		"CANCEL_DISTRIBUTION": "Cancel distribution",
+		"CANCEL": "Cancel",
+		"CANCEL_DISTRIBUTION": "Cancel campaign",
 		"CLEAR": "Clear",
 		"CLEAR_FORM": "Clear form",
 		"COPY": "Duplicate",
 		"CREATE_EVENT": "Save event",
 		"DELETE": "Delete",
 		"DOWNLOAD": "Download",
-		"EDIT": "Edit",
-		"EDITOR": "Add distribution",
+		"EDIT": "Save changes",
+		"EDITOR": "New campaign",
 		"EDIT_EVENT": "Edit event",
 		"FILTER": "Filter",
 		"LOGIN": "Log in",
@@ -28,7 +29,7 @@
 		"PROMO_CODE": "Attach promo code",
 		"SAVE": "Save",
 		"SEARCH": "Search",
-		"SEND_DISTRIBUTION": "Send distribution",
+		"SEND_DISTRIBUTION": "Send campaign",
 		"START_EVENT": "Run event",
 		"STOP_EVENT": "Stop event",
 		"TO_FROM": "Generate"
@@ -48,18 +49,18 @@
 			"PROMO_CODE": "Are you sure you want to delete selected promo code(s)?",
 			"SEGMENTATION": "Are you sure you want to delete selected segmentation?",
 			"SEGMENTATIONS": "Are you sure you want to delete selected segmentation(s)?",
-			"SETTING_DEFAULT": "After restarting the application, all settings will be reversed to default. Are you sure you want to restart the application?",
+			"SETTING_DEFAULT": "After restarting the application, all settings will be reverted to default. Are you sure you want to restart the application?",
 			"USER": "Are you sure you want to delete selected user(s)?"
 		},
 		"DISTRIBUTION": {
-			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel selected E-mail distribution?",
-			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel selected SMS distribution?",
-			"DELETES_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected E-mail distribution(s)?",
-			"DELETES_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS distribution(s)?",
-			"DELETE_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected SMS distribution?",
-			"DELETE_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS distribution?",
-			"SEND_EMAIL_DISTRIBUTION": "Are you sure you want to run selected E-mail distribution?",
-			"SEND_SMS_DISTRIBUTION": "Are you sure you want to run selected SMS distribution?"
+			"CANCEL_EMAIL_DISTRIBUTION": "Are you sure you want to cancel selected E-mail campaign(s)?",
+			"CANCEL_SMS_DISTRIBUTION": "Do you really want to cancel selected SMS campaign(s)?",
+			"DELETES_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected E-mail campaign(s)?",
+			"DELETES_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS campaign(s)?",
+			"DELETE_EMAIL_DISTRIBUTION": "Are you sure you want to delete selected SMS campaign?",
+			"DELETE_SMS_DISTRIBUTION": "Are you sure you want to delete selected SMS campaign?",
+			"SEND_EMAIL_DISTRIBUTION": "Are you sure you want to run selected E-mail campaign?",
+			"SEND_SMS_DISTRIBUTION": "Are you sure you want to run selected SMS campaign?"
 		},
 		"DOCUMENT": {
 			"EXP_DATE": "Valid till",
@@ -70,14 +71,14 @@
 		},
 		"ERROR": {
 			"DATA_ENTERED_INCORRECTLY": "Incorrect value!",
-			"ERROR_SENDING": "Sending failed",
+			"ERROR_SENDING": "Sending failed.",
 			"NOT_ALL_FIELDS": "Please fill in all the fields.",
 			"NOT_ENOUGH_RIGHTS": "Permission denied!",
 			"RIGHTS_FOR_YOU_ACCOUNT": "Your account permissions were changed. New permissions will be activated upon logging in. In a few seconds you will be redirected to the log in page.",
 			"SERVER_IS_NOT_RES": "The server is currently not responding. Please restart the application and try again later, or contact support service."
 		},
 		"INTERSECTION": {
-			"ACCOUNT_CODE": "Account code:",
+			"ACCOUNT_CODE": "Accounting code:",
 			"BRAND": "Brands:",
 			"CUSTOMER": "Profile:",
 			"CUSTOMER_GROUP": "Passenger groups:",
@@ -85,8 +86,8 @@
 			"DATE_TO": "Discontinue date:",
 			"DIRECTIONS": "Directions:",
 			"FLIGHT": "Flight numbers:",
-			"FLIGHT_DATA_FROM": "Flight date from:",
-			"FLIGHT_DATA_TO": "Flight date to:",
+			"FLIGHT_DATA_FROM": "Travel date after:",
+			"FLIGHT_DATA_TO": "Travel date before:",
 			"GO_TO": "Manage promo code",
 			"PROMOTIONS": "Promotion:",
 			"PROMOTIONS_CODE": "Promo code:",
@@ -98,25 +99,25 @@
 			"RDD": "RBD:",
 			"SEGMENTATION": "Segmentations:",
 			"TITLE": "Overlapping promo codes",
-			"USES_PER": "Usage per profile:",
+			"USES_PER": "Usage per passenger:",
 			"USES_TOTAL": "Total usage:",
-			"VAL": "Discount amount:"
+			"VAL": "Discount value:"
 		},
 		"NO": "No",
 		"OK": {
-			"ADDITIONAL_NAME": "Additional name successfully added",
-			"DOCUMENT_CHANGED": "Document successfully added",
-			"PASSENGER_CHANGED": "Passenger data successfully changed",
-			"PASSENGER_COMBINED": "Passenger successfully merged",
-			"PASSWORD_CHANGED": "Password successfully changed",
-			"PROMO_CODE_CHANGED": "Promo code successfully changed",
-			"PROMO_CODE_LINKED": "Promo code successfully attached",
+			"ADDITIONAL_NAME": "Additional name successfully added.",
+			"DOCUMENT_CHANGED": "Document successfully added.",
+			"PASSENGER_CHANGED": "Passenger data successfully updated.",
+			"PASSENGER_COMBINED": "Passengers successfully merged.",
+			"PASSWORD_CHANGED": "Password successfully updated.",
+			"PROMO_CODE_CHANGED": "Promo code successfully updated.",
+			"PROMO_CODE_LINKED": "Promo code successfully attached.",
 			"PROMO_CODE_NOT_PERSONALIZED": "This promo code is NOT personalized. It is available for any passenger.",
-			"PROMO_CODE_SAVE": "Promo code saved successfully",
-			"SEGMENTATION_CHANGED": "Segmentation successfully changed",
-			"SEGMENTATION_SAVE": "Segmentation successfully saved",
-			"USER_CHANGED": "User data successfully changed",
-			"USER_RIGHTS_CHANGED": "User rights changed"
+			"PROMO_CODE_SAVE": "Promo code saved successfully.",
+			"SEGMENTATION_CHANGED": "Segmentation successfully updated.",
+			"SEGMENTATION_SAVE": "Segmentation successfully saved.",
+			"USER_CHANGED": "User data successfully updated.",
+			"USER_RIGHTS_CHANGED": "User rights updated."
 		},
 		"UPDATE_PROFILE": {
 			"FIRST_NAME": "Name:",
@@ -140,7 +141,7 @@
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
 		"DISTRIBUTIONS": {
-			"GROUP_NAME": "Distributions",
+			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",
 			"LIST_SMS": "SMS"
 		},
@@ -154,7 +155,7 @@
 			"LIST_GROUP_CUSTOMER": "List of groups"
 		},
 		"PROMOTIONS_CODES": {
-			"ADD_PROMOTIONS": "Add promo offer",
+			"ADD_PROMOTIONS": "Promo offers",
 			"ADD_PROMOTIONS_CODES": "Add promo code",
 			"GROUP_NAME": "Promo codes",
 			"SEARCH_PROMOTIONS_CODES": "Promo code search"
@@ -167,17 +168,17 @@
 			"ADD_SEGMENTATION": "New simple segmentation",
 			"AGGREGATION_SEGMENTATION": "New complex segmentation",
 			"GROUP_NAME": "Segmentation",
-			"LIST_SEGMENTATION": "List of segmentations"
+			"LIST_SEGMENTATION": "Segmentations list"
 		},
 		"SETTINGS": {
 			"GROUP_NAME": "Settings",
 			"RESTART": "Restart",
-			"TABLE_CUSTOMERS": "Passenger tables"
+			"TABLE_CUSTOMERS": "Passenger list settings"
 		},
 		"USERS": {
 			"ADD_USERS": "Add user",
 			"GROUP_NAME": "Users",
-			"LIST_USERS": "User list"
+			"LIST_USERS": "Users list"
 		},
 		"VERSION": "Version"
 	},
@@ -185,12 +186,7 @@
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
-					"DATE_FROM": "Eff date",
-					"DATE_TO": "Disc date",
-					"FILTER": "Filter",
-					"LAST_TRY": "Creation time",
-					"STATUS": "Status",
-					"STATUSES": {
+					"COUNT_STATUSES": {
 						"BOUNCED": "Returned",
 						"CLICKED": "Link followed",
 						"DELIVERED": "Delivered",
@@ -201,6 +197,27 @@
 						"SEND_TO_CUSTOMER": "Sent to customer",
 						"SENT_TO_GATEWAY": "Sent to mail gateway"
 					},
+					"DATE_FROM": "Effective date",
+					"DATE_TO": "Discontinue date",
+					"EMAIL_STATUSES": {
+						"ACTIVE": "Active",
+						"CANCELLED": "Completed",
+						"COMPLETED": "Canceled",
+						"CREATED": "Created",
+						"ERROR": "Error",
+						"FINISHED": "Finished",
+						"SENDING_FINISHED": "Sending finished"
+					},
+					"FILTER": "Filter",
+					"LAST_TRY": "Creation time",
+					"SMS_STATUSES": {
+						"ACTIVE": "Active",
+						"CANCELLED": "Completed",
+						"CREATED": "Created",
+						"ERROR": "Error",
+						"SENDING_FINISHED": "Sending finished"
+					},
+					"STATUS": "Status",
 					"SUBJECT": "Subject"
 				}
 			},
@@ -208,7 +225,7 @@
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
-				"LAST_TRY": "Date and time when distribution was created:",
+				"LAST_TRY": "Date and time when campaign was created:",
 				"STATUS": "Status:",
 				"STATUSES": {
 					"BOUNCED": "Returned",
@@ -227,7 +244,18 @@
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "Status"
+					"STATUS": "Status",
+					"STATUSES": {
+						"BOUNCED": "Bounced",
+						"CLICKED_LINK": "Clicked on the link",
+						"DELIVERED": "Delivered",
+						"ERROR": "Error",
+						"NOT_SENT": "Not sent",
+						"READ": "Read",
+						"SEND_CUSTOMER": "Send to customer",
+						"SENT_GATEWAY": "Sent to gateway",
+						"UNSUBSCRIBED": "Unsubscribed"
+					}
 				},
 				"TO": "to"
 			},
@@ -235,7 +263,7 @@
 				"DATE": "Mailing Dates:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
-				"LAST_TRY": "Date and time when distribution was created:",
+				"LAST_TRY": "Date and time when campaign was created:",
 				"STATUS": "Status:",
 				"STATUSES": {
 					"BOUNCED": "Returned",
@@ -248,13 +276,18 @@
 					"SEND_TO_CUSTOMER": "Sent to customer",
 					"SENT_TO_GATEWAY": "Sent to mail gateway"
 				},
-				"SUBJECT": "Topic of the letter:",
+				"SUBJECT": "Message subject:",
 				"TABLE": {
 					"ERROR_MESSAGE": "Note",
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"STATUS": "status"
+					"STATUS": "status",
+					"STATUSES": {
+						"ERROR": "Error",
+						"NOT_SENT": "Not sent",
+						"SEND_CUSTOMER": "Send to customer"
+					}
 				},
 				"TO": "to"
 			}
@@ -268,7 +301,7 @@
 					"TYPE_EVENT": {
 						"EMAIL": "E-mail",
 						"SMS": "SMS",
-						"TITLE": "Event type"
+						"TITLE": "Notification type"
 					}
 				}
 			},
@@ -281,21 +314,21 @@
 					"TYPE_EVENT": {
 						"EMAIL": "E-mail",
 						"SMS": "SMS",
-						"TITLE": "Event Type:"
+						"TITLE": "Notification type:"
 					}
 				},
 				"TABLE": {
-					"DATE_OF_BIRTH": "Date of Birth",
+					"DATE_OF_BIRTH": "Date of birth",
 					"FIELD": {
-						"PROFILE": "Profile No.",
+						"PROFILE": "Profile ID",
 						"SEARCH": "Search by",
 						"VALUE": "Value"
 					},
 					"FIRST_NAME": "Name",
-					"GENDER": "Gender",
+					"GENDER": "Sex",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"PROFILE": "Profile No."
+					"PROFILE": "Profile ID"
 				}
 			},
 			"LIST_EVENT": {
@@ -308,7 +341,7 @@
 					"TYPE_EVENT": {
 						"EMAIL": "E-mail",
 						"SMS": "SMS",
-						"TITLE": "Event type"
+						"TITLE": "Notification type"
 					}
 				}
 			}
@@ -324,10 +357,10 @@
 		},
 		"PROFILES": {
 			"ADD_PROFILE": {
-				"DATE": "DD.MM.YYYY",
+				"DATE": "Date of birth (DD.MM.YYYY)",
 				"GENDER": {
-					"F": "F",
-					"M": "M",
+					"F": "Female",
+					"M": "Male",
 					"TITLE": "Sex"
 				},
 				"MIDDLE_NAME": "Middle Name",
@@ -338,42 +371,42 @@
 			"SEARCH_PROFILE": {
 				"FORM": {
 					"AIRLINE_L_CODE": "Airline code",
-					"ARR_POINT": "Destination",
-					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale eff date",
-					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Sale disc date",
+					"ARR_POINT": "Point of destination",
+					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date after",
+					"BOOKING_CREATE_DATE_TO_EXCLUDE": "Sale date before",
 					"CAB": "Cabin code",
 					"CONTACT_EMAIL": "Email",
 					"CONTACT_PHONE": "Phone",
 					"CONTACT_SEXIST": "Contact missing",
 					"CUSTOMER_GROUP": "Passenger groups",
-					"CUSTOMER_IDS": "Profile No.",
-					"DEPT_IME_TO_EXCLUDE": "Flight date",
-					"DEP_POINT": "Departure point",
-					"DEP_TIME_FROM_INCLUDE": "Flight date later than",
-					"DOB_FROM_INCLUDE": "Date of birth later than",
-					"DOB_TO_EXCLUDE": "Date of birth earlier than",
-					"EMD": "№ of service.",
+					"CUSTOMER_IDS": "Profile ID",
+					"DEPT_IME_TO_EXCLUDE": "Travel date before",
+					"DEP_POINT": "Point of departure",
+					"DEP_TIME_FROM_INCLUDE": "Travel date after",
+					"DOB_FROM_INCLUDE": "Date of birth after",
+					"DOB_TO_EXCLUDE": "Date of birth before",
+					"EMD": "EMD №",
 					"FARE_CODE": "Fare code",
 					"FIRST_NAME": "Name",
 					"FLIGHT": "Flight number",
 					"FLIGHT_DATE_FROM": "",
 					"FLIGHT_DATE_TO": "",
 					"GENDER": {
-						"F": "F",
-						"M": "M",
+						"F": "Female",
+						"M": "Male",
 						"TITLE": "Sex"
 					},
 					"ID": "",
 					"LAST_NAME": "Surname",
-					"MONEY_AMOUNT_FROM_INCLUDE": "Total amount greater than",
-					"MONEY_AMOUNT_TO_INCLUDE": "Total amount less than",
-					"PROFILE": "Profile №",
+					"MONEY_AMOUNT_FROM_INCLUDE": "Total cost greater than",
+					"MONEY_AMOUNT_TO_INCLUDE": "Total cost less than",
+					"PROFILE": "Profile ID",
 					"RBD": "RBD",
-					"REC_LOC": "Record locator",
+					"REC_LOC": "Recloc",
 					"SEGMENTATION": "Segmentations",
 					"SERVICE_CODE": "SSR/RFISC code",
 					"TICKET": "Ticket number",
-					"TOLTIP_CSV": "CSV file with search query export"
+					"TOLTIP_CSV": "Export to CSV file with search results"
 				},
 				"TABLE": {
 					"DATE_OF_BIRTH": "Date of Birth",
@@ -381,59 +414,61 @@
 					"GENDER": "Sex",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"PROFILE": "Profile No."
+					"PROFILE": "Profile ID"
 				}
 			},
 			"TABS_PROFILE": {
 				"CONTACT": {
 					"FORM": {
-						"CONTACT_TEXT": "Contact Type Descriptions",
+						"CONTACT_TEXT": "Description",
 						"CONTACT_TYPE": "Contact type",
-						"TITLE": "Add Contact"
+						"TITLE": "Add contact"
 					},
 					"TABLE": {
 						"CONTACT_TEXT": "Value",
-						"CONTACT_TYPE": "Type of",
+						"CONTACT_TYPE": "Type",
 						"FILTER": "Filter",
-						"USE_FOR_DISTRIBUTION": "Distribution contact"
+						"USE_FOR_DISTRIBUTION": "Campaign contact"
 					},
 					"TAB_NAME": "Contacts"
 				},
 				"DOCUMENT": {
 					"FORM": {
-						"ADD": "To Add",
-						"DOCUMENT_TYPE": "Document Type",
-						"EXP_DATE": "Validity",
+						"ADD": "Add",
+						"DOCUMENT_TYPE": "Document type",
+						"EXP_DATE": "Valid till",
 						"FIRST_NAME": "Name",
 						"LAST_NAME": "Surname",
-						"MIDDLE_NAME": "Middle Name",
-						"NUM": "Document Number"
+						"MIDDLE_NAME": "Middle name",
+						"NUM": "Document number"
 					},
 					"TABLE": {
-						"DOCUMENT_TYPE": "Document Type",
-						"EXP_DATE": "Validity",
+						"DOCUMENT_TYPE": "Document type",
+						"EXP_DATE": "Valid till",
 						"FILTER": "Filter",
 						"FIRST_NAME": "Name",
 						"LAST_NAME": "Surname",
-						"MIDDLE_NAME": "Middle Name",
-						"NUM": "Document Number"
+						"MIDDLE_NAME": "Middle name",
+						"NUM": "Document number"
 					},
 					"TAB_NAME": "Documents"
 				},
 				"HEADER": {
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Paid services count:",
-					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Cancelled paid services:",
-					"COUNT_ACTIVE_TICKET": "Orders placed:",
-					"COUNT_CANCELLED_TICKET": "Cancelled orders:",
+					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Cancelled paid services count:",
+					"COUNT_ACTIVE_TICKET": "Placed orders count:",
+					"COUNT_CANCELLED_TICKET": "Cancelled orders count:",
 					"CREATE_DATE": "Joined:",
 					"CUSTOMER_GROUP": "Passenger groups:",
-					"CUSTOMER_ID": "Profile №:",
-					"DATE_OF_BIRTH": "Date of Birth:",
+					"CUSTOMER_ID": "Profile ID:",
+					"DATE_OF_BIRTH": "Date of birth:",
+					"EDIT_LIST_CUSTOMER_GROUPS": "Edit list of passengers groups",
 					"GENDER": "Sex:",
 					"LUT": "Last activity:",
-					"PROFILE": "Profile:",
-					"SEGMENTATION": "Segmentations",
-					"TOTAL_AMOUNT": "Total amount:"
+					"PROFILE": "Name:",
+					"SEGMENTATION": "Segmentations:",
+					"SHOW_ALL_GROUPS": "Show all groups",
+					"TOTAL_AMOUNT": "Total cost:"
 				},
 				"MESSAGES": {
 					"HEADER": {
@@ -443,7 +478,7 @@
 					},
 					"TAB_NAME": "Messages",
 					"TEMPLATE": {
-						"GO_TO": "Manage the distribution"
+						"GO_TO": "Manage campaign"
 					}
 				},
 				"ORDER": {
@@ -452,7 +487,7 @@
 							"STATUS": {
 								"ACTIVE": "Active",
 								"CANCELLED": "Cancelled",
-								"TITLE": "Order Status"
+								"TITLE": "Order status"
 							}
 						},
 						"TEMPLATE": {
@@ -463,35 +498,35 @@
 								"TICKETS": "By tickets:"
 							},
 							"POS": {
-								"AGENCY": "Agency:",
+								"AGENCY": "Travel agency:",
 								"COUNTRY": "Country:",
-								"GDS": "GDS:",
-								"POS_ID": "POS ID:",
-								"REC_LOC": "Recloc GDS:",
+								"GDS": "Booking source:",
+								"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP:",
+								"REC_LOC": "GDS Recloc:",
 								"TERMINAL": "Terminal ID:"
 							},
 							"SEGMENTS": {
-								"ARR_POINT": "Arrival airport:",
-								"ARR_TIME": "Date/Time of arrival:",
+								"ARR_POINT": "Point of arrival:",
+								"ARR_TIME": "Date/time of arrival:",
 								"CABIN": "Cabin code:",
-								"DEP_POINT": "Departure airport:",
-								"DEP_TIME": "Date/Time of departure:",
+								"DEP_POINT": "Point of departure:",
+								"DEP_TIME": "Date/time of departure:",
 								"FLIGHT": "Flight number:",
 								"RBD": "RBD:",
 								"STATUS": "Segment status:"
 							},
 							"SERVICES": {
-								"ARR_POINT": "Arrival airport:",
-								"ARR_TIME": "Date/Time of arrival:",
-								"CONCEPT_MEASURE": "Concept / Measure:",
+								"ARR_POINT": "Point of arrival:",
+								"ARR_TIME": "Date/time of arrival:",
+								"CONCEPT_MEASURE": "Concept/measure:",
 								"COST": "Cost: ",
 								"COUPON": "Coupon number:",
-								"COUPON_STATUS": "Status:",
+								"COUPON_STATUS": "Coupon status:",
 								"DATE": "Date:",
-								"DEP_POINT": "Departure airport:",
-								"DEP_TIME": "Date/Time of departure:",
+								"DEP_POINT": "Point of departure:",
+								"DEP_TIME": "Date/time of departure:",
 								"EMD": "EMD:",
-								"EMD_TYPE": "EMD Type:",
+								"EMD_TYPE": "EMD type:",
 								"FLIGHT": "Flight number:",
 								"NOS": {
 									"COMMENT": "Comment:",
@@ -504,13 +539,13 @@
 								"SVC_TYPE": "SVC type:"
 							},
 							"TICKETS": {
-								"ARR_POINT": "Arrival airport:",
-								"ARR_TIME": "Date/Time of arrival:",
-								"COUPON": "Coupon Number:",
-								"DEP_POINT": "Departure airport:",
-								"DEP_TIME": "Date/Time of departure:",
+								"ARR_POINT": "Point of arrival:",
+								"ARR_TIME": "Date/time of arrival:",
+								"COUPON": "Coupon number:",
+								"DEP_POINT": "Point of departure:",
+								"DEP_TIME": "Date/time of departure:",
 								"FARE_CODE": "Fare basis:",
-								"FLIGHT": "Flight №:",
+								"FLIGHT": "Flight number:",
 								"NUM_DER_TICKET": "Ticket number:",
 								"STATUS": "Status:"
 							}
@@ -519,7 +554,7 @@
 					"FILTER": {
 						"DATE_CREATE": "Date of creation",
 						"DATE_SEARCH": "Choose date",
-						"REC_LOC": "Record locator",
+						"REC_LOC": "Recloc",
 						"SEARCH": "Search by",
 						"STATUS": {
 							"ACTIVE": "Active",
@@ -530,39 +565,39 @@
 					},
 					"HEADER": {
 						"DATE_CREATE": "Date of creation",
-						"REC_LOC": "Order №",
+						"REC_LOC": "Order number",
 						"STATUS": "Order status"
 					},
 					"OPTION_GROUPS": {
-						"ALL": "Any:",
-						"ALL_SEARCH": "Search by all parameters",
-						"POS": "Point of sale",
-						"SEGMENTS": "Segment",
-						"SERVICES": "Services",
-						"TICKETS": "Ticket"
+						"ALL": "Any parameter:",
+						"ALL_SEARCH": "Search in all sections",
+						"POS": "Search by point of sale",
+						"SEGMENTS": "Search by segment",
+						"SERVICES": "Search by services",
+						"TICKETS": "Search by tickets"
 					},
 					"TAB_NAME": "Orders"
 				},
 				"PRIVILEGES": {
 					"HEADER": {
-						"DATE_OF_CARRIAGE": "Date of transportation",
+						"DATE_OF_CARRIAGE": "Date of travel",
 						"DATE_OF_SALE": "Date of sale",
-						"DIRECTION_FROM": "Travelling from",
-						"DIRECTION_TO": "Travelling to",
+						"DIRECTION_FROM": "Travel origin",
+						"DIRECTION_TO": "Travel destination",
 						"GDS": "GDS Recloc",
-						"ORGANIZATION": "Organization",
-						"STATUS": "status"
+						"ORGANIZATION": "Benefit provider",
+						"STATUS": "Status"
 					},
 					"TAB_NAME": "Benefits",
 					"TEMPLATE": {
-						"ARR_LOC_CODE": "Travelling to:",
-						"COUPON": "Coupon Number:",
-						"DEP_LOC_CODE": "Travelling from:",
+						"ARR_LOC_CODE": "Travel destination:",
+						"COUPON": "Coupon number:",
+						"DEP_LOC_CODE": "Travel origin:",
 						"DISCOUNT_SUM": "Amount of granted benefits:",
 						"EXTERNAL_DISCOUNT_SOURCE_NAME": "Benefit provider:",
-						"FLIGHT_DATA": "Date of transportation:",
-						"PRICE": "Total cost of transportation:",
-						"SALE_DATE": "Benefit grant date (date of sale):",
+						"FLIGHT_DATA": "Date of travel:",
+						"PRICE": "Total cost:",
+						"SALE_DATE": "Benefit granted on (date of sale):",
 						"STATUS_NAME": "Status:",
 						"TICKET": "Ticket number:"
 					}
@@ -570,57 +605,57 @@
 				"PROFILE": {
 					"CARD": {
 						"COMMENT": "Notes:",
-						"DATE_OF_BIRTH": "Date of Birth:",
+						"DATE_OF_BIRTH": "Date of birth:",
 						"FIRST_NAME": "Name:",
 						"GENDER": "Sex:",
 						"LAST_NAME": "Surname:",
-						"MIDDLE_NAME": "Middle Name:",
+						"MIDDLE_NAME": "Middle name:",
 						"TITLE": "Basic information"
 					},
 					"EDIT": {
 						"COMMENT": "Notes",
-						"DATE_OF_BIRTH": "Date of Birth",
+						"DATE_OF_BIRTH": "Date of birth",
 						"FIRST_NAME": "Name",
 						"GENDER": {
-							"F": "F",
-							"M": "m",
+							"F": "Female",
+							"M": "Male",
 							"TITLE": "Sex"
 						},
 						"LAST_NAME": "Surname",
-						"MIDDLE_NAME": "Middle Name",
+						"MIDDLE_NAME": "Middle name",
 						"TITLE": "Edit"
 					},
 					"FORM": {
 						"FIRST_NAME": "Name",
 						"LAST_NAME": "Surname",
-						"MIDDLE_NAME": "Middle Name",
+						"MIDDLE_NAME": "Middle name",
 						"TITLE": "Add additional name"
 					},
 					"TABLE": {
 						"FIRST_NAME": "Name",
 						"LAST_NAME": "Surname",
-						"MIDDLE_NAME": "Middle Name"
+						"MIDDLE_NAME": "Middle name"
 					},
 					"TAB_NAME": "Profile"
 				},
 				"PROMO_CODE": {
 					"EXPANSION": {
 						"TEMPLATE": {
-							"ACCOUT_CODE": "Account Code:",
+							"ACCOUT_CODE": "Accounting code:",
 							"BRAND": "Brands:",
 							"CUSTOMER": "Profile: ",
 							"CUSTOMER_GROUP": "Passenger groups:",
-							"FLIGHT_DATE_FROM": "Flight date from:",
-							"FLIGHT_DATE_TO": "Flight date to:",
+							"FLIGHT_DATE_FROM": "Travel date after:",
+							"FLIGHT_DATE_TO": "Travel date before:",
 							"GO_TO": "Manage promo code",
 							"PROMO_CODE_FLIGHT_LIST": "Flight numbers:",
 							"RDB": "RBD:",
-							"REC_LOC": "Record locator:",
+							"REC_LOC": "Recloc:",
 							"ROUTE": "Directions:",
 							"SEGMENTATION": "Segmentations:",
-							"USES_PER_PERSON": "Usage per profile:",
+							"USES_PER_PERSON": "Usage per passenger:",
 							"USES_TOTAL": "Total usage:",
-							"VAL": "Discount amount:",
+							"VAL": "Discount value:",
 							"VAL_TYPE": {
 								"PERCENT": "Percent",
 								"SUM": "Amount",
@@ -650,26 +685,26 @@
 		"PROMOTIONS": {
 			"ADD_PROMOTIONS": {
 				"FIELD": {
-					"PROMOTIONS": "Promo offer"
+					"PROMOTIONS": "Promo offers"
 				},
 				"TABLE": {
-					"PROMOTIONS": "Promo offer"
+					"PROMOTIONS": "Promo offer name"
 				}
 			},
 			"ADD_PROMOTIONS_CODE": {
 				"FIELD": {
-					"ACCOUNT_CODE": "Account Code",
-					"ARR_LOC": "Travelling to",
+					"ACCOUNT_CODE": "Accounting code",
+					"ARR_LOC": "Travel to",
 					"BRAND": "Brands",
-					"CUSTOMER": "Profile",
+					"CUSTOMER": "Passenger profile ID",
 					"CUSTOMER_GROUP": "Passenger groups",
 					"DATE_FROM": "Effective date",
 					"DATE_TO": "Discontinue date",
-					"DEP_LOC": "Travelling from",
-					"DESCRIPTION": "Promo offer description",
+					"DEP_LOC": "Travel from",
+					"DESCRIPTION": "Promo code description",
 					"FLIGHT": "Flight numbers",
-					"FLIGHT_DATA_FROM": "Flight date from",
-					"FLIGHT_DATA_TO": "Flight date to",
+					"FLIGHT_DATA_FROM": "Travel date after",
+					"FLIGHT_DATA_TO": "Travel date before",
 					"PROMOTIONS": "Promo offer",
 					"PROMOTIONS_CODE": "Promo code",
 					"PROMOTIONS_CODE_VAL": {
@@ -677,42 +712,42 @@
 						"PERCENT": "Percent",
 						"TITLE": "Discount type"
 					},
-					"RDD": "RBD",
+					"RDD": "RBDs",
 					"REASON": "Basis",
 					"SEGMENTATION": "Segmentations",
 					"USED": "Used:",
-					"USES_PER": "Usage per profile",
+					"USES_PER": "Usage per passenger",
 					"USES_TOTAL": "Total usage",
-					"VAL": "Discount amount"
+					"VAL": "Discount value"
 				},
 				"TABLE": {
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
-					"PROFILE": "Profile №"
+					"PROFILE": "Profile ID"
 				}
 			},
 			"SEARCH_PROMOTIONS_CODE": {
 				"FIELD": {
-					"ACCOUNT_CODE": "Account Code",
+					"ACCOUNT_CODE": "Accounting code",
 					"BRAND": "Brands",
 					"CUSTOMER_GROUP": "Passenger groups",
-					"DATE_FROM": "Effective date",
-					"DATE_TO": "Discontinue date",
+					"DATE_FROM": "Effective date on/after",
+					"DATE_TO": "Discontinue date on/before",
 					"FLIGHT": "Flight numbers",
-					"FLIGHT_DATA_FROM": "Flight date from",
-					"FLIGHT_DATA_TO": "Flight date to",
+					"FLIGHT_DATA_FROM": "Travel date after",
+					"FLIGHT_DATA_TO": "Travel date before",
 					"PROMOTIONS": "Promo offer",
 					"PROMOTIONS_CODE": "Promo code",
 					"RDD": "RBD",
 					"SEGMENTATION": "Segmentations"
 				},
 				"TABLE": {
-					"ACCOUNT_CODE": "Account code",
-					"DATE_FROM": "Eff date",
-					"DATE_TO": "Disc date",
-					"FLIGHT_DATA_FROM": "Flight date from",
-					"FLIGHT_DATA_TO": "Flight date to",
+					"ACCOUNT_CODE": "Accounting code",
+					"DATE_FROM": "Effective date",
+					"DATE_TO": "Discontinue date",
+					"FLIGHT_DATA_FROM": "Travel date after",
+					"FLIGHT_DATA_TO": "Travel date before",
 					"PROMOTIONS": "Promo offer",
 					"PROMOTIONS_CODE": "Promo code"
 				}
@@ -720,9 +755,9 @@
 		},
 		"REPORTS": {
 			"STATISTICS_REPORT": {
-				"MES_DOWNLOAD_EXC": "Download report in an *.xls file",
-				"MES_DOWNLOAD_PDF": "Download report in a *.pdf file",
-				"MES_DOWNLOAD_WORD": "Download report in a *.doc file",
+				"MES_DOWNLOAD_EXC": "Download report in *.xls file",
+				"MES_DOWNLOAD_PDF": "Download report in *.pdf file",
+				"MES_DOWNLOAD_WORD": "Download report in *.doc file",
 				"REPORT_PARAMETERS": "Report settings",
 				"REPORT_SELECTION": "Report type"
 			}
@@ -733,17 +768,17 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
-					"NEXT": "Continue",
+					"NEXT": "Next",
 					"PREV": "Back"
 				},
 				"GROUP_SEGMENTATION": {
 					"GRANULARITY": {
-						"COUPON": "Coupon",
+						"COUPON": "Coupons",
 						"ORDERS": "Orders",
-						"PASSENGER": "Passenger",
+						"PASSENGER": "Passengers",
 						"TITLE": "Breakdown by:"
 					},
-					"GROUP_SEGMENTATION": "Segmentation name 1"
+					"GROUP_SEGMENTATION": "Segmentation name"
 				},
 				"NUMBER_SEGMENTS": {
 					"FROM": "From",
@@ -757,38 +792,38 @@
 					"FROM": "From",
 					"SERVICES": "Services",
 					"TICKETS": "Tickets",
-					"TITLE": "Order amount",
+					"TITLE": "Order cost",
 					"TO": "To"
 				},
 				"PROFILE_DETAILS": {
-					"DOB_FROM": "Date of birth from",
+					"DOB_FROM": "Date of birth on/after",
 					"DOB_TO": "",
-					"FLIES_WITHOUT_CHILDREN": "Travels without children",
-					"FLIES_WITH_CHILDREN": "Travels with children",
+					"FLIES_WITHOUT_CHILDREN": "Never travelled with child/infant",
+					"FLIES_WITH_CHILDREN": "Travelled with child/infant at least once",
 					"GENDER": {
-						"F": "F",
-						"M": "M",
+						"F": "Female",
+						"M": "Male",
 						"TITLE": "Sex"
 					},
 					"TITLE": "Profile details"
 				},
 				"RESERVATION_DATE_RANG": {
-					"DATE_FROM": "Free range from",
-					"DATE_TO": "Free range till",
-					"TITLE": "Booking date range"
+					"DATE_FROM": "After",
+					"DATE_TO": "Before",
+					"TITLE": "Reservation date"
 				},
 				"SERVICES": {
 					"AIRLINE_L_CODE": "Airline code",
-					"ARR_D_FROM": "Departure date range from",
-					"ARR_D_TO": "Departure date range till",
-					"ARR_LOC": "Destination point",
-					"DEP_LOC": "Departure point",
-					"DISPATCH_TIME": "Time of departure",
+					"ARR_D_FROM": "Departure date after",
+					"ARR_D_TO": "Departure date before",
+					"ARR_LOC": "Point of destination",
+					"DEP_LOC": "Point of origin",
+					"DISPATCH_TIME": "Time before departure",
 					"FLIGHT_NO": "Flight number",
 					"NOT_SERVICE_CODE": "No service code",
-					"POS_AGENCY": "Agency code (point of sale)",
-					"POS_GDS": "GDS code (point of sale)",
-					"POS_ID": " Travel agency user ID (point of sale)",
+					"POS_AGENCY": "Pseudo ID / 1Н agency ID",
+					"POS_GDS": "Booking source",
+					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP",
 					"SERVICE_CODE": "SSR/RFISC",
 					"TITLE": "Paid services"
 				},
@@ -800,18 +835,18 @@
 				},
 				"TICKET": {
 					"AIRLINE_L_CODE": "Airline code",
-					"ARR_D_FROM": "Effective travel date",
-					"ARR_D_TO": "Discontinue travel date",
-					"ARR_LOC": "Destination",
+					"ARR_D_FROM": "Travel date after",
+					"ARR_D_TO": "Travel date before",
+					"ARR_LOC": "Point of destination",
 					"CABIN": "Cabin code",
-					"DEP_LOC": "Point of departure",
+					"DEP_LOC": "Point of origin",
 					"DISPATCH_TIME": "Time before departure",
 					"FLIGHT_NO": "Flight number",
-					"POS_AGENCY": "Agency code (point of sale)",
-					"POS_GDS": "GDS code (point of sale)",
-					"POS_ID": "PPR code (point of sale)",
-					"RARE_CODE": "Rate code",
-					"RDB": "Booking class",
+					"POS_AGENCY": "Pseudo ID / 1Н agency ID",
+					"POS_GDS": "Booking source",
+					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP",
+					"RARE_CODE": "Fare code",
+					"RDB": "RBD",
 					"TITLE": "Ticket"
 				}
 			},
@@ -819,35 +854,35 @@
 				"FIELD": {
 					"CHOICE_SEGMENTATION": "Select segmentations to merge",
 					"GRANULARITY": {
-						"COUPON": "Coupon",
+						"COUPON": "Coupons",
 						"ORDERS": "Orders",
-						"PASSENGER": "Passenger",
+						"PASSENGER": "Passengers",
 						"TITLE": "Breakdown by"
 					},
-					"NAME_COMPLEX_SEGMENTATION": "Name"
+					"NAME_COMPLEX_SEGMENTATION": "Complex segmentation name"
 				},
 				"SEGMENTATIONS": "Segmentations to merge",
 				"TABLE": {
-					"FILTER": "Filter",
-					"GROUP_SEGMENTATION": "Segmentation 2",
-					"TITLE": "Complex segmentations 3"
+					"FILTER": "Filter by name",
+					"GROUP_SEGMENTATION": "Name",
+					"TITLE": "Complex segmentations list"
 				}
 			},
 			"LIST_SEGMENTATION": {
 				"PROFILE_SEGMENTATION": {
-					"CUSTOMER_ID": "Profile №",
-					"FIRST_NAME": "Segmentation name 11",
+					"CUSTOMER_ID": "Profile ID",
+					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name"
 				},
 				"TABLE_SEGMENTATION": {
 					"ALL": "All",
 					"COMPLICATED": "Complex",
-					"FILTER": "Search by name",
+					"FILTER": "Filter by name",
 					"GRANULARITY": {
-						"COUPON": "Coupon",
+						"COUPON": "Coupons",
 						"ORDERS": "Orders",
-						"PASSENGER": "Passenger",
+						"PASSENGER": "Passengers",
 						"TITLE": "Breakdown criteria"
 					},
 					"SEGMENTATION": "Name",
@@ -855,9 +890,9 @@
 					"STATUS": {
 						"COMPLICATED": "Complex",
 						"SIMPLE": "Simple",
-						"TITLE": "Status"
+						"TITLE": "Type"
 					},
-					"TITLE": "Segmentation list"
+					"TITLE": "Segmentations list"
 				}
 			}
 		},
@@ -873,7 +908,7 @@
 				"TABLE": {
 					"PROFILE_GROUP": "Group name"
 				},
-				"TITLE": "Passenger group"
+				"TITLE": "Add new passenger group"
 			}
 		},
 		"USERS": {
@@ -897,9 +932,9 @@
 			"USER": {
 				"ACCESS_RIGHTS": {
 					"ADDITIONAL_RIGHT": "Additional rights",
-					"ANALYTICS": "Analytics",
+					"ANALYTICS": "Segmentations",
 					"CUSTOMERS": "Passengers",
-					"DISTRIBUTIONS": "Distributions",
+					"DISTRIBUTIONS": "Campaigns",
 					"EVENTS": "Events",
 					"PRIVILEGES": "Benefits",
 					"PROMOTIONS_CODES": "Promo codes",
@@ -927,13 +962,13 @@
 	},
 	"POP_UP": {
 		"DIALOG_MERGE_PROFILE": {
-			"CUSTOMER_IDS": "Profile №:",
+			"CUSTOMER_IDS": "Profile ID:",
 			"DATE_OF_BIRTH": "Date of birth:",
 			"FIRST_NAME": "Name:",
 			"LAST_NAME": "Surname:"
 		},
 		"DIALOG_PROMO_CODE": {
-			"ACCOUNT_CODE": "Account Code:",
+			"ACCOUNT_CODE": "Accounting code:",
 			"DATE_FROM": "Effective date",
 			"DATE_TO": "Discontinue date",
 			"NAME_PROMO_CODE": "Promo code name:",
@@ -944,13 +979,13 @@
 				"TITLE": "Select a mailing form"
 			},
 			"DIALOG_EMAIL": {
-				"DATE_FROM": "Sending date from",
-				"DATE_TO": "Sending date till",
+				"DATE_FROM": "Sending start date",
+				"DATE_TO": "Sending end date",
 				"EXAMPLE": "Example:",
 				"LIMITS": "Limit",
-				"PARAMS": "Distribution settings",
+				"PARAMS": "Campaign settings",
 				"TEMPLATE": "Template",
-				"TEMPLATE_TITLE": "Distribution template",
+				"TEMPLATE_TITLE": "Campaign template",
 				"TEXT": "Text",
 				"THEME": "Subject",
 				"TITLE": "Mailing settings",
@@ -960,19 +995,19 @@
 				"SYMBOLS_ENTERED": "Symbols entered",
 				"TEMPLATE": "Template",
 				"TEXT": "Message text",
-				"TITLE": "Title"
+				"TITLE": "Subject"
 			}
 		}
 	},
 	"TABLE": {
 		"FIRST_PAGE": "First page",
 		"FROM": "of",
-		"ITEMS_PER_PAGE": "Lines per page",
+		"ITEMS_PER_PAGE": "Rows per page",
 		"LAST_PAGE": "Last page",
 		"NEXT": "Next",
 		"PREV": "Previous",
 		"RESULT": {
-			"ERROR": "Nothing found for this request.",
+			"ERROR": "Nothing found. Try another search",
 			"OK": "Search results"
 		}
 	},

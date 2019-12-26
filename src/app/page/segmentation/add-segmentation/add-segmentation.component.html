@@ -138,7 +138,8 @@
           <div class="add-segmentation__stepper-button">
             <button mat-button
                     matStepperPrevious>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.PREV' | translate}}</button>
-            <button mat-button matStepperNext>{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
+            <button mat-button matStepperNext
+                    (click)="initAutocomplete( 'formSegmentationStepper' )">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.BUTTON.NEXT' | translate}}</button>
           </div>
         </mat-step>
 
@@ -439,7 +440,7 @@
         </mat-grid-tile>
       </mat-grid-list>
 
-      <mat-grid-list cols="4" rowHeight="300px">
+      <mat-grid-list cols="4" rowHeight="350px">
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">

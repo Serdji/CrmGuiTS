@@ -9,10 +9,8 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { SelectionModel } from '@angular/cdk/collections';
 import { Router } from '@angular/router';
 import { Iprofile } from '../../../interface/iprofile';
-import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { TableAsyncService } from '../../../services/table-async.service';
-
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {

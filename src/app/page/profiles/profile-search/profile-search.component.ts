@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { takeWhile, map, delay } from 'rxjs/operators';
+import {  map, delay } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -24,7 +24,6 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
-
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {
@@ -258,9 +257,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       this.initQueryParams();
     };
 
-    forkJoin(
+    forkJoin([
       this.listSegmentationService.getSegmentation(),
       this.profileGroupService.getProfileGroup()
+      ]
     )
       .pipe( untilDestroyed(this) )
       .subscribe( success );
@@ -369,7 +369,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
 
     params = airlineCode ? params : _.omit( params, [ 'airlineLCode', 'airlineId' ] );
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: params } );
+    this.router.navigate( [ '/crm/profile-search' ], { queryParams: params } );
     this.sendProfileParams = params;
     this.profileSearchService.getProfileSearch( this.sendProfileParams )
       .pipe( untilDestroyed(this) )
@@ -454,7 +454,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   clearForm(): void {
     this.resetForm();
     this.buttonCsvDisabled = true;
-    this.router.navigate( [ '/crm/profilesearch' ], { queryParams: {} } );
+    this.router.navigate( [ '/crm/profile-search' ], { queryParams: {} } );
   }
 
   downloadCsv(): void {

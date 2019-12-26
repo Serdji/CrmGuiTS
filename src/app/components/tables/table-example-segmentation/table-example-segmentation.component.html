@@ -69,13 +69,13 @@
         </mat-icon>
         <mat-icon (click)="$event.stopPropagation()"
                   *ngIf="element.isComplex"
-                  routerLink="/crm/complexsegmentation/"
+                  routerLink="/crm/complex-segmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
         <mat-icon (click)="$event.stopPropagation()"
                   *ngIf="!element.isComplex"
-                  routerLink="/crm/addsegmentation/"
+                  routerLink="/crm/edit-segmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
@@ -94,7 +94,7 @@
             <mat-nav-list>
               <mat-list-item class="table__segmentations-child"
                              *ngFor=" let childSegmentation of element.childSegmentations"
-                             routerLink="/crm/addsegmentation/"
+                             routerLink="/crm/edit-segmentation/"
                              [queryParams]="{ segmentationId: childSegmentation.segmentationId }"
               >
                 <mat-icon>subdirectory_arrow_right</mat-icon>

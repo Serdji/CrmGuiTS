@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { delay, map, takeWhile } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
@@ -106,7 +106,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.saveUrlServiceService.subjectEvent401
       .pipe( untilDestroyed(this) )
       .subscribe( _ => {
-        this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
+        this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
       } );
   }
 
@@ -183,15 +183,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
       }
     };
-    const whichForm = whichFormGroup => {
-      return this[ whichFormGroup ].get( formControlName ).valueChanges
-        .pipe(
-          untilDestroyed(this),
-          delay( this.autDelay ),
-          map( mapFilter )
-        );
-    };
-    return whichForm( formGroup );
+    return this[ formGroup ].get( formControlName ).valueChanges
+      .pipe(
+        untilDestroyed( this ),
+        delay( this.autDelay ),
+        map( mapFilter )
+      );
   }
 
 
@@ -541,13 +538,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     const isQueryParams = hasSaveFormParams( queryParams );
     const saveFormParams = isQueryParams ? JSON.parse( queryParams.saveFormParams ) : '';
     if ( !this.formSegmentation.invalid || isQueryParams ) {
-      _( this.saveSegmentationParams ).assign( isQueryParams ? saveFormParams : this.segmentationParameters() ).value();
+      this.saveSegmentationParams = isQueryParams ? saveFormParams : this.segmentationParameters();
       if ( !R.isEmpty( this.saveSegmentationParams ) ) {
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
           .pipe( untilDestroyed(this) )
           .subscribe( value => {
             this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
-            this.router.navigate( [ `/crm/addsegmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
+            this.router.navigate( [ `/crm/edit-segmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
           } );
       }
     }
@@ -555,15 +552,13 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   createForm(): void {
     if ( !this.formSegmentation.invalid ) {
-      _( this.createSegmentationParams )
-        .assign( this.segmentationParameters() )
-        .set( 'segmentationId', this.segmentationId )
-        .value();
+      this.createSegmentationParams = this.segmentationParameters();
+     _( this.createSegmentationParams ).set( 'segmentationId', this.segmentationId ).value();
       this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
         .pipe( untilDestroyed(this) )
         .subscribe( _ => {
           this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' );
-          this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
+          this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
         } );
     }
   }
@@ -587,7 +582,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( _ => {
         this.resetForm();
       } );
-    this.router.navigate( [ '/crm/addsegmentation' ], { queryParams: {} } );
+    this.router.navigate( [ '/crm/add-segmentation' ], { queryParams: {} } );
   }
 
   ngOnDestroy(): void {}

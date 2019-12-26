@@ -51,6 +51,7 @@ export class AppComponent implements OnInit {
     this.isTokenRedirect();
     this.updateVersion();
     this.saveUrlServiceService.deleteLocalStorageParams();
+
     this.titleService.dataTitle();
     this.initTranslate();
   }

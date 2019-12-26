@@ -74,7 +74,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   private initFormAdd() {
     this.formAdd = this.fb.group( {
       'segmentationTitle': [ '', Validators.required ],
-      'segmentationGranularity': [ '', Validators.required ],
+      'segmentationGranularity': '',
       'segmentation': '',
     } );
     this.formAdd.get( 'segmentation' ).disable();
@@ -257,7 +257,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
       this.buttonSearch = false;
       this.buttonCreate = false;
       this.buttonSave = true;
-      this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
+      this.router.navigate( [ 'crm/complex-segmentation' ], { queryParams: { segmentationId: complexSegmentation.segmentationId } } );
       this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
     };
     if ( !this.formAdd.invalid ) {
@@ -284,8 +284,9 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private onClearForm() {
-    this.router.navigate( [ 'crm/complexsegmentation' ], { queryParams: {} } );
+    this.router.navigate( [ 'crm/complex-segmentation' ], { queryParams: {} } );
     this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
+    this.formAdd.get( 'segmentationGranularity' ).patchValue( '' );
     this.formAdd.get( 'segmentationTitle' ).setErrors( null );
     this.selectionSegmentation = [];
     this.buttonSearch = true;

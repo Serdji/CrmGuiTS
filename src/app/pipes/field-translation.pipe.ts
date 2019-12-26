@@ -5,8 +5,9 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class FieldTranslationPipe implements PipeTransform {
 
-  transform(value: string): string {
-    switch ( value ) {
+
+  transform(value: string | number): string {
+   switch ( value ) {
       case  'firstName': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.FIRST_NAME';
       case  'lastName': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.LAST_NAME';
       case  'secondName': return 'PAGE.PROFILES.SEARCH_PROFILE.TABLE.MIDDLE_NAME';
