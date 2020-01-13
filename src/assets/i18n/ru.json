@@ -187,6 +187,14 @@
 		"VERSION": "Версия"
 	},
 	"PAGE": {
+		"CUSTOM_SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"TEMPLATE": "Выбор шаблона сегментации",
+					"TITLE": "Название спец сегментации"
+				}
+			}
+		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {

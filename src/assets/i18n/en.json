@@ -187,6 +187,14 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
+		"CUSTOM_SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"TEMPLATE": "Segmentation pattern selection",
+					"TITLE": "Special segmentation name"
+				}
+			}
+		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {

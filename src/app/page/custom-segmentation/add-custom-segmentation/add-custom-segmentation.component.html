@@ -1,3 +1,33 @@
-<div class="custom-segmentation">
-  <h1>custom-segmentation</h1>
+<div class="add-custom-segmentation__wrapper">
+  <div class="add-custom-segmentation__wrapper">
+    <mat-card class="add-custom-segmentation__form">
+      <form [formGroup]="formCustomSegmentation">
+        <mat-form-field class="add-custom-segmentation__input">
+          <input matInput formControlName="title" type="text"
+                 placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
+        </mat-form-field>
+        <mat-form-field class="add-custom-segmentation__input">
+          <mat-select formControlName="template"
+                      placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
+            <mat-option></mat-option>
+            <mat-option value="1">Шаблон 1</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <app-dynamic-form
+        [paramsDynamicForm]="paramsDynamicForm"
+        [splitInput]="1"
+        [cols]="1"
+        rowHeight="70px"
+        (dynamicFormEmit)="onReportGeneration($event)"
+      >
+      </app-dynamic-form>
+    </mat-card>
+
+
+
+    <mat-card class="add-custom-segmentation__table">
+
+    </mat-card>
+  </div>
 </div>
