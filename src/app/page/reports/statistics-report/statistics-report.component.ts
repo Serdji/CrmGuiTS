@@ -1,15 +1,12 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { StatisticsReportService } from './statistics-report.service';
-import { map, takeWhile } from 'rxjs/operators';
 import * as R from 'ramda';
 import { saveAs } from 'file-saver';
 import { NestedTreeControl } from '@angular/cdk/tree';
 import { MatTreeNestedDataSource } from '@angular/material/tree';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { PDFDocumentProxy } from 'pdfjs-dist';
-import { combineLatest } from 'rxjs';
-import * as _ from 'lodash';
 import * as moment from 'moment';
 import { TitleService } from '../../../services/title.service';
 import { MatSnackBar } from '@angular/material/snack-bar';

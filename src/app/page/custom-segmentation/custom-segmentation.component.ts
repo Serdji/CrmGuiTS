@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import * as R from 'ramda';
+import { untilDestroyed } from 'ngx-take-until-destroy';
+
+
 
 @Component({
   selector: 'app-custom-segmentation',
@@ -9,7 +13,7 @@ export class CustomSegmentationComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnInit(): void {
   }
 
 }
