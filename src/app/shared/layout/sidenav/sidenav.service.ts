@@ -55,6 +55,14 @@ export class SidenavService {
         ]
       },
       {
+        name: 'MENU.CUSTOM_SEGMENTATION.GROUP_NAME',
+        icon: 'subtitles',
+        claims: 'analytics:read',
+        link: [
+          { url: '/crm/add-custom-segmentation', title: 'MENU.CUSTOM_SEGMENTATION.ADD_SEGMENTATION' },
+        ]
+      },
+      {
         name: 'MENU.GROUP_CUSTOMER.GROUP_NAME',
         icon: 'group_add',
         claims: 'analytics:read',

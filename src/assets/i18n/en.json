@@ -140,6 +140,10 @@
 			"GROUP_NAME": "Passengers",
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
+		"CUSTOM_SEGMENTATION": {
+			"ADD_SEGMENTATION": "New simple segmentation",
+			"GROUP_NAME": "Custom segmentation"
+		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",

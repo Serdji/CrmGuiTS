@@ -140,6 +140,10 @@
 			"GROUP_NAME": "Пассажиры",
 			"SEARCH_CUSTOMER": "Поиск пассажира"
 		},
+		"CUSTOM_SEGMENTATION": {
+			"ADD_SEGMENTATION": "Добавить сегментацию",
+			"GROUP_NAME": "Спец сегментация"
+		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Рассылки",
 			"LIST_EMAIL": "Email",
