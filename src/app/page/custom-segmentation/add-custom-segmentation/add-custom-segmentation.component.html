@@ -10,7 +10,7 @@
           <mat-select formControlName="template"
                       placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
             <mat-option></mat-option>
-            <mat-option value="1">Шаблон 1</mat-option>
+            <mat-option *ngFor=" let template of templates | async" [value]="template.segmentationId"> {{ template.title }} </mat-option>
           </mat-select>
         </mat-form-field>
       </form>
