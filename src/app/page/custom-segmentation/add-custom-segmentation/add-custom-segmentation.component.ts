@@ -8,6 +8,7 @@ import { Observable, of } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
 import { map, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
+import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
 
 
 @Component( {
@@ -66,7 +67,25 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   onReportGeneration( event: any ): void {
-    console.log( event );
+    const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
+      const value = {};
+      _.each( event, ( val, key ) => {
+        if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, values: val } );
+      } );
+      return value;
+    } ) as ICustomSegmentationParams['CustomSegmentationParameters'];
+
+    const params: ICustomSegmentationParams = {
+      CustomSegmentationTemplateId: this.templateId,
+      Title: this.formCustomSegmentation.get( 'title' ).value,
+      Description: '',
+      CustomSegmentationParameters,
+    };
+
+    this.addCustomSegmentationService.setCustomSegmentation( params )
+      .pipe( untilDestroyed( this ) )
+      .subscribe( value => console.log( value ) );
+
   }
 
   ngOnDestroy(): void {}

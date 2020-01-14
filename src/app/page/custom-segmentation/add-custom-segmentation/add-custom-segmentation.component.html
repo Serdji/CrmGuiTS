@@ -9,14 +9,16 @@
         <mat-form-field class="add-custom-segmentation__input">
           <mat-select formControlName="template"
                       placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
-            <mat-option></mat-option>
+            <mat-option value="0"></mat-option>
             <mat-option *ngFor=" let template of templates$ | async" [value]="template.customSegmentationTemplateId"> {{ template.templateName }} </mat-option>
           </mat-select>
         </mat-form-field>
       </form>
       <mat-progress-bar mode="buffer" *ngIf="isLouderDynamicForm"></mat-progress-bar>
       <app-dynamic-form
-        *ngIf="paramsDynamicForm && !isLouderDynamicForm"
+        *ngIf="paramsDynamicForm &&
+        !isLouderDynamicForm &&
+        formCustomSegmentation.get('template').value !== '0'"
         [paramsDynamicForm]="paramsDynamicForm"
         [splitInput]="1"
         [cols]="1"

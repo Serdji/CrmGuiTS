@@ -5,6 +5,7 @@ import { RetryRequestService } from '../../../services/retry-request.service';
 import { Observable } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
+import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +24,10 @@ export class AddCustomSegmentationService {
 
   getCustomSegmentation( id: number ): Observable<IParamsDynamicForm[]> {
     return this.http.get( `${this.configService.crmApi}/crm/customSegmentation/templateParameters/${id}`).pipe( this.retryRequestService.retry() ) as Observable<IParamsDynamicForm[]>;
+  }
+
+  setCustomSegmentation( params: ICustomSegmentationParams ): Observable<{ 'customSegmentationId': number }> {
+    return this.http.post( `${this.configService.crmApi}/crm/customSegmentation`, params ).pipe( this.retryRequestService.retry() ) as Observable<{ 'customSegmentationId': number }>;
   }
 
 }

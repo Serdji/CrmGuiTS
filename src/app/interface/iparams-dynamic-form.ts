@@ -1,4 +1,5 @@
 export interface IParamsDynamicForm {
+  'id': number;
   'name': string;
   'dataType': number;
   'nullable': boolean;
