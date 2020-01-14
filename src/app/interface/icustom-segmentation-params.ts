@@ -4,6 +4,6 @@ export interface ICustomSegmentationParams {
   'Description': string;
   'CustomSegmentationParameters': {
     'ParameterId': number;
-    'Value': number | number[];
+    'Value': any | any[];
   }[];
 }
