@@ -6,7 +6,8 @@ import { AddCustomSegmentationService } from './add-custom-segmentation.service'
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { Observable, of } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
-import { mergeMap } from 'rxjs/operators';
+import { map, mergeMap, tap } from 'rxjs/operators';
+import * as _ from 'lodash';
 
 
 @Component( {
@@ -16,102 +17,12 @@ import { mergeMap } from 'rxjs/operators';
 } )
 export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
-  public paramsDynamicForm: IParamsDynamicForm[] = [
-    {
-      'name': 'SegmentsFrom',
-      'dataType': 3,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Количество сегментов от',
-      'promptUser': true,
-      'values': [ '10' ]
-    }, {
-      'name': 'Dep_DFrom',
-      'dataType': 1,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Дата вылета с',
-      'promptUser': true,
-      'values': [ '1/1/2019 12:00:00 AM' ]
-    }, {
-      'name': 'Dep_DTo',
-      'dataType': 1,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Дата вылета по',
-      'promptUser': true,
-      'values': [ '1/1/2100 12:00:00 AM' ]
-    }, {
-      'name': 'Dep_L',
-      'dataType': 4,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Откуда',
-      'promptUser': true,
-      'values': [ null ]
-    }, {
-      'name': 'Arr_L',
-      'dataType': 4,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Куда',
-      'promptUser': true,
-      'values': [ null ]
-    }, {
-      'name': 'FareCode',
-      'dataType': 4,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Код тарифа',
-      'promptUser': true,
-      'values': [ null ]
-    }, {
-      'name': 'PosGds',
-      'dataType': 4,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Код ГРС',
-      'promptUser': true,
-      'values': [ null ]
-    }, {
-      'name': 'PosId',
-      'dataType': 4,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Код ППР',
-      'promptUser': true,
-      'values': [ null ]
-    }, {
-      'name': 'PosAgency',
-      'dataType': 4,
-      'nullable': true,
-      'allowBlank': false,
-      'multiValue': false,
-      'isQueryParameter': false,
-      'prompt': 'Код агентства',
-      'promptUser': true,
-      'values': [ null ]
-    }
-  ];
-  public templates: Observable<ICustomSegmentationTemplate[]>;
+  public paramsDynamicForm: IParamsDynamicForm[];
+  public templates$: Observable<ICustomSegmentationTemplate[]>;
+  public isLouderDynamicForm: boolean;
 
   private formCustomSegmentation: FormGroup;
+  private templateId: number;
 
   constructor(
     private addCustomSegmentationService: AddCustomSegmentationService,
@@ -122,6 +33,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initTemplate();
     this.initDynamicForm();
+    this.isLouderDynamicForm = false;
   }
 
   initForm() {
@@ -132,16 +44,25 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initTemplate() {
-    this.templates = this.addCustomSegmentationService.getCustomSegmentationTemplate();
+    this.templates$ = this.addCustomSegmentationService.getCustomSegmentationTemplate();
   }
 
   private initDynamicForm() {
+    const isLouderDynamicFormFn = _ => this.isLouderDynamicForm = !this.isLouderDynamicForm;
+    const success = paramsDynamicForm => {
+      this.paramsDynamicForm = paramsDynamicForm;
+      this.templateId = _.chain( paramsDynamicForm ).find( 'templateId' ).get( 'templateId' ).value();
+    };
+
     this.formCustomSegmentation.get( 'template' ).valueChanges
       .pipe(
-        mergeMap( val => of( val ) ),
+        tap( isLouderDynamicFormFn ),
+        mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId )
+          .pipe( map( params => _.map( params, val => _.set( val, 'templateId', templateId ) ) ) )
+        ),
+        tap( isLouderDynamicFormFn ),
         untilDestroyed( this )
-        )
-      .subscribe(console.log);
+      ).subscribe( success );
   }
 
   onReportGeneration( event: any ): void {

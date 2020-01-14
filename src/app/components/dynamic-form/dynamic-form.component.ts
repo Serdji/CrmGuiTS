@@ -40,11 +40,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   private initParameterConversion() {
     const typeCheck = ( typeNumber: number ): string => {
       switch ( typeNumber ) {
-        case 0: return 'checkbox'; break;
-        case 1: return 'date'; break;
+        case 0: return 'checkbox';
+        case 1: return 'date';
         case 2:
         case 3:
-        case 4: return 'text'; break;
+        case 4: return 'text';
       }
     };
     const mapParamsDynamicForm = R.map( ( paramsDynamicForm: IParamsDynamicForm ) => {
@@ -80,7 +80,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         R.path([ prop, 'value' ], this.dataObject ) || '',
         this.mapValidators( R.path( [ prop, 'validators' ], this.dataObject ) )
       );
-    }
+    };
     const setFormGroup = prop => formGroup[ prop ] = formControls( prop );
     const mapPerson = R.map( setFormGroup );
     const composeFormControl = R.compose( mapPerson, R.keys );
