@@ -100,7 +100,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   initForm() {
     this.formCustomSegmentation = this.fb.group( {
       title: '',
-      template: ''
+      customSegmentationTemplateId: ''
     } );
   }
 
@@ -109,36 +109,33 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initDynamicForm() {
-    const isLouderDynamicFormFn = _ => this.isLouderDynamicForm = !this.isLouderDynamicForm;
     const success = paramsDynamicForm => {
       this.paramsDynamicForm = paramsDynamicForm;
       this.templateId = _.chain( paramsDynamicForm ).find( 'templateId' ).get( 'templateId' ).value();
     };
 
-    this.formCustomSegmentation.get( 'template' ).valueChanges
+    this.formCustomSegmentation.get( 'customSegmentationTemplateId' ).valueChanges
       .pipe(
-        tap( isLouderDynamicFormFn ),
+        tap( _ => this.isLouderDynamicForm = true ),
         mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId )
           .pipe( map( params => _.map( params, val => _.set( val, 'templateId', templateId ) ) ) )
         ),
-        tap( isLouderDynamicFormFn ),
+        tap( _ => this.isLouderDynamicForm = false ),
         untilDestroyed( this )
       ).subscribe( success );
   }
-
-  isLoaderCustomSegmentationTableFn = () => this.isLoaderCustomSegmentationTable = !this.isLoaderCustomSegmentationTable;
 
   private initCustomSegmentationTable() {
     const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
     this.listSegmentationService.getSegmentation()
       .pipe(
         untilDestroyed( this ),
-        tap( this.isLoaderCustomSegmentationTableFn )
+        tap( _ => this.isLoaderCustomSegmentationTable = false )
       ).subscribe( success );
   }
 
   onReportGeneration( event: any ): void {
-    this.isLoaderCustomSegmentationTableFn();
+    this.isLoaderCustomSegmentationTable = true;
     const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
       const value = {};
       _.each( event, ( val, key ) => {

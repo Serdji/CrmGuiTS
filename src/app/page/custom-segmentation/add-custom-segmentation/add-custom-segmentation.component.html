@@ -7,7 +7,7 @@
                  placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
         </mat-form-field>
         <mat-form-field class="add-custom-segmentation__input">
-          <mat-select formControlName="template"
+          <mat-select formControlName="customSegmentationTemplateId"
                       placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
             <mat-option value="0"></mat-option>
             <mat-option *ngFor=" let template of templates$ | async" [value]="template.customSegmentationTemplateId"> {{ template.templateName }} </mat-option>
@@ -18,7 +18,7 @@
       <app-dynamic-form
         *ngIf="paramsDynamicForm &&
         !isLouderDynamicForm &&
-        formCustomSegmentation.get('template').value !== '0'"
+        formCustomSegmentation.get('customSegmentationTemplateId').value !== '0'"
         [paramsDynamicForm]="paramsDynamicForm"
         [splitInput]="1"
         [cols]="1"
