@@ -46,7 +46,6 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
     this.initDataSource();
     this.initDisplayedColumns();
     this.initFormCheckbox();
@@ -71,8 +70,10 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
 
   private initSwitchSegmentation() {
     const isComplex = segmentation => segmentation.isComplex;
+    const isCustom = segmentation => segmentation.isCustom;
     const segmentationSimple = R.reject( isComplex );
     const segmentationComplicated = R.filter( isComplex );
+    const segmentationCustom = R.filter( isCustom );
     const success = ( { whichSegmentation } ) => {
       switch ( whichSegmentation ) {
         case 'all':
@@ -84,6 +85,10 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
         case 'complicated':
           this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
           break;
+        case 'custom':
+          this.dataSourceFun( segmentationCustom( this.tableDataSource ) );
+          break;
+
       }
     };
 

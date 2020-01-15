@@ -893,6 +893,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "All",
 					"COMPLICATED": "Complex",
+					"CUSTOM": "Custom",
 					"FILTER": "Filter by name",
 					"GRANULARITY": {
 						"COUPON": "Coupons",
@@ -904,6 +905,7 @@
 					"SIMPLE": "Simple",
 					"STATUS": {
 						"COMPLICATED": "Complex",
+						"CUSTOM": "Custom",
 						"SIMPLE": "Simple",
 						"TITLE": "Type"
 					},

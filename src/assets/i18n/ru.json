@@ -893,6 +893,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
+					"CUSTOM": "Спец",
 					"FILTER": "Фильтр",
 					"GRANULARITY": {
 						"COUPON": "Купон",
@@ -904,6 +905,7 @@
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
+						"CUSTOM": "Спец",
 						"SIMPLE": "Простая",
 						"TITLE": "Тип"
 					},
