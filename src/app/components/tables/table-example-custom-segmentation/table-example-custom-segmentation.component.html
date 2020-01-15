@@ -38,8 +38,12 @@
     <ng-container matColumnDef="segmentationId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <mat-icon routerLink="/crm/complex-segmentation"
-                  [queryParams]="{ segmentationId: element.segmentationId }" >create</mat-icon>
+        <mat-icon
+          (click)="redirectToSegmentation(element.segmentationId); $event.stopPropagation()"
+        >search
+        </mat-icon>
+        <mat-icon routerLink="/crm/add-custom-segmentation"
+                  [queryParams]="{ customSegmentationId: element.segmentationId }" >create</mat-icon>
       </mat-cell>
     </ng-container>
 

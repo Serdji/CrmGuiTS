@@ -1,4 +1,4 @@
-<div class="add-custom-segmentation__wrapper">
+<div class="add-custom-segmentation">
   <div class="add-custom-segmentation__wrapper">
     <mat-card class="add-custom-segmentation__form">
       <form [formGroup]="formCustomSegmentation">
@@ -28,14 +28,24 @@
       </app-dynamic-form>
     </mat-card>
 
-
-
     <mat-card class="add-custom-segmentation__table">
       <mat-progress-bar *ngIf="isLoaderCustomSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
         <mat-card-title> {{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.TABLE.TITLE' | translate}} </mat-card-title>
-        <app-table-example-custom-segmentation *ngIf="customSegmentation.length !== 0" [tableDataSource]="customSegmentation"></app-table-example-custom-segmentation>
+        <app-table-example-custom-segmentation *ngIf="customSegmentation.length !== 0" [tableDataSource]="customSegmentation" (emitSegmentationId)="onProfileSearch( $event )"></app-table-example-custom-segmentation>
       </ng-template>
     </mat-card>
   </div>
+
+  <mat-card class="list-custom-segmentation__table-profile" *ngIf="isTableProfileTable">
+    <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <mat-card-title>{{segmentationProfiles.customers.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
+      <app-table-async-segmentation-profile
+        *ngIf="segmentationProfiles.customers.length !== 0"
+        [tableDataSource]="segmentationProfiles.customers">
+      </app-table-async-segmentation-profile>
+    </ng-template>
+  </mat-card>
+
 </div>

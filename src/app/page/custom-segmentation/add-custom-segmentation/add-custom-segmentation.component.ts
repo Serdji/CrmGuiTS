@@ -11,6 +11,12 @@ import * as _ from 'lodash';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
+import { ActivatedRoute, Router } from '@angular/router';
+import { TableAsyncService } from '../../../services/table-async.service';
+import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
+import { IpagPage } from '../../../interface/ipag-page';
+import { AddSegmentationService } from '../../segmentation/add-segmentation/add-segmentation.service';
+import { timer } from 'rxjs/observable/timer';
 
 
 @Component( {
@@ -25,14 +31,22 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   public customSegmentation: ISegmentation[];
   public isLouderDynamicForm: boolean;
   public isLoaderCustomSegmentationTable: boolean;
+  public isLoaderProfileTable: boolean;
+  public isTableProfileTable: boolean;
+  public segmentationProfiles: ISegmentationProfile;
 
   private formCustomSegmentation: FormGroup;
   private templateId: number;
+  private segmentationId: number;
 
   constructor(
     private addCustomSegmentationService: AddCustomSegmentationService,
     private listSegmentationService: ListSegmentationService,
-    private fb: FormBuilder
+    private addSegmentationService: AddSegmentationService,
+    private fb: FormBuilder,
+    private router: Router,
+    private route: ActivatedRoute,
+    private tableAsyncService: TableAsyncService,
   ) { }
 
   ngOnInit(): void {
@@ -40,8 +54,25 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initTemplate();
     this.initDynamicForm();
     this.initCustomSegmentationTable();
+    this.initQueryParams();
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
+  }
+
+  private initQueryParams() {
+    this.route.queryParams
+      .pipe( untilDestroyed(this) )
+      .subscribe( res => {
+        console.log( res );
+        const isRes = !R.isEmpty( res );
+        const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
+        if ( isKeySegmentationId ) {
+          this.initTableProfile( res.segmentationId );
+          this.segmentationId = res.segmentationId;
+        }
+        this.isTableProfileTable = isKeySegmentationId;
+        this.isLoaderProfileTable = isKeySegmentationId;
+      } );
   }
 
   initForm() {
@@ -105,6 +136,45 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       .pipe( untilDestroyed( this ) )
       .subscribe( () => this.initCustomSegmentationTable() );
 
+  }
+
+  private initTableProfilePagination() {
+    this.tableAsyncService.subjectPage
+      .pipe( untilDestroyed(this) )
+      .subscribe( ( value: IpagPage ) => {
+        const pageIndex = value.pageIndex * value.pageSize;
+        const paramsAndCount = {
+          'segmentationId': this.segmentationId,
+          from: pageIndex,
+          count: value.pageSize
+        };
+        this.addSegmentationService.getProfiles( paramsAndCount )
+          .pipe( untilDestroyed(this) )
+          .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
+      } );
+  }
+
+  private initTableProfile( id: number ) {
+    const params = {
+      segmentationId: id,
+      from: 0,
+      count: 10
+    };
+    this.addSegmentationService.getProfiles( params )
+      .pipe( untilDestroyed(this) )
+      .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
+        this.tableAsyncService.countPage = segmentationProfiles.totalCount;
+        this.segmentationProfiles = segmentationProfiles;
+        this.isLoaderProfileTable = false;
+      } );
+  }
+
+  onProfileSearch( segmentationId: number ): void {
+    this.segmentationId = segmentationId;
+    this.isTableProfileTable = true;
+    this.isLoaderProfileTable = true;
+    this.router.navigate( [ 'crm/add-custom-segmentation' ], { queryParams: { segmentationId } } );
+    this.initTableProfile( this.segmentationId );
   }
 
   ngOnDestroy(): void {}

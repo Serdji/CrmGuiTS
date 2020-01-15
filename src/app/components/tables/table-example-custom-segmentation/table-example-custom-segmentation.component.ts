@@ -27,6 +27,7 @@ export class TableExampleCustomSegmentationComponent implements OnInit, OnDestro
 
 
   @Input() private tableDataSource: any;
+  @Output() private emitSegmentationId = new EventEmitter<number>();
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -126,6 +127,10 @@ export class TableExampleCustomSegmentationComponent implements OnInit, OnDestro
       const params = Object.assign( {}, { ids: arrayId } );
       this.windowDialog( `DIALOG.DELETE.SEGMENTATIONS`, 'delete', params, 'deleteSegmentations' );
     }
+  }
+
+  redirectToSegmentation( segmentationId: number ): void {
+    this.emitSegmentationId.emit( segmentationId );
   }
 
   disabledCheckbox( eventData ): void {
