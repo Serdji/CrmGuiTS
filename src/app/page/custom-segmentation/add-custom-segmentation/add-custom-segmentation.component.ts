@@ -58,6 +58,18 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initTableProfilePagination();
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
+    this.listSegmentationService.subjectSegmentations
+      .pipe( untilDestroyed(this) )
+      .subscribe( _ => this.refreshSegmentation() );
+  }
+
+  private refreshSegmentation() {
+    timer( 500 )
+      .pipe( untilDestroyed(this) )
+      .subscribe( _ => {
+        this.isLoaderCustomSegmentationTable = true;
+        this.initCustomSegmentationTable();
+      } );
   }
 
   private initQueryParams() {
