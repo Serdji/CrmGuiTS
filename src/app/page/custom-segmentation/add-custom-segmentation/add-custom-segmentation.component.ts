@@ -6,9 +6,11 @@ import { AddCustomSegmentationService } from './add-custom-segmentation.service'
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { Observable, of } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
-import { map, mergeMap, tap } from 'rxjs/operators';
+import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
+import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
+import { ISegmentation } from '../../../interface/isegmentation';
 
 
 @Component( {
@@ -20,13 +22,16 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   public paramsDynamicForm: IParamsDynamicForm[];
   public templates$: Observable<ICustomSegmentationTemplate[]>;
+  public customSegmentation: ISegmentation[];
   public isLouderDynamicForm: boolean;
+  public isLoaderCustomSegmentationTable: boolean;
 
   private formCustomSegmentation: FormGroup;
   private templateId: number;
 
   constructor(
     private addCustomSegmentationService: AddCustomSegmentationService,
+    private listSegmentationService: ListSegmentationService,
     private fb: FormBuilder
   ) { }
 
@@ -34,7 +39,9 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initTemplate();
     this.initDynamicForm();
+    this.initCustomSegmentationTable();
     this.isLouderDynamicForm = false;
+    this.isLoaderCustomSegmentationTable = true;
   }
 
   initForm() {
@@ -63,6 +70,15 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
         ),
         tap( isLouderDynamicFormFn ),
         untilDestroyed( this )
+      ).subscribe( success );
+  }
+
+  private initCustomSegmentationTable() {
+    const isLoaderCustomSegmentationTableFn = _ => this.isLoaderCustomSegmentationTable = !this.isLoaderCustomSegmentationTable;
+    const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
+    this.listSegmentationService.getSegmentation()
+      .pipe(
+        tap( isLoaderCustomSegmentationTableFn )
       ).subscribe( success );
   }
 

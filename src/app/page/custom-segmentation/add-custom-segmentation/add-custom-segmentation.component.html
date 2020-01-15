@@ -31,7 +31,11 @@
 
 
     <mat-card class="add-custom-segmentation__table">
-
+      <mat-progress-bar *ngIf="isLoaderCustomSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <mat-card-title> {{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.TABLE.TITLE' | translate}} </mat-card-title>
+        <app-table-example-custom-segmentation *ngIf="customSegmentation.length !== 0" [tableDataSource]="customSegmentation"></app-table-example-custom-segmentation>
+      </ng-template>
     </mat-card>
   </div>
 </div>
