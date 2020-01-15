@@ -73,17 +73,19 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       ).subscribe( success );
   }
 
+  isLoaderCustomSegmentationTableFn = () => this.isLoaderCustomSegmentationTable = !this.isLoaderCustomSegmentationTable;
+
   private initCustomSegmentationTable() {
-    const isLoaderCustomSegmentationTableFn = _ => this.isLoaderCustomSegmentationTable = !this.isLoaderCustomSegmentationTable;
     const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
     this.listSegmentationService.getSegmentation()
       .pipe(
         untilDestroyed( this ),
-        tap( isLoaderCustomSegmentationTableFn )
+        tap( this.isLoaderCustomSegmentationTableFn )
       ).subscribe( success );
   }
 
   onReportGeneration( event: any ): void {
+    this.isLoaderCustomSegmentationTableFn();
     const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
       const value = {};
       _.each( event, ( val, key ) => {
@@ -101,7 +103,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
     this.addCustomSegmentationService.setCustomSegmentation( params )
       .pipe( untilDestroyed( this ) )
-      .subscribe( value => console.log( value ) );
+      .subscribe( () => this.initCustomSegmentationTable() );
 
   }
 
