@@ -55,6 +55,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initDynamicForm();
     this.initCustomSegmentationTable();
     this.initQueryParams();
+    this.initTableProfilePagination();
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
   }
@@ -63,8 +64,6 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( untilDestroyed(this) )
       .subscribe( res => {
-        console.log( res );
-        const isRes = !R.isEmpty( res );
         const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
         if ( isKeySegmentationId ) {
           this.initTableProfile( res.segmentationId );
