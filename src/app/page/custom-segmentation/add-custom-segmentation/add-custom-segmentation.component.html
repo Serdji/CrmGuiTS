@@ -16,6 +16,7 @@
       </form>
       <mat-progress-bar mode="buffer" *ngIf="isLouderDynamicForm"></mat-progress-bar>
       <app-dynamic-form
+        [edit]="isEditCustomSegmentation"
         *ngIf="paramsDynamicForm &&
         !isLouderDynamicForm &&
         formCustomSegmentation.get('customSegmentationTemplateId').value !== '0'"

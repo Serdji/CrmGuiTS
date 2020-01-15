@@ -35,4 +35,8 @@ export class AddCustomSegmentationService {
     return this.http.post( `${this.configService.crmApi}/crm/customSegmentation`, params ).pipe( this.retryRequestService.retry() ) as Observable<{ 'customSegmentationId': number }>;
   }
 
+  putCustomSegmentation( params: ICustomSegmentationParams ): Observable<{ 'customSegmentationId': number }> {
+    return this.http.put( `${this.configService.crmApi}/crm/customSegmentation`, params ).pipe( this.retryRequestService.retry() ) as Observable<{ 'customSegmentationId': number }>;
+  }
+
 }

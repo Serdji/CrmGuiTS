@@ -1,4 +1,5 @@
 export interface ICustomSegmentationParams {
+  'CustomSegmentationId'?: number;
   'CustomSegmentationTemplateId': number;
   'Title': string;
   'Description': string;

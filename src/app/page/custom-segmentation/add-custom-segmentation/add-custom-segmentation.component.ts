@@ -35,10 +35,12 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   public isLoaderProfileTable: boolean;
   public isTableProfileTable: boolean;
   public segmentationProfiles: ISegmentationProfile;
+  public isEditCustomSegmentation: boolean;
 
   private formCustomSegmentation: FormGroup;
   private templateId: number;
   private segmentationId: number;
+  private customSegmentationId: number;
 
   constructor(
     private addCustomSegmentationService: AddCustomSegmentationService,
@@ -57,6 +59,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initCustomSegmentationTable();
     this.initQueryParams();
     this.initTableProfilePagination();
+    this.isEditCustomSegmentation = false;
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
     this.listSegmentationService.subjectSegmentations
@@ -82,13 +85,16 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
         if ( isKeySegmentationId ) {
           this.initTableProfile( res.segmentationId );
           this.segmentationId = res.segmentationId;
+          this.formCustomSegmentation.get('customSegmentationTemplateId').patchValue('0');
         } else if ( isKeyCustomSegmentationId ) {
           this.isLouderDynamicForm = true;
+          this.customSegmentationId = res.customSegmentationId;
           this.addCustomSegmentationService.getCustomSegmentationParams( res.customSegmentationId )
             .pipe( untilDestroyed( this ) )
             .subscribe( ( customSegmentationGetParams: ICustomSegmentationGetParams ) => {
               this.formCustomSegmentation.patchValue( customSegmentationGetParams );
               this.paramsDynamicForm = customSegmentationGetParams.customSegmentationParameters;
+              this.isEditCustomSegmentation = true;
               this.isLouderDynamicForm = false;
             } );
         }
@@ -151,9 +157,16 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       CustomSegmentationParameters,
     };
 
-    this.addCustomSegmentationService.setCustomSegmentation( params )
-      .pipe( untilDestroyed( this ) )
-      .subscribe( () => this.initCustomSegmentationTable() );
+    if( !this.isEditCustomSegmentation ) {
+      this.addCustomSegmentationService.setCustomSegmentation( params )
+        .pipe( untilDestroyed( this ) )
+        .subscribe( () => this.initCustomSegmentationTable() );
+    } else {
+      _.set( params, 'CustomSegmentationId', this.customSegmentationId );
+      this.addCustomSegmentationService.putCustomSegmentation( params )
+        .pipe( untilDestroyed( this ) )
+        .subscribe( () => this.initCustomSegmentationTable() );
+    }
 
   }
 

@@ -26,6 +26,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   @Input() rowHeight: string;
   @Input() paramsDynamicForm: IParamsDynamicForm[];
   @Input() splitInput: number;
+  @Input() edit: boolean;
   @Output() dynamicFormEmit: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private renderer: Renderer2) { }
