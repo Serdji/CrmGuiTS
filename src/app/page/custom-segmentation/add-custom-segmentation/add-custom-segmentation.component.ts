@@ -142,7 +142,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
       const value = {};
       _.each( event, ( val, key ) => {
-        if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, values: val } );
+        if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, value: val } );
       } );
       return value;
     } ) as ICustomSegmentationParams['CustomSegmentationParameters'];

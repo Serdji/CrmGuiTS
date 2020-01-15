@@ -63,6 +63,7 @@ export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
       'select',
       'title',
       'isComplex',
+      'isCustom',
       'segmentationGranularity',
       'segmentationId',
     ];

@@ -44,13 +44,17 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="isCustom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element"></mat-cell>
+    </ng-container>
 
     <ng-container matColumnDef="isComplex">
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.TITLE' | translate}} </mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <span *ngIf="this.formFilterSegmentation.get('whichSegmentation').value === 'simple'">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.COMPLICATED' | translate}}</span>
-        <span *ngIf="this.formFilterSegmentation.get('whichSegmentation').value === 'complicated'">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.SIMPLE'  | translate}}</span>
-        <span *ngIf="this.formFilterSegmentation.get('whichSegmentation').value === 'custom'">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.CUSTOM' | translate}}</span>
+        <span *ngIf="element.isComplex && !element.isCustom">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.COMPLICATED' | translate}}</span>
+        <span *ngIf="!element.isComplex && !element.isCustom">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.SIMPLE'  | translate}}</span>
+        <span *ngIf="element.isCustom">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.CUSTOM' | translate}}</span>
         <mat-icon *ngIf="element.isComplex">arrow_downward</mat-icon>
       </mat-cell>
     </ng-container>
@@ -72,13 +76,13 @@
         >search
         </mat-icon>
         <mat-icon (click)="$event.stopPropagation()"
-                  *ngIf="element.isComplex"
+                  *ngIf="element.isComplex && !element.isCustom"
                   routerLink="/crm/complex-segmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
         <mat-icon (click)="$event.stopPropagation()"
-                  *ngIf="!element.isComplex"
+                  *ngIf="!element.isComplex && !element.isCustom"
                   routerLink="/crm/edit-segmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
