@@ -6,6 +6,7 @@ import { Observable } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
+import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
 
 @Injectable({
   providedIn: 'root'
@@ -24,6 +25,10 @@ export class AddCustomSegmentationService {
 
   getCustomSegmentation( id: number ): Observable<IParamsDynamicForm[]> {
     return this.http.get( `${this.configService.crmApi}/crm/customSegmentation/templateParameters/${id}`).pipe( this.retryRequestService.retry() ) as Observable<IParamsDynamicForm[]>;
+  }
+
+  getCustomSegmentationParams( id: number ): Observable<ICustomSegmentationGetParams> {
+    return this.http.get( `${this.configService.crmApi}/crm/customSegmentation/parameters/${id}`).pipe( this.retryRequestService.retry() ) as Observable<ICustomSegmentationGetParams>;
   }
 
   setCustomSegmentation( params: ICustomSegmentationParams ): Observable<{ 'customSegmentationId': number }> {

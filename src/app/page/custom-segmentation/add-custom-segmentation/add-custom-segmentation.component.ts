@@ -17,6 +17,7 @@ import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { IpagPage } from '../../../interface/ipag-page';
 import { AddSegmentationService } from '../../segmentation/add-segmentation/add-segmentation.service';
 import { timer } from 'rxjs/observable/timer';
+import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
 
 
 @Component( {
@@ -59,13 +60,13 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
     this.listSegmentationService.subjectSegmentations
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.refreshSegmentation() );
   }
 
   private refreshSegmentation() {
     timer( 500 )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.isLoaderCustomSegmentationTable = true;
         this.initCustomSegmentationTable();
@@ -74,12 +75,22 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( res => {
         const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
+        const isKeyCustomSegmentationId = _.chain( res ).keys().first().value() === 'customSegmentationId';
         if ( isKeySegmentationId ) {
           this.initTableProfile( res.segmentationId );
           this.segmentationId = res.segmentationId;
+        } else if ( isKeyCustomSegmentationId ) {
+          this.isLouderDynamicForm = true;
+          this.addCustomSegmentationService.getCustomSegmentationParams( res.customSegmentationId )
+            .pipe( untilDestroyed( this ) )
+            .subscribe( ( customSegmentationGetParams: ICustomSegmentationGetParams ) => {
+              this.formCustomSegmentation.patchValue( customSegmentationGetParams );
+              this.paramsDynamicForm = customSegmentationGetParams.customSegmentationParameters;
+              this.isLouderDynamicForm = false;
+            } );
         }
         this.isTableProfileTable = isKeySegmentationId;
         this.isLoaderProfileTable = isKeySegmentationId;
@@ -151,7 +162,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -160,7 +171,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
@@ -172,7 +183,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.addSegmentationService.getProfiles( params )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
         this.tableAsyncService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
