@@ -78,6 +78,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
     this.listSegmentationService.getSegmentation()
       .pipe(
+        untilDestroyed( this ),
         tap( isLoaderCustomSegmentationTableFn )
       ).subscribe( success );
   }
