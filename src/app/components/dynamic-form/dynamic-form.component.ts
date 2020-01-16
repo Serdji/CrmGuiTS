@@ -19,7 +19,6 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public splitObjectProps: any;
   public buttonDisabled: boolean;
 
-
   private dataObject: any = {};
 
   @Input() cols: number;
@@ -40,13 +39,22 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
 
 
   private initParameterConversion() {
+
+    enum inputType {
+      bool,
+      date,
+      float,
+      int,
+      string
+    }
+
     const typeCheck = ( typeNumber: number ): string => {
       switch ( typeNumber ) {
-        case 0: return 'checkbox';
-        case 1: return 'date';
-        case 2:
-        case 3:
-        case 4: return 'text';
+        case inputType.bool: return 'checkbox';
+        case inputType.date: return 'date';
+        case inputType.float: return 'float';
+        case inputType.int: return 'int';
+        case inputType.string: return 'text';
       }
     };
     const mapParamsDynamicForm = R.map( ( paramsDynamicForm: IParamsDynamicForm ) => {

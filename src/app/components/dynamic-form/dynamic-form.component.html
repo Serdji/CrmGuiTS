@@ -6,6 +6,17 @@
         <div *ngFor="let prop of objectProps">
           <div [ngSwitch]="prop.type">
 
+
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'float'">
+              <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder" [appNumbersOnly]="prop.type">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'int'">
+              <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder" [appNumbersOnly]="prop.type">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+            </mat-form-field>
+
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'text'">
               <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder">
               <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
