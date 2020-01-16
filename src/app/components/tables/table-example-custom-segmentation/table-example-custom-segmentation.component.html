@@ -42,8 +42,6 @@
           (click)="redirectToSegmentation(element.segmentationId); $event.stopPropagation()"
         >search
         </mat-icon>
-        <mat-icon routerLink="/crm/add-custom-segmentation"
-                  [queryParams]="{ customSegmentationId: element.segmentationId }" >create</mat-icon>
       </mat-cell>
     </ng-container>
 

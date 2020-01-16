@@ -90,7 +90,7 @@
         <mat-icon (click)="$event.stopPropagation()"
                   *ngIf="element.isCustom"
                   routerLink="/crm/add-custom-segmentation/"
-                  [queryParams]="{ customSegmentationId: element.segmentationId }"
+                  [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
       </mat-cell>
