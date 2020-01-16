@@ -29,6 +29,7 @@ import { TableAsyncEmailComponent } from './table-async-email/table-async-email.
 import { TableAsyncSmsComponent } from './table-async-sms/table-async-sms.component';
 import { TableAsyncEmailDistributionProfileComponent } from './table-async-email-distribution-profile/table-async-email-distribution-profile.component';
 import { TableAsyncSmsDistributionProfileComponent } from './table-async-sms-distribution-profile/table-async-sms-distribution-profile.component';
+import { TableExampleCustomSegmentationComponent } from './table-example-custom-segmentation/table-example-custom-segmentation.component';
 
 @NgModule({
   imports: [
@@ -60,6 +61,7 @@ import { TableAsyncSmsDistributionProfileComponent } from './table-async-sms-dis
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
     TableExampleComplexSegmentationComponent,
+    TableExampleCustomSegmentationComponent,
     TableExampleTaskComponent,
     TableAsyncEventProfileComponent
   ],
@@ -80,6 +82,7 @@ import { TableAsyncSmsDistributionProfileComponent } from './table-async-sms-dis
     TableAsyncPromoCodeProfileComponent,
     TableAsyncSearchPromoCodeComponent,
     TableExampleComplexSegmentationComponent,
+    TableExampleCustomSegmentationComponent,
     TableExampleTaskComponent,
     TableAsyncEventProfileComponent
   ],

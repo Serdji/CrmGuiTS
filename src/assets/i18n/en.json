@@ -140,6 +140,10 @@
 			"GROUP_NAME": "Passengers",
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
+		"CUSTOM_SEGMENTATION": {
+			"ADD_SEGMENTATION": "New simple segmentation",
+			"GROUP_NAME": "Custom segmentation"
+		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",
@@ -183,6 +187,18 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
+		"CUSTOM_SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"DESCRIPTION": "Description",
+					"TEMPLATE": "Segmentation pattern selection",
+					"TITLE": "Special segmentation name"
+				},
+				"TABLE": {
+					"TITLE": "Custom segmentation"
+				}
+			}
+		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
@@ -878,6 +894,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "All",
 					"COMPLICATED": "Complex",
+					"CUSTOM": "Custom",
 					"FILTER": "Filter by name",
 					"GRANULARITY": {
 						"COUPON": "Coupons",
@@ -889,6 +906,7 @@
 					"SIMPLE": "Simple",
 					"STATUS": {
 						"COMPLICATED": "Complex",
+						"CUSTOM": "Custom",
 						"SIMPLE": "Simple",
 						"TITLE": "Type"
 					},

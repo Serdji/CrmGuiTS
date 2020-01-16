@@ -16,9 +16,9 @@ export class OrderService {
   public counterActiveServicesIsEmd = 0;
   public counterCancelledServicesIsEmd = 0;
 
-  private voidSumAmountCurEmd = 0;
-  private voidSumAmountEurEmd = 0;
-  private voidSumAmountUsdEmd = 0;
+  private voidSumAmountCurEmdArr: number[] = [];
+  private voidSumAmountEurEmdArr: number[] = [];
+  private voidSumAmountUsdEmdArr: number[] = [];
 
   constructor(
     private http: HttpClient,
@@ -95,22 +95,24 @@ export class OrderService {
   } );
 
 
-  // -----------------------------------------------Сумма аннулированных услуг, стату V----------------------------------------
-  private voidSumAmountEmd = R.map( ( orders: any ) => {
+  // --------------------------------------------------------Счетчик EMD---------------------------------------------------
+  private countEmd = R.map( ( orders: any ) => {
     if ( orders.BookingStatus === 'Active' ) {
 
-      // -------------------------Подсчет суммы аннулированных услуг, стату V-------------------------
+      // -----------------------Массив сумм аннулированных услуг, стату V------------------------
       const sumAmountFn = ( amount: string ): number => {
         const mapAmountFn = ( service: { emd: {}, couponStatus: string } ): number => {
-          if ( !R.isEmpty( service.couponStatus ) && service.couponStatus === 'V' ) return service.emd[ amount ];
+          if ( !R.isEmpty( service.couponStatus ) && !R.isNil( service.couponStatus ) && service.couponStatus === 'V' ) return service.emd[ amount ];
           else return 0;
         };
         return R.compose( R.sum, R.map( mapAmountFn ) )( orders.services );
       };
 
-      this.voidSumAmountCurEmd = sumAmountFn( 'AmountCur' );
-      this.voidSumAmountEurEmd = sumAmountFn( 'AmountEur' );
-      this.voidSumAmountUsdEmd = sumAmountFn( 'AmountUsd' );
+      if ( !R.isNil( orders.services ) ) {
+        this.voidSumAmountCurEmdArr.push( sumAmountFn( 'AmountCur' ) );
+        this.voidSumAmountEurEmdArr.push( sumAmountFn( 'AmountEur' ) );
+        this.voidSumAmountUsdEmdArr.push( sumAmountFn( 'AmountUsd' ) );
+      }
       // -------------------------------------------------------------------------------------------
 
       _.map( orders.services, service => {
@@ -336,9 +338,9 @@ export class OrderService {
     // ------------------------------------------------------------------------------
 
     // ----------------------Вычитаем аннулированные услуг---------------------------
-    emdCur -= this.voidSumAmountCurEmd;
-    emdEur -= this.voidSumAmountEurEmd;
-    emdUsd -= this.voidSumAmountUsdEmd;
+    emdCur -= R.sum( this.voidSumAmountCurEmdArr );
+    emdEur -= R.sum( this.voidSumAmountEurEmdArr );
+    emdUsd -= R.sum( this.voidSumAmountUsdEmdArr );
     // ------------------------------------------------------------------------------
 
     const countActiveTicket = _( orders ).filter( [ 'BookingStatus', 'Active' ] ).size();
@@ -375,7 +377,7 @@ export class OrderService {
     this.ordersAmount,
     this.ordersMonetaryInfo,
     this.ordersMoneyIsCZeroB,
-    this.voidSumAmountEmd,
+    this.countEmd,
     this.ordersMixing,
     this.orderSort
   );

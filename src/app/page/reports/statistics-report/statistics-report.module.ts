@@ -9,6 +9,7 @@ import { StatisticsReportRoutes } from './statistics-reportrouting';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { TranslateModule } from '@ngx-translate/core';
 
+
 @NgModule( {
   imports: [
     CommonModule,
