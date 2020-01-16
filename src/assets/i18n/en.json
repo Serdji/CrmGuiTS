@@ -190,6 +190,7 @@
 		"CUSTOM_SEGMENTATION": {
 			"ADD_CUSTOM_SEGMENTATION": {
 				"FORM": {
+					"DESCRIPTION": "Description",
 					"TEMPLATE": "Segmentation pattern selection",
 					"TITLE": "Special segmentation name"
 				},

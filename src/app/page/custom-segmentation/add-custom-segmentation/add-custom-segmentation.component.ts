@@ -40,7 +40,6 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   private formCustomSegmentation: FormGroup;
   private templateId: number;
   private segmentationId: number;
-  private customSegmentationId: number;
 
   constructor(
     private addCustomSegmentationService: AddCustomSegmentationService,
@@ -82,13 +81,16 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       .subscribe( res => {
         const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
         const isKeyCustomSegmentationId = _.chain( res ).keys().first().value() === 'customSegmentationId';
+        this.segmentationId = res.segmentationId || res.customSegmentationId;
+        this.isEditCustomSegmentation = false;
         if ( isKeySegmentationId ) {
+
           this.initTableProfile( res.segmentationId );
-          this.segmentationId = res.segmentationId;
-          this.formCustomSegmentation.get('customSegmentationTemplateId').patchValue('0');
+          this.formCustomSegmentation.get( 'customSegmentationTemplateId' ).patchValue( '0' );
+
         } else if ( isKeyCustomSegmentationId ) {
+
           this.isLouderDynamicForm = true;
-          this.customSegmentationId = res.customSegmentationId;
           this.addCustomSegmentationService.getCustomSegmentationParams( res.customSegmentationId )
             .pipe( untilDestroyed( this ) )
             .subscribe( ( customSegmentationGetParams: ICustomSegmentationGetParams ) => {
@@ -106,7 +108,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   initForm() {
     this.formCustomSegmentation = this.fb.group( {
       title: '',
-      customSegmentationTemplateId: ''
+      customSegmentationTemplateId: '',
+      description: ''
     } );
   }
 
@@ -131,7 +134,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       ).subscribe( success );
   }
 
-  private initCustomSegmentationTable() {
+  private initCustomSegmentationTable(  ) {
     const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
     this.listSegmentationService.getSegmentation()
       .pipe(
@@ -140,7 +143,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       ).subscribe( success );
   }
 
-  onReportGeneration( event: any ): void {
+  private generationParams( event: any ) {
     this.isLoaderCustomSegmentationTable = true;
     const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
       const value = {};
@@ -153,21 +156,24 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     const params: ICustomSegmentationParams = {
       CustomSegmentationTemplateId: this.templateId,
       Title: this.formCustomSegmentation.get( 'title' ).value,
-      Description: '',
+      Description: this.formCustomSegmentation.get( 'description' ).value,
       CustomSegmentationParameters,
     };
+    return params;
+  }
 
-    if( !this.isEditCustomSegmentation ) {
-      this.addCustomSegmentationService.setCustomSegmentation( params )
-        .pipe( untilDestroyed( this ) )
-        .subscribe( () => this.initCustomSegmentationTable() );
-    } else {
-      _.set( params, 'CustomSegmentationId', this.customSegmentationId );
-      this.addCustomSegmentationService.putCustomSegmentation( params )
-        .pipe( untilDestroyed( this ) )
-        .subscribe( () => this.initCustomSegmentationTable() );
-    }
+  onSendCustomSegmentationParams( event: any ): void {
+    const params = this.generationParams( event );
+    this.addCustomSegmentationService.setCustomSegmentation( params )
+      .pipe( untilDestroyed( this ) )
+      .subscribe( () => this.initCustomSegmentationTable() );
+  }
 
+  onEditCustomSegmentationParams( event: any ) {
+    const params = _.set( this.generationParams( event ), 'CustomSegmentationId', this.segmentationId );
+    this.addCustomSegmentationService.putCustomSegmentation( params )
+      .pipe( untilDestroyed( this ) )
+      .subscribe( () => this.initCustomSegmentationTable() );
   }
 
   private initTableProfilePagination() {

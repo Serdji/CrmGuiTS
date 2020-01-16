@@ -28,6 +28,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   @Input() splitInput: number;
   @Input() edit: boolean;
   @Output() dynamicFormEmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dynamicFormEmitEdit: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private renderer: Renderer2) { }
 
@@ -127,11 +128,19 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     return formValidators;
   }
 
-  onDynamicFormEmit(): void {
+  private objParserDateFn() {
     const objParserDate = {};
     const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
     R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
-    this.dynamicFormEmit.emit( objParserDate );
+    return objParserDate;
+  }
+
+  onDynamicFormEmit(): void {
+    this.dynamicFormEmit.emit( this.objParserDateFn() );
+  }
+
+  onDynamicFormEmitEdit(): void {
+    this.dynamicFormEmitEdit.emit( this.objParserDateFn() );
   }
 
   ngOnDestroy(): void {}

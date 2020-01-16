@@ -7,6 +7,9 @@
                  placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
         </mat-form-field>
         <mat-form-field class="add-custom-segmentation__input">
+          <textarea formControlName="description" matInput rows="8" placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.DESCRIPTION' | translate}}"></textarea>
+        </mat-form-field>
+        <mat-form-field class="add-custom-segmentation__input">
           <mat-select formControlName="customSegmentationTemplateId"
                       placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
             <mat-option value="0"></mat-option>
@@ -24,7 +27,8 @@
         [splitInput]="1"
         [cols]="1"
         rowHeight="70px"
-        (dynamicFormEmit)="onReportGeneration($event)"
+        (dynamicFormEmit)="onSendCustomSegmentationParams($event)"
+        (dynamicFormEmitEdit)="onEditCustomSegmentationParams($event)"
       >
       </app-dynamic-form>
     </mat-card>

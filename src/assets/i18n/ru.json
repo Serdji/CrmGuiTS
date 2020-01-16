@@ -190,6 +190,7 @@
 		"CUSTOM_SEGMENTATION": {
 			"ADD_CUSTOM_SEGMENTATION": {
 				"FORM": {
+					"DESCRIPTION": "Описание",
 					"TEMPLATE": "Выбор шаблона сегментации",
 					"TITLE": "Название спец сегментации"
 				},
