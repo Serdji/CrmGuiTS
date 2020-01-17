@@ -153,8 +153,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   onSendCustomSegmentationParams( event: any ): void {
-    const params = this.generationParams( event );
     if ( !this.formCustomSegmentation.invalid ) {
+      const params = this.generationParams( event );
       this.addCustomSegmentationService.setCustomSegmentation( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( () => this.initCustomSegmentationTable() );
@@ -162,8 +162,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   onEditCustomSegmentationParams( event: any ): void {
-    const params = _.set( this.generationParams( event ), 'CustomSegmentationId', this.segmentationId );
     if ( !this.formCustomSegmentation.invalid ) {
+      const params = _.set( this.generationParams( event ), 'CustomSegmentationId', this.segmentationId );
       this.addCustomSegmentationService.putCustomSegmentation( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( () => this.initCustomSegmentationTable() );
