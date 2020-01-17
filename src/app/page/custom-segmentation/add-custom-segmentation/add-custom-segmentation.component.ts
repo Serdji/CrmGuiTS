@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import * as R from 'ramda';
 import { untilDestroyed } from 'ngx-take-until-destroy';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AddCustomSegmentationService } from './add-custom-segmentation.service';
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { Observable, of } from 'rxjs';
@@ -79,7 +79,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.route.queryParams
       .pipe( untilDestroyed( this ) )
       .subscribe( res => {
-        if( _.has(res, 'segmentationId') ) {
+        if ( _.has( res, 'segmentationId' ) ) {
           const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
           this.segmentationId = res.segmentationId;
           this.isLouderDynamicForm = true;
@@ -99,7 +99,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   initForm() {
     this.formCustomSegmentation = this.fb.group( {
-      title: '',
+      title: [ '', Validators.required ],
       customSegmentationTemplateId: '',
       description: ''
     } );
@@ -110,22 +110,15 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initDynamicForm() {
-    const success = paramsDynamicForm => {
-      this.paramsDynamicForm = paramsDynamicForm;
-      this.templateId = _.chain( paramsDynamicForm ).find( 'templateId' ).get( 'templateId' ).value();
-    };
-
+    const success = paramsDynamicForm => this.paramsDynamicForm = paramsDynamicForm;
     this.formCustomSegmentation.get( 'customSegmentationTemplateId' ).valueChanges
       .pipe(
         tap( val => {
-          if( val === '0' )  {
-            this.router.navigate( [ 'crm/add-custom-segmentation' ], { } );
-          }
+          this.templateId = val;
+          if ( val === '0' ) this.router.navigate( [ 'crm/add-custom-segmentation' ], {} );
         } ),
         tap( _ => this.isLouderDynamicForm = true ),
-        mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId )
-          .pipe( map( params => _.map( params, val => _.set( val, 'templateId', templateId ) ) ) )
-        ),
+        mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId ) ),
         tap( _ => this.isLouderDynamicForm = false ),
         untilDestroyed( this )
       ).subscribe( success );
@@ -161,16 +154,20 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   onSendCustomSegmentationParams( event: any ): void {
     const params = this.generationParams( event );
-    this.addCustomSegmentationService.setCustomSegmentation( params )
-      .pipe( untilDestroyed( this ) )
-      .subscribe( () => this.initCustomSegmentationTable() );
+    if ( !this.formCustomSegmentation.invalid ) {
+      this.addCustomSegmentationService.setCustomSegmentation( params )
+        .pipe( untilDestroyed( this ) )
+        .subscribe( () => this.initCustomSegmentationTable() );
+    }
   }
 
   onEditCustomSegmentationParams( event: any ): void {
     const params = _.set( this.generationParams( event ), 'CustomSegmentationId', this.segmentationId );
-    this.addCustomSegmentationService.putCustomSegmentation( params )
-      .pipe( untilDestroyed( this ) )
-      .subscribe( () => this.initCustomSegmentationTable() );
+    if ( !this.formCustomSegmentation.invalid ) {
+      this.addCustomSegmentationService.putCustomSegmentation( params )
+        .pipe( untilDestroyed( this ) )
+        .subscribe( () => this.initCustomSegmentationTable() );
+    }
   }
 
   private initTableProfilePagination() {
