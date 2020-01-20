@@ -63,7 +63,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       this.dataObject = R.merge( this.dataObject, {
         [`${paramsDynamicForm.name}`]: {
           placeholder: paramsDynamicForm.prompt,
-          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
+          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ?
+            !R.isNil( paramsDynamicForm.values[0] ) ?
+              new Date(paramsDynamicForm.values[0]) :
+              paramsDynamicForm.values[0] :
+            paramsDynamicForm.values[0],
           type: typeCheck( paramsDynamicForm.dataType ),
           validators: { required: !paramsDynamicForm.nullable }
         }
