@@ -3,8 +3,9 @@
     <mat-card class="add-custom-segmentation__form">
       <form [formGroup]="formCustomSegmentation">
         <mat-form-field class="add-custom-segmentation__input">
-          <input matInput formControlName="title" type="text"
+          <input #title matInput formControlName="title" type="text"
                  placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
+          <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
         </mat-form-field>
         <mat-form-field class="add-custom-segmentation__input">
           <textarea formControlName="description" matInput rows="8" placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.DESCRIPTION' | translate}}"></textarea>

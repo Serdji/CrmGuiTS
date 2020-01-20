@@ -32,9 +32,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   constructor(private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.initParameterConversion();
-    this.initButtonDisabled();
-    this.autoFocusAndBlur( );
+    if( !R.isEmpty( this.paramsDynamicForm ) ) {
+      this.initParameterConversion();
+      this.initButtonDisabled();
+      this.autoFocusAndBlur( );
+    }
   }
 
 
@@ -61,7 +63,11 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       this.dataObject = R.merge( this.dataObject, {
         [`${paramsDynamicForm.name}`]: {
           placeholder: paramsDynamicForm.prompt,
-          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
+          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ?
+            !R.isNil( paramsDynamicForm.values[0] ) ?
+              new Date(paramsDynamicForm.values[0]) :
+              paramsDynamicForm.values[0] :
+            paramsDynamicForm.values[0],
           type: typeCheck( paramsDynamicForm.dataType ),
           validators: { required: !paramsDynamicForm.nullable }
         }
@@ -139,7 +145,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   private objParserDateFn() {
     const objParserDate = {};
     const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
-    R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
+    if( !R.isEmpty( this.paramsDynamicForm ) ) R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
     return objParserDate;
   }
 
