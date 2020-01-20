@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, Renderer2, ViewChild } from '@angular/core';
 import * as R from 'ramda';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -41,7 +41,10 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   private templateId: number;
   private segmentationId: number;
 
+  @ViewChild( 'title', { static: true } ) inputNameTitle: ElementRef;
+
   constructor(
+    private renderer: Renderer2,
     private addCustomSegmentationService: AddCustomSegmentationService,
     private listSegmentationService: ListSegmentationService,
     private addSegmentationService: AddSegmentationService,
@@ -119,8 +122,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
         } ),
         tap( _ => this.isLouderDynamicForm = true ),
         mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId ) ),
+        untilDestroyed( this ),
         tap( _ => this.isLouderDynamicForm = false ),
-        untilDestroyed( this )
       ).subscribe( success );
   }
 
@@ -152,12 +155,19 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     return params;
   }
 
+  private autoFocusAndBlur(): void {
+    this.inputNameTitle.nativeElement.focus();
+    this.inputNameTitle.nativeElement.blur();
+  }
+
   onSendCustomSegmentationParams( event: any ): void {
     if ( !this.formCustomSegmentation.invalid ) {
       const params = this.generationParams( event );
       this.addCustomSegmentationService.setCustomSegmentation( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( () => this.initCustomSegmentationTable() );
+    } else {
+      this.autoFocusAndBlur();
     }
   }
 
@@ -167,6 +177,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       this.addCustomSegmentationService.putCustomSegmentation( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( () => this.initCustomSegmentationTable() );
+    } else {
+      this.autoFocusAndBlur();
     }
   }
 
