@@ -5,6 +5,7 @@ import { catchError } from 'rxjs/operators';
 import { ConfigService } from '../../../../services/config-service.service';
 import { Router } from '@angular/router';
 import { RetryRequestService } from '../../../../services/retry-request.service';
+import { Iprofile } from '../../../../interface/iprofile';
 
 @Injectable( {
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class ProfileService {
     private router: Router,
   ) { }
 
-  getProfile( id: number ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/customer/${id}` )
+  getProfile( id: number ) {
+    return this.http.get<Iprofile>( `${this.configService.crmApi}/crm/customer/${id}` )
       .pipe(
         this.retryRequestService.retry(),
         catchError( (err: any) => {

@@ -12,9 +12,11 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { ISettings } from '../../../interface/isettings';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
 import { ITabsControlData } from '../../../interface/itabs-control-data';
-import { timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ISegmentation } from '../../../interface/isegmentation';
+import { IcustomerGroupRelations } from '../../../interface/icustomer-group-relations';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -30,8 +32,6 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public ordersProgress: boolean;
   public isProfileCreateDate: boolean;
   public orders;
-  public profileSegmentation: any;
-  public profileGroup: any;
   public accessDisabledMessages: boolean;
   public accessDisabledPromoCode: boolean;
   public accessDisabledPrivileges: boolean;
@@ -40,7 +40,17 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public dataOrder: { recLocGDS: string };
   public distributionId: { distributionId: number };
   public dataPromoCode: { promoCodeId: number };
-
+  public profileSegmentation: {
+    takeSegmentation: ISegmentation[];
+    segmentation: ISegmentation[];
+    isPointer: boolean;
+  };
+  public profileGroup: {
+    takeProfileGroup: IcustomerGroupRelations[];
+    profileGroup: IcustomerGroupRelations[];
+    isPointer: boolean;
+    profileId: number;
+  };
 
 
   constructor(
@@ -134,7 +144,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed(this)
       )
-      .subscribe( ( profile ) => {
+      .subscribe( ( profile: Iprofile  ) => {
         this.initProfileSegmentation( profile );
         this.initProfileGroup( profile );
         _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
