@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import {  map, delay } from 'rxjs/operators';
+import { map, delay } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -25,6 +25,7 @@ import * as R from 'ramda';
 import { DialogMergeProfileService } from '../../../components/merge-profile/dialog-merge-profile/dialog-merge-profile.service';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ISellType } from '../../../interface/isell-type';
 
 @Component( {
   selector: 'app-profile-search',
@@ -36,11 +37,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public formProfileSearch: FormGroup;
   public airports: IAirport[];
   public airlineLCode: IAirlineLCode[];
+  public sellType: ISellType[];
   public airportsFromOptions: Observable<IAirport[]>;
   public airportsToOptions: Observable<IAirport[]>;
   public airlineLCodeOptions: Observable<IAirlineLCode[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
-  public customerGroupOptions: Observable<ISegmentation[]>;
+  public customerGroupOptions: Observable<IcustomerGroup[]>;
+  public sellTypeOptions: Observable<ISellType[]>;
   public profiles: Iprofiles;
   public isTableCard: boolean = false;
   public isLoader: boolean = false;
@@ -67,6 +70,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
   private airlineId: number;
+  private sellTypeId: number;
 
   @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
   @ViewChild( 'customerGroupChipInput', { static: true } ) customerGroupFruitInput: ElementRef<HTMLInputElement>;
@@ -95,37 +99,38 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initSegmentation();
     this.initCustomerGroup();
     this.initAirlineLCodes();
+    this.initSellType();
     this.initCurrencyDefault();
     this.activeButton();
     this.initQueryParams();
     this.profileSearchService.subjectDeleteProfile
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
     this.dialogMergeProfileService.subjectMergeCustomer
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.creatingObjectForm() );
   }
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( params => this.formFilling( params ) );
   }
 
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
   private initTableAsync() {
     this.tableAsyncService.subjectPage
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = Object.assign( this.sendProfileParams, { sortvalue: 'last_name', from: pageIndex, count: value.pageSize } );
         this.profileSearchService.getProfileSearch( paramsAndCount )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( ( profile: Iprofiles ) => this.tableAsyncService.setTableDataSource( profile.result ) );
       } );
   }
@@ -133,27 +138,33 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private initAirports() {
     this.profileSearchService.getAirports()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( airports: IAirport[] ) => this.airports = airports );
   }
 
 
   private initSegmentation() {
     this.listSegmentationService.getSegmentation()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( segmentation: ISegmentation[] ) => this.segmentation = segmentation );
   }
 
   private initCustomerGroup() {
     this.profileGroupService.getProfileGroup()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( customerGroup: IcustomerGroup[] ) => this.customerGroup = customerGroup );
   }
 
   private initAirlineLCodes() {
     this.profileSearchService.getAirlineCodes()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
+  }
+
+  private initSellType() {
+    this.profileSearchService.getSellType()
+      .pipe( untilDestroyed( this ) )
+      .subscribe( ( sellType: ISellType[] ) => this.sellType = sellType );
   }
 
   private initAutocomplete() {
@@ -162,16 +173,21 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
     this.airlineLCodeOptions = this.autocomplete( 'airlineLCode', 'airlineLCode' );
+    this.sellTypeOptions = this.autocomplete( 'sellType', 'sellType' );
   }
 
-  public displayFn( option ): string | undefined {
+  public displayAirlineLCodeFn( option ): string | undefined {
     return R.is( Object, option ) ? option.title : option;
+  }
+
+  public displaySellTypeCodeFn( option ): string | undefined {
+    return R.is( Object, option ) ? option.sellTypeCode : option;
   }
 
   private autocomplete( formControlName: string, options: string ): Observable<any> {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
-        untilDestroyed(this),
+        untilDestroyed( this ),
         delay( this.autDelay ),
         map( val => {
           switch ( options ) {
@@ -190,6 +206,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
             case 'airlineLCode':
               return this.airlineLCode.filter( airlineLCode => {
                   if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
+                }
+              );
+            case 'sellType':
+              return this.sellType.filter( sellType => {
+                  if ( !R.isNil( val ) ) return sellType.sellTypeCode.toLowerCase().includes( R.is( Object, val ) ? val.sellTypeCode.toLowerCase() : val.toLowerCase() );
                 }
               );
           }
@@ -212,6 +233,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       recloc: '',
       emd: '',
       airlineLCode: '',
+      sellType: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -238,7 +260,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private switchCheckbox() {
     this.formProfileSearch.get( 'contactsexist' ).valueChanges
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( value => {
         this.formProfileSearch.get( 'contactemail' )[ value ? 'disable' : 'enable' ]();
         this.formProfileSearch.get( 'contactphone' )[ value ? 'disable' : 'enable' ]();
@@ -257,17 +279,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       this.initQueryParams();
     };
 
-    forkJoin([
-      this.listSegmentationService.getSegmentation(),
-      this.profileGroupService.getProfileGroup()
+    forkJoin( [
+        this.listSegmentationService.getSegmentation(),
+        this.profileGroupService.getProfileGroup()
       ]
     )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( success );
   }
 
   private formFilling( params ) {
-    const hasAirlineId = R.has( 'airlineId' );
 
     if ( Object.keys( params ).length !== 0 ) {
       const newObjectForm = {};
@@ -300,10 +321,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
         if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
         if ( this.isKeys( key, 'airlineLCode' ) ) newObjectForm[ key ] = params[ key ];
+        if ( this.isKeys( key, 'sellType' ) ) newObjectForm[ key ] = params[ key ];
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
       this.airlineId = params[ 'airlineId' ];
+      this.sellTypeId = params[ 'idSellType' ];
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
   }
@@ -351,7 +374,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       _.set( params, 'customerGroupIds', customerGroup );
     }
 
-
     this.serverRequest( params );
   }
 
@@ -360,19 +382,29 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.isLoader = true;
     this.isQueryParams = false;
 
-    const airlineLCodeValue = this.formProfileSearch.get( 'airlineLCode' ).value;
+    const airlineLCodeValue: IAirlineLCode = this.formProfileSearch.get( 'airlineLCode' ).value;
     const airlineId = airlineLCodeValue.idAirline || this.airlineId || null;
     const airlineCode = airlineLCodeValue.title || airlineLCodeValue;
 
+    const sellTypeValue: ISellType = this.formProfileSearch.get( 'sellType' ).value;
+    const idSellType = sellTypeValue.idSellType || this.sellTypeId || null;
+    const sellType = sellTypeValue.sellTypeCode || sellTypeValue;
+
+
     _.merge( params, { airlineLCode: airlineCode } );
     _.merge( params, { airlineId: +airlineId } );
+
+    _.merge( params, { sellType: sellType } );
+    _.merge( params, { idSellType: +idSellType } );
+
     _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
 
     params = airlineCode ? params : _.omit( params, [ 'airlineLCode', 'airlineId' ] );
+    params = sellType ? params : _.omit( params, [ 'sellType', 'idSellType' ] );
     this.router.navigate( [ '/crm/profile-search' ], { queryParams: params } );
     this.sendProfileParams = params;
     this.profileSearchService.getProfileSearch( this.sendProfileParams )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( profile => {
         this.tableAsyncService.countPage = profile.totalRows;
         this.profiles = profile.result;
@@ -391,6 +423,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'segmentation'
           && key !== 'customerGroup'
           && key !== 'airlineLCode'
+          && key !== 'sellType'
           && key !== 'deptimefrominclude'
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
@@ -412,6 +445,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         return key === 'contactsexist';
       case 'airlineLCode':
         return key === 'airlineLCode';
+      case 'sellType':
+        return key === 'sellType';
     }
   }
 
@@ -461,13 +496,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.buttonCsvDisabled = true;
     this.csvLoader = true;
     this.profileSearchService.downloadCsv( this.sendProfileParams )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( resp => {
         const filename = resp.headers.get( 'content-disposition' ).split( ';' )[ 1 ].split( '=' )[ 1 ];
         saveAs( resp.body, filename );
         this.buttonCsvDisabled = false;
         this.csvLoader = false;
-      } , _ => {
+      }, _ => {
         this.buttonCsvDisabled = false;
         this.csvLoader = false;
       } );
@@ -495,7 +530,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     this.formProfileSearch.valueChanges
       .pipe(
-        untilDestroyed(this),
+        untilDestroyed( this ),
         map( () => isActiveButtonSearch( this.formProfileSearch.value ) )
       )
       .subscribe( isValue => this.buttonSearch = isValue && isChips() );

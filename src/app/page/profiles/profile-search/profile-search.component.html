@@ -100,6 +100,14 @@
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="emd" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.EMD' | translate}}">
             </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="sellType" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
+              <mat-autocomplete #sellType="matAutocomplete" [displayWith]="displaySellTypeCodeFn">
+                <mat-option *ngFor="let sellType of sellTypeOptions | async" [value]="sellType">
+                  {{ sellType.sellTypeCode }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
           </mat-card-content>
         </mat-card>
       </mat-grid-tile>
@@ -109,7 +117,7 @@
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="airlineLCode" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRLINE_L_CODE' | translate}}" [matAutocomplete]="airlineLCode">
-              <mat-autocomplete #airlineLCode="matAutocomplete" [displayWith]="displayFn">
+              <mat-autocomplete #airlineLCode="matAutocomplete" [displayWith]="displayAirlineLCodeFn">
                 <mat-option *ngFor="let airlineLCode of airlineLCodeOptions | async" [value]="airlineLCode">
                   {{airlineLCode.title}}
                 </mat-option>
