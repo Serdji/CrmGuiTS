@@ -523,6 +523,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const isFormInvalid = R.curry( ( objForm: any, value ) => R.isNil( value ) || objForm.invalid );
     const isFormValOfInv = isFormInvalid( this.formProfileSearch );
     const funcMapKeys = R.curry( ( objForm, value, key ) => objForm.get( `${key}` ).value === '' || isFormValOfInv( objForm.get( `${key}` ).value ) );
+    // @ts-ignore
     const mapKeyFormObj = R.curry( ( objForm: any, objFormValue ) => _.mapKeys( objFormValue, funcMapKeys( objForm ) ) );
     const getBooleanObj = mapKeyFormObj( this.formProfileSearch );
     const isSizeObj = objFormValue => _.size( objFormValue ) === 1;

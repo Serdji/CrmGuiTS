@@ -55,7 +55,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     this.progress = true;
     this.profileService.getProfile( this.id )
       .pipe( untilDestroyed(this) )
-      .subscribe( ( value ) => {
+      .subscribe( ( value: Iprofile ) => {
         Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
         this.formUpdateProfile.patchValue( value );
         this.profile = value;
