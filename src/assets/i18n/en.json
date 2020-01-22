@@ -386,6 +386,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AIRCRAFT_TYPE": "Aircraft Type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_POINT": "Point of destination",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date after",
@@ -420,8 +421,8 @@
 					"RBD": "RBD",
 					"REC_LOC": "Recloc",
 					"SEGMENTATION": "Segmentations",
-					"SELL_COUNTRY": "Sales country",
-					"SELL_TYPE": "Type of sales",
+					"SELL_COUNTRY": "country of sale",
+					"SELL_TYPE": "Type of sale",
 					"SERVICE_CODE": "SSR/RFISC code",
 					"TICKET": "Ticket number",
 					"TOLTIP_CSV": "Export to CSV file with search results"

@@ -257,6 +257,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       airlineLCode: '',
       sellType: '',
       sellCountry: '',
+      AircraftType: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -279,6 +280,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     } );
     this.switchCheckbox();
     this.forkJoinObservable();
+    this.formProfileSearch.get('AircraftType').disable();
   }
 
   private switchCheckbox() {

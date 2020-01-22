@@ -135,6 +135,9 @@
               <input matInput formControlName="flight" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FLIGHT' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
+              <input matInput formControlName="AircraftType" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRCRAFT_TYPE' | translate}}">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
               <input matInput formControlName="deptimefrominclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}" [matDatepicker]="DepTimeFromIncludeFligth">
               <mat-datepicker-toggle matSuffix [for]="DepTimeFromIncludeFligth"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DepTimeFromIncludeFligth></mat-datepicker>
