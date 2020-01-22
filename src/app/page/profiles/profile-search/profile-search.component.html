@@ -1,6 +1,6 @@
 <div class="profile-search" appAccessRights="customers:read" appAccessMessage="true">
   <form class="profile-search__form" [formGroup]="formProfileSearch">
-    <mat-grid-list cols="4" rowHeight="280px">
+    <mat-grid-list cols="4" rowHeight="300px">
       <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
@@ -99,6 +99,14 @@
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="emd" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.EMD' | translate}}">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="sellCountry" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_COUNTRY' | translate}}" [matAutocomplete]="sellCountry">
+              <mat-autocomplete #sellCountry="matAutocomplete" [displayWith]="displaySellCountryFn">
+                <mat-option *ngFor="let sellCountry of sellCountryOptions | async" [value]="sellCountry">
+                  {{ sellCountry.title }}
+                </mat-option>
+              </mat-autocomplete>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
               <input matInput formControlName="sellType" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">

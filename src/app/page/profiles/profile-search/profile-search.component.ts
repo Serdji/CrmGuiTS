@@ -26,6 +26,7 @@ import { DialogMergeProfileService } from '../../../components/merge-profile/dia
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
+import { ICountries } from '../../../interface/icountries';
 
 @Component( {
   selector: 'app-profile-search',
@@ -34,13 +35,10 @@ import { ISellType } from '../../../interface/isell-type';
 } )
 export class ProfileSearchComponent implements OnInit, OnDestroy {
 
-  public formProfileSearch: FormGroup;
-  public airports: IAirport[];
-  public airlineLCode: IAirlineLCode[];
-  public sellType: ISellType[];
   public airportsFromOptions: Observable<IAirport[]>;
   public airportsToOptions: Observable<IAirport[]>;
   public airlineLCodeOptions: Observable<IAirlineLCode[]>;
+  public sellCountryOptions: Observable<ICountries[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   public sellTypeOptions: Observable<ISellType[]>;
@@ -67,9 +65,16 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private autDelay: number = 500;
 
+  private formProfileSearch: FormGroup;
+  private airports: IAirport[];
+  private airlineLCode: IAirlineLCode[];
+  private countries: ICountries[];
+  private sellType: ISellType[];
+
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
   private airlineId: number;
+  private OriginIdCountryOpr: number;
   private sellTypeId: number;
 
   @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
@@ -99,6 +104,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initSegmentation();
     this.initCustomerGroup();
     this.initAirlineLCodes();
+    this.initCountries();
     this.initSellType();
     this.initCurrencyDefault();
     this.activeButton();
@@ -161,6 +167,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
   }
 
+  private initCountries() {
+    this.profileSearchService.getCountries()
+      .pipe( untilDestroyed( this ) )
+      .subscribe( ( countries: ICountries[] ) => this.countries = countries );
+  }
+
   private initSellType() {
     this.profileSearchService.getSellType()
       .pipe( untilDestroyed( this ) )
@@ -173,10 +185,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
     this.airlineLCodeOptions = this.autocomplete( 'airlineLCode', 'airlineLCode' );
+    this.sellCountryOptions = this.autocomplete( 'sellCountry', 'sellCountry' );
     this.sellTypeOptions = this.autocomplete( 'sellType', 'sellType' );
   }
 
   public displayAirlineLCodeFn( option ): string | undefined {
+    return R.is( Object, option ) ? option.title : option;
+  }
+
+  public displaySellCountryFn( option ): string | undefined {
     return R.is( Object, option ) ? option.title : option;
   }
 
@@ -208,6 +225,11 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
                   if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
                 }
               );
+            case 'sellCountry':
+              return this.countries.filter( country => {
+                  if ( !R.isNil( val ) ) return country.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
+                }
+              );
             case 'sellType':
               return this.sellType.filter( sellType => {
                   if ( !R.isNil( val ) ) return sellType.sellTypeCode.toLowerCase().includes( R.is( Object, val ) ? val.sellTypeCode.toLowerCase() : val.toLowerCase() );
@@ -234,6 +256,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       emd: '',
       airlineLCode: '',
       sellType: '',
+      sellCountry: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -321,11 +344,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
         if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
         if ( this.isKeys( key, 'airlineLCode' ) ) newObjectForm[ key ] = params[ key ];
+        if ( this.isKeys( key, 'sellCountry' ) ) newObjectForm[ key ] = params[ key ];
         if ( this.isKeys( key, 'sellType' ) ) newObjectForm[ key ] = params[ key ];
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
       this.airlineId = params[ 'airlineId' ];
+      this.OriginIdCountryOpr = params[ 'OriginIdCountryOpr' ];
       this.sellTypeId = params[ 'idSellType' ];
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
@@ -386,6 +411,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const airlineId = airlineLCodeValue.idAirline || this.airlineId || null;
     const airlineCode = airlineLCodeValue.title || airlineLCodeValue;
 
+    const sellCountryValue: ICountries = this.formProfileSearch.get( 'sellCountry' ).value;
+    const OriginIdCountryOpr = sellCountryValue.countryId || this.OriginIdCountryOpr || null;
+    const sellCountry = sellCountryValue.title || sellCountryValue;
+
     const sellTypeValue: ISellType = this.formProfileSearch.get( 'sellType' ).value;
     const idSellType = sellTypeValue.idSellType || this.sellTypeId || null;
     const sellType = sellTypeValue.sellTypeCode || sellTypeValue;
@@ -393,6 +422,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     _.merge( params, { airlineLCode: airlineCode } );
     _.merge( params, { airlineId: +airlineId } );
+
+    _.merge( params, { sellCountry: sellCountry } );
+    _.merge( params, { OriginIdCountryOpr: +OriginIdCountryOpr } );
 
     _.merge( params, { sellType: sellType } );
     _.merge( params, { idSellType: +idSellType } );
@@ -423,6 +455,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'segmentation'
           && key !== 'customerGroup'
           && key !== 'airlineLCode'
+          && key !== 'sellCountry'
           && key !== 'sellType'
           && key !== 'deptimefrominclude'
           && key !== 'deptimetoexclude'
@@ -447,6 +480,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         return key === 'airlineLCode';
       case 'sellType':
         return key === 'sellType';
+      case 'sellCountry':
+        return key === 'sellCountry';
     }
   }
 
