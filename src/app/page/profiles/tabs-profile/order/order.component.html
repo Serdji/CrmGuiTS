@@ -187,7 +187,7 @@
 
 
           <div class="order__grid">
-            <mat-grid-list cols="1" rowHeight="149px">
+            <mat-grid-list cols="1" rowHeight="155px">
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
@@ -250,6 +250,10 @@
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.ARR_TIME' | translate}}</span>
                         <span><b> {{ticket.segment?.arrTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
                       </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_TYPE' | translate}}</span>
+                        <span><b> {{ticket.PtkSellType}}</b></span>
+                      </div>
                     </div>
 
                     <div class="order__content">
@@ -269,6 +273,10 @@
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.STATUS' | translate}}</span>
                         <span><b> {{ticket.couponStatus}}</b></span>
                       </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_COUNTRY' | translate}}</span>
+                        <span><b> {{ticket.OriginCountryOpr}}</b></span>
+                      </div>
                     </div>
                   </div>
                 </mat-card>
@@ -278,7 +286,7 @@
 
 
           <div class="order__grid">
-            <mat-grid-list cols="1" rowHeight="224px">
+            <mat-grid-list cols="1" rowHeight="232px">
               <mat-grid-tile *ngFor=" let service of order.services" [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid mat-elevation-z0">
                   <div class="order__content-wrapper">
@@ -323,6 +331,10 @@
                         <span class="order__content-text">{{ service.nos ? ('PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.NOS.NAME_SERVICES' | translate) : ('PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.NOS.COMMENT' | translate)}}</span>
                         <span><b> {{ service.nos || service.text }}</b></span>
                       </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_TYPE' | translate}}</span>
+                        <span><b> {{service.PtkSellType}}</b></span>
+                      </div>
                     </div>
 
                     <div class="order__content">
@@ -359,6 +371,10 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.CONCEPT_MEASURE' | translate}}</span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_COUNTRY' | translate}}</span>
+                        <span><b> {{service.OriginCountryOpr}}</b></span>
                       </div>
                     </div>
                   </div>

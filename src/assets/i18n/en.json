@@ -421,7 +421,7 @@
 					"RBD": "RBD",
 					"REC_LOC": "Recloc",
 					"SEGMENTATION": "Segmentations",
-					"SELL_COUNTRY": "country of sale",
+					"SELL_COUNTRY": "Country of sale",
 					"SELL_TYPE": "Type of sale",
 					"SERVICE_CODE": "SSR/RFISC code",
 					"TICKET": "Ticket number",
@@ -553,11 +553,14 @@
 								},
 								"QTTY": "Amount:",
 								"RFISC": "RFISC:",
+								"SELL_COUNTRY": "Country of sale:",
+								"SELL_TYPE": "Type of sale",
 								"SSR": "SSR:",
 								"STATUS": "Service status:",
 								"SVC_TYPE": "SVC type:"
 							},
 							"TICKETS": {
+								"AIRCRAFT_TYPE": "Aircraft Type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"COUPON": "Coupon number:",
@@ -566,6 +569,8 @@
 								"FARE_CODE": "Fare basis:",
 								"FLIGHT": "Flight number:",
 								"NUM_DER_TICKET": "Ticket number:",
+								"SELL_COUNTRY": "Country of sale:",
+								"SELL_TYPE": "Type of sale:",
 								"STATUS": "Status:"
 							}
 						}

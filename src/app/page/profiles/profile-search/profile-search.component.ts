@@ -434,6 +434,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
 
     params = airlineCode ? params : _.omit( params, [ 'airlineLCode', 'airlineId' ] );
+    params = sellCountry ? params : _.omit( params, [ 'sellCountry', 'OriginIdCountryOpr' ] );
     params = sellType ? params : _.omit( params, [ 'sellType', 'idSellType' ] );
     this.router.navigate( [ '/crm/profile-search' ], { queryParams: params } );
     this.sendProfileParams = params;

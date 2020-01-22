@@ -553,11 +553,14 @@
 								},
 								"QTTY": "Количество:",
 								"RFISC": "Rfisc:",
+								"SELL_COUNTRY": "Страна продажи:",
+								"SELL_TYPE": "Тип продажи",
 								"SSR": "SSR:",
 								"STATUS": "Статус услуги:",
 								"SVC_TYPE": "Тип SVC:"
 							},
 							"TICKETS": {
+								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"COUPON": "Номер купона:",
@@ -566,6 +569,8 @@
 								"FARE_CODE": "Fare basis:",
 								"FLIGHT": "№ рейса:",
 								"NUM_DER_TICKET": "Номер билета:",
+								"SELL_COUNTRY": "Страна продажи:",
+								"SELL_TYPE": "Тип продажи:",
 								"STATUS": "Статус:"
 							}
 						}
