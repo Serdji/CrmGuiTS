@@ -386,6 +386,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AIRCRAFT_TYPE": "Тип ВС",
 					"AIRLINE_L_CODE": "Код авиакомпании",
 					"ARR_POINT": "Куда",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Дата продажи с",
@@ -420,6 +421,8 @@
 					"RBD": "Класс бронирования",
 					"REC_LOC": "№ брони",
 					"SEGMENTATION": "Сегментации",
+					"SELL_COUNTRY": "Страна продажи",
+					"SELL_TYPE": "Тип продажи",
 					"SERVICE_CODE": "Код услуги",
 					"TICKET": "№ билета",
 					"TOLTIP_CSV": "Вагрузка SVG файла с учетом поискового запроса"
@@ -550,11 +553,14 @@
 								},
 								"QTTY": "Количество:",
 								"RFISC": "Rfisc:",
+								"SELL_COUNTRY": "Страна продажи:",
+								"SELL_TYPE": "Тип продажи:",
 								"SSR": "SSR:",
 								"STATUS": "Статус услуги:",
 								"SVC_TYPE": "Тип SVC:"
 							},
 							"TICKETS": {
+								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"COUPON": "Номер купона:",
@@ -563,6 +569,8 @@
 								"FARE_CODE": "Fare basis:",
 								"FLIGHT": "№ рейса:",
 								"NUM_DER_TICKET": "Номер билета:",
+								"SELL_COUNTRY": "Страна продажи:",
+								"SELL_TYPE": "Тип продажи:",
 								"STATUS": "Статус:"
 							}
 						}

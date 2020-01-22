@@ -22,7 +22,7 @@
 		"DOWNLOAD": "Download",
 		"EDIT": "Save changes",
 		"EDITOR": "New campaign",
-		"EDIT_EVENT": "Edit event",
+		"EDIT_EVENT": "Manage event",
 		"FILTER": "Filter",
 		"LOGIN": "Log in",
 		"MERGE_PROFILE": "Merge passengers",
@@ -386,6 +386,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AIRCRAFT_TYPE": "Aircraft Type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_POINT": "Point of destination",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date after",
@@ -420,6 +421,8 @@
 					"RBD": "RBD",
 					"REC_LOC": "Recloc",
 					"SEGMENTATION": "Segmentations",
+					"SELL_COUNTRY": "Country of sale",
+					"SELL_TYPE": "Type of sale",
 					"SERVICE_CODE": "SSR/RFISC code",
 					"TICKET": "Ticket number",
 					"TOLTIP_CSV": "Export to CSV file with search results"
@@ -550,11 +553,14 @@
 								},
 								"QTTY": "Amount:",
 								"RFISC": "RFISC:",
+								"SELL_COUNTRY": "Country of sale:",
+								"SELL_TYPE": "Type of sale:",
 								"SSR": "SSR:",
 								"STATUS": "Service status:",
 								"SVC_TYPE": "SVC type:"
 							},
 							"TICKETS": {
+								"AIRCRAFT_TYPE": "Aircraft Type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"COUPON": "Coupon number:",
@@ -563,6 +569,8 @@
 								"FARE_CODE": "Fare basis:",
 								"FLIGHT": "Flight number:",
 								"NUM_DER_TICKET": "Ticket number:",
+								"SELL_COUNTRY": "Country of sale:",
+								"SELL_TYPE": "Type of sale:",
 								"STATUS": "Status:"
 							}
 						}

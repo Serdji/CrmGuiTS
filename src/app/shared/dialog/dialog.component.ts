@@ -23,6 +23,8 @@ import { DistributionService } from '../../page/distribution/distribution.servic
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter } from '@angular/material-moment-adapter';
+import { Iprofile } from '../../interface/iprofile';
+import { ISegmentation } from '../../interface/isegmentation';
 
 const MY_FORMATS = {
   parse: {
@@ -37,7 +39,7 @@ const MY_FORMATS = {
 @Component( {
   selector: 'app-dialog',
   templateUrl: './dialog.component.html',
-  styleUrls: [ './dialog.component.styl' ],  providers: [
+  styleUrls: [ './dialog.component.styl' ], providers: [
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
     { provide: DateAdapter, useClass: MomentDateAdapter, deps: [ MAT_DATE_LOCALE ] },
   ],
@@ -52,7 +54,6 @@ export class DialogComponent implements OnInit, OnDestroy {
   public profileGroups: IcustomerGroup[];
   public isLoader: boolean;
   public paramsProfileGroup: any;
-
 
 
   constructor(
@@ -119,7 +120,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'addProfileGroup':
         this.formProfileGroups.get( 'customerGroupId' ).valueChanges
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( id => {
             if ( +id !== 0 ) {
               const params = {
@@ -127,7 +128,7 @@ export class DialogComponent implements OnInit, OnDestroy {
                 customerId: this.data.params.profileId
               };
               this.profileGroupService.addProfileGroupRelation( params )
-                .pipe( untilDestroyed(this) )
+                .pipe( untilDestroyed( this ) )
                 .subscribe( _ => {
                   this.initGetAway();
                 } );
@@ -143,8 +144,8 @@ export class DialogComponent implements OnInit, OnDestroy {
         this.isLoader = true;
         this.profileService.getProfile( this.data.params.profileId )
           .pipe(
-            untilDestroyed(this),
-            map( resp => resp.customerGroupRelations )
+            untilDestroyed( this ),
+            map( ( resp: Iprofile ) => resp.customerGroupRelations )
           )
           .subscribe( value => {
             this.paramsProfileGroup = value;
@@ -152,7 +153,7 @@ export class DialogComponent implements OnInit, OnDestroy {
 
             this.profileGroupService.getProfileGroup()
               .pipe(
-                untilDestroyed(this),
+                untilDestroyed( this ),
                 map( resp => _.differenceBy( resp, this.paramsProfileGroup, 'customerGroupId' ) )
               )
               .subscribe( ( profileGroups: any ) => {
@@ -170,7 +171,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     switch ( this.data.card ) {
       case 'user':
         this.userService.deleteUser( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/list-users/' ] );
@@ -178,14 +179,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'profiles':
         this.profileSearchService.deleteProfiles( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'profile':
         this.profileService.deleteProfile( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/profile-search' ] );
@@ -193,7 +194,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'contacts':
         this.contactService.deleteContacts( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -206,14 +207,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           'ContactText': this.formUpdateContact.get( 'contactText' ).value
         };
         this.contactService.putContact( paramsContact )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'profileNames':
         this.profileService.deleteProfileNames( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -228,14 +229,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           'secondName': this.formUpdateProfileName.get( 'secondName' ).value,
         };
         this.profileService.putProfileName( paramsProfileName )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'documents':
         this.documentService.deleteDocuments( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -252,14 +253,14 @@ export class DialogComponent implements OnInit, OnDestroy {
           'expDate': moment( this.formUpdateDocument.get( 'expDate' ).value ).format( 'YYYY-MM-DD' ),
         };
         this.documentService.putDocument( paramsDocument )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteSegmentation':
         this.addSegmentationService.deleteSegmentation( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addSegmentationService.subjectDeleteSegmentation.next();
@@ -267,7 +268,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'deleteSegmentations':
         this.listSegmentationService.deleteSegmentations( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
@@ -275,7 +276,7 @@ export class DialogComponent implements OnInit, OnDestroy {
       case 'restart':
         const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
         this.auth.revokeRefreshToken( token.refreshToken )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             localStorage.clear();
             this.dialogRef.close();
@@ -285,14 +286,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'deleteProfileGroups':
         this.profileGroupService.deleteCustomerGroups( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'startEmailDistribution':
         this.distributionService.startDistribution( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.distributionService.distributionSubject.next();
             this.dialogRef.close();
@@ -300,14 +301,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'displayeds':
         this.distributionService.deleteDistributions( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteEmailDistribution':
         this.distributionService.deleteDistribution( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/list-email' ] );
@@ -315,7 +316,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'stopEmailDistribution':
         this.distributionService.stopDistribution( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.distributionService.distributionSubject.next();
@@ -323,7 +324,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'startSmsDistribution':
         this.distributionService.startDistribution( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.distributionService.distributionSubject.next();
             this.dialogRef.close();
@@ -331,14 +332,14 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'displayeds':
         this.distributionService.deleteDistributions( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
           } );
         break;
       case 'deleteSmsDistribution':
         this.distributionService.deleteDistribution( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.router.navigate( [ '/crm/list-sms' ] );
@@ -346,7 +347,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'stopSmsDistribution':
         this.distributionService.stopDistribution( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.distributionService.distributionSubject.next();
@@ -354,7 +355,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'deletePromotions':
         this.addPromotionsService.deletePromotions( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsService.subjectDeletePromotions.next();
@@ -362,11 +363,11 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'updatePromotions':
         const paramsPromotions = {
-          'promotionId':  this.data.params.promotionsId,
+          'promotionId': this.data.params.promotionsId,
           'promotionName': this.formUpdatePromotions.get( 'promotionsName' ).value
         };
         this.addPromotionsService.updatePromotions( paramsPromotions )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsService.subjectDeletePromotions.next();
@@ -374,7 +375,7 @@ export class DialogComponent implements OnInit, OnDestroy {
         break;
       case 'promoCode':
         this.addPromotionsCodesService.deletePromoCode( this.data.params )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( _ => {
             this.dialogRef.close();
             this.addPromotionsCodesService.subjectDeletePromotionsCodes.next();
@@ -385,15 +386,17 @@ export class DialogComponent implements OnInit, OnDestroy {
 
   deleteProfileGroup( id ): void {
     this.profileGroupService.deleteProfileGroupRelation( id )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.initGetAway();
         this.profileGroupService.subjectProfileGroup.next();
       } );
   }
 
-  openSegmentation( id ): void {
-    this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { segmentationId: id } } );
+  openSegmentation( segmentation: ISegmentation ): void {
+    if ( !segmentation.isComplex && !segmentation.isCustom ) this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { segmentationId: segmentation.segmentationId } } );
+    if ( segmentation.isComplex && !segmentation.isCustom ) this.router.navigate( [ '/crm/complex-segmentation' ], { queryParams: { segmentationId: segmentation.segmentationId } } );
+    if ( segmentation.isCustom ) this.router.navigate( [ '/crm/add-custom-segmentation' ], { queryParams: { segmentationId: segmentation.segmentationId } } );
     this.dialogRef.close();
   }
 
