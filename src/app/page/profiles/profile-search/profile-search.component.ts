@@ -365,8 +365,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const segmentation = [];
     const customerGroup = [];
 
-    console.log( this.formProfileSearch.value );
-
     for ( const segmentationChip of this.segmentationChips ) {
       if ( segmentationChip ) {
         segmentation.push( _.chain( this.segmentation ).find( { 'title': segmentationChip } ).get( 'segmentationId' ).value() );
@@ -380,10 +378,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     }
 
     for ( const key of formValue ) {
-      const valueForm = keys => {
-        console.log( keys, this.formProfileSearch.get( keys ).value );
-        return this.formProfileSearch.get( keys ).value || '';
-      }
+      const valueForm = keys => this.formProfileSearch.get( keys ).value || '';
       if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = valueForm( key ).trim();
       if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( valueForm( key ) ).format( 'DD.MM.YYYY' );
       if ( this.isKeys( key, 'checkbox' ) ) {
@@ -465,7 +460,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'airlineLCode'
           && key !== 'sellCountry'
           && key !== 'sellType'
-          && key !== 'craft'
           && key !== 'deptimefrominclude'
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
