@@ -119,7 +119,7 @@
       <ng-template matExpansionPanelContent>
         <div class="order__grid-wrapper">
           <div class="order__grid">
-            <mat-grid-list *ngFor=" let pos of order.pos" cols="1" rowHeight="149px">
+            <mat-grid-list *ngFor=" let pos of order.pos" cols="1" rowHeight="155px">
               <mat-grid-tile [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
@@ -158,6 +158,10 @@
                       <div class="order__content-point">
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.ARR_TIME' | translate}}</span>
                         <span><b> {{segment.arrTime | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.AIRCRAFT_TYPE' | translate}}</span>
+                        <span><b> {{segment.Craft }}</b></span>
                       </div>
                     </div>
 

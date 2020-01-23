@@ -522,6 +522,7 @@
 								"TERMINAL": "Terminal ID:"
 							},
 							"SEGMENTS": {
+								"AIRCRAFT_TYPE": "Aircraft Type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"CABIN": "Cabin code:",
@@ -557,7 +558,6 @@
 								"SVC_TYPE": "SVC type:"
 							},
 							"TICKETS": {
-								"AIRCRAFT_TYPE": "Aircraft Type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"COUPON": "Coupon number:",

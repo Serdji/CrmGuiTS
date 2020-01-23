@@ -522,6 +522,7 @@
 								"TERMINAL": "Терминал:"
 							},
 							"SEGMENTS": {
+								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"CABIN": "Кабина:",
@@ -557,7 +558,6 @@
 								"SVC_TYPE": "Тип SVC:"
 							},
 							"TICKETS": {
-								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"COUPON": "Номер купона:",
