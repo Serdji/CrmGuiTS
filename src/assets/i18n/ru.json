@@ -142,7 +142,7 @@
 		},
 		"CUSTOM_SEGMENTATION": {
 			"ADD_SEGMENTATION": "Добавить сегментацию",
-			"GROUP_NAME": "Спец сегментация"
+			"GROUP_NAME": "Преднастроенная сегментация"
 		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Рассылки",
@@ -192,10 +192,10 @@
 				"FORM": {
 					"DESCRIPTION": "Описание",
 					"TEMPLATE": "Выбор шаблона сегментации",
-					"TITLE": "Название спец сегментации"
+					"TITLE": "Название преднастроенной сегментации"
 				},
 				"TABLE": {
-					"TITLE": "Спец сегментации"
+					"TITLE": "Преднастроенные сегментации"
 				}
 			}
 		},
@@ -902,7 +902,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
-					"CUSTOM": "Спец",
+					"CUSTOM": "Преднастроенные",
 					"FILTER": "Фильтр",
 					"GRANULARITY": {
 						"COUPON": "Купон",
@@ -914,7 +914,7 @@
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
-						"CUSTOM": "Спец",
+						"CUSTOM": "Преднастроенные",
 						"SIMPLE": "Простая",
 						"TITLE": "Тип"
 					},
