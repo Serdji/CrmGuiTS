@@ -7,7 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AddCustomSegmentationRoutes } from './add-custom-segmentation-reportrouting';
 import { AddCustomSegmentationComponent } from './add-custom-segmentation.component';
 import { AddCustomSegmentationService } from './add-custom-segmentation.service';
-import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
+import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 
 
 @NgModule( {
