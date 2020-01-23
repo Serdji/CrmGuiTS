@@ -167,9 +167,9 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "New simple segmentation",
 			"AGGREGATION_SEGMENTATION": "New complex segmentation",
-			"CUSTOM_SEGMENTATION": "Special segmentation",
+			"CUSTOM_SEGMENTATION": "Custom segmentations",
 			"GROUP_NAME": "Segmentation",
-			"LIST_SEGMENTATION": "Segmentations list"
+			"LIST_SEGMENTATION": "Segmentation list"
 		},
 		"SETTINGS": {
 			"GROUP_NAME": "Settings",
