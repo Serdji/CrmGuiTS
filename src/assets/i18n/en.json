@@ -189,7 +189,7 @@
 				"FORM": {
 					"DESCRIPTION": "Description",
 					"TEMPLATE": "Segmentation pattern selection",
-					"TITLE": "Special segmentation name"
+					"TITLE": "Custom segmentation name"
 				},
 				"TABLE": {
 					"TITLE": "Custom segmentation"

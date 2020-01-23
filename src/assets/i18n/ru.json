@@ -167,7 +167,7 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "Добавить сегментацию",
 			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
-			"CUSTOM_SEGMENTATION": "Спец сегментация",
+			"CUSTOM_SEGMENTATION": "Преднастроенная сегментация",
 			"GROUP_NAME": "Сегментация",
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
