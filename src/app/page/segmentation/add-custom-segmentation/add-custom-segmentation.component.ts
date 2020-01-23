@@ -9,15 +9,15 @@ import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmenta
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
-import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { IpagPage } from '../../../interface/ipag-page';
-import { AddSegmentationService } from '../../segmentation/add-segmentation/add-segmentation.service';
 import { timer } from 'rxjs/observable/timer';
 import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
+import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
+import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
 
 
 @Component( {

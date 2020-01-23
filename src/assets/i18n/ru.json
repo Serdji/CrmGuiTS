@@ -140,10 +140,6 @@
 			"GROUP_NAME": "Пассажиры",
 			"SEARCH_CUSTOMER": "Поиск пассажира"
 		},
-		"CUSTOM_SEGMENTATION": {
-			"ADD_SEGMENTATION": "Добавить сегментацию",
-			"GROUP_NAME": "Преднастроенная сегментация"
-		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Рассылки",
 			"LIST_EMAIL": "Email",
@@ -171,6 +167,7 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "Добавить сегментацию",
 			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
+			"CUSTOM_SEGMENTATION": "Преднастроенная сегментация",
 			"GROUP_NAME": "Сегментация",
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
@@ -192,10 +189,10 @@
 				"FORM": {
 					"DESCRIPTION": "Описание",
 					"TEMPLATE": "Выбор шаблона сегментации",
-					"TITLE": "Название преднастроенной сегментации"
+					"TITLE": "Название спец сегментации"
 				},
 				"TABLE": {
-					"TITLE": "Преднастроенные сегментации"
+					"TITLE": "Спец сегментации"
 				}
 			}
 		},
@@ -902,7 +899,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
-					"CUSTOM": "Преднастроенные",
+					"CUSTOM": "Спец",
 					"FILTER": "Фильтр",
 					"GRANULARITY": {
 						"COUPON": "Купон",
@@ -914,7 +911,7 @@
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
-						"CUSTOM": "Преднастроенные",
+						"CUSTOM": "Спец",
 						"SIMPLE": "Простая",
 						"TITLE": "Тип"
 					},
