@@ -167,7 +167,7 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "Добавить сегментацию",
 			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
-			"CUSTOM_SEGMENTATION": "Преднастроенная сегментация",
+			"CUSTOM_SEGMENTATION": "Преднастроенные сегментации",
 			"GROUP_NAME": "Сегментация",
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
@@ -189,10 +189,10 @@
 				"FORM": {
 					"DESCRIPTION": "Описание",
 					"TEMPLATE": "Выбор шаблона сегментации",
-					"TITLE": "Название спец сегментации"
+					"TITLE": "Название предснастроенной сегментации"
 				},
 				"TABLE": {
-					"TITLE": "Спец сегментации"
+					"TITLE": "Предснастроенные сегментации"
 				}
 			}
 		},
@@ -899,7 +899,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
-					"CUSTOM": "Спец",
+					"CUSTOM": "Предснастроенные",
 					"FILTER": "Фильтр",
 					"GRANULARITY": {
 						"COUPON": "Купон",
@@ -911,7 +911,7 @@
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
-						"CUSTOM": "Спец",
+						"CUSTOM": "Предснастроенная",
 						"SIMPLE": "Простая",
 						"TITLE": "Тип"
 					},
