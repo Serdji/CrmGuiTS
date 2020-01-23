@@ -61,7 +61,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initCustomSegmentationTable();
     this.initQueryParams();
     this.initTableProfilePagination();
-    this.isEditCustomSegmentation = true;
+    this.isEditCustomSegmentation = false;
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
     this.listSegmentationService.subjectSegmentations
@@ -83,6 +83,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       .pipe( untilDestroyed( this ) )
       .subscribe( res => {
         if ( _.has( res, 'segmentationId' ) ) {
+          this.isEditCustomSegmentation = true;
           const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
           this.segmentationId = res.segmentationId;
           this.isLouderDynamicForm = true;
@@ -96,6 +97,9 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
             } );
           this.isTableProfileTable = isKeySegmentationId;
           this.isLoaderProfileTable = isKeySegmentationId;
+        } else {
+          this.isEditCustomSegmentation = false;
+          this.clearForm();
         }
       } );
   }
@@ -106,6 +110,17 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       customSegmentationTemplateId: '',
       description: ''
     } );
+  }
+
+  private clearForm() {
+    _.each( this.formCustomSegmentation.getRawValue(), ( val, key ) => {
+      if( key !== 'customSegmentationTemplateId' ) {
+        this.formCustomSegmentation.get( key ).patchValue( '' );
+        this.formCustomSegmentation.get( key ).setErrors( null );
+      } else {
+        this.formCustomSegmentation.get( key ).patchValue( '0' );
+      }
+    } )
   }
 
   private initTemplate() {
