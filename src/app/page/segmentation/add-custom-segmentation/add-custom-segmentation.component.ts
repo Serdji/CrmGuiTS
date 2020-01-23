@@ -18,6 +18,7 @@ import { timer } from 'rxjs/observable/timer';
 import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
+import { logger } from 'codelyzer/util/logger';
 
 
 @Component( {
@@ -83,7 +84,6 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       .pipe( untilDestroyed( this ) )
       .subscribe( res => {
         if ( _.has( res, 'segmentationId' ) ) {
-          this.isEditCustomSegmentation = true;
           const isKeySegmentationId = _.chain( res ).keys().first().value() === 'segmentationId';
           this.segmentationId = res.segmentationId;
           this.isLouderDynamicForm = true;
@@ -91,6 +91,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
           this.addCustomSegmentationService.getCustomSegmentationParams( res.segmentationId )
             .pipe( untilDestroyed( this ) )
             .subscribe( ( customSegmentationGetParams: ICustomSegmentationGetParams ) => {
+              this.isEditCustomSegmentation = true;
               this.formCustomSegmentation.patchValue( customSegmentationGetParams );
               this.paramsDynamicForm = customSegmentationGetParams.customSegmentationParameters;
               this.isLouderDynamicForm = false;
@@ -114,13 +115,9 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   private clearForm() {
     _.each( this.formCustomSegmentation.getRawValue(), ( val, key ) => {
-      if( key !== 'customSegmentationTemplateId' ) {
-        this.formCustomSegmentation.get( key ).patchValue( '' );
-        this.formCustomSegmentation.get( key ).setErrors( null );
-      } else {
-        this.formCustomSegmentation.get( key ).patchValue( '0' );
-      }
-    } )
+      this.formCustomSegmentation.get( key ).patchValue( null );
+      this.formCustomSegmentation.get( key ).setErrors( null );
+    } );
   }
 
   private initTemplate() {
@@ -136,7 +133,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
           if ( val === '0' ) this.router.navigate( [ 'crm/add-custom-segmentation' ], {} );
         } ),
         tap( _ => this.isLouderDynamicForm = true ),
-        mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId ) ),
+        mergeMap( templateId => _.isNil( templateId ) ? of( templateId ) : this.addCustomSegmentationService.getCustomSegmentation( templateId ) ),
         untilDestroyed( this ),
         tap( _ => this.isLouderDynamicForm = false ),
       ).subscribe( success );
