@@ -787,8 +787,8 @@
 			},
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
-					"NEXT": "Назад",
-					"PREV": "Далее"
+					"NEXT": "Далее",
+					"PREV": "Назад"
 				},
 				"GROUP_SEGMENTATION": {
 					"GRANULARITY": {
