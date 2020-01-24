@@ -4,15 +4,15 @@
       <form [formGroup]="formCustomSegmentation">
         <mat-form-field class="add-custom-segmentation__input">
           <input #title matInput formControlName="title" type="text"
-                 placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
+                 placeholder="{{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
           <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
         </mat-form-field>
         <mat-form-field class="add-custom-segmentation__input">
-          <textarea formControlName="description" matInput rows="8" placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.DESCRIPTION' | translate}}"></textarea>
+          <textarea formControlName="description" matInput rows="8" placeholder="{{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.DESCRIPTION' | translate}}"></textarea>
         </mat-form-field>
         <mat-form-field class="add-custom-segmentation__input">
           <mat-select formControlName="customSegmentationTemplateId"
-                      placeholder="{{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
+                      placeholder="{{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
             <mat-option value="0"></mat-option>
             <mat-option *ngFor=" let template of templates$ | async" [value]="template.customSegmentationTemplateId"> {{ template.templateName }} </mat-option>
           </mat-select>
@@ -37,7 +37,7 @@
     <mat-card class="add-custom-segmentation__table">
       <mat-progress-bar *ngIf="isLoaderCustomSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <mat-card-title> {{'PAGE.CUSTOM_SEGMENTATION.ADD_CUSTOM_SEGMENTATION.TABLE.TITLE' | translate}} </mat-card-title>
+        <mat-card-title> {{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.TABLE.TITLE' | translate}} </mat-card-title>
         <app-table-example-custom-segmentation *ngIf="customSegmentation.length !== 0" [tableDataSource]="customSegmentation" (emitSegmentationId)="onProfileSearch( $event )"></app-table-example-custom-segmentation>
       </ng-template>
     </mat-card>

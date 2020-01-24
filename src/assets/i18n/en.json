@@ -184,18 +184,6 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
-		"CUSTOM_SEGMENTATION": {
-			"ADD_CUSTOM_SEGMENTATION": {
-				"FORM": {
-					"DESCRIPTION": "Description",
-					"TEMPLATE": "Segmentation pattern selection",
-					"TITLE": "Custom segmentation name"
-				},
-				"TABLE": {
-					"TITLE": "Custom segmentation"
-				}
-			}
-		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
@@ -787,6 +775,16 @@
 			"TITLE": "Restart application"
 		},
 		"SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"DESCRIPTION": "Description",
+					"TEMPLATE": "Segmentation pattern selection",
+					"TITLE": "Custom segmentation name"
+				},
+				"TABLE": {
+					"TITLE": "Custom segmentation"
+				}
+			},
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
 					"NEXT": "Next",
