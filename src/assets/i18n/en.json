@@ -778,11 +778,11 @@
 			"ADD_CUSTOM_SEGMENTATION": {
 				"FORM": {
 					"DESCRIPTION": "Description",
-					"TEMPLATE": "Segmentation pattern selection",
+					"TEMPLATE": "Template selection",
 					"TITLE": "Custom segmentation name"
 				},
 				"TABLE": {
-					"TITLE": "Custom segmentation"
+					"TITLE": "Custom segmentation list"
 				}
 			},
 			"ADD_SEGMENTATION": {
