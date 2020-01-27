@@ -407,7 +407,7 @@
 					"REC_LOC": "Recloc",
 					"SEGMENTATION": "Segmentations",
 					"SELL_COUNTRY": "Country of sale",
-					"SELL_TYPE": "Type of sale",
+					"SELL_TYPE": "Type of service sale",
 					"SERVICE_CODE": "SSR/RFISC code",
 					"TICKET": "Ticket number",
 					"TOLTIP_CSV": "Export to CSV file with search results"
