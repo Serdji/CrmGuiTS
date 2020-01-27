@@ -371,7 +371,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
-					"AIRCRAFT_TYPE": "Aircraft Type",
+					"AIRCRAFT_TYPE": "Aircraft type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_POINT": "Point of destination",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date after",
@@ -510,7 +510,7 @@
 								"TERMINAL": "Terminal ID:"
 							},
 							"SEGMENTS": {
-								"AIRCRAFT_TYPE": "Aircraft Type",
+								"AIRCRAFT_TYPE": "Aircraft type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"CABIN": "Cabin code:",
@@ -884,7 +884,7 @@
 				"TABLE": {
 					"FILTER": "Filter by name",
 					"GROUP_SEGMENTATION": "Name",
-					"TITLE": "Complex segmentations list"
+					"TITLE": "Complex segmentation list"
 				}
 			},
 			"LIST_SEGMENTATION": {
@@ -913,7 +913,7 @@
 						"SIMPLE": "Simple",
 						"TITLE": "Type"
 					},
-					"TITLE": "Segmentations list"
+					"TITLE": "Segmentation list"
 				}
 			}
 		},
