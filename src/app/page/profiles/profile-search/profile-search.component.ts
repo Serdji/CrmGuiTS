@@ -64,9 +64,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public addCustomerGroupOnBlur = false;
   public customerGroupChips: string[] = [];
 
+  public formProfileSearch: FormGroup;
+
   private autDelay: number = 500;
 
-  private formProfileSearch: FormGroup;
   private airports: IAirport[];
   private airlineLCode: IAirlineLCode[];
   private countries: ICountries[];

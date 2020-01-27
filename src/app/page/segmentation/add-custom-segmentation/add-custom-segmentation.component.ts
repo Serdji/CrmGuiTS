@@ -37,8 +37,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   public isTableProfileTable: boolean;
   public segmentationProfiles: ISegmentationProfile;
   public isEditCustomSegmentation: boolean;
+  public formCustomSegmentation: FormGroup;
 
-  private formCustomSegmentation: FormGroup;
   private templateId: number;
   private segmentationId: number;
 
