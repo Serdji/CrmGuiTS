@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { delay, map, takeWhile } from 'rxjs/operators';
+import { delay, map } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
@@ -183,15 +183,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
       }
     };
-    const whichForm = whichFormGroup => {
-      return this[ whichFormGroup ].get( formControlName ).valueChanges
-        .pipe(
-          untilDestroyed(this),
-          delay( this.autDelay ),
-          map( mapFilter )
-        );
-    };
-    return whichForm( formGroup );
+    return this[ formGroup ].get( formControlName ).valueChanges
+      .pipe(
+        untilDestroyed( this ),
+        delay( this.autDelay ),
+        map( mapFilter )
+      );
   }
 
 
@@ -543,7 +540,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     if ( !this.formSegmentation.invalid || isQueryParams ) {
       this.saveSegmentationParams = isQueryParams ? saveFormParams : this.segmentationParameters();
       if ( !R.isEmpty( this.saveSegmentationParams ) ) {
-        console.log( this.saveSegmentationParams );
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
           .pipe( untilDestroyed(this) )
           .subscribe( value => {

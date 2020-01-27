@@ -1,10 +1,21 @@
 <div class="dynamic-form">
-  <form class="dynamic-form__form" [formGroup]="dynamicForm">
+  <form *ngIf="paramsDynamicForm.length !== 0" class="dynamic-form__form" [formGroup]="dynamicForm">
     <mat-grid-list [cols]="cols" [rowHeight]="rowHeight">
       <mat-grid-tile class="dynamic-form__grid-tile" *ngFor="let objectProps of splitObjectProps" colspan="1"
                      rowspan="1">
         <div *ngFor="let prop of objectProps">
           <div [ngSwitch]="prop.type">
+
+
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'float'">
+              <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder" [appNumbersOnly]="prop.type">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="dynamic-form__input" *ngSwitchCase="'int'">
+              <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder" [appNumbersOnly]="prop.type">
+              <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+            </mat-form-field>
 
             <mat-form-field class="dynamic-form__input" *ngSwitchCase="'text'">
               <input matInput [id]="prop.key" [formControlName]="prop.key" [type]="prop.type" [placeholder]="prop.placeholder">
@@ -41,11 +52,23 @@
       </mat-grid-tile>
     </mat-grid-list>
   </form>
-  <button
-    [disabled]="buttonDisabled"
-    class="dynamic-form__button" mat-raised-button
-    (click)="onDynamicFormEmit()" color="primary">
-    <mat-icon>graphic_eq</mat-icon>
-    {{'BUTTON.TO_FROM' | translate}}
-  </button>
+
+  <div class="dynamic-form__button-wrapper">
+    <button
+      *ngIf="!edit"
+      [disabled]="buttonDisabled"
+      class="dynamic-form__button" mat-raised-button
+      (click)="onDynamicFormEmit()" color="primary">
+      <mat-icon>graphic_eq</mat-icon>
+      {{'BUTTON.TO_FROM' | translate}}
+    </button>
+    <button
+      *ngIf="edit"
+      [disabled]="buttonDisabled"
+      class="dynamic-form__button" mat-raised-button
+      (click)="onDynamicFormEmitEdit()" color="warn">
+      <mat-icon>create</mat-icon>
+      {{'BUTTON.EDIT' | translate}}
+    </button>
+  </div>
 </div>

@@ -8,6 +8,7 @@
       <mat-radio-button class="table__form-radio-button" value="all"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.ALL' | translate}} </mat-radio-button>
       <mat-radio-button class="table__form-radio-button" value="simple"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.SIMPLE' | translate}} </mat-radio-button>
       <mat-radio-button class="table__form-radio-button" value="complicated"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.COMPLICATED' | translate}} </mat-radio-button>
+      <mat-radio-button class="table__form-radio-button" value="custom"> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.CUSTOM' | translate}} </mat-radio-button>
     </mat-radio-group>
     <mat-divider></mat-divider>
   </form>
@@ -43,10 +44,17 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="isCustom">
+      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
+      <mat-cell #matCell *matCellDef="let element"></mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="isComplex">
       <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.TITLE' | translate}} </mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">
-        <span>{{element.isComplex ? ('PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.COMPLICATED' | translate) : ('PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.SIMPLE'  | translate)}}</span>
+        <span *ngIf="element.isComplex && !element.isCustom">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.COMPLICATED' | translate}}</span>
+        <span *ngIf="!element.isComplex && !element.isCustom">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.SIMPLE'  | translate}}</span>
+        <span *ngIf="element.isCustom">{{'PAGE.SEGMENTATION.LIST_SEGMENTATION.TABLE_SEGMENTATION.STATUS.CUSTOM' | translate}}</span>
         <mat-icon *ngIf="element.isComplex">arrow_downward</mat-icon>
       </mat-cell>
     </ng-container>
@@ -68,14 +76,20 @@
         >search
         </mat-icon>
         <mat-icon (click)="$event.stopPropagation()"
-                  *ngIf="element.isComplex"
+                  *ngIf="element.isComplex && !element.isCustom"
                   routerLink="/crm/complex-segmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>
         <mat-icon (click)="$event.stopPropagation()"
-                  *ngIf="!element.isComplex"
+                  *ngIf="!element.isComplex && !element.isCustom"
                   routerLink="/crm/edit-segmentation/"
+                  [queryParams]="{ segmentationId: element.segmentationId }"
+        >create
+        </mat-icon>
+        <mat-icon (click)="$event.stopPropagation()"
+                  *ngIf="element.isCustom"
+                  routerLink="/crm/add-custom-segmentation/"
                   [queryParams]="{ segmentationId: element.segmentationId }"
         >create
         </mat-icon>

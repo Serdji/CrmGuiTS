@@ -79,7 +79,7 @@
     <mat-list role="listitem" *ngFor="let segmentation of data.params.segmentation; let i = index">
       <div class="dialog__wrapper">
         <h3>{{segmentation.title}}</h3>
-        <mat-icon mat-list-icon (click)="openSegmentation(segmentation.segmentationId)">remove_red_eye</mat-icon>
+        <mat-icon mat-list-icon (click)="openSegmentation(segmentation)">remove_red_eye</mat-icon>
       </div>
       <mat-divider *ngIf="data.params.segmentation.length - 1 !== i"></mat-divider>
     </mat-list>

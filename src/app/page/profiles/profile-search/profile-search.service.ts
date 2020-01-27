@@ -1,12 +1,12 @@
 import { Observable, of, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { IprofileSearch } from '../../../interface/iprofile-search';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
 import { map } from 'rxjs/operators';
 import * as R from 'ramda';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
+import { ICountries } from '../../../interface/icountries';
 
 @Injectable()
 export class ProfileSearchService {
@@ -20,16 +20,27 @@ export class ProfileSearchService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getCountry(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/country' ).pipe( this.retryRequestService.retry() );
-  }
-
   getAirports(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/airport' ).pipe( this.retryRequestService.retry() );
   }
 
-  getAirlineCodes(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/airline' )
+  getCountries(): Observable<ICountries[]> {
+    return this.http.get<ICountries[]>( this.configService.crmApi + '/crm/country' )
+      .pipe(
+        this.retryRequestService.retry(),
+        map( ( countries: ICountries ) => {
+          const countryTitleFn = country => {
+            const titleLens = R.lensProp( 'title' );
+            const titleFn = () => country.lCode === country.rCode ? country.lCode : `${country.lCode} ( ${country.rCode} )`;
+            return R.set( titleLens, titleFn(), country );
+          };
+          return R.map( countryTitleFn, countries );
+        } )
+      );
+  }
+
+  getAirlineCodes(): Observable<IAirlineLCode[]> {
+    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + '/crm/airline' )
       .pipe(
         this.retryRequestService.retry(),
         map( ( airlineCodes: IAirlineLCode ) => {
@@ -45,6 +56,10 @@ export class ProfileSearchService {
 
   getCities(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/city' ).pipe( this.retryRequestService.retry() );
+  }
+
+  getSellType(): Observable<any> {
+    return this.http.get( this.configService.crmApi + '/crm/selltype' ).pipe( this.retryRequestService.retry() );
   }
 
   getProfileSearch( params ): Observable<any> {

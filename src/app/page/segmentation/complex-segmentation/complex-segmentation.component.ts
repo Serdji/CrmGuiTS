@@ -74,7 +74,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   private initFormAdd() {
     this.formAdd = this.fb.group( {
       'segmentationTitle': [ '', Validators.required ],
-      'segmentationGranularity': [ '', Validators.required ],
+      'segmentationGranularity': '',
       'segmentation': '',
     } );
     this.formAdd.get( 'segmentation' ).disable();
@@ -286,6 +286,7 @@ export class ComplexSegmentationComponent implements OnInit, OnDestroy {
   private onClearForm() {
     this.router.navigate( [ 'crm/complex-segmentation' ], { queryParams: {} } );
     this.formAdd.get( 'segmentationTitle' ).patchValue( '' );
+    this.formAdd.get( 'segmentationGranularity' ).patchValue( '' );
     this.formAdd.get( 'segmentationTitle' ).setErrors( null );
     this.selectionSegmentation = [];
     this.buttonSearch = true;

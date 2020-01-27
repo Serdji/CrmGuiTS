@@ -8,94 +8,47 @@ import { timer } from 'rxjs/observable/timer';
 import { Router } from '@angular/router';
 import { SelectionModel } from '@angular/cdk/collections';
 import { takeWhile } from 'rxjs/operators';
-import { ISegmentation } from '../../../interface/isegmentation';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import * as R from 'ramda';
-import { detailExpand } from '../../../animations/animations';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
 @Component( {
-  selector: 'app-table-example-segmentation',
-  templateUrl: './table-example-segmentation.component.html',
-  styleUrls: [ './table-example-segmentation.component.styl' ],
-  animations: [ detailExpand ],
+  selector: 'app-table-example-custom-segmentation',
+  templateUrl: './table-example-custom-segmentation.component.html',
+  styleUrls: [ './table-example-custom-segmentation.component.styl' ],
 } )
-export class TableExampleSegmentationComponent implements OnInit, OnDestroy {
+export class TableExampleCustomSegmentationComponent implements OnInit, OnDestroy {
 
   public displayedColumns: string[] = [];
   public dataSource: MatTableDataSource<any>;
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
-  public expandedElement: ISegmentation | null;
-  public formFilterSegmentation: FormGroup;
 
 
 
-  @Input() private tableDataSource: ISegmentation[];
+  @Input() private tableDataSource: any;
   @Output() private emitSegmentationId = new EventEmitter<number>();
 
-  @ViewChild( MatSort, { static: true } ) sort: MatSort;
-  @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
+  @ViewChild(MatSort, { static: true }) sort: MatSort;
+  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
     private router: Router,
-    private fb: FormBuilder,
   ) { }
 
   ngOnInit(): void {
+
     this.initDataSource();
     this.initDisplayedColumns();
-    this.initFormCheckbox();
-    this.initSwitchSegmentation();
-  }
-
-  private initFormCheckbox() {
-    this.formFilterSegmentation = this.fb.group( {
-      whichSegmentation: 'all'
-    } );
   }
 
   private initDisplayedColumns() {
     this.displayedColumns = [
       'select',
       'title',
-      'isComplex',
-      'isCustom',
-      'segmentationGranularity',
       'segmentationId',
     ];
-  }
-
-  private initSwitchSegmentation() {
-    const isComplex = segmentation => segmentation.isComplex;
-    const isCustom = segmentation => segmentation.isCustom;
-    const segmentationSimple = R.reject( isComplex );
-    const segmentationComplicated = R.filter( isComplex );
-    const segmentationCustom = R.filter( isCustom );
-    const success = ( { whichSegmentation } ) => {
-      switch ( whichSegmentation ) {
-        case 'all':
-          this.dataSourceFun( this.tableDataSource );
-          break;
-        case 'simple':
-          this.dataSourceFun( segmentationSimple( this.tableDataSource ) );
-          break;
-        case 'complicated':
-          this.dataSourceFun( segmentationComplicated( this.tableDataSource ) );
-          break;
-        case 'custom':
-          this.dataSourceFun( segmentationCustom( this.tableDataSource ) );
-          break;
-
-      }
-    };
-
-    this.formFilterSegmentation.valueChanges
-      .pipe( untilDestroyed(this) )
-      .subscribe( success );
   }
 
   private initDataSource() {

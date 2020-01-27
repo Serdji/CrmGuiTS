@@ -52,6 +52,7 @@ export class SidenavService {
           { url: '/crm/list-segmentation', title: 'MENU.SEGMENTATION.LIST_SEGMENTATION' },
           { url: '/crm/add-segmentation', title: 'MENU.SEGMENTATION.ADD_SEGMENTATION' },
           { url: '/crm/complex-segmentation', title: 'MENU.SEGMENTATION.AGGREGATION_SEGMENTATION' },
+          { url: '/crm/add-custom-segmentation', title: 'MENU.SEGMENTATION.CUSTOM_SEGMENTATION' },
         ]
       },
       {

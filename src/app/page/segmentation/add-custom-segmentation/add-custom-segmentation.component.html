@@ -1,0 +1,57 @@
+<div class="add-custom-segmentation">
+  <div class="add-custom-segmentation__wrapper">
+    <mat-card class="add-custom-segmentation__form">
+      <form [formGroup]="formCustomSegmentation">
+        <mat-form-field class="add-custom-segmentation__input">
+          <input #title matInput formControlName="title" type="text"
+                 placeholder="{{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TITLE' | translate}}">
+          <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+        </mat-form-field>
+        <mat-form-field class="add-custom-segmentation__input">
+          <textarea formControlName="description" matInput rows="8" placeholder="{{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.DESCRIPTION' | translate}}"></textarea>
+        </mat-form-field>
+        <mat-form-field class="add-custom-segmentation__input">
+          <mat-select formControlName="customSegmentationTemplateId"
+                      placeholder="{{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.FORM.TEMPLATE' | translate}}">
+            <mat-option value="0"></mat-option>
+            <mat-option *ngFor=" let template of templates$ | async" [value]="template.customSegmentationTemplateId"> {{ template.templateName }} </mat-option>
+          </mat-select>
+        </mat-form-field>
+      </form>
+      <mat-progress-bar mode="buffer" *ngIf="isLouderDynamicForm"></mat-progress-bar>
+      <app-dynamic-form
+        [edit]="isEditCustomSegmentation"
+        *ngIf="paramsDynamicForm &&
+        !isLouderDynamicForm &&
+        formCustomSegmentation.get('customSegmentationTemplateId').value !== '0'"
+        [paramsDynamicForm]="paramsDynamicForm"
+        [splitInput]="1"
+        [cols]="1"
+        rowHeight="70px"
+        (dynamicFormEmit)="onSendCustomSegmentationParams($event)"
+        (dynamicFormEmitEdit)="onEditCustomSegmentationParams($event)"
+      >
+      </app-dynamic-form>
+    </mat-card>
+
+    <mat-card class="add-custom-segmentation__table">
+      <mat-progress-bar *ngIf="isLoaderCustomSegmentationTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+      <ng-template #loaderDisabled>
+        <mat-card-title> {{'PAGE.SEGMENTATION.ADD_CUSTOM_SEGMENTATION.TABLE.TITLE' | translate}} </mat-card-title>
+        <app-table-example-custom-segmentation *ngIf="customSegmentation.length !== 0" [tableDataSource]="customSegmentation" (emitSegmentationId)="onProfileSearch( $event )"></app-table-example-custom-segmentation>
+      </ng-template>
+    </mat-card>
+  </div>
+
+  <mat-card class="list-custom-segmentation__table-profile" *ngIf="isTableProfileTable">
+    <mat-progress-bar *ngIf="isLoaderProfileTable; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <mat-card-title>{{segmentationProfiles.customers.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
+      <app-table-async-segmentation-profile
+        *ngIf="segmentationProfiles.customers.length !== 0"
+        [tableDataSource]="segmentationProfiles.customers">
+      </app-table-async-segmentation-profile>
+    </ng-template>
+  </mat-card>
+
+</div>

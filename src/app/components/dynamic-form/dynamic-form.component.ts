@@ -19,39 +19,55 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
   public splitObjectProps: any;
   public buttonDisabled: boolean;
 
-
   private dataObject: any = {};
 
   @Input() cols: number;
   @Input() rowHeight: string;
   @Input() paramsDynamicForm: IParamsDynamicForm[];
   @Input() splitInput: number;
+  @Input() edit: boolean;
   @Output() dynamicFormEmit: EventEmitter<any> = new EventEmitter<any>();
+  @Output() dynamicFormEmitEdit: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(private renderer: Renderer2) { }
 
   ngOnInit(): void {
-    this.initParameterConversion();
-    this.initButtonDisabled();
-    this.autoFocusAndBlur( );
+    if( !R.isEmpty( this.paramsDynamicForm ) ) {
+      this.initParameterConversion();
+      this.initButtonDisabled();
+      this.autoFocusAndBlur( );
+    }
   }
 
 
   private initParameterConversion() {
+
+    enum inputType {
+      bool,
+      date,
+      float,
+      int,
+      string
+    }
+
     const typeCheck = ( typeNumber: number ): string => {
       switch ( typeNumber ) {
-        case 0: return 'checkbox'; break;
-        case 1: return 'date'; break;
-        case 2:
-        case 3:
-        case 4: return 'text'; break;
+        case inputType.bool: return 'checkbox';
+        case inputType.date: return 'date';
+        case inputType.float: return 'float';
+        case inputType.int: return 'int';
+        case inputType.string: return 'text';
       }
     };
     const mapParamsDynamicForm = R.map( ( paramsDynamicForm: IParamsDynamicForm ) => {
       this.dataObject = R.merge( this.dataObject, {
         [`${paramsDynamicForm.name}`]: {
           placeholder: paramsDynamicForm.prompt,
-          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ? new Date(paramsDynamicForm.values[0]) : paramsDynamicForm.values[0],
+          value: typeCheck( paramsDynamicForm.dataType ) === 'date' ?
+            !R.isNil( paramsDynamicForm.values[0] ) ?
+              new Date(paramsDynamicForm.values[0]) :
+              paramsDynamicForm.values[0] :
+            paramsDynamicForm.values[0],
           type: typeCheck( paramsDynamicForm.dataType ),
           validators: { required: !paramsDynamicForm.nullable }
         }
@@ -80,7 +96,7 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         R.path([ prop, 'value' ], this.dataObject ) || '',
         this.mapValidators( R.path( [ prop, 'validators' ], this.dataObject ) )
       );
-    }
+    };
     const setFormGroup = prop => formGroup[ prop ] = formControls( prop );
     const mapPerson = R.map( setFormGroup );
     const composeFormControl = R.compose( mapPerson, R.keys );
@@ -126,11 +142,19 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
     return formValidators;
   }
 
-  onDynamicFormEmit(): void {
+  private objParserDateFn() {
     const objParserDate = {};
     const parserDate = ( value, key ) => objParserDate[ key ] = moment.isDate( value ) || moment.isMoment( value ) ? moment( value ).format( 'YYYY.MM.DD' ) : value;
-    R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
-    this.dynamicFormEmit.emit( objParserDate );
+    if( !R.isEmpty( this.paramsDynamicForm ) ) R.forEachObjIndexed( parserDate, this.dynamicForm.getRawValue() );
+    return objParserDate;
+  }
+
+  onDynamicFormEmit(): void {
+    this.dynamicFormEmit.emit( this.objParserDateFn() );
+  }
+
+  onDynamicFormEmitEdit(): void {
+    this.dynamicFormEmitEdit.emit( this.objParserDateFn() );
   }
 
   ngOnDestroy(): void {}

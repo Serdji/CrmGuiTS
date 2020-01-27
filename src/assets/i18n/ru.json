@@ -47,8 +47,8 @@
 			"PROFILE_GROUP": "Вы действительно хотите удалить группу пассажиров или группы пассажиров ?",
 			"PROMOTION": "Вы действительно хотите удалить промоакцию или промоакции ?",
 			"PROMO_CODE": "Вы действительно хотите удалить промокод ?",
-			"SEGMENTATION": "Вы действительно хотите удалить группу сегментации ?",
-			"SEGMENTATIONS": "Вы действительно хотите удалить группу сегментации или группы сегментации ?",
+			"SEGMENTATION": "Вы действительно хотите удалить сегментацию ?",
+			"SEGMENTATIONS": "Вы действительно хотите удалить сегментацию(-и) ?",
 			"SETTING_DEFAULT": "После перезагрузки приложение все ваши настройки будут установлены по умолчанию. Вы действительно хотите перезагрузить приложения?",
 			"USER": "Вы действительно хотите удалить пользователя ?"
 		},
@@ -97,7 +97,7 @@
 				"TITLE": "Тип скидки:"
 			},
 			"RDD": "Класс бронирования:",
-			"SEGMENTATION": "Группы сегментации:",
+			"SEGMENTATION": "Сегментации:",
 			"TITLE": "Обнаружено пересечение промокодов",
 			"USES_PER": "Использование для профиля:",
 			"USES_TOTAL": "Общее количество использования:",
@@ -167,6 +167,7 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "Добавить сегментацию",
 			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
+			"CUSTOM_SEGMENTATION": "Преднастроенные сегментации",
 			"GROUP_NAME": "Сегментация",
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
@@ -295,7 +296,7 @@
 		"EVENTS": {
 			"ADD_EVENT": {
 				"FIELD": {
-					"MULTIPLICITY": "Кратность",
+					"MULTIPLICITY": "Кратность (1/x)",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Выбор сегментации",
 					"TYPE_EVENT": {
@@ -308,7 +309,7 @@
 			"EVENT": {
 				"CARD": {
 					"EDIT": "Редактировать",
-					"MULTIPLICITY": "Кратность:",
+					"MULTIPLICITY": "Кратность (1/x):",
 					"NAME_EVENT": "Название события:",
 					"SEGMENTATION": "Сегментация:",
 					"TYPE_EVENT": {
@@ -333,7 +334,7 @@
 			},
 			"LIST_EVENT": {
 				"TABLE": {
-					"MULTIPLICITY": "Кратность",
+					"MULTIPLICITY": "Кратность (1/x)",
 					"NAME_EVENT": "Название события",
 					"SEGMENTATION": "Сегментации",
 					"STATUS": "Статус",
@@ -370,6 +371,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AIRCRAFT_TYPE": "Тип ВС",
 					"AIRLINE_L_CODE": "Код авиакомпании",
 					"ARR_POINT": "Куда",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Дата продажи с",
@@ -400,10 +402,12 @@
 					"LAST_NAME": "Фамилия",
 					"MONEY_AMOUNT_FROM_INCLUDE": "Общая сумма от",
 					"MONEY_AMOUNT_TO_INCLUDE": "Общая сумма до",
-					"PROFILE": "№ Профиля",
+					"PROFILE": "№ профиля",
 					"RBD": "Класс бронирования",
 					"REC_LOC": "№ брони",
-					"SEGMENTATION": "Группы сегментации",
+					"SEGMENTATION": "Сегментации",
+					"SELL_COUNTRY": "Страна продажи",
+					"SELL_TYPE": "Тип продажи",
 					"SERVICE_CODE": "Код услуги",
 					"TICKET": "№ билета",
 					"TOLTIP_CSV": "Вагрузка SVG файла с учетом поискового запроса"
@@ -459,14 +463,14 @@
 					"COUNT_ACTIVE_TICKET": "Оформленных заказов:",
 					"COUNT_CANCELLED_TICKET": "Аннулированных заказов:",
 					"CREATE_DATE": "С нами:",
-					"CUSTOMER_GROUP": "Группы пассажиров",
+					"CUSTOMER_GROUP": "Группы пассажиров:",
 					"CUSTOMER_ID": "№ профиля:",
 					"DATE_OF_BIRTH": "Дата рождения:",
 					"EDIT_LIST_CUSTOMER_GROUPS": "Редактирование списка групп пассажиров",
 					"GENDER": "Пол:",
 					"LUT": "Дата последней активности:",
 					"PROFILE": "Профиль:",
-					"SEGMENTATION": "Группы сегментации",
+					"SEGMENTATION": "Сегментации:",
 					"SHOW_ALL_GROUPS": "Показать все группы",
 					"TOTAL_AMOUNT": "Оформленных на сумму:"
 				},
@@ -506,6 +510,7 @@
 								"TERMINAL": "Терминал:"
 							},
 							"SEGMENTS": {
+								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"CABIN": "Кабина:",
@@ -534,6 +539,8 @@
 								},
 								"QTTY": "Количество:",
 								"RFISC": "Rfisc:",
+								"SELL_COUNTRY": "Страна продажи:",
+								"SELL_TYPE": "Тип продажи:",
 								"SSR": "SSR:",
 								"STATUS": "Статус услуги:",
 								"SVC_TYPE": "Тип SVC:"
@@ -547,6 +554,8 @@
 								"FARE_CODE": "Fare basis:",
 								"FLIGHT": "№ рейса:",
 								"NUM_DER_TICKET": "Номер билета:",
+								"SELL_COUNTRY": "Страна продажи:",
+								"SELL_TYPE": "Тип продажи:",
 								"STATUS": "Статус:"
 							}
 						}
@@ -652,7 +661,7 @@
 							"RDB": "Класс бронирования:",
 							"REC_LOC": "Заказы:",
 							"ROUTE": "Направления:",
-							"SEGMENTATION": "Группы сегментации:",
+							"SEGMENTATION": "Сегментации:",
 							"USES_PER_PERSON": "Использование для профиля:",
 							"USES_TOTAL": "Общее количество использования:",
 							"VAL": "Величина скидки:",
@@ -714,7 +723,7 @@
 					},
 					"RDD": "Класс бронирования",
 					"REASON": "Основание",
-					"SEGMENTATION": "Группы сегментации",
+					"SEGMENTATION": "Сегментации",
 					"USED": "Использован:",
 					"USES_PER": "Использование для профиля",
 					"USES_TOTAL": "Общее количество использования",
@@ -740,7 +749,7 @@
 					"PROMOTIONS": "Промоакция",
 					"PROMOTIONS_CODE": "Промокод",
 					"RDD": "Класс бронирования",
-					"SEGMENTATION": "Группы сегментации"
+					"SEGMENTATION": "Сегментации"
 				},
 				"TABLE": {
 					"ACCOUNT_CODE": "Расчётный код",
@@ -766,19 +775,29 @@
 			"TITLE": "Перезагрузить приложение"
 		},
 		"SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"DESCRIPTION": "Описание",
+					"TEMPLATE": "Выбор шаблона сегментации",
+					"TITLE": "Название преднастроенной сегментации"
+				},
+				"TABLE": {
+					"TITLE": "Преднастроенные сегментации"
+				}
+			},
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
-					"NEXT": "Следующая",
-					"PREV": "Предыдущая"
+					"NEXT": "Далее",
+					"PREV": "Назад"
 				},
 				"GROUP_SEGMENTATION": {
 					"GRANULARITY": {
 						"COUPON": "Купон",
 						"ORDERS": "Заказы",
 						"PASSENGER": "Пассажир",
-						"TITLE": "Гранулярность"
+						"TITLE": "Детализация"
 					},
-					"GROUP_SEGMENTATION": "Группа сегментации"
+					"GROUP_SEGMENTATION": "Сегментация"
 				},
 				"NUMBER_SEGMENTS": {
 					"FROM": "От",
@@ -797,9 +816,9 @@
 				},
 				"PROFILE_DETAILS": {
 					"DOB_FROM": "Дата рождения от",
-					"DOB_TO": "",
-					"FLIES_WITHOUT_CHILDREN": "Летает без детей",
-					"FLIES_WITH_CHILDREN": "Летает с детьми",
+					"DOB_TO": "Дата рождения до",
+					"FLIES_WITHOUT_CHILDREN": "Нет ни одного перелёта с детьми",
+					"FLIES_WITH_CHILDREN": "Есть хотя бы один перелёт с детьми",
 					"GENDER": {
 						"F": "Ж",
 						"M": "М",
@@ -857,14 +876,14 @@
 						"COUPON": "Купон",
 						"ORDERS": "Заказы",
 						"PASSENGER": "Пассажир",
-						"TITLE": "Гранулярность"
+						"TITLE": "Детализация"
 					},
 					"NAME_COMPLEX_SEGMENTATION": "Название сложной сегментации"
 				},
 				"SEGMENTATIONS": "Cегментации",
 				"TABLE": {
 					"FILTER": "Фильтр",
-					"GROUP_SEGMENTATION": "Группа сегментации",
+					"GROUP_SEGMENTATION": "Сегментация",
 					"TITLE": "Сложные сегментации"
 				}
 			},
@@ -878,19 +897,21 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
+					"CUSTOM": "Преднастроенные",
 					"FILTER": "Фильтр",
 					"GRANULARITY": {
 						"COUPON": "Купон",
 						"ORDERS": "Заказы",
 						"PASSENGER": "Пассажир",
-						"TITLE": "Гранулярность"
+						"TITLE": "Детализация"
 					},
-					"SEGMENTATION": "Группа сегментации",
+					"SEGMENTATION": "Сегментация",
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
+						"CUSTOM": "Преднастроенная",
 						"SIMPLE": "Простая",
-						"TITLE": "Статус"
+						"TITLE": "Тип"
 					},
 					"TITLE": "Показать сегментации"
 				}

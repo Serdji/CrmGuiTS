@@ -25,6 +25,7 @@ const routes: Routes = [
         { path: 'add-segmentation', loadChildren: () => import('./page/segmentation/add-segmentation/add-segmentation.module').then(m => m.AddSegmentationModule), data: { title: 'MENU.SEGMENTATION.ADD_SEGMENTATION' } },
         { path: 'edit-segmentation', loadChildren: () => import('./page/segmentation/add-segmentation/add-segmentation.module').then(m => m.AddSegmentationModule), data: { title: 'BREADCRUMBS.EDIT_SEGMENTATION' } },
         { path: 'complex-segmentation', loadChildren: () => import('./page/segmentation/complex-segmentation/complex-segmentation.module').then(m => m.ComplexSegmentationModule), data: { title: 'MENU.SEGMENTATION.AGGREGATION_SEGMENTATION' } },
+        { path: 'add-custom-segmentation', loadChildren: () => import('./page/segmentation/add-custom-segmentation/add-custom-segmentation.module').then(m => m.AddCustomSegmentationModule), data: { title: 'MENU.SEGMENTATION.CUSTOM_SEGMENTATION'} },
         { path: 'profile-group', loadChildren: () => import('./page/special-groups/profile-group/profile-group.module').then(m => m.ProfileGroupModule), data: { title: 'MENU.GROUP_CUSTOMER.LIST_GROUP_CUSTOMER' } },
         { path: 'list-email', loadChildren: () => import('./page/distribution/list-email/list-email.module').then(m => m.ListEmailModule), data: { title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' } },
         { path: 'list-sms', loadChildren: () => import('./page/distribution/list-sms/list-sms.module').then(m => m.ListSmsModule), data: { title: 'MENU.DISTRIBUTIONS.LIST_SMS' } },
