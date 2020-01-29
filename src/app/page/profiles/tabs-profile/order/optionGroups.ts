@@ -129,7 +129,7 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_TYPE'
       },
       {
-        value: { controlName: [ 'OriginCountryOpr' ], controlGroupName: 'tickets', isDate: false },
+        value: { controlName: [ 'IdSellCountry' ], controlGroupName: 'tickets', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_COUNTRY'
       },
     ]
@@ -207,7 +207,7 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_TYPE'
       },
       {
-        value: { controlName: [ 'OriginCountryOpr' ], controlGroupName: 'services', isDate: false },
+        value: { controlName: [ 'IdSellCountry' ], controlGroupName: 'services', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_COUNTRY'
       },
     ]
