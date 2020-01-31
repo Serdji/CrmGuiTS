@@ -59,15 +59,15 @@ export class AppComponent implements OnInit {
   private initTranslate() {
     this.translate.addLangs( [ 'ru', 'en' ] );
     this.translate.setDefaultLang( 'ru' );
-    // const browserLang = this.translate.getBrowserLang();
-    // const loadingLanguage = localStorage.getItem( 'language' );
+    const browserLang = this.translate.getBrowserLang();
+    const loadingLanguage = localStorage.getItem( 'language' );
 
-    // if ( loadingLanguage ) this.translate.use( loadingLanguage );
-    // else this.translate.use( browserLang.match( /ru|en'/ ) ? browserLang : 'en' );
+    if ( loadingLanguage ) this.translate.use( loadingLanguage );
+    else this.translate.use( browserLang.match( /ru|en'/ ) ? browserLang : 'en' );
 
-    // this.translate.stream( 'MENU' ).subscribe( _ => {
-    //   this._adapter.setLocale( this.translate.store.currentLang );
-    // } );
+    this.translate.stream( 'MENU' ).subscribe( _ => {
+      this._adapter.setLocale( this.translate.store.currentLang );
+    } );
   }
 
   private isTokenRedirect() {
