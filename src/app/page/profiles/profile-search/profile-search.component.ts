@@ -76,7 +76,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
   private airlineId: number;
-  private OriginIdCountryOpr: number;
+  private IdSellCountry: number;
   private sellTypeId: number;
 
   @ViewChild( 'segmentationChipInput', { static: true } ) segmentationFruitInput: ElementRef<HTMLInputElement>;
@@ -353,7 +353,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
       this.formProfileSearch.patchValue( newObjectForm );
       this.airlineId = params[ 'airlineId' ];
-      this.OriginIdCountryOpr = params[ 'OriginIdCountryOpr' ];
+      this.IdSellCountry = params[ 'IdSellCountry' ];
       this.sellTypeId = params[ 'idSellType' ];
       if ( this.isQueryParams ) this.creatingObjectForm();
     }
@@ -415,7 +415,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const airlineCode = airlineLCodeValue.title || airlineLCodeValue;
 
     const sellCountryValue: ICountries = this.formProfileSearch.get( 'sellCountry' ).value;
-    const OriginIdCountryOpr = sellCountryValue.countryId || this.OriginIdCountryOpr || null;
+    const IdSellCountry = sellCountryValue.countryId || this.IdSellCountry || null;
     const sellCountry = sellCountryValue.title || sellCountryValue;
 
     const sellTypeValue: ISellType = this.formProfileSearch.get( 'sellType' ).value;
@@ -427,7 +427,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     _.merge( params, { airlineId: +airlineId } );
 
     _.merge( params, { sellCountry: sellCountry } );
-    _.merge( params, { OriginIdCountryOpr: +OriginIdCountryOpr } );
+    _.merge( params, { IdSellCountry: +IdSellCountry } );
 
     _.merge( params, { sellType: sellType } );
     _.merge( params, { idSellType: +idSellType } );
@@ -435,7 +435,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     _.merge( params, { sortvalue: 'last_name', from: 0, count: 10 } );
 
     params = airlineCode ? params : _.omit( params, [ 'airlineLCode', 'airlineId' ] );
-    params = sellCountry ? params : _.omit( params, [ 'sellCountry', 'OriginIdCountryOpr' ] );
+    params = sellCountry ? params : _.omit( params, [ 'sellCountry', 'IdSellCountry' ] );
     params = sellType ? params : _.omit( params, [ 'sellType', 'idSellType' ] );
     this.router.navigate( [ '/crm/profile-search' ], { queryParams: params } );
     this.sendProfileParams = params;
