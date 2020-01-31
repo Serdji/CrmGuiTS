@@ -490,6 +490,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
 
+
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {
     const input = event.input;
     const value = event.value;
