@@ -55,6 +55,7 @@
 
   <div class="dynamic-form__button-wrapper">
     <button
+      *ngIf="!edit"
       [disabled]="buttonDisabled"
       class="dynamic-form__button" mat-raised-button
       (click)="onDynamicFormEmit()" color="primary">

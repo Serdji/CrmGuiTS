@@ -22,7 +22,7 @@ export class MessagesService {
     return this.http.get( `${this.configService.crmApi}/crm/distributions/customerEmails/${id}` )
       .pipe(
         this.retryRequestService.retry(),
-        map( ( messages: IMessages[] ) => _( messages ).sortBy( 'lastTryDT' ).reverse().value() )
+        map( ( messages: IMessages[] ) => _( messages ).sortBy( 'Код авиакомпании' ).reverse().value() )
       );
   }
 

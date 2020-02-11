@@ -140,10 +140,6 @@
 			"GROUP_NAME": "Passengers",
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
-		"CUSTOM_SEGMENTATION": {
-			"ADD_SEGMENTATION": "New simple segmentation",
-			"GROUP_NAME": "Custom segmentation"
-		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",
@@ -171,8 +167,9 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "New simple segmentation",
 			"AGGREGATION_SEGMENTATION": "New complex segmentation",
+			"CUSTOM_SEGMENTATION": "Custom segmentations",
 			"GROUP_NAME": "Segmentation",
-			"LIST_SEGMENTATION": "Segmentations list"
+			"LIST_SEGMENTATION": "Segmentation list"
 		},
 		"SETTINGS": {
 			"GROUP_NAME": "Settings",
@@ -187,18 +184,6 @@
 		"VERSION": "Version"
 	},
 	"PAGE": {
-		"CUSTOM_SEGMENTATION": {
-			"ADD_CUSTOM_SEGMENTATION": {
-				"FORM": {
-					"DESCRIPTION": "Description",
-					"TEMPLATE": "Segmentation pattern selection",
-					"TITLE": "Special segmentation name"
-				},
-				"TABLE": {
-					"TITLE": "Custom segmentation"
-				}
-			}
-		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
@@ -386,7 +371,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
-					"AIRCRAFT_TYPE": "Aircraft Type",
+					"AIRCRAFT_TYPE": "Aircraft type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_POINT": "Point of destination",
 					"BOOKING_CREATE_DATE_FROM_INCLUDE": "Sale date after",
@@ -422,7 +407,7 @@
 					"REC_LOC": "Recloc",
 					"SEGMENTATION": "Segmentations",
 					"SELL_COUNTRY": "Country of sale",
-					"SELL_TYPE": "Type of sale",
+					"SELL_TYPE": "Type of service sale",
 					"SERVICE_CODE": "SSR/RFISC code",
 					"TICKET": "Ticket number",
 					"TOLTIP_CSV": "Export to CSV file with search results"
@@ -525,6 +510,7 @@
 								"TERMINAL": "Terminal ID:"
 							},
 							"SEGMENTS": {
+								"AIRCRAFT_TYPE": "Aircraft type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"CABIN": "Cabin code:",
@@ -560,7 +546,6 @@
 								"SVC_TYPE": "SVC type:"
 							},
 							"TICKETS": {
-								"AIRCRAFT_TYPE": "Aircraft Type",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"COUPON": "Coupon number:",
@@ -790,6 +775,16 @@
 			"TITLE": "Restart application"
 		},
 		"SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"DESCRIPTION": "Description",
+					"TEMPLATE": "Template selection",
+					"TITLE": "Custom segmentation name"
+				},
+				"TABLE": {
+					"TITLE": "Custom segmentation list"
+				}
+			},
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
 					"NEXT": "Next",
@@ -889,7 +884,7 @@
 				"TABLE": {
 					"FILTER": "Filter by name",
 					"GROUP_SEGMENTATION": "Name",
-					"TITLE": "Complex segmentations list"
+					"TITLE": "Complex segmentation list"
 				}
 			},
 			"LIST_SEGMENTATION": {
@@ -918,7 +913,7 @@
 						"SIMPLE": "Simple",
 						"TITLE": "Type"
 					},
-					"TITLE": "Segmentations list"
+					"TITLE": "Segmentation list"
 				}
 			}
 		},

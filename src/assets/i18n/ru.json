@@ -140,10 +140,6 @@
 			"GROUP_NAME": "Пассажиры",
 			"SEARCH_CUSTOMER": "Поиск пассажира"
 		},
-		"CUSTOM_SEGMENTATION": {
-			"ADD_SEGMENTATION": "Добавить сегментацию",
-			"GROUP_NAME": "Спец сегментация"
-		},
 		"DISTRIBUTIONS": {
 			"GROUP_NAME": "Рассылки",
 			"LIST_EMAIL": "Email",
@@ -171,6 +167,7 @@
 		"SEGMENTATION": {
 			"ADD_SEGMENTATION": "Добавить сегментацию",
 			"AGGREGATION_SEGMENTATION": "Объединение сегментаций",
+			"CUSTOM_SEGMENTATION": "Преднастроенные сегментации",
 			"GROUP_NAME": "Сегментация",
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
@@ -187,18 +184,6 @@
 		"VERSION": "Версия"
 	},
 	"PAGE": {
-		"CUSTOM_SEGMENTATION": {
-			"ADD_CUSTOM_SEGMENTATION": {
-				"FORM": {
-					"DESCRIPTION": "Описание",
-					"TEMPLATE": "Выбор шаблона сегментации",
-					"TITLE": "Название спец сегментации"
-				},
-				"TABLE": {
-					"TITLE": "Спец сегментации"
-				}
-			}
-		},
 		"DISTRIBUTION": {
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
@@ -422,10 +407,10 @@
 					"REC_LOC": "№ брони",
 					"SEGMENTATION": "Сегментации",
 					"SELL_COUNTRY": "Страна продажи",
-					"SELL_TYPE": "Тип продажи",
+					"SELL_TYPE": "Тип продажи услуги",
 					"SERVICE_CODE": "Код услуги",
 					"TICKET": "№ билета",
-					"TOLTIP_CSV": "Вагрузка SVG файла с учетом поискового запроса"
+					"TOLTIP_CSV": "Загрузка SVG файла с учетом поискового запроса"
 				},
 				"TABLE": {
 					"DATE_OF_BIRTH": "Дата рождения",
@@ -525,6 +510,7 @@
 								"TERMINAL": "Терминал:"
 							},
 							"SEGMENTS": {
+								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"CABIN": "Кабина:",
@@ -560,7 +546,6 @@
 								"SVC_TYPE": "Тип SVC:"
 							},
 							"TICKETS": {
-								"AIRCRAFT_TYPE": "Тип ВС",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"COUPON": "Номер купона:",
@@ -790,10 +775,20 @@
 			"TITLE": "Перезагрузить приложение"
 		},
 		"SEGMENTATION": {
+			"ADD_CUSTOM_SEGMENTATION": {
+				"FORM": {
+					"DESCRIPTION": "Описание",
+					"TEMPLATE": "Выбор шаблона сегментации",
+					"TITLE": "Название преднастроенной сегментации"
+				},
+				"TABLE": {
+					"TITLE": "Преднастроенные сегментации"
+				}
+			},
 			"ADD_SEGMENTATION": {
 				"BUTTON": {
-					"NEXT": "Назад",
-					"PREV": "Далее"
+					"NEXT": "Далее",
+					"PREV": "Назад"
 				},
 				"GROUP_SEGMENTATION": {
 					"GRANULARITY": {
@@ -902,7 +897,7 @@
 				"TABLE_SEGMENTATION": {
 					"ALL": "Все",
 					"COMPLICATED": "Сложные",
-					"CUSTOM": "Спец",
+					"CUSTOM": "Преднастроенные",
 					"FILTER": "Фильтр",
 					"GRANULARITY": {
 						"COUPON": "Купон",
@@ -914,7 +909,7 @@
 					"SIMPLE": "Простые",
 					"STATUS": {
 						"COMPLICATED": "Сложная",
-						"CUSTOM": "Спец",
+						"CUSTOM": "Преднастроенная",
 						"SIMPLE": "Простая",
 						"TITLE": "Тип"
 					},

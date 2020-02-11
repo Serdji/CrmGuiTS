@@ -9,15 +9,16 @@ import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmenta
 import { filter, map, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
-import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { ActivatedRoute, Router } from '@angular/router';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import { IpagPage } from '../../../interface/ipag-page';
-import { AddSegmentationService } from '../../segmentation/add-segmentation/add-segmentation.service';
 import { timer } from 'rxjs/observable/timer';
 import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
+import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
+import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
+import { logger } from 'codelyzer/util/logger';
 
 
 @Component( {
@@ -36,8 +37,8 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   public isTableProfileTable: boolean;
   public segmentationProfiles: ISegmentationProfile;
   public isEditCustomSegmentation: boolean;
+  public formCustomSegmentation: FormGroup;
 
-  private formCustomSegmentation: FormGroup;
   private templateId: number;
   private segmentationId: number;
 
@@ -61,7 +62,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     this.initCustomSegmentationTable();
     this.initQueryParams();
     this.initTableProfilePagination();
-    this.isEditCustomSegmentation = true;
+    this.isEditCustomSegmentation = false;
     this.isLouderDynamicForm = false;
     this.isLoaderCustomSegmentationTable = true;
     this.listSegmentationService.subjectSegmentations
@@ -90,12 +91,16 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
           this.addCustomSegmentationService.getCustomSegmentationParams( res.segmentationId )
             .pipe( untilDestroyed( this ) )
             .subscribe( ( customSegmentationGetParams: ICustomSegmentationGetParams ) => {
+              this.isEditCustomSegmentation = true;
               this.formCustomSegmentation.patchValue( customSegmentationGetParams );
               this.paramsDynamicForm = customSegmentationGetParams.customSegmentationParameters;
               this.isLouderDynamicForm = false;
             } );
           this.isTableProfileTable = isKeySegmentationId;
           this.isLoaderProfileTable = isKeySegmentationId;
+        } else {
+          this.isEditCustomSegmentation = false;
+          this.clearForm();
         }
       } );
   }
@@ -105,6 +110,13 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       title: [ '', Validators.required ],
       customSegmentationTemplateId: '',
       description: ''
+    } );
+  }
+
+  private clearForm() {
+    _.each( this.formCustomSegmentation.getRawValue(), ( val, key ) => {
+      this.formCustomSegmentation.get( key ).patchValue( null );
+      this.formCustomSegmentation.get( key ).setErrors( null );
     } );
   }
 
@@ -121,7 +133,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
           if ( val === '0' ) this.router.navigate( [ 'crm/add-custom-segmentation' ], {} );
         } ),
         tap( _ => this.isLouderDynamicForm = true ),
-        mergeMap( templateId => this.addCustomSegmentationService.getCustomSegmentation( templateId ) ),
+        mergeMap( templateId => _.isNil( templateId ) ? of( templateId ) : this.addCustomSegmentationService.getCustomSegmentation( templateId ) ),
         untilDestroyed( this ),
         tap( _ => this.isLouderDynamicForm = false ),
       ).subscribe( success );

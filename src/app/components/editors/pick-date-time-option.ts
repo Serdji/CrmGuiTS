@@ -1,5 +1,6 @@
 import { OwlDateTimeIntl } from 'ng-pick-datetime';
 import { TranslateService } from '@ngx-translate/core';
+import { Injectable } from '@angular/core';
 
 export const FORMATS_DATE_TIME = {
   parseInput: 'DD.MM.YYYY | HH:mm',
@@ -11,7 +12,9 @@ export const FORMATS_DATE_TIME = {
   monthYearA11yLabel: 'MMMM YYYY',
 };
 
-
+@Injectable({
+  providedIn: 'root'
+})
 export class DefaultIntl extends OwlDateTimeIntl {
   constructor( public translate: TranslateService ) {
     super();

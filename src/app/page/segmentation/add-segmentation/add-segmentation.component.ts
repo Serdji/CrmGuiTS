@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { delay, map } from 'rxjs/operators';
+import { debounceTime, switchMap } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
@@ -40,8 +40,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public isTable: boolean;
   public resetRadioButtonFood: boolean;
   public resetRadioButtonCurrentRange: boolean;
-  public airports: IAirport[];
-  public airlineLCode: IAirlineLCode[];
   public airlineLCodeOptionsT: Observable<IAirlineLCode[]>;
   public airlineLCodeOptionsE: Observable<IAirlineLCode[]>;
   public airportsFromOptionsT: Observable<IAirport[]>;
@@ -56,7 +54,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private controlsConfig: any;
 
   private segmentationId: number;
-  private segmentationParams: any;
   private saveSegmentationParams: any = {};
   private createSegmentationParams: any = {};
   private autDelay: number = 500;
@@ -95,16 +92,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.initQueryParams();
     this.formInputDisable();
     this.initTableProfilePagination();
-    this.initAirports();
-    this.initAirlineLCodes();
     this.initAutocomplete( 'formSegmentationStepper' );
     this.initAutocomplete( 'formSegmentation' );
     this.initFieldClock();
     this.addSegmentationService.subjectDeleteSegmentation
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.clearForm() );
     this.saveUrlServiceService.subjectEvent401
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { saveFormParams: JSON.stringify( this.segmentationParameters() ) } } );
       } );
@@ -112,7 +107,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( params => {
         const hasSaveFormParams = R.has( 'saveFormParams' );
         const hasSegmentationId = R.has( 'segmentationId' );
@@ -132,17 +127,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       } );
   }
 
-  private initAirports() {
-    this.profileSearchService.getAirports()
-      .pipe( untilDestroyed(this) )
-      .subscribe( ( value: IAirport[] ) => this.airports = value );
-  }
-
-  private initAirlineLCodes() {
-    this.profileSearchService.getAirlineCodes()
-      .pipe( untilDestroyed(this) )
-      .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
-  }
 
   public displayFn( option ): string | undefined {
     return R.is( Object, option ) ? option.title : option;
@@ -175,20 +159,19 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private autocomplete( formGroup: string, formControlName: string ): Observable<any> {
-    const mapFilter = val => {
-      if ( val ) {
-        if ( formControlName === 'airlineLCodeIdT' || formControlName === 'airlineLCodeIdE' ) {
-          return this.airlineLCode.filter( airlineLCode => airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() ) );
-        }
-        return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
-      }
-    };
+    if ( formControlName === 'airlineLCodeIdT' || formControlName === 'airlineLCodeIdE' ) {
+      return this[ formGroup ].get( formControlName ).valueChanges
+        .pipe(
+          debounceTime( this.autDelay ),
+          switchMap( ( text: string ) => this.profileSearchService.getAirlineCodes( encodeURI( text ) ) ),
+        ) as Observable<IAirlineLCode[]>;
+    }
     return this[ formGroup ].get( formControlName ).valueChanges
       .pipe(
-        untilDestroyed( this ),
-        delay( this.autDelay ),
-        map( mapFilter )
-      );
+        debounceTime( this.autDelay ),
+        switchMap( ( text: string ) => this.profileSearchService.getAirports( encodeURI( text ) ) ),
+      ) as Observable<IAirport[]>;
+
   }
 
 
@@ -216,11 +199,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       }
       if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
     };
-    const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed(this) );
-    const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( untilDestroyed(this) );
+    const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
+    const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( untilDestroyed( this ) );
     const resForkJoin = forkJoin( [ getSegmentationParams, getAirlineCodes ] );
 
-    resForkJoin.pipe( untilDestroyed(this) ).subscribe( success );
+    resForkJoin.pipe( untilDestroyed( this ) ).subscribe( success );
   }
 
   private initFormControl() {
@@ -290,7 +273,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         .each( values => this[ formGroupName ].get( values ).disable() );
 
       this[ formGroupName ].get( 'subjectAnalysis' ).valueChanges
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( params => {
           _( this[ formGroupName ].getRawValue() ).each( () => {
             _( [ 'moneyAmountFromInclude', 'moneyAmountToExclude', 'currency', 'eDocTypeP' ] )
@@ -310,7 +293,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       _( this[ formGroupName ].getRawValue() ).each( ( values, key ) => {
         if ( key === 'eDocTypeS' ) {
           this[ formGroupName ].get( key ).valueChanges
-            .pipe( untilDestroyed(this) )
+            .pipe( untilDestroyed( this ) )
             .subscribe( params => {
               _( [
                 'airlineLCodeIdT', 'flightNoT', 'arrivalDFromIncludeT',
@@ -335,7 +318,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             } );
         } else if ( key === 'eDocTypeP' ) {
           this[ formGroupName ].get( key ).valueChanges
-            .pipe( untilDestroyed(this) )
+            .pipe( untilDestroyed( this ) )
             .subscribe( params => {
               _( [
                 'airlineLCodeIdT', 'flightNoT', 'arrivalDFromIncludeT',
@@ -366,11 +349,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private initFieldClock() {
     _.each( this.arrFormGroup, formGroup => {
       this[ formGroup ].get( 'timeBeforeDepartureT' ).valueChanges
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( value => this.selectedTimeT = value );
 
       this[ formGroup ].get( 'timeBeforeDepartureE' ).valueChanges
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( value => this.selectedTimeE = value );
     } );
   }
@@ -395,7 +378,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   private initTableProfilePagination() {
     this.tableAsyncService.subjectPage
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( value: IpagPage ) => {
         const pageIndex = value.pageIndex * value.pageSize;
         const paramsAndCount = {
@@ -404,7 +387,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           count: value.pageSize
         };
         this.addSegmentationService.getProfiles( paramsAndCount )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( ( segmentationProfiles: ISegmentationProfile ) => this.tableAsyncService.setTableDataSource( segmentationProfiles.customers ) );
       } );
   }
@@ -416,7 +399,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       count: 10
     };
     this.addSegmentationService.getProfiles( params )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( segmentationProfiles: ISegmentationProfile ) => {
         this.tableAsyncService.countPage = segmentationProfiles.totalCount;
         this.segmentationProfiles = segmentationProfiles;
@@ -436,7 +419,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -541,7 +524,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       this.saveSegmentationParams = isQueryParams ? saveFormParams : this.segmentationParameters();
       if ( !R.isEmpty( this.saveSegmentationParams ) ) {
         this.addSegmentationService.saveSegmentation( this.saveSegmentationParams )
-          .pipe( untilDestroyed(this) )
+          .pipe( untilDestroyed( this ) )
           .subscribe( value => {
             this.windowDialog( `DIALOG.OK.SEGMENTATION_SAVE`, 'ok' );
             this.router.navigate( [ `/crm/edit-segmentation/` ], { queryParams: { segmentationId: value.segmentationId } } );
@@ -553,9 +536,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   createForm(): void {
     if ( !this.formSegmentation.invalid ) {
       this.createSegmentationParams = this.segmentationParameters();
-     _( this.createSegmentationParams ).set( 'segmentationId', this.segmentationId ).value();
+      _( this.createSegmentationParams ).set( 'segmentationId', this.segmentationId ).value();
       this.addSegmentationService.updateSegmentation( this.createSegmentationParams )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.windowDialog( `DIALOG.OK.SEGMENTATION_CHANGED`, 'ok' );
           this.router.navigate( [ '/crm/edit-segmentation' ], { queryParams: { segmentationId: this.segmentationId } } );
@@ -578,7 +561,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.resetForm();
       } );
