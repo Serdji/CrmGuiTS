@@ -1,15 +1,13 @@
-import { Observable, of, OperatorFunction, pipe, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
-import { concatAll, map, toArray } from 'rxjs/operators';
-import * as R from 'ramda';
+import { map } from 'rxjs/operators';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { ICountries } from '../../../interface/icountries';
 import * as _ from 'lodash';
-import { UnaryFunction } from 'rxjs/src/internal/types';
-import { concatAllStreamToArray } from '../../../util/concatAllStreamToArray';
+import { concatAllStreamToArray } from '../../../utils/concatAllStreamToArray';
 
 @Injectable()
 export class ProfileSearchService {
@@ -31,24 +29,16 @@ export class ProfileSearchService {
     );
   }
 
-  private myPipe() {
-    return pipe(
-      concatAll(),
-      map( this.mapConcatTitle ),
-      toArray()
-    );
-  }
-
   getAirports(): Observable<any> {
     return this.http.get( this.configService.crmApi + '/crm/airport' ).pipe( this.retryRequestService.retry() );
   }
 
   getCountries() {
-    return this.http.get<ICountries[]>( this.configService.crmApi + '/crm/country' ).pipe( this.retryRequestService.retry(), this.myPipe() );
+    return this.http.get<ICountries[]>( this.configService.crmApi + '/crm/country' ).pipe( this.retryRequestService.retry(), concatAllStreamToArray( map( this.mapConcatTitle ) ) );
   }
 
   getAirlineCodes() {
-    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + '/crm/airline' ).pipe( this.retryRequestService.retry(), this.myPipe() );
+    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + '/crm/airline' ).pipe( this.retryRequestService.retry(), concatAllStreamToArray(map( this.mapConcatTitle )) );
   }
 
   getCities(): Observable<any> {
