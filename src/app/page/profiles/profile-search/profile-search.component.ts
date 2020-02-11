@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { map, delay } from 'rxjs/operators';
+import { map, debounceTime } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -65,8 +65,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public customerGroupChips: string[] = [];
 
   public formProfileSearch: FormGroup;
-
-  private autDelay: number = 500;
 
   private airports: IAirport[];
   private airlineLCode: IAirlineLCode[];
@@ -207,7 +205,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     return this.formProfileSearch.get( formControlName ).valueChanges
       .pipe(
         untilDestroyed( this ),
-        delay( this.autDelay ),
+        debounceTime( 500 ),
         map( val => {
           switch ( options ) {
             case 'airports':
