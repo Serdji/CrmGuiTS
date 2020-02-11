@@ -49,7 +49,7 @@ export class ProfileSearchService {
   }
 
   getSellType(  text: string = '' ): Observable<any> {
-    return this.http.get<ISellType[]>( this.configService.crmApi + `/crm/selltype${ text }` ).pipe( this.retryRequestService.retry() );
+    return this.http.get<ISellType[]>( this.configService.crmApi + `/crm/selltype/${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
   getProfileSearch( params ): Observable<any> {
