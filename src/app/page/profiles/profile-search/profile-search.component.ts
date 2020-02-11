@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { map, debounceTime } from 'rxjs/operators';
+import { map, debounceTime, switchMap, tap, } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -27,7 +27,6 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
 import { ICountries } from '../../../interface/icountries';
-import { logger } from 'codelyzer/util/logger';
 
 @Component( {
   selector: 'app-profile-search',
@@ -44,8 +43,8 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   public sellTypeOptions: Observable<ISellType[]>;
   public profiles: Iprofiles;
-  public isTableCard: boolean = false;
-  public isLoader: boolean = false;
+  public isTableCard = false;
+  public isLoader = false;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
   public currencyDefault: string;
@@ -66,10 +65,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   public formProfileSearch: FormGroup;
 
-  private airports: IAirport[];
-  private airlineLCode: IAirlineLCode[];
-  private countries: ICountries[];
-  private sellType: ISellType[];
+  private delay: number;
 
   private sendProfileParams: IprofileSearch;
   private isQueryParams: boolean;
@@ -97,8 +93,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.buttonSearch = true;
     this.buttonCsvDisabled = true;
     this.csvLoader = false;
-    this.initAirports();
+    this.delay = 500;
     this.initForm();
+    this.initAirports();
     this.initAutocomplete();
     this.initTableAsync();
     this.initSegmentation();
@@ -143,9 +140,17 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
 
   private initAirports() {
-    this.profileSearchService.getAirports()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( airports: IAirport[] ) => this.airports = airports );
+    this.airportsFromOptions = this.formProfileSearch.get( 'deppoint' ).valueChanges
+      .pipe(
+        debounceTime( this.delay ),
+        switchMap( text => this.profileSearchService.getAirports( encodeURI( text ) ) ),
+      ) as Observable<IAirport[]>;
+    this.airportsToOptions = this.formProfileSearch.get( 'arrpoint' ).valueChanges
+      .pipe(
+        debounceTime( this.delay ),
+        switchMap( text => this.profileSearchService.getAirports( encodeURI( text ) ) )
+      ) as Observable<IAirport[]>;
+
   }
 
 
@@ -162,31 +167,33 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   private initAirlineLCodes() {
-    this.profileSearchService.getAirlineCodes()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( airlineCodes: IAirlineLCode[] ) => this.airlineLCode = airlineCodes );
+    this.airlineLCodeOptions = this.formProfileSearch.get( 'airlineLCode' ).valueChanges
+      .pipe(
+        debounceTime( this.delay ),
+        switchMap( text => this.profileSearchService.getAirlineCodes( encodeURI( text ) ) )
+      ) as Observable<IAirlineLCode[]>;
+
   }
 
   private initCountries() {
-    this.profileSearchService.getCountries()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( countries: ICountries[] ) => this.countries = countries );
+    this.sellCountryOptions = this.formProfileSearch.get( 'sellCountry' ).valueChanges
+      .pipe(
+        debounceTime( this.delay ),
+        switchMap( text => this.profileSearchService.getCountries( encodeURI( text ) ) )
+      ) as Observable<ICountries[]>;
   }
 
   private initSellType() {
-    this.profileSearchService.getSellType()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( sellType: ISellType[] ) => this.sellType = sellType );
+    this.sellTypeOptions = this.formProfileSearch.get( 'sellType' ).valueChanges
+      .pipe(
+        debounceTime( this.delay ),
+        switchMap( text => this.profileSearchService.getSellType( encodeURI( text ) ) )
+      ) as Observable<ISellType[]>;
   }
 
   private initAutocomplete() {
-    this.airportsFromOptions = this.autocomplete( 'deppoint', 'airports' );
-    this.airportsToOptions = this.autocomplete( 'arrpoint', 'airports' );
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
-    this.airlineLCodeOptions = this.autocomplete( 'airlineLCode', 'airlineLCode' );
-    this.sellCountryOptions = this.autocomplete( 'sellCountry', 'sellCountry' );
-    this.sellTypeOptions = this.autocomplete( 'sellType', 'sellType' );
   }
 
   public displayAirlineLCodeFn( option ): string | undefined {
@@ -208,31 +215,18 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         debounceTime( 500 ),
         map( val => {
           switch ( options ) {
-            case 'airports':
-              return this.airports.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
             case 'segmentation':
               return this.segmentation.filter( segmentation => {
-                  if ( !R.isNil( val ) ) return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                  if ( !R.isNil( val ) ) {
+                    return segmentation.title.toLowerCase().includes( val.toLowerCase() );
+                  }
                 }
               );
             case 'customerGroup':
               return this.customerGroup.filter( customerGroup => {
-                  if ( !R.isNil( val ) ) return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
-                }
-              );
-            case 'airlineLCode':
-              return this.airlineLCode.filter( airlineLCode => {
-                  if ( !R.isNil( val ) ) return airlineLCode.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
-                }
-              );
-            case 'sellCountry':
-              return this.countries.filter( country => {
-                  if ( !R.isNil( val ) ) return country.title.toLowerCase().includes( R.is( Object, val ) ? val.title.toLowerCase() : val.toLowerCase() );
-                }
-              );
-            case 'sellType':
-              return this.sellType.filter( sellType => {
-                  if ( !R.isNil( val ) ) return sellType.sellTypeCode.toLowerCase().includes( R.is( Object, val ) ? val.sellTypeCode.toLowerCase() : val.toLowerCase() );
+                  if ( !R.isNil( val ) ) {
+                    return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                  }
                 }
               );
           }
@@ -341,19 +335,33 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       this.customerGroupChips = customerGroupTitles;
 
       for ( const key of Object.keys( params ) ) {
-        if ( this.isKeys( key, 'all' ) ) newObjectForm[ key ] = params[ key ];
-        if ( this.isKeys( key, 'data' ) ) newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
-        if ( this.isKeys( key, 'checkbox' ) ) newObjectForm[ key ] = params[ key ];
-        if ( this.isKeys( key, 'airlineLCode' ) ) newObjectForm[ key ] = params[ key ];
-        if ( this.isKeys( key, 'sellCountry' ) ) newObjectForm[ key ] = params[ key ];
-        if ( this.isKeys( key, 'sellType' ) ) newObjectForm[ key ] = params[ key ];
+        if ( this.isKeys( key, 'all' ) ) {
+          newObjectForm[ key ] = params[ key ];
+        }
+        if ( this.isKeys( key, 'data' ) ) {
+          newObjectForm[ key ] = params[ key ] ? new Date( params[ key ].split( '.' ).reverse().join( ',' ) ) : '';
+        }
+        if ( this.isKeys( key, 'checkbox' ) ) {
+          newObjectForm[ key ] = params[ key ];
+        }
+        if ( this.isKeys( key, 'airlineLCode' ) ) {
+          newObjectForm[ key ] = params[ key ];
+        }
+        if ( this.isKeys( key, 'sellCountry' ) ) {
+          newObjectForm[ key ] = params[ key ];
+        }
+        if ( this.isKeys( key, 'sellType' ) ) {
+          newObjectForm[ key ] = params[ key ];
+        }
       }
 
       this.formProfileSearch.patchValue( newObjectForm );
       this.airlineId = params[ 'airlineId' ];
       this.IdSellCountry = params[ 'IdSellCountry' ];
       this.sellTypeId = params[ 'idSellType' ];
-      if ( this.isQueryParams ) this.creatingObjectForm();
+      if ( this.isQueryParams ) {
+        this.creatingObjectForm();
+      }
     }
   }
 
@@ -378,11 +386,18 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
     for ( const key of formValue ) {
       const valueForm = keys => this.formProfileSearch.get( keys ).value || '';
-      if ( this.isKeys( key, 'all' ) ) highlightObj[ key ] = valueForm( key ).trim();
-      if ( this.isKeys( key, 'data' ) ) highlightObj[ key ] = moment( valueForm( key ) ).format( 'DD.MM.YYYY' );
+      if ( this.isKeys( key, 'all' ) ) {
+        highlightObj[ key ] = valueForm( key ).trim();
+      }
+      if ( this.isKeys( key, 'data' ) ) {
+        highlightObj[ key ] = moment( valueForm( key ) ).format( 'DD.MM.YYYY' );
+      }
       if ( this.isKeys( key, 'checkbox' ) ) {
-        if ( this.formProfileSearch.get( key ).value ) highlightObj[ key ] = !valueForm( key );
-        else delete highlightObj[ key ];
+        if ( this.formProfileSearch.get( key ).value ) {
+          highlightObj[ key ] = !valueForm( key );
+        } else {
+          delete highlightObj[ key ];
+        }
       }
     }
 
@@ -520,7 +535,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   }
 
   sendForm(): void {
-    if ( !this.formProfileSearch.invalid ) this.creatingObjectForm();
+    if ( !this.formProfileSearch.invalid ) {
+      this.creatingObjectForm();
+    }
   }
 
   clearForm(): void {

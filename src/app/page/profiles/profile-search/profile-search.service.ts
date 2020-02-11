@@ -8,6 +8,9 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { ICountries } from '../../../interface/icountries';
 import * as _ from 'lodash';
 import { concatAllStreamToArray } from '../../../utils/concatAllStreamToArray';
+import { IAirport } from '../../../interface/iairport';
+import { ISellType } from '../../../interface/isell-type';
+import { ICity } from '../../../interface/icity';
 
 @Injectable()
 export class ProfileSearchService {
@@ -29,24 +32,24 @@ export class ProfileSearchService {
     );
   }
 
-  getAirports(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/airport' ).pipe( this.retryRequestService.retry() );
+  getAirports( text: string = '' ) {
+    return this.http.get<IAirport[]>( this.configService.crmApi + `/crm/airport/${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
-  getCountries() {
-    return this.http.get<ICountries[]>( this.configService.crmApi + '/crm/country' ).pipe( this.retryRequestService.retry(), concatAllStreamToArray( map( this.mapConcatTitle ) ) );
+  getCountries( text: string = '' ) {
+    return this.http.get<ICountries[]>( this.configService.crmApi + `/crm/country/${ text }` ).pipe( this.retryRequestService.retry(), concatAllStreamToArray( map( this.mapConcatTitle ) ) );
   }
 
-  getAirlineCodes() {
-    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + '/crm/airline' ).pipe( this.retryRequestService.retry(), concatAllStreamToArray(map( this.mapConcatTitle )) );
+  getAirlineCodes( text: string = '' ) {
+    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + `/crm/airline/${ text }` ).pipe( this.retryRequestService.retry(), concatAllStreamToArray(map( this.mapConcatTitle )) );
   }
 
-  getCities(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/city' ).pipe( this.retryRequestService.retry() );
+  getCities( text: string = '' ) {
+    return this.http.get<ICity[]>( this.configService.crmApi + `/crm/city/${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
-  getSellType(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/selltype' ).pipe( this.retryRequestService.retry() );
+  getSellType(  text: string = '' ): Observable<any> {
+    return this.http.get<ISellType[]>( this.configService.crmApi + `/crm/selltype${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
   getProfileSearch( params ): Observable<any> {
