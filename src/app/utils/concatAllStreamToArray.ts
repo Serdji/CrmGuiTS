@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
 import { concatAll, toArray } from 'rxjs/operators';
 
-export const concatAllStreamToArray = ( ...fns: Function[] ) => pipeFromArray( concatAll(), ...fns, toArray() );
-const pipeFromArray = ( ...fns: Function[] ) => ( source: Observable<any> ) => fns.reduce( ( acc, fn ) => fn( acc ), source );
+export const concatAllStreamToArray = ( ...operators: Function[] ) => pipeFromArray( concatAll(), ...operators, toArray() );
+const pipeFromArray = ( ...operators: Function[] ) => ( source: Observable<any> ) => operators.reduce( ( acc, fn ) => fn( acc ), source );
