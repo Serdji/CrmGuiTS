@@ -7,7 +7,7 @@ import { map } from 'rxjs/operators';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { ICountries } from '../../../interface/icountries';
 import * as _ from 'lodash';
-import { concatAllStreamToArray } from '../../../utils/concatAllStreamToArray';
+import { convertToStream } from '../../../utils/convertToStream';
 import { IAirport } from '../../../interface/iairport';
 import { ISellType } from '../../../interface/isell-type';
 import { ICity } from '../../../interface/icity';
@@ -37,11 +37,11 @@ export class ProfileSearchService {
   }
 
   getCountries( text: string = '' ) {
-    return this.http.get<ICountries[]>( this.configService.crmApi + `/crm/country/${ text }` ).pipe( this.retryRequestService.retry(), concatAllStreamToArray( map( this.mapConcatTitle ) ) );
+    return this.http.get<ICountries[]>( this.configService.crmApi + `/crm/country/${ text }` ).pipe( this.retryRequestService.retry(), convertToStream( map( this.mapConcatTitle ) ) );
   }
 
   getAirlineCodes( text: string = '' ) {
-    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + `/crm/airline/${ text }` ).pipe( this.retryRequestService.retry(), concatAllStreamToArray(map( this.mapConcatTitle )) );
+    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + `/crm/airline/${ text }` ).pipe( this.retryRequestService.retry(), convertToStream(map( this.mapConcatTitle )) );
   }
 
   getCities( text: string = '' ) {

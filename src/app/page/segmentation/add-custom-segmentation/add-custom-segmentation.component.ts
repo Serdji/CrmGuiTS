@@ -6,7 +6,7 @@ import { AddCustomSegmentationService } from './add-custom-segmentation.service'
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { Observable, of } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
-import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { filter, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
 import { ISegmentation } from '../../../interface/isegmentation';
@@ -19,6 +19,7 @@ import { ICustomSegmentationGetParams } from '../../../interface/icustom-segment
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
 import { logger } from 'codelyzer/util/logger';
+import { convertToStream } from '../../../utils/convertToStream';
 
 
 @Component( {
@@ -140,11 +141,15 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initCustomSegmentationTable() {
-    const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
+    const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = segmentation;
     this.listSegmentationService.getSegmentation()
       .pipe(
         untilDestroyed( this ),
-        tap( _ => this.isLoaderCustomSegmentationTable = false )
+        tap( _ => this.isLoaderCustomSegmentationTable = false ),
+        convertToStream(
+          filter( ( { isCustom }: ISegmentation ) => isCustom )
+        ),
+        tap( console.log )
       ).subscribe( success );
   }
 
