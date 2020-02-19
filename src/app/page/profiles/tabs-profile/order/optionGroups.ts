@@ -206,6 +206,26 @@ export const optionGroups: IOptionGroups[] = [
         value: { controlName: [ 'SellCountry' ], controlGroupName: 'services', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_COUNTRY'
       },
+      {
+        value: { controlName: [ 'DateOfService' ], controlGroupName: 'services', isDate: true },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE_OF_SERVICE'
+      },
+      {
+        value: { controlName: [ 'DateTrans' ], controlGroupName: 'services', isDate: true },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE_TRANS'
+      },
+      {
+        value: { controlName: [ 'OriginPosId' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_POS_ID'
+      },
+      {
+        value: { controlName: [ 'OriginPult' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_PULT'
+      },
+      {
+        value: { controlName: [ 'OriginAgency' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_AGENCY'
+      },
     ]
   }
 ];

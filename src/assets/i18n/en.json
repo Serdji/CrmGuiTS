@@ -535,6 +535,8 @@
 								"COUPON": "Coupon number:",
 								"COUPON_STATUS": "Coupon status:",
 								"DATE": "Date:",
+								"DATE_OF_SERVICE": "Date of service:",
+								"DATE_TRANS": "Date trans:",
 								"DEP_POINT": "Point of departure:",
 								"DEP_TIME": "Date/time of departure:",
 								"EMD": "EMD:",
@@ -544,6 +546,9 @@
 									"COMMENT": "Comment:",
 									"NAME_SERVICES": "Service name:"
 								},
+								"ORIGIN_AGENCY": "Origin agency:",
+								"ORIGIN_POS_ID": "Origin pos id:",
+								"ORIGIN_PULT": "Origin pult:",
 								"QTTY": "Amount:",
 								"RFISC": "RFISC:",
 								"SELL_COUNTRY": "Country of sale:",

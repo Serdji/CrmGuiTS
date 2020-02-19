@@ -286,7 +286,7 @@
 
 
           <div class="order__grid">
-            <mat-grid-list cols="1" rowHeight="240px">
+            <mat-grid-list cols="1" rowHeight="300px">
               <mat-grid-tile *ngFor=" let service of order.services" [colspan]="1" [rowspan]="1">
                 <mat-card class="order__card-grid mat-elevation-z0">
                   <div class="order__content-wrapper">
@@ -335,6 +335,18 @@
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_TYPE' | translate}}</span>
                         <span><b> {{service.PtkSellType}}</b></span>
                       </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE_OF_SERVICE' | translate}}</span>
+                        <span><b> {{service.DateOfService | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE_TRANS' | translate}}</span>
+                        <span><b> {{service.DateTrans | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_POS_ID' | translate}}</span>
+                        <span><b> {{service.OriginPosId}}</b></span>
+                      </div>
                     </div>
 
                     <div class="order__content">
@@ -375,6 +387,14 @@
                       <div class="order__content-point">
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_COUNTRY' | translate}}</span>
                         <span><b> {{service.SellCountry}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_PULT' | translate}}</span>
+                        <span><b> {{service.OriginPult}}</b></span>
+                      </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_AGENCY' | translate}}</span>
+                        <span><b> {{service.OriginAgency}}</b></span>
                       </div>
                     </div>
                   </div>

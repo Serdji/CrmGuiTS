@@ -535,6 +535,8 @@
 								"COUPON": "Номер купона:",
 								"COUPON_STATUS": "Статус:",
 								"DATE": "Дата:",
+								"DATE_OF_SERVICE": "Дата услуги:",
+								"DATE_TRANS": "Дата покупки:",
 								"DEP_POINT": "Аэропорт вылета:",
 								"DEP_TIME": "Дата / время вылета:",
 								"EMD": "EMD:",
@@ -544,6 +546,9 @@
 									"COMMENT": "Комментарий:",
 									"NAME_SERVICES": "Название услуги:"
 								},
+								"ORIGIN_AGENCY": "Агентство:",
+								"ORIGIN_POS_ID": "ППР:",
+								"ORIGIN_PULT": "Пульт:",
 								"QTTY": "Количество:",
 								"RFISC": "Rfisc:",
 								"SELL_COUNTRY": "Страна продажи:",
