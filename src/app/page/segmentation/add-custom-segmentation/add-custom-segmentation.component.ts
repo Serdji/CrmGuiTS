@@ -18,7 +18,6 @@ import { timer } from 'rxjs/observable/timer';
 import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
-import { logger } from 'codelyzer/util/logger';
 import { convertToStream } from '../../../utils/convertToStream';
 
 
