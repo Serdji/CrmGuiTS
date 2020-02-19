@@ -125,11 +125,7 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.STATUS'
       },
       {
-        value: { controlName: [ 'PtkSellType' ], controlGroupName: 'tickets', isDate: false },
-        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_TYPE'
-      },
-      {
-        value: { controlName: [ 'IdSellCountry' ], controlGroupName: 'tickets', isDate: false },
+        value: { controlName: [ 'SellCountry' ], controlGroupName: 'tickets', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_COUNTRY'
       },
     ]
@@ -207,7 +203,7 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_TYPE'
       },
       {
-        value: { controlName: [ 'IdSellCountry' ], controlGroupName: 'services', isDate: false },
+        value: { controlName: [ 'SellCountry' ], controlGroupName: 'services', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_COUNTRY'
       },
     ]
