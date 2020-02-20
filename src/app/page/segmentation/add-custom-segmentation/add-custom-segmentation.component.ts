@@ -148,7 +148,6 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
         convertToStream(
           filter( ( { isCustom }: ISegmentation ) => isCustom )
         ),
-        tap( console.log )
       ).subscribe( success );
   }
 
