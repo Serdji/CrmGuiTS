@@ -16,7 +16,6 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import * as R from 'ramda';
 import { SaveUrlServiceService } from '../../../services/save-url-service.service';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
-import { AmazingTimePickerService } from 'amazing-time-picker';
 
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -260,6 +259,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       posIdE: '',
       posAgencyE: '',
       emdSellTypeE: '',
+      dateOfServiceFromIncludeE: '',
+      dateOfServiceToExcludeE: '',
+      dateTransFromIncludeE: '',
+      dateTransToExcludeE: ''
     };
   }
 
@@ -318,7 +321,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
-                'emdSellTypeE'
+                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -343,7 +346,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
-                'emdSellTypeE'
+                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -504,7 +507,15 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         posAgencyE: this.formSegmentation.get( 'posAgencyE' ).value,
         emdSellTypeE: _.has( this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType, 'idAirline' ) ?
           this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType :
-          this.formSegmentation.get( 'emdSellTypeE' ).value
+          this.formSegmentation.get( 'emdSellTypeE' ).value,
+        dateOfServiceFromIncludeE: this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ?
+          moment( this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+        dateOfServiceToExcludeE: this.formSegmentation.get( 'dateOfServiceToExcludeE' ).value ?
+          moment( this.formSegmentation.get( 'dateOfServiceToExcludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+        dateTransFromIncludeE: this.formSegmentation.get( 'dateTransFromIncludeE' ).value ?
+          moment( this.formSegmentation.get( 'dateTransFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
+        dateTransToExcludeE: this.formSegmentation.get( 'dateTransToExcludeE' ).value ?
+          moment( this.formSegmentation.get( 'dateTransToExcludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
       },
     };
 
