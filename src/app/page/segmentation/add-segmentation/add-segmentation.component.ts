@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, switchMap } from 'rxjs/operators';
+import { debounceTime, map, switchMap } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { forkJoin, Observable, timer } from 'rxjs';
+import { EMPTY, forkJoin, Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { IAirport } from '../../../interface/iairport';
@@ -146,7 +146,12 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.sellTypeOptionsE = this[ formGroup ].get( 'emdSellTypeE' ).valueChanges
       .pipe(
         debounceTime( this.autDelay ),
-        switchMap( ( text: string ) => this.profileSearchService.getSellType( encodeURI( text ) ) ),
+        switchMap( ( text: string ) => {
+          if ( _.size( text ) ) {
+            return this.profileSearchService.getSellType( encodeURI( text ) );
+          }
+          return EMPTY;
+        } ),
       ) as Observable<ISellType[]>;
   }
 
@@ -172,45 +177,64 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       return this[ formGroup ].get( formControlName ).valueChanges
         .pipe(
           debounceTime( this.autDelay ),
-          switchMap( ( text: string ) => this.profileSearchService.getAirlineCodes( encodeURI( text ) ) ),
+          switchMap( ( text: string ) => {
+            if ( _.size( text ) > 0 ) {
+              return this.profileSearchService.getAirlineCodes( encodeURI( text ) );
+            }
+            return EMPTY;
+          } ),
         ) as Observable<IAirlineLCode[]>;
     }
     return this[ formGroup ].get( formControlName ).valueChanges
       .pipe(
         debounceTime( this.autDelay ),
-        switchMap( ( text: string ) => this.profileSearchService.getAirports( encodeURI( text ) ) ),
+        switchMap( ( text: string ) => {
+          if ( _.size( text ) > 0 ) {
+            return this.profileSearchService.getAirports( encodeURI( text ) );
+          }
+          return EMPTY;
+        } ),
       ) as Observable<IAirport[]>;
 
   }
 
 
   private formFilling( id ) {
-    const success = ( [ segmentationParams, airlineLCode ] ) => {
-      const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
-      this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
-      this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
-      _( segmentationParams ).each( ( value, key ) => {
-        if ( !_.isNull( value ) && !_.isNaN( value ) ) {
-          if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
-          if ( ( key === 'ticket' && !!value ) || ( key === 'emd' && !!value ) ) value = _.omit( value, [ 'airlineLCodeIdT', 'airlineLCodeIdE' ] );
-          this.formSegmentation.patchValue( value );
+    const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
+    getSegmentationParams$.pipe(
+      map( segmentationParams => {
+        const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
+        this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
+        this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
+        _( segmentationParams ).each( ( value, key ) => {
+          if ( !_.isNull( value ) && !_.isNaN( value ) ) {
+            if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
+            if ( ( key === 'ticket' && !!value ) || ( key === 'emd' && !!value ) ) value = _.omit( value, [ 'airlineLCodeIdT', 'airlineLCodeIdE' ] );
+            this.formSegmentation.patchValue( value );
+          }
+        } );
+        if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
+        return segmentationParams;
+      } ),
+      switchMap( segmentationParams => {
+        if ( segmentationParams.ticket ) {
+          const text = segmentationParams.ticket.airlineLCodeIdT;
+          this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( this.invertDate( segmentationParams.ticket.timeBeforeDepartureT ) );
+          if ( _.size( text ) > 0 ) {
+            return this.profileSearchService.getAirlineCodes( encodeURI( text ) );
+          }
+          return EMPTY;
         }
-      } );
-      if ( segmentationParams.ticket ) {
-        this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.ticket.airlineLCodeIdT } ) );
-        this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( this.invertDate( segmentationParams.ticket.timeBeforeDepartureT ) );
-      }
-      if ( segmentationParams.emd ) {
-        this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( _.find( airlineLCode, { idAirline: segmentationParams.emd.airlineLCodeIdE } ) );
-        this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( this.invertDate( segmentationParams.emd.timeBeforeDepartureE ) );
-      }
-      if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
-    };
-    const getSegmentationParams = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
-    const getAirlineCodes = this.profileSearchService.getAirlineCodes().pipe( untilDestroyed( this ) );
-    const resForkJoin = forkJoin( [ getSegmentationParams, getAirlineCodes ] );
-
-    resForkJoin.pipe( untilDestroyed( this ) ).subscribe( success );
+        if ( segmentationParams.emd ) {
+          const text = segmentationParams.emd.airlineLCodeIdE;
+          this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( this.invertDate( segmentationParams.emd.timeBeforeDepartureE ) );
+          if ( _.size( text ) > 0 ) {
+            return this.profileSearchService.getAirlineCodes( encodeURI( text ) );
+          }
+          return EMPTY;
+        }
+      } )
+    ).subscribe();
   }
 
   private initFormControl() {
@@ -511,7 +535,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         emdSellTypeE: _.has( this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType, 'idAirline' ) ?
           this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType :
           this.formSegmentation.get( 'emdSellTypeE' ).value,
-        craftE:  this.formSegmentation.get( 'craftE' ).value,
+        craftE: this.formSegmentation.get( 'craftE' ).value,
         dateOfServiceFromIncludeE: this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ?
           moment( this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         dateOfServiceToExcludeE: this.formSegmentation.get( 'dateOfServiceToExcludeE' ).value ?
