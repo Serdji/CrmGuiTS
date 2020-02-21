@@ -259,6 +259,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       posIdE: '',
       posAgencyE: '',
       emdSellTypeE: '',
+      craftE: '',
       dateOfServiceFromIncludeE: '',
       dateOfServiceToExcludeE: '',
       dateTransFromIncludeE: '',
@@ -321,7 +322,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
-                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE'
+                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE',
+                'craftE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -346,7 +348,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
-                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE'
+                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE',
+                'craftE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -508,6 +511,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         emdSellTypeE: _.has( this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType, 'idAirline' ) ?
           this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType :
           this.formSegmentation.get( 'emdSellTypeE' ).value,
+        craftE:  this.formSegmentation.get( 'craftE' ).value,
         dateOfServiceFromIncludeE: this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ?
           moment( this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         dateOfServiceToExcludeE: this.formSegmentation.get( 'dateOfServiceToExcludeE' ).value ?
