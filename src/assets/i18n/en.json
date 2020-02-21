@@ -844,10 +844,15 @@
 					"TITLE": "Reservation date"
 				},
 				"SERVICES": {
+					"AIRCRAFT_TYPE": "Aircraft type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_D_FROM": "Departure date after",
 					"ARR_D_TO": "Departure date before",
 					"ARR_LOC": "Point of destination",
+					"DATE_OF_SERVICE_FROM_INCLUDE": "Service date after",
+					"DATE_OF_SERVICE_TO_EXCLUDE": "Service date before",
+					"DATE_TRANS_FROM_INCLUDE": "Service sale date after",
+					"DATE_TRANS_TO_EXCLUDE": "Service sale date before",
 					"DEP_LOC": "Point of origin",
 					"DISPATCH_TIME": "Time before departure",
 					"FLIGHT_NO": "Flight number",
@@ -855,6 +860,7 @@
 					"POS_AGENCY": "Pseudo ID / 1Н agency ID",
 					"POS_GDS": "Booking source",
 					"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP",
+					"SELL_TYPE": "Type of service sale",
 					"SERVICE_CODE": "SSR/RFISC",
 					"TITLE": "Paid services"
 				},

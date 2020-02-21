@@ -20,6 +20,7 @@ import { AmazingTimePickerService } from 'amazing-time-picker';
 
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { ISellType } from '../../../interface/isell-type';
 
 @Component( {
   selector: 'app-add-segmentation',
@@ -46,6 +47,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public airportsToOptionsT: Observable<IAirport[]>;
   public airportsFromOptionsE: Observable<IAirport[]>;
   public airportsToOptionsE: Observable<IAirport[]>;
+  public sellTypeOptionsE: Observable<ISellType[]>;
   public selectedTimeT: string;
   public selectedTimeE: string;
   public isIconsClockT: boolean;
@@ -70,7 +72,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
     private saveUrlServiceService: SaveUrlServiceService,
-    private atp: AmazingTimePickerService,
   ) { }
 
   ngOnInit(): void {
@@ -132,6 +133,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     return R.is( Object, option ) ? option.title : option;
   }
 
+  public displaySellTypeCodeFn( option ): string | undefined {
+    return R.is( Object, option ) ? option.sellTypeCode : option;
+  }
+
   public initAutocomplete( formGroup ) {
     this.airportsFromOptionsT = this.autocomplete( formGroup, 'departureLocationCodeT' );
     this.airportsToOptionsT = this.autocomplete( formGroup, 'arrivalLocationCodeT' );
@@ -139,6 +144,11 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.airportsToOptionsE = this.autocomplete( formGroup, 'arrivalLocationCodeE' );
     this.airlineLCodeOptionsT = this.autocomplete( formGroup, 'airlineLCodeIdT' );
     this.airlineLCodeOptionsE = this.autocomplete( formGroup, 'airlineLCodeIdE' );
+    this.sellTypeOptionsE = this[ formGroup ].get( 'emdSellTypeE' ).valueChanges
+      .pipe(
+        debounceTime( this.autDelay ),
+        switchMap( ( text: string ) => this.profileSearchService.getSellType( encodeURI( text ) ) ),
+      ) as Observable<ISellType[]>;
   }
 
   private invertDate( minutes: number ): string {
@@ -176,9 +186,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
 
   private formFilling( id ) {
-    const success = response => {
-      const segmentationParams = response[ 0 ];
-      const airlineLCode = response[ 1 ];
+    const success = ( [ segmentationParams, airlineLCode ] ) => {
       const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
       this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
       this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
@@ -250,7 +258,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       notServiceCodeE: '',
       posGdsE: '',
       posIdE: '',
-      posAgencyE: ''
+      posAgencyE: '',
+      emdSellTypeE: '',
     };
   }
 
@@ -308,7 +317,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               _( [
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
-                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
+                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
+                'emdSellTypeE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -332,7 +342,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
               _( [
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
-                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE'
+                'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
+                'emdSellTypeE'
               ] )
                 .each( formControlName => {
                   this.isIconsClockE = params === 'E';
@@ -490,7 +501,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         notServiceCodeE: this.formSegmentation.get( 'notServiceCodeE' ).value,
         posGdsE: this.formSegmentation.get( 'posGdsE' ).value,
         posIdE: this.formSegmentation.get( 'posIdE' ).value,
-        posAgencyE: this.formSegmentation.get( 'posAgencyE' ).value
+        posAgencyE: this.formSegmentation.get( 'posAgencyE' ).value,
+        emdSellTypeE: _.has( this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType, 'idAirline' ) ?
+          this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType :
+          this.formSegmentation.get( 'emdSellTypeE' ).value
       },
     };
 

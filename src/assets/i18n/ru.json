@@ -844,10 +844,15 @@
 					"TITLE": "Диапазон дат бронирования"
 				},
 				"SERVICES": {
+					"AIRCRAFT_TYPE": "Тип ВС",
 					"AIRLINE_L_CODE": "Код авиакомпании",
 					"ARR_D_FROM": "Диапазон даты вылета с",
 					"ARR_D_TO": "Диапазон даты вылета по",
 					"ARR_LOC": "Куда",
+					"DATE_OF_SERVICE_FROM_INCLUDE": "Дата услуги от",
+					"DATE_OF_SERVICE_TO_EXCLUDE": "Дата услуги до",
+					"DATE_TRANS_FROM_INCLUDE": "Дата покупки от",
+					"DATE_TRANS_TO_EXCLUDE": "Дата покупки до",
 					"DEP_LOC": "Откуда",
 					"DISPATCH_TIME": "Время до вылета",
 					"FLIGHT_NO": "Номер рейса",
@@ -855,6 +860,7 @@
 					"POS_AGENCY": "Код агентства (точка продажи)",
 					"POS_GDS": "Код ГРС (точка продажи)",
 					"POS_ID": "Код ППР (точка продажи)",
+					"SELL_TYPE": "Тип продажи услуги",
 					"SERVICE_CODE": "Код услуги",
 					"TITLE": "Платные услуги"
 				},
