@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, map, switchMap } from 'rxjs/operators';
+import { debounceTime, map, switchMap, tap } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
@@ -202,7 +202,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formFilling( id ) {
     const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
     getSegmentationParams$.pipe(
-      map( segmentationParams => {
+      tap( segmentationParams => {
         const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
         this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
         this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
@@ -214,7 +214,6 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           }
         } );
         if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
-        return segmentationParams;
       } ),
       switchMap( segmentationParams => {
         if ( segmentationParams.ticket ) {
