@@ -153,13 +153,17 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
 
   private generationParams( event: any ) {
     this.isLoaderCustomSegmentationTable = true;
-    const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
-      const value = {};
-      _.each( event, ( val, key ) => {
-        if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, value: val } );
-      } );
-      return value;
-    } ) as ICustomSegmentationParams['CustomSegmentationParameters'];
+    const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] =
+      _.chain( this.paramsDynamicForm )
+        .map( DynamicForm => {
+          const value = {};
+          _.each( event, ( val, key ) => {
+            if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, value: val } );
+          } );
+          return value;
+        } )
+        .reject( ['value', ''] )
+        .value() as  ICustomSegmentationParams['CustomSegmentationParameters'];
 
     const params: ICustomSegmentationParams = {
       CustomSegmentationTemplateId: this.templateId,
@@ -178,6 +182,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   onSendCustomSegmentationParams( event: any ): void {
     if ( !this.formCustomSegmentation.invalid ) {
       const params = this.generationParams( event );
+      console.log( params );
       this.addCustomSegmentationService.setCustomSegmentation( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( () => this.initCustomSegmentationTable() );
