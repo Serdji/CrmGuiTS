@@ -143,7 +143,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.airportsToOptionsE = this.autocomplete( formGroup, 'arrivalLocationCodeE' );
     this.airlineLCodeOptionsT = this.autocomplete( formGroup, 'airlineLCodeIdT' );
     this.airlineLCodeOptionsE = this.autocomplete( formGroup, 'airlineLCodeIdE' );
-    this.sellTypeOptionsE = this[ formGroup ].get( 'emdSellTypeE' ).valueChanges
+    this.sellTypeOptionsE = this[ formGroup ].get( 'emdIdSellTypeE' ).valueChanges
       .pipe(
         debounceTime( this.autDelay ),
         switchMap( ( text: string ) => {
@@ -281,7 +281,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       posGdsE: '',
       posIdE: '',
       posAgencyE: '',
-      emdSellTypeE: '',
+      emdIdSellTypeE: '',
       craftE: '',
       dateOfServiceFromIncludeE: '',
       dateOfServiceToExcludeE: '',
@@ -345,7 +345,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
-                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE',
+                'emdIdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE',
                 'craftE'
               ] )
                 .each( formControlName => {
@@ -371,7 +371,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
                 'airlineLCodeIdE', 'flightNoE', 'arrivalDFromIncludeE',
                 'arrivalDToExcludeE', 'departureLocationCodeE', 'arrivalLocationCodeE',
                 'serviceCodeE', 'notServiceCodeE', 'posGdsE', 'posIdE', 'posAgencyE', 'timeBeforeDepartureE',
-                'emdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE',
+                'emdIdSellTypeE', 'dateOfServiceFromIncludeE', 'dateOfServiceToExcludeE', 'dateTransFromIncludeE', 'dateTransToExcludeE',
                 'craftE'
               ] )
                 .each( formControlName => {
@@ -531,9 +531,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         posGdsE: this.formSegmentation.get( 'posGdsE' ).value,
         posIdE: this.formSegmentation.get( 'posIdE' ).value,
         posAgencyE: this.formSegmentation.get( 'posAgencyE' ).value,
-        emdSellTypeE: _.has( this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType, 'idAirline' ) ?
-          this.formSegmentation.get( 'emdSellTypeE' ).value.idSellType :
-          this.formSegmentation.get( 'emdSellTypeE' ).value,
+        emdIdSellTypeE: _.has( this.formSegmentation.get( 'emdIdSellTypeE' ).value, 'idSellType' ) ?
+          this.formSegmentation.get( 'emdIdSellTypeE' ).value.idSellType :
+          this.formSegmentation.get( 'emdIdSellTypeE' ).value,
         craftE: this.formSegmentation.get( 'craftE' ).value,
         dateOfServiceFromIncludeE: this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ?
           moment( this.formSegmentation.get( 'dateOfServiceFromIncludeE' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',

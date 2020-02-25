@@ -326,7 +326,7 @@
                      placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
             </mat-form-field>
             <mat-form-field class="add-segmentation__input">
-              <input matInput formControlName="emdSellTypeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
+              <input matInput formControlName="emdIdSellTypeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
               <mat-autocomplete #sellType="matAutocomplete" [displayWith]="displaySellTypeCodeFn">
                 <mat-option *ngFor="let sellType of sellTypeOptionsE | async" [value]="sellType">
                   {{ sellType.sellTypeCode }}
@@ -679,7 +679,7 @@
                        placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
               </mat-form-field>
               <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="emdSellTypeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
+                <input matInput formControlName="emdIdSellTypeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
                 <mat-autocomplete #sellType="matAutocomplete" [displayWith]="displaySellTypeCodeFn">
                   <mat-option *ngFor="let sellType of sellTypeOptionsE | async" [value]="sellType">
                     {{ sellType.sellTypeCode }}
