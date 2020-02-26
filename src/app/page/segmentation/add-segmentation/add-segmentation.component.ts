@@ -20,6 +20,7 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
+import { ISegmentationParameters } from '../../../interface/isegmentation-parameters';
 
 @Component( {
   selector: 'app-add-segmentation',
@@ -155,7 +156,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       ) as Observable<ISellType[]>;
   }
 
-  private invertDate( minutes: number ): string {
+  private invertDate( minutes: any): string {
     const day = _.padStart( Math.floor( minutes / 60 / 24 ) + '', 2, '0' );
     const hour = _.padStart( Math.floor( minutes / 60 % 24 ) + '', 2, '0' );
     const min = _.padStart( Math.floor( minutes % 60 ) + '', 2, '0' );
@@ -202,31 +203,39 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formFilling( id ) {
     const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
     getSegmentationParams$.pipe(
-      tap( segmentationParams => {
-        const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
-        this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationParams.segmentationTitle || '' );
-        this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationParams.segmentationGranularity + '' || '' );
-        _( segmentationParams ).each( ( value, key ) => {
+      tap( ( segmentationParams: ISegmentationParameters )  => {
+        const {
+          segmentationTitle,
+          segmentationGranularity,
+          ticket,
+          emd,
+        } = segmentationParams;
+        this.formSegmentation.get( 'segmentationTitle' ).patchValue( segmentationTitle || '' );
+        this.formSegmentation.get( 'segmentationGranularity' ).patchValue( segmentationGranularity + '' || '' );
+        _( segmentationParams ).each( ( value: any, key: string ) => {
           if ( !_.isNull( value ) && !_.isNaN( value ) ) {
             if ( ( key === 'payment' && !!value ) || ( key === 'segment' && !!value ) ) this.formSegmentation.get( 'subjectAnalysis' ).patchValue( key );
-            if ( ( key === 'ticket' && !!value ) || ( key === 'emd' && !!value ) ) value = _.omit( value, [ 'airlineLCodeIdT', 'airlineLCodeIdE' ] );
             this.formSegmentation.patchValue( value );
           }
         } );
+        if( !_.isNull( ticket ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( ticket.airlineLCodeT );
+        if( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( emd.airlineLCodeE );
+        if( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( emd.emdSellTypeE );
+        const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
         if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
       } ),
-      switchMap( segmentationParams => {
-        if ( segmentationParams.ticket ) {
-          const text = segmentationParams.ticket.airlineLCodeIdT;
-          this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( this.invertDate( segmentationParams.ticket.timeBeforeDepartureT ) );
+      switchMap( ( { ticket, emd }: ISegmentationParameters ) => {
+        if ( ticket ) {
+          const text = ticket.airlineLCodeIdT as string;
+          this.formSegmentation.get( 'timeBeforeDepartureT' ).patchValue( this.invertDate( ticket.timeBeforeDepartureT ) );
           if ( _.size( text ) > 0 ) {
             return this.profileSearchService.getAirlineCodes( encodeURI( text ) );
           }
           return EMPTY;
         }
-        if ( segmentationParams.emd ) {
-          const text = segmentationParams.emd.airlineLCodeIdE;
-          this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( this.invertDate( segmentationParams.emd.timeBeforeDepartureE ) );
+        if ( emd ) {
+          const text = emd.airlineLCodeIdE as string;
+          this.formSegmentation.get( 'timeBeforeDepartureE' ).patchValue( this.invertDate( emd.timeBeforeDepartureE ) );
           if ( _.size( text ) > 0 ) {
             return this.profileSearchService.getAirlineCodes( encodeURI( text ) );
           }
@@ -467,7 +476,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private segmentationParameters() {
-    const segmentationParameters = {
+    const segmentationParameters: ISegmentationParameters = {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
       segmentationGranularity: this.formSegmentation.get( 'segmentationGranularity' ).value,
       customer: {
@@ -548,7 +557,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
     const filterSegmentationParameters = {};
 
-    _( segmentationParameters ).each( ( parentValue, parentKey ) => {
+    _( segmentationParameters ).each( ( parentValue: any, parentKey: string ) => {
       _( parentValue ).each( childrenValue => {
         if ( !!childrenValue ) {
           _.set( filterSegmentationParameters, parentKey, parentValue );
