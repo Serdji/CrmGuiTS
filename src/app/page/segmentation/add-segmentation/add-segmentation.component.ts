@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { debounceTime, switchMap, tap } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EMPTY, Observable, timer } from 'rxjs';
+import { EMPTY, from, Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { IAirport } from '../../../interface/iairport';
@@ -72,10 +72,10 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
     private saveUrlServiceService: SaveUrlServiceService,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
-
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonDelete = true;
@@ -156,7 +156,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       ) as Observable<ISellType[]>;
   }
 
-  private invertDate( minutes: any): string {
+  private invertDate( minutes: any ): string {
     const day = _.padStart( Math.floor( minutes / 60 / 24 ) + '', 2, '0' );
     const hour = _.padStart( Math.floor( minutes / 60 % 24 ) + '', 2, '0' );
     const min = _.padStart( Math.floor( minutes % 60 ) + '', 2, '0' );
@@ -203,7 +203,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formFilling( id ) {
     const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
     getSegmentationParams$.pipe(
-      tap( ( segmentationParams: ISegmentationParameters )  => {
+      tap( ( segmentationParams: ISegmentationParameters ) => {
         const {
           segmentationTitle,
           segmentationGranularity,
@@ -218,9 +218,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             this.formSegmentation.patchValue( value );
           }
         } );
-        if( !_.isNull( ticket ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( ticket.airlineLCodeT );
-        if( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( emd.airlineLCodeE );
-        if( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( emd.emdSellTypeE );
+        if ( !_.isNull( ticket ) ) this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( { title: ticket.airlineLCodeT, idAirline: ticket.airlineLCodeIdT } );
+        if ( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( { title: emd.airlineLCodeE, idAirline: emd.airlineLCodeIdE } );
+        if ( !_.isNull( emd ) ) this.formSegmentation.get( 'emdIdSellTypeE' ).patchValue( { sellTypeCode: emd.emdSellTypeE, idSellType: emd.emdIdSellTypeE } );
         const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
         if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
       } ),
@@ -241,7 +241,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           }
           return EMPTY;
         }
-      } )
+      } ),
+      tap( console.log )
     ).subscribe();
   }
 
