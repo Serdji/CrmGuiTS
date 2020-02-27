@@ -7,7 +7,7 @@ import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
-import { EMPTY, from, Observable, timer } from 'rxjs';
+import { EMPTY, Observable, timer } from 'rxjs';
 import { IpagPage } from '../../../interface/ipag-page';
 import * as moment from 'moment';
 import { IAirport } from '../../../interface/iairport';
