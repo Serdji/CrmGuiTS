@@ -443,7 +443,11 @@
     </form>
   </div>
 
-  <div class="add-segmentation__change" *ngIf="isFormSegmentation">
+  <mat-card *ngIf="isFormSegmentation && isProgressSegmentationParams">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
+
+  <div class="add-segmentation__change" *ngIf="isFormSegmentation && !isProgressSegmentationParams">
     <form class="add-segmentation__form" [formGroup]="formSegmentation">
       <mat-grid-list cols="1" rowHeight="150px">
         <mat-grid-tile [colspan]="1" [rowspan]="1">

@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
@@ -52,6 +52,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public selectedTimeE: string;
   public isIconsClockT: boolean;
   public isIconsClockE: boolean;
+  public isProgressSegmentationParams: boolean;
 
   private controlsConfig: any;
 
@@ -76,6 +77,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.isProgressSegmentationParams = true;
     this.buttonSave = false;
     this.buttonCreate = true;
     this.buttonDelete = true;
@@ -203,6 +205,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   private formFilling( id ) {
     const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
     getSegmentationParams$.pipe(
+      delay( 300 ),
       tap( ( segmentationParams: ISegmentationParameters ) => {
         const {
           segmentationTitle,
@@ -223,6 +226,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         if ( !_.isNull( emd ) ) this.formSegmentation.get( 'emdIdSellTypeE' ).patchValue( { sellTypeCode: emd.emdSellTypeE, idSellType: emd.emdIdSellTypeE } );
         const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
         if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
+        this.isProgressSegmentationParams = false;
       } ),
       switchMap( ( { ticket, emd }: ISegmentationParameters ) => {
         if ( ticket ) {
@@ -573,6 +577,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   }
 
   changeForm(): void {
+    this.isProgressSegmentationParams = false;
     this.isFormSegmentation = true;
     this.formSegmentation.patchValue( this.formSegmentationStepper.value );
     this.initAutocomplete( 'formSegmentation' );
@@ -620,6 +625,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
   clearForm(): void {
     this.formSegmentation.get( 'segmentationGranularity' ).enabled;
+    this.isProgressSegmentationParams = false;
     this.isFormSegmentation = false;
     this.initAutocomplete( 'formSegmentationStepper' );
     timer( 100 )
