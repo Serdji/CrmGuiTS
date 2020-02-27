@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable, Subject } from 'rxjs';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
+import { ISegmentationParameters } from '../../../interface/isegmentation-parameters';
 
 @Injectable( {
   providedIn: 'root'
@@ -21,8 +22,8 @@ export class AddSegmentationService {
     return this.http.get( `${this.configService.crmApi}/crm/segmentation/result`, { params } ).pipe( this.retryRequestService.retry() );
   }
 
-  getSegmentationParams( id: number ): Observable<any> {
-    return this.http.get( `${this.configService.crmApi}/crm/segmentation/${id}/parameters` ).pipe( this.retryRequestService.retry() );
+  getSegmentationParams( id: number ) {
+    return this.http.get<ISegmentationParameters>( `${this.configService.crmApi}/crm/segmentation/${id}/parameters` ).pipe( this.retryRequestService.retry() );
   }
 
   saveSegmentation( params ): Observable<any> {

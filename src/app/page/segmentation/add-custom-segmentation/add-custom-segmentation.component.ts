@@ -6,7 +6,7 @@ import { AddCustomSegmentationService } from './add-custom-segmentation.service'
 import { IParamsDynamicForm } from '../../../interface/iparams-dynamic-form';
 import { Observable, of } from 'rxjs';
 import { ICustomSegmentationTemplate } from '../../../interface/icustom-segmentation-template';
-import { filter, map, mergeMap, tap } from 'rxjs/operators';
+import { filter, mergeMap, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { ICustomSegmentationParams } from '../../../interface/icustom-segmentation-params';
 import { ISegmentation } from '../../../interface/isegmentation';
@@ -18,7 +18,7 @@ import { timer } from 'rxjs/observable/timer';
 import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
-import { logger } from 'codelyzer/util/logger';
+import { convertToStream } from '../../../utils/convertToStream';
 
 
 @Component( {
@@ -140,23 +140,30 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   }
 
   private initCustomSegmentationTable() {
-    const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = _.filter( segmentation, 'isCustom' );
+    const success = ( segmentation: ISegmentation[] ) => this.customSegmentation = segmentation;
     this.listSegmentationService.getSegmentation()
       .pipe(
         untilDestroyed( this ),
-        tap( _ => this.isLoaderCustomSegmentationTable = false )
+        tap( _ => this.isLoaderCustomSegmentationTable = false ),
+        convertToStream(
+          filter( ( { isCustom }: ISegmentation ) => isCustom )
+        ),
       ).subscribe( success );
   }
 
   private generationParams( event: any ) {
     this.isLoaderCustomSegmentationTable = true;
-    const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] = _.map( this.paramsDynamicForm, DynamicForm => {
-      const value = {};
-      _.each( event, ( val, key ) => {
-        if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, value: val } );
-      } );
-      return value;
-    } ) as ICustomSegmentationParams['CustomSegmentationParameters'];
+    const CustomSegmentationParameters: ICustomSegmentationParams['CustomSegmentationParameters'] =
+      _.chain( this.paramsDynamicForm )
+        .map( DynamicForm => {
+          const value = {};
+          _.each( event, ( val, key ) => {
+            if ( DynamicForm.name === key ) _.merge( value, { ParameterId: DynamicForm.id, value: val } );
+          } );
+          return value;
+        } )
+        .reject( ['value', ''] )
+        .value() as  ICustomSegmentationParams['CustomSegmentationParameters'];
 
     const params: ICustomSegmentationParams = {
       CustomSegmentationTemplateId: this.templateId,
@@ -175,6 +182,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
   onSendCustomSegmentationParams( event: any ): void {
     if ( !this.formCustomSegmentation.invalid ) {
       const params = this.generationParams( event );
+      console.log( params );
       this.addCustomSegmentationService.setCustomSegmentation( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( () => this.initCustomSegmentationTable() );

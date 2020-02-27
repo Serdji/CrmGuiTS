@@ -248,6 +248,13 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       ticket: '',
       recloc: '',
       emd: '',
+      dateOfServiceFromInclude: '',
+      dateOfServiceToExclude: '',
+      dateTransFromInclude: '',
+      dateTransToExclude: '',
+      originPosId: '',
+      originPult: '',
+      originAgency: '',
       airlineLCode: '',
       sellType: '',
       sellCountry: '',
@@ -478,7 +485,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           && key !== 'deptimetoexclude'
           && key !== 'dobfrominclude'
           && key !== 'dobtoexclude'
-          && key !== 'dobtoexclude'
+          && key !== 'dateOfServiceFromInclude'
+          && key !== 'dateOfServiceToExclude'
+          && key !== 'dateTransFromInclude'
+          && key !== 'dateTransToExclude'
           && key !== 'bookingcreatedatefrominclude'
           && key !== 'bookingcreatedatetoexclude'
           && key !== 'contactsexist';
@@ -489,6 +499,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
           || key === 'deptimetoexclude'
           || key === 'dobfrominclude'
           || key === 'dobtoexclude'
+          || key === 'dateOfServiceFromInclude'
+          || key === 'dateOfServiceToExclude'
+          || key === 'dateTransFromInclude'
+          || key === 'dateTransToExclude'
           || key === 'bookingcreatedatefrominclude'
           || key === 'bookingcreatedatetoexclude';
       case 'checkbox':

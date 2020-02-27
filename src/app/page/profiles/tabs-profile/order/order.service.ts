@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, shareReplay } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../../services/config-service.service';
@@ -387,6 +387,7 @@ export class OrderService {
       .pipe(
         this.retryRequestService.retry(),
         map( this.ordersComposeMap ),
+        shareReplay()
       );
   }
 

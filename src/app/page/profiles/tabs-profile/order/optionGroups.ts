@@ -125,11 +125,7 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.STATUS'
       },
       {
-        value: { controlName: [ 'PtkSellType' ], controlGroupName: 'tickets', isDate: false },
-        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_TYPE'
-      },
-      {
-        value: { controlName: [ 'IdSellCountry' ], controlGroupName: 'tickets', isDate: false },
+        value: { controlName: [ 'SellCountry' ], controlGroupName: 'tickets', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.TICKETS.SELL_COUNTRY'
       },
     ]
@@ -207,8 +203,28 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_TYPE'
       },
       {
-        value: { controlName: [ 'IdSellCountry' ], controlGroupName: 'services', isDate: false },
+        value: { controlName: [ 'SellCountry' ], controlGroupName: 'services', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.SELL_COUNTRY'
+      },
+      {
+        value: { controlName: [ 'DateOfService' ], controlGroupName: 'services', isDate: true },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE_OF_SERVICE'
+      },
+      {
+        value: { controlName: [ 'DateTrans' ], controlGroupName: 'services', isDate: true },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.DATE_TRANS'
+      },
+      {
+        value: { controlName: [ 'OriginPosId' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_POS_ID'
+      },
+      {
+        value: { controlName: [ 'OriginPult' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_PULT'
+      },
+      {
+        value: { controlName: [ 'OriginAgency' ], controlGroupName: 'services', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SERVICES.ORIGIN_AGENCY'
       },
     ]
   }
