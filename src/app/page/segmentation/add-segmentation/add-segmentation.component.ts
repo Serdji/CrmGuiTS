@@ -203,8 +203,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
 
 
   private formFilling( id ) {
-    const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe( untilDestroyed( this ) );
-    getSegmentationParams$.pipe(
+    const getSegmentationParams$ = this.addSegmentationService.getSegmentationParams( id ).pipe(
       delay( 300 ),
       tap( ( segmentationParams: ISegmentationParameters ) => {
         const {
@@ -246,8 +245,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           return EMPTY;
         }
       } ),
-      tap( console.log )
-    ).subscribe();
+      untilDestroyed( this ),
+    );
+    getSegmentationParams$.subscribe();
   }
 
   private initFormControl() {
