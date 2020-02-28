@@ -31,7 +31,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
   public isProfileCreateDate: boolean;
-  public orders;
+  public ordersLast;
   public accessDisabledMessages: boolean;
   public accessDisabledPromoCode: boolean;
   public accessDisabledPrivileges: boolean;
@@ -127,7 +127,9 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       .pipe( untilDestroyed(this) )
       .subscribe(
         orders => {
-          this.orders = _.last( orders );
+          this.orderService.subjectOrders.next( orders );
+          this.orderService.subjectOrders.asObservable();
+          this.ordersLast = _.last( orders );
           this.ordersProgress = false;
           this.isProfileCreateDate = false;
         },

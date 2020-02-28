@@ -56,7 +56,6 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.isSortFilterReverse = false;
     this.optionGroups = optionGroups;
     this.isData = false;
-    this.initBooking();
     this.initCurrencyDefault();
     this.initControlConfig();
     this.initForm();
@@ -64,6 +63,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.initFilterOrders();
     this.initSwitchSearch();
     this.initMultiSearchOrders();
+    this.initBooking();
   }
 
 
@@ -86,7 +86,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     };
     const error = _ => this.progress = false;
 
-    this.orderService.getBooking( this.id )
+    this.orderService.subjectOrders
       .pipe( untilDestroyed(this) )
       .subscribe( success, error );
   }
@@ -263,8 +263,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private loadSearchOrdersParams() {
     if ( this.saveSearchOrdersParams ) {
-      const parentParams = this.saveSearchOrdersParams[ 0 ];
-      const childParams = this.saveSearchOrdersParams[ 1 ];
+      const [ parentParams, childParams ]: any = this.saveSearchOrdersParams;
       this.formSearch.get( 'switchSearch' ).patchValue( this.optionGroups[ parentParams ].option[ childParams ].value );
     }
   }

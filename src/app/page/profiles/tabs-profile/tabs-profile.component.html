@@ -31,7 +31,7 @@
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CREATE_DATE' | translate}}</span>
                   <span>
-                    <b *ngIf="orders && !isProfileCreateDate" > {{orders.createDate | date:'dd.MM.yyyy' }}</b>
+                    <b *ngIf="ordersLast && !isProfileCreateDate" > {{ordersLast.createDate | date:'dd.MM.yyyy' }}</b>
                     <b *ngIf="isProfileCreateDate" > {{profile.createDate | date:'dd.MM.yyyy' }}</b>
                   </span>
                 </div>
@@ -107,37 +107,37 @@
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_ACTIVE_TICKET' | translate}}</span>
-                  <span><b *ngIf="orders"> {{orders.countActiveTicket}}</b></span>
+                  <span><b *ngIf="ordersLast"> {{ordersLast.countActiveTicket}}</b></span>
                   <span> | </span>
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_CANCELLED_TICKET' | translate}}</span>
-                  <span><b *ngIf="orders"> {{orders.countCancelledTicket}}</b></span>
+                  <span><b *ngIf="ordersLast"> {{ordersLast.countCancelledTicket}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.TOTAL_AMOUNT' | translate}}</span>
-                  <span><b *ngIf="orders">
-                    {{ orders.totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
-                    {{ orders.totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
-                    {{ orders.totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
+                  <span><b *ngIf="ordersLast">
+                    {{ ordersLast.totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
+                    {{ ordersLast.totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
+                    {{ ordersLast.totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNTER_ACTIVE_SERVICES_IS_EMD' | translate}}</span>
-                  <span><b *ngIf="orders"> {{orders.counterActiveServicesIsEmd}}</b></span>
+                  <span><b *ngIf="ordersLast"> {{ordersLast.counterActiveServicesIsEmd}}</b></span>
                   <span> | </span>
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNTER_CANCELLED_SERVICES_IS_EMD' | translate}}</span>
-                  <span><b *ngIf="orders"> {{orders.counterCancelledServicesIsEmd}}</b></span>
+                  <span><b *ngIf="ordersLast"> {{ordersLast.counterCancelledServicesIsEmd}}</b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.TOTAL_AMOUNT' | translate}}</span>
-                  <span><b *ngIf="orders">
-                    {{ orders.totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
-                    {{ orders.totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
-                    {{ orders.totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
+                  <span><b *ngIf="ordersLast">
+                    {{ ordersLast.totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
+                    {{ ordersLast.totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
+                    {{ ordersLast.totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
                 </div>
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.LUT' | translate}}</span>
-                  <span><b *ngIf="orders"> {{orders.lut | date:'dd.MM.yyyy'}}</b></span>
+                  <span><b *ngIf="ordersLast"> {{ordersLast.lut | date:'dd.MM.yyyy'}}</b></span>
                 </div>
               </div>
             </div>
