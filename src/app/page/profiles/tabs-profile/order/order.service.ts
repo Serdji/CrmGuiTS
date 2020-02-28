@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { HttpClient } from '@angular/common/http';
@@ -20,7 +20,7 @@ export class OrderService {
   private voidSumAmountEurEmdArr: number[] = [];
   private voidSumAmountUsdEmdArr: number[] = [];
 
-  public subjectOrders = new BehaviorSubject({});
+  public subjectOrders = new Subject();
 
   constructor(
     private http: HttpClient,

@@ -30,7 +30,7 @@
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CREATE_DATE' | translate}}</span>
-                  <span>
+                  <span *ngFor="let ordersLast of ordersLast$ | async">
                     <b *ngIf="ordersLast && !isProfileCreateDate" > {{ordersLast.createDate | date:'dd.MM.yyyy' }}</b>
                     <b *ngIf="isProfileCreateDate" > {{profile.createDate | date:'dd.MM.yyyy' }}</b>
                   </span>
@@ -103,7 +103,7 @@
         <mat-spinner class="tabs-profile__spinner" *ngIf="ordersProgress"></mat-spinner>
         <div *ngIf="!ordersProgress">
           <mat-card class="tabs-profile__card-grid mat-elevation-z0">
-            <div class="tabs-profile__content-wrapper">
+            <div *ngFor="let ordersLast of ordersLast$ | async" class="tabs-profile__content-wrapper">
               <div class="tabs-profile__content">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_ACTIVE_TICKET' | translate}}</span>

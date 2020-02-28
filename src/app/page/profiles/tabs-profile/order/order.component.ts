@@ -1,13 +1,13 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { delay, map, skipWhile, takeWhile, tap } from 'rxjs/operators';
+import { catchError, delay, map, skipWhile, takeWhile, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
 import * as R from 'ramda';
 import * as moment from 'moment';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { Observable, timer } from 'rxjs';
+import { EMPTY, Observable, timer } from 'rxjs';
 import { DOCUMENT } from '@angular/common';
 import { optionGroups, IOptionGroups, IOptionValue } from './optionGroups';
 
@@ -83,7 +83,7 @@ export class OrderComponent implements OnInit, OnDestroy {
           this.recLocCDS = this.data ? this.data.recLocGDS : '';
           this.loadSearchOrdersParams();
           return this.orders;
-        } ),
+        } )
       );
   }
 
