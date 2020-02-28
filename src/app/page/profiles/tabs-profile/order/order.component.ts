@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { delay, map, skipWhile, takeWhile } from 'rxjs/operators';
+import { delay, map, skipWhile, takeWhile, tap } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
@@ -24,9 +24,8 @@ export class OrderComponent implements OnInit, OnDestroy {
   @Input() id: number;
   @Input() data: { recLocGDS: string };
 
-  public orders;
+  public orders$: Observable<any>;
   public originalOrders;
-  public progress: boolean;
   public currencyDefault: string;
   public formFilter: FormGroup;
   public formSearch: FormGroup;
@@ -37,6 +36,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   public isData: boolean;
 
 
+  private orders: any;
   private isSortFilterReverse: boolean;
   private filterControlConfig: any;
   private searchControlConfig: any;
@@ -51,8 +51,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
-    this.progress = true;
     this.isSortFilterReverse = false;
     this.optionGroups = optionGroups;
     this.isData = false;
@@ -69,26 +67,24 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private initCurrencyDefault() {
     this.currencyDefaultService.getCurrencyDefault()
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( ( settings: ISettings ) => this.currencyDefault = settings.currency );
   }
 
   private initBooking() {
     // YESSEN SYPATAYEV 21428 26ML5C
-    const success = orders => {
-      const getRecloc = R.pluck( 'recloc' );
-      this.originalOrders = R.init( orders );
-      this.orders = R.clone( this.originalOrders );
-      this.arrRecloc = getRecloc( this.orders );
-      this.progress = false;
-      this.recLocCDS = this.data ? this.data.recLocGDS : '';
-      this.loadSearchOrdersParams();
-    };
-    const error = _ => this.progress = false;
-
-    this.orderService.subjectOrders
-      .pipe( untilDestroyed(this) )
-      .subscribe( success, error );
+    this.orders$ = this.orderService.subjectOrders
+      .pipe(
+        map( ( orders: any ) => {
+          const getRecloc = R.pluck( 'recloc' );
+          this.originalOrders = R.init( orders );
+          this.orders = R.clone( this.originalOrders );
+          this.arrRecloc = getRecloc( this.orders );
+          this.recLocCDS = this.data ? this.data.recLocGDS : '';
+          this.loadSearchOrdersParams();
+          return this.orders;
+        } ),
+      );
   }
 
   private initControlConfig() {
@@ -116,7 +112,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   private autocomplete( formControlName: string ): Observable<any> {
     return this.formFilter.get( formControlName ).valueChanges
       .pipe(
-        untilDestroyed(this),
+        untilDestroyed( this ),
         map( val => this.arrRecloc.filter( recloc => recloc.toLowerCase().includes( val.toLowerCase() ) ) )
       );
   }
@@ -135,7 +131,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
     const valueForm = ( val, formControl ) => {
       this.formFilter.get( formControl ).valueChanges
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( success( formControl ) );
     };
 
@@ -248,7 +244,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     this.eventField( this.disableFields );
 
     this.formSearch.get( 'switchSearch' ).valueChanges
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( success );
   }
 
@@ -256,7 +252,7 @@ export class OrderComponent implements OnInit, OnDestroy {
     const sendSearchControlName = [ 'dateSearch', 'textSearch' ];
     _.each( sendSearchControlName, formControlName => {
       this.formSearch.get( formControlName ).valueChanges
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( this.searchOrders );
     } );
   }
@@ -283,7 +279,7 @@ export class OrderComponent implements OnInit, OnDestroy {
   onOpenPanel( id: string ): void {
     timer( 0 )
       .pipe(
-        untilDestroyed(this),
+        untilDestroyed( this ),
         takeWhile( _ => !!this.data ),
         takeWhile( _ => this.data.recLocGDS !== '' ),
       )

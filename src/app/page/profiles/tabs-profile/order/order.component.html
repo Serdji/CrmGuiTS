@@ -1,8 +1,5 @@
 <div class="order">
-  <mat-card *ngIf="progress">
-    <mat-progress-bar mode="buffer"></mat-progress-bar>
-  </mat-card>
-  <mat-accordion *ngIf="!progress" multi="true">
+  <mat-accordion multi="true">
 
     <mat-card class="order__sort _filter mat-elevation-z0">
       <form class="order__form" [formGroup]="formSearch">
@@ -97,7 +94,7 @@
     </mat-card>
 
     <mat-expansion-panel
-      *ngFor="let order of orders; let i = index"
+      *ngFor="let order of orders$ | async; let i = index"
       [expanded]="order.pos[0].distrRecloc.recloc === recLocCDS"
       [id]="order.IdBooking"
       (opened)="onOpenPanel( order.IdBooking )"
