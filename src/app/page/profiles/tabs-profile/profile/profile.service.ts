@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable, Subject, throwError } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { ConfigService } from '../../../../services/config-service.service';
 import { Router } from '@angular/router';
@@ -14,6 +14,7 @@ export class ProfileService {
 
   public subjectDeleteProfileNames = new Subject();
   public subjectPutProfileNames = new Subject();
+  public subjectGetProfile = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient,

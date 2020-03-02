@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, last, map, skip, takeWhile, tap } from 'rxjs/operators';
+import { catchError, last, map, skip, takeWhile, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
@@ -28,6 +28,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
 
   public profileId: number;
   public profile: Iprofile;
+  public profile$: Observable<Iprofile[]>;
   public profileProgress: boolean;
   public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
@@ -65,7 +66,9 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
+    this.ordersProgress = true;
+    this.profileProgress = true;
+    this.profileSegmentationProgress = true;
     this.selectedIndex = 0;
     this.initQueryRouter();
     this.initCurrencyDefault();
@@ -121,9 +124,6 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   }
 
   private initOrder( id: number ) {
-    this.ordersProgress = true;
-    this.profileProgress = true;
-    this.profileSegmentationProgress = true;
     this.ordersLast$ = this.orderService.getBooking( id )
       .pipe(
         tap( orders => {
@@ -147,28 +147,30 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   }
 
   private initProfile( id: number ) {
-    this.profileService.getProfile( id )
+    this.profile$ = this.profileService.getProfile( id )
       .pipe(
-        untilDestroyed( this )
-      )
-      .subscribe( ( profile: Iprofile ) => {
-        this.initProfileSegmentation( profile );
-        this.initProfileGroup( profile );
-        _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
-        this.profile = profile;
-        this.profileProgress = false;
-      } );
+        tap( ( profile: Iprofile ) => {
+          this.initProfileSegmentation( profile );
+          this.initProfileGroup( profile );
+        } ),
+        map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
+        tap( _ => {
+          this.profileProgress = false;
+          this.profileSegmentationProgress = false;
+        } ),
+        toArray()
+      );
   }
 
   private initProfileSegmentation( profile: Iprofile ) {
-
+    console.log( profile );
     this.profileSegmentation = {
       takeSegmentation: _.take( profile.segmentations, 3 ),
       segmentation: profile.segmentations,
       isPointer: _.size( profile.segmentations ) > 3
     };
-    this.profileSegmentationProgress = false;
-  }
+    console.log( this.profileSegmentation );
+}
 
   private initProfileGroup( profile: Iprofile ) {
     this.profileGroup = {
