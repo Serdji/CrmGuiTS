@@ -139,7 +139,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfile( id );
           this.ordersProgress = false;
           this.isProfileCreateDate = true;
-          this.orderService.subjectOrders.next( EMPTY );
+          this.orderService.subjectOrders.next( [] );
           return EMPTY;
         } ),
         tap( _ => this.orderService.subjectOrders.asObservable() )
