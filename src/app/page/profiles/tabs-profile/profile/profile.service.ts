@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { BehaviorSubject, Observable, Subject, throwError } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { catchError, shareReplay } from 'rxjs/operators';
 import { ConfigService } from '../../../../services/config-service.service';
 import { Router } from '@angular/router';
 import { RetryRequestService } from '../../../../services/retry-request.service';
@@ -14,7 +14,7 @@ export class ProfileService {
 
   public subjectDeleteProfileNames = new Subject();
   public subjectPutProfileNames = new Subject();
-  public subjectGetProfile = new BehaviorSubject([]);
+  public subjectGetProfile = new Subject();
 
   constructor(
     private http: HttpClient,
@@ -32,7 +32,8 @@ export class ProfileService {
             case 404: this.router.navigate( [ 'crm/404' ] ); break;
           }
           return throwError(err);
-        } )
+        } ),
+        shareReplay()
       );
   }
 

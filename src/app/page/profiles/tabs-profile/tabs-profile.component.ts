@@ -154,7 +154,9 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfileGroup( profile );
         } ),
         map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
-        tap( _ => {
+        tap( ( profile: Iprofile ) => {
+          this.profileService.subjectGetProfile.next( profile );
+          this.profileService.subjectGetProfile.asObservable();
           this.profileProgress = false;
           this.profileSegmentationProgress = false;
         } ),
@@ -163,13 +165,11 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   }
 
   private initProfileSegmentation( profile: Iprofile ) {
-    console.log( profile );
     this.profileSegmentation = {
       takeSegmentation: _.take( profile.segmentations, 3 ),
       segmentation: profile.segmentations,
       isPointer: _.size( profile.segmentations ) > 3
     };
-    console.log( this.profileSegmentation );
 }
 
   private initProfileGroup( profile: Iprofile ) {

@@ -1,6 +1,6 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { takeWhile } from 'rxjs/operators';
+import { map, takeWhile, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { Iprofile } from '../../../../interface/iprofile';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +12,8 @@ import { IprofileNames } from '../../../../interface/iprofile-names';
 
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import * as _ from 'lodash';
+import { Observable } from 'rxjs';
 
 @Component
 ( {
@@ -24,6 +26,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   @Input() id: number;
 
   public profile: Iprofile;
+  public profile$: Observable<Iprofile[]>;
   public progress: boolean;
   public edit: boolean = false;
   public formUpdateProfile: FormGroup;
@@ -31,7 +34,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public profileNames: IprofileNames[];
   public isLoader: boolean = true;
   public showHide: boolean;
-
 
 
   constructor(
@@ -42,32 +44,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.progress = true;
     this.initProfile();
     this.initFormProfile();
     this.initFormAddProfile();
     this.profileService.subjectDeleteProfileNames
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.refreshTableProfileNames() );
     this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames() );
   }
 
   private initProfile() {
-    this.progress = true;
-    this.profileService.getProfile( this.id )
-      .pipe( untilDestroyed(this) )
-      .subscribe( ( value: Iprofile ) => {
-        Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
-        this.formUpdateProfile.patchValue( value );
-        this.profile = value;
-        this.progress = false;
-        this.initProfileNames( value.customerId );
-      } );
+    this.profile$ = this.profileService.subjectGetProfile
+      .pipe(
+        tap( ( profile: Iprofile ) => {
+          this.formUpdateProfile.patchValue( profile );
+          this.profile = profile;
+          this.progress = false;
+          this.initProfileNames( profile.customerId );
+          console.log( profile );
+        } ),
+        toArray(),
+        tap( console.log )
+      );
   }
 
 
   private initProfileNames( id: number ) {
     this.profileService.getAllProfileNames( id )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( value => {
         this.profileNames = value;
         this.isLoader = false;
@@ -76,7 +81,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   private refreshTableProfileNames() {
     timer( 100 )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.isLoader = true;
         this.initProfileNames( this.profile.customerId );
@@ -91,7 +96,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       gender: '',
       dob: '',
       comment: '',
-    });
+    } );
   }
 
   private initFormAddProfile() {
@@ -99,7 +104,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       firstName: [ '', Validators.required ],
       lastName: '',
       secondName: '',
-    });
+    } );
   }
 
   sendFormUpdateProfile(): void {
@@ -111,7 +116,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, customerNameId: this.profile.customerNameId } );
       Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( profile => {
           Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
           this.windowDialog( 'DIALOG.OK.PASSENGER_CHANGED', 'ok' );
@@ -127,11 +132,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAddProfile.getRawValue() );
       this.profileService.addAddProfile( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.windowDialog( 'DIALOG.OK.ADDITIONAL_NAME', 'ok' );
           timer( 1500 )
-            .pipe( untilDestroyed(this) )
+            .pipe( untilDestroyed( this ) )
             .subscribe( _ => {
               this.refreshTableProfileNames();
               this.resetForm();
@@ -144,7 +149,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   resetForm() {
     this.formAddProfile.reset();
     for ( const formControlName in this.formAddProfile.value ) {
-      this.formAddProfile.get( `${ formControlName }` ).setErrors( null );
+      this.formAddProfile.get( `${formControlName}` ).setErrors( null );
     }
   }
 
@@ -163,7 +168,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.dialog.closeAll();
           this.edit = false;
