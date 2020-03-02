@@ -20,7 +20,7 @@ export class OrderService {
   private voidSumAmountEurEmdArr: number[] = [];
   private voidSumAmountUsdEmdArr: number[] = [];
 
-  public subjectOrders = new Subject();
+  public subjectOrders = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient,
