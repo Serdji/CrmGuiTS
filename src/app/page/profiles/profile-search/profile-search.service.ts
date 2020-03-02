@@ -1,12 +1,16 @@
-import { Observable, of, Subject } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
 import { map } from 'rxjs/operators';
-import * as R from 'ramda';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { ICountries } from '../../../interface/icountries';
+import * as _ from 'lodash';
+import { convertToStream } from '../../../utils/convertToStream';
+import { IAirport } from '../../../interface/iairport';
+import { ISellType } from '../../../interface/isell-type';
+import { ICity } from '../../../interface/icity';
 
 @Injectable()
 export class ProfileSearchService {
@@ -20,46 +24,32 @@ export class ProfileSearchService {
     private retryRequestService: RetryRequestService
   ) { }
 
-  getAirports(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/airport' ).pipe( this.retryRequestService.retry() );
+  private mapConcatTitle( obj ) {
+    return _.set(
+      obj,
+      'title',
+      obj.lCode === obj.rCode ? obj.lCode : `${obj.lCode} ( ${obj.rCode} )`
+    );
   }
 
-  getCountries(): Observable<ICountries[]> {
-    return this.http.get<ICountries[]>( this.configService.crmApi + '/crm/country' )
-      .pipe(
-        this.retryRequestService.retry(),
-        map( ( countries: ICountries ) => {
-          const countryTitleFn = country => {
-            const titleLens = R.lensProp( 'title' );
-            const titleFn = () => country.lCode === country.rCode ? country.lCode : `${country.lCode} ( ${country.rCode} )`;
-            return R.set( titleLens, titleFn(), country );
-          };
-          return R.map( countryTitleFn, countries );
-        } )
-      );
+  getAirports( text: string = '' ) {
+    return this.http.get<IAirport[]>( this.configService.crmApi + `/crm/airport/${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
-  getAirlineCodes(): Observable<IAirlineLCode[]> {
-    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + '/crm/airline' )
-      .pipe(
-        this.retryRequestService.retry(),
-        map( ( airlineCodes: IAirlineLCode ) => {
-          const airlineCodeTitleFn = airlineCode => {
-            const titleLens = R.lensProp( 'title' );
-            const titleFn = () => airlineCode.lCode === airlineCode.rCode ? airlineCode.lCode : `${airlineCode.lCode} ( ${airlineCode.rCode} )`;
-            return R.set( titleLens, titleFn(), airlineCode );
-          };
-          return R.map( airlineCodeTitleFn, airlineCodes );
-        } )
-      );
+  getCountries( text: string = '' ) {
+    return this.http.get<ICountries[]>( this.configService.crmApi + `/crm/country/${ text }` ).pipe( this.retryRequestService.retry(), convertToStream( map( this.mapConcatTitle ) ) );
   }
 
-  getCities(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/city' ).pipe( this.retryRequestService.retry() );
+  getAirlineCodes( text: string = '' ) {
+    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + `/crm/airline/${ text }` ).pipe( this.retryRequestService.retry(), convertToStream(map( this.mapConcatTitle )) );
   }
 
-  getSellType(): Observable<any> {
-    return this.http.get( this.configService.crmApi + '/crm/selltype' ).pipe( this.retryRequestService.retry() );
+  getCities( text: string = '' ) {
+    return this.http.get<ICity[]>( this.configService.crmApi + `/crm/city/${ text }` ).pipe( this.retryRequestService.retry() );
+  }
+
+  getSellType(  text: string = '' ): Observable<any> {
+    return this.http.get<ISellType[]>( this.configService.crmApi + `/crm/selltype/${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
   getProfileSearch( params ): Observable<any> {

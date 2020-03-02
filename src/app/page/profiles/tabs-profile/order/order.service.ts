@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { BehaviorSubject, Observable, Subject } from 'rxjs';
+import { map, shareReplay } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../../services/config-service.service';
@@ -19,6 +19,8 @@ export class OrderService {
   private voidSumAmountCurEmdArr: number[] = [];
   private voidSumAmountEurEmdArr: number[] = [];
   private voidSumAmountUsdEmdArr: number[] = [];
+
+  public subjectOrders = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient,
@@ -387,6 +389,7 @@ export class OrderService {
       .pipe(
         this.retryRequestService.retry(),
         map( this.ordersComposeMap ),
+        shareReplay()
       );
   }
 

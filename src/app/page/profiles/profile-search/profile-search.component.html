@@ -1,6 +1,6 @@
 <div class="profile-search" appAccessRights="customers:read" appAccessMessage="true">
   <form class="profile-search__form" [formGroup]="formProfileSearch">
-    <mat-grid-list cols="4" rowHeight="300px">
+    <mat-grid-list cols="5" rowHeight="300px">
       <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
@@ -83,6 +83,42 @@
               <input matInput formControlName="dobtoexclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DOB_TO_EXCLUDE' | translate}}" [matDatepicker]="DobToExclude">
               <mat-datepicker-toggle matSuffix [for]="DobToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobToExclude color="primary"></mat-datepicker>
+            </mat-form-field>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+
+      <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-card class="profile-search__card">
+          <mat-card-content class="profile-search__content">
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dateOfServiceFromInclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_OF_SERVICE_FROM_INCLUDE' | translate}}" [matDatepicker]="DateOfServiceFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DateOfServiceFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateOfServiceFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dateOfServiceToExclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_OF_SERVICE_TO_EXCLUDE' | translate}}" [matDatepicker]="DateOfServiceToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DateOfServiceToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateOfServiceToExclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dateTransFromInclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_TRANS_FROM_INCLUDE' | translate}}" [matDatepicker]="DateTransFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DateTransFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateTransFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="dateTransToExclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_TRANS_TO_EXCLUDE' | translate}}" [matDatepicker]="DateTransToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DateTransToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateTransToExclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="originPosId" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_POS_ID' | translate}}">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="originPult" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_PULT' | translate}}">
+            </mat-form-field>
+            <mat-form-field class="profile-search__input">
+              <input matInput formControlName="originAgency" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_AGENCY' | translate}}">
             </mat-form-field>
           </mat-card-content>
         </mat-card>

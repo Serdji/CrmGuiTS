@@ -325,6 +325,37 @@
               <input matInput formControlName="posAgencyE" type="text"
                      placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
             </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="emdIdSellTypeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
+              <mat-autocomplete #sellType="matAutocomplete" [displayWith]="displaySellTypeCodeFn">
+                <mat-option *ngFor="let sellType of sellTypeOptionsE | async" [value]="sellType">
+                  {{ sellType.sellTypeCode }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="craftE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.AIRCRAFT_TYPE' | translate}}">
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dateOfServiceFromIncludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_OF_SERVICE_FROM_INCLUDE' | translate}}" [matDatepicker]="DateOfServiceFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DateOfServiceFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateOfServiceFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dateOfServiceToExcludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_OF_SERVICE_TO_EXCLUDE' | translate}}" [matDatepicker]="DateOfServiceToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DateOfServiceToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateOfServiceToExclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dateTransFromIncludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_TRANS_FROM_INCLUDE' | translate}}" [matDatepicker]="DateTransFromInclude">
+              <mat-datepicker-toggle matSuffix [for]="DateTransFromInclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateTransFromInclude></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="add-segmentation__input">
+              <input matInput formControlName="dateTransToExcludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_TRANS_TO_EXCLUDE' | translate}}" [matDatepicker]="DateTransToExclude">
+              <mat-datepicker-toggle matSuffix [for]="DateTransToExclude"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #DateTransToExclude></mat-datepicker>
+            </mat-form-field>
           </div>
           <div class="add-segmentation__stepper-button">
             <button mat-button
@@ -412,7 +443,11 @@
     </form>
   </div>
 
-  <div class="add-segmentation__change" *ngIf="isFormSegmentation">
+  <mat-card *ngIf="isFormSegmentation && isProgressSegmentationParams">
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
+
+  <div class="add-segmentation__change" *ngIf="isFormSegmentation && !isProgressSegmentationParams">
     <form class="add-segmentation__form" [formGroup]="formSegmentation">
       <mat-grid-list cols="1" rowHeight="150px">
         <mat-grid-tile [colspan]="1" [rowspan]="1">
@@ -440,7 +475,7 @@
         </mat-grid-tile>
       </mat-grid-list>
 
-      <mat-grid-list cols="4" rowHeight="350px">
+      <mat-grid-list cols="4" rowHeight="360px">
 
         <mat-grid-tile [colspan]="1" [rowspan]="1">
           <mat-card class="add-segmentation__card">
@@ -646,6 +681,37 @@
               <mat-form-field class="add-segmentation__input">
                 <input matInput formControlName="posAgencyE" type="text"
                        placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.POS_AGENCY' | translate}}">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="emdIdSellTypeE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
+                <mat-autocomplete #sellType="matAutocomplete" [displayWith]="displaySellTypeCodeFn">
+                  <mat-option *ngFor="let sellType of sellTypeOptionsE | async" [value]="sellType">
+                    {{ sellType.sellTypeCode }}
+                  </mat-option>
+                </mat-autocomplete>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="craftE" type="text" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.AIRCRAFT_TYPE' | translate}}">
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dateOfServiceFromIncludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_OF_SERVICE_FROM_INCLUDE' | translate}}" [matDatepicker]="DateOfServiceFromInclude">
+                <mat-datepicker-toggle matSuffix [for]="DateOfServiceFromInclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #DateOfServiceFromInclude></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dateOfServiceToExcludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_OF_SERVICE_TO_EXCLUDE' | translate}}" [matDatepicker]="DateOfServiceToExclude">
+                <mat-datepicker-toggle matSuffix [for]="DateOfServiceToExclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #DateOfServiceToExclude></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dateTransFromIncludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_TRANS_FROM_INCLUDE' | translate}}" [matDatepicker]="DateTransFromInclude">
+                <mat-datepicker-toggle matSuffix [for]="DateTransFromInclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #DateTransFromInclude></mat-datepicker>
+              </mat-form-field>
+              <mat-form-field class="add-segmentation__input">
+                <input matInput formControlName="dateTransToExcludeE" placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.DATE_TRANS_TO_EXCLUDE' | translate}}" [matDatepicker]="DateTransToExclude">
+                <mat-datepicker-toggle matSuffix [for]="DateTransToExclude"></mat-datepicker-toggle>
+                <mat-datepicker touchUi="true" #DateTransToExclude></mat-datepicker>
               </mat-form-field>
             </mat-card-content>
           </mat-card>

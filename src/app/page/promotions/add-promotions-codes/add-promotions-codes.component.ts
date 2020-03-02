@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Observable, timer } from 'rxjs';
-import { delay, map, takeWhile } from 'rxjs/operators';
+import { debounceTime, map, switchMap} from 'rxjs/operators';
 import { MatAutocompleteSelectedEvent } from '@angular/material/autocomplete';
 import { MatChipInputEvent } from '@angular/material/chips';
 import { MatDialog } from '@angular/material/dialog';
@@ -41,7 +41,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   public isLoader: boolean;
   public formPromoCodes: FormGroup;
-  public cities: ICity[];
   public promotions: IPromotions;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
@@ -54,7 +53,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public promoCodeRouteList: any[] = [];
   public promoCodeValTypes: IPromoCodeValTypes;
   public profilePromoCode: IProfilePromoCode;
-  public customPatterns: { [ character: string ]: { pattern: RegExp, optional?: boolean } };
 
   public promoCodeFlightListSelectable = true;
   public promoCodeFlightListRemovable = true;
@@ -170,11 +168,17 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   }
 
   private initCities() {
-    this.profileSearchService.getCities()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( cities: ICity[] ) => {
-        this.cities = cities;
-      } );
+    this.citiesFromOptions = this.formPromoCodes.get('dep_Location').valueChanges
+      .pipe(
+        debounceTime( this.autDelay ),
+        switchMap( text => this.profileSearchService.getCities( text ) )
+      ) as Observable<ICity[]>;
+    this.citiesToOptions = this.formPromoCodes.get('arr_Location').valueChanges
+      .pipe(
+        debounceTime( this.autDelay ),
+        switchMap( text => this.profileSearchService.getCities( text ) )
+      ) as Observable<ICity[]>;
+
   }
 
   private initSegmentation() {
@@ -352,8 +356,6 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
   private initAutocomplete() {
     this.promotionsOptions = this.autocomplete( 'promotionName', 'promotion' );
-    this.citiesFromOptions = this.autocomplete( 'dep_Location', 'cities' );
-    this.citiesToOptions = this.autocomplete( 'arr_Location', 'cities' );
     this.segmentationOptions = this.autocomplete( 'segmentations', 'segmentations' );
     this.customerGroupOptions = this.autocomplete( 'customerGroups', 'customerGroups' );
   }
@@ -362,14 +364,11 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     return this.formPromoCodes.get( formControlName ).valueChanges
       .pipe(
         untilDestroyed( this ),
-        delay( this.autDelay ),
+        debounceTime( this.autDelay ),
         map( val => {
           switch ( options ) {
             case 'promotion':
               if ( val ) return this.promotions.result.filter( promotions => promotions.promotionName.toLowerCase().includes( val.toLowerCase() ) );
-              break;
-            case 'cities':
-              if ( val ) return this.cities.filter( location => location.locationCode.toLowerCase().includes( val.toLowerCase() ) );
               break;
             case 'segmentations':
               if ( val !== null ) return this.segmentation.filter( segmentation => segmentation.title.toLowerCase().includes( val.toLowerCase() ) );
