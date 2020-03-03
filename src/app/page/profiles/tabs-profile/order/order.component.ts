@@ -73,17 +73,15 @@ export class OrderComponent implements OnInit, OnDestroy {
   private initBooking() {
     // YESSEN SYPATAYEV 21428 26ML5C
     this.orderService.subjectOrders
-      .pipe(
-        map( ( orders: any ) => {
-          const getRecloc = R.pluck( 'recloc' );
-          this.originalOrders = R.init( orders );
-          this.orders = R.clone( this.originalOrders );
-          this.arrRecloc = getRecloc( this.orders );
-          this.recLocCDS = this.data ? this.data.recLocGDS : '';
-          this.loadSearchOrdersParams();
-          return this.orders;
-        } )
-      ).subscribe();
+      .pipe( untilDestroyed( this ) )
+      .subscribe( ( orders: any ) => {
+        const getRecloc = R.pluck( 'recloc' );
+        this.originalOrders = R.init( orders );
+        this.orders = R.clone( this.originalOrders );
+        this.arrRecloc = getRecloc( this.orders );
+        this.recLocCDS = this.data ? this.data.recLocGDS : '';
+        this.loadSearchOrdersParams();
+      } );
   }
 
   private initControlConfig() {
