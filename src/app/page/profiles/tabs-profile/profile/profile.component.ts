@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { takeWhile } from 'rxjs/operators';
+import { map, mergeMap, shareReplay, switchMap, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { Iprofile } from '../../../../interface/iprofile';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -12,6 +12,8 @@ import { IprofileNames } from '../../../../interface/iprofile-names';
 
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import * as _ from 'lodash';
+import { EMPTY, Observable } from 'rxjs';
 
 @Component
 ( {
@@ -23,7 +25,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
 
-  public profile: Iprofile;
+  public profile$: Observable<Iprofile[]>;
   public progress: boolean;
   public edit: boolean = false;
   public formUpdateProfile: FormGroup;
@@ -32,6 +34,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public isLoader: boolean = true;
   public showHide: boolean;
 
+  private profile: Iprofile;
 
 
   constructor(
@@ -39,47 +42,52 @@ export class ProfileComponent implements OnInit, OnDestroy {
     private profileService: ProfileService,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
+    this.progress = true;
     this.initProfile();
     this.initFormProfile();
     this.initFormAddProfile();
     this.profileService.subjectDeleteProfileNames
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.refreshTableProfileNames() );
     this.profileService.subjectPutProfileNames.subscribe( _ => this.refreshTableProfileNames() );
   }
 
   private initProfile() {
-    this.progress = true;
-    this.profileService.getProfile( this.id )
-      .pipe( untilDestroyed(this) )
-      .subscribe( ( value: Iprofile ) => {
-        Object.assign( value, value.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
-        this.formUpdateProfile.patchValue( value );
-        this.profile = value;
-        this.progress = false;
-        this.initProfileNames( value.customerId );
-      } );
+    this.profile$ = this.profileService.subjectGetProfile
+      .pipe(
+        tap( ( profile: Iprofile[] ) => {
+          if ( !_.isEmpty( profile ) ) {
+            this.profile = _.last( profile );
+            this.formUpdateProfile.patchValue( this.profile  );
+            this.progress = false;
+            this.cd.detectChanges();
+          }
+        } ),
+        mergeMap( ( profile: Iprofile[] ) => {
+          if ( !_.isEmpty( profile ) ) {
+            return this.profileService.getAllProfileNames( profile[ 0 ].customerId )
+              .pipe(
+                tap( value => this.isLoader = false ),
+                map( customerNames => _.each( profile, ( p: Iprofile ) => p.customerNames = customerNames ) ),
+              );
+          }
+          return EMPTY;
+        } ),
+        shareReplay()
+      );
   }
 
-
-  private initProfileNames( id: number ) {
-    this.profileService.getAllProfileNames( id )
-      .pipe( untilDestroyed(this) )
-      .subscribe( value => {
-        this.profileNames = value;
-        this.isLoader = false;
-      } );
-  }
 
   private refreshTableProfileNames() {
     timer( 100 )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.isLoader = true;
-        this.initProfileNames( this.profile.customerId );
+        this.profileService.subjectGetProfile.next( [ this.profile ] );
       } );
   }
 
@@ -91,7 +99,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       gender: '',
       dob: '',
       comment: '',
-    });
+    } );
   }
 
   private initFormAddProfile() {
@@ -99,7 +107,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       firstName: [ '', Validators.required ],
       lastName: '',
       secondName: '',
-    });
+    } );
   }
 
   sendFormUpdateProfile(): void {
@@ -111,9 +119,9 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, customerNameId: this.profile.customerNameId } );
       Object.assign( params, { dob: moment( this.formUpdateProfile.get( 'dob' ).value ).format( 'YYYY-MM-DD' ) } );
       this.profileService.putProfile( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( profile => {
-          Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+          Object.assign( profile, profile.customerNames.find( customerName => customerName.customerNameType === 1 ) );
           this.windowDialog( 'DIALOG.OK.PASSENGER_CHANGED', 'ok' );
           this.profile = profile;
         } );
@@ -127,11 +135,11 @@ export class ProfileComponent implements OnInit, OnDestroy {
       Object.assign( params, { customerId: this.profile.customerId, CustomerNameType: 2 } );
       Object.assign( params, this.formAddProfile.getRawValue() );
       this.profileService.addAddProfile( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.windowDialog( 'DIALOG.OK.ADDITIONAL_NAME', 'ok' );
           timer( 1500 )
-            .pipe( untilDestroyed(this) )
+            .pipe( untilDestroyed( this ) )
             .subscribe( _ => {
               this.refreshTableProfileNames();
               this.resetForm();
@@ -144,7 +152,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
   resetForm() {
     this.formAddProfile.reset();
     for ( const formControlName in this.formAddProfile.value ) {
-      this.formAddProfile.get( `${ formControlName }` ).setErrors( null );
+      this.formAddProfile.get( `${formControlName}` ).setErrors( null );
     }
   }
 
@@ -163,7 +171,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
     } );
     if ( !disableTimer ) {
       timer( 1500 )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.dialog.closeAll();
           this.edit = false;
