@@ -1,6 +1,6 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { map, takeWhile, tap, toArray } from 'rxjs/operators';
+import { map, mergeMap, shareReplay, switchMap, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile.service';
 import { Iprofile } from '../../../../interface/iprofile';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -13,7 +13,7 @@ import { IprofileNames } from '../../../../interface/iprofile-names';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import * as _ from 'lodash';
-import { Observable } from 'rxjs';
+import { EMPTY, Observable } from 'rxjs';
 
 @Component
 ( {
@@ -25,7 +25,6 @@ export class ProfileComponent implements OnInit, OnDestroy {
 
   @Input() id: number;
 
-  public profile: Iprofile;
   public profile$: Observable<Iprofile[]>;
   public progress: boolean;
   public edit: boolean = false;
@@ -35,12 +34,15 @@ export class ProfileComponent implements OnInit, OnDestroy {
   public isLoader: boolean = true;
   public showHide: boolean;
 
+  private profile: Iprofile;
+
 
   constructor(
     private route: ActivatedRoute,
     private profileService: ProfileService,
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private cd: ChangeDetectorRef
   ) { }
 
   ngOnInit(): void {
@@ -57,34 +59,35 @@ export class ProfileComponent implements OnInit, OnDestroy {
   private initProfile() {
     this.profile$ = this.profileService.subjectGetProfile
       .pipe(
-        tap( ( profile: Iprofile ) => {
-          this.formUpdateProfile.patchValue( profile );
-          this.profile = profile;
-          this.progress = false;
-          this.initProfileNames( profile.customerId );
-          console.log( profile );
+        tap( ( profile: Iprofile[] ) => {
+          if ( !_.isEmpty( profile ) ) {
+            this.formUpdateProfile.patchValue( profile );
+            this.profile = _.last( profile );
+            this.progress = false;
+            this.cd.detectChanges();
+          }
         } ),
-        toArray(),
-        tap( console.log )
+        mergeMap( ( profile: Iprofile[] ) => {
+          if ( !_.isEmpty( profile ) ) {
+            return this.profileService.getAllProfileNames( profile[ 0 ].customerId )
+              .pipe(
+                tap( value => this.isLoader = false ),
+                map( customerNames => _.each( profile, ( p: Iprofile ) => p.customerNames = customerNames ) ),
+              );
+          }
+          return EMPTY;
+        } ),
+        shareReplay()
       );
   }
 
-
-  private initProfileNames( id: number ) {
-    this.profileService.getAllProfileNames( id )
-      .pipe( untilDestroyed( this ) )
-      .subscribe( value => {
-        this.profileNames = value;
-        this.isLoader = false;
-      } );
-  }
 
   private refreshTableProfileNames() {
     timer( 100 )
       .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
         this.isLoader = true;
-        this.initProfileNames( this.profile.customerId );
+        this.profileService.subjectGetProfile.next( [ this.profile ] );
       } );
   }
 
@@ -118,7 +121,7 @@ export class ProfileComponent implements OnInit, OnDestroy {
       this.profileService.putProfile( params )
         .pipe( untilDestroyed( this ) )
         .subscribe( profile => {
-          Object.assign( profile, profile.customerNames.filter( customerName => customerName.customerNameType === 1 )[ 0 ] );
+          Object.assign( profile, profile.customerNames.find( customerName => customerName.customerNameType === 1 ) );
           this.windowDialog( 'DIALOG.OK.PASSENGER_CHANGED', 'ok' );
           this.profile = profile;
         } );

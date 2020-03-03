@@ -14,7 +14,7 @@ export class ProfileService {
 
   public subjectDeleteProfileNames = new Subject();
   public subjectPutProfileNames = new Subject();
-  public subjectGetProfile = new Subject();
+  public subjectGetProfile = new BehaviorSubject([]);
 
   constructor(
     private http: HttpClient,

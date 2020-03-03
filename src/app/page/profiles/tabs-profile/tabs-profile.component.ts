@@ -154,13 +154,12 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfileGroup( profile );
         } ),
         map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
-        tap( ( profile: Iprofile ) => {
+        toArray(),
+        tap( ( profile: Iprofile[] ) => {
           this.profileService.subjectGetProfile.next( profile );
-          this.profileService.subjectGetProfile.asObservable();
           this.profileProgress = false;
           this.profileSegmentationProgress = false;
         } ),
-        toArray()
       );
   }
 

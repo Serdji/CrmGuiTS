@@ -1,6 +1,8 @@
 <div class="profile">
+  <mat-card *ngIf="progress" >
+    <mat-progress-bar mode="buffer"></mat-progress-bar>
+  </mat-card>
   <mat-card *ngFor="let profile of profile$ | async" class="profile__card">
-    <mat-spinner class="profile__spinner" *ngIf="progress"></mat-spinner>
     <div *ngIf="!edit">
       <div>
         <mat-card-header>
@@ -96,7 +98,7 @@
 
   </mat-card>
 
-  <mat-card class="profile__card">
+  <mat-card *ngFor="let profile of profile$ | async" class="profile__card">
     <div class="profile__show">
       <span
         (click)="showHiden()"> {{ showHide ? ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.HIDE' | translate) : ('PAGE.PROFILES.TABS_PROFILE.SHOW_HIDE.SHOW' | translate) }}</span>
@@ -126,11 +128,11 @@
       </button>
     </form>
 
-    <div *ngIf="profileNames?.length > 1">
+    <div *ngIf="profile.customerNames?.length > 1">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <app-table-example-profile-names *ngIf="profileNames.length > 1"
-                                         [tableDataSource]="profileNames"></app-table-example-profile-names>
+        <app-table-example-profile-names *ngIf="profile.customerNames.length > 1"
+                                         [tableDataSource]="profile.customerNames"></app-table-example-profile-names>
       </ng-template>
     </div>
 
