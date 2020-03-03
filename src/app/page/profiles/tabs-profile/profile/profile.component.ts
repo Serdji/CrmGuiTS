@@ -61,8 +61,8 @@ export class ProfileComponent implements OnInit, OnDestroy {
       .pipe(
         tap( ( profile: Iprofile[] ) => {
           if ( !_.isEmpty( profile ) ) {
-            this.formUpdateProfile.patchValue( profile );
             this.profile = _.last( profile );
+            this.formUpdateProfile.patchValue( this.profile  );
             this.progress = false;
             this.cd.detectChanges();
           }
