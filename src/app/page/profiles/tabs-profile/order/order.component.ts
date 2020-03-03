@@ -24,7 +24,6 @@ export class OrderComponent implements OnInit, OnDestroy {
   @Input() id: number;
   @Input() data: { recLocGDS: string };
 
-  public orders$: Observable<any>;
   public originalOrders;
   public currencyDefault: string;
   public formFilter: FormGroup;
@@ -34,9 +33,9 @@ export class OrderComponent implements OnInit, OnDestroy {
   public recLocCDS: string;
   public optionGroups: IOptionGroups[];
   public isData: boolean;
+  public orders: any;
 
 
-  private orders: any;
   private isSortFilterReverse: boolean;
   private filterControlConfig: any;
   private searchControlConfig: any;
@@ -73,7 +72,7 @@ export class OrderComponent implements OnInit, OnDestroy {
 
   private initBooking() {
     // YESSEN SYPATAYEV 21428 26ML5C
-    this.orders$ = this.orderService.subjectOrders
+    this.orderService.subjectOrders
       .pipe(
         map( ( orders: any ) => {
           const getRecloc = R.pluck( 'recloc' );
@@ -84,7 +83,7 @@ export class OrderComponent implements OnInit, OnDestroy {
           this.loadSearchOrdersParams();
           return this.orders;
         } )
-      );
+      ).subscribe();
   }
 
   private initControlConfig() {
