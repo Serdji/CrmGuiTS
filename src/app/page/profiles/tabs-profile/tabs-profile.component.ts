@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, last, map, skip, takeWhile, tap, toArray } from 'rxjs/operators';
+import { catchError, last, map, mergeMap, skip, switchMap, takeWhile, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
@@ -12,7 +12,7 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { ISettings } from '../../../interface/isettings';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
 import { ITabsControlData } from '../../../interface/itabs-control-data';
-import { EMPTY, Observable, timer } from 'rxjs';
+import { EMPTY, Observable, of, timer } from 'rxjs';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISegmentation } from '../../../interface/isegmentation';
@@ -27,6 +27,7 @@ import { convertToStream } from '../../../utils/convertToStream';
 export class TabsProfileComponent implements OnInit, OnDestroy {
 
   public profileId: number;
+  public createDate: string;
   public profile: Iprofile;
   public profile$: Observable<Iprofile[]>;
   public profileProgress: boolean;
@@ -139,10 +140,14 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfile( id );
           this.ordersProgress = false;
           this.isProfileCreateDate = true;
+          this.createDate = null;
           this.orderService.subjectOrders.next( [] );
-          return EMPTY;
+          return of( [] );
         } ),
-        tap( _ => this.orderService.subjectOrders.asObservable() )
+        tap( orders => {
+          if ( !_.isEmpty( orders ) ) this.createDate = orders[ 0 ].createDate;
+          this.orderService.subjectOrders.asObservable();
+        } )
       );
   }
 
@@ -169,7 +174,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
       segmentation: profile.segmentations,
       isPointer: _.size( profile.segmentations ) > 3
     };
-}
+  }
 
   private initProfileGroup( profile: Iprofile ) {
     this.profileGroup = {
