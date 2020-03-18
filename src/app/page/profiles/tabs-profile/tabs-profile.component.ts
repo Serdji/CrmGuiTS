@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, last, map, skip, takeWhile, tap } from 'rxjs/operators';
+import { catchError, last, map, mergeMap, skip, switchMap, takeWhile, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
@@ -12,7 +12,7 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { ISettings } from '../../../interface/isettings';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
 import { ITabsControlData } from '../../../interface/itabs-control-data';
-import { EMPTY, Observable, timer } from 'rxjs';
+import { EMPTY, Observable, of, timer } from 'rxjs';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISegmentation } from '../../../interface/isegmentation';
@@ -27,7 +27,9 @@ import { convertToStream } from '../../../utils/convertToStream';
 export class TabsProfileComponent implements OnInit, OnDestroy {
 
   public profileId: number;
+  public createDate: string;
   public profile: Iprofile;
+  public profile$: Observable<Iprofile[]>;
   public profileProgress: boolean;
   public profileSegmentationProgress: boolean;
   public ordersProgress: boolean;
@@ -65,7 +67,9 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-
+    this.ordersProgress = true;
+    this.profileProgress = true;
+    this.profileSegmentationProgress = true;
     this.selectedIndex = 0;
     this.initQueryRouter();
     this.initCurrencyDefault();
@@ -121,9 +125,6 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
   }
 
   private initOrder( id: number ) {
-    this.ordersProgress = true;
-    this.profileProgress = true;
-    this.profileSegmentationProgress = true;
     this.ordersLast$ = this.orderService.getBooking( id )
       .pipe(
         tap( orders => {
@@ -139,35 +140,40 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfile( id );
           this.ordersProgress = false;
           this.isProfileCreateDate = true;
+          this.createDate = null;
           this.orderService.subjectOrders.next( [] );
-          return EMPTY;
+          return of( [] );
         } ),
-        tap( _ => this.orderService.subjectOrders.asObservable() )
+        tap( orders => {
+          if ( !_.isEmpty( orders ) ) this.createDate = orders[ 0 ].createDate;
+          this.orderService.subjectOrders.asObservable();
+        } )
       );
   }
 
   private initProfile( id: number ) {
-    this.profileService.getProfile( id )
+    this.profile$ = this.profileService.getProfile( id )
       .pipe(
-        untilDestroyed( this )
-      )
-      .subscribe( ( profile: Iprofile ) => {
-        this.initProfileSegmentation( profile );
-        this.initProfileGroup( profile );
-        _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) );
-        this.profile = profile;
-        this.profileProgress = false;
-      } );
+        tap( ( profile: Iprofile ) => {
+          this.initProfileSegmentation( profile );
+          this.initProfileGroup( profile );
+        } ),
+        map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
+        toArray(),
+        tap( ( profile: Iprofile[] ) => {
+          this.profileService.subjectGetProfile.next( profile );
+          this.profileProgress = false;
+          this.profileSegmentationProgress = false;
+        } ),
+      );
   }
 
   private initProfileSegmentation( profile: Iprofile ) {
-
     this.profileSegmentation = {
       takeSegmentation: _.take( profile.segmentations, 3 ),
       segmentation: profile.segmentations,
       isPointer: _.size( profile.segmentations ) > 3
     };
-    this.profileSegmentationProgress = false;
   }
 
   private initProfileGroup( profile: Iprofile ) {
