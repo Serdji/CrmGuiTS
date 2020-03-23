@@ -1,4 +1,4 @@
-export interface IPromoCodeValTypes {
+export interface IPromoCodesValTypes {
   'promoCodeValTypeId': number;
   'promoCodeValTypeName': string;
 }[]

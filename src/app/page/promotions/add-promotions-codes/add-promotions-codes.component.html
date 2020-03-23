@@ -153,15 +153,14 @@
               <input matInput formControlName="usesTotal" type="text" placeholder="{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.USES_TOTAL' | translate}}">
             </mat-form-field>
           </mat-card-content>
-          <div class="add-promotions-codes__progress-bar">
+          <div *ngIf="progressBar" class="add-promotions-codes__progress-bar">
             <span>{{'PAGE.PROMOTIONS.ADD_PROMOTIONS_CODE.FIELD.USED' | translate}} </span>
             <section class="example-section">
               <mat-progress-bar
                 class="example-margin"
                 color="primary"
                 mode="determinate"
-                [value]="50"
-                [bufferValue]="75">
+                [value]="progressBar">
               </mat-progress-bar>
             </section>
           </div>

@@ -18,15 +18,15 @@ import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { ListSegmentationService } from '../../segmentation/list-segmentation/list-segmentation.service';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { AddPromotionsCodesService } from './add-promotions-codes.service';
-import { IPromoCodeValTypes } from '../../../interface/ipromo-code-val-types';
+import { IPromoCodesValTypes } from '../../../interface/ipromo-code-val-types';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { IPromoCode } from '../../../interface/ipromo-code';
+import { IPromoCode, IPromoCodes } from '../../../interface/ipromo-code';
 import { IProfilePromoCode } from '../../../interface/iprofile-promo-code';
 import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 import { promotionValidatorAsync } from '../../../validators/promotionValidatorAsync';
-import { IPromoCodeAdd } from '../../../interface/ipromo-code-add';
+import { IPromoCodesAdd } from '../../../interface/ipromo-code-add';
 import { IChipsCustomerList } from '../../../interface/ichips-customer-list';
 import { SaveUrlServiceService } from '../../../services/save-url-service.service';
 
@@ -51,7 +51,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   readonly separatorKeysCodes: number[] = [ ENTER, COMMA, SPACE ];
   public promoCodeRouteList: any[] = [];
-  public promoCodeValTypes: IPromoCodeValTypes;
+  public promoCodeValTypes: IPromoCodesValTypes;
   public profilePromoCode: IProfilePromoCode;
 
   public promoCodeFlightListSelectable = true;
@@ -91,6 +91,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public buttonSearch: boolean;
   public isTable: boolean;
 
+  public progressBar: number;
 
   private autDelay: number;
   private promoCodeId: number;
@@ -125,6 +126,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.buttonCreate = true;
     this.buttonDelete = true;
     this.buttonSearch = true;
+    this.progressBar = 0;
 
     this.isLoader = true;
     this.autDelay = 500;
@@ -200,7 +202,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   private initPromoCodeValTypes() {
     this.addPromotionsCodesService.getPromoCodeValTypes()
       .pipe( untilDestroyed( this ) )
-      .subscribe( ( promoCodeValTypes: IPromoCodeValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
+      .subscribe( ( promoCodeValTypes: IPromoCodesValTypes ) => this.promoCodeValTypes = promoCodeValTypes );
   }
 
   private initPromotions() {
@@ -270,6 +272,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     this.addPromotionsCodesService.getPromoCode( +promoCodeId )
       .pipe( untilDestroyed( this ) )
       .subscribe( ( promoCod: IPromoCode ) => {
+        const { usesFact, usesTotal } = promoCod;
+        this.progressBar = usesFact / usesTotal * 100;
         _.set( promoCod, 'promotionName', _.get( promoCod, 'promotion.promotionName' ) );
         _.each( promoCod, ( value: any, key: string ) => {
           if ( !_.isNull( value ) && !_.isNaN( value ) ) {
@@ -527,19 +531,19 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
 
 
   private isPromoCod( messDialog ) {
-    return ( promoCodeAdd: IPromoCodeAdd ) => {
+    return ( promoCodeAdd: IPromoCodesAdd ) => {
       this.windowDialog( messDialog, 'ok' );
       this.router.navigate( [ '/crm/add-promotions-codes' ], { queryParams: { promoCodeId: promoCodeAdd.promoCode.promoCodeId } } );
     };
   }
 
   private isIntersectionPromoCod() {
-    return ( promoCodeAdd: IPromoCodeAdd ) => {
+    return ( promoCodeAdd: IPromoCodesAdd ) => {
       this.windowDialog( '', 'intersection', 'intersection', true, promoCodeAdd.intersectingPromoCodes );
     };
   }
 
-  private intersectionPromoCod( promoCodeAdd: IPromoCodeAdd, messDialog ) {
+  private intersectionPromoCod( promoCodeAdd: IPromoCodesAdd, messDialog ) {
     const isNil = () => R.isNil( promoCodeAdd.promoCode );
     const whichMethod = R.ifElse( isNil, this.isIntersectionPromoCod(), this.isPromoCod( messDialog ) );
     whichMethod( promoCodeAdd );
@@ -552,7 +556,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
     if ( !this.formPromoCodes.invalid || isQueryParams ) {
       this.addPromotionsCodesService.savePromoCode( isQueryParams ? saveFormParams : this.promoCodeParameters() )
         .pipe( untilDestroyed( this ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_SAVE' ) );
+        .subscribe( ( promoCodeAdd: IPromoCodesAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_SAVE' ) );
     }
   }
 
@@ -575,7 +579,7 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       _.set( params, 'promoCodeId', this.promoCodeId );
       this.addPromotionsCodesService.updatePromoCode( params )
         .pipe( untilDestroyed( this ) )
-        .subscribe( ( promoCodeAdd: IPromoCodeAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_CHANGED' ) );
+        .subscribe( ( promoCodeAdd: IPromoCodesAdd ) => this.intersectionPromoCod( promoCodeAdd, 'DIALOG.OK.PROMO_CODE_CHANGED' ) );
     }
   }
 

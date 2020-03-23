@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../services/config-service.service';
 import { RetryRequestService } from '../../../services/retry-request.service';
 import { Observable, Subject } from 'rxjs';
-import { IPromoCode } from '../../../interface/ipromo-code';
+import { IPromoCodes } from '../../../interface/ipromo-code';
 import { map } from 'rxjs/operators';
 import * as _ from 'lodash';
 import * as moment from 'moment';
@@ -29,7 +29,7 @@ export class AddPromotionsCodesService {
     return this.http.get( this.configService.crmApi + '/crm/promoCodes', { params } )
       .pipe(
         this.retryRequestService.retry(),
-        map( ( promoCodes: IPromoCode ) => {
+        map( ( promoCodes: IPromoCodes ) => {
           _.each( promoCodes.result, promoCod => {
             let { dateFrom, dateTo } = promoCod;
             const { code, accountCode } = promoCod;
@@ -51,7 +51,7 @@ export class AddPromotionsCodesService {
   }
 
   getPromoCode( id: number ) {
-    return this.http.get( this.configService.crmApi + '/crm/promoCodes/' + id ).pipe( this.retryRequestService.retry() );
+    return this.http.get<IPromoCodes['result']>( this.configService.crmApi + '/crm/promoCodes/' + id ).pipe( this.retryRequestService.retry() );
   }
 
   savePromoCode( params ): Observable<any> {
