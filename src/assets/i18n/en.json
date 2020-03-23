@@ -737,6 +737,7 @@
 					"REASON": "Basis",
 					"SEGMENTATION": "Segmentations",
 					"USED": "Used:",
+					"OF": "of",
 					"USES_PER": "Usage per passenger",
 					"USES_TOTAL": "Total usage",
 					"VAL": "Discount value"

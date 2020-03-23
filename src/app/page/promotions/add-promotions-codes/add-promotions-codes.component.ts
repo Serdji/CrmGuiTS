@@ -92,6 +92,8 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
   public isTable: boolean;
 
   public progressBar: number;
+  public usesFact: number;
+  public usesTotal: number;
 
   private autDelay: number;
   private promoCodeId: number;
@@ -273,7 +275,9 @@ export class AddPromotionsCodesComponent implements OnInit, OnDestroy {
       .pipe( untilDestroyed( this ) )
       .subscribe( ( promoCod: IPromoCode ) => {
         const { usesFact, usesTotal } = promoCod;
-        this.progressBar = usesFact / usesTotal * 100;
+        this.usesFact = usesFact;
+        this.usesTotal = usesTotal;
+        this.progressBar = this.usesFact  / this.usesTotal * 100;
         _.set( promoCod, 'promotionName', _.get( promoCod, 'promotion.promotionName' ) );
         _.each( promoCod, ( value: any, key: string ) => {
           if ( !_.isNull( value ) && !_.isNaN( value ) ) {
