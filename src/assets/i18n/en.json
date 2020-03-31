@@ -173,6 +173,7 @@
 		},
 		"SETTINGS": {
 			"GROUP_NAME": "Settings",
+			"INDEX": "Index",
 			"RESTART": "Restart",
 			"TABLE_CUSTOMERS": "Passenger list settings"
 		},
@@ -726,6 +727,7 @@
 					"FLIGHT": "Flight numbers",
 					"FLIGHT_DATA_FROM": "Travel date after",
 					"FLIGHT_DATA_TO": "Travel date before",
+					"OF": "of",
 					"PROMOTIONS": "Promo offer",
 					"PROMOTIONS_CODE": "Promo code",
 					"PROMOTIONS_CODE_VAL": {
@@ -737,7 +739,6 @@
 					"REASON": "Basis",
 					"SEGMENTATION": "Segmentations",
 					"USED": "Used:",
-					"OF": "of",
 					"USES_PER": "Usage per passenger",
 					"USES_TOTAL": "Total usage",
 					"VAL": "Discount value"
@@ -937,6 +938,11 @@
 			}
 		},
 		"SETTINGS": {
+			"INDEX": {
+				"FIELD": {
+					"T": ""
+				}
+			},
 			"TABLE_PROFILE": {
 				"COLUMN_DISPLAY": "Column display",
 				"COLUMN_ORDER": "Column order",

@@ -173,6 +173,7 @@
 		},
 		"SETTINGS": {
 			"GROUP_NAME": "Настройки",
+			"INDEX": "Индекс",
 			"RESTART": "Перезагрузка",
 			"TABLE_CUSTOMERS": "Таблицы пассажиров"
 		},
@@ -726,6 +727,7 @@
 					"FLIGHT": "Номера рейсов",
 					"FLIGHT_DATA_FROM": "Период реализации от",
 					"FLIGHT_DATA_TO": "Период реализации до",
+					"OF": "из",
 					"PROMOTIONS": "Промоакция",
 					"PROMOTIONS_CODE": "Промокод",
 					"PROMOTIONS_CODE_VAL": {
@@ -737,7 +739,6 @@
 					"REASON": "Основание",
 					"SEGMENTATION": "Сегментации",
 					"USED": "Использовано:",
-					"OF": "из",
 					"USES_PER": "Использование для профиля",
 					"USES_TOTAL": "Общее количество использования",
 					"VAL": "Величина скидки"
@@ -937,6 +938,11 @@
 			}
 		},
 		"SETTINGS": {
+			"INDEX": {
+				"FIELD": {
+					"T": ""
+				}
+			},
 			"TABLE_PROFILE": {
 				"COLUMN_DISPLAY": "Отображение столбцов",
 				"COLUMN_ORDER": "Порядок столбцов",
