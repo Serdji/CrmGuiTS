@@ -940,8 +940,14 @@
 		"SETTINGS": {
 			"INDEX": {
 				"FIELD": {
-					"T": ""
-				}
+					"ACTUAL_ACTIVE_FROM": "Дата настоящей активности с",
+					"ACTUAL_ACTIVE_TO": "Дата настоящей активности по",
+					"PAST_ACTIVE_FROM": "Дата прошлой активности с",
+					"PAST_ACTIVE_TO": "Дата прошлой активности по",
+					"SALE_DATE_FROM": "Дата продажи с",
+					"SALE_DATE_TO": "Дата продажи по"
+				},
+				"TITLE": "Настройка индексации"
 			},
 			"TABLE_PROFILE": {
 				"COLUMN_DISPLAY": "Отображение столбцов",

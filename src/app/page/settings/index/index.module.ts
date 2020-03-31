@@ -5,12 +5,14 @@ import { SharedModule } from '../../../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { IndexService } from './index.service';
 import { IndexRoutes } from './index.routing';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule( {
   imports: [
     CommonModule,
     SharedModule,
+    ReactiveFormsModule,
     IndexRoutes,
     TranslateModule
   ],

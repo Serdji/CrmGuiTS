@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-index',
@@ -7,9 +8,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndexComponent implements OnInit {
 
-  constructor() { }
+  private formIndex: FormGroup;
 
-  ngOnInit() {
+  constructor(
+    private fb: FormBuilder,
+  ) { }
+
+  ngOnInit(): void {
+    this.initFormIndex();
+  }
+
+  initFormIndex() {
+    this.formIndex = this.fb.group( {
+      saleDateFrom: '',
+      saleDateTo: '',
+      pastActiveFrom: '',
+      pastActiveTo: '',
+      actualActiveFrom: '',
+      actualActiveTo: ''
+    } );
   }
 
 }

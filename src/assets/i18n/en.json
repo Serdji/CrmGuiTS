@@ -940,8 +940,14 @@
 		"SETTINGS": {
 			"INDEX": {
 				"FIELD": {
-					"T": ""
-				}
+					"ACTUAL_ACTIVE_FROM": "Date of actual activity since",
+					"ACTUAL_ACTIVE_TO": "Date of actual activity by",
+					"PAST_ACTIVE_FROM": "Date of last activity since",
+					"PAST_ACTIVE_TO": "Last activity date for",
+					"SALE_DATE_FROM": "Sale date from",
+					"SALE_DATE_TO": "Sale Date By"
+				},
+				"TITLE": "Index Setting"
 			},
 			"TABLE_PROFILE": {
 				"COLUMN_DISPLAY": "Column display",
