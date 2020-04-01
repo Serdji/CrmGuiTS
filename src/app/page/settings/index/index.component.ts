@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { IndexService } from './index.service';
+import { IindexConfig } from '../../../interface/iindex-config';
 
 @Component({
   selector: 'app-index',
@@ -12,10 +14,12 @@ export class IndexComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private indexService: IndexService
   ) { }
 
   ngOnInit(): void {
     this.initFormIndex();
+    this.initGetIndexConfig();
   }
 
   initFormIndex() {
@@ -27,6 +31,16 @@ export class IndexComponent implements OnInit {
       actualActiveFrom: '',
       actualActiveTo: ''
     } );
+  }
+
+  private  initGetIndexConfig() {
+    this.indexService.getIndexConfig().subscribe( (config: IindexConfig) => {
+      this.formIndex.patchValue( config );
+    } );
+  }
+
+  public onEditIndexConfig(): void {
+    this.indexService.putIndexConfig( this.formIndex.value ).subscribe();
   }
 
 }
