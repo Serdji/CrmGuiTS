@@ -6,6 +6,7 @@ import { PromoCodeModule } from './promo-code/promo-code.module';
 import { DynamicFormModule } from './dynamic-form/dynamic-form.module';
 import { MergeProfileModule } from './merge-profile/merge-profile.module';
 import { ReportAccessRightsModule } from './report-access-rights/report-access-rights.module';
+import { SwitchLangModule } from './switch-lang/switch-lang.module';
 
 @NgModule({
   imports: [
@@ -16,6 +17,7 @@ import { ReportAccessRightsModule } from './report-access-rights/report-access-r
     MergeProfileModule,
     DynamicFormModule,
     ReportAccessRightsModule,
+    SwitchLangModule
   ],
   exports: [
     TablesModule,
@@ -24,6 +26,7 @@ import { ReportAccessRightsModule } from './report-access-rights/report-access-r
     MergeProfileModule,
     DynamicFormModule,
     ReportAccessRightsModule,
+    SwitchLangModule
   ],
 })
 export class ComponentsModule {

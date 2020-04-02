@@ -5,13 +5,7 @@
     </button>
     <span routerLink="/crm/entrance" style="cursor: pointer">LEONARDO CRM</span>
 
-    <form class="toolbar__form" [formGroup]="formLang">
-      <mat-form-field class="toolbar__form-input">
-        <mat-select formControlName="lang">
-          <mat-option *ngFor=" let lang of translate.getLangs()" [value]="lang" >{{lang}}</mat-option>
-        </mat-select>
-      </mat-form-field>
-    </form>
+    <app-switch-lang class="toolbar__form"></app-switch-lang>
 
     <button class="toolbar__button-menu" mat-button [matMenuTriggerFor]="appMenu">
       <mat-icon>face</mat-icon>

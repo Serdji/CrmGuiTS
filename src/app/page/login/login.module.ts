@@ -7,6 +7,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../shared/material/material.module';
 import { LoginRoutes } from './login.routing';
 import { TranslateModule } from '@ngx-translate/core';
+import { ComponentsModule } from '../../components/components.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import { TranslateModule } from '@ngx-translate/core';
     MaterialModule,
     ReactiveFormsModule,
     LoginRoutes,
-    TranslateModule
+    TranslateModule,
+    ComponentsModule
   ],
   declarations: [ LoginComponent ],
   providers: [ LoginService ]

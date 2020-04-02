@@ -1,0 +1,9 @@
+<div class="switch-lang">
+  <form class="switch-lang__form" [formGroup]="formLang">
+    <mat-form-field class="switch-lang__form-input">
+      <mat-select formControlName="lang">
+        <mat-option *ngFor=" let lang of translate.getLangs()" [value]="lang" >{{lang}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+  </form>
+</div>

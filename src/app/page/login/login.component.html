@@ -19,7 +19,10 @@
                   <input matInput formControlName="AirlineCode" autocomplete="off" type="text" placeholder="{{'PAGE.LOGIN.AIRLINE_CODE' | translate}}">
                 </mat-form-field>
                 <button mat-raised-button type="submit" color="primary" class="login__button">{{'BUTTON.LOGIN' | translate}}</button>
-                <mat-checkbox formControlName="save">{{'PAGE.LOGIN.REMEMBER_ME' | translate}}</mat-checkbox>
+                <div class="login__lang">
+                  <app-switch-lang></app-switch-lang>
+                  <mat-checkbox formControlName="save">{{'PAGE.LOGIN.REMEMBER_ME' | translate}}</mat-checkbox>
+                </div>
               </form>
             </div>
           </mat-card-content>
