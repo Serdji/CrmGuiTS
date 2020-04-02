@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { DateAdapter } from '@angular/material/core';
 
 @Component( {
   selector: 'app-switch-lang',
@@ -14,11 +15,28 @@ export class SwitchLangComponent implements OnInit {
   constructor(
     public translate: TranslateService,
     private fb: FormBuilder,
+    private _adapter: DateAdapter<any>,
   ) { }
 
   ngOnInit(): void {
+    this.initTranslate();
     this.initFormLang();
     this.switchLang();
+  }
+
+  private initTranslate() {
+    this.translate.addLangs( [ 'ru', 'en' ] );
+    this.translate.setDefaultLang( 'en' );
+    const browserLang = this.translate.getBrowserLang();
+    const defaultLang = this.translate.getDefaultLang();
+    const loadingLanguage = localStorage.getItem( 'language' );
+    if ( loadingLanguage ) this.translate.use( loadingLanguage );
+    // else this.translate.use( browserLang.match( /ru|en'/ ) ? browserLang : 'en' );
+    else this.translate.use( defaultLang );
+
+    this.translate.stream( 'MENU' ).subscribe( _ => {
+      this._adapter.setLocale( this.translate.store.currentLang );
+    } );
   }
 
   private initFormLang() {
