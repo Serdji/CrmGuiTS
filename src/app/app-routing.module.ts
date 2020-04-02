@@ -39,6 +39,7 @@ const routes: Routes = [
         { path: 'event/:id', loadChildren: () => import('./page/events/event/event.module').then(m => m.EventModule), data: { title: 'BREADCRUMBS.EVENT' } },
         { path: 'list-event', loadChildren: () => import('./page/events/list-event/list-event.module').then(m => m.ListEventModule), data: { title: 'MENU.EVENT.LIST_EVENT' } },
         { path: 'form-table-async-profile-settings', loadChildren: () => import('./page/settings/form-table-async-profile-settings/form-table-async-profile-settings.module').then(m => m.FormTableAsyncProfileSettingsModule), data: { title: 'MENU.SETTINGS.TABLE_CUSTOMERS' } },
+        { path: 'index', loadChildren: () => import('./page/settings/index/index.module').then(m => m.IndexModule), data: { title: 'MENU.SETTINGS.INDEX' } },
         { path: 'restart', loadChildren: () => import('./page/settings/restart/restart.module').then(m => m.RestartModule), data: { title: 'MENU.SETTINGS.RESTART' } },
       ],
     },

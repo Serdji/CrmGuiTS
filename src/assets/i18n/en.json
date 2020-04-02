@@ -107,6 +107,7 @@
 		"OK": {
 			"ADDITIONAL_NAME": "Additional name successfully added.",
 			"DOCUMENT_CHANGED": "Document successfully added.",
+			"INDEX_SETTING": "Index Parameters Successfully Changed",
 			"PASSENGER_CHANGED": "Passenger data successfully updated.",
 			"PASSENGER_COMBINED": "Passengers successfully merged.",
 			"PASSWORD_CHANGED": "Password successfully updated.",
@@ -173,6 +174,7 @@
 		},
 		"SETTINGS": {
 			"GROUP_NAME": "Settings",
+			"INDEX": "Index",
 			"RESTART": "Restart",
 			"TABLE_CUSTOMERS": "Passenger list settings"
 		},
@@ -726,6 +728,7 @@
 					"FLIGHT": "Flight numbers",
 					"FLIGHT_DATA_FROM": "Travel date after",
 					"FLIGHT_DATA_TO": "Travel date before",
+					"OF": "of",
 					"PROMOTIONS": "Promo offer",
 					"PROMOTIONS_CODE": "Promo code",
 					"PROMOTIONS_CODE_VAL": {
@@ -936,6 +939,17 @@
 			}
 		},
 		"SETTINGS": {
+			"INDEX": {
+				"FIELD": {
+					"ACTUAL_ACTIVE_FROM": "Date of actual activity since",
+					"ACTUAL_ACTIVE_TO": "Date of actual activity by",
+					"PAST_ACTIVE_FROM": "Date of last activity since",
+					"PAST_ACTIVE_TO": "Last activity date for",
+					"SALE_DATE_FROM": "Sale date from",
+					"SALE_DATE_TO": "Sale Date By"
+				},
+				"TITLE": "Index Setting"
+			},
 			"TABLE_PROFILE": {
 				"COLUMN_DISPLAY": "Column display",
 				"COLUMN_ORDER": "Column order",

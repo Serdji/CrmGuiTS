@@ -10,7 +10,7 @@ import * as R from 'ramda';
 import { ProfileSearchService } from '../../profiles/profile-search/profile-search.service';
 import { SearchPromotionsCodesService } from '../search-promotions-codes/search-promotions-codes.service';
 import { ActivatedRoute } from '@angular/router';
-import { IPromoCode } from '../../../interface/ipromo-code';
+import { IPromoCodes } from '../../../interface/ipromo-code';
 import { TableAsyncSearchPromoCodeService } from '../../../components/tables/table-async-search-promo-code/table-async-search-promo-code.service';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
@@ -27,7 +27,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
   public isTablePromoCode: boolean;
   public formPromotions: FormGroup;
   public promotions: IPromotions;
-  public promoCode: IPromoCode;
+  public promoCode: IPromoCodes;
 
 
   private promotionName: string;
@@ -77,7 +77,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
     this.isLoaderPromoCode = true;
     this.searchPromotionsCodesService.getSearchPromotionsCodes( searchParams )
       .pipe( untilDestroyed(this) )
-      .subscribe( ( promoCode: IPromoCode ) => {
+      .subscribe( ( promoCode: IPromoCodes ) => {
         this.tableAsyncSearchPromoCodeService.countPage = promoCode.totalCount;
         this.promoCode = promoCode;
         this.isLoaderPromoCode = false;
@@ -97,7 +97,7 @@ export class AddPromotionsComponent implements OnInit, OnDestroy {
         };
         this.searchPromotionsCodesService.getSearchPromotionsCodes( paramsAndCount )
           .pipe( untilDestroyed(this) )
-          .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
+          .subscribe( ( promoCode: IPromoCodes ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
       } );
   }
 

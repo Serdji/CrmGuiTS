@@ -7,7 +7,7 @@ import { Observable, timer } from 'rxjs';
 import { DialogPromoCodeService } from './dialog-promo-code.service';
 import * as _ from 'lodash';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { IPromoCode } from '../../../interface/ipromo-code';
+import { IPromoCodes } from '../../../interface/ipromo-code';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 
@@ -18,9 +18,9 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 } )
 export class DialogPromoCodeComponent implements OnInit, OnDestroy {
 
-  public promoCodes: IPromoCode;
+  public promoCodes: IPromoCodes;
   public formPromoCod: FormGroup;
-  public promoCodesOptions: Observable<IPromoCode>;
+  public promoCodesOptions: Observable<IPromoCodes>;
 
 
   private autDelay: number;
@@ -49,7 +49,7 @@ export class DialogPromoCodeComponent implements OnInit, OnDestroy {
     };
     this.addPromotionsCodesService.getAllPromoCodes( params )
       .pipe( untilDestroyed(this) )
-      .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
+      .subscribe( ( promoCodes: IPromoCodes ) => this.promoCodes = promoCodes );
   }
 
   private initForm() {

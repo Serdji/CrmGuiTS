@@ -13,7 +13,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 } )
 export class ToolbarComponent implements OnInit {
 
-  public formLang: FormGroup;
   public login;
 
   constructor(
@@ -25,24 +24,6 @@ export class ToolbarComponent implements OnInit {
 
   ngOnInit(): void {
     this.login = localStorage.getItem( 'login' );
-    this.initFormLang();
-    this.switchLang();
-  }
-
-  private initFormLang() {
-    this.formLang = this.fb.group( {
-      lang: ''
-    } );
-    this.translate.get( 'MENU' ).subscribe( _ => {
-      this.formLang.get( 'lang' ).patchValue( this.translate.store.currentLang );
-    } );
-  }
-
-  private switchLang() {
-    this.formLang.get( 'lang' ).valueChanges.subscribe( ( lang: string ) => {
-      localStorage.setItem( 'language', lang );
-      this.translate.use( lang );
-    } );
   }
 
   goOut(): void {

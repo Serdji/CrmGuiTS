@@ -7,8 +7,8 @@
         <mat-spinner class="tabs-profile__spinner" *ngIf="profileProgress"></mat-spinner>
         <div>
           <mat-card class="tabs-profile__card-grid mat-elevation-z0">
-            <div class="tabs-profile__content-wrapper">
-              <div *ngFor=" let profile of profile$ | async" class="tabs-profile__content _right-width">
+            <div *ngFor=" let profile of profile$ | async" class="tabs-profile__content-wrapper">
+              <div class="tabs-profile__content _right-width">
                 <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CUSTOMER_ID' | translate}}</span>
                   <span><b> {{profile.customerId}}</b></span>
@@ -28,11 +28,11 @@
               </div>
 
               <div class="tabs-profile__content">
-                <div *ngFor="let ordersLast of ordersLast$ | async" class="tabs-profile__content-point">
+                <div class="tabs-profile__content-point">
                   <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CREATE_DATE' | translate}}</span>
                   <span>
-                    <b *ngIf="ordersLast && !isProfileCreateDate" > {{ordersLast.createDate | date:'dd.MM.yyyy' }}</b>
-                    <b *ngIf="isProfileCreateDate" > {{profile.createDate | date:'dd.MM.yyyy' }}</b>
+                    <b *ngIf="createDate" > {{createDate | date:'dd.MM.yyyy' }}</b>
+                    <b *ngIf="!createDate"> {{profile.createDate | date:'dd.MM.yyyy' }}</b>
                   </span>
                 </div>
               </div>

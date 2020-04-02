@@ -47,8 +47,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
       date,
       float,
       int,
-      long,
-      string
+      string,
+      long
     }
 
     const typeCheck = ( typeNumber: number ): string => {
@@ -57,8 +57,8 @@ export class DynamicFormComponent implements OnInit, OnDestroy {
         case inputType.date: return 'date';
         case inputType.float: return 'float';
         case inputType.int: return 'int';
-        case inputType.long: return 'int';
         case inputType.string: return 'text';
+        case inputType.long: return 'int';
       }
     };
     const mapParamsDynamicForm = R.map( ( paramsDynamicForm: IParamsDynamicForm ) => {

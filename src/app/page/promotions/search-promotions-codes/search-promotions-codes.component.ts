@@ -14,7 +14,7 @@ import { ListSegmentationService } from '../../segmentation/list-segmentation/li
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
 import { IcustomerGroup } from '../../../interface/icustomer-group';
 import { AddPromotionsCodesService } from '../add-promotions-codes/add-promotions-codes.service';
-import { IPromoCode } from '../../../interface/ipromo-code';
+import { IPromoCodes } from '../../../interface/ipromo-code';
 import * as moment from 'moment';
 import * as R from 'ramda';
 import { TableAsyncSearchPromoCodeService } from '../../../components/tables/table-async-search-promo-code/table-async-search-promo-code.service';
@@ -35,12 +35,12 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
   public promotionsOptions: Observable<IPromotions[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
-  public promoCodesOptions: Observable<IPromoCode>;
+  public promoCodesOptions: Observable<IPromoCodes>;
   public promotions: IPromotions;
-  public promoCodes: IPromoCode;
+  public promoCodes: IPromoCodes;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
-  public promoCode: IPromoCode;
+  public promoCode: IPromoCodes;
   public buttonSearch: boolean;
 
 
@@ -103,7 +103,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
     };
     this.addPromotionsCodesService.getAllPromoCodes( params )
       .pipe( untilDestroyed(this) )
-      .subscribe( ( promoCodes: IPromoCode ) => this.promoCodes = promoCodes );
+      .subscribe( ( promoCodes: IPromoCodes ) => this.promoCodes = promoCodes );
   }
 
   private initSegmentation() {
@@ -272,7 +272,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
 
         this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
           .pipe( untilDestroyed(this) )
-          .subscribe( ( promoCode: IPromoCode ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
+          .subscribe( ( promoCode: IPromoCodes ) => this.tableAsyncSearchPromoCodeService.setTableDataSource( promoCode.result ) );
       } );
   }
 
@@ -302,7 +302,7 @@ export class SearchPromotionsCodesComponent implements OnInit, OnDestroy {
       this.searchParams = _.omit( this.searchParams, paramsOmit );
       this.searchPromotionsCodesService.getSearchPromotionsCodes( this.searchParams )
         .pipe( untilDestroyed(this) )
-        .subscribe( ( promoCode: IPromoCode ) => {
+        .subscribe( ( promoCode: IPromoCodes ) => {
           this.tableAsyncSearchPromoCodeService.countPage = promoCode.totalCount;
           this.promoCode = promoCode;
           this.isLoader = false;

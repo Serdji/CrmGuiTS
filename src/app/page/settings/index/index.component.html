@@ -1,0 +1,53 @@
+<div class="index">
+  <mat-card>
+    <mat-card-title>{{'PAGE.SETTINGS.INDEX.TITLE' | translate}}</mat-card-title>
+    <form class="index__form" [formGroup]="formIndex">
+      <div class="index__box">
+        <mat-form-field class="index__input">
+          <input matInput formControlName="saleDateFrom" type="text" placeholder="{{'PAGE.SETTINGS.INDEX.FIELD.SALE_DATE_FROM' | translate}}" [matDatepicker]="saleDateFrom">
+          <mat-datepicker-toggle matSuffix [for]="saleDateFrom"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #saleDateFrom></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="index__input">
+          <input matInput formControlName="saleDateTo" type="text" placeholder="{{'PAGE.SETTINGS.INDEX.FIELD.SALE_DATE_TO' | translate}}" [matDatepicker]="saleDateTo">
+                    <mat-datepicker-toggle matSuffix [for]="saleDateTo"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #saleDateTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="index__box">
+        <mat-form-field class="index__input">
+          <input matInput formControlName="pastActiveFrom" type="text" placeholder="{{'PAGE.SETTINGS.INDEX.FIELD.PAST_ACTIVE_FROM' | translate}}" [matDatepicker]="pastActiveFrom">
+                    <mat-datepicker-toggle matSuffix [for]="pastActiveFrom"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #pastActiveFrom></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="index__input">
+          <input matInput formControlName="pastActiveTo" type="text" placeholder="{{'PAGE.SETTINGS.INDEX.FIELD.PAST_ACTIVE_TO' | translate}}" [matDatepicker]="pastActiveTo">
+                    <mat-datepicker-toggle matSuffix [for]="pastActiveTo"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #pastActiveTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+      <div class="index__box">
+        <mat-form-field class="index__input">
+          <input matInput formControlName="actualActiveFrom" type="text" placeholder="{{'PAGE.SETTINGS.INDEX.FIELD.SALE_DATE_FROM' | translate}}" [matDatepicker]="actualActiveFrom">
+                    <mat-datepicker-toggle matSuffix [for]="actualActiveFrom"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #actualActiveFrom></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="index__input">
+          <input matInput formControlName="actualActiveTo" type="text" placeholder="{{'PAGE.SETTINGS.INDEX.FIELD.SALE_DATE_TO' | translate}}" [matDatepicker]="actualActiveTo">
+                    <mat-datepicker-toggle matSuffix [for]="actualActiveTo"></mat-datepicker-toggle>
+          <mat-datepicker touchUi="true" #actualActiveTo></mat-datepicker>
+        </mat-form-field>
+      </div>
+    </form>
+    <button
+      mat-raised-button
+      color="warn"
+      [disabled]="isDisabledButton"
+      (click)="onEditIndexConfig()"
+    >{{'BUTTON.EDIT' | translate}}
+      <mat-icon style="margin-left: 10px">
+        create
+      </mat-icon>
+    </button>
+  </mat-card>
+</div>

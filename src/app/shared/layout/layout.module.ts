@@ -10,6 +10,7 @@ import { SidenavService } from './sidenav/sidenav.service';
 import { BreadcrumbsModule } from '../breadcrumbs/breadcrumbs.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { ReactiveFormsModule } from '@angular/forms';
+import { SwitchLangModule } from '../../components/switch-lang/switch-lang.module';
 
 @NgModule({
   imports: [
@@ -19,6 +20,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     BreadcrumbsModule,
     TranslateModule,
     ReactiveFormsModule,
+    SwitchLangModule
   ],
   declarations: [
     SidenavComponent,

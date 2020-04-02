@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit, Input } from '@angular/core';
-import { IPromoCode } from '../../../../interface/ipromo-code';
+import { IPromoCodes } from '../../../../interface/ipromo-code';
 import { PromoCodeService } from './promo-code.service';
 import { takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
@@ -19,7 +19,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
   @Input() data: { promoCodeId: number };
 
   public progress: boolean;
-  public promoCodes: IPromoCode;
+  public promoCodes: IPromoCodes;
   public nameButton: string;
   public isUsedHostRecLoc: boolean;
   public isPromoCodNull: boolean;
@@ -41,7 +41,7 @@ export class PromoCodeComponent implements OnInit, OnDestroy {
 
   private initPromoCodes() {
     const customerId = { 'customerId': this.id };
-    const success = ( promoCodes: IPromoCode ) => {
+    const success = ( promoCodes: IPromoCodes ) => {
       const sortByDateFrom = R.sortBy( R.prop( 'dateFrom' ), promoCodes.result );
       this.promoCodes = R.set( R.lensProp( 'result' ), sortByDateFrom, promoCodes );
 

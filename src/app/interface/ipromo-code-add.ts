@@ -1,4 +1,4 @@
-export interface IPromoCodeAdd {
+export interface IPromoCodesAdd {
   promoCode: {
     promoCodeId: number;
     promotionId: number;
