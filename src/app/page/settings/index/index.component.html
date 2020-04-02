@@ -42,6 +42,7 @@
     <button
       mat-raised-button
       color="warn"
+      [disabled]="isDisabledButton"
       (click)="onEditIndexConfig()"
     >{{'BUTTON.EDIT' | translate}}
       <mat-icon style="margin-left: 10px">

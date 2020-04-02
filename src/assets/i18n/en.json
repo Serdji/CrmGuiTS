@@ -107,6 +107,7 @@
 		"OK": {
 			"ADDITIONAL_NAME": "Additional name successfully added.",
 			"DOCUMENT_CHANGED": "Document successfully added.",
+			"INDEX_SETTING": "Index Parameters Successfully Changed",
 			"PASSENGER_CHANGED": "Passenger data successfully updated.",
 			"PASSENGER_COMBINED": "Passengers successfully merged.",
 			"PASSWORD_CHANGED": "Password successfully updated.",
