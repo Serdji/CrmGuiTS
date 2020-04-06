@@ -13,6 +13,7 @@ export interface Iprofile {
   dob: string;
   comment: string;
   createDate: string;
+  relevanceIndex: number;
   customerNames: IprofileNames[];
   segmentations: ISegmentation[];
   customerGroupRelations: IcustomerGroupRelations[];

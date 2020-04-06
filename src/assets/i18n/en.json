@@ -479,6 +479,7 @@
 					"GENDER": "Sex:",
 					"LUT": "Last activity:",
 					"PROFILE": "Name:",
+					"RELEVANCE_INDEX": "Index:",
 					"SEGMENTATION": "Segmentations:",
 					"SHOW_ALL_GROUPS": "Show all groups",
 					"TOTAL_AMOUNT": "Total cost:"
