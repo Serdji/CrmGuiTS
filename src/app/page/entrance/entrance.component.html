@@ -1,14 +1,12 @@
 <div class="entrance">
-  <mat-grid-list cols="4" rowHeight="300px">
-    <div *ngFor="let card of cards">
-      <mat-grid-tile [colspan]="1" [rowspan]="1">
+  <div class="row no-gutters row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+    <div *ngFor="let card of cards" class="col entrance__cards">
         <mat-card class="entrance__card" (click)="openLink()" routerLink='{{ card.link[0].url }}'>
           <mat-card-title class="entrance__title">{{ card.name | translate  }} </mat-card-title>
           <mat-card-actions class="entrance__actions">
             <mat-icon class="entrance__icon">{{ card.icon }}</mat-icon>
           </mat-card-actions>
         </mat-card>
-      </mat-grid-tile>
     </div>
-  </mat-grid-list>
+  </div>
 </div>
