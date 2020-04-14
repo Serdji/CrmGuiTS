@@ -1,5 +1,5 @@
 <div class="entrance">
-  <div class="row no-gutters row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
+  <div class="row row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
     <div *ngFor="let card of cards" class="col entrance__cards">
         <mat-card class="entrance__card" (click)="openLink()" routerLink='{{ card.link[0].url }}'>
           <mat-card-title class="entrance__title">{{ card.name | translate  }} </mat-card-title>

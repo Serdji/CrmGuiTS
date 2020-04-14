@@ -39,8 +39,8 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.activityUser.idleLogout();
-    this.autoOpenAccord();
-    this.autoOpenSidena();
+    // this.autoOpenAccord();
+    // this.autoOpenSidena();
     this.louder();
     this.loader = false;
     this.menu = this.sidenavService.menu;
