@@ -6,7 +6,7 @@
 $background: mat-color($mat-brown, 50);
 
 body {
-  background: $background;
+  background-color: $background !important;
   height: 100vh;
 }
 
