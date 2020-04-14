@@ -443,14 +443,17 @@
     </form>
   </div>
 
+
+<!-- ################################################################################################################################################################  -->
+
   <mat-card *ngIf="isFormSegmentation && isProgressSegmentationParams">
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
 
   <div class="add-segmentation__change" *ngIf="isFormSegmentation && !isProgressSegmentationParams">
     <form class="add-segmentation__form" [formGroup]="formSegmentation">
-      <mat-grid-list cols="1" rowHeight="150px">
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
+      <div class="row no-gutters">
+        <div class="col _mb">
           <mat-card class="add-segmentation__card">
             <mat-card-content class="add-segmentation__content">
               <mat-form-field class="add-segmentation__input">
@@ -472,40 +475,102 @@
               </mat-form-field>
             </mat-card-content>
           </mat-card>
-        </mat-grid-tile>
-      </mat-grid-list>
+        </div>
+      </div>
 
-      <mat-grid-list cols="4" rowHeight="360px">
 
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-card class="add-segmentation__card">
-            <div class="add-segmentation__content-title-wrapper">
+      <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 no-gutters">
+        <div class="col">
+          <div class="row row-cols-1 no-gutters">
+            <div class="col _mb">
+              <mat-card class="add-segmentation__card">
+                <div class="add-segmentation__content-title-wrapper">
               <span
                 class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.TITLE' | translate}}</span>
-              <mat-icon *ngIf="resetRadioButtonFood"
-                        matTooltip="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.REMOVE' | translate}}"
-                        (click)="resetRadioButton('subjectAnalysis')">remove_circle_outline
-              </mat-icon>
-            </div>
-            <mat-card-content class="add-segmentation__content">
-              <mat-radio-group class="add-segmentation__input" formControlName="subjectAnalysis">
-                <div class="add-segmentation__input-radio-wrapper">
-                  <div class="add-segmentation__input-radio-group">
-                    <mat-radio-button class="add-segmentation__input-radio"
-                                      value="segment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.SEGMENT' | translate}}
-                    </mat-radio-button>
-                    <mat-radio-button class="add-segmentation__input-radio _margin-none"
-                                      value="payment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.PAYMENT' | translate}}
-                    </mat-radio-button>
-                  </div>
+                  <mat-icon *ngIf="resetRadioButtonFood"
+                            matTooltip="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.REMOVE' | translate}}"
+                            (click)="resetRadioButton('subjectAnalysis')">remove_circle_outline
+                  </mat-icon>
                 </div>
-              </mat-radio-group>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
+                <mat-card-content class="add-segmentation__content">
+                  <mat-radio-group class="add-segmentation__input" formControlName="subjectAnalysis">
+                    <div class="add-segmentation__input-radio-wrapper">
+                      <div class="add-segmentation__input-radio-group">
+                        <mat-radio-button class="add-segmentation__input-radio"
+                                          value="segment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.SEGMENT' | translate}}
+                        </mat-radio-button>
+                        <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                          value="payment">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SUBJECT_ANALYSIS.PAYMENT' | translate}}
+                        </mat-radio-button>
+                      </div>
+                    </div>
+                  </mat-radio-group>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col _mb">
+              <mat-card class="add-segmentation__card">
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TITLE' | translate}}</span>
+                <mat-card-content class="add-segmentation__content">
+                  <mat-form-field class="add-segmentation__input">
+                    <input formControlName="segmentsCountFromInclude" matInput type="text"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.FROM' | translate}}">
+                    <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <input formControlName="segmentsCountToExclude" matInput type="text"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TO' | translate}}">
+                    <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <mat-select formControlName="eDocTypeS">
+                      <mat-option
+                        value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TICKETS' | translate}}</mat-option>
+                      <mat-option
+                        value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.SERVICES' | translate}}</mat-option>
+                    </mat-select>
+                    <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+                  </mat-form-field>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col _mb">
+              <mat-card class="add-segmentation__card">
+            <span
+              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TITLE' | translate}}</span>
+                <mat-card-content class="add-segmentation__content">
+                  <mat-form-field class="add-segmentation__input">
+                    <input formControlName="moneyAmountFromInclude" matInput type="text"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.FROM' | translate}}">
+                    <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <input formControlName="moneyAmountToExclude" matInput type="text"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TO' | translate}}">
+                    <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <input matInput formControlName="currency" type="text"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.CURRENCY' | translate}}">
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <mat-select formControlName="eDocTypeP">
+                      <mat-option
+                        value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TICKETS' | translate}}</mat-option>
+                      <mat-option
+                        value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.SERVICES' | translate}}</mat-option>
+                    </mat-select>
+                    <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
+                  </mat-form-field>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
+        </div>
 
 
-        <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <div class="col _mb">
           <mat-card class="add-segmentation__card">
             <span
               class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.TICKET.TITLE' | translate}}</span>
@@ -597,9 +662,10 @@
               </mat-form-field>
             </mat-card-content>
           </mat-card>
-        </mat-grid-tile>
+        </div>
 
-        <mat-grid-tile [colspan]="1" [rowspan]="3">
+
+        <div class="col _mb">
           <mat-card class="add-segmentation__card">
             <span
               class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.SERVICES.TITLE' | translate}}</span>
@@ -715,168 +781,110 @@
               </mat-form-field>
             </mat-card-content>
           </mat-card>
-        </mat-grid-tile>
+        </div>
 
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-card class="add-segmentation__card">
+
+        <div class="col col-lg-8">
+          <div class="row row-cols-1 row-cols-lg-2 row-cols-xl-1 no-gutters">
+            <div class="col _mb">
+              <mat-card class="add-segmentation__card">
             <span
               class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.TITLE' | translate}}</span>
-            <mat-card-content class="add-segmentation__content">
-              <mat-form-field class="add-segmentation__input">
-                <input formControlName="bookingCreateDateFromInclude" matInput
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_FROM' | translate}}"
-                       [matDatepicker]="bookingCreateDateFromInclude">
-                <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
-                <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <input formControlName="bookingCreateDateToExclude" matInput
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_TO' | translate}}"
-                       [matDatepicker]="bookingCreateDateToExclude">
-                <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
-                <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
-              </mat-form-field>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-card class="add-segmentation__card">
-            <span
-              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TITLE' | translate}}</span>
-            <mat-card-content class="add-segmentation__content">
-              <mat-form-field class="add-segmentation__input">
-                <input formControlName="segmentsCountFromInclude" matInput type="text"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.FROM' | translate}}">
-                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <input formControlName="segmentsCountToExclude" matInput type="text"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TO' | translate}}">
-                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <mat-select formControlName="eDocTypeS">
-                  <mat-option
-                    value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.TICKETS' | translate}}</mat-option>
-                  <mat-option
-                    value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.NUMBER_SEGMENTS.SERVICES' | translate}}</mat-option>
-                </mat-select>
-                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
-              </mat-form-field>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-card class="add-segmentation__card">
-            <mat-card-content class="add-segmentation__content">
+                <mat-card-content class="add-segmentation__content">
+                  <mat-form-field class="add-segmentation__input">
+                    <input formControlName="bookingCreateDateFromInclude" matInput
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_FROM' | translate}}"
+                           [matDatepicker]="bookingCreateDateFromInclude">
+                    <mat-datepicker-toggle matSuffix [for]="bookingCreateDateFromInclude"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #bookingCreateDateFromInclude></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <input formControlName="bookingCreateDateToExclude" matInput
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.RESERVATION_DATE_RANG.DATE_TO' | translate}}"
+                           [matDatepicker]="bookingCreateDateToExclude">
+                    <mat-datepicker-toggle matSuffix [for]="bookingCreateDateToExclude"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #bookingCreateDateToExclude></mat-datepicker>
+                  </mat-form-field>
+                </mat-card-content>
+              </mat-card>
+            </div>
+            <div class="col  _mb">
+              <mat-card class="add-segmentation__card">
+                <mat-card-content class="add-segmentation__content">
               <span
                 class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.TITLE' | translate}}</span>
-              <mat-form-field class="add-segmentation__input">
-                <mat-select formControlName="gender"
-                            placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
-                  <mat-option></mat-option>
-                  <mat-option
-                    value="M">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.M' | translate}}</mat-option>
-                  <mat-option
-                    value="F">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.F' | translate}}</mat-option>
-                </mat-select>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="dobFromInclude"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_FROM' | translate}}"
-                       [matDatepicker]="dobFromInclude">
-                <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
-                <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="dobToExclude"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_TO' | translate}}"
-                       [matDatepicker]="dobToExclude">
-                <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
-                <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
-              </mat-form-field>
-              <mat-radio-group formControlName="withChild" class="add-segmentation__input">
-                <div class="add-segmentation__input-radio-wrapper">
-                  <div class="add-segmentation__input-radio-group">
-                    <mat-radio-button class="add-segmentation__input-radio _margin-none"
-                                      [value]="true">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITH_CHILDREN' | translate}}
-                    </mat-radio-button>
-                  </div>
-                  <div class="add-segmentation__input-radio-group _right">
-                    <mat-radio-button class="add-segmentation__input-radio _margin-none"
-                                      [value]="false">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITHOUT_CHILDREN' | translate}}
-                    </mat-radio-button>
-                  </div>
-                </div>
-              </mat-radio-group>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-
-
-        <mat-grid-tile [colspan]="1" [rowspan]="1">
-          <mat-card class="add-segmentation__card">
-            <span
-              class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TITLE' | translate}}</span>
-            <mat-card-content class="add-segmentation__content">
-              <mat-form-field class="add-segmentation__input">
-                <input formControlName="moneyAmountFromInclude" matInput type="text"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.FROM' | translate}}">
-                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <input formControlName="moneyAmountToExclude" matInput type="text"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TO' | translate}}">
-                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <input matInput formControlName="currency" type="text"
-                       placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.CURRENCY' | translate}}">
-              </mat-form-field>
-              <mat-form-field class="add-segmentation__input">
-                <mat-select formControlName="eDocTypeP">
-                  <mat-option
-                    value="T">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.TICKETS' | translate}}</mat-option>
-                  <mat-option
-                    value="E">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.ORDER_AMOUNT.SERVICES' | translate}}</mat-option>
-                </mat-select>
-                <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
-              </mat-form-field>
-            </mat-card-content>
-          </mat-card>
-        </mat-grid-tile>
-
-
-        <div class="add-segmentation__button-wrapper">
-          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                  (click)="saveForm()" color="primary" [disabled]="buttonSave">
-            <mat-icon>save</mat-icon>
-            {{'BUTTON.SAVE' | translate}}
-          </button>
-          <button appAccessRights="analytics:read" class="add-segmentation__button" mat-raised-button
-                  (click)="searchForm()" color="primary" [disabled]="buttonSearch">
-            <mat-icon>search</mat-icon>
-            {{'BUTTON.SEARCH' | translate}}
-          </button>
-          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                  (click)="createForm()" [disabled]="buttonCreate">
-            <mat-icon>create</mat-icon>
-            {{'BUTTON.EDIT' | translate}}
-          </button>
-          <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                  (click)="deleteSegmentation()" color="warn" [disabled]="buttonDelete">
-            <mat-icon>delete</mat-icon>
-            {{'BUTTON.DELETE' | translate}}
-          </button>
-          <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">
-            <mat-icon>clear</mat-icon>
-            {{'BUTTON.CLEAR_FORM' | translate}}
-          </button>
+                  <mat-form-field class="add-segmentation__input">
+                    <mat-select formControlName="gender"
+                                placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
+                      <mat-option></mat-option>
+                      <mat-option
+                        value="M">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.M' | translate}}</mat-option>
+                      <mat-option
+                        value="F">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.F' | translate}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <input matInput formControlName="dobFromInclude"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_FROM' | translate}}"
+                           [matDatepicker]="dobFromInclude">
+                    <mat-datepicker-toggle matSuffix [for]="dobFromInclude"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #dobFromInclude></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
+                    <input matInput formControlName="dobToExclude"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.DOB_TO' | translate}}"
+                           [matDatepicker]="dobToExclude">
+                    <mat-datepicker-toggle matSuffix [for]="dobToExclude"></mat-datepicker-toggle>
+                    <mat-datepicker touchUi="true" #dobToExclude></mat-datepicker>
+                  </mat-form-field>
+                  <mat-radio-group formControlName="withChild" class="add-segmentation__input">
+                    <div class="add-segmentation__input-radio-wrapper">
+                      <div class="add-segmentation__input-radio-group">
+                        <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                          [value]="true">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITH_CHILDREN' | translate}}
+                        </mat-radio-button>
+                      </div>
+                      <div class="add-segmentation__input-radio-group _right">
+                        <mat-radio-button class="add-segmentation__input-radio _margin-none"
+                                          [value]="false">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.FLIES_WITHOUT_CHILDREN' | translate}}
+                        </mat-radio-button>
+                      </div>
+                    </div>
+                  </mat-radio-group>
+                </mat-card-content>
+              </mat-card>
+            </div>
+          </div>
         </div>
-      </mat-grid-list>
+      </div>
     </form>
+
+    <div class="add-segmentation__button-wrapper">
+      <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+              (click)="saveForm()" color="primary" [disabled]="buttonSave">
+        <mat-icon>save</mat-icon>
+        {{'BUTTON.SAVE' | translate}}
+      </button>
+      <button appAccessRights="analytics:read" class="add-segmentation__button" mat-raised-button
+              (click)="searchForm()" color="primary" [disabled]="buttonSearch">
+        <mat-icon>search</mat-icon>
+        {{'BUTTON.SEARCH' | translate}}
+      </button>
+      <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+              (click)="createForm()" [disabled]="buttonCreate">
+        <mat-icon>create</mat-icon>
+        {{'BUTTON.EDIT' | translate}}
+      </button>
+      <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
+              (click)="deleteSegmentation()" color="warn" [disabled]="buttonDelete">
+        <mat-icon>delete</mat-icon>
+        {{'BUTTON.DELETE' | translate}}
+      </button>
+      <button class="add-segmentation__button" mat-raised-button (click)="clearForm()">
+        <mat-icon>clear</mat-icon>
+        {{'BUTTON.CLEAR_FORM' | translate}}
+      </button>
+    </div>
 
     <mat-card class="add-segmentation__table" *ngIf="isTable">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
