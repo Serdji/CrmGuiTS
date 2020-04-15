@@ -3,7 +3,7 @@
 
   <form [formGroup]="formEvent" class="add-event__form">
     <div class="row no-gutters">
-      <div class="col col-lg-12 col-xl-3">
+      <div class="col col-12 col-xl-3">
         <mat-card class="add-event__field">
           <mat-form-field class="add-event__input">
             <input matInput formControlName="title" type="text"
@@ -40,7 +40,7 @@
         </mat-card>
       </div>
 
-      <div class="col col-lg-12 col-xl-9">
+      <div class="col col-12 col-xl-9">
         <mat-card class="add-event__type">
           <app-editor-email *ngIf="distributionType === 1" [params]="{ 'segmentationId': segmentationId, 'task': task }"
                             [totalCount]="totalCount" [whichButton]="whichAction"
