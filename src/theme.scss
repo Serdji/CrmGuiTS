@@ -18,6 +18,16 @@ hr {
   display: none !important;
 }
 
+.row {
+  height: 100%;
+  .col {
+    margin-bottom: 10px;
+    ._no-col-mb{
+      margin-bottom: 0;
+    }
+  }
+}
+
 // Define the default theme (same as the example above).
 $candy-app-primary: mat-palette($mat-light-blue);
 $candy-app-accent:  mat-palette($mat-pink, A200, A100, A400);

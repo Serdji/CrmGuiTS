@@ -91,7 +91,6 @@ export class SidenavComponent implements OnInit, OnDestroy {
   private autoCloseAccord() {
     timer( 0 ).pipe( untilDestroyed(this) ).subscribe( _ => {
       const aElement = this.accord.nativeElement.querySelectorAll( 'a' );
-      console.log( aElement );
       fromEvent( aElement, 'click' )
         .pipe( delay( 500 ) )
         .subscribe( _ => this.sidenav.close() );

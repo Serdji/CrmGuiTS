@@ -1,23 +1,27 @@
 <div class="profile-search" appAccessRights="customers:read" appAccessMessage="true">
   <form class="profile-search__form" [formGroup]="formProfileSearch">
     <div class="row no-gutters row-cols-1 row-cols-md-3 row-cols-lg-4 row-cols-xl-5">
-      <div class="col _mb">
+      <div class="col">
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="lastname" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.LAST_NAME' | translate}}">
+              <input matInput formControlName="lastname" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.LAST_NAME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="firstname" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FIRST_NAME' | translate}}">
+              <input matInput formControlName="firstname" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FIRST_NAME' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="customerids" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.PROFILE' | translate}}">
+              <input matInput formControlName="customerids" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.PROFILE' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <mat-select formControlName="gender" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.TITLE' | translate}}">
+              <mat-select formControlName="gender"
+                          placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.TITLE' | translate}}">
                 <mat-option></mat-option>
-                <mat-option value="m" >{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M' | translate}}</mat-option>
-                <mat-option value="f" >{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.F' | translate}}</mat-option>
+                <mat-option value="m">{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.M' | translate}}</mat-option>
+                <mat-option value="f">{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.GENDER.F' | translate}}</mat-option>
               </mat-select>
             </mat-form-field>
 
@@ -42,8 +46,10 @@
                   [matChipInputAddOnBlur]="addSegmentationOnBlur"
                   (matChipInputTokenEnd)="add($event, 'segmentation', 'segmentationChips')">
               </mat-chip-list>
-              <mat-autocomplete #segmentation="matAutocomplete" (optionSelected)="selected($event, 'segmentation', 'segmentationChips', 'segmentationFruitInput')">
-                <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId" [value]="segmentation.title">{{ segmentation.title }}</mat-option>
+              <mat-autocomplete #segmentation="matAutocomplete"
+                                (optionSelected)="selected($event, 'segmentation', 'segmentationChips', 'segmentationFruitInput')">
+                <mat-option *ngFor="let segmentation of segmentationOptions | async" [id]="segmentation.segmentationId"
+                            [value]="segmentation.title">{{ segmentation.title }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
 
@@ -69,18 +75,25 @@
                   [matChipInputAddOnBlur]="addCustomerGroupOnBlur"
                   (matChipInputTokenEnd)="add($event, 'customerGroup', 'customerGroupChips')">
               </mat-chip-list>
-              <mat-autocomplete #customerGroup="matAutocomplete" (optionSelected)="selected($event, 'customerGroup', 'customerGroupChips', 'customerGroupFruitInput')">
-                <mat-option *ngFor="let customerGroup of customerGroupOptions | async" [id]="customerGroup.customerGroupId" [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
+              <mat-autocomplete #customerGroup="matAutocomplete"
+                                (optionSelected)="selected($event, 'customerGroup', 'customerGroupChips', 'customerGroupFruitInput')">
+                <mat-option *ngFor="let customerGroup of customerGroupOptions | async"
+                            [id]="customerGroup.customerGroupId"
+                            [value]="customerGroup.customerGroupName">{{ customerGroup.customerGroupName }}</mat-option>
               </mat-autocomplete>
             </mat-form-field>
 
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dobfrominclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DOB_FROM_INCLUDE' | translate}}" [matDatepicker]="DobFromInclude">
+              <input matInput formControlName="dobfrominclude"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DOB_FROM_INCLUDE' | translate}}"
+                     [matDatepicker]="DobFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DobFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dobtoexclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DOB_TO_EXCLUDE' | translate}}" [matDatepicker]="DobToExclude">
+              <input matInput formControlName="dobtoexclude"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DOB_TO_EXCLUDE' | translate}}"
+                     [matDatepicker]="DobToExclude">
               <mat-datepicker-toggle matSuffix [for]="DobToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DobToExclude color="primary"></mat-datepicker>
             </mat-form-field>
@@ -88,58 +101,74 @@
         </mat-card>
       </div>
 
-      <div class="col _mb">
+      <div class="col">
         <mat-card class="profile-search__card">
           <mat-card-content class="profile-search__content">
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dateOfServiceFromInclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_OF_SERVICE_FROM_INCLUDE' | translate}}" [matDatepicker]="DateOfServiceFromInclude">
+              <input matInput formControlName="dateOfServiceFromInclude"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_OF_SERVICE_FROM_INCLUDE' | translate}}"
+                     [matDatepicker]="DateOfServiceFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DateOfServiceFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DateOfServiceFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dateOfServiceToExclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_OF_SERVICE_TO_EXCLUDE' | translate}}" [matDatepicker]="DateOfServiceToExclude">
+              <input matInput formControlName="dateOfServiceToExclude"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_OF_SERVICE_TO_EXCLUDE' | translate}}"
+                     [matDatepicker]="DateOfServiceToExclude">
               <mat-datepicker-toggle matSuffix [for]="DateOfServiceToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DateOfServiceToExclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dateTransFromInclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_TRANS_FROM_INCLUDE' | translate}}" [matDatepicker]="DateTransFromInclude">
+              <input matInput formControlName="dateTransFromInclude"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_TRANS_FROM_INCLUDE' | translate}}"
+                     [matDatepicker]="DateTransFromInclude">
               <mat-datepicker-toggle matSuffix [for]="DateTransFromInclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DateTransFromInclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="dateTransToExclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_TRANS_TO_EXCLUDE' | translate}}" [matDatepicker]="DateTransToExclude">
+              <input matInput formControlName="dateTransToExclude"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DATE_TRANS_TO_EXCLUDE' | translate}}"
+                     [matDatepicker]="DateTransToExclude">
               <mat-datepicker-toggle matSuffix [for]="DateTransToExclude"></mat-datepicker-toggle>
               <mat-datepicker touchUi="true" #DateTransToExclude></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="originPosId" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_POS_ID' | translate}}">
+              <input matInput formControlName="originPosId" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_POS_ID' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="originPult" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_PULT' | translate}}">
+              <input matInput formControlName="originPult" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_PULT' | translate}}">
             </mat-form-field>
             <mat-form-field class="profile-search__input">
-              <input matInput formControlName="originAgency" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_AGENCY' | translate}}">
+              <input matInput formControlName="originAgency" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ORIGIN_AGENCY' | translate}}">
             </mat-form-field>
           </mat-card-content>
         </mat-card>
       </div>
 
-      <div class="col">
-        <div class="row no-gutters">
-          <div class="col _mb">
+      <div class="col _no-col-mb">
+        <div class="row no-gutters row-cols-1">
+          <div class="col">
             <mat-card class="profile-search__card">
               <mat-card-content class="profile-search__content">
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="ticket" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.TICKET' | translate}}">
+                  <input matInput formControlName="ticket" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.TICKET' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="recloc" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.REC_LOC' | translate}}">
+                  <input matInput formControlName="recloc" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.REC_LOC' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="emd" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.EMD' | translate}}">
+                  <input matInput formControlName="emd" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.EMD' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="sellCountry" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_COUNTRY' | translate}}" [matAutocomplete]="sellCountry">
+                  <input matInput formControlName="sellCountry" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_COUNTRY' | translate}}"
+                         [matAutocomplete]="sellCountry">
                   <mat-autocomplete #sellCountry="matAutocomplete" [displayWith]="displaySellCountryFn">
                     <mat-option *ngFor="let sellCountry of sellCountryOptions | async" [value]="sellCountry">
                       {{ sellCountry.title }}
@@ -147,7 +176,9 @@
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="sellType" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_TYPE' | translate}}" [matAutocomplete]="sellType">
+                  <input matInput formControlName="sellType" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SELL_TYPE' | translate}}"
+                         [matAutocomplete]="sellType">
                   <mat-autocomplete #sellType="matAutocomplete" [displayWith]="displaySellTypeCodeFn">
                     <mat-option *ngFor="let sellType of sellTypeOptions | async" [value]="sellType">
                       {{ sellType.sellTypeCode }}
@@ -158,32 +189,40 @@
             </mat-card>
           </div>
 
-          <div class="col _mb"><mat-card class="profile-search__card">
-            <mat-card-content class="profile-search__content">
-              <mat-form-field class="profile-search__input">
-                <input matInput formControlName="cab" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CAB' | translate}}">
-              </mat-form-field>
-              <mat-form-field class="profile-search__input">
-                <input matInput formControlName="rbd" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.RBD' | translate}}">
-              </mat-form-field>
-              <mat-form-field class="profile-search__input">
-                <input matInput formControlName="farecode" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FARE_CODE' | translate}}">
-              </mat-form-field>
-              <mat-form-field class="profile-search__input">
-                <input matInput formControlName="servicecode" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SERVICE_CODE' | translate}}">
-              </mat-form-field>
-            </mat-card-content>
-          </mat-card></div>
-        </div>
-      </div>
-
-      <div class="col">
-        <div class="row no-gutters">
-          <div class="col _mb">
+          <div class="col">
             <mat-card class="profile-search__card">
               <mat-card-content class="profile-search__content">
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="airlineLCode" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRLINE_L_CODE' | translate}}" [matAutocomplete]="airlineLCode">
+                  <input matInput formControlName="cab" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CAB' | translate}}">
+                </mat-form-field>
+                <mat-form-field class="profile-search__input">
+                  <input matInput formControlName="rbd" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.RBD' | translate}}">
+                </mat-form-field>
+                <mat-form-field class="profile-search__input">
+                  <input matInput formControlName="farecode" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FARE_CODE' | translate}}">
+                </mat-form-field>
+                <mat-form-field class="profile-search__input">
+                  <input matInput formControlName="servicecode" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.SERVICE_CODE' | translate}}">
+                </mat-form-field>
+              </mat-card-content>
+            </mat-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="col _no-col-mb">
+        <div class="row no-gutters row-cols-1">
+          <div class="col">
+            <mat-card class="profile-search__card">
+              <mat-card-content class="profile-search__content">
+                <mat-form-field class="profile-search__input">
+                  <input matInput formControlName="airlineLCode" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRLINE_L_CODE' | translate}}"
+                         [matAutocomplete]="airlineLCode">
                   <mat-autocomplete #airlineLCode="matAutocomplete" [displayWith]="displayAirlineLCodeFn">
                     <mat-option *ngFor="let airlineLCode of airlineLCodeOptions | async" [value]="airlineLCode">
                       {{airlineLCode.title}}
@@ -191,18 +230,24 @@
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="flight" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FLIGHT' | translate}}">
+                  <input matInput formControlName="flight" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.FLIGHT' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="craft" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRCRAFT_TYPE' | translate}}">
+                  <input matInput formControlName="craft" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRCRAFT_TYPE' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="deptimefrominclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}" [matDatepicker]="DepTimeFromIncludeFligth">
+                  <input matInput formControlName="deptimefrominclude"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}"
+                         [matDatepicker]="DepTimeFromIncludeFligth">
                   <mat-datepicker-toggle matSuffix [for]="DepTimeFromIncludeFligth"></mat-datepicker-toggle>
                   <mat-datepicker touchUi="true" #DepTimeFromIncludeFligth></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="deptimetoexclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEPT_IME_TO_EXCLUDE' | translate}}" [matDatepicker]="DepTimeToExcludeFligth">
+                  <input matInput formControlName="deptimetoexclude"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEPT_IME_TO_EXCLUDE' | translate}}"
+                         [matDatepicker]="DepTimeToExcludeFligth">
                   <mat-datepicker-toggle matSuffix [for]="DepTimeToExcludeFligth"></mat-datepicker-toggle>
                   <mat-datepicker touchUi="true" #DepTimeToExcludeFligth></mat-datepicker>
                 </mat-form-field>
@@ -210,22 +255,28 @@
             </mat-card>
           </div>
 
-          <div class="col _mb">
+          <div class="col">
             <mat-card class="profile-search__card">
               <mat-card-content class="profile-search__content">
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="moneyamountfrominclude" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.MONEY_AMOUNT_FROM_INCLUDE' | translate}} ({{currencyDefault}})">
+                  <input matInput formControlName="moneyamountfrominclude" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.MONEY_AMOUNT_FROM_INCLUDE' | translate}} ({{currencyDefault}})">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="moneyamounttoinclude" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.MONEY_AMOUNT_TO_INCLUDE' | translate}} ({{currencyDefault}})">
+                  <input matInput formControlName="moneyamounttoinclude" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.MONEY_AMOUNT_TO_INCLUDE' | translate}} ({{currencyDefault}})">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="bookingcreatedatefrominclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.BOOKING_CREATE_DATE_FROM_INCLUDE' | translate}}" [matDatepicker]="bookingcreatedatefrominclude">
+                  <input matInput formControlName="bookingcreatedatefrominclude"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.BOOKING_CREATE_DATE_FROM_INCLUDE' | translate}}"
+                         [matDatepicker]="bookingcreatedatefrominclude">
                   <mat-datepicker-toggle matSuffix [for]="bookingcreatedatefrominclude"></mat-datepicker-toggle>
                   <mat-datepicker touchUi="true" #bookingcreatedatefrominclude></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="bookingcreatedatetoexclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.BOOKING_CREATE_DATE_TO_EXCLUDE' | translate}}" [matDatepicker]="bookingcreatedatetoexclude">
+                  <input matInput formControlName="bookingcreatedatetoexclude"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.BOOKING_CREATE_DATE_TO_EXCLUDE' | translate}}"
+                         [matDatepicker]="bookingcreatedatetoexclude">
                   <mat-datepicker-toggle matSuffix [for]="bookingcreatedatetoexclude"></mat-datepicker-toggle>
                   <mat-datepicker touchUi="true" #bookingcreatedatetoexclude></mat-datepicker>
                 </mat-form-field>
@@ -235,30 +286,40 @@
         </div>
       </div>
 
-      <div class="col col-lg-6">
-        <div class="row no-gutters row-cols-lg-2 row-cols-xl-1">
-          <div class="col _mb">
+      <div class="col _no-col-mb col-lg-6">
+        <div class="row no-gutters row-cols-1 row-cols-lg-2 row-cols-xl-1">
+          <div class="col">
             <mat-card class="profile-search__card">
               <mat-card-content class="profile-search__content">
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="deppoint" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_POINT' | translate}}" [matAutocomplete]="airportfrom">
+                  <input matInput formControlName="deppoint" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_POINT' | translate}}"
+                         [matAutocomplete]="airportfrom">
                   <mat-autocomplete #airportfrom="matAutocomplete">
-                    <mat-option *ngFor="let airport of airportsFromOptions | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+                    <mat-option *ngFor="let airport of airportsFromOptions | async"
+                                [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="arrpoint" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ARR_POINT' | translate}}" [matAutocomplete]="airportto">
+                  <input matInput formControlName="arrpoint" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.ARR_POINT' | translate}}"
+                         [matAutocomplete]="airportto">
                   <mat-autocomplete #airportto="matAutocomplete">
-                    <mat-option *ngFor="let airport of airportsToOptions | async" [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
+                    <mat-option *ngFor="let airport of airportsToOptions | async"
+                                [value]="airport.locationCode">{{ airport.locationCode }}</mat-option>
                   </mat-autocomplete>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="deptimefrominclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}" [matDatepicker]="DepTimeFromInclude">
+                  <input matInput formControlName="deptimefrominclude"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}"
+                         [matDatepicker]="DepTimeFromInclude">
                   <mat-datepicker-toggle matSuffix [for]="DepTimeFromInclude"></mat-datepicker-toggle>
                   <mat-datepicker touchUi="true" #DepTimeFromInclude></mat-datepicker>
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="deptimetoexclude" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEPT_IME_TO_EXCLUDE' | translate}}" [matDatepicker]="DepTimeToExclude">
+                  <input matInput formControlName="deptimetoexclude"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEPT_IME_TO_EXCLUDE' | translate}}"
+                         [matDatepicker]="DepTimeToExclude">
                   <mat-datepicker-toggle matSuffix [for]="DepTimeToExclude"></mat-datepicker-toggle>
                   <mat-datepicker touchUi="true" #DepTimeToExclude></mat-datepicker>
                 </mat-form-field>
@@ -266,16 +327,19 @@
             </mat-card>
           </div>
 
-          <div class="col _mb">
+          <div class="col">
             <mat-card class="profile-search__card">
               <mat-card-content class="profile-search__content">
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="contactemail" type="email" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CONTACT_EMAIL' | translate}}">
+                  <input matInput formControlName="contactemail" type="email"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CONTACT_EMAIL' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
-                  <input matInput formControlName="contactphone" type="text" placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CONTACT_PHONE' | translate}}">
+                  <input matInput formControlName="contactphone" type="text"
+                         placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CONTACT_PHONE' | translate}}">
                 </mat-form-field>
-                <mat-checkbox  formControlName="contactsexist">{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CONTACT_SEXIST' | translate}}</mat-checkbox>
+                <mat-checkbox
+                  formControlName="contactsexist">{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CONTACT_SEXIST' | translate}}</mat-checkbox>
               </mat-card-content>
             </mat-card>
           </div>
@@ -285,14 +349,18 @@
   </form>
 
   <div class="profile-search__button-wrapper">
-    <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button (click)="sendForm()" color="primary" [disabled]="buttonSearch">
+    <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button
+            (click)="sendForm()" color="primary" [disabled]="buttonSearch">
       <mat-icon>search</mat-icon>
       {{'BUTTON.SEARCH' | translate}}
     </button>
-    <button [disabled]="buttonCsvDisabled" appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button matTooltip="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.TOLTIP_CSV' | translate}}" (click)="downloadCsv()" color="accent">
+    <button [disabled]="buttonCsvDisabled" appAccessRights="customers:read" class="profile-search__button _left-button"
+            mat-raised-button matTooltip="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.TOLTIP_CSV' | translate}}"
+            (click)="downloadCsv()" color="accent">
       <mat-icon>insert_drive_file</mat-icon>
       CSV
-      <mat-spinner *ngIf="csvLoader" strokeWidth="5" diameter="30" color="warn" class="profile-search__button-spinner"></mat-spinner>
+      <mat-spinner *ngIf="csvLoader" strokeWidth="5" diameter="30" color="warn"
+                   class="profile-search__button-spinner"></mat-spinner>
     </button>
     <button class="profile-search__button" mat-raised-button (click)="clearForm()">
       <mat-icon>clear</mat-icon>
@@ -304,11 +372,11 @@
     <mat-card appAccessRights="customers:read" appAccessMessage="true" *ngIf="isTableCard">
       <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
       <ng-template #loaderDisabled>
-        <mat-card-title>{{profiles.length !==0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
-          <app-table-async-profile
-            [tableDataSource]="profiles"
-          >
-          </app-table-async-profile>
+        <mat-card-title>{{profiles.length !== 0 ? ('TABLE.RESULT.OK' | translate) : ('TABLE.RESULT.ERROR' | translate)}}</mat-card-title>
+        <app-table-async-profile
+          [tableDataSource]="profiles"
+        >
+        </app-table-async-profile>
       </ng-template>
     </mat-card>
   </div>
