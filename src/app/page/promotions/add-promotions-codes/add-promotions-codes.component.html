@@ -300,39 +300,39 @@
         </mat-card>
       </div>
     </div>
+    <div class="add-promotions-codes__button-wrapper">
+      <button appAccessRights="promotions:update" class="add-promotions-codes__button _left-button" mat-raised-button
+              (click)="saveForm()" color="primary" [disabled]="buttonSave">
+        <mat-icon>save</mat-icon>
+        {{'BUTTON.SAVE' | translate}}
+      </button>
+      <button appAccessRights="promotions:read" class="add-promotions-codes__button" mat-raised-button
+              (click)="searchForm()" color="primary" [disabled]="buttonSearch">
+        <mat-icon>search</mat-icon>
+        {{'BUTTON.SEARCH' | translate}}
+      </button>
+      <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+              (click)="createForm()" [disabled]="buttonCreate">
+        <mat-icon>create</mat-icon>
+        {{'BUTTON.EDIT' | translate}}
+      </button>
+      <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+              (click)="copyForm()" color="warn" [disabled]="buttonCopy">
+        <mat-icon>file_copy</mat-icon>
+        {{'BUTTON.COPY' | translate}}
+      </button>
+      <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
+              (click)="deletePromoCode()" color="accent" [disabled]="buttonDelete">
+        <mat-icon>delete</mat-icon>
+        {{'BUTTON.DELETE' | translate}}
+      </button>
+      <button class="add-promotions-codes__button" mat-raised-button (click)="clearForm()">
+        <mat-icon>clear</mat-icon>
+        {{'BUTTON.CLEAR_FORM' | translate}}
+      </button>
+    </div>
   </form>
 
-  <div class="add-promotions-codes__button-wrapper">
-    <button appAccessRights="promotions:update" class="add-promotions-codes__button _left-button" mat-raised-button
-            (click)="saveForm()" color="primary" [disabled]="buttonSave">
-      <mat-icon>save</mat-icon>
-      {{'BUTTON.SAVE' | translate}}
-    </button>
-    <button appAccessRights="promotions:read" class="add-promotions-codes__button" mat-raised-button
-            (click)="searchForm()" color="primary" [disabled]="buttonSearch">
-      <mat-icon>search</mat-icon>
-      {{'BUTTON.SEARCH' | translate}}
-    </button>
-    <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
-            (click)="createForm()" [disabled]="buttonCreate">
-      <mat-icon>create</mat-icon>
-      {{'BUTTON.EDIT' | translate}}
-    </button>
-    <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
-            (click)="copyForm()" color="warn" [disabled]="buttonCopy">
-      <mat-icon>file_copy</mat-icon>
-      {{'BUTTON.COPY' | translate}}
-    </button>
-    <button appAccessRights="promotions:update" class="add-promotions-codes__button" mat-raised-button
-            (click)="deletePromoCode()" color="accent" [disabled]="buttonDelete">
-      <mat-icon>delete</mat-icon>
-      {{'BUTTON.DELETE' | translate}}
-    </button>
-    <button class="add-promotions-codes__button" mat-raised-button (click)="clearForm()">
-      <mat-icon>clear</mat-icon>
-      {{'BUTTON.CLEAR_FORM' | translate}}
-    </button>
-  </div>
 
   <mat-card class="add-promotions-codes__table" *ngIf="isTable">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>

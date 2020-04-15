@@ -346,27 +346,27 @@
         </div>
       </div>
     </div>
+    <div class="profile-search__button-wrapper">
+      <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button
+              (click)="sendForm()" color="primary" [disabled]="buttonSearch">
+        <mat-icon>search</mat-icon>
+        {{'BUTTON.SEARCH' | translate}}
+      </button>
+      <button [disabled]="buttonCsvDisabled" appAccessRights="customers:read" class="profile-search__button"
+              mat-raised-button matTooltip="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.TOLTIP_CSV' | translate}}"
+              (click)="downloadCsv()" color="accent">
+        <mat-icon>insert_drive_file</mat-icon>
+        CSV
+        <mat-spinner *ngIf="csvLoader" strokeWidth="5" diameter="30" color="warn"
+                     class="profile-search__button-spinner"></mat-spinner>
+      </button>
+      <button class="profile-search__button" mat-raised-button (click)="clearForm()">
+        <mat-icon>clear</mat-icon>
+        {{'BUTTON.CLEAR_FORM' | translate}}
+      </button>
+    </div>
   </form>
 
-  <div class="profile-search__button-wrapper">
-    <button appAccessRights="customers:read" class="profile-search__button _left-button" mat-raised-button
-            (click)="sendForm()" color="primary" [disabled]="buttonSearch">
-      <mat-icon>search</mat-icon>
-      {{'BUTTON.SEARCH' | translate}}
-    </button>
-    <button [disabled]="buttonCsvDisabled" appAccessRights="customers:read" class="profile-search__button _left-button"
-            mat-raised-button matTooltip="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.TOLTIP_CSV' | translate}}"
-            (click)="downloadCsv()" color="accent">
-      <mat-icon>insert_drive_file</mat-icon>
-      CSV
-      <mat-spinner *ngIf="csvLoader" strokeWidth="5" diameter="30" color="warn"
-                   class="profile-search__button-spinner"></mat-spinner>
-    </button>
-    <button class="profile-search__button" mat-raised-button (click)="clearForm()">
-      <mat-icon>clear</mat-icon>
-      {{'BUTTON.CLEAR_FORM' | translate}}
-    </button>
-  </div>
 
   <div class="profile-search__table">
     <mat-card appAccessRights="customers:read" appAccessMessage="true" *ngIf="isTableCard">
