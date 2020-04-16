@@ -2,155 +2,161 @@
 
   <mat-card class="tabs-profile__card">
 
-    <mat-grid-list cols="7" rowHeight="150px">
-      <mat-grid-tile [colspan]="2" [rowspan]="1">
+    <div class="row no-gutters">
+      <div class="col col-12 col-md-6 col-xl-4">
         <mat-spinner class="tabs-profile__spinner" *ngIf="profileProgress"></mat-spinner>
-        <div>
-          <mat-card class="tabs-profile__card-grid mat-elevation-z0">
-            <div *ngFor=" let profile of profile$ | async" class="tabs-profile__content-wrapper">
-              <div class="tabs-profile__content _right-width">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CUSTOMER_ID' | translate}}</span>
-                  <span><b> {{profile.customerId}}</b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.PROFILE' | translate}}</span>
-                  <span><b> {{profile.lastName}} {{profile.firstName}} {{profile.secondName}}</b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.DATE_OF_BIRTH' | translate}}</span>
-                  <span><b> {{profile.dob | date:'dd.MM.yyyy' }}</b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.GENDER' | translate}}</span>
-                  <span><b> {{profile.gender | fieldTranslation | translate}}</b></span>
-                </div>
+        <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+          <div *ngFor=" let profile of profile$ | async" class="tabs-profile__content-wrapper">
+            <div class="tabs-profile__content _right-width">
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CUSTOMER_ID' | translate}}</span>
+                <span><b> {{profile.customerId}}</b></span>
               </div>
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.PROFILE' | translate}}</span>
+                <span><b> {{profile.lastName}} {{profile.firstName}} {{profile.secondName}}</b></span>
+              </div>
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.DATE_OF_BIRTH' | translate}}</span>
+                <span><b> {{profile.dob | date:'dd.MM.yyyy' }}</b></span>
+              </div>
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.GENDER' | translate}}</span>
+                <span><b> {{profile.gender | fieldTranslation | translate}}</b></span>
+              </div>
+            </div>
 
-              <div class="tabs-profile__content">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.RELEVANCE_INDEX' | translate}}</span>
-                  <span>
-                    <b *ngIf="createDate" > {{ profile.relevanceIndex }}</b>
+            <div class="tabs-profile__content">
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.RELEVANCE_INDEX' | translate}}</span>
+                <span>
+                    <b *ngIf="createDate"> {{ profile.relevanceIndex }}</b>
                   </span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CREATE_DATE' | translate}}</span>
-                  <span>
-                    <b *ngIf="createDate" > {{createDate | date:'dd.MM.yyyy' }}</b>
+              </div>
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CREATE_DATE' | translate}}</span>
+                <span>
+                    <b *ngIf="createDate"> {{createDate | date:'dd.MM.yyyy' }}</b>
                     <b *ngIf="!createDate"> {{profile.createDate | date:'dd.MM.yyyy' }}</b>
                   </span>
-                </div>
               </div>
             </div>
-          </mat-card>
-        </div>
-      </mat-grid-tile>
+          </div>
+        </mat-card>
+      </div>
 
-
-      <mat-grid-tile [colspan]="3" [rowspan]="1">
-        <div>
-          <mat-card class="tabs-profile__card-grid mat-elevation-z0">
-            <mat-spinner class="tabs-profile__spinner" *ngIf="profileSegmentationProgress"></mat-spinner>
-            <div *ngIf="!profileSegmentationProgress" class="tabs-profile__content-wrapper">
-              <div class="tabs-profile__content _right-width">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.SEGMENTATION' | translate}}</span>
-                </div>
-                <div
-                  *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
-                  class="tabs-profile__content-point">
-                  <b *ngIf="!takeSegmentation.isComplex && !takeSegmentation.isCustom"
-                     routerLink="/crm/edit-segmentation"
-                     [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
-                     [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}
-                  </b>
-                  <b *ngIf="takeSegmentation.isComplex && !takeSegmentation.isCustom"
-                     routerLink="/crm/complex-segmentation"
-                     [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
-                     [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}
-                  </b>
-                  <b *ngIf="takeSegmentation.isCustom"
-                     routerLink="/crm/add-custom-segmentation"
-                     [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
-                     [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}
-                  </b>
-                </div>
-                <mat-icon
-                  *ngIf="this.profileSegmentation.isPointer"
-                  class="_pointer"
-                  matTooltip="{{'PAGE.PROFILES.TABS_PROFILE.HEADER.SHOW_ALL_GROUPS' | translate}}"
-                  (click)="openListSegmentation()"
-                >aspect_ratio
-                </mat-icon>
+      <div class="col col-12 col-md-12 col-xl-4 order-1 order-xl-0">
+        <mat-spinner class="tabs-profile__spinner" *ngIf="profileSegmentationProgress"></mat-spinner>
+        <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+          <div *ngIf="!profileSegmentationProgress" class="tabs-profile__content-wrapper">
+            <div class="tabs-profile__content _right-width">
+              <div class="tabs-profile__content-point">
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.SEGMENTATION' | translate}}</span>
               </div>
-
-              <div class="tabs-profile__content">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CUSTOMER_GROUP' | translate}}</span>
-                </div>
-                <div *ngFor="let takeProfileGroup of profileGroup.takeProfileGroup" class="tabs-profile__content-point">
-                  <b>{{takeProfileGroup.customerGroup.customerGroupName}}</b>
-                </div>
-                <mat-icon
-                  class="_pointer"
-                  matTooltip="{{'PAGE.PROFILES.TABS_PROFILE.HEADER.EDIT_LIST_CUSTOMER_GROUPS' | translate}}"
-                  (click)="addProfileGroup()"
-                >create
-                </mat-icon>
+              <div
+                *ngFor="let takeSegmentation of profileSegmentation.takeSegmentation"
+                class="tabs-profile__content-point">
+                <b *ngIf="!takeSegmentation.isComplex && !takeSegmentation.isCustom"
+                   routerLink="/crm/edit-segmentation"
+                   [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
+                   [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}
+                </b>
+                <b *ngIf="takeSegmentation.isComplex && !takeSegmentation.isCustom"
+                   routerLink="/crm/complex-segmentation"
+                   [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
+                   [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}
+                </b>
+                <b *ngIf="takeSegmentation.isCustom"
+                   routerLink="/crm/add-custom-segmentation"
+                   [queryParams]="{segmentationId: takeSegmentation.segmentationId}"
+                   [ngStyle]="{'cursor': 'pointer'}"> {{takeSegmentation.title}}
+                </b>
               </div>
+              <mat-icon
+                *ngIf="this.profileSegmentation.isPointer"
+                class="_pointer"
+                matTooltip="{{'PAGE.PROFILES.TABS_PROFILE.HEADER.SHOW_ALL_GROUPS' | translate}}"
+                (click)="openListSegmentation()"
+              >aspect_ratio
+              </mat-icon>
             </div>
-          </mat-card>
-        </div>
-      </mat-grid-tile>
 
+            <div class="tabs-profile__content">
+              <div class="tabs-profile__content-point">
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.CUSTOMER_GROUP' | translate}}</span>
+              </div>
+              <div *ngFor="let takeProfileGroup of profileGroup.takeProfileGroup" class="tabs-profile__content-point">
+                <b>{{takeProfileGroup.customerGroup.customerGroupName}}</b>
+              </div>
+              <mat-icon
+                class="_pointer"
+                matTooltip="{{'PAGE.PROFILES.TABS_PROFILE.HEADER.EDIT_LIST_CUSTOMER_GROUPS' | translate}}"
+                (click)="addProfileGroup()"
+              >create
+              </mat-icon>
+            </div>
+          </div>
+        </mat-card>
+      </div>
 
-      <mat-grid-tile [colspan]="2" [rowspan]="1">
+      <div class="col col-12 col-md-6 col-xl-4">
         <mat-spinner class="tabs-profile__spinner" *ngIf="ordersProgress"></mat-spinner>
-        <div>
-          <mat-card class="tabs-profile__card-grid mat-elevation-z0">
-            <div *ngFor="let ordersLast of ordersLast$ | async" class="tabs-profile__content-wrapper">
-              <div class="tabs-profile__content">
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_ACTIVE_TICKET' | translate}}</span>
-                  <span><b *ngIf="ordersLast"> {{ordersLast.countActiveTicket}}</b></span>
-                  <span> | </span>
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_CANCELLED_TICKET' | translate}}</span>
-                  <span><b *ngIf="ordersLast"> {{ordersLast.countCancelledTicket}}</b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.TOTAL_AMOUNT' | translate}}</span>
-                  <span><b *ngIf="ordersLast">
+        <mat-card class="tabs-profile__card-grid mat-elevation-z0">
+          <div *ngFor="let ordersLast of ordersLast$ | async" class="tabs-profile__content-wrapper">
+            <div class="tabs-profile__content">
+              <div class="tabs-profile__content-point">
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_ACTIVE_TICKET' | translate}}</span>
+                <span><b *ngIf="ordersLast"> {{ordersLast.countActiveTicket}}</b></span>
+                <span> | </span>
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNT_CANCELLED_TICKET' | translate}}</span>
+                <span><b *ngIf="ordersLast"> {{ordersLast.countCancelledTicket}}</b></span>
+              </div>
+              <div class="tabs-profile__content-point">
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.TOTAL_AMOUNT' | translate}}</span>
+                <span><b *ngIf="ordersLast">
                     {{ ordersLast.totalAmount.ticket.ticketCur | currency:currencyDefault:'symbol-narrow' }} |
-                    {{ ordersLast.totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
-                    {{ ordersLast.totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
+                  {{ ordersLast.totalAmount.ticket.ticketEur | currency:'EUR':'symbol-narrow' }} |
+                  {{ ordersLast.totalAmount.ticket.ticketUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNTER_ACTIVE_SERVICES_IS_EMD' | translate}}</span>
-                  <span><b *ngIf="ordersLast"> {{ordersLast.counterActiveServicesIsEmd}}</b></span>
-                  <span> | </span>
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNTER_CANCELLED_SERVICES_IS_EMD' | translate}}</span>
-                  <span><b *ngIf="ordersLast"> {{ordersLast.counterCancelledServicesIsEmd}}</b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.TOTAL_AMOUNT' | translate}}</span>
-                  <span><b *ngIf="ordersLast">
+              </div>
+              <div class="tabs-profile__content-point">
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNTER_ACTIVE_SERVICES_IS_EMD' | translate}}</span>
+                <span><b *ngIf="ordersLast"> {{ordersLast.counterActiveServicesIsEmd}}</b></span>
+                <span> | </span>
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.COUNTER_CANCELLED_SERVICES_IS_EMD' | translate}}</span>
+                <span><b *ngIf="ordersLast"> {{ordersLast.counterCancelledServicesIsEmd}}</b></span>
+              </div>
+              <div class="tabs-profile__content-point">
+                <span
+                  class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.TOTAL_AMOUNT' | translate}}</span>
+                <span><b *ngIf="ordersLast">
                     {{ ordersLast.totalAmount.emd.emdCur | currency:currencyDefault:'symbol-narrow' }} |
-                    {{ ordersLast.totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
-                    {{ ordersLast.totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
+                  {{ ordersLast.totalAmount.emd.emdEur | currency:'EUR':'symbol-narrow' }} |
+                  {{ ordersLast.totalAmount.emd.emdUsd | currency:'USD':'symbol-narrow' }}
                   </b></span>
-                </div>
-                <div class="tabs-profile__content-point">
-                  <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.LUT' | translate}}</span>
-                  <span><b *ngIf="ordersLast"> {{ordersLast.lut | date:'dd.MM.yyyy'}}</b></span>
-                </div>
+              </div>
+              <div class="tabs-profile__content-point">
+                <span class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.LUT' | translate}}</span>
+                <span><b *ngIf="ordersLast"> {{ordersLast.lut | date:'dd.MM.yyyy'}}</b></span>
               </div>
             </div>
-          </mat-card>
-        </div>
-      </mat-grid-tile>
-    </mat-grid-list>
+          </div>
+        </mat-card>
+      </div>
+    </div>
   </mat-card>
 
   <mat-tab-group
