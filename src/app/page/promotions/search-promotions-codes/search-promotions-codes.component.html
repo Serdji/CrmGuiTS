@@ -99,25 +99,25 @@
         </mat-card>
       </div>
     </div>
+    <div class="search-promotions-codes__button-wrapper">
+      <button
+        appAccessRights="promotions:read"
+        class="search-promotions-codes__button _left-button"
+        mat-raised-button
+        (click)="searchForm()"
+        color="primary"
+        [disabled]="buttonSearch"
+      >
+        <mat-icon>search</mat-icon>
+        {{'BUTTON.SEARCH' | translate}}
+      </button>
+      <button class="search-promotions-codes__button" mat-raised-button (click)="clearForm()">
+        <mat-icon>clear</mat-icon>
+        {{'BUTTON.CLEAR_FORM' | translate}}
+      </button>
+    </div>
   </form>
 
-  <div class="search-promotions-codes__button-wrapper">
-    <button
-      appAccessRights="promotions:read"
-      class="search-promotions-codes__button _left-button"
-      mat-raised-button
-      (click)="searchForm()"
-      color="primary"
-      [disabled]="buttonSearch"
-    >
-      <mat-icon>search</mat-icon>
-      {{'BUTTON.SEARCH' | translate}}
-    </button>
-    <button class="search-promotions-codes__button" mat-raised-button (click)="clearForm()">
-      <mat-icon>clear</mat-icon>
-      {{'BUTTON.CLEAR_FORM' | translate}}
-    </button>
-  </div>
 
   <mat-card class="search-promotions-codes__table" *ngIf="isTable">
     <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
