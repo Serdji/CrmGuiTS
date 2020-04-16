@@ -3,7 +3,7 @@
   <mat-card class="tabs-profile__card">
 
     <div class="row no-gutters">
-      <div class="col col-12 col-md-6 col-xl-4">
+      <div class="col col-12 col-lg-6 col-xl-4">
         <mat-spinner class="tabs-profile__spinner" *ngIf="profileProgress"></mat-spinner>
         <mat-card class="tabs-profile__card-grid mat-elevation-z0">
           <div *ngFor=" let profile of profile$ | async" class="tabs-profile__content-wrapper">
@@ -51,7 +51,7 @@
         </mat-card>
       </div>
 
-      <div class="col col-12 col-md-12 col-xl-4 order-1 order-xl-0">
+      <div class="col col-12 col-lg-12 col-xl-5 order-1 order-xl-0">
         <mat-spinner class="tabs-profile__spinner" *ngIf="profileSegmentationProgress"></mat-spinner>
         <mat-card class="tabs-profile__card-grid mat-elevation-z0">
           <div *ngIf="!profileSegmentationProgress" class="tabs-profile__content-wrapper">
@@ -107,7 +107,7 @@
         </mat-card>
       </div>
 
-      <div class="col col-12 col-md-6 col-xl-4">
+      <div class="col col-12 col-lg-6 col-xl-3">
         <mat-spinner class="tabs-profile__spinner" *ngIf="ordersProgress"></mat-spinner>
         <mat-card class="tabs-profile__card-grid mat-elevation-z0">
           <div *ngFor="let ordersLast of ordersLast$ | async" class="tabs-profile__content-wrapper">

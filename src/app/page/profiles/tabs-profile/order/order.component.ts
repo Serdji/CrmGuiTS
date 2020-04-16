@@ -1,6 +1,6 @@
 import { Component, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 import { OrderService } from './order.service';
-import { catchError, delay, map, skipWhile, takeWhile, tap } from 'rxjs/operators';
+import {  map, takeWhile } from 'rxjs/operators';
 import * as _ from 'lodash';
 import { CurrencyDefaultService } from '../../../../services/currency-default.service';
 import { ISettings } from '../../../../interface/isettings';
@@ -227,8 +227,12 @@ export class OrderComponent implements OnInit, OnDestroy {
       const clearFormControl = whichFormControl === 'dateSearch' ? 'textSearch' : 'dateSearch';
       this.formSearch.get( clearFormControl ).patchValue( '' );
       const formControlValue = this.formSearch.get( whichFormControl ).value;
-      if ( !R.isNil( formControlValue ) ) this.searchOrders( formControlValue );
-      if ( countOpen === 1 ) this.eventField( this.enableFields );
+      if ( !R.isNil( formControlValue ) ) {
+        this.searchOrders( formControlValue );
+      }
+      if ( countOpen === 1 ) {
+        this.eventField( this.enableFields );
+      }
     };
     const disabledFn = _ => {
       countOpen = 0;
