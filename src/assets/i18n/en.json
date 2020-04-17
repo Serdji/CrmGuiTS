@@ -486,7 +486,7 @@
 				},
 				"MESSAGES": {
 					"HEADER": {
-						"DATE": "Date and time",
+						"DATE": "Status change date",
 						"STATUS": "Current status",
 						"TOPIC_LETTER": "Message subject"
 					},
