@@ -70,7 +70,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.ordersProgress = true;
     this.profileProgress = true;
     this.profileSegmentationProgress = true;
-    this.selectedIndex = 0;
+    this.selectedIndex = 5;
     this.initQueryRouter();
     this.initCurrencyDefault();
     this.initTabsControlData();

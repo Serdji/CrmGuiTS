@@ -34,68 +34,81 @@
     <mat-progress-bar mode="buffer"></mat-progress-bar>
   </mat-card>
 
-  <mat-accordion  class="promo-code__accordion" [ngClass]="{'_used': isUsedHostRecLoc}" *ngIf="!progress && !isPromoCodNull" multi="true">
+  <mat-accordion class="promo-code__accordion" [ngClass]="{'_used': isUsedHostRecLoc}"
+                 *ngIf="!progress && !isPromoCodNull" multi="true">
 
     <mat-card class="promo-code__sort mat-elevation-z0">
-      <div class="promo-code__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('code')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.PROMO_CODE' | translate}}&nbsp;</b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
-      </div>
-      <div class="promo-code__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('promotion.promotionName')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.PROMO' | translate}}&nbsp;</b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
-      </div>
-      <div class="promo-code__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('dateFrom')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.DATE_FROM' | translate}}&nbsp;</b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
-      </div>
-      <div class="promo-code__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('dateTo')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.DATE_TO' | translate}} </b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
-      </div>
-      <div *ngIf="isUsedHostRecLoc" class="promo-code__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('usedHostRecLocTotalCount')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.QUANTITY' | translate}} </b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
+      <div class="row no-gutters" [ngClass]="{'row-cols-5': isUsedHostRecLoc, 'row-cols-4': !isUsedHostRecLoc}">
+        <div class="col">
+          <div class="promo-code__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('code')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.PROMO_CODE' | translate}}&nbsp;</b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="promo-code__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('promotion.promotionName')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.PROMO' | translate}}&nbsp;</b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="promo-code__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('dateFrom')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.DATE_FROM' | translate}}&nbsp;</b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+        <div class="col">
+          <div class="promo-code__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('dateTo')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.DATE_TO' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+        <div class="col" *ngIf="isUsedHostRecLoc">
+          <div class="promo-code__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('usedHostRecLocTotalCount')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.HEADER.QUANTITY' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
       </div>
     </mat-card>
 
@@ -107,21 +120,31 @@
       (opened)="onOpenPanel( promoCode.promoCodeId )"
     >
       <mat-expansion-panel-header>
-        <div class="promo-code__header-wrapper">
-          <div class="promo-code__title">
-            <span> {{promoCode.code}} </span>
+        <div class="row no-gutters" [ngClass]="{'row-cols-5': isUsedHostRecLoc, 'row-cols-4': !isUsedHostRecLoc}">
+          <div class="col _no-col-mb">
+            <div class="promo-code__title">
+              <span> {{promoCode.code}} </span>
+            </div>
           </div>
-          <div class="promo-code__title">
-            <span> {{ promoCode.promotion.promotionName }} </span>
+          <div class="col _no-col-mb">
+            <div class="promo-code__title">
+              <span> {{ promoCode.promotion.promotionName }} </span>
+            </div>
           </div>
-          <div class="promo-code__title">
-            <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
+          <div class="col _no-col-mb">
+            <div class="promo-code__title">
+              <span> {{promoCode.dateFrom | date:'dd.MM.yyyy'}} </span>
+            </div>
           </div>
-          <div class="promo-code__title">
-            <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+          <div class="col _no-col-mb">
+            <div class="promo-code__title">
+              <span> {{promoCode.dateTo | date:'dd.MM.yyyy'}} </span>
+            </div>
           </div>
-          <div *ngIf="isUsedHostRecLoc" class="promo-code__title">
-            <span> {{promoCode.usedHostRecLocTotalCount}} </span>
+          <div class="col _no-col-mb" *ngIf="isUsedHostRecLoc">
+            <div class="promo-code__title">
+              <span> {{promoCode.usedHostRecLocTotalCount}} </span>
+            </div>
           </div>
         </div>
       </mat-expansion-panel-header>
@@ -129,129 +152,148 @@
 
       <ng-template matExpansionPanelContent>
         <mat-card class="promo-code__card mat-elevation-z0">
-          <div class="promo-code__box">
+          <div class="row row-cols-1 row-cols-xl-3 no-gutters">
 
-
-            <div class="promo-code__info">
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.ACCOUT_CODE' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.accountCode}}</b></span>
+            <div class="col">
+              <div class="promo-code__info">
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.ACCOUT_CODE' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.accountCode}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.val}}</b></span>
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.val}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.TITLE' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{ promoCode.promoCodeValTypeId === 1 ? ('PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.SUM' | translate) : ('PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.PERCENT' | translate) }}</b></span>
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.TITLE' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{ promoCode.promoCodeValTypeId === 1 ? ('PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.SUM' | translate) : ('PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.VAL_TYPE.PERCENT' | translate) }}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.USES_PER_PERSON' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.usesPerPerson}}</b></span>
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.USES_PER_PERSON' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.usesPerPerson}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.USES_TOTAL' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.usesTotal}}</b></span>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="promo-code__info">
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.PROMO_CODE_FLIGHT_LIST' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span *ngFor="let flightList of promoCode.promoCodeFlightList "><b>{{flightList}}</b></span>
-                </div>
-              </div>
-
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.FLIGHT_DATE_FROM' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.flightDateFrom | date:'dd.MM.yyyy'}}</b></span>
-                </div>
-              </div>
-
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.FLIGHT_DATE_TO' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span><b>{{promoCode.flightDateTo | date:'dd.MM.yyyy'}}</b></span>
-                </div>
-              </div>
-
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.BRAND' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span *ngFor="let brandList of promoCode.promoCodeBrandList"><b>{{brandList}}</b></span>
-                </div>
-              </div>
-
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.RDB' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
-                </div>
-              </div>
-
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.ROUTE' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
-                    <div
-                      class="promo-code__info-location">{{routeList.dep_Location !== '' && routeList.dep_Location !== null ? routeList.dep_Location : '∞'}}</div>
-                    <mat-icon>arrow_right_alt</mat-icon>
-                    <div
-                      class="promo-code__info-location">{{routeList.arr_Location !== '' && routeList.arr_Location !== null ? routeList.arr_Location : '∞'}}</div>
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.USES_TOTAL' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.usesTotal}}</b></span>
                   </div>
                 </div>
               </div>
             </div>
 
+            <div class="col">
+              <div class="promo-code__info">
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.PROMO_CODE_FLIGHT_LIST' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let flightList of promoCode.promoCodeFlightList "><b>{{flightList}}</b></span>
+                  </div>
+                </div>
 
-            <div class="promo-code__info">
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.CUSTOMER' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span *ngFor="let customersId of promoCode.customersIds"><b>{{customersId}}</b></span>
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.FLIGHT_DATE_FROM' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.flightDateFrom | date:'dd.MM.yyyy'}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.FLIGHT_DATE_TO' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span><b>{{promoCode.flightDateTo | date:'dd.MM.yyyy'}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.BRAND' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let brandList of promoCode.promoCodeBrandList"><b>{{brandList}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.RDB' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let rbdList of promoCode.promoCodeRbdList"><b>{{rbdList}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.ROUTE' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <div class="promo-code__info-direction" *ngFor="let routeList of promoCode.promoCodeRouteList">
+                      <div
+                        class="promo-code__info-location">{{routeList.dep_Location !== '' && routeList.dep_Location !== null ? routeList.dep_Location : '∞'}}</div>
+                      <mat-icon>arrow_right_alt</mat-icon>
+                      <div
+                        class="promo-code__info-location">{{routeList.arr_Location !== '' && routeList.arr_Location !== null ? routeList.arr_Location : '∞'}}</div>
+                    </div>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.SEGMENTATION' | translate}}</span>
-                <div class="promo-code__info-params">
-                  <span *ngFor="let segmentation of promoCode.segmentations"><b>{{segmentation.title}}</b></span>
+            <div class="col">
+              <div class="promo-code__info">
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.CUSTOMER' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let customersId of promoCode.customersIds"><b>{{customersId}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.CUSTOMER_GROUP' | translate}}</span>
-                <div class="promo-code__info-params">
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.SEGMENTATION' | translate}}</span>
+                  <div class="promo-code__info-params">
+                    <span *ngFor="let segmentation of promoCode.segmentations"><b>{{segmentation.title}}</b></span>
+                  </div>
+                </div>
+
+                <div class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.CUSTOMER_GROUP' | translate}}</span>
+                  <div class="promo-code__info-params">
                   <span
                     *ngFor="let customerGroup of promoCode.customerGroups"><b>{{customerGroup.customerGroupName}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div *ngIf="isUsedHostRecLoc" class="promo-code__info-wrapper">
-                <span class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.REC_LOC' | translate}}</span>
-                <div class="promo-code__info-params">
+                <div *ngIf="isUsedHostRecLoc" class="promo-code__info-wrapper">
+                <span
+                  class="promo-code__info-text">{{'PAGE.PROFILES.TABS_PROFILE.PROMO_CODE.EXPANSION.TEMPLATE.REC_LOC' | translate}}</span>
+                  <div class="promo-code__info-params">
                   <span
-                    *ngFor="let usedHostRecLoc of promoCode.usedHostRecLoc"><b>{{usedHostRecLoc.hostRecLoc}} | {{usedHostRecLoc.useDt | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                    *ngFor="let usedHostRecLoc of promoCode.usedHostRecLoc"><b>{{usedHostRecLoc.hostRecLoc}}
+                    | {{usedHostRecLoc.useDt | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                  </div>
                 </div>
-              </div>
 
+              </div>
             </div>
           </div>
 
