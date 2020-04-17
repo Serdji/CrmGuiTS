@@ -8,7 +8,10 @@
   <mat-accordion *ngIf="!progress" class="privileges__accordion" multi="true">
 
     <mat-card class="privileges__sort mat-elevation-z0">
-      <div class="privileges__filter">
+
+      <div class="row row-cols-7 no-gutters">
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -19,8 +22,11 @@
           <b>{{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.GDS' | translate}}</b>
           <mat-icon>swap_vert</mat-icon>
         </span>
-      </div>
-      <div class="privileges__filter">
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -31,8 +37,11 @@
           <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.ORGANIZATION' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
-      </div>
-      <div class="privileges__filter">
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -43,8 +52,11 @@
           <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DIRECTION_FROM' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
-      </div>
-      <div class="privileges__filter">
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -55,8 +67,11 @@
           <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DIRECTION_TO' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
-      </div>
-      <div class="privileges__filter">
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -67,8 +82,11 @@
           <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DATE_OF_SALE' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
-      </div>
-      <div class="privileges__filter">
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -79,8 +97,11 @@
           <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DATE_OF_CARRIAGE' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
-      </div>
-      <div class="privileges__filter">
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="privileges__filter">
         <span
           matRipple
           matRippleColor="rgba(0,0,0,.1)"
@@ -91,32 +112,55 @@
           <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.STATUS' | translate}} </b>
           <mat-icon>swap_vert</mat-icon>
         </span>
+          </div>
+        </div>
       </div>
     </mat-card>
 
     <mat-expansion-panel *ngFor="let privileges of privileges.result ">
       <mat-expansion-panel-header>
-        <div class="privileges__header-wrapper">
-          <div class="privileges__title _hover" (click)="onOpenTabOrder(privileges.recLoc)">
-            <span> {{privileges.recLoc}} </span>
+        <div class="row row-cols-7 no-gutters">
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title _hover" (click)="onOpenTabOrder(privileges.recLoc)">
+              <span> {{privileges.recLoc}} </span>
+            </div>
           </div>
-          <div class="privileges__title">
-            <span> {{privileges.externalDiscountSourceName}} </span>
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title">
+              <span> {{privileges.externalDiscountSourceName}} </span>
+            </div>
           </div>
-          <div class="privileges__title">
-            <span> {{privileges.departureLocationCode}} </span>
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title">
+              <span> {{privileges.departureLocationCode}} </span>
+            </div>
           </div>
-          <div class="privileges__title">
-            <span> {{privileges.arrivalLocationCode}} </span>
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title">
+              <span> {{privileges.arrivalLocationCode}} </span>
+            </div>
           </div>
-          <div class="privileges__title">
-            <span> {{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}} </span>
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title">
+              <span> {{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}} </span>
+            </div>
           </div>
-          <div class="privileges__title">
-            <span> {{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}} </span>
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title">
+              <span> {{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}} </span>
+            </div>
           </div>
-          <div class="privileges__title">
-            <span> {{privileges.externalDiscountStatusName}} </span>
+
+          <div class="col _no-col-mb">
+            <div class="privileges__title">
+              <span> {{privileges.externalDiscountStatusName}} </span>
+            </div>
           </div>
         </div>
       </mat-expansion-panel-header>
@@ -124,83 +168,88 @@
 
       <ng-template matExpansionPanelContent>
         <mat-card class="privileges__card mat-elevation-z0">
-          <div class="privileges__box">
+          <div class="row no-gutters">
 
-
-            <div class="privileges__info">
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.EXTERNAL_DISCOUNT_SOURCE_NAME' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.externalDiscountSourceName}}</b></span>
+            <div class="col col-12 col-lg-6 col-xl-4">
+              <div class="privileges__info">
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.EXTERNAL_DISCOUNT_SOURCE_NAME' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.externalDiscountSourceName}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.SALE_DATE' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.SALE_DATE' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.saleDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.TICKET' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.ticket}}</b></span>
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.TICKET' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.ticket}}</b></span>
+                  </div>
                 </div>
-              </div>
 
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.COUPON' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.coupon}}</b></span>
-                </div>
-              </div>
-            </div>
-
-
-            <div class="privileges__info">
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.DEP_LOC_CODE' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.departureLocationCode}}</b></span>
-                </div>
-              </div>
-
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.ARR_LOC_CODE' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.arrivalLocationCode}}</b></span>
-                </div>
-              </div>
-
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.FLIGHT_DATA' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
-                </div>
-              </div>
-
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.STATUS_NAME' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.externalDiscountStatusName}}</b></span>
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.COUPON' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.coupon}}</b></span>
+                  </div>
                 </div>
               </div>
             </div>
 
 
-            <div class="privileges__info">
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.PRICE' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.price}}</b></span>
+            <div class="col col-12 col-lg-6 col-xl-4">
+              <div class="privileges__info">
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.DEP_LOC_CODE' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.departureLocationCode}}</b></span>
+                  </div>
+                </div>
+
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.ARR_LOC_CODE' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.arrivalLocationCode}}</b></span>
+                  </div>
+                </div>
+
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.FLIGHT_DATA' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.flightDate | date:'HH:mm dd.MM.yyyy'}}</b></span>
+                  </div>
+                </div>
+
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.STATUS_NAME' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.externalDiscountStatusName}}</b></span>
+                  </div>
                 </div>
               </div>
+            </div>
 
-              <div class="privileges__info-wrapper">
-                <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.DISCOUNT_SUM' | translate}} </span>
-                <div class="privileges__info-params">
-                  <span><b>{{privileges.discountSum}}</b></span>
+
+            <div class="col col-12 col-lg-12 col-xl-4">
+              <div class="privileges__info">
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.PRICE' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.price}}</b></span>
+                  </div>
+                </div>
+
+                <div class="privileges__info-wrapper">
+                  <span class="privileges__info-text"> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.TEMPLATE.DISCOUNT_SUM' | translate}} </span>
+                  <div class="privileges__info-params">
+                    <span><b>{{privileges.discountSum}}</b></span>
+                  </div>
                 </div>
               </div>
             </div>
