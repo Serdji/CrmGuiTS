@@ -16,8 +16,7 @@ import { tap } from 'rxjs/operators';
 export class IndexComponent implements OnInit, OnDestroy {
 
   public isDisabledButton: boolean;
-
-  private formIndex: FormGroup;
+  public formIndex: FormGroup;
 
   constructor(
     private fb: FormBuilder,
