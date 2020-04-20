@@ -13,8 +13,8 @@
       </mat-card-content>
       <mat-divider></mat-divider>
       <mat-card-actions class="profile-sms-distribution__action">
-        <mat-grid-list cols="5" rowHeight="200px">
-          <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <div class="row no-gutters">
+          <div class="col col-12 col-lg-12 col-xl-4">
             <div class="profile-sms-distribution__grid">
               <span>{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.DATE' | translate}}
                 <b> {{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.FROM' | translate}} {{ distributionProfile.dateFrom | date:'dd.MM.yyyy' }}
@@ -27,8 +27,8 @@
                     class="profile-sms-distribution__error">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.ERROR_MESSAGE' | translate}}
                 <b> {{ distributionProfile.errorMessage }} </b>  </span>
             </div>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="2" [rowspan]="1">
+          </div>
+          <div class="col col-12 col-lg-6 col-xl-4">
             <div class="profile-sms-distribution__grid">
               <span [matBadge]="distributionProfile.distributionStatuses.notSentCount" matBadgeOverlap="false"
                     matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.NOT_SENT' | translate}}</span>
@@ -37,10 +37,10 @@
               <span [matBadge]="distributionProfile.distributionStatuses.errorCount" matBadgeOverlap="false"
                     matBadgeColor="primary">{{'PAGE.DISTRIBUTION.PROFILE_SMS_DISTRIBUTION.STATUSES.ERROR' | translate}}</span>
             </div>
-          </mat-grid-tile>
-          <mat-grid-tile [colspan]="1" [rowspan]="1">
-          </mat-grid-tile>
-        </mat-grid-list>
+          </div>
+          <div class="col col-12 col-lg-6 col-xl-4">
+          </div>
+        </div>
         <div class="profile-sms-distribution__button-wrapper">
           <button
             class="profile-sms-distribution__button"
