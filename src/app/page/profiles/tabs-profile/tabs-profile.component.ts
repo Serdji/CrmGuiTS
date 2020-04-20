@@ -17,7 +17,7 @@ import { EMPTY, Observable, of, timer } from 'rxjs';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISegmentation } from '../../../interface/isegmentation';
 import { IcustomerGroupRelations } from '../../../interface/icustomer-group-relations';
-import { convertToStream } from '../../../utils/convertToStream';
+import { ConvertToStream } from '../../../utils/ConvertToStream';
 
 @Component( {
   selector: 'app-tabs-profile',
@@ -64,6 +64,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     private profileGroupService: ProfileGroupService,
     private currencyDefaultService: CurrencyDefaultService,
     private tabsProfileService: TabsProfileService,
+    private convertToStream: ConvertToStream
   ) { }
 
   ngOnInit(): void {
@@ -133,7 +134,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
             this.isProfileCreateDate = false;
           }
         ),
-        convertToStream(
+        this.convertToStream.stream(
           last()
         ),
         catchError( err => {
