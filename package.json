@@ -34,7 +34,6 @@
     "@types/moment": "2.13.0",
     "@types/ramda": "^0.25.47",
     "amazing-time-picker": "^1.8.0",
-    "bootstrap": "^4.4.1",
     "classlist.js": "^1.1.20150312",
     "core-js": "2.5.7",
     "file-saver": "^2.0.0-rc.4",
