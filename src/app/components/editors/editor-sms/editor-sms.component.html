@@ -11,7 +11,7 @@
           <mat-form-field class="editor-sms__input">
             <textarea #message formControlName="text" matInput rows="8" placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TEXT' | translate}}"></textarea>
             <mat-hint align="start"><strong>{{'POP_UP.EDITOR.DIALOG_SMS.SYMBOLS_ENTERED' | translate}}</strong> </mat-hint>
-            <mat-hint align="end" [ngStyle]="{'color': counter.color}">{{counter.size}} / {{counter.oneSizeSms}}</mat-hint>
+            <mat-hint align="end" [ngStyle]="{'color': counter.color}">{{counter.size}} / {{counter.nexStep}} | SMS: {{counter.counterSms}}</mat-hint>
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
         </mat-card>

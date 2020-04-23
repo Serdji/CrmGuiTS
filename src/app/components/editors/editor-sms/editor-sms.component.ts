@@ -38,11 +38,13 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     size: number;
     counterSms: number;
     oneSizeSms: number;
+    nexStep: number;
   } = {
     color: 'rgba(0, 0, 0, 0.54)',
     size: 0,
     counterSms: 1,
     oneSizeSms: 64,
+    nexStep: 64,
   };
 
 
@@ -117,23 +119,22 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     size: number,
     oneSizeSms: number = this.counter.oneSizeSms,
     nexStep: number = this.counter.oneSizeSms,
-    defaultCounterSms: number = 1
-  ): number {
+    defaultCounterSms:  { counterSms: number, nexStep: number } = { counterSms: 1, nexStep: this.counter.oneSizeSms }
+  ): { counterSms: number, nexStep: number } {
     return oneSizeSms > size ? defaultCounterSms :
       nexStep <= size ? this.counterSmsFn( (( nexStep + oneSizeSms ) / oneSizeSms), size, oneSizeSms, nexStep + oneSizeSms ) :
-        counterSms;
+        { counterSms, nexStep };
   }
 
   private initCounterSms() {
     this.formSms.get( 'text' ).valueChanges
       .pipe(
         map( ( value: any ) => {
-          console.log( this.counterSmsFn( this.counter.counterSms, value.length ) );
           return {
-            ...this.counter,
+            oneSizeSms: this.counter.oneSizeSms,
             size: value.length,
             color: value.length >= this.counter.oneSizeSms ? '#f44336' : 'rgba(0, 0, 0, 0.54)',
-            counterSms: this.counterSmsFn( this.counter.counterSms, value.length ),
+            ...this.counterSmsFn( this.counter.counterSms, value.length ),
           };
         } )
       ).subscribe( counter => this.counter = counter );

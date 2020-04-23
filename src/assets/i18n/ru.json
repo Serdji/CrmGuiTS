@@ -1046,7 +1046,7 @@
 				"TOTAL_COUNT": "Количество"
 			},
 			"DIALOG_SMS": {
-				"SYMBOLS_ENTERED": "Введенных символов",
+				"SYMBOLS_ENTERED": "Введенных символов и счетчик SMS",
 				"TEMPLATE": "Шаблон",
 				"TEXT": "Текст сообщения",
 				"TITLE": "Название"

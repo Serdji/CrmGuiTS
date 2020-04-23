@@ -1046,7 +1046,7 @@
 				"TOTAL_COUNT": "Amount"
 			},
 			"DIALOG_SMS": {
-				"SYMBOLS_ENTERED": "Symbols entered",
+				"SYMBOLS_ENTERED": "Symbols entered and SMS counter",
 				"TEMPLATE": "Template",
 				"TEXT": "Message text",
 				"TITLE": "Subject"
