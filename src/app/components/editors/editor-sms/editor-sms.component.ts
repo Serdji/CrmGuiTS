@@ -112,14 +112,28 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       .subscribe( _ => this.buttonDisabled = this.formSms.invalid );
   }
 
+  private counterSmsFn(
+    counterSms: number,
+    size: number,
+    oneSizeSms: number = this.counter.oneSizeSms,
+    nexStep: number = this.counter.oneSizeSms,
+    defaultCounterSms: number = 1
+  ): number {
+    return oneSizeSms > size ? defaultCounterSms :
+      nexStep <= size ? this.counterSmsFn( (( nexStep + oneSizeSms ) / oneSizeSms), size, oneSizeSms, nexStep + oneSizeSms ) :
+        counterSms;
+  }
+
   private initCounterSms() {
     this.formSms.get( 'text' ).valueChanges
       .pipe(
         map( ( value: any ) => {
+          console.log( this.counterSmsFn( this.counter.counterSms, value.length ) );
           return {
             ...this.counter,
             size: value.length,
             color: value.length >= this.counter.oneSizeSms ? '#f44336' : 'rgba(0, 0, 0, 0.54)',
+            counterSms: this.counterSmsFn( this.counter.counterSms, value.length ),
           };
         } )
       ).subscribe( counter => this.counter = counter );
