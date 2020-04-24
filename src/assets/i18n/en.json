@@ -382,6 +382,7 @@
 					"CONTACT_EMAIL": "Email",
 					"CONTACT_PHONE": "Phone",
 					"CONTACT_SEXIST": "Contact missing",
+					"CRAFT_SOURCE": "Aircraft Type Attribute:",
 					"CUSTOMER_GROUP": "Passenger groups",
 					"CUSTOMER_IDS": "Profile ID",
 					"DATE_OF_SERVICE_FROM_INCLUDE": "Service date after",
@@ -520,10 +521,11 @@
 								"TERMINAL": "Terminal ID:"
 							},
 							"SEGMENTS": {
-								"AIRCRAFT_TYPE": "Aircraft type",
+								"AIRCRAFT_TYPE": "Aircraft type:",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"CABIN": "Cabin code:",
+								"CRAFT_SOURCE": "Aircraft Type Attribute:",
 								"DEP_POINT": "Point of departure:",
 								"DEP_TIME": "Date/time of departure:",
 								"FLIGHT": "Flight number:",

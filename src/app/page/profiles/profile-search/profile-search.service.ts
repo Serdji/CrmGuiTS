@@ -11,6 +11,7 @@ import { ConvertToStream } from '../../../utils/ConvertToStream';
 import { IAirport } from '../../../interface/iairport';
 import { ISellType } from '../../../interface/isell-type';
 import { ICity } from '../../../interface/icity';
+import { ICraftSource } from '../../../interface/icraft-source';
 
 @Injectable()
 export class ProfileSearchService {
@@ -31,6 +32,10 @@ export class ProfileSearchService {
       'title',
       obj.lCode === obj.rCode ? obj.lCode : `${obj.lCode} ( ${obj.rCode} )`
     );
+  }
+
+  getCraftSource() {
+    return this.http.get<ICraftSource[]>( this.configService.crmApi + `/crm/craftsource` ).pipe( this.retryRequestService.retry() );
   }
 
   getAirports( text: string = '' ) {

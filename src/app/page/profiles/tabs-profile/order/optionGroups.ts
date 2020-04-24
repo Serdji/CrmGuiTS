@@ -72,6 +72,14 @@ export const optionGroups: IOptionGroups[] = [
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.ARR_TIME'
       },
       {
+        value: { controlName: [ 'craft' ], controlGroupName: 'segments', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.AIRCRAFT_TYPE'
+      },
+      {
+        value: { controlName: [ 'craftSource' ], controlGroupName: 'segments', isDate: false },
+        viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.CRAFT_SOURCE'
+      },
+      {
         value: { controlName: [ 'flight' ], controlGroupName: 'segments', isDate: false },
         viewValue: 'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.FLIGHT'
       },

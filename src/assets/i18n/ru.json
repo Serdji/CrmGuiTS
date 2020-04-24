@@ -382,6 +382,7 @@
 					"CONTACT_EMAIL": "Электронная почта",
 					"CONTACT_PHONE": "Телефон",
 					"CONTACT_SEXIST": "Отсутствие контакта",
+					"CRAFT_SOURCE": "Признак типа ВС:",
 					"CUSTOMER_GROUP": "Группы пассажиров",
 					"CUSTOMER_IDS": "№ профиля",
 					"DATE_OF_SERVICE_FROM_INCLUDE": "Дата услуги от",
@@ -520,10 +521,11 @@
 								"TERMINAL": "Терминал:"
 							},
 							"SEGMENTS": {
-								"AIRCRAFT_TYPE": "Тип ВС",
+								"AIRCRAFT_TYPE": "Тип ВС:",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"CABIN": "Кабина:",
+								"CRAFT_SOURCE": "Признак типа ВС:",
 								"DEP_POINT": "Аэропорт вылета:",
 								"DEP_TIME": "Дата / время вылета:",
 								"FLIGHT": "№ рейса:",

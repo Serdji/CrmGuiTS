@@ -238,6 +238,13 @@
                          placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AIRCRAFT_TYPE' | translate}}">
                 </mat-form-field>
                 <mat-form-field class="profile-search__input">
+                  <mat-select formControlName="idCraftSource"
+                              placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.CRAFT_SOURCE' | translate}}">
+                    <mat-option></mat-option>
+                    <mat-option *ngFor="let  craftSource of craftSources | async " [value]="craftSource.idCraftSource + ''">{{craftSource.craftSourceName}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+                <mat-form-field class="profile-search__input">
                   <input matInput formControlName="deptimefrominclude"
                          placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.DEP_TIME_FROM_INCLUDE' | translate}}"
                          [matDatepicker]="DepTimeFromIncludeFligth">

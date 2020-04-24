@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { map, debounceTime, switchMap, tap, } from 'rxjs/operators';
+import { map, debounceTime, switchMap } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -27,6 +27,7 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
 import { ICountries } from '../../../interface/icountries';
+import { ICraftSource } from '../../../interface/icraft-source';
 
 @Component( {
   selector: 'app-profile-search',
@@ -42,6 +43,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
   public sellTypeOptions: Observable<ISellType[]>;
+  public craftSources: Observable<ICraftSource[]>;
   public profiles: Iprofiles;
   public isTableCard = false;
   public isLoader = false;
@@ -95,6 +97,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.csvLoader = false;
     this.delay = 500;
     this.initForm();
+    this.initCraftSource();
     this.initAirports();
     this.initAutocomplete();
     this.initTableAsync();
@@ -138,6 +141,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initCraftSource() {
+    this.craftSources = this.profileSearchService.getCraftSource() as Observable<ICraftSource[]>;
+  }
 
   private initAirports() {
     this.airportsFromOptions = this.formProfileSearch.get( 'deppoint' ).valueChanges
@@ -259,6 +265,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       sellType: '',
       sellCountry: '',
       craft: '',
+      idCraftSource: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
