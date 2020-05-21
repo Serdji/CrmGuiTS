@@ -105,6 +105,7 @@ export class SidenavService {
         link: [
           { url: '/crm/form-table-async-profile-settings', title: 'MENU.SETTINGS.TABLE_CUSTOMERS' },
           { url: '/crm/index', title: 'MENU.SETTINGS.INDEX' },
+          { url: '/crm/age-interval', title: 'MENU.SETTINGS.AGE_INTERVAL' },
           { url: '/crm/restart', title: 'MENU.SETTINGS.RESTART' },
         ]
       }

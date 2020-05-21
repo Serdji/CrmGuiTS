@@ -173,6 +173,7 @@
 			"LIST_SEGMENTATION": "Segmentation list"
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": "Age interval",
 			"GROUP_NAME": "Settings",
 			"INDEX": "Index",
 			"RESTART": "Restart",
@@ -942,6 +943,9 @@
 			}
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": {
+				"TITLE": "Age range setting"
+			},
 			"INDEX": {
 				"FIELD": {
 					"ACTUAL_ACTIVE_FROM": "Date of actual activity since",
