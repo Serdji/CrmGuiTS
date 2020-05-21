@@ -1,1 +1,18 @@
-<div class="age-interval">age-interval</div>
+<div class="age-interval">
+  <mat-card>
+    <mat-card-title> {{'PAGE.SETTINGS.AGE_INTERVAL.TITLE' | translate}} </mat-card-title>
+    <form class="age-interval__form" [formGroup]="formAgeInterval">
+      <div class="age-interval__box">
+        <mat-form-field class="age-interval__input">
+          <input matInput formControlName="ageTo" type="text" placeholder="Возраст от">
+        </mat-form-field>
+        <mat-form-field class="age-interval__input">
+          <input matInput formControlName="ageFrom" type="text" placeholder="Возраст до">
+        </mat-form-field>
+        <mat-form-field class="age-interval__input">
+          <input matInput formControlName="title" type="text" placeholder="Название">
+        </mat-form-field>
+      </div>
+    </form>
+  </mat-card>
+</div>
