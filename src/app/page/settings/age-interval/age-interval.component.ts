@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { IndexService } from '../index/index.service';
 import { MatDialog } from '@angular/material/dialog';
 
 @Component( {
@@ -9,11 +8,34 @@ import { MatDialog } from '@angular/material/dialog';
   styleUrls: [ './age-interval.component.styl' ]
 } )
 export class AgeIntervalComponent implements OnInit {
+
+
+
   public formAgeInterval: FormGroup;
+  public parameters = [
+    {
+      id: 1,
+      ageTo: 12,
+      ageFrom: 15,
+      title: 'Подростки'
+    },
+    {
+      id: 2,
+      ageTo: 16,
+      ageFrom: 18,
+      title: 'Совершеннолетнии'
+    },
+    {
+      id: 3,
+      ageTo: 18,
+      ageFrom: 21,
+      title: 'Продажа табака и алкоголя'
+    },
+  ];
+
 
   constructor(
     private fb: FormBuilder,
-    private indexService: IndexService,
     private dialog: MatDialog,
   ) { }
 

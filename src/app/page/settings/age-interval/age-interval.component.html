@@ -1,6 +1,18 @@
 <div class="age-interval">
   <mat-card>
     <mat-card-title> {{'PAGE.SETTINGS.AGE_INTERVAL.TITLE' | translate}} </mat-card-title>
+
+    <div class="age-interval__fields">
+      <div class="age-interval__row" *ngFor="let params of parameters" >
+        <div class="age-interval__row-items">
+          <span> {{ params.ageTo }} </span>
+          <span> {{ params.ageFrom }} </span>
+          <span> {{ params.title }} </span>
+          <span> {{ params.id }} </span>
+        </div>
+      </div>
+    </div>
+
     <form class="age-interval__form" [formGroup]="formAgeInterval">
       <div class="age-interval__box">
         <mat-form-field class="age-interval__input">
