@@ -232,6 +232,8 @@
 				"LAST_TRY": "Date and time when campaign was created:",
 				"STATUS": "Status:",
 				"STATUSES": {
+					"ACTIVE_COUNTER": "Number of profiles with active e-mail addresses",
+					"ACTIVE_MAILS_COUNTER": "Number of active e-mails from selected profiles",
 					"BOUNCED": "Returned",
 					"CLICKED": "Link followed",
 					"DELIVERED": "Delivered",
@@ -240,7 +242,8 @@
 					"READ": "Read",
 					"REJECTED": "Unsubscribed",
 					"SEND_TO_CUSTOMER": "Sent to customer",
-					"SENT_TO_GATEWAY": "Sent to mail gateway"
+					"SENT_TO_GATEWAY": "Sent to mail gateway",
+					"WITHOUT_ACTIVE_COUNTER": "Number of profiles with missing active e-mail addresses"
 				},
 				"SUBJECT": "Subject of the message:",
 				"TABLE": {
