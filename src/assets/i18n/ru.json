@@ -246,10 +246,12 @@
 				},
 				"SUBJECT": "Тема письма:",
 				"TABLE": {
+					"EMAIL": "email",
 					"ERROR_MESSAGE": "Пояснение",
 					"FIRST_NAME": "Имя",
 					"LAST_NAME": "Фамилия",
 					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля",
 					"STATUS": "Статус",
 					"STATUSES": {
 						"BOUNCED": "Возвращено",

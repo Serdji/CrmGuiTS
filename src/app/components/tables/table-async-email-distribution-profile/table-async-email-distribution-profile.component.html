@@ -41,6 +41,20 @@
       </mat-cell>
     </ng-container>
 
+    <ng-container matColumnDef="contactAddress">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.EMAIL' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.contactAddress}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="customerId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.DISTRIBUTION.PROFILE_EMAIL_DISTRIBUTION.TABLE.PROFILE' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.customerId}}</span>
+      </mat-cell>
+    </ng-container>
+
     <ng-container matColumnDef="distributionCustomerId" stickyEnd>
       <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
       <mat-cell #matCell *matCellDef="let element">

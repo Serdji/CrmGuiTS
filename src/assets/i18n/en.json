@@ -246,10 +246,12 @@
 				},
 				"SUBJECT": "Subject of the message:",
 				"TABLE": {
+					"EMAIL": "email",
 					"ERROR_MESSAGE": "Note",
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": "Profile ID",
 					"STATUS": "Status",
 					"STATUSES": {
 						"BOUNCED": "Bounced",
