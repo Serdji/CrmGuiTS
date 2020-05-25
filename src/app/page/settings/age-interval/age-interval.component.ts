@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-age-interval',
@@ -10,8 +11,8 @@ import { MatDialog } from '@angular/material/dialog';
 export class AgeIntervalComponent implements OnInit {
 
 
-
-  public formAgeInterval: FormGroup;
+  public formAddAgeInterval: FormGroup;
+  public formCreateAgeInterval: FormGroup;
   public parameters = [
     {
       id: 1,
@@ -40,15 +41,35 @@ export class AgeIntervalComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.initForm();
+    this.initForms();
   }
 
-  private initForm(): void {
-    this.formAgeInterval = this.fb.group( {
-      ageTo: '',
-      ageFrom: '',
-      title: ''
+  private initForms(): void {
+    _.each( [ 'formAddAgeInterval', 'formCreateAgeInterval' ], formName => {
+      this[ formName ] = this.fb.group( {
+        ageTo: '',
+        ageFrom: '',
+        title: ''
+      } );
     } );
+  }
+
+  public onAdd(): void {
+    const formValue = this.formAddAgeInterval.value;
+    this.parameters.push( {
+      id: _.random(100),
+      ...formValue
+    } );
+    console.log( this.parameters );
+  }
+
+  public onCreate( id: number ): void {
+    console.log( id );
+
+  }
+
+  public onClose( id: number ): void {
+    this.parameters = _.reject( this.parameters, { id } );
   }
 
 
