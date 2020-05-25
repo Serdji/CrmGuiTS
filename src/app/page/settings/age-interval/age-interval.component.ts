@@ -54,22 +54,41 @@ export class AgeIntervalComponent implements OnInit {
     } );
   }
 
-  public onAdd(): void {
-    const formValue = this.formAddAgeInterval.value;
-    this.parameters.push( {
-      id: _.random(100),
-      ...formValue
-    } );
-    console.log( this.parameters );
+  private hideFormCreate() {
+    const formCreateNodeList: NodeList = document.querySelectorAll( '.age-interval__form-create' );
+    const itemNodeList: NodeList = document.querySelectorAll( '.age-interval__row-item' );
+    _.each( formCreateNodeList, ( formNode: HTMLElement ) => formNode.classList.add( '_hidden' ) );
+    _.each( itemNodeList, ( itemNode: HTMLElement ) => itemNode.classList.remove( '_hidden' ) );
   }
 
-  public onCreate( id: number ): void {
-    console.log( id );
+  public onAddCreate( id: number ) {
+    this.parameters = _.map( this.parameters, params => {
+      if ( params.id === id ) {
+        _.each( params, ( val, key ) => params[key] = this.formCreateAgeInterval.value[key] );
+        params.id = id;
+      }
+      return params;
+    } );
+    this.hideFormCreate();
+  }
 
+  public onCreate(item: HTMLElement, formCreate: HTMLElement,  id: number ): void {
+    this.hideFormCreate();
+    item.classList.toggle( '_hidden' );
+    formCreate.classList.toggle( '_hidden' );
+    this.formCreateAgeInterval.patchValue( _.find( this.parameters, { id } ) );
   }
 
   public onClose( id: number ): void {
     this.parameters = _.reject( this.parameters, { id } );
+  }
+
+  public onAdd(): void {
+    const formValue = this.formAddAgeInterval.value;
+    this.parameters.push( {
+      id: _.random(1000),
+      ...formValue
+    } );
   }
 
 

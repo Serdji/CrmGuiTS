@@ -1,8 +1,15 @@
+border = 1px solid rgba(0, 0, 0, 0.12);
+
 .age-interval
 
-  &__form
+  &__form-add,
+  &__form-create
     display: flex;
     flex-direction: row;
+
+  &__form-create
+    flex: 1;
+    border-bottom: border;
 
   &__box
     width: 100%;
@@ -19,21 +26,30 @@
     height: 40px;
 
   &__row
+    display: flex;
+
 
     &-item
+      flex: 1;
       align-items: center;
       display: flex;
       flex-direction: row;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: border;
 
       span
         padding: 10px 0
         flex: 1;
 
     &-menu
+      display: flex;
       cursor: pointer;
       color: #696969;
       margin-left: auto;
+      align-items: center;
+      border-bottom: border;
+
+      &._form
+        border: none;
 
       mat-icon
         &:nth-child( 1 )
