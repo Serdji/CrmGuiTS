@@ -947,6 +947,11 @@
 		},
 		"SETTINGS": {
 			"AGE_INTERVAL": {
+				"FIELD": {
+					"AGE_FROM": "Age To:",
+					"AGE_TO": "Age from:",
+					"TITLE": "Title:"
+				},
 				"TITLE": "Age range setting"
 			},
 			"INDEX": {

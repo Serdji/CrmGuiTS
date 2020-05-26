@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
+import { fromEvent, pipe } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component( {
   selector: 'app-age-interval',
@@ -42,6 +44,18 @@ export class AgeIntervalComponent implements OnInit {
 
   ngOnInit(): void {
     this.initForms();
+    this.initEvent();
+  }
+
+  private initEvent(): void {
+    fromEvent( document, 'click' )
+      .pipe(
+        map( ( e: Event ) => _.map( e.composedPath(), ( node: HTMLElement ) => node.className ) ),
+        map( ( classNames: string[] ) => _.includes( classNames, 'age-interval' ) )
+      )
+      .subscribe( ( isTarget: boolean ) => {
+        if ( !isTarget ) this.hideFormCreate();
+      } );
   }
 
   private initForms(): void {
@@ -64,7 +78,7 @@ export class AgeIntervalComponent implements OnInit {
   public onAddCreate( id: number ) {
     this.parameters = _.map( this.parameters, params => {
       if ( params.id === id ) {
-        _.each( params, ( val, key ) => params[key] = this.formCreateAgeInterval.value[key] );
+        _.each( params, ( val, key ) => params[ key ] = this.formCreateAgeInterval.value[ key ] );
         params.id = id;
       }
       return params;
@@ -72,7 +86,7 @@ export class AgeIntervalComponent implements OnInit {
     this.hideFormCreate();
   }
 
-  public onCreate(item: HTMLElement, formCreate: HTMLElement,  id: number ): void {
+  public onCreate( item: HTMLElement, formCreate: HTMLElement, id: number ): void {
     this.hideFormCreate();
     item.classList.toggle( '_hidden' );
     formCreate.classList.toggle( '_hidden' );
@@ -86,7 +100,7 @@ export class AgeIntervalComponent implements OnInit {
   public onAdd(): void {
     const formValue = this.formAddAgeInterval.value;
     this.parameters.push( {
-      id: _.random(1000),
+      id: _.random( 1000 ),
       ...formValue
     } );
   }

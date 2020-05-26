@@ -5,19 +5,19 @@
     <div class="age-interval__fields">
       <div class="age-interval__row" *ngFor="let params of parameters">
         <div #item class="age-interval__row-item">
-          <span> Возраст от: {{ params.ageTo }} </span>
-          <span> Возраст до  {{ params.ageFrom }} </span>
-          <span> Название: {{ params.title }} </span>
+          <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_TO' | translate}} <b>{{ params.ageTo }}</b> </span>
+          <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}  <b>{{ params.ageFrom }}</b> </span>
+          <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.TITLE' | translate}} <b>{{ params.title }}</b> </span>
         </div>
         <form #formCreate [formGroup]="formCreateAgeInterval" class="age-interval__form-create _hidden">
           <mat-form-field class="age-interval__input">
-            <input matInput formControlName="ageTo" type="text" placeholder="Возраст от">
+            <input matInput formControlName="ageTo" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_TO' | translate}}">
           </mat-form-field>
           <mat-form-field class="age-interval__input">
-            <input matInput formControlName="ageFrom" type="text" placeholder="Возраст до">
+            <input matInput formControlName="ageFrom" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}">
           </mat-form-field>
           <mat-form-field class="age-interval__input">
-            <input matInput formControlName="title" type="text" placeholder="Название">
+            <input matInput formControlName="title" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.TITLE' | translate}}">
           </mat-form-field>
           <div class="age-interval__row-menu _form">
             <mat-icon (click)="onAddCreate( params.id )">add</mat-icon>
@@ -33,13 +33,13 @@
     <form class="age-interval__form-add" [formGroup]="formAddAgeInterval">
       <div class="age-interval__box">
         <mat-form-field class="age-interval__input">
-          <input matInput formControlName="ageTo" type="text" placeholder="Возраст от">
+          <input matInput formControlName="ageTo" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_TO' | translate}}">
         </mat-form-field>
         <mat-form-field class="age-interval__input">
-          <input matInput formControlName="ageFrom" type="text" placeholder="Возраст до">
+          <input matInput formControlName="ageFrom" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}">
         </mat-form-field>
         <mat-form-field class="age-interval__input">
-          <input matInput formControlName="title" type="text" placeholder="Название">
+          <input matInput formControlName="title" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.TITLE' | translate}}">
         </mat-form-field>
         <button (click)="onAdd()" class="age-interval__button-add" mat-stroked-button>{{'BUTTON.ADD' | translate}}</button>
       </div>
