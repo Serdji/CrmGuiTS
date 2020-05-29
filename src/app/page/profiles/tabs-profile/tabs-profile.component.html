@@ -226,5 +226,10 @@
         <app-privileges [id]="profileId"></app-privileges>
       </ng-template>
     </mat-tab>
+    <mat-tab label="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TAB_NAME' | translate}}">
+      <ng-template matTabContent>
+        <app-companions [id]="profileId"></app-companions>
+      </ng-template>
+    </mat-tab>
   </mat-tab-group>
 </div>

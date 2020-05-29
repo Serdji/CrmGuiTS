@@ -1,1 +1,8 @@
-<p>companions works!</p>
+<div class="companions">
+  <mat-card>
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-table-example-companions  *ngIf="companions.length !== 0" [tableDataSource]="companions"></app-table-example-companions>
+    </ng-template>
+  </mat-card>
+</div>

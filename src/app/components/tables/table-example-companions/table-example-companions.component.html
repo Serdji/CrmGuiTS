@@ -1,0 +1,89 @@
+<div class="table">
+  <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
+
+    <ng-container matColumnDef="customerId">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.CUSTOMER_ID' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.customerId}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="recLoc">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.REC_LOC' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.recLoc}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="documentNumber">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.DOCUMENT_ID' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.documentNumber}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="firstName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.firstName}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="lastName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.LAST_NAME' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.lastName}}</span>
+      </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="secondName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.MIDDLE_NAME' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.secondName}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+    <ng-container matColumnDef="dob">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.DOB' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.dob | date:'dd.MM.yyyy'}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+
+    <ng-container matColumnDef="ageGroup">
+      <mat-header-cell *matHeaderCellDef mat-sort-header> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.TABLE.AGE_GROUP' | translate}}</mat-header-cell>
+      <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)">
+        <span>{{element.ageGroup}}</span>
+      </mat-cell>
+    </ng-container>
+
+
+
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  <mat-paginator #paginator
+                 [pageSize]="10"
+                 [pageSizeOptions]="[10, 20, 50, 100]"
+                 [showFirstLastButtons]="true">
+  </mat-paginator>
+</div>

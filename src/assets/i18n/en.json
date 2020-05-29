@@ -438,6 +438,19 @@
 				}
 			},
 			"TABS_PROFILE": {
+				"COMPANIONS": {
+					"TABLE": {
+						"AGE_GROUP": "Age group",
+						"CUSTOMER_ID": "Profile ID",
+						"DOB": "Date of birth",
+						"DOCUMENT_ID": "Documents",
+						"FIRST_NAME": "Name",
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle name",
+						"REC_LOC": "Recloc"
+					},
+					"TAB_NAME": "Companions"
+				},
 				"CONTACT": {
 					"FORM": {
 						"CONTACT_TEXT": "Description",
