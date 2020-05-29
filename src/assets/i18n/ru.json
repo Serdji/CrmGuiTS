@@ -173,6 +173,7 @@
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": "Интервал возрастов",
 			"GROUP_NAME": "Настройки",
 			"INDEX": "Индекс",
 			"RESTART": "Перезагрузка",
@@ -947,6 +948,19 @@
 			}
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": {
+				"FIELD": {
+					"AGE_FROM": "Возраст до:",
+					"AGE_TO": "Возраст от:",
+					"GENDER": {
+						"F": "Ж",
+						"M": "М",
+						"TITLE": "Пол:"
+					},
+					"TITLE": "Название:"
+				},
+				"TITLE": "Настройка интервала возрастов"
+			},
 			"INDEX": {
 				"FIELD": {
 					"ACTUAL_ACTIVE_FROM": "Дата настоящей активности с",
