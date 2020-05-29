@@ -7,6 +7,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { AgeIntervalRoutes } from './age-interval.routing';
 import { AgeIntervalService } from './age-interval.service';
 import { PipesModule } from '../../../pipes/pipes.module';
+import { DirectivesModule } from '../../../directives/directives.module';
 
 
 @NgModule( {
@@ -16,7 +17,8 @@ import { PipesModule } from '../../../pipes/pipes.module';
     ReactiveFormsModule,
     AgeIntervalRoutes,
     TranslateModule,
-    PipesModule
+    PipesModule,
+    DirectivesModule
   ],
   declarations: [ AgeIntervalComponent ],
   providers: [ AgeIntervalService ]

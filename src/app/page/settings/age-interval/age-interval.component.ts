@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
-import { fromEvent, Observable, of, pipe } from 'rxjs';
+import { fromEvent } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
 import { IAgeGroups } from '../../../interface/iage-group';
 import { AgeIntervalService } from './age-interval.service';
@@ -19,6 +19,13 @@ export class AgeIntervalComponent implements OnInit {
   public formAddAgeInterval: FormGroup;
   public formCreateAgeInterval: FormGroup;
   public ageGroups: IAgeGroups[];
+
+  private formValueDefault: IAgeGroups = {
+    ageTo: null,
+    ageFrom: null,
+    gender: null,
+    title: null
+  };
 
 
   constructor(
@@ -57,12 +64,7 @@ export class AgeIntervalComponent implements OnInit {
 
   private initForms(): void {
     _.each( [ 'formAddAgeInterval', 'formCreateAgeInterval' ], formName => {
-      this[ formName ] = this.fb.group( {
-        ageTo: '',
-        ageFrom: '',
-        gender: '',
-        title: ''
-      } );
+      this[ formName ] = this.fb.group( this.formValueDefault);
     } );
   }
 
@@ -104,6 +106,7 @@ export class AgeIntervalComponent implements OnInit {
       ...formValue
     } );
     this.ageIntervalService.updateAgeGroups( this.ageGroups ).subscribe();
+    this.formAddAgeInterval.patchValue( this.formValueDefault );
   }
 
 

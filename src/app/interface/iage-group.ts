@@ -3,7 +3,7 @@ export interface IAgeGroup {
 }
 
 export interface IAgeGroups {
-  id: number;
+  id?: number;
   ageTo: number;
   ageFrom: number;
   gender: 'f' | 'm';
