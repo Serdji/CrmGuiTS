@@ -3,10 +3,11 @@
     <mat-card-title> {{'PAGE.SETTINGS.AGE_INTERVAL.TITLE' | translate}} </mat-card-title>
 
     <div class="age-interval__fields">
-      <div class="age-interval__row" *ngFor="let params of parameters">
+      <div class="age-interval__row" *ngFor="let params of ageGroups$ | async">
         <div #item class="age-interval__row-item">
           <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_TO' | translate}} <b>{{ params.ageTo }}</b> </span>
           <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}  <b>{{ params.ageFrom }}</b> </span>
+          <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.TITLE' | translate}}  <b>{{ params.gender  | fieldTranslation | translate }}</b> </span>
           <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.TITLE' | translate}} <b>{{ params.title }}</b> </span>
         </div>
         <form #formCreate [formGroup]="formCreateAgeInterval" class="age-interval__form-create _hidden">
@@ -15,6 +16,13 @@
           </mat-form-field>
           <mat-form-field class="age-interval__input">
             <input matInput formControlName="ageFrom" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}">
+          </mat-form-field>
+          <mat-form-field class="age-interval__input">
+            <mat-select formControlName="gender" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.TITLE' | translate}}">
+              <mat-option></mat-option>
+              <mat-option value="f">{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.F' | translate}}</mat-option>
+              <mat-option value="m">{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.M' | translate}}</mat-option>
+            </mat-select>
           </mat-form-field>
           <mat-form-field class="age-interval__input">
             <input matInput formControlName="title" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.TITLE' | translate}}">
@@ -38,6 +46,13 @@
         <mat-form-field class="age-interval__input">
           <input matInput formControlName="ageFrom" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}">
         </mat-form-field>
+        <mat-form-field class="age-interval__input">
+            <mat-select formControlName="gender" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.TITLE' | translate}}">
+              <mat-option></mat-option>
+              <mat-option value="f">{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.F' | translate}}</mat-option>
+              <mat-option value="m">{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.GENDER.M' | translate}}</mat-option>
+            </mat-select>
+          </mat-form-field>
         <mat-form-field class="age-interval__input">
           <input matInput formControlName="title" type="text" placeholder="{{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.TITLE' | translate}}">
         </mat-form-field>

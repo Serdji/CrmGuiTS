@@ -950,6 +950,11 @@
 				"FIELD": {
 					"AGE_FROM": "Age To:",
 					"AGE_TO": "Age from:",
+					"GENDER": {
+						"F": "Female",
+						"M": "Male",
+						"TITLE": "Sex:"
+					},
 					"TITLE": "Title:"
 				},
 				"TITLE": "Age range setting"

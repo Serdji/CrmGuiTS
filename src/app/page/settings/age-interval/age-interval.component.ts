@@ -2,8 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
-import { fromEvent, pipe } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { fromEvent, Observable, pipe } from 'rxjs';
+import { map, pluck } from 'rxjs/operators';
+import { IAgeGroup, IAgeGroups } from '../../../interface/iage-group';
+import { AgeIntervalService } from './age-interval.service';
 
 @Component( {
   selector: 'app-age-interval',
@@ -15,43 +17,33 @@ export class AgeIntervalComponent implements OnInit {
 
   public formAddAgeInterval: FormGroup;
   public formCreateAgeInterval: FormGroup;
-  public parameters = [
-    {
-      id: 1,
-      ageTo: 12,
-      ageFrom: 15,
-      title: 'Подростки'
-    },
-    {
-      id: 2,
-      ageTo: 16,
-      ageFrom: 18,
-      title: 'Совершеннолетнии'
-    },
-    {
-      id: 3,
-      ageTo: 18,
-      ageFrom: 21,
-      title: 'Продажа табака и алкоголя'
-    },
-  ];
+  public ageGroups$: Observable<IAgeGroups[]>;
 
 
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private ageIntervalService: AgeIntervalService
   ) { }
 
   ngOnInit(): void {
     this.initForms();
     this.initEvent();
+    this.initAgeInterval();
+  }
+
+  public initAgeInterval() {
+    this.ageGroups$ = this.ageIntervalService.getAgeGroups()
+      .pipe(
+        pluck( 'ageGroups' )
+      ) as Observable<IAgeGroups[]>;
   }
 
   private initEvent(): void {
     fromEvent( document, 'click' )
       .pipe(
         map( ( e: Event ) => _.map( e.composedPath(), ( node: HTMLElement ) => node.className ) ),
-        map( ( classNames: string[] ) => _.includes( classNames, 'age-interval' ) )
+        map( ( classNames: string[] ) => ( _.includes( classNames, 'age-interval' ) ) || _.includes( classNames, 'cdk-overlay-pane' ) )
       )
       .subscribe( ( isTarget: boolean ) => {
         if ( !isTarget ) this.hideFormCreate();
@@ -63,6 +55,7 @@ export class AgeIntervalComponent implements OnInit {
       this[ formName ] = this.fb.group( {
         ageTo: '',
         ageFrom: '',
+        gender: '',
         title: ''
       } );
     } );
