@@ -2,10 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
 import * as _ from 'lodash';
-import { fromEvent, Observable, pipe } from 'rxjs';
+import { fromEvent, Observable, of, pipe } from 'rxjs';
 import { map, pluck } from 'rxjs/operators';
-import { IAgeGroup, IAgeGroups } from '../../../interface/iage-group';
+import { IAgeGroups } from '../../../interface/iage-group';
 import { AgeIntervalService } from './age-interval.service';
+import { ConvertToStream } from '../../../utils/ConvertToStream';
 
 @Component( {
   selector: 'app-age-interval',
@@ -17,12 +18,13 @@ export class AgeIntervalComponent implements OnInit {
 
   public formAddAgeInterval: FormGroup;
   public formCreateAgeInterval: FormGroup;
-  public ageGroups$: Observable<IAgeGroups[]>;
+  public ageGroups: IAgeGroups[];
 
 
   constructor(
     private fb: FormBuilder,
     private dialog: MatDialog,
+    private convertToStream: ConvertToStream,
     private ageIntervalService: AgeIntervalService
   ) { }
 
@@ -33,10 +35,13 @@ export class AgeIntervalComponent implements OnInit {
   }
 
   public initAgeInterval() {
-    this.ageGroups$ = this.ageIntervalService.getAgeGroups()
+    this.ageIntervalService.getAgeGroups()
       .pipe(
-        pluck( 'ageGroups' )
-      ) as Observable<IAgeGroups[]>;
+        pluck( 'ageGroups' ),
+        this.convertToStream.stream(
+          map( ( ageGroups: IAgeGroups ) =>  _.set( ageGroups, 'gender', _.toLower( ageGroups.gender ) ) )
+        )
+      ).subscribe( ( ageGroups: IAgeGroups[] ) => this.ageGroups = ageGroups );
   }
 
   private initEvent(): void {
@@ -69,13 +74,14 @@ export class AgeIntervalComponent implements OnInit {
   }
 
   public onAddCreate( id: number ) {
-    this.parameters = _.map( this.parameters, params => {
+    this.ageGroups = _.map( this.ageGroups, params => {
       if ( params.id === id ) {
         _.each( params, ( val, key ) => params[ key ] = this.formCreateAgeInterval.value[ key ] );
         params.id = id;
       }
       return params;
     } );
+    this.ageIntervalService.updateAgeGroups( this.ageGroups ).subscribe();
     this.hideFormCreate();
   }
 
@@ -83,19 +89,21 @@ export class AgeIntervalComponent implements OnInit {
     this.hideFormCreate();
     item.classList.toggle( '_hidden' );
     formCreate.classList.toggle( '_hidden' );
-    this.formCreateAgeInterval.patchValue( _.find( this.parameters, { id } ) );
+    this.formCreateAgeInterval.patchValue( _.find( this.ageGroups, { id } ) );
   }
 
-  public onClose( id: number ): void {
-    this.parameters = _.reject( this.parameters, { id } );
+  public onDelete( id: number ): void {
+    this.ageGroups = _.reject( this.ageGroups, { id } );
+    this.ageIntervalService.updateAgeGroups( this.ageGroups ).subscribe();
   }
 
   public onAdd(): void {
     const formValue = this.formAddAgeInterval.value;
-    this.parameters.push( {
+    this.ageGroups.push( {
       id: _.random( 1000 ),
       ...formValue
     } );
+    this.ageIntervalService.updateAgeGroups( this.ageGroups ).subscribe();
   }
 
 

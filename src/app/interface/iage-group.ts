@@ -6,6 +6,6 @@ export interface IAgeGroups {
   id: number;
   ageTo: number;
   ageFrom: number;
-  gender: string;
+  gender: 'f' | 'm';
   title: string;
 }

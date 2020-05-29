@@ -3,7 +3,7 @@
     <mat-card-title> {{'PAGE.SETTINGS.AGE_INTERVAL.TITLE' | translate}} </mat-card-title>
 
     <div class="age-interval__fields">
-      <div class="age-interval__row" *ngFor="let params of ageGroups$ | async">
+      <div class="age-interval__row" *ngFor="let params of ageGroups">
         <div #item class="age-interval__row-item">
           <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_TO' | translate}} <b>{{ params.ageTo }}</b> </span>
           <span> {{'PAGE.SETTINGS.AGE_INTERVAL.FIELD.AGE_FROM' | translate}}  <b>{{ params.ageFrom }}</b> </span>
@@ -33,7 +33,7 @@
         </form>
         <div class="age-interval__row-menu">
           <mat-icon (click)="onCreate(item, formCreate,  params.id )" >create</mat-icon>
-          <mat-icon (click)="onClose( params.id )">close</mat-icon>
+          <mat-icon (click)="onDelete( params.id )">close</mat-icon>
         </div>
       </div>
     </div>
