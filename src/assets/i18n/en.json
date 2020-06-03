@@ -488,6 +488,7 @@
 				},
 				"HEADER": {
 					"AGE": "Age:",
+					"AGE_GROUP": "Age Group:",
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Paid services count:",
 					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Cancelled paid services count:",
 					"COUNT_ACTIVE_TICKET": "Placed orders count:",
