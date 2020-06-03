@@ -11,6 +11,7 @@ export interface Iprofile {
   firstName: string;
   secondName: string;
   dob: string;
+  customerAge: number;
   comment: string;
   createDate: string;
   relevanceIndex: number;

@@ -46,6 +46,13 @@
                     <b *ngIf="!createDate"> {{profile.createDate | date:'dd.MM.yyyy' }}</b>
                   </span>
               </div>
+              <div class="tabs-profile__content-point">
+                  <span
+                    class="tabs-profile__content-text">{{'PAGE.PROFILES.TABS_PROFILE.HEADER.AGE' | translate}}</span>
+                <span>
+                    <b> {{ profile.customerAge }} </b>
+                  </span>
+              </div>
             </div>
           </div>
         </mat-card>

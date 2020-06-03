@@ -5,6 +5,7 @@ import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ProfileGroupService } from '../../special-groups/profile-group/profile-group.service';
@@ -160,6 +161,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfileGroup( profile );
         } ),
         map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
+        map( ( profile: Iprofile ) => _.set( profile, 'customerAge', moment().format('YYYY') - moment( profile.dob ).format('YYYY') ) ),
         toArray(),
         tap( ( profile: Iprofile[] ) => {
           this.profileService.subjectGetProfile.next( profile );
