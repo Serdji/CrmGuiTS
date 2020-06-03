@@ -161,6 +161,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
           this.initProfileGroup( profile );
         } ),
         map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
+        // @ts-ignore
         map( ( profile: Iprofile ) => _.set( profile, 'customerAge', moment().format('YYYY') - moment( profile.dob ).format('YYYY') ) ),
         toArray(),
         tap( ( profile: Iprofile[] ) => {
