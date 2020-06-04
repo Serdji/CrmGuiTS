@@ -814,6 +814,15 @@
               <span
                 class="add-segmentation__content-title">{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.TITLE' | translate}}</span>
                   <mat-form-field class="add-segmentation__input">
+                    <input matInput formControlName="arrivalLocationCodeT" type="text"
+                           placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.AGE_GROUP' | translate}}"
+                           [matAutocomplete]="ageGroup">
+                    <mat-autocomplete #ageGroup="matAutocomplete">
+                      <mat-option *ngFor="let ageGroup of ageGroupOptions | async"
+                                  [value]="ageGroup.title">{{ ageGroup.title }}</mat-option>
+                    </mat-autocomplete>
+                  </mat-form-field>
+                  <mat-form-field class="add-segmentation__input">
                     <mat-select formControlName="gender"
                                 placeholder="{{'PAGE.SEGMENTATION.ADD_SEGMENTATION.PROFILE_DETAILS.GENDER.TITLE' | translate}}">
                       <mat-option></mat-option>

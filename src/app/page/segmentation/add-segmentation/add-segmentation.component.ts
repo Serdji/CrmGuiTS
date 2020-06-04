@@ -21,6 +21,8 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
 import { ISegmentationParameters } from '../../../interface/isegmentation-parameters';
+import { IAgeGroups } from '../../../interface/iage-group';
+import { AgeIntervalService } from '../../settings/age-interval/age-interval.service';
 
 @Component( {
   selector: 'app-add-segmentation',
@@ -48,6 +50,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public airportsFromOptionsE: Observable<IAirport[]>;
   public airportsToOptionsE: Observable<IAirport[]>;
   public sellTypeOptionsE: Observable<ISellType[]>;
+  public ageGroupOptions: Observable<IAgeGroups[]>;
   public selectedTimeT: string;
   public selectedTimeE: string;
   public isIconsClockT: boolean;
@@ -73,7 +76,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
     private saveUrlServiceService: SaveUrlServiceService,
-    private cd: ChangeDetectorRef
+    private ageIntervalService: AgeIntervalService,
   ) { }
 
   ngOnInit(): void {

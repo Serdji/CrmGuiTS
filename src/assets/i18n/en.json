@@ -855,6 +855,7 @@
 					"TO": "To"
 				},
 				"PROFILE_DETAILS": {
+					"AGE_GROUP": "Age group",
 					"DOB_FROM": "Date of birth on/after",
 					"DOB_TO": "",
 					"FLIES_WITHOUT_CHILDREN": "Never travelled with child/infant",

@@ -855,6 +855,7 @@
 					"TO": "До"
 				},
 				"PROFILE_DETAILS": {
+					"AGE_GROUP": "Группа возраста",
 					"DOB_FROM": "Дата рождения от",
 					"DOB_TO": "Дата рождения до",
 					"FLIES_WITHOUT_CHILDREN": "Нет ни одного перелёта с детьми",
