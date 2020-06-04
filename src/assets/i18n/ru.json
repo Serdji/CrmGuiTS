@@ -379,6 +379,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AGE_GROUP": "Группа возраста",
 					"AIRCRAFT_TYPE": "Тип ВС",
 					"AIRLINE_L_CODE": "Код авиакомпании",
 					"ARR_POINT": "Куда",
@@ -488,7 +489,7 @@
 				},
 				"HEADER": {
 					"AGE": "Возраст:",
-					"AGE_GROUP": "Группа возрастов:",
+					"AGE_GROUP": "Группа возраста:",
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Оформленных платных услуг:",
 					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Аннулированных платных услуг:",
 					"COUNT_ACTIVE_TICKET": "Оформленных заказов:",

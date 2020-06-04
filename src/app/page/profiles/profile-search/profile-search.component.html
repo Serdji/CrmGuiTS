@@ -26,6 +26,17 @@
             </mat-form-field>
 
             <mat-form-field class="profile-search__input">
+              <input matInput formControlName="ageGroup" type="text"
+                     placeholder="{{'PAGE.PROFILES.SEARCH_PROFILE.FORM.AGE_GROUP' | translate}}"
+                     [matAutocomplete]="ageGroup">
+              <mat-autocomplete #ageGroup="matAutocomplete">
+                <mat-option *ngFor="let ageGroup of ageGroupOptions | async" [value]="ageGroup.title">
+                  {{ ageGroup.title }}
+                </mat-option>
+              </mat-autocomplete>
+            </mat-form-field>
+
+            <mat-form-field class="profile-search__input">
               <mat-chip-list #chipListSegmentation>
                 <mat-chip
                   [ngStyle]="{'background-color': '#03a9f4', 'color': 'white'}"

@@ -379,6 +379,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AGE_GROUP": "Age group",
 					"AIRCRAFT_TYPE": "Aircraft type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_POINT": "Point of destination",
