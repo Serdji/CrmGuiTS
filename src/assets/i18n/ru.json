@@ -538,6 +538,7 @@
 								"AGENCY": "Агентство:",
 								"COUNTRY": "Страна:",
 								"GDS": "GDS:",
+								"PARENT_REC_LOC": "Parent Recloc",
 								"POS_ID": "POS ID:",
 								"REC_LOC": "Recloc GDS:",
 								"TERMINAL": "Терминал:"

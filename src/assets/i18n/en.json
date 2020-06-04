@@ -538,6 +538,7 @@
 								"AGENCY": "Travel agency:",
 								"COUNTRY": "Country:",
 								"GDS": "Booking source:",
+								"PARENT_REC_LOC": "Parent Recloc",
 								"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP:",
 								"REC_LOC": "GDS Recloc:",
 								"TERMINAL": "Terminal ID:"
