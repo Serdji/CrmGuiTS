@@ -277,6 +277,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       dobtoexclude: '',
       ticket: '',
       recloc: '',
+      parentRecloc: '',
       emd: '',
       dateOfServiceFromInclude: '',
       dateOfServiceToExclude: '',

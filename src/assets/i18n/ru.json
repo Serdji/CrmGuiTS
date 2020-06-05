@@ -419,6 +419,7 @@
 					"ORIGIN_AGENCY": "Агентство",
 					"ORIGIN_POS_ID": "ППР",
 					"ORIGIN_PULT": "Пульт",
+					"PARENT_REC_LOC": "№ родительской брони",
 					"PROFILE": "№ профиля",
 					"RBD": "Класс бронирования",
 					"REC_LOC": "№ брони",

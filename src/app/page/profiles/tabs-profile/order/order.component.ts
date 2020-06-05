@@ -290,8 +290,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       } );
   }
 
-  ngOnDestroy(): void {
-    this.data.recLocGDS = '';
-  }
+  ngOnDestroy(): void {}
 
 }

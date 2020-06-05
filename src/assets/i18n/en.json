@@ -419,6 +419,7 @@
 					"ORIGIN_AGENCY": "Origin agency ID",
 					"ORIGIN_POS_ID": "Origin PoS ID",
 					"ORIGIN_PULT": "Origin console ID",
+					"PARENT_REC_LOC": "Parent reclock",
 					"PROFILE": "Profile ID",
 					"RBD": "RBD",
 					"REC_LOC": "Recloc",
