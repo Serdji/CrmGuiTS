@@ -13,6 +13,8 @@ import { ContactService } from '../../../page/profiles/tabs-profile/contact/cont
 import { Icontact } from '../../../interface/icontact';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import * as R from 'ramda';
+import { TabsProfileService } from '../../../services/tabs-profile.service';
 
 @Component( {
   selector: 'app-table-example-companions',
@@ -38,6 +40,7 @@ export class TableExampleCompanionsComponent implements OnInit, OnDestroy {
     private contactService: ContactService,
     private dialog: MatDialog,
     private router: Router,
+    private tabsProfileService: TabsProfileService
   ) { }
 
   ngOnInit(): void {
@@ -56,6 +59,7 @@ export class TableExampleCompanionsComponent implements OnInit, OnDestroy {
       'secondName',
       'dob',
       'ageGroup',
+      'router',
     ];
   }
 
@@ -151,6 +155,17 @@ export class TableExampleCompanionsComponent implements OnInit, OnDestroy {
       const params = Object.assign( {}, { ids: arrayId } );
       this.windowDialog( `DIALOG.DELETE.CONTACT`, 'delete', params, 'contacts' );
     }
+  }
+
+  redirectToDisplayed( id: number, recLocGDS: string ): void {
+    this.router.navigate( [ `/crm/profile/${id}` ] );
+    const params = {
+      selectedIndex: 3,
+      order: {
+        recLocGDS
+      }
+    };
+    this.tabsProfileService.subjectControlTabsData.next( params );
   }
 
   disabledCheckbox( eventData ): void {

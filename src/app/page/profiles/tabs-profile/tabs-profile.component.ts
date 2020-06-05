@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { catchError, last, map, mergeMap, skip, switchMap, takeWhile, tap, toArray } from 'rxjs/operators';
+import { catchError, last, map, tap, toArray } from 'rxjs/operators';
 import { ProfileService } from './profile/profile.service';
 import { Iprofile } from '../../../interface/iprofile';
 import { OrderService } from './order/order.service';
@@ -13,7 +13,7 @@ import { CurrencyDefaultService } from '../../../services/currency-default.servi
 import { ISettings } from '../../../interface/isettings';
 import { TabsProfileService } from '../../../services/tabs-profile.service';
 import { ITabsControlData } from '../../../interface/itabs-control-data';
-import { EMPTY, Observable, of, timer } from 'rxjs';
+import { Observable, of, timer } from 'rxjs';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISegmentation } from '../../../interface/isegmentation';
@@ -162,7 +162,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         } ),
         map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
         // @ts-ignore
-        map( ( profile: Iprofile ) => _.set( profile, 'customerAge', moment().format('YYYY') - moment( profile.dob ).format('YYYY') ) ),
+        map( ( profile: Iprofile ) => _.set( profile, 'customerAge', moment().format( 'YYYY' ) - moment( profile.dob ).format( 'YYYY' ) ) ),
         toArray(),
         tap( ( profile: Iprofile[] ) => {
           this.profileService.subjectGetProfile.next( profile );
