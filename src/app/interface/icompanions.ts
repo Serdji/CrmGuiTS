@@ -1,4 +1,4 @@
-export interface ICompanion{
+export interface ICompanion {
   'result': ICompanions[];
 }
 
@@ -11,4 +11,20 @@ export interface ICompanions {
   'dob': string;
   'ageGroup': string;
   'documentNumber': string;
+  'orders': IOrders[];
+}
+
+interface IOrders {
+  'bookingCreateDate': string;
+  'recLoc': string;
+  'coupons': ICoupons[];
+}
+
+interface ICoupons {
+  'coupon': string;
+  'depDate': string;
+  'from': string;
+  'ticketNum': string;
+  'to': string;
+
 }
