@@ -453,7 +453,17 @@
 							"REC_LOC": "Recloc"
 						},
 						"TEMPLATE": {
-							"1": ""
+							"COUPONS": {
+								"COUPON": "Coupon",
+								"DEP_DATE": "Flight date",
+								"FROM": "From",
+								"TICKET_NUM": "Ticket number",
+								"TO": "To"
+							},
+							"ORDERS": {
+								"BOOKING_CREATE_DATA": "Date of order (reservation)",
+								"REC_LOC": "Recloc"
+							}
 						}
 					},
 					"TABLE": {

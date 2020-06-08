@@ -453,7 +453,17 @@
 							"REC_LOC": "Заказ №"
 						},
 						"TEMPLATE": {
-							"1": ""
+							"COUPONS": {
+								"COUPON": "Купон",
+								"DEP_DATE": "Дата рейса",
+								"FROM": "Откуда",
+								"TICKET_NUM": "Номер билета",
+								"TO": "Куда"
+							},
+							"ORDERS": {
+								"BOOKING_CREATE_DATA": "Дата заказа (брони)",
+								"REC_LOC": "Заказ №"
+							}
 						}
 					},
 					"TABLE": {
