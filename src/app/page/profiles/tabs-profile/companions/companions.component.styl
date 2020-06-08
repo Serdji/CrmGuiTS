@@ -1,0 +1,130 @@
+minWidthTitle = 100px
+
+.mat-expansion-panel-header
+  padding: 0 16px;
+
+
+.companions
+
+  &__header
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      width: 100%;
+
+  &__search
+    .order__input
+      margin-right: 10px;
+
+  &__filter
+
+    &-wrapper
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+
+
+  &__sort,
+  &__filter
+    display: flex;
+    color: rgba(0, 0, 0, 0.54);
+    font-size: 15px;
+    font-weight: 400;
+
+  &__sort
+    justify-content: space-between;
+    border-radius: 0;
+    box-shadow: 0 0 0 0 rgba(0,0,0,0.2), 0 0 2px 0 rgba(0,0,0,0.14), 0 0 0 0 rgba(0,0,0,0.12)
+
+    &._filter
+      flex-direction: column;
+
+  &__filter,
+  &__title
+    min-width: minWidthTitle;
+
+    span
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+    &:last-child
+      min-width: 0;
+
+
+  &__title
+    margin-right: 0;
+
+    &:last-child
+      min-width: 0;
+      margin-right: 55px;
+      flex-grow: 0;
+
+
+  &__card
+
+    &-grid
+      background: #f9f9f9;
+      border: 1px solid #dedede;
+      padding: 15px 10px;
+      margin: 0 5px;
+      min-height: 125px;
+
+      &._back-none
+        background: none;
+        border: none;
+
+      &._ticket
+        background: #f0f9ff;
+
+  &__grid
+    flex: 1;
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+
+  &__content
+    flex: 1;
+    display: flex;
+    flex-direction column;
+    justify-content: space-between
+    padding-right: 10px;
+    box-sizing: border-box;
+
+    &._none-justify
+      flex: 2
+      justify-content: normal;
+
+    b
+      font-size: 12px;
+
+
+    &._right-width
+      flex: 2;
+      padding-right: 10px;
+
+    &-point,
+    &-ticket
+      display: flex;
+      justify-content: space-between;
+
+    &-wrapper
+      display: flex;
+      flex-direction: row;
+      height: 100%;
+
+    &-ticket
+      margin-bottom: 20px;
+
+      &._sales
+        margin-left: auto;
+
+    &-text
+      font-size: 12px;
+      color: #b5b5b5;
+
+.row
+  width: 100%;

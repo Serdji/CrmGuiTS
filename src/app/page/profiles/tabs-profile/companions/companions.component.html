@@ -1,8 +1,90 @@
 <div class="companions">
-  <mat-card>
-    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
-    <ng-template #loaderDisabled>
-      <app-table-example-companions  *ngIf="companions.length !== 0" [tableDataSource]="companions"></app-table-example-companions>
-    </ng-template>
-  </mat-card>
+
+
+  <mat-accordion class="companions__accordion" multi="true">
+
+    <mat-card class="companions__sort mat-elevation-z0">
+
+      <div class="row row-cols-3 no-gutters">
+
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('saleDate')"
+        >
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DATE_OF_SALE' | translate}} </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('flightDate')"
+        >
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.DATE_OF_CARRIAGE' | translate}} </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+        <span
+          matRipple
+          matRippleColor="rgba(0,0,0,.1)"
+          matRippleUnbounded="true"
+          matRippleRadius="50"
+          (click)="onSortFilter('externalDiscountStatusName')"
+        >
+          <b> {{'PAGE.PROFILES.TABS_PROFILE.PRIVILEGES.HEADER.STATUS' | translate}} </b>
+          <mat-icon>swap_vert</mat-icon>
+        </span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+
+    <mat-expansion-panel *ngFor="let companion of companions$ | async ">
+      <mat-expansion-panel-header>
+        <div class="row row-cols-3 no-gutters">
+
+          <div class="col _no-col-mb">
+            <div class="companions__title _hover">
+              <span> {{companion.customerId}} </span>
+            </div>
+          </div>
+
+          <div class="col _no-col-mb">
+            <div class="companions__title">
+              <span> {{companion.documentNumber}} </span>
+            </div>
+          </div>
+
+          <div class="col _no-col-mb">
+            <div class="companions__title">
+              <span> {{companion.dob | date:'dd.MM.yyyy'}} </span>
+            </div>
+          </div>
+
+        </div>
+      </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-card class="companions__card mat-elevation-z0">
+        </mat-card>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
 </div>

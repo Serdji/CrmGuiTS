@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICompanions } from '../../../../interface/icompanions';
 import { CompanionsService } from './companions.service';
 import { pluck, tap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
 
 @Component( {
   selector: 'app-companions',
@@ -13,7 +14,7 @@ export class CompanionsComponent implements OnInit {
   @Input() id: number;
 
   public isLoader: boolean;
-  public companions: ICompanions[];
+  public companions$: Observable<ICompanions[]>;
 
   constructor(
     private companionsService: CompanionsService
@@ -25,12 +26,11 @@ export class CompanionsComponent implements OnInit {
   }
 
   private initCompanions() {
-    this.companionsService.getCompanions( this.id )
+    this.companions$ = this.companionsService.getCompanions( this.id )
       .pipe(
         pluck( 'result' ),
         tap( _ => this.isLoader = false )
-      )
-      .subscribe( ( companions: ICompanions[] ) => this.companions = companions );
+      ) as Observable<ICompanions[]>;
   }
 
 }
