@@ -5,9 +5,9 @@
 
     <mat-card class="companions__sort mat-elevation-z0">
 
-      <div class="row row-cols-3 no-gutters">
+      <div class="row no-gutters">
 
-        <div class="col _no-col-mb">
+        <div class="col-5 _no-col-mb">
           <div class="companions__filter">
         <span
           matRipple
@@ -22,7 +22,7 @@
           </div>
         </div>
 
-        <div class="col _no-col-mb">
+        <div class="col-5 _no-col-mb">
           <div class="companions__filter">
         <span
           matRipple
@@ -37,7 +37,7 @@
           </div>
         </div>
 
-        <div class="col _no-col-mb">
+        <div class="col-2 _no-col-mb">
           <div class="companions__filter">
         <span
           matRipple
@@ -57,21 +57,21 @@
 
     <mat-expansion-panel *ngFor="let companion of companions$ | async ">
       <mat-expansion-panel-header>
-        <div class="row row-cols-3 no-gutters">
+        <div class="row no-gutters">
 
-          <div class="col _no-col-mb">
+          <div class="col-5 _no-col-mb">
             <div class="companions__title _hover">
               <span> {{companion.customerId}} </span>
             </div>
           </div>
 
-          <div class="col _no-col-mb">
+          <div class="col-5 _no-col-mb">
             <div class="companions__title">
               <span> {{companion.documentNumber}} </span>
             </div>
           </div>
 
-          <div class="col _no-col-mb">
+          <div class="col-2 _no-col-mb">
             <div class="companions__title">
               <span> {{companion.dob | date:'dd.MM.yyyy'}} </span>
             </div>
