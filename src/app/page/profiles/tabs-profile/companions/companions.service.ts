@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigService } from '../../../../services/config-service.service';
 import { RetryRequestService } from '../../../../services/retry-request.service';
 import { ICompanion } from '../../../../interface/icompanions';
+import { shareReplay } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -16,7 +17,7 @@ export class CompanionsService {
   ) { }
 
   public getCompanions( id: number ) {
-    return this.http.get<ICompanion>( `${this.configService.crmApi}/crm/customer/${id}/companions` ).pipe( this.retryRequestService.retry() );
+    return this.http.get<ICompanion>( `${this.configService.crmApi}/crm/customer/${id}/companions` ).pipe( this.retryRequestService.retry(), shareReplay() );
   }
 
 }

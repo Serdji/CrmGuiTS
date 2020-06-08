@@ -441,6 +441,21 @@
 			},
 			"TABS_PROFILE": {
 				"COMPANIONS": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"AGE_GROUP": "Возрастная группа",
+							"CUSTOMER_ID": "№ профиля",
+							"DOB": "Дата рождения",
+							"DOCUMENT_ID": "Документ №",
+							"FIRST_NAME": "Имя",
+							"LAST_NAME": "Фамилия",
+							"MIDDLE_NAME": "Отчество",
+							"REC_LOC": "Заказ №"
+						},
+						"TEMPLATE": {
+							"1": ""
+						}
+					},
 					"TABLE": {
 						"AGE_GROUP": "Возрастная группа",
 						"CUSTOMER_ID": "№ профиля",

@@ -441,6 +441,21 @@
 			},
 			"TABS_PROFILE": {
 				"COMPANIONS": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"AGE_GROUP": "Age group",
+							"CUSTOMER_ID": "Profile ID",
+							"DOB": "Date of birth",
+							"DOCUMENT_ID": "Documents",
+							"FIRST_NAME": "Name",
+							"LAST_NAME": "Surname",
+							"MIDDLE_NAME": "Middle name",
+							"REC_LOC": "Recloc"
+						},
+						"TEMPLATE": {
+							"1": ""
+						}
+					},
 					"TABLE": {
 						"AGE_GROUP": "Age group",
 						"CUSTOMER_ID": "Profile ID",
