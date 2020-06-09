@@ -1,8 +1,8 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ICompanions, ICompanionOrders, ICoupons } from '../../../../interface/icompanions';
 import { CompanionsService } from './companions.service';
-import { map, pluck, tap } from 'rxjs/operators';
-import { Observable } from 'rxjs';
+import { filter, map, pluck, switchMap, tap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 import * as R from 'ramda';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConvertToStream } from '../../../../utils/ConvertToStream';
@@ -23,6 +23,7 @@ export class CompanionsComponent implements OnInit {
   public formFilter: FormGroup;
 
   private isSortFilterReverse: boolean;
+  private originCompanions: ICompanions[];
 
   constructor(
     private fb: FormBuilder,
@@ -33,15 +34,17 @@ export class CompanionsComponent implements OnInit {
   ngOnInit() {
     this.isLoader = true;
     this.isSortFilterReverse = false;
+    this.initForm();
     this.initCompanions();
     this.initAirport();
-    this.initForm();
+    this.initFilterAirport();
   }
 
   private initCompanions() {
     this.companions$ = this.companionsService.getCompanions( this.id )
       .pipe(
         pluck( 'result' ),
+        tap( ( companions: ICompanions[] ) => this.originCompanions = companions ),
         tap( _ => this.isLoader = false )
       ) as Observable<ICompanions[]>;
   }
@@ -50,7 +53,7 @@ export class CompanionsComponent implements OnInit {
     this.airports$ = this.companions$
       .pipe(
         map( ( companions: ICompanions[] ) => {
-          const airports = [];
+          const airports: string[] = [];
           _.each( companions, ( companion: ICompanions ) => {
             _.each( companion.orders, ( order: ICompanionOrders ) => {
               _.each( order.coupons, ( coupon: ICoupons ) => {
@@ -62,6 +65,30 @@ export class CompanionsComponent implements OnInit {
           return _.uniq( airports );
         } )
       ) as Observable<string[]>;
+  }
+
+  private initFilterAirport() {
+    _.each( [ 'from', 'to' ], ( formName: string ) => {
+      this.formFilter.get( formName ).valueChanges
+        .pipe(
+          switchMap( value => {
+            return of( this.originCompanions )
+              .pipe(
+                this.convertToStream.stream(
+                  filter( ( companion: ICompanions ) => {
+                    let isFilter: boolean;
+                    _.each( companion.orders, ( order: ICompanionOrders ) => {
+                      _.each( order.coupons, ( coupon: ICoupons ) => {
+                        isFilter = _.isUndefined( value ) ? _.isUndefined( value ) : coupon[ formName ] === value;
+                      } );
+                    } );
+                    return isFilter;
+                  } ),
+                )
+              );
+          } ),
+        ).subscribe( ( companion: ICompanions[] ) => this.companions$ = of( companion ) as Observable<ICompanions[]> );
+    } );
   }
 
   private initForm() {
