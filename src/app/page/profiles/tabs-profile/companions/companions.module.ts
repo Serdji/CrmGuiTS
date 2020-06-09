@@ -5,6 +5,7 @@ import { SharedModule } from '../../../../shared/shared.module';
 import { ComponentsModule } from '../../../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CompanionsService } from './companions.service';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule( {
@@ -12,6 +13,7 @@ import { CompanionsService } from './companions.service';
     CommonModule,
     SharedModule,
     ComponentsModule,
+    ReactiveFormsModule,
     TranslateModule,
   ],
   declarations: [ CompanionsComponent ],

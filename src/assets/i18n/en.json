@@ -466,6 +466,12 @@
 							}
 						}
 					},
+					"FILTER": {
+						"DEP_DATE_FROM": "Flight date from",
+						"DEP_DATE_TO": "Flight date to",
+						"FROM": "From",
+						"TO": "To"
+					},
 					"TABLE": {
 						"AGE_GROUP": "Age group",
 						"CUSTOMER_ID": "Profile ID",

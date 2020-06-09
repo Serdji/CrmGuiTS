@@ -1,7 +1,43 @@
 <div class="companions">
-
-
   <mat-accordion class="companions__accordion" multi="true">
+
+    <mat-card class="companions__sort _filter mat-elevation-z0">
+      <form class="companions__form" [formGroup]="formFilter">
+        <div class="companions__filter-wrapper">
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <mat-select matInput formControlName="from" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.FROM' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let airport of airports$ | async" [value]="airport">{{ airport }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <mat-select matInput formControlName="to" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.TO' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let airport of airports$ | async" [value]="airport">{{ airport }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <input matInput formControlName="depDateFrom" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_FROM' | translate}}" [matDatepicker]="depDateFrom">
+              <mat-datepicker-toggle matSuffix [for]="depDateFrom"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #depDateFrom></mat-datepicker>
+            </mat-form-field>
+          </div>
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <input matInput formControlName="depDateTo" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_TO' | translate}}" [matDatepicker]="depDateTo">
+              <mat-datepicker-toggle matSuffix [for]="depDateTo"></mat-datepicker-toggle>
+              <mat-datepicker touchUi="true" #depDateTo></mat-datepicker>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+
     <mat-card class="companions__sort mat-elevation-z0">
       <div class="row row-cols-4 no-gutters">
         <div class="col _no-col-mb">
@@ -136,14 +172,14 @@
               <mat-expansion-panel-header>
                 <div class="row no-gutters">
 
-                  <div class="col-9 _no-col-mb">
+                  <div class="col-6 _no-col-mb">
                     <div class="companions__title _hover">
                       <span> {{order.recLoc}} </span>
                     </div>
                   </div>
 
 
-                  <div class="col-3 _no-col-mb">
+                  <div class="col-6 _no-col-mb">
                     <div class="companions__title">
                       <span> {{order.bookingCreateDate | date:'dd.MM.yyyy'}} </span>
                     </div>

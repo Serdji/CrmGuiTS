@@ -1,9 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ICompanions } from '../../../../interface/icompanions';
+import { ICompanions, ICompanionOrders, ICoupons } from '../../../../interface/icompanions';
 import { CompanionsService } from './companions.service';
 import { map, pluck, tap } from 'rxjs/operators';
 import { Observable } from 'rxjs';
 import * as R from 'ramda';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { ConvertToStream } from '../../../../utils/ConvertToStream';
+import * as _ from 'lodash';
 
 @Component( {
   selector: 'app-companions',
@@ -16,17 +19,23 @@ export class CompanionsComponent implements OnInit {
 
   public isLoader: boolean;
   public companions$: Observable<ICompanions[]>;
+  public airports$: Observable<string[]>;
+  public formFilter: FormGroup;
 
   private isSortFilterReverse: boolean;
 
   constructor(
-    private companionsService: CompanionsService
+    private fb: FormBuilder,
+    private companionsService: CompanionsService,
+    private convertToStream: ConvertToStream
   ) { }
 
   ngOnInit() {
     this.isLoader = true;
     this.isSortFilterReverse = false;
     this.initCompanions();
+    this.initAirport();
+    this.initForm();
   }
 
   private initCompanions() {
@@ -35,6 +44,33 @@ export class CompanionsComponent implements OnInit {
         pluck( 'result' ),
         tap( _ => this.isLoader = false )
       ) as Observable<ICompanions[]>;
+  }
+
+  private initAirport() {
+    this.airports$ = this.companions$
+      .pipe(
+        map( ( companions: ICompanions[] ) => {
+          const airports = [];
+          _.each( companions, ( companion: ICompanions ) => {
+            _.each( companion.orders, ( order: ICompanionOrders ) => {
+              _.each( order.coupons, ( coupon: ICoupons ) => {
+                airports.push( coupon.from );
+                airports.push( coupon.to );
+              } );
+            } );
+          } );
+          return _.uniq( airports );
+        } )
+      ) as Observable<string[]>;
+  }
+
+  private initForm() {
+    this.formFilter = this.fb.group( {
+      from: '',
+      to: '',
+      depDateFrom: '',
+      depDateTo: ''
+    } );
   }
 
   onSortFilter( title: string ): void {

@@ -11,16 +11,16 @@ export interface ICompanions {
   'dob': string;
   'ageGroup': string;
   'documentNumber': string;
-  'orders': IOrders[];
+  'orders': ICompanionOrders[];
 }
 
-interface IOrders {
+export interface ICompanionOrders {
   'bookingCreateDate': string;
   'recLoc': string;
   'coupons': ICoupons[];
 }
 
-interface ICoupons {
+export interface ICoupons {
   'coupon': string;
   'depDate': string;
   'from': string;
