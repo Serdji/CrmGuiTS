@@ -7,6 +7,7 @@ import * as R from 'ramda';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConvertToStream } from '../../../../utils/ConvertToStream';
 import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component( {
   selector: 'app-companions',
@@ -44,6 +45,26 @@ export class CompanionsComponent implements OnInit {
     this.companions$ = this.companionsService.getCompanions( this.id )
       .pipe(
         pluck( 'result' ),
+        map(
+          ( companions: ICompanions[] ) => {
+            return _.map( companions, ( companion: ICompanions ) => {
+              return {
+                ...companion,
+                orders: _.map( companion.orders, ( order: ICompanionOrders ) => {
+                  return {
+                    ...order,
+                    coupons: _.map( order.coupons, ( coupon: ICoupons ) => {
+                      return {
+                        ...coupon,
+                        depDate: moment( coupon.depDate ).format( 'DD.MM.YYYYY' )
+                      };
+                    } )
+                  };
+                } )
+              };
+            } );
+          }
+        ),
         tap( ( companions: ICompanions[] ) => this.originCompanions = companions ),
         tap( _ => this.isLoader = false )
       ) as Observable<ICompanions[]>;
@@ -74,7 +95,7 @@ export class CompanionsComponent implements OnInit {
         tap( _ => this.formFilter.get( 'airportValue' ).enable() ),
         map( switchFromTo => {
           this.formFilter.get( 'airportValue' ).patchValue( undefined );
-          if( _.isUndefined(  switchFromTo )  ) {
+          if ( _.isUndefined( switchFromTo ) ) {
             this.formFilter.get( 'airportValue' ).patchValue( switchFromTo );
             this.formFilter.get( 'airportValue' ).disable();
             return switchFromTo;
@@ -100,7 +121,7 @@ export class CompanionsComponent implements OnInit {
                     )
                   );
               } ),
-            )
+            );
         } )
       ).subscribe( ( companion: ICompanions[] ) => this.companions$ = of( companion ) as Observable<ICompanions[]> );
   }
