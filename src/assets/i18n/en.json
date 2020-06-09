@@ -470,7 +470,9 @@
 						"DEP_DATE_FROM": "Flight date from",
 						"DEP_DATE_TO": "Flight date to",
 						"FROM": "From",
-						"TO": "To"
+						"SWITCH_FROM_TO": "Destination Selection",
+						"TO": "To",
+						"VALUE": "Value"
 					},
 					"TABLE": {
 						"AGE_GROUP": "Age group",

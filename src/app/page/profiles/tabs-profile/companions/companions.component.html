@@ -6,15 +6,16 @@
         <div class="companions__filter-wrapper">
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <mat-select matInput formControlName="from" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.FROM' | translate}}">
+              <mat-select matInput formControlName="switchFromTo" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.SWITCH_FROM_TO' | translate}}">
                 <mat-option></mat-option>
-                <mat-option *ngFor="let airport of airports$ | async" [value]="airport">{{ airport }}</mat-option>
+                <mat-option value="from"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.FROM' | translate}} </mat-option>
+                <mat-option value="to"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.TO' | translate}} </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <mat-select matInput formControlName="to" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.TO' | translate}}">
+              <mat-select matInput formControlName="airportValue" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.VALUE' | translate}}">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let airport of airports$ | async" [value]="airport">{{ airport }}</mat-option>
               </mat-select>

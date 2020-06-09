@@ -68,36 +68,51 @@ export class CompanionsComponent implements OnInit {
   }
 
   private initFilterAirport() {
-    _.each( [ 'from', 'to' ], ( formName: string ) => {
-      this.formFilter.get( formName ).valueChanges
-        .pipe(
-          switchMap( value => {
-            return of( this.originCompanions )
-              .pipe(
-                this.convertToStream.stream(
-                  filter( ( companion: ICompanions ) => {
-                    let isFilter: boolean;
-                    _.each( companion.orders, ( order: ICompanionOrders ) => {
-                      _.each( order.coupons, ( coupon: ICoupons ) => {
-                        isFilter = _.isUndefined( value ) ? _.isUndefined( value ) : coupon[ formName ] === value;
-                      } );
-                    } );
-                    return isFilter;
-                  } ),
-                )
-              );
-          } ),
-        ).subscribe( ( companion: ICompanions[] ) => this.companions$ = of( companion ) as Observable<ICompanions[]> );
-    } );
+
+    this.formFilter.get( 'switchFromTo' ).valueChanges
+      .pipe(
+        tap( _ => this.formFilter.get( 'airportValue' ).enable() ),
+        map( switchFromTo => {
+          this.formFilter.get( 'airportValue' ).patchValue( undefined );
+          if( _.isUndefined(  switchFromTo )  ) {
+            this.formFilter.get( 'airportValue' ).patchValue( switchFromTo );
+            this.formFilter.get( 'airportValue' ).disable();
+            return switchFromTo;
+          }
+          return switchFromTo;
+        } ),
+        switchMap( switchFromTo => {
+          return this.formFilter.get( 'airportValue' ).valueChanges
+            .pipe(
+              switchMap( airportValue => {
+                return of( this.originCompanions )
+                  .pipe(
+                    this.convertToStream.stream(
+                      filter( ( companion: ICompanions ) => {
+                        let isFilter: boolean;
+                        _.each( companion.orders, ( order: ICompanionOrders ) => {
+                          _.each( order.coupons, ( coupon: ICoupons ) => {
+                            isFilter = _.isUndefined( airportValue ) ? _.isUndefined( airportValue ) : coupon[ switchFromTo ] === airportValue;
+                          } );
+                        } );
+                        return isFilter;
+                      } ),
+                    )
+                  );
+              } ),
+            )
+        } )
+      ).subscribe( ( companion: ICompanions[] ) => this.companions$ = of( companion ) as Observable<ICompanions[]> );
   }
 
   private initForm() {
     this.formFilter = this.fb.group( {
-      from: '',
-      to: '',
+      switchFromTo: '',
+      airportValue: '',
       depDateFrom: '',
       depDateTo: ''
     } );
+    this.formFilter.get( 'airportValue' ).disable();
   }
 
   onSortFilter( title: string ): void {
