@@ -2,7 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ICompanions, ICompanionOrders, ICoupons } from '../../../../interface/icompanions';
 import { CompanionsService } from './companions.service';
 import { filter, map, pluck, switchMap, tap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
+import { combineLatest, Observable, of } from 'rxjs';
 import * as R from 'ramda';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConvertToStream } from '../../../../utils/ConvertToStream';
@@ -39,6 +39,7 @@ export class CompanionsComponent implements OnInit {
     this.initCompanions();
     this.initAirport();
     this.initFilterAirport();
+    this.initFilterIntervalDate();
   }
 
   private initCompanions() {
@@ -56,7 +57,7 @@ export class CompanionsComponent implements OnInit {
                     coupons: _.map( order.coupons, ( coupon: ICoupons ) => {
                       return {
                         ...coupon,
-                        depDate: moment( new Date(  coupon.depDate ) ).format( 'DD.MM.YYYYY' )
+                        depDate: new Date( coupon.depDate )
                       };
                     } )
                   };
@@ -124,6 +125,43 @@ export class CompanionsComponent implements OnInit {
             );
         } )
       ).subscribe( ( companion: ICompanions[] ) => this.companions$ = of( companion ) as Observable<ICompanions[]> );
+  }
+
+  private initFilterIntervalDate() {
+
+    const intervalFilter$ = combineLatest( [
+      this.companions$,
+      this.formFilter.get( 'depDateFrom' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) ),
+      this.formFilter.get( 'depDateTo' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) )
+    ] ).pipe(
+      map( ( [ companions, depDateFrom, depDateTo ]: [ ICompanions[], string, string ] ) => {
+        companions = _.map( companions, ( companion: ICompanions ) => {
+          const orders = _.map( companion.orders, ( order: ICompanionOrders ) => {
+            return {
+              ...order,
+              coupons: _.sortBy( order.coupons, 'depDate' )
+            };
+          } );
+          return {
+            ...companion,
+            orders: _.sortBy( orders, ( order: ICompanionOrders ) => order.coupons[ 0 ].depDate )
+          };
+        } );
+        return [
+          _.sortBy( companions, ( companion: ICompanions ) => companion.orders[ 0 ].coupons[ 0 ].depDate ),
+          depDateFrom,
+          depDateTo
+        ];
+      } )
+    );
+
+    intervalFilter$.subscribe( ( [ companions, depDateFrom, depDateTo ]: [ ICompanions[], string, string ] ) => {
+      console.log( companions, depDateFrom, depDateTo );
+    } );
+
+    this.formFilter.get( 'depDateFrom' ).patchValue( moment( '23.07.2018' ) );
+    this.formFilter.get( 'depDateTo' ).patchValue( moment( '06.08.2018' ) );
+
   }
 
   private initForm() {
