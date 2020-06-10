@@ -23,16 +23,18 @@
           </div>
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <input matInput formControlName="depDateFrom" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_FROM' | translate}}" [matDatepicker]="depDateFrom">
-              <mat-datepicker-toggle matSuffix [for]="depDateFrom"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #depDateFrom></mat-datepicker>
+              <mat-select matInput formControlName="depDateFrom" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_FROM' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let date of dates$ | async" [value]="date">{{ date }}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <input matInput formControlName="depDateTo" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_TO' | translate}}" [matDatepicker]="depDateTo">
-              <mat-datepicker-toggle matSuffix [for]="depDateTo"></mat-datepicker-toggle>
-              <mat-datepicker touchUi="true" #depDateTo></mat-datepicker>
+              <mat-select matInput formControlName="depDateTo" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_TO' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let date of dates$ | async" [value]="date">{{ date }}</mat-option>
+              </mat-select>
             </mat-form-field>
           </div>
         </div>
@@ -201,7 +203,7 @@
                           </div>
                           <div class="companions__content-point">
                             <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.DEP_DATE' | translate}}</span>
-                            <span><b> {{coupon.depDate | date:'dd.MM.yyyy'}}</b></span>
+                            <span><b> {{coupon.depDate }}</b></span>
                           </div>
                           <div class="companions__content-point">
                             <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TICKET_NUM' | translate}}</span>
