@@ -201,9 +201,9 @@ export class CompanionsComponent implements OnInit {
       } );
 
       const start = _.findIndex( companions, predicate( depDateFrom ) ) !== -1 ? _.findIndex( companions, predicate( depDateFrom ) ) : 0;
-      const end = _.findLastIndex( companions, predicate( depDateTo ) ) !== -1 ? _.findLastIndex( companions, predicate( depDateTo ) ) : companions.length - 1;
+      const end = _.findLastIndex( companions, predicate( depDateTo ) ) !== -1 ? _.findLastIndex( companions, predicate( depDateTo ) ) + 1 : companions.length;
 
-      console.log( start, end );
+      this.companions$ = of( _.slice( this.originCompanions, start, end ) );
     } );
   }
 
