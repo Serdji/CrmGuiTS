@@ -66,6 +66,21 @@ export class CompanionsComponent implements OnInit {
             } );
           }
         ),
+        map( ( companions: ICompanions[] ) => {
+          companions = _.map( companions, ( companion: ICompanions ) => {
+            const orders = _.map( companion.orders, ( order: ICompanionOrders ) => {
+              return {
+                ...order,
+                coupons: _.sortBy( order.coupons, 'depDate' )
+              };
+            } );
+            return {
+              ...companion,
+              orders: _.sortBy( orders, ( order: ICompanionOrders ) => order.coupons[ 0 ].depDate )
+            };
+          } );
+          return _.sortBy( companions, ( companion: ICompanions ) => companion.orders[ 0 ].coupons[ 0 ].depDate );
+        } ),
         tap( ( companions: ICompanions[] ) => this.originCompanions = companions ),
         tap( _ => this.isLoader = false )
       ) as Observable<ICompanions[]>;
@@ -131,21 +146,26 @@ export class CompanionsComponent implements OnInit {
 
     const intervalFilter$ = combineLatest( [
       this.companions$.pipe(
-        map( ( companions: ICompanions[] ) => {
-          companions = _.map( companions, ( companion: ICompanions ) => {
-            const orders = _.map( companion.orders, ( order: ICompanionOrders ) => {
+        map(
+          ( companions: ICompanions[] ) => {
+            return _.map( companions, ( companion: ICompanions ) => {
               return {
-                ...order,
-                coupons: _.sortBy( order.coupons, 'depDate' )
+                ...companion,
+                orders: _.map( companion.orders, ( order: ICompanionOrders ) => {
+                  return {
+                    ...order,
+                    coupons: _.map( order.coupons, ( coupon: ICoupons ) => {
+                      return {
+                        ...coupon,
+                        depDate: moment( coupon.depDate ).format( 'DD.MM.YYYY' )
+                      };
+                    } )
+                  };
+                } )
               };
             } );
-            return {
-              ...companion,
-              orders: _.sortBy( orders, ( order: ICompanionOrders ) => order.coupons[ 0 ].depDate )
-            };
-          } );
-          return _.sortBy( companions, ( companion: ICompanions ) => companion.orders[ 0 ].coupons[ 0 ].depDate );
-        } )
+          }
+        ),
       ),
       this.formFilter.get( 'depDateFrom' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) ),
       this.formFilter.get( 'depDateTo' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) )
@@ -153,10 +173,26 @@ export class CompanionsComponent implements OnInit {
 
     intervalFilter$.subscribe( ( [ companions, depDateFrom, depDateTo ]: [ ICompanions[], string, string ] ) => {
       console.log( companions, depDateFrom, depDateTo );
+      const predicate = ( date ) => ( {
+        orders: [
+          {
+            coupons: [
+              { depDate: date }
+            ]
+          }
+        ]
+      } );
+
+
+      const start = _.findIndex( companions, predicate( depDateFrom ) ) !== -1 ? _.findIndex( companions, predicate( depDateFrom ) ) : 0;
+      const end = _.findLastIndex( companions, predicate( depDateTo ) ) !== -1 ? _.findLastIndex( companions, predicate( depDateTo ) ) : companions.length - 1;
+
+      console.log( start, end );
+
     } );
 
-    this.formFilter.get( 'depDateFrom' ).patchValue( moment( '23.07.2018' ) );
-    this.formFilter.get( 'depDateTo' ).patchValue( moment( '06.08.2018' ) );
+    this.formFilter.get( 'depDateFrom' ).patchValue( moment( '07.23.2018' ) );
+    this.formFilter.get( 'depDateTo' ).patchValue( moment( '08.06.2018' ) );
 
   }
 

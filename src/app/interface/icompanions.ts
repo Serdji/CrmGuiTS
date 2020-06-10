@@ -22,7 +22,7 @@ export interface ICompanionOrders {
 
 export interface ICoupons {
   'coupon': string;
-  'depDate': Date;
+  'depDate': Date | string;
   'from': string;
   'ticketNum': string;
   'to': string;
