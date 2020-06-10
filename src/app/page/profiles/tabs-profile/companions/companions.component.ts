@@ -130,30 +130,26 @@ export class CompanionsComponent implements OnInit {
   private initFilterIntervalDate() {
 
     const intervalFilter$ = combineLatest( [
-      this.companions$,
-      this.formFilter.get( 'depDateFrom' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) ),
-      this.formFilter.get( 'depDateTo' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) )
-    ] ).pipe(
-      map( ( [ companions, depDateFrom, depDateTo ]: [ ICompanions[], string, string ] ) => {
-        companions = _.map( companions, ( companion: ICompanions ) => {
-          const orders = _.map( companion.orders, ( order: ICompanionOrders ) => {
+      this.companions$.pipe(
+        map( ( companions: ICompanions[] ) => {
+          companions = _.map( companions, ( companion: ICompanions ) => {
+            const orders = _.map( companion.orders, ( order: ICompanionOrders ) => {
+              return {
+                ...order,
+                coupons: _.sortBy( order.coupons, 'depDate' )
+              };
+            } );
             return {
-              ...order,
-              coupons: _.sortBy( order.coupons, 'depDate' )
+              ...companion,
+              orders: _.sortBy( orders, ( order: ICompanionOrders ) => order.coupons[ 0 ].depDate )
             };
           } );
-          return {
-            ...companion,
-            orders: _.sortBy( orders, ( order: ICompanionOrders ) => order.coupons[ 0 ].depDate )
-          };
-        } );
-        return [
-          _.sortBy( companions, ( companion: ICompanions ) => companion.orders[ 0 ].coupons[ 0 ].depDate ),
-          depDateFrom,
-          depDateTo
-        ];
-      } )
-    );
+          return _.sortBy( companions, ( companion: ICompanions ) => companion.orders[ 0 ].coupons[ 0 ].depDate );
+        } )
+      ),
+      this.formFilter.get( 'depDateFrom' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) ),
+      this.formFilter.get( 'depDateTo' ).valueChanges.pipe( map( date => moment( date ).format( 'DD.MM.YYYY' ) ) )
+    ] );
 
     intervalFilter$.subscribe( ( [ companions, depDateFrom, depDateTo ]: [ ICompanions[], string, string ] ) => {
       console.log( companions, depDateFrom, depDateTo );
