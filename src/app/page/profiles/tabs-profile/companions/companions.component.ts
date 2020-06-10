@@ -56,7 +56,7 @@ export class CompanionsComponent implements OnInit {
                     coupons: _.map( order.coupons, ( coupon: ICoupons ) => {
                       return {
                         ...coupon,
-                        depDate: moment( coupon.depDate ).format( 'DD.MM.YYYYY' )
+                        depDate: moment( new Date(  coupon.depDate ) ).format( 'DD.MM.YYYYY' )
                       };
                     } )
                   };
