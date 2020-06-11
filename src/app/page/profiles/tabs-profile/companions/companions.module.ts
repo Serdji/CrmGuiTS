@@ -6,6 +6,7 @@ import { ComponentsModule } from '../../../../components/components.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { CompanionsService } from './companions.service';
 import { ReactiveFormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 
 
 @NgModule( {
@@ -15,6 +16,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     ComponentsModule,
     ReactiveFormsModule,
     TranslateModule,
+    RouterModule,
   ],
   declarations: [ CompanionsComponent ],
   exports: [ CompanionsComponent ],

@@ -72,7 +72,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.ordersProgress = true;
     this.profileProgress = true;
     this.profileSegmentationProgress = true;
-    this.selectedIndex = 7;
+    this.selectedIndex = null;
     this.initQueryRouter();
     this.initCurrencyDefault();
     this.initTabsControlData();
@@ -98,7 +98,7 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
     this.tabsProfileService.subjectControlTabsData
       .pipe( untilDestroyed( this ) )
       .subscribe( ( tabsControlData: ITabsControlData ) => {
-        this.selectedIndex = 0;
+        // this.selectedIndex = 0;
         timer( 0 )
           .pipe( untilDestroyed( this ) )
           .subscribe( _ => {

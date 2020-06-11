@@ -8,6 +8,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { ConvertToStream } from '../../../../utils/ConvertToStream';
 import * as _ from 'lodash';
 import * as moment from 'moment';
+import { TabsProfileService } from '../../../../services/tabs-profile.service';
+import { ITabsControlData } from '../../../../interface/itabs-control-data';
 
 @Component( {
   selector: 'app-companions',
@@ -30,7 +32,8 @@ export class CompanionsComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private companionsService: CompanionsService,
-    private convertToStream: ConvertToStream
+    private convertToStream: ConvertToStream,
+    private tabsProfileService: TabsProfileService
   ) { }
 
   ngOnInit() {
@@ -215,6 +218,10 @@ export class CompanionsComponent implements OnInit {
       depDateTo: ''
     } );
     this.formFilter.get( 'airportValue' ).disable();
+  }
+
+  onOpenTab( params: ITabsControlData ): void {
+    this.tabsProfileService.subjectControlTabsData.next( params );
   }
 
   onSortFilter( title: string ): void {

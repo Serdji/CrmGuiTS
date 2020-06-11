@@ -460,6 +460,8 @@
 								"TICKET_NUM": "Ticket number",
 								"TO": "To"
 							},
+							"GO_TO_ORDER": "Go to satellite order",
+							"GO_TO_PROFILE": "Go to satellite profile",
 							"ORDERS": {
 								"BOOKING_CREATE_DATA": "Date of order (reservation)",
 								"REC_LOC": "Recloc"

@@ -6,16 +6,19 @@
         <div class="companions__filter-wrapper">
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <mat-select matInput formControlName="switchFromTo" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.SWITCH_FROM_TO' | translate}}">
+              <mat-select matInput formControlName="switchFromTo" type="text"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.SWITCH_FROM_TO' | translate}}">
                 <mat-option></mat-option>
-                <mat-option value="from"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.FROM' | translate}} </mat-option>
+                <mat-option
+                  value="from"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.FROM' | translate}} </mat-option>
                 <mat-option value="to"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.TO' | translate}} </mat-option>
               </mat-select>
             </mat-form-field>
           </div>
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <mat-select matInput formControlName="airportValue" type="text" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.VALUE' | translate}}">
+              <mat-select matInput formControlName="airportValue" type="text"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.VALUE' | translate}}">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let airport of airports$ | async" [value]="airport">{{ airport }}</mat-option>
               </mat-select>
@@ -23,7 +26,8 @@
           </div>
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <mat-select matInput formControlName="depDateFrom" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_FROM' | translate}}">
+              <mat-select matInput formControlName="depDateFrom"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_FROM' | translate}}">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let date of dates$ | async" [value]="date">{{ date }}</mat-option>
               </mat-select>
@@ -31,7 +35,8 @@
           </div>
           <div class="companions__filter">
             <mat-form-field class="companions__input">
-              <mat-select matInput formControlName="depDateTo" placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_TO' | translate}}">
+              <mat-select matInput formControlName="depDateTo"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_TO' | translate}}">
                 <mat-option></mat-option>
                 <mat-option *ngFor="let date of dates$ | async" [value]="date">{{ date }}</mat-option>
               </mat-select>
@@ -143,7 +148,7 @@
             <mat-card class="companions__sort mat-elevation-z0">
               <div class="row no-gutters">
 
-                <div class="col-9 _no-col-mb">
+                <div class="col-6 _no-col-mb">
                   <div class="companions__filter">
                     <span
                       matRipple
@@ -156,7 +161,7 @@
                   </div>
                 </div>
 
-                <div class="col-3 _no-col-mb">
+                <div class="col-6 _no-col-mb">
                   <div class="companions__filter">
                     <span
                       matRipple
@@ -198,23 +203,28 @@
                       <div class="companions__content-wrapper">
                         <div class="companions__content _right-width">
                           <div class="companions__content-point">
-                            <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.COUPON' | translate}}</span>
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.COUPON' | translate}}</span>
                             <span><b> {{coupon.coupon}}</b></span>
                           </div>
                           <div class="companions__content-point">
-                            <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.DEP_DATE' | translate}}</span>
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.DEP_DATE' | translate}}</span>
                             <span><b> {{coupon.depDate }}</b></span>
                           </div>
                           <div class="companions__content-point">
-                            <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TICKET_NUM' | translate}}</span>
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TICKET_NUM' | translate}}</span>
                             <span><b> {{coupon.ticketNum}}</b></span>
                           </div>
                           <div class="companions__content-point">
-                            <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.FROM' | translate}}</span>
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.FROM' | translate}}</span>
                             <span><b> {{coupon.from }}</b></span>
                           </div>
                           <div class="companions__content-point">
-                            <span class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TO' | translate}}</span>
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TO' | translate}}</span>
                             <span><b> {{coupon.to }}</b></span>
                           </div>
                         </div>
@@ -222,9 +232,16 @@
                     </mat-card>
                   </div>
                 </div>
+                <span class="companions__link" routerLink="/crm/profile/{{ companion.customerId }}" (click)="onOpenTab(
+               { selectedIndex: 3, order: { recLocGDS: order.recLoc } }
+                )">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.GO_TO_ORDER' | translate}}</span>
               </ng-template>
             </mat-expansion-panel>
           </mat-accordion>
+          <span class="companions__link"
+                routerLink="/crm/profile/{{ companion.customerId }}"(click)="onOpenTab(
+               { selectedIndex: 0, order: { recLocGDS: '' } }
+                )">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.GO_TO_PROFILE' | translate}}</span>
         </mat-card>
       </ng-template>
     </mat-expansion-panel>
