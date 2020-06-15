@@ -215,6 +215,7 @@
 					},
 					"DATE_FROM": "Дата от",
 					"DATE_TO": "Дата до",
+					"DIST_SUBJECT_NAME": "Тематики рассылки",
 					"EMAIL_STATUSES": {
 						"ACTIVE": "Выполняется ",
 						"CANCELLED": "Завершена ",

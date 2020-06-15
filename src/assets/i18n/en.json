@@ -215,6 +215,7 @@
 					},
 					"DATE_FROM": "Effective date",
 					"DATE_TO": "Discontinue date",
+					"DIST_SUBJECT_NAME": "Distribution topic",
 					"EMAIL_STATUSES": {
 						"ACTIVE": "Active",
 						"CANCELLED": "Completed",
