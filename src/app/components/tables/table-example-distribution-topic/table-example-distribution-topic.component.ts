@@ -25,11 +25,10 @@ export class TableExampleDistributionTopicComponent implements OnInit, OnDestroy
   public isDisabled: boolean;
 
 
-
   @Input() private tableDataSource: any;
 
-  @ViewChild(MatSort, { static: true }) sort: MatSort;
-  @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
+  @ViewChild( MatSort, { static: true } ) sort: MatSort;
+  @ViewChild( MatPaginator, { static: true } ) paginator: MatPaginator;
 
   constructor(
     private dialog: MatDialog,
@@ -44,11 +43,9 @@ export class TableExampleDistributionTopicComponent implements OnInit, OnDestroy
 
   private initDisplayedColumns() {
     this.displayedColumns = [
-      'select',
-      'firstName',
-      'lastName',
-      'secondName',
-      'customerNameId',
+      'idDistSubject',
+      'distSubjectName',
+      'distSubjectDescription',
     ];
   }
 
@@ -60,11 +57,11 @@ export class TableExampleDistributionTopicComponent implements OnInit, OnDestroy
   private dataSourceFun( params ) {
     this.dataSource = new MatTableDataSource( params );
     timer( 1 )
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => {
-      this.dataSource.sort = this.sort;
-      this.dataSource.paginator = this.paginator;
-    } );
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+      } );
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '', card: string = '' ) {
@@ -103,7 +100,7 @@ export class TableExampleDistributionTopicComponent implements OnInit, OnDestroy
 
   editCreate( customerId, customerNameId, customerNameType, firstName, lastName, secondName ): void {
     const fioObj = { firstName, lastName, secondName };
-    this.windowDialog( ``, 'updateProfileName',  { customerId, customerNameId, customerNameType, fioObj } , 'profileName' );
+    this.windowDialog( ``, 'updateProfileName', { customerId, customerNameId, customerNameType, fioObj }, 'profileName' );
   }
 
   public isAllSelected() {

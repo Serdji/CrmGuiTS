@@ -1,6 +1,6 @@
 <div class="distribution-topic">
-  <form class="distribution-topic__form" [formGroup]="formDistSubject">
-    <mat-card class="distribution-topic__card">
+  <mat-card class="distribution-topic__card">
+    <form class="distribution-topic__form" [formGroup]="formDistSubject">
       <mat-card-content class="distribution-topic__content">
         <mat-form-field class="distribution-topic__input">
           <input matInput formControlName="distSubjectName" type="text"
@@ -12,20 +12,21 @@
                  placeholder="{{'PAGE.DISTRIBUTION.DISTRIBUTION_TOPIC.FIELD.DIST_SUBJECT_DESCRIPTION' | translate}}">
         </mat-form-field>
         <button appAccessRights="analytics:update" class="add-segmentation__button" mat-raised-button
-                (click)="saveForm()" color="primary">
+                (click)="onSaveForm()" color="primary">
           <mat-icon>save</mat-icon>
           {{'BUTTON.SAVE' | translate}}
         </button>
       </mat-card-content>
-    </mat-card>
-  </form>
+    </form>
+  </mat-card>
 
-<!--    <mat-card class="distribution-topic__table">-->
-<!--      <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>-->
-<!--      <ng-template #loaderDisabled>-->
-<!--        <app-table-example-distribution-topic *ngIf="profileGroup.length !== 0" [tableDataSource]="profileGroup"></app-table-example-distribution-topic>-->
-<!--      </ng-template>-->
-<!--    </mat-card>-->
+  <mat-card class="distribution-topic__table">
+    <mat-progress-bar *ngIf="isLoader; else loaderDisabled" mode="buffer"></mat-progress-bar>
+    <ng-template #loaderDisabled>
+      <app-table-example-distribution-topic *ngIf="distSubject.length !== 0"
+                                            [tableDataSource]="distSubject"></app-table-example-distribution-topic>
+    </ng-template>
+  </mat-card>
 
 
 </div>

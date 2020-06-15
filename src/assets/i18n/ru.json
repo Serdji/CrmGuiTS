@@ -193,6 +193,11 @@
 				"FIELD": {
 					"DIST_SUBJECT_DESCRIPTION": "Краткое описание тематики рассылки",
 					"DIST_SUBJECT_NAME": "Название тематики рассылки"
+				},
+				"TABL": {
+					"DIST_SUBJECT_DESCRIPTION": "Краткое описание тематики рассылки",
+					"DIST_SUBJECT_NAME": "Название тематики рассылки",
+					"ID": "Id"
 				}
 			},
 			"LIST_DISTRIBUTION": {

@@ -4,65 +4,28 @@
   </mat-form-field>
   <mat-table class="table" #table [dataSource]="dataSource" matSort matSortDirection="asc">
 
-    <ng-container matColumnDef="select" sticky>
-      <mat-header-cell *matHeaderCellDef>
-        <mat-checkbox appAccessRights="customers:update"
-                      appAccessDisabled="true"
-                      [disabled]="isDisabled"
-                      (emitAccessDisabled)="disabledCheckbox($event)"
-                      (change)="$event ? masterToggle() : null"
-                      [checked]="selection.hasValue() && isAllSelected()"
-                      [indeterminate]="selection.hasValue() && !isAllSelected()">
-        </mat-checkbox>
-      </mat-header-cell>
-      <mat-cell *matCellDef="let element">
-        <mat-checkbox appAccessRights="customers:update"
-                      appAccessDisabled="true"
-                      (emitAccessDisabled)="disabledCheckbox($event)"
-                      [disabled]="isDisabled"
-                      [id]="element.customerNameId"
-                      (click)="$event.stopPropagation()"
-                      (change)="$event ? selection.toggle(element) : null"
-                      [checked]="selection.isSelected(element)">
-        </mat-checkbox>
-      </mat-cell>
-    </ng-container>
 
-    <ng-container matColumnDef="firstName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.TABLE.FIRST_NAME' | translate}}</mat-header-cell>
+    <ng-container matColumnDef="idDistSubject">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.DISTRIBUTION_TOPIC.TABL.ID' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.firstName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.idDistSubject}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="lastName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.TABLE.LAST_NAME' | translate}}</mat-header-cell>
+    <ng-container matColumnDef="distSubjectName">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.DISTRIBUTION_TOPIC.TABL.DIST_SUBJECT_NAME' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.lastName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.distSubjectName}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="secondName">
-      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.PROFILES.TABS_PROFILE.PROFILE.TABLE.MIDDLE_NAME' | translate}}</mat-header-cell>
+    <ng-container matColumnDef="distSubjectDescription">
+      <mat-header-cell *matHeaderCellDef mat-sort-header>{{'PAGE.DISTRIBUTION.DISTRIBUTION_TOPIC.TABL.DIST_SUBJECT_DESCRIPTION' | translate}}</mat-header-cell>
       <mat-cell #matCell class="table__cell" [ngClass]="{ '_cp' : isCp }" *matCellDef="let element"
-                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.secondName}}</span>
+                (mousemove)="cursorPointer(matCell)" (click)="openText(matCell)"><span>{{element.distSubjectDescription}}</span>
       </mat-cell>
     </ng-container>
 
-    <ng-container matColumnDef="customerNameId" stickyEnd>
-      <mat-header-cell *matHeaderCellDef mat-sort-header></mat-header-cell>
-      <mat-cell #matCell *matCellDef="let element">
-        <mat-icon [id]="element.customerNameId" (click)="editCreate(
-        element.customerId,
-        element.customerNameId,
-        element.customerNameType,
-        element.firstName,
-        element.lastName,
-        element.secondName
-        )">create
-        </mat-icon>
-      </mat-cell>
-    </ng-container>
 
     <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
     <mat-row class="table__row" *matRowDef="let row; columns: displayedColumns;"></mat-row>
