@@ -70,6 +70,7 @@ export class SidenavService {
         link: [
           { url: '/crm/list-email', title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' },
           { url: '/crm/list-sms', title: 'MENU.DISTRIBUTIONS.LIST_SMS' },
+          { url: '/crm/distribution-topic', title: 'MENU.DISTRIBUTIONS.DISTRIBUTION_TOPIC' },
         ]
       },
       {

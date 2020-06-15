@@ -142,6 +142,7 @@
 			"SEARCH_CUSTOMER": "Поиск пассажира"
 		},
 		"DISTRIBUTIONS": {
+			"DISTRIBUTION_TOPIC": "Тематика рассылки",
 			"GROUP_NAME": "Рассылки",
 			"LIST_EMAIL": "Email",
 			"LIST_SMS": "SMS"

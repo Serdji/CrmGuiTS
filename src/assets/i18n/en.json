@@ -142,6 +142,7 @@
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
 		"DISTRIBUTIONS": {
+			"DISTRIBUTION_TOPIC": "Distribution topic",
 			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",
 			"LIST_SMS": "SMS"
