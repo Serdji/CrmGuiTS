@@ -18,7 +18,6 @@ import { untilDestroyed } from 'ngx-take-until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
 import { DistributionTopicService } from '../../../page/distribution/distribution-topic/distribution-topic.service';
-import { tap } from 'rxjs/operators';
 import { IDistributionTopic } from '../../../interface/idistribution-topic';
 
 

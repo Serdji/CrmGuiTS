@@ -4,7 +4,6 @@ import { EditorSmsService } from './editor-sms.service';
 import { map, startWith, takeWhile } from 'rxjs/operators';
 import { ITemplate } from '../../../interface/itemplate';
 import * as R from 'ramda';
-import * as moment from 'moment';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { Observable, of, timer } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
@@ -15,6 +14,8 @@ import { ITemplates } from '../../../interface/itemplates';
 
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { DistributionTopicService } from '../../../page/distribution/distribution-topic/distribution-topic.service';
+import { IDistributionTopic } from '../../../interface/idistribution-topic';
 
 @Component( {
   selector: 'app-editor-sms',
@@ -31,7 +32,8 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   public formSms: FormGroup;
   public buttonDisabled: boolean;
-  public templates: ITemplates[];
+  public templates$: Observable<ITemplates[]>;
+  public distSubjects$: Observable<IDistributionTopic[]>;
   public template: ITemplate;
   public counter: {
     color: string;
@@ -57,6 +59,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private editorService: EditorService,
+    private distributionTopicService: DistributionTopicService,
   ) { }
 
   ngOnInit(): void {
@@ -66,6 +69,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.initIsButtonSave();
     this.formFilling();
     this.initTemplates();
+    this.initDistSubject();
     this.initCounterSms();
   }
 
@@ -80,17 +84,18 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.formSms = this.fb.group( {
       subject: [ '', [ Validators.required ] ],
       text: [ '', [ Validators.required ] ],
-      templateId: ''
+      templateId: '',
+      distSubjectId: ''
     } );
     this.newParams();
   }
 
   private initTemplates() {
-    this.editorSmsService.getTemplates()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( templates: ITemplates[] ) => {
-        this.templates = templates;
-      } );
+    this.templates$ =  this.editorSmsService.getTemplates();
+  }
+
+  private initDistSubject() {
+    this.distSubjects$ = this.distributionTopicService.getAllDistributionSubjects() as Observable<IDistributionTopic[]>;
   }
 
   private insertTemplate() {
