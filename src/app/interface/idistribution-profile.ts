@@ -28,6 +28,8 @@ export interface IDistributionProfile {
     withoutActiveCount: number;
     activeMailsCount: number;
   };
+  distSubjectDescription: string;
+  distSubjectName: string;
   'totalCount': number;
   'dateFrom': string;
   'dateTo': string;

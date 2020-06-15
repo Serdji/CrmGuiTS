@@ -240,6 +240,7 @@
 			},
 			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
+				"DIST_SUBJECT_NAME": "Distribution topic:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
 				"LAST_TRY": "Date and time when campaign was created:",
@@ -283,6 +284,7 @@
 			},
 			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
+				"DIST_SUBJECT_NAME": "Distribution topic:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
 				"LAST_TRY": "Date and time when campaign was created:",

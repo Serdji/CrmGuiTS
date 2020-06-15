@@ -240,6 +240,7 @@
 			},
 			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Даты рассылок:",
+				"DIST_SUBJECT_NAME": "Тематики рассылки:",
 				"ERROR_MESSAGE": "Сообщение об ошибки:",
 				"FROM": "от",
 				"LAST_TRY": "Дата и время создания рассылки:",
@@ -283,6 +284,7 @@
 			},
 			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Даты рассылок:",
+				"DIST_SUBJECT_NAME": "Тематики рассылки:",
 				"ERROR_MESSAGE": "Сообщение об ошибки:",
 				"FROM": "от",
 				"LAST_TRY": "Дата и время создания рассылки:",
