@@ -1122,6 +1122,7 @@
 			"DIALOG_EMAIL": {
 				"DATE_FROM": "Sending start date",
 				"DATE_TO": "Sending end date",
+				"DIST_SUBJECT_NAME": "Topic name",
 				"EXAMPLE": "Example:",
 				"LIMITS": "Limit",
 				"PARAMS": "Campaign settings",
@@ -1133,6 +1134,7 @@
 				"TOTAL_COUNT": "Amount"
 			},
 			"DIALOG_SMS": {
+				"DIST_SUBJECT_NAME": "Topic name",
 				"SYMBOLS_ENTERED": "Symbols entered and SMS counter",
 				"TEMPLATE": "Template",
 				"TEXT": "Message text",

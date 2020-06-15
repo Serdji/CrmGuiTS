@@ -1122,6 +1122,7 @@
 			"DIALOG_EMAIL": {
 				"DATE_FROM": "Дата отправки от",
 				"DATE_TO": "Дата отправки до",
+				"DIST_SUBJECT_NAME": "Название тематики рассылки",
 				"EXAMPLE": "Пример:",
 				"LIMITS": "Лимит",
 				"PARAMS": "Параметры рассылок",
@@ -1133,6 +1134,7 @@
 				"TOTAL_COUNT": "Количество"
 			},
 			"DIALOG_SMS": {
+				"DIST_SUBJECT_NAME": "Название тематики рассылки",
 				"SYMBOLS_ENTERED": "Введенных символов и счетчик SMS",
 				"TEMPLATE": "Шаблон",
 				"TEXT": "Текст сообщения",
