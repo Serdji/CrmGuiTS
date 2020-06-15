@@ -189,6 +189,12 @@
 	},
 	"PAGE": {
 		"DISTRIBUTION": {
+			"DISTRIBUTION_TOPIC": {
+				"FIELD": {
+					"DIST_SUBJECT_DESCRIPTION": "Краткое описание тематики рассылки",
+					"DIST_SUBJECT_NAME": "Название тематики рассылки"
+				}
+			},
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
 					"COUNT_STATUSES": {

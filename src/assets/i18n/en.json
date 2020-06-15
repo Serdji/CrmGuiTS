@@ -189,6 +189,12 @@
 	},
 	"PAGE": {
 		"DISTRIBUTION": {
+			"DISTRIBUTION_TOPIC": {
+				"FIELD": {
+					"DIST_SUBJECT_DESCRIPTION": "Brief description of the newsletter topics",
+					"DIST_SUBJECT_NAME": "Topic name"
+				}
+			},
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
 					"COUNT_STATUSES": {

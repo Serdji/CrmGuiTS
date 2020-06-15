@@ -31,6 +31,7 @@ import { TableAsyncEmailDistributionProfileComponent } from './table-async-email
 import { TableAsyncSmsDistributionProfileComponent } from './table-async-sms-distribution-profile/table-async-sms-distribution-profile.component';
 import { TableExampleCustomSegmentationComponent } from './table-example-custom-segmentation/table-example-custom-segmentation.component';
 import { TableExampleCompanionsComponent } from './table-example-companions/table-example-companions.component';
+import { TableExampleDistributionTopicComponent } from './table-example-distribution-topic/table-example-distribution-topic.component';
 
 @NgModule({
   imports: [
@@ -65,7 +66,8 @@ import { TableExampleCompanionsComponent } from './table-example-companions/tabl
     TableExampleCustomSegmentationComponent,
     TableExampleTaskComponent,
     TableAsyncEventProfileComponent,
-    TableExampleCompanionsComponent
+    TableExampleCompanionsComponent,
+    TableExampleDistributionTopicComponent,
   ],
   exports: [
     TableExampleComponent,
@@ -87,7 +89,8 @@ import { TableExampleCompanionsComponent } from './table-example-companions/tabl
     TableExampleCustomSegmentationComponent,
     TableExampleTaskComponent,
     TableAsyncEventProfileComponent,
-    TableExampleCompanionsComponent
+    TableExampleCompanionsComponent,
+    TableExampleDistributionTopicComponent,
   ],
   providers: [
     TableAsyncService,

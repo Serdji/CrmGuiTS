@@ -6,6 +6,7 @@ import { SharedModule } from '../../../shared/shared.module';
 import { ComponentsModule } from '../../../components/components.module';
 import { ReactiveFormsModule } from '@angular/forms';
 import { DistributionTopicService } from './distribution-topic.service';
+import { TranslateModule } from '@ngx-translate/core';
 
 
 
@@ -16,6 +17,7 @@ import { DistributionTopicService } from './distribution-topic.service';
     SharedModule,
     ComponentsModule,
     ReactiveFormsModule,
+    TranslateModule,
     DistributionTopicRoutes
   ],
   providers: [ DistributionTopicService ]
