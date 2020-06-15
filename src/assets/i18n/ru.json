@@ -331,6 +331,7 @@
 			},
 			"EVENT": {
 				"CARD": {
+					"DIST_SUBJECT_NAME": "Тематики рассылки:",
 					"EDIT": "Редактировать",
 					"MULTIPLICITY": "Кратность (1/x):",
 					"NAME_EVENT": "Название события:",

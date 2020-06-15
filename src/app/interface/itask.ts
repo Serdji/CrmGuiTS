@@ -1,4 +1,7 @@
 export interface ITask {
+  'distSubjectDescription': string;
+  'distSubjectId': number;
+  'distSubjectName': string;
   'taskId': number;
   'title': string;
   'distributionType': number;

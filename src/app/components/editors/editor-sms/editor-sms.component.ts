@@ -76,6 +76,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
   private formFilling() {
     if ( this.params.task ) {
       this.formSms.get( 'subject' ).patchValue( this.params.task.subject );
+      this.formSms.get( 'distSubjectId' ).patchValue( this.params.task.distSubjectId );
       this.formSms.get( 'text' ).patchValue( this.params.task.distributionTemplate );
     }
   }

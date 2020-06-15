@@ -331,6 +331,7 @@
 			},
 			"EVENT": {
 				"CARD": {
+					"DIST_SUBJECT_NAME": "Distribution topic:",
 					"EDIT": "Edit",
 					"MULTIPLICITY": "Frequency:",
 					"NAME_EVENT": "Event name:",

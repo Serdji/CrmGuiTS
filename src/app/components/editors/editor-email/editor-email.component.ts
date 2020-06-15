@@ -118,6 +118,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   private formFilling() {
     if ( this.params.task ) {
       this.formDistribution.get( 'subject' ).patchValue( this.params.task.subject );
+      this.formDistribution.get( 'distSubjectId' ).patchValue( this.params.task.distSubjectId );
       this.formDistribution.get( 'text' ).patchValue( this.params.task.distributionTemplate );
     }
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );
