@@ -8,6 +8,7 @@ import { AccessRightsDistributionGuard } from './guards/access-rights-distributi
 
 const routes: Routes = [
     { path: '', loadChildren: () => import('./page/login/login.module').then(m => m.LoginModule) , data: { title: 'Авторизация' } },
+    { path: 'unsubscribe', loadChildren: () => import('./page/unsubscribe/unsubscribe.module').then(m => m.UnsubscribeModule) , data: { title: 'Отписка' } },
     {
       path: 'crm',
       component: LayoutComponent,
