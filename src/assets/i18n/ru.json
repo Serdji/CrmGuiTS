@@ -205,6 +205,8 @@
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
 					"COUNT_STATUSES": {
+						"ACTIVE_COUNTER": "Количество профилей с активными e-mail адресами",
+						"ACTIVE_MAILS_COUNTER": "Количество активных e-mail из отобранных профилей",
 						"BOUNCED": "Возвращено",
 						"CLICKED": "Переход по ссылке",
 						"DELIVERED": "Доставлено",
@@ -213,7 +215,8 @@
 						"READ": "Прочитано",
 						"REJECTED": "Отписался",
 						"SEND_TO_CUSTOMER": "Отправлено клиенту",
-						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
+						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз",
+						"WITHOUT_ACTIVE_COUNTER": "Количество профилей с отсутствующими активными e-mail адресами"
 					},
 					"DATE_FROM": "Дата от",
 					"DATE_TO": "Дата до",
