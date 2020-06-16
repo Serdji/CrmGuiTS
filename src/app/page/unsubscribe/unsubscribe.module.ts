@@ -5,6 +5,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { UnsubscribeService } from './unsubscribe.service';
 import { UnsubscribeRoutes } from './unsubscribe.routing';
+import { ComponentsModule } from '../../components/components.module';
 
 
 
@@ -14,6 +15,7 @@ import { UnsubscribeRoutes } from './unsubscribe.routing';
     CommonModule,
     SharedModule,
     TranslateModule,
+    ComponentsModule,
     UnsubscribeRoutes
   ],
   providers: [ UnsubscribeService ]

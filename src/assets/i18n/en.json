@@ -26,13 +26,15 @@
 		"FILTER": "Filter",
 		"LOGIN": "Log in",
 		"MERGE_PROFILE": "Merge passengers",
+		"NO": "No",
 		"PROMO_CODE": "Attach promo code",
 		"SAVE": "Save",
 		"SEARCH": "Search",
 		"SEND_DISTRIBUTION": "Send campaign",
 		"START_EVENT": "Run event",
 		"STOP_EVENT": "Stop event",
-		"TO_FROM": "Generate"
+		"TO_FROM": "Generate",
+		"YES": "Yes"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {
@@ -1055,6 +1057,9 @@
 				},
 				"TITLE": "Add new passenger group"
 			}
+		},
+		"UNSUBSCRIBE": {
+			"TITLE": "Are you sure you want to unsubscribe from the newsletter ?"
 		},
 		"USERS": {
 			"ADD_USER": {
