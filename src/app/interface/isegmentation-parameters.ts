@@ -6,6 +6,8 @@ export interface ISegmentationParameters {
     dobFromInclude: string;
     dobToExclude: string;
     withChild: string;
+    relevanceFrom: number;
+    relevanceTo: number;
     gender: string;
   };
   booking: {

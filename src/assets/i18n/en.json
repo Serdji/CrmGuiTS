@@ -923,6 +923,8 @@
 						"M": "Male",
 						"TITLE": "Sex"
 					},
+					"RELEVANCE_FROM": "Passenger significance index from",
+					"RELEVANCE_TO": "Passenger significance index to",
 					"TITLE": "Profile details"
 				},
 				"RESERVATION_DATE_RANG": {

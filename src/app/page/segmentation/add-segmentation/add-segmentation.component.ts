@@ -333,7 +333,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       dateOfServiceFromIncludeE: '',
       dateOfServiceToExcludeE: '',
       dateTransFromIncludeE: '',
-      dateTransToExcludeE: ''
+      dateTransToExcludeE: '',
+      relevanceFrom: '',
+      relevanceTo: ''
     };
   }
 
@@ -524,6 +526,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
         dobToExclude: this.formSegmentation.get( 'dobToExclude' ).value ?
           moment( this.formSegmentation.get( 'dobToExclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         withChild: this.formSegmentation.get( 'withChild' ).value,
+        relevanceFrom: this.formSegmentation.get( 'relevanceFrom' ).value,
+        relevanceTo: this.formSegmentation.get( 'relevanceTo' ).value,
         gender: this.formSegmentation.get( 'gender' ).value,
       },
       booking: {
