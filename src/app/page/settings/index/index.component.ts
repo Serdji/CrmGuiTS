@@ -7,6 +7,8 @@ import { DialogComponent } from '../../../shared/dialog/dialog.component';
 import { timer } from 'rxjs/observable/timer';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { tap } from 'rxjs/operators';
+import * as _ from 'lodash';
+import * as moment from 'moment';
 
 @Component( {
   selector: 'app-index',
@@ -16,8 +18,7 @@ import { tap } from 'rxjs/operators';
 export class IndexComponent implements OnInit, OnDestroy {
 
   public isDisabledButton: boolean;
-
-  private formIndex: FormGroup;
+  public formIndex: FormGroup;
 
   constructor(
     private fb: FormBuilder,
@@ -64,13 +65,17 @@ export class IndexComponent implements OnInit, OnDestroy {
 
   public onEditIndexConfig(): void {
     this.isDisabledButton = true;
-    this.indexService.putIndexConfig( this.formIndex.value )
+    const newConfig: IindexConfig = {} as IindexConfig;
+    _.each( this.formIndex.value, ( val, key ) => newConfig[ key ] = moment( val ).format( 'YYYY-MM-DD' ) + 'T00:00:00' );
+    this.indexService.putIndexConfig( newConfig )
       .pipe( tap( _ => this.isDisabledButton = false ) )
       .subscribe(
-      ( config: IindexConfig ) => {
-        this.formIndex.patchValue( config );
-        this.windowDialog( 'DIALOG.OK.INDEX_SETTING', 'ok' );
-      } );
+        ( config: IindexConfig ) => {
+          this.formIndex.patchValue( config );
+          this.windowDialog( 'DIALOG.OK.INDEX_SETTING', 'ok' );
+        },
+        _ => this.isDisabledButton = false
+      );
   }
 
   ngOnDestroy(): void {}

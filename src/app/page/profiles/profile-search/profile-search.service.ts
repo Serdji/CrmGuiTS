@@ -7,10 +7,11 @@ import { map } from 'rxjs/operators';
 import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { ICountries } from '../../../interface/icountries';
 import * as _ from 'lodash';
-import { convertToStream } from '../../../utils/convertToStream';
+import { ConvertToStream } from '../../../utils/ConvertToStream';
 import { IAirport } from '../../../interface/iairport';
 import { ISellType } from '../../../interface/isell-type';
 import { ICity } from '../../../interface/icity';
+import { ICraftSource } from '../../../interface/icraft-source';
 
 @Injectable()
 export class ProfileSearchService {
@@ -21,7 +22,8 @@ export class ProfileSearchService {
   constructor(
     private http: HttpClient,
     private configService: ConfigService,
-    private retryRequestService: RetryRequestService
+    private retryRequestService: RetryRequestService,
+    private convertToStream: ConvertToStream,
   ) { }
 
   private mapConcatTitle( obj ) {
@@ -32,16 +34,20 @@ export class ProfileSearchService {
     );
   }
 
+  getCraftSource() {
+    return this.http.get<ICraftSource[]>( this.configService.crmApi + `/crm/craftsource` ).pipe( this.retryRequestService.retry() );
+  }
+
   getAirports( text: string = '' ) {
     return this.http.get<IAirport[]>( this.configService.crmApi + `/crm/airport/${ text }` ).pipe( this.retryRequestService.retry() );
   }
 
   getCountries( text: string = '' ) {
-    return this.http.get<ICountries[]>( this.configService.crmApi + `/crm/country/${ text }` ).pipe( this.retryRequestService.retry(), convertToStream( map( this.mapConcatTitle ) ) );
+    return this.http.get<ICountries[]>( this.configService.crmApi + `/crm/country/${ text }` ).pipe( this.retryRequestService.retry(), this.convertToStream.stream( map( this.mapConcatTitle ) ) );
   }
 
   getAirlineCodes( text: string = '' ) {
-    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + `/crm/airline/${ text }` ).pipe( this.retryRequestService.retry(), convertToStream(map( this.mapConcatTitle )) );
+    return this.http.get<IAirlineLCode[]>( this.configService.crmApi + `/crm/airline/${ text }` ).pipe( this.retryRequestService.retry(), this.convertToStream.stream(map( this.mapConcatTitle )) );
   }
 
   getCities( text: string = '' ) {

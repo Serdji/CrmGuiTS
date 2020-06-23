@@ -18,7 +18,7 @@ import { timer } from 'rxjs/observable/timer';
 import { ICustomSegmentationGetParams } from '../../../interface/icustom-segmentation-get-params';
 import { ListSegmentationService } from '../list-segmentation/list-segmentation.service';
 import { AddSegmentationService } from '../add-segmentation/add-segmentation.service';
-import { convertToStream } from '../../../utils/convertToStream';
+import { ConvertToStream } from '../../../utils/ConvertToStream';
 
 
 @Component( {
@@ -53,6 +53,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private tableAsyncService: TableAsyncService,
+    private convertToStream: ConvertToStream
   ) { }
 
   ngOnInit(): void {
@@ -145,7 +146,7 @@ export class AddCustomSegmentationComponent implements OnInit, OnDestroy {
       .pipe(
         untilDestroyed( this ),
         tap( _ => this.isLoaderCustomSegmentationTable = false ),
-        convertToStream(
+        this.convertToStream.stream(
           filter( ( { isCustom }: ISegmentation ) => isCustom )
         ),
       ).subscribe( success );

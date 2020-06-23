@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { map, debounceTime, switchMap, tap, } from 'rxjs/operators';
+import { map, debounceTime, switchMap, pluck } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -27,6 +27,9 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
 import { ICountries } from '../../../interface/icountries';
+import { ICraftSource } from '../../../interface/icraft-source';
+import { IAgeGroups } from '../../../interface/iage-group';
+import { AgeIntervalService } from '../../settings/age-interval/age-interval.service';
 
 @Component( {
   selector: 'app-profile-search',
@@ -41,12 +44,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   public sellCountryOptions: Observable<ICountries[]>;
   public segmentationOptions: Observable<ISegmentation[]>;
   public customerGroupOptions: Observable<IcustomerGroup[]>;
+  public ageGroupOptions: Observable<IAgeGroups[]>;
   public sellTypeOptions: Observable<ISellType[]>;
+  public craftSources: Observable<ICraftSource[]>;
   public profiles: Iprofiles;
   public isTableCard = false;
   public isLoader = false;
   public segmentation: ISegmentation[];
   public customerGroup: IcustomerGroup[];
+  public ageGroup: IAgeGroups[];
   public currencyDefault: string;
   public buttonSearch: boolean;
   public buttonCsvDisabled: boolean;
@@ -86,6 +92,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private currencyDefaultService: CurrencyDefaultService,
     private dialogMergeProfileService: DialogMergeProfileService,
+    private ageIntervalService: AgeIntervalService
   ) { }
 
   ngOnInit(): void {
@@ -95,6 +102,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.csvLoader = false;
     this.delay = 500;
     this.initForm();
+    this.initCraftSource();
     this.initAirports();
     this.initAutocomplete();
     this.initTableAsync();
@@ -106,6 +114,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.initCurrencyDefault();
     this.activeButton();
     this.initQueryParams();
+    this.initAgeGroup();
     this.profileSearchService.subjectDeleteProfile
       .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.serverRequest( this.sendProfileParams ) );
@@ -138,6 +147,9 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       } );
   }
 
+  private initCraftSource() {
+    this.craftSources = this.profileSearchService.getCraftSource() as Observable<ICraftSource[]>;
+  }
 
   private initAirports() {
     this.airportsFromOptions = this.formProfileSearch.get( 'deppoint' ).valueChanges
@@ -164,6 +176,15 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     this.profileGroupService.getProfileGroup()
       .pipe( untilDestroyed( this ) )
       .subscribe( ( customerGroup: IcustomerGroup[] ) => this.customerGroup = customerGroup );
+  }
+
+  private initAgeGroup() {
+    this.ageIntervalService.getAgeGroups()
+      .pipe(
+        untilDestroyed( this ),
+        pluck( 'ageGroups' )
+      )
+      .subscribe( ( ageGroup: IAgeGroups[] ) => this.ageGroup = ageGroup );
   }
 
   private initAirlineLCodes() {
@@ -194,6 +215,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
   private initAutocomplete() {
     this.segmentationOptions = this.autocomplete( 'segmentation', 'segmentation' );
     this.customerGroupOptions = this.autocomplete( 'customerGroup', 'customerGroup' );
+    this.ageGroupOptions = this.autocomplete( 'ageGroup', 'ageGroup' );
   }
 
   public displayAirlineLCodeFn( option ): string | undefined {
@@ -216,16 +238,23 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         map( val => {
           switch ( options ) {
             case 'segmentation':
-              return this.segmentation.filter( segmentation => {
+              return this.segmentation.filter( ( segmentation: ISegmentation ) => {
                   if ( !R.isNil( val ) ) {
                     return segmentation.title.toLowerCase().includes( val.toLowerCase() );
                   }
                 }
               );
             case 'customerGroup':
-              return this.customerGroup.filter( customerGroup => {
+              return this.customerGroup.filter( ( customerGroup: IcustomerGroup ) => {
                   if ( !R.isNil( val ) ) {
                     return customerGroup.customerGroupName.toLowerCase().includes( val.toLowerCase() );
+                  }
+                }
+              );
+            case 'ageGroup':
+              return this.ageGroup.filter( ( ageGroup: IAgeGroups ) => {
+                  if ( !R.isNil( val ) ) {
+                    return ageGroup.title.toLowerCase().includes( val.toLowerCase() );
                   }
                 }
               );
@@ -243,10 +272,12 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       gender: '',
       segmentation: '',
       customerGroup: '',
+      ageGroup: '',
       dobfrominclude: '',
       dobtoexclude: '',
       ticket: '',
       recloc: '',
+      parentRecloc: '',
       emd: '',
       dateOfServiceFromInclude: '',
       dateOfServiceToExclude: '',
@@ -259,6 +290,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       sellType: '',
       sellCountry: '',
       craft: '',
+      idCraftSource: '',
       flight: '',
       flightdatefrom: '',
       flightdateto: '',
@@ -515,7 +547,6 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
         return key === 'sellCountry';
     }
   }
-
 
 
   add( event: MatChipInputEvent, formControlName: string, chips: string ): void {

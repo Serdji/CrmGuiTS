@@ -23,6 +23,13 @@ export interface IDistributionProfile {
     'statusNameRus': string
   };
   distributionStatuses: IDistributionStatuses;
+  profileStatuses: {
+    activeCount: number;
+    withoutActiveCount: number;
+    activeMailsCount: number;
+  };
+  distSubjectDescription: string;
+  distSubjectName: string;
   'totalCount': number;
   'dateFrom': string;
   'dateTo': string;

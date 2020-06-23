@@ -14,6 +14,7 @@ import { TableAsyncService } from '../../../services/table-async.service';
 import { IpagPage } from '../../../interface/ipag-page';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { IEmail } from '../../../interface/iemail';
 
 @Component( {
   selector: 'app-table-async-email',
@@ -28,7 +29,7 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
   public isCp: boolean = false;
   public selection = new SelectionModel<any>( true, [] );
   public isDisabled: boolean;
-  public expandedElement: PeriodicElement | null;
+  public expandedElement: IEmail | null;
   public resultsLength: number;
   public isLoadingResults: boolean = false;
   public totalCount: number;
@@ -36,7 +37,7 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
 
 
 
-  @Input() private tableDataSource: PeriodicElement[];
+  @Input() private tableDataSource: IEmail[];
 
   @ViewChild(MatSort, { static: true }) sort: MatSort;
   @ViewChild(MatPaginator, { static: true }) paginator: MatPaginator;
@@ -60,6 +61,7 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
     this.displayedColumns = [
       'select',
       'subject',
+      'distSubjectName',
       'distributionStatusId',
       'dateFrom',
       'dateTo',
@@ -88,6 +90,7 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
   }
 
   private initDataSource() {
+    console.log( this.tableDataSource  );
     this.dataSourceFun( this.tableDataSource );
   }
 
@@ -174,18 +177,6 @@ export class TableAsyncEmailComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {}
 
-}
-
-export interface PeriodicElement {
-  status: any;
-  select: any;
-  subject: string;
-  statusNameRus: string;
-  dateFrom: string;
-  dateTo: string;
-  lastTryDT: string;
-  distributionId: number;
-  distributionStatuses: any;
 }
 
 

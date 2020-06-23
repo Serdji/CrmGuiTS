@@ -70,6 +70,7 @@ export class SidenavService {
         link: [
           { url: '/crm/list-email', title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' },
           { url: '/crm/list-sms', title: 'MENU.DISTRIBUTIONS.LIST_SMS' },
+          { url: '/crm/distribution-topic', title: 'MENU.DISTRIBUTIONS.DISTRIBUTION_TOPIC' },
         ]
       },
       {
@@ -105,6 +106,7 @@ export class SidenavService {
         link: [
           { url: '/crm/form-table-async-profile-settings', title: 'MENU.SETTINGS.TABLE_CUSTOMERS' },
           { url: '/crm/index', title: 'MENU.SETTINGS.INDEX' },
+          { url: '/crm/age-interval', title: 'MENU.SETTINGS.AGE_INTERVAL' },
           { url: '/crm/restart', title: 'MENU.SETTINGS.RESTART' },
         ]
       }

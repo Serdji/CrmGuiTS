@@ -5,7 +5,7 @@ import { Directive, ElementRef, HostListener, Input } from '@angular/core';
 })
 export class NumbersOnlyDirective {
 
-  @Input('appNumbersOnly') typeNumber: string;
+  @Input('appNumbersOnly') typeNumber: 'int' | 'float';
 
   constructor(private _el: ElementRef) { }
 

@@ -6,7 +6,7 @@
 $background: mat-color($mat-brown, 50);
 
 body {
-  background: $background;
+  background-color: $background !important;
   height: 100vh;
 }
 
@@ -16,6 +16,16 @@ hr {
 
 ._hidden {
   display: none !important;
+}
+
+.row {
+  height: 100%;
+  .col {
+    margin-bottom: 10px;
+    ._no-col-mb{
+      margin-bottom: 0;
+    }
+  }
 }
 
 // Define the default theme (same as the example above).

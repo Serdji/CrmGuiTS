@@ -6,12 +6,14 @@
     <div class="dialog-merge-profile__example-wrapper" *ngFor="let profile of profiles; let i = index">
       <div class="dialog-merge-profile__example-box" *ngFor="let result of profile.result" cdkDrag>
         <mat-list>
-          <mat-list-item *ngFor="let customerName of result.customerNames">
-            <mat-icon mat-list-icon>how_to_reg</mat-icon>
+          <mat-list-item [ngStyle]="{'height': 'auto'}" *ngFor="let customerName of result.customerNames">
+            <mat-icon mat-list-icon>person</mat-icon>
             <h4 mat-line>
-              <b>{{'POP_UP.DIALOG_MERGE_PROFILE.FIRST_NAME' | translate}}</b> {{customerName.firstName}} |
-              <b>{{'POP_UP.DIALOG_MERGE_PROFILE.LAST_NAME' | translate}}</b> {{customerName.lastName}} |
-              <b>{{'POP_UP.DIALOG_MERGE_PROFILE.CUSTOMER_IDS' | translate}}</b> {{customerName.customerId}}
+              <div class="row row-col-1 row-col-xl-3 no-gutters">
+                <div class="col"><b>{{'POP_UP.DIALOG_MERGE_PROFILE.FIRST_NAME' | translate}}</b> {{customerName.firstName}} |</div>
+                <div class="col"><b>{{'POP_UP.DIALOG_MERGE_PROFILE.LAST_NAME' | translate}}</b> {{customerName.lastName}} |</div>
+                <div class="col"><b>{{'POP_UP.DIALOG_MERGE_PROFILE.CUSTOMER_IDS' | translate}}</b> {{customerName.customerId}}</div>
+              </div>
             </h4>
             <p mat-line><b>{{'POP_UP.DIALOG_MERGE_PROFILE.DATE_OF_BIRTH' | translate}}</b> {{result.dob | date:'dd.MM.yyyy'}} </p>
           </mat-list-item>

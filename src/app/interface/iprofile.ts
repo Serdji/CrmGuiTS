@@ -11,8 +11,11 @@ export interface Iprofile {
   firstName: string;
   secondName: string;
   dob: string;
+  customerAge: number;
+  ageGroup: string;
   comment: string;
   createDate: string;
+  relevanceIndex: number;
   customerNames: IprofileNames[];
   segmentations: ISegmentation[];
   customerGroupRelations: IcustomerGroupRelations[];

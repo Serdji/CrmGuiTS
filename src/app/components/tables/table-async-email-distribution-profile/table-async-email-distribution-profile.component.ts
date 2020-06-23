@@ -60,7 +60,9 @@ export class TableAsyncEmailDistributionProfileComponent implements OnInit, OnDe
       'secondName',
       'distributionCustomerStatus',
       'errorMessage',
-      'distributionCustomerId',
+      'contactAddress',
+      'customerId',
+      'distributionCustomerId'
     ];
   }
 

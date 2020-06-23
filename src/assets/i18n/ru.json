@@ -26,13 +26,15 @@
 		"FILTER": "Фильтр",
 		"LOGIN": "Авторизоваться",
 		"MERGE_PROFILE": "Объединить пассажиров",
+		"NO": "Нет",
 		"PROMO_CODE": "Привязать промокод",
 		"SAVE": "Сохранить",
 		"SEARCH": "Искать",
 		"SEND_DISTRIBUTION": "Отправить рассылку",
 		"START_EVENT": "Запуск события",
 		"STOP_EVENT": "Остановить событие",
-		"TO_FROM": "Сформировать"
+		"TO_FROM": "Сформировать",
+		"YES": "Да"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {
@@ -142,6 +144,7 @@
 			"SEARCH_CUSTOMER": "Поиск пассажира"
 		},
 		"DISTRIBUTIONS": {
+			"DISTRIBUTION_TOPIC": "Тематика рассылки",
 			"GROUP_NAME": "Рассылки",
 			"LIST_EMAIL": "Email",
 			"LIST_SMS": "SMS"
@@ -173,6 +176,7 @@
 			"LIST_SEGMENTATION": "Список сегментаций"
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": "Интервал возрастов",
 			"GROUP_NAME": "Настройки",
 			"INDEX": "Индекс",
 			"RESTART": "Перезагрузка",
@@ -187,9 +191,22 @@
 	},
 	"PAGE": {
 		"DISTRIBUTION": {
+			"DISTRIBUTION_TOPIC": {
+				"FIELD": {
+					"DIST_SUBJECT_DESCRIPTION": "Краткое описание тематики рассылки",
+					"DIST_SUBJECT_NAME": "Название тематики рассылки"
+				},
+				"TABL": {
+					"DIST_SUBJECT_DESCRIPTION": "Краткое описание тематики рассылки",
+					"DIST_SUBJECT_NAME": "Название тематики рассылки",
+					"ID": "Id"
+				}
+			},
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
 					"COUNT_STATUSES": {
+						"ACTIVE_COUNTER": "Количество профилей с активными e-mail адресами",
+						"ACTIVE_MAILS_COUNTER": "Количество активных e-mail из отобранных профилей",
 						"BOUNCED": "Возвращено",
 						"CLICKED": "Переход по ссылке",
 						"DELIVERED": "Доставлено",
@@ -198,10 +215,12 @@
 						"READ": "Прочитано",
 						"REJECTED": "Отписался",
 						"SEND_TO_CUSTOMER": "Отправлено клиенту",
-						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
+						"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз",
+						"WITHOUT_ACTIVE_COUNTER": "Количество профилей с отсутствующими активными e-mail адресами"
 					},
 					"DATE_FROM": "Дата от",
 					"DATE_TO": "Дата до",
+					"DIST_SUBJECT_NAME": "Тематики рассылки",
 					"EMAIL_STATUSES": {
 						"ACTIVE": "Выполняется ",
 						"CANCELLED": "Завершена ",
@@ -226,11 +245,14 @@
 			},
 			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Даты рассылок:",
+				"DIST_SUBJECT_NAME": "Тематики рассылки:",
 				"ERROR_MESSAGE": "Сообщение об ошибки:",
 				"FROM": "от",
 				"LAST_TRY": "Дата и время создания рассылки:",
 				"STATUS": "Статус:",
 				"STATUSES": {
+					"ACTIVE_COUNTER": "Количество профилей с активными e-mail адресами",
+					"ACTIVE_MAILS_COUNTER": "Количество активных e-mail из отобранных профилей",
 					"BOUNCED": "Возвращено",
 					"CLICKED": "Переход по ссылке",
 					"DELIVERED": "Доставлено",
@@ -239,14 +261,17 @@
 					"READ": "Прочитано",
 					"REJECTED": "Отписался",
 					"SEND_TO_CUSTOMER": "Отправлено клиенту",
-					"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз"
+					"SENT_TO_GATEWAY": "Отправлено в почтовый шлюз",
+					"WITHOUT_ACTIVE_COUNTER": "Количество профилей с отсутствующими активными e-mail адресами"
 				},
 				"SUBJECT": "Тема письма:",
 				"TABLE": {
+					"EMAIL": "email",
 					"ERROR_MESSAGE": "Пояснение",
 					"FIRST_NAME": "Имя",
 					"LAST_NAME": "Фамилия",
 					"MIDDLE_NAME": "Отчество",
+					"PROFILE": "№ профиля",
 					"STATUS": "Статус",
 					"STATUSES": {
 						"BOUNCED": "Возвращено",
@@ -264,6 +289,7 @@
 			},
 			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Даты рассылок:",
+				"DIST_SUBJECT_NAME": "Тематики рассылки:",
 				"ERROR_MESSAGE": "Сообщение об ошибки:",
 				"FROM": "от",
 				"LAST_TRY": "Дата и время создания рассылки:",
@@ -310,6 +336,7 @@
 			},
 			"EVENT": {
 				"CARD": {
+					"DIST_SUBJECT_NAME": "Тематики рассылки:",
 					"EDIT": "Редактировать",
 					"MULTIPLICITY": "Кратность (1/x):",
 					"NAME_EVENT": "Название события:",
@@ -373,6 +400,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AGE_GROUP": "Группа возраста",
 					"AIRCRAFT_TYPE": "Тип ВС",
 					"AIRLINE_L_CODE": "Код авиакомпании",
 					"ARR_POINT": "Куда",
@@ -382,6 +410,7 @@
 					"CONTACT_EMAIL": "Электронная почта",
 					"CONTACT_PHONE": "Телефон",
 					"CONTACT_SEXIST": "Отсутствие контакта",
+					"CRAFT_SOURCE": "Признак типа ВС:",
 					"CUSTOMER_GROUP": "Группы пассажиров",
 					"CUSTOMER_IDS": "№ профиля",
 					"DATE_OF_SERVICE_FROM_INCLUDE": "Дата услуги от",
@@ -411,6 +440,7 @@
 					"ORIGIN_AGENCY": "Агентство",
 					"ORIGIN_POS_ID": "ППР",
 					"ORIGIN_PULT": "Пульт",
+					"PARENT_REC_LOC": "№ родительской брони",
 					"PROFILE": "№ профиля",
 					"RBD": "Класс бронирования",
 					"REC_LOC": "№ брони",
@@ -431,6 +461,54 @@
 				}
 			},
 			"TABS_PROFILE": {
+				"COMPANIONS": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"AGE_GROUP": "Возрастная группа",
+							"CUSTOMER_ID": "№ профиля",
+							"DOB": "Дата рождения",
+							"DOCUMENT_ID": "Документ №",
+							"FIRST_NAME": "Имя",
+							"LAST_NAME": "Фамилия",
+							"MIDDLE_NAME": "Отчество",
+							"REC_LOC": "Заказ №"
+						},
+						"TEMPLATE": {
+							"COUPONS": {
+								"COUPON": "Купон",
+								"DEP_DATE": "Дата рейса",
+								"FROM": "Откуда",
+								"TICKET_NUM": "Номер билета",
+								"TO": "Куда"
+							},
+							"GO_TO_ORDER": "Перейти в заказ спутника",
+							"GO_TO_PROFILE": "Перейти в профиль спутника",
+							"ORDERS": {
+								"BOOKING_CREATE_DATA": "Дата заказа (брони)",
+								"REC_LOC": "Заказ №"
+							}
+						}
+					},
+					"FILTER": {
+						"DEP_DATE_FROM": "Дата рейса от",
+						"DEP_DATE_TO": "Дата рейса до",
+						"FROM": "Откуда",
+						"SWITCH_FROM_TO": "Выбор пункта назначения",
+						"TO": "Куда",
+						"VALUE": "Значение"
+					},
+					"TABLE": {
+						"AGE_GROUP": "Возрастная группа",
+						"CUSTOMER_ID": "№ профиля",
+						"DOB": "Дата рождения",
+						"DOCUMENT_ID": "Документ №",
+						"FIRST_NAME": "Имя",
+						"LAST_NAME": "Фамилия",
+						"MIDDLE_NAME": "Отчество",
+						"REC_LOC": "Заказ №"
+					},
+					"TAB_NAME": "Спутники"
+				},
 				"CONTACT": {
 					"FORM": {
 						"CONTACT_TEXT": "Описания к типу контакта",
@@ -467,6 +545,8 @@
 					"TAB_NAME": "Документы"
 				},
 				"HEADER": {
+					"AGE": "Возраст:",
+					"AGE_GROUP": "Группа возраста:",
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Оформленных платных услуг:",
 					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Аннулированных платных услуг:",
 					"COUNT_ACTIVE_TICKET": "Оформленных заказов:",
@@ -479,13 +559,14 @@
 					"GENDER": "Пол:",
 					"LUT": "Дата последней активности:",
 					"PROFILE": "Профиль:",
+					"RELEVANCE_INDEX": "Индекс:",
 					"SEGMENTATION": "Сегментации:",
 					"SHOW_ALL_GROUPS": "Показать все группы",
 					"TOTAL_AMOUNT": "Оформленных на сумму:"
 				},
 				"MESSAGES": {
 					"HEADER": {
-						"DATE": "Дата и время рассылки",
+						"DATE": "Дата смены статуса",
 						"STATUS": "Текущий статус",
 						"TOPIC_LETTER": "Тема письма"
 					},
@@ -514,15 +595,17 @@
 								"AGENCY": "Агентство:",
 								"COUNTRY": "Страна:",
 								"GDS": "GDS:",
+								"PARENT_REC_LOC": "Parent Recloc:",
 								"POS_ID": "POS ID:",
 								"REC_LOC": "Recloc GDS:",
 								"TERMINAL": "Терминал:"
 							},
 							"SEGMENTS": {
-								"AIRCRAFT_TYPE": "Тип ВС",
+								"AIRCRAFT_TYPE": "Тип ВС:",
 								"ARR_POINT": "Аэропорт прилета:",
 								"ARR_TIME": "Дата / время прилета:",
 								"CABIN": "Кабина:",
+								"CRAFT_SOURCE": "Признак типа ВС:",
 								"DEP_POINT": "Аэропорт вылета:",
 								"DEP_TIME": "Дата / время вылета:",
 								"FLIGHT": "№ рейса:",
@@ -830,6 +913,7 @@
 					"TO": "До"
 				},
 				"PROFILE_DETAILS": {
+					"AGE_GROUP": "Группа возраста",
 					"DOB_FROM": "Дата рождения от",
 					"DOB_TO": "Дата рождения до",
 					"FLIES_WITHOUT_CHILDREN": "Нет ни одного перелёта с детьми",
@@ -839,6 +923,8 @@
 						"M": "М",
 						"TITLE": "Пол"
 					},
+					"RELEVANCE_FROM": "Индекс значимости пассажира от",
+					"RELEVANCE_TO": "Индекс значимости пассажира до",
 					"TITLE": "Детали профиля"
 				},
 				"RESERVATION_DATE_RANG": {
@@ -939,6 +1025,19 @@
 			}
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": {
+				"FIELD": {
+					"AGE_FROM": "Возраст до:",
+					"AGE_TO": "Возраст от:",
+					"GENDER": {
+						"F": "Ж",
+						"M": "М",
+						"TITLE": "Пол:"
+					},
+					"TITLE": "Название:"
+				},
+				"TITLE": "Настройка интервала возрастов"
+			},
 			"INDEX": {
 				"FIELD": {
 					"ACTUAL_ACTIVE_FROM": "Дата настоящей активности с",
@@ -963,6 +1062,9 @@
 				},
 				"TITLE": "Группа пассажиров"
 			}
+		},
+		"UNSUBSCRIBE": {
+			"TITLE": "Вы действительно хотите отписаться от рассылки ?"
 		},
 		"USERS": {
 			"ADD_USER": {
@@ -1034,6 +1136,7 @@
 			"DIALOG_EMAIL": {
 				"DATE_FROM": "Дата отправки от",
 				"DATE_TO": "Дата отправки до",
+				"DIST_SUBJECT_NAME": "Название тематики рассылки",
 				"EXAMPLE": "Пример:",
 				"LIMITS": "Лимит",
 				"PARAMS": "Параметры рассылок",
@@ -1045,7 +1148,8 @@
 				"TOTAL_COUNT": "Количество"
 			},
 			"DIALOG_SMS": {
-				"SYMBOLS_ENTERED": "Введенных символов",
+				"DIST_SUBJECT_NAME": "Название тематики рассылки",
+				"SYMBOLS_ENTERED": "Введенных символов и счетчик SMS",
 				"TEMPLATE": "Шаблон",
 				"TEXT": "Текст сообщения",
 				"TITLE": "Название"

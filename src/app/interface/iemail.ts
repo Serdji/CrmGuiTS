@@ -6,6 +6,11 @@ export interface IEmail {
       'distributionStatusId': number;
       'statusNameRus': string;
     };
+    profileStatuses: {
+      'activeCount': number;
+      'activeMailsCount': number;
+      'withoutActiveCount': number;
+    };
     distributionStatuses: {
       'bouncedCount': number
       'bouncedNameRus': string;

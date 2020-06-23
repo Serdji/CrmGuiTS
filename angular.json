@@ -23,7 +23,9 @@
             ],
             "styles": [
               "src/styles.css",
-              "src/theme.scss"
+              "src/theme.scss",
+              "src/bootstrap-reboot.css",
+              "src/bootstrap-grid.css"
             ],
             "scripts": [
               "./node_modules/moment/min/moment.min.js"

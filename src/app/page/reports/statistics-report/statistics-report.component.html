@@ -1,75 +1,81 @@
 <div class="distribution-report">
-  <mat-card class="distribution-report__stepper">
-    <mat-vertical-stepper linear #stepper>
-      <mat-step>
-        <ng-template matStepLabel>{{'PAGE.REPORTS.STATISTICS_REPORT.REPORT_SELECTION' | translate}}</ng-template>
 
-        <app-report-access-rights (sendTemplate)="onSendTemplate( $event )" isDir ></app-report-access-rights>
+  <div class="row">
+    <div class="col col-lg-12 col-xl-4">
+      <mat-card class="distribution-report__stepper">
+        <mat-vertical-stepper linear #stepper>
+          <mat-step>
+            <ng-template matStepLabel>{{'PAGE.REPORTS.STATISTICS_REPORT.REPORT_SELECTION' | translate}}</ng-template>
 
-      </mat-step>
+            <app-report-access-rights (sendTemplate)="onSendTemplate( $event )" isDir ></app-report-access-rights>
 
-      <mat-step [stepControl]="dynamicForm">
-        <ng-template matStepLabel>{{'PAGE.REPORTS.STATISTICS_REPORT.REPORT_PARAMETERS' | translate}}</ng-template>
-        <mat-progress-bar *ngIf="isProgressDynamicForm" mode="buffer"></mat-progress-bar>
-        <app-dynamic-form
-          *ngIf="paramsDynamicForm && isDynamicForm"
-          [paramsDynamicForm]="paramsDynamicForm"
-          [splitInput]="1"
-          [cols]="1"
-          rowHeight="70px"
-          (dynamicFormEmit)="onReportGeneration($event)"
-        >
-        </app-dynamic-form>
-      </mat-step>
-    </mat-vertical-stepper>
-  </mat-card>
+          </mat-step>
 
-  <div class="distribution-report__pdf-viewer">
-    <mat-spinner class="distribution-report__spinner" *ngIf="isProgressPdfViewer"></mat-spinner>
-    <mat-card *ngIf="pdfSrc && !isProgressPdfViewer">
-      <pdf-viewer
-        zoom="1.3"
-        [src]="pdfSrc"
-        [page]="pageVariable"
-        [show-all]="false"
-        [render-text]="true"
-        (after-load-complete)="afterLoadComplete($event)"
-        style="display: block;"
-      >
-      </pdf-viewer>
+          <mat-step [stepControl]="dynamicForm">
+            <ng-template matStepLabel>{{'PAGE.REPORTS.STATISTICS_REPORT.REPORT_PARAMETERS' | translate}}</ng-template>
+            <mat-progress-bar *ngIf="isProgressDynamicForm" mode="buffer"></mat-progress-bar>
+            <app-dynamic-form
+              *ngIf="paramsDynamicForm && isDynamicForm"
+              [paramsDynamicForm]="paramsDynamicForm"
+              [splitInput]="1"
+              [cols]="1"
+              rowHeight="70px"
+              (dynamicFormEmit)="onReportGeneration($event)"
+            >
+            </app-dynamic-form>
+          </mat-step>
+        </mat-vertical-stepper>
+      </mat-card>
+    </div>
 
-      <div class="distribution-report__paginator">
-        <button [disabled]="buttonPreviousDisabled" (click)="onIncrementPage(-1)" mat-button>
-          <mat-icon>navigate_before</mat-icon>
-        </button>
+    <div class="col col-lg-12 col-xl-8">
+      <div class="distribution-report__pdf-viewer">
+        <mat-spinner class="distribution-report__spinner" *ngIf="isProgressPdfViewer"></mat-spinner>
+        <mat-card *ngIf="pdfSrc && !isProgressPdfViewer">
+          <pdf-viewer
+            zoom="1.3"
+            [src]="pdfSrc"
+            [page]="pageVariable"
+            [show-all]="false"
+            [render-text]="true"
+            (after-load-complete)="afterLoadComplete($event)"
+            style="display: block;"
+          >
+          </pdf-viewer>
 
-        <span *ngIf="pageLength"> от {{pageVariable}} до {{ pageLength }}</span>
-        <button [disabled]="buttonNextDisabled" (click)="onIncrementPage(1)" mat-button>
-          <mat-icon>navigate_next</mat-icon>
-        </button>
+          <div class="distribution-report__paginator">
+            <button [disabled]="buttonPreviousDisabled" (click)="onIncrementPage(-1)" mat-button>
+              <mat-icon>navigate_before</mat-icon>
+            </button>
+
+            <span *ngIf="pageLength"> от {{pageVariable}} до {{ pageLength }}</span>
+            <button [disabled]="buttonNextDisabled" (click)="onIncrementPage(1)" mat-button>
+              <mat-icon>navigate_next</mat-icon>
+            </button>
+          </div>
+          <mat-progress-bar class="distribution-report__button-progress" *ngIf="isProgressButton" mode="buffer"></mat-progress-bar>
+          <div *ngIf="!isProgressButton">
+            <button class="distribution-report__button" mat-raised-button
+                    matTooltip="{{'PAGE.REPORTS.STATISTICS_REPORT.MES_DOWNLOAD_PDF' | translate}}" (click)="onDownloadPDF( 'pdf' )"
+                    color="accent">
+              <mat-icon>insert_drive_file</mat-icon>
+              {{'BUTTON.DOWNLOAD' | translate}} PDF
+            </button>
+            <button class="distribution-report__button" mat-raised-button
+                    matTooltip="{{'PAGE.REPORTS.STATISTICS_REPORT.MES_DOWNLOAD_WORD' | translate}}" (click)="onDownloadPDF( 'doc' )"
+                    color="primary">
+              <mat-icon>insert_drive_file</mat-icon>
+              {{'BUTTON.DOWNLOAD' | translate}} Word
+            </button>
+            <button class="distribution-report__button _excel" mat-raised-button
+                    matTooltip="{{'PAGE.REPORTS.STATISTICS_REPORT.MES_DOWNLOAD_EXC' | translate}}" (click)="onDownloadPDF( 'xls' )"
+                    color="primary">
+              <mat-icon>insert_drive_file</mat-icon>
+              {{'BUTTON.DOWNLOAD' | translate}} Excel
+            </button>
+          </div>
+        </mat-card>
       </div>
-      <mat-progress-bar class="distribution-report__button-progress" *ngIf="isProgressButton" mode="buffer"></mat-progress-bar>
-      <div *ngIf="!isProgressButton">
-        <button class="distribution-report__button" mat-raised-button
-                matTooltip="{{'PAGE.REPORTS.STATISTICS_REPORT.MES_DOWNLOAD_PDF' | translate}}" (click)="onDownloadPDF( 'pdf' )"
-                color="accent">
-          <mat-icon>insert_drive_file</mat-icon>
-          {{'BUTTON.DOWNLOAD' | translate}} PDF
-        </button>
-        <button class="distribution-report__button" mat-raised-button
-                matTooltip="{{'PAGE.REPORTS.STATISTICS_REPORT.MES_DOWNLOAD_WORD' | translate}}" (click)="onDownloadPDF( 'doc' )"
-                color="primary">
-          <mat-icon>insert_drive_file</mat-icon>
-          {{'BUTTON.DOWNLOAD' | translate}} Word
-        </button>
-        <button class="distribution-report__button _excel" mat-raised-button
-                matTooltip="{{'PAGE.REPORTS.STATISTICS_REPORT.MES_DOWNLOAD_EXC' | translate}}" (click)="onDownloadPDF( 'xls' )"
-                color="primary">
-          <mat-icon>insert_drive_file</mat-icon>
-          {{'BUTTON.DOWNLOAD' | translate}} Excel
-        </button>
-      </div>
-    </mat-card>
+    </div>
   </div>
-
 </div>

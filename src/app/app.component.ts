@@ -53,6 +53,7 @@ export class AppComponent implements OnInit {
   private isTokenRedirect() {
     const token = JSON.parse( localStorage.getItem( 'paramsToken' ) );
     if ( !token ) {
+      console.log(this.router.url );
       timer( 300 ).subscribe( _ => this.router.navigate( [ '/' ] ) );
     } else {
       if ( this.location.path() === '' ) {

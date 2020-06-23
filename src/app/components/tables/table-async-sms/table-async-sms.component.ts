@@ -58,6 +58,7 @@ export class TableAsyncSmsComponent implements OnInit, OnDestroy {
     this.displayedColumns = [
       'select',
       'subject',
+      'distSubjectName',
       'distributionStatusId',
       'dateFrom',
       'dateTo',

@@ -11,7 +11,7 @@
           <mat-form-field class="editor-sms__input">
             <textarea #message formControlName="text" matInput rows="8" placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TEXT' | translate}}"></textarea>
             <mat-hint align="start"><strong>{{'POP_UP.EDITOR.DIALOG_SMS.SYMBOLS_ENTERED' | translate}}</strong> </mat-hint>
-            <mat-hint align="end">{{message.value.length}}</mat-hint>
+            <mat-hint align="end" [ngStyle]="{'color': counter.color}">{{counter.size}} / {{counter.nexStep}} | SMS: {{counter.counterSms}}</mat-hint>
             <mat-error>{{'FIELD.ERROR.OBLIGATORY_FIELD' | translate}}</mat-error>
           </mat-form-field>
         </mat-card>
@@ -22,8 +22,17 @@
           <mat-form-field class="editor-sms__input">
             <mat-select formControlName="templateId" placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.TEMPLATE' | translate}}">
               <mat-option></mat-option>
-              <mat-option *ngFor="let template of templates"
+              <mat-option *ngFor="let template of templates$ | async"
                           [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="editor-sms__input">
+            <mat-select formControlName="distSubjectId" placeholder="{{'POP_UP.EDITOR.DIALOG_SMS.DIST_SUBJECT_NAME' | translate}}">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let distSubject of distSubjects$ | async"
+                          matTooltip="{{ distSubject.distSubjectDescription }}"
+                          matTooltipPosition="right"
+                          [value]="distSubject.idDistSubject"> {{distSubject.distSubjectName}} </mat-option>
             </mat-select>
           </mat-form-field>
         </mat-card>

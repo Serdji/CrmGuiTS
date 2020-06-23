@@ -26,13 +26,15 @@
 		"FILTER": "Filter",
 		"LOGIN": "Log in",
 		"MERGE_PROFILE": "Merge passengers",
+		"NO": "No",
 		"PROMO_CODE": "Attach promo code",
 		"SAVE": "Save",
 		"SEARCH": "Search",
 		"SEND_DISTRIBUTION": "Send campaign",
 		"START_EVENT": "Run event",
 		"STOP_EVENT": "Stop event",
-		"TO_FROM": "Generate"
+		"TO_FROM": "Generate",
+		"YES": "Yes"
 	},
 	"DIALOG": {
 		"ADD_PROFILE_GROUP": {
@@ -142,6 +144,7 @@
 			"SEARCH_CUSTOMER": "Passenger search"
 		},
 		"DISTRIBUTIONS": {
+			"DISTRIBUTION_TOPIC": "Distribution topic",
 			"GROUP_NAME": "Campaigns",
 			"LIST_EMAIL": "Email",
 			"LIST_SMS": "SMS"
@@ -173,6 +176,7 @@
 			"LIST_SEGMENTATION": "Segmentation list"
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": "Age interval",
 			"GROUP_NAME": "Settings",
 			"INDEX": "Index",
 			"RESTART": "Restart",
@@ -187,9 +191,22 @@
 	},
 	"PAGE": {
 		"DISTRIBUTION": {
+			"DISTRIBUTION_TOPIC": {
+				"FIELD": {
+					"DIST_SUBJECT_DESCRIPTION": "Brief description of the newsletter topics",
+					"DIST_SUBJECT_NAME": "Topic name"
+				},
+				"TABL": {
+					"DIST_SUBJECT_DESCRIPTION": "Brief description of the newsletter topics",
+					"DIST_SUBJECT_NAME": "Topic name",
+					"ID": "Id"
+				}
+			},
 			"LIST_DISTRIBUTION": {
 				"TABLE": {
 					"COUNT_STATUSES": {
+						"ACTIVE_COUNTER": "Number of profiles with active e-mail addresses",
+						"ACTIVE_MAILS_COUNTER": "Number of active e-mails from selected profiles",
 						"BOUNCED": "Returned",
 						"CLICKED": "Link followed",
 						"DELIVERED": "Delivered",
@@ -198,10 +215,12 @@
 						"READ": "Read",
 						"REJECTED": "Unsubscribed",
 						"SEND_TO_CUSTOMER": "Sent to customer",
-						"SENT_TO_GATEWAY": "Sent to mail gateway"
+						"SENT_TO_GATEWAY": "Sent to mail gateway",
+						"WITHOUT_ACTIVE_COUNTER": "Number of profiles with missing active e-mail addresses"
 					},
 					"DATE_FROM": "Effective date",
 					"DATE_TO": "Discontinue date",
+					"DIST_SUBJECT_NAME": "Distribution topic",
 					"EMAIL_STATUSES": {
 						"ACTIVE": "Active",
 						"CANCELLED": "Completed",
@@ -226,11 +245,14 @@
 			},
 			"PROFILE_EMAIL_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
+				"DIST_SUBJECT_NAME": "Distribution topic:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
 				"LAST_TRY": "Date and time when campaign was created:",
 				"STATUS": "Status:",
 				"STATUSES": {
+					"ACTIVE_COUNTER": "Number of profiles with active e-mail addresses",
+					"ACTIVE_MAILS_COUNTER": "Number of active e-mails from selected profiles",
 					"BOUNCED": "Returned",
 					"CLICKED": "Link followed",
 					"DELIVERED": "Delivered",
@@ -239,14 +261,17 @@
 					"READ": "Read",
 					"REJECTED": "Unsubscribed",
 					"SEND_TO_CUSTOMER": "Sent to customer",
-					"SENT_TO_GATEWAY": "Sent to mail gateway"
+					"SENT_TO_GATEWAY": "Sent to mail gateway",
+					"WITHOUT_ACTIVE_COUNTER": "Number of profiles with missing active e-mail addresses"
 				},
 				"SUBJECT": "Subject of the message:",
 				"TABLE": {
+					"EMAIL": "email",
 					"ERROR_MESSAGE": "Note",
 					"FIRST_NAME": "Name",
 					"LAST_NAME": "Surname",
 					"MIDDLE_NAME": "Middle Name",
+					"PROFILE": "Profile ID",
 					"STATUS": "Status",
 					"STATUSES": {
 						"BOUNCED": "Bounced",
@@ -264,6 +289,7 @@
 			},
 			"PROFILE_SMS_DISTRIBUTION": {
 				"DATE": "Mailing Dates:",
+				"DIST_SUBJECT_NAME": "Distribution topic:",
 				"ERROR_MESSAGE": "Error Message:",
 				"FROM": "from",
 				"LAST_TRY": "Date and time when campaign was created:",
@@ -310,6 +336,7 @@
 			},
 			"EVENT": {
 				"CARD": {
+					"DIST_SUBJECT_NAME": "Distribution topic:",
 					"EDIT": "Edit",
 					"MULTIPLICITY": "Frequency:",
 					"NAME_EVENT": "Event name:",
@@ -373,6 +400,7 @@
 			},
 			"SEARCH_PROFILE": {
 				"FORM": {
+					"AGE_GROUP": "Age group",
 					"AIRCRAFT_TYPE": "Aircraft type",
 					"AIRLINE_L_CODE": "Airline code",
 					"ARR_POINT": "Point of destination",
@@ -382,6 +410,7 @@
 					"CONTACT_EMAIL": "Email",
 					"CONTACT_PHONE": "Phone",
 					"CONTACT_SEXIST": "Contact missing",
+					"CRAFT_SOURCE": "Aircraft Type Attribute:",
 					"CUSTOMER_GROUP": "Passenger groups",
 					"CUSTOMER_IDS": "Profile ID",
 					"DATE_OF_SERVICE_FROM_INCLUDE": "Service date after",
@@ -411,6 +440,7 @@
 					"ORIGIN_AGENCY": "Origin agency ID",
 					"ORIGIN_POS_ID": "Origin PoS ID",
 					"ORIGIN_PULT": "Origin console ID",
+					"PARENT_REC_LOC": "Parent reclock",
 					"PROFILE": "Profile ID",
 					"RBD": "RBD",
 					"REC_LOC": "Recloc",
@@ -431,6 +461,54 @@
 				}
 			},
 			"TABS_PROFILE": {
+				"COMPANIONS": {
+					"EXPANSION": {
+						"PANEL_HEADER": {
+							"AGE_GROUP": "Age group",
+							"CUSTOMER_ID": "Profile ID",
+							"DOB": "Date of birth",
+							"DOCUMENT_ID": "Documents",
+							"FIRST_NAME": "Name",
+							"LAST_NAME": "Surname",
+							"MIDDLE_NAME": "Middle name",
+							"REC_LOC": "Recloc"
+						},
+						"TEMPLATE": {
+							"COUPONS": {
+								"COUPON": "Coupon",
+								"DEP_DATE": "Flight date",
+								"FROM": "From",
+								"TICKET_NUM": "Ticket number",
+								"TO": "To"
+							},
+							"GO_TO_ORDER": "Go to satellite order",
+							"GO_TO_PROFILE": "Go to satellite profile",
+							"ORDERS": {
+								"BOOKING_CREATE_DATA": "Date of order (reservation)",
+								"REC_LOC": "Recloc"
+							}
+						}
+					},
+					"FILTER": {
+						"DEP_DATE_FROM": "Flight date from",
+						"DEP_DATE_TO": "Flight date to",
+						"FROM": "From",
+						"SWITCH_FROM_TO": "Destination Selection",
+						"TO": "To",
+						"VALUE": "Value"
+					},
+					"TABLE": {
+						"AGE_GROUP": "Age group",
+						"CUSTOMER_ID": "Profile ID",
+						"DOB": "Date of birth",
+						"DOCUMENT_ID": "Documents",
+						"FIRST_NAME": "Name",
+						"LAST_NAME": "Surname",
+						"MIDDLE_NAME": "Middle name",
+						"REC_LOC": "Recloc"
+					},
+					"TAB_NAME": "Companions"
+				},
 				"CONTACT": {
 					"FORM": {
 						"CONTACT_TEXT": "Description",
@@ -467,6 +545,8 @@
 					"TAB_NAME": "Documents"
 				},
 				"HEADER": {
+					"AGE": "Age:",
+					"AGE_GROUP": "Age Group:",
 					"COUNTER_ACTIVE_SERVICES_IS_EMD": "Paid services count:",
 					"COUNTER_CANCELLED_SERVICES_IS_EMD": "Cancelled paid services count:",
 					"COUNT_ACTIVE_TICKET": "Placed orders count:",
@@ -479,13 +559,14 @@
 					"GENDER": "Sex:",
 					"LUT": "Last activity:",
 					"PROFILE": "Name:",
+					"RELEVANCE_INDEX": "Index:",
 					"SEGMENTATION": "Segmentations:",
 					"SHOW_ALL_GROUPS": "Show all groups",
 					"TOTAL_AMOUNT": "Total cost:"
 				},
 				"MESSAGES": {
 					"HEADER": {
-						"DATE": "Date and time",
+						"DATE": "Status change date",
 						"STATUS": "Current status",
 						"TOPIC_LETTER": "Message subject"
 					},
@@ -514,15 +595,17 @@
 								"AGENCY": "Travel agency:",
 								"COUNTRY": "Country:",
 								"GDS": "Booking source:",
+								"PARENT_REC_LOC": "Parent Recloc:",
 								"POS_ID": "IATA agency ID / 1H inhouse ID / ERSP:",
 								"REC_LOC": "GDS Recloc:",
 								"TERMINAL": "Terminal ID:"
 							},
 							"SEGMENTS": {
-								"AIRCRAFT_TYPE": "Aircraft type",
+								"AIRCRAFT_TYPE": "Aircraft type:",
 								"ARR_POINT": "Point of arrival:",
 								"ARR_TIME": "Date/time of arrival:",
 								"CABIN": "Cabin code:",
+								"CRAFT_SOURCE": "Aircraft Type Attribute:",
 								"DEP_POINT": "Point of departure:",
 								"DEP_TIME": "Date/time of departure:",
 								"FLIGHT": "Flight number:",
@@ -830,6 +913,7 @@
 					"TO": "To"
 				},
 				"PROFILE_DETAILS": {
+					"AGE_GROUP": "Age group",
 					"DOB_FROM": "Date of birth on/after",
 					"DOB_TO": "",
 					"FLIES_WITHOUT_CHILDREN": "Never travelled with child/infant",
@@ -839,6 +923,8 @@
 						"M": "Male",
 						"TITLE": "Sex"
 					},
+					"RELEVANCE_FROM": "Passenger significance index from",
+					"RELEVANCE_TO": "Passenger significance index to",
 					"TITLE": "Profile details"
 				},
 				"RESERVATION_DATE_RANG": {
@@ -939,6 +1025,19 @@
 			}
 		},
 		"SETTINGS": {
+			"AGE_INTERVAL": {
+				"FIELD": {
+					"AGE_FROM": "Age To:",
+					"AGE_TO": "Age from:",
+					"GENDER": {
+						"F": "Female",
+						"M": "Male",
+						"TITLE": "Sex:"
+					},
+					"TITLE": "Title:"
+				},
+				"TITLE": "Age range setting"
+			},
 			"INDEX": {
 				"FIELD": {
 					"ACTUAL_ACTIVE_FROM": "Date of actual activity since",
@@ -963,6 +1062,9 @@
 				},
 				"TITLE": "Add new passenger group"
 			}
+		},
+		"UNSUBSCRIBE": {
+			"TITLE": "Are you sure you want to unsubscribe from the newsletter ?"
 		},
 		"USERS": {
 			"ADD_USER": {
@@ -1034,6 +1136,7 @@
 			"DIALOG_EMAIL": {
 				"DATE_FROM": "Sending start date",
 				"DATE_TO": "Sending end date",
+				"DIST_SUBJECT_NAME": "Topic name",
 				"EXAMPLE": "Example:",
 				"LIMITS": "Limit",
 				"PARAMS": "Campaign settings",
@@ -1045,7 +1148,8 @@
 				"TOTAL_COUNT": "Amount"
 			},
 			"DIALOG_SMS": {
-				"SYMBOLS_ENTERED": "Symbols entered",
+				"DIST_SUBJECT_NAME": "Topic name",
+				"SYMBOLS_ENTERED": "Symbols entered and SMS counter",
 				"TEMPLATE": "Template",
 				"TEXT": "Message text",
 				"TITLE": "Subject"

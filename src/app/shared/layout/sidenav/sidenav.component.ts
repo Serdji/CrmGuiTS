@@ -6,10 +6,12 @@ import { MatSidenav } from '@angular/material/sidenav';
 import { LayoutService } from '../layout.service';
 import {  NavigationEnd, NavigationStart, Router } from '@angular/router';
 import { SidenavService } from './sidenav.service';
-import { takeWhile } from 'rxjs/operators';
+import { delay, takeWhile } from 'rxjs/operators';
 import { TranslateService } from '@ngx-translate/core';
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { logger } from 'codelyzer/util/logger';
+import { fromEvent } from 'rxjs/observable/fromEvent';
 
 @Component( {
   selector: 'app-sidenav',
@@ -39,8 +41,9 @@ export class SidenavComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.activityUser.idleLogout();
-    this.autoOpenAccord();
-    this.autoOpenSidena();
+    // this.autoOpenAccord();
+    // this.autoOpenSidena();
+    this.autoCloseAccord();
     this.louder();
     this.loader = false;
     this.menu = this.sidenavService.menu;
@@ -83,6 +86,15 @@ export class SidenavComponent implements OnInit, OnDestroy {
         }
       }
     } );
+  }
+
+  private autoCloseAccord() {
+    timer( 0 ).pipe( untilDestroyed(this) ).subscribe( _ => {
+      const aElement = this.accord.nativeElement.querySelectorAll( 'a' );
+      fromEvent( aElement, 'click' )
+        .pipe( delay( 500 ) )
+        .subscribe( _ => this.sidenav.close() );
+    });
   }
 
   ngOnDestroy(): void {}

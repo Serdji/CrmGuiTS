@@ -1,12 +1,11 @@
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { EditorSmsService } from './editor-sms.service';
-import { takeWhile } from 'rxjs/operators';
+import { map, startWith, takeWhile } from 'rxjs/operators';
 import { ITemplate } from '../../../interface/itemplate';
 import * as R from 'ramda';
-import * as moment from 'moment';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { timer } from 'rxjs';
+import { Observable, of, timer } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import { EditorService } from '../editor.service';
@@ -15,6 +14,8 @@ import { ITemplates } from '../../../interface/itemplates';
 
 
 import { untilDestroyed } from 'ngx-take-until-destroy';
+import { DistributionTopicService } from '../../../page/distribution/distribution-topic/distribution-topic.service';
+import { IDistributionTopic } from '../../../interface/idistribution-topic';
 
 @Component( {
   selector: 'app-editor-sms',
@@ -31,8 +32,22 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   public formSms: FormGroup;
   public buttonDisabled: boolean;
-  public templates: ITemplates[];
+  public templates$: Observable<ITemplates[]>;
+  public distSubjects$: Observable<IDistributionTopic[]>;
   public template: ITemplate;
+  public counter: {
+    color: string;
+    size: number;
+    counterSms: number;
+    oneSizeSms: number;
+    nexStep: number;
+  } = {
+    color: 'rgba(0, 0, 0, 0.54)',
+    size: 0,
+    counterSms: 1,
+    oneSizeSms: 64,
+    nexStep: 64,
+  };
 
 
   private distributionId: number;
@@ -44,21 +59,24 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     private dialog: MatDialog,
     private router: Router,
     private editorService: EditorService,
+    private distributionTopicService: DistributionTopicService,
   ) { }
 
   ngOnInit(): void {
-
     this.buttonDisabled = true;
     this.initFormSms();
     this.insertTemplate();
     this.initIsButtonSave();
     this.formFilling();
     this.initTemplates();
+    this.initDistSubject();
+    this.initCounterSms();
   }
 
   private formFilling() {
-    if( this.params.task ) {
+    if ( this.params.task ) {
       this.formSms.get( 'subject' ).patchValue( this.params.task.subject );
+      this.formSms.get( 'distSubjectId' ).patchValue( this.params.task.distSubjectId );
       this.formSms.get( 'text' ).patchValue( this.params.task.distributionTemplate );
     }
   }
@@ -67,27 +85,28 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     this.formSms = this.fb.group( {
       subject: [ '', [ Validators.required ] ],
       text: [ '', [ Validators.required ] ],
-      templateId: ''
+      templateId: '',
+      distSubjectId: ''
     } );
     this.newParams();
   }
 
   private initTemplates() {
-    this.editorSmsService.getTemplates()
-      .pipe( untilDestroyed(this) )
-      .subscribe( ( templates: ITemplates[] ) => {
-        this.templates = templates;
-      } );
+    this.templates$ =  this.editorSmsService.getTemplates();
+  }
+
+  private initDistSubject() {
+    this.distSubjects$ = this.distributionTopicService.getAllDistributionSubjects() as Observable<IDistributionTopic[]>;
   }
 
   private insertTemplate() {
     this.formSms.get( 'templateId' ).valueChanges
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( value => {
         this.formSms.get( 'text' ).patchValue( '' );
         if ( value ) {
           this.editorService.getTemplate( value )
-            .pipe( untilDestroyed(this) )
+            .pipe( untilDestroyed( this ) )
             .subscribe( ( template: ITemplate ) => {
               this.formSms.get( 'text' ).patchValue( template.text );
             } );
@@ -97,8 +116,34 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
 
   private initIsButtonSave() {
     this.formSms.valueChanges
-      .pipe( untilDestroyed(this) )
+      .pipe( untilDestroyed( this ) )
       .subscribe( _ => this.buttonDisabled = this.formSms.invalid );
+  }
+
+  private counterSmsFn(
+    counterSms: number,
+    size: number,
+    oneSizeSms: number = this.counter.oneSizeSms,
+    nexStep: number = this.counter.oneSizeSms,
+    defaultCounterSms:  { counterSms: number, nexStep: number } = { counterSms: 1, nexStep: this.counter.oneSizeSms }
+  ): { counterSms: number, nexStep: number } {
+    return oneSizeSms > size ? defaultCounterSms :
+      nexStep <= size ? this.counterSmsFn( (( nexStep + oneSizeSms ) / oneSizeSms), size, oneSizeSms, nexStep + oneSizeSms ) :
+        { counterSms, nexStep };
+  }
+
+  private initCounterSms() {
+    this.formSms.get( 'text' ).valueChanges
+      .pipe(
+        map( ( value: any ) => {
+          return {
+            oneSizeSms: this.counter.oneSizeSms,
+            size: value.length,
+            color: value.length >= this.counter.oneSizeSms ? '#f44336' : 'rgba(0, 0, 0, 0.54)',
+            ...this.counterSmsFn( this.counter.counterSms, value.length ),
+          };
+        } )
+      ).subscribe( counter => this.counter = counter );
   }
 
   private windowDialog( messDialog: string, status: string, params: any = '' ) {
@@ -113,7 +158,7 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
     if ( status === 'ok' ) {
       this.formSms.reset();
       timer( 1500 )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( _ => {
           this.dialog.closeAll();
         } );
@@ -137,10 +182,10 @@ export class EditorSmsComponent implements OnInit, OnDestroy {
       const error = _ => this.windowDialog( 'DIALOG.ERROR.ERROR_SENDING', 'error' );
 
       const saveDistribution = params => this.editorService.saveDistribution( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( success, error );
       const saveFromPromoCode = params => this.editorService.saveFromPromoCode( params )
-        .pipe( untilDestroyed(this) )
+        .pipe( untilDestroyed( this ) )
         .subscribe( success, error );
 
       const whichMethod = R.ifElse( R.has( 'promoCodeId' ), saveFromPromoCode, saveDistribution );

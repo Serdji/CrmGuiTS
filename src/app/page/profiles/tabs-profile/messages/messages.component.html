@@ -5,41 +5,52 @@
   <mat-accordion *ngIf="!progress" multi="true">
 
     <mat-card class="messages__sort mat-elevation-z0">
-      <div class="messages__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('parsedSubject')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.HEADER.TOPIC_LETTER' | translate}} </b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
-      </div>
-      <div class="messages__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('distributionCustomerStatus.statusNameRus')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.HEADER.STATUS' | translate}}&nbsp;</b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
-      </div>
-      <div  class="messages__filter">
-        <span
-          matRipple
-          matRippleColor="rgba(0,0,0,.1)"
-          matRippleUnbounded="true"
-          matRippleRadius="50"
-          (click)="sortFilter('lastTryDT')"
-        >
-          <b>{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.HEADER.DATE' | translate}}&nbsp;</b>
-          <mat-icon>swap_vert</mat-icon>
-        </span>
+
+      <div class="row no-gutters">
+        <div class="col col-5 _no-col-mb">
+          <div class="messages__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('parsedSubject')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.HEADER.TOPIC_LETTER' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="col col-5 _no-col-mb">
+          <div class="messages__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('distributionCustomerStatus.statusNameRus')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.HEADER.STATUS' | translate}}&nbsp;</b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="col col-2 _no-col-mb">
+          <div  class="messages__filter _justify-content-flex-end">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="sortFilter('lastTryDT')"
+            >
+              <b>{{'PAGE.PROFILES.TABS_PROFILE.MESSAGES.HEADER.DATE' | translate}}&nbsp;</b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
       </div>
     </mat-card>
 
@@ -50,15 +61,23 @@
       (opened)="onOpenPanel( message.distributionId )"
     >
       <mat-expansion-panel-header>
-        <div class="messages__header-wrapper">
-          <div class="messages__title">
-            <span>{{message.parsedSubject}}</span>
+        <div class="row no-gutters">
+          <div class="col col-5 _no-col-mb">
+            <div class="messages__title">
+              <span>{{message.parsedSubject}}</span>
+            </div>
           </div>
-          <div class="messages__title">
-            <span>{{message.distributionCustomerStatus.distributionCustomerStatusId | emailMessagesTranslation | translate}}</span>
+
+          <div class="col col-5 _no-col-mb">
+            <div class="messages__title">
+              <span>{{message.distributionCustomerStatus.distributionCustomerStatusId | emailMessagesTranslation | translate}}</span>
+            </div>
           </div>
-          <div class="messages__title">
-            <span>{{message.lastTryDT | date: 'dd.MM.yyyy, HH:mm'}}</span>
+
+          <div class="col col-2 _no-col-mb">
+            <div class="messages__title _justify-content-flex-end _mr">
+              <span>{{message.lastTryDT | date: 'dd.MM.yyyy, HH:mm'}}</span>
+            </div>
           </div>
         </div>
       </mat-expansion-panel-header>

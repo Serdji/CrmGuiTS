@@ -141,9 +141,7 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
     this.isAllSelected() ?
       this.selection.clear() :
       this.dataSource.data.forEach( row => this.selection.select( row ) );
-    timer( 100 )
-      .pipe( untilDestroyed(this) )
-      .subscribe( _ => this.isIds() );
+      this.isIds();
   }
 
   editCreate( id ): void {
@@ -171,21 +169,22 @@ export class TableAsyncProfileComponent implements OnInit, OnDestroy {
   }
 
   isIds(): void {
-    const arrayId = [];
-    const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
-    checkbox.forEach( ( el: HTMLInputElement ) => {
-      if ( el.checked ) {
-        const id = el.id.split( '-' );
-        if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
-      } else {
-        this.ids = {};
+    timer( 100 ).subscribe( _ => {
+      const arrayId = [];
+      const checkbox = Array.from( document.querySelectorAll( 'mat-table input' ) );
+      checkbox.forEach( ( el: HTMLInputElement ) => {
+        if ( el.checked ) {
+          const id = el.id.split( '-' );
+          if ( Number.isInteger( +id[ 0 ] ) ) arrayId.push( +id[ 0 ] );
+        } else {
+          this.ids = {};
+        }
+      } );
+      if ( arrayId.length !== 0 ) {
+        this.ids = { customerIds: arrayId };
+        this.lessThanTwo = this.ids.customerIds.length < 2;
       }
-    } );
-
-    if ( arrayId.length !== 0 ) {
-      this.ids = { customerIds: arrayId };
-      this.lessThanTwo = this.ids.customerIds.length < 2;
-    }
+    } )
   }
 
   ngOnDestroy(): void {}

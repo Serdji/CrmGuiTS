@@ -26,8 +26,7 @@ export class SwitchLangComponent implements OnInit {
 
   private initTranslate() {
     this.translate.addLangs( [ 'ru', 'en' ] );
-    this.translate.setDefaultLang( 'en' );
-    const browserLang = this.translate.getBrowserLang();
+    this.translate.setDefaultLang( 'ru' );
     const defaultLang = this.translate.getDefaultLang();
     const loadingLanguage = localStorage.getItem( 'language' );
     if ( loadingLanguage ) this.translate.use( loadingLanguage );

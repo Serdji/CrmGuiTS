@@ -95,7 +95,7 @@
 
     <mat-expansion-panel
       *ngFor="let order of orders; let i = index"
-      [expanded]="order.pos[0].distrRecloc.recloc === recLocCDS"
+      [expanded]="order.pos[0].distrRecloc.recloc === recLocCDS  ||  order.recloc === recLocCDS"
       [id]="order.IdBooking"
       (opened)="onOpenPanel( order.IdBooking )"
     >
@@ -114,13 +114,14 @@
       </mat-expansion-panel-header>
 
       <ng-template matExpansionPanelContent>
-        <div class="order__grid-wrapper">
-          <div class="order__grid">
-            <mat-grid-list *ngFor=" let pos of order.pos" cols="1" rowHeight="160px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <div class="row no-gutters align-items-start">
+          <div class="col col-12 col-lg-6 col-xl-4 _no-col-mb">
+            <div class="row row-cols-1 no-gutters" *ngFor=" let pos of order.pos" >
+              <div class="col">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
+                      <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.PARENT_REC_LOC' | translate}} <b> {{pos.distrRecloc.parentRecloc}} </b></div>
                       <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.REC_LOC' | translate}} <b> {{pos.distrRecloc.recloc}} </b></div>
                       <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.GDS' | translate}} <b> {{pos.gds}} </b></div>
                       <div class="order__content-ticket">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.POS.POS_ID' | translate}} <b> {{pos.posId}} </b></div>
@@ -133,10 +134,10 @@
                     </div>
                   </div>
                 </mat-card>
-              </mat-grid-tile>
+              </div>
 
 
-              <mat-grid-tile *ngFor=" let segment of order.segments" [colspan]="1" [rowspan]="1">
+              <div class="col" *ngFor=" let segment of order.segments">
                 <mat-card class="order__card-grid mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
@@ -158,7 +159,7 @@
                       </div>
                       <div class="order__content-point">
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.AIRCRAFT_TYPE' | translate}}</span>
-                        <span><b> {{segment.Craft }}</b></span>
+                        <span><b> {{segment.craft }}</b></span>
                       </div>
                     </div>
 
@@ -179,17 +180,21 @@
                         <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.STATUS' | translate}}</span>
                         <span><b> {{segment.status}}</b></span>
                       </div>
+                      <div class="order__content-point">
+                        <span class="order__content-text">{{'PAGE.PROFILES.TABS_PROFILE.ORDER.EXPANSION.TEMPLATE.SEGMENTS.CRAFT_SOURCE' | translate}}</span>
+                        <span><b> {{segment.craftSource }}</b></span>
+                      </div>
                     </div>
                   </div>
                 </mat-card>
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </div>
 
 
-          <div class="order__grid">
-            <mat-grid-list cols="1" rowHeight="160px">
-              <mat-grid-tile [colspan]="1" [rowspan]="1">
+          <div class="col col-12 col-lg-6 col-xl-4 _no-col-mb">
+            <div class="row row-cols-1 no-gutters">
+              <div class="col">
                 <mat-card class="order__card-grid _ticket mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _none-justify">
@@ -225,9 +230,9 @@
                     </div>
                   </div>
                 </mat-card>
-              </mat-grid-tile>
+              </div>
 
-              <mat-grid-tile *ngFor="let ticket of order.tickets" [colspan]="1" [rowspan]="1">
+              <div class="col" *ngFor="let ticket of order.tickets">
                 <mat-card class="order__card-grid mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
@@ -277,14 +282,14 @@
                     </div>
                   </div>
                 </mat-card>
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </div>
 
 
-          <div class="order__grid">
-            <mat-grid-list cols="1" rowHeight="320px">
-              <mat-grid-tile *ngFor=" let service of order.services" [colspan]="1" [rowspan]="1">
+          <div class="col col-12 col-lg-12 col-xl-4 _no-col-mb">
+            <div class="row row-cols-1 no-gutters">
+              <div class="col" *ngFor="let service of order.services">
                 <mat-card class="order__card-grid mat-elevation-z0">
                   <div class="order__content-wrapper">
                     <div class="order__content _right-width">
@@ -396,8 +401,8 @@
                     </div>
                   </div>
                 </mat-card>
-              </mat-grid-tile>
-            </mat-grid-list>
+              </div>
+            </div>
           </div>
         </div>
       </ng-template>
