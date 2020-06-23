@@ -1027,8 +1027,8 @@
 		"SETTINGS": {
 			"AGE_INTERVAL": {
 				"FIELD": {
-					"AGE_FROM": "Возраст до:",
-					"AGE_TO": "Возраст от:",
+					"AGE_FROM": "Возраст от:",
+					"AGE_TO": "Возраст до:",
 					"GENDER": {
 						"F": "Ж",
 						"M": "М",
