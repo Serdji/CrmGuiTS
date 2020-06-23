@@ -1,0 +1,249 @@
+<div class="companions">
+  <mat-accordion class="companions__accordion" multi="true">
+
+    <mat-card class="companions__sort _filter mat-elevation-z0">
+      <form class="companions__form" [formGroup]="formFilter">
+        <div class="companions__filter-wrapper">
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <mat-select matInput formControlName="switchFromTo" type="text"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.SWITCH_FROM_TO' | translate}}">
+                <mat-option></mat-option>
+                <mat-option
+                  value="from"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.FROM' | translate}} </mat-option>
+                <mat-option value="to"> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.TO' | translate}} </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <mat-select matInput formControlName="airportValue" type="text"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.VALUE' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let airport of airports$ | async" [value]="airport">{{ airport }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <mat-select matInput formControlName="depDateFrom"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_FROM' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let date of dates$ | async" [value]="date">{{ date }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="companions__filter">
+            <mat-form-field class="companions__input">
+              <mat-select matInput formControlName="depDateTo"
+                          placeholder="{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.FILTER.DEP_DATE_TO' | translate}}">
+                <mat-option></mat-option>
+                <mat-option *ngFor="let date of dates$ | async" [value]="date">{{ date }}</mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+        </div>
+      </form>
+    </mat-card>
+
+    <mat-card class="companions__sort mat-elevation-z0">
+      <div class="row row-cols-4 no-gutters">
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="onSortFilter('customerId')"
+            >
+              <b> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.PANEL_HEADER.CUSTOMER_ID' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="onSortFilter('firstName')"
+            >
+              <b> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.PANEL_HEADER.FIRST_NAME' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="onSortFilter('lastName')"
+            >
+              <b> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.PANEL_HEADER.LAST_NAME' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+
+        <div class="col _no-col-mb">
+          <div class="companions__filter">
+            <span
+              matRipple
+              matRippleColor="rgba(0,0,0,.1)"
+              matRippleUnbounded="true"
+              matRippleRadius="50"
+              (click)="onSortFilter('dob')"
+            >
+              <b> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.PANEL_HEADER.DOB' | translate}} </b>
+              <mat-icon>swap_vert</mat-icon>
+            </span>
+          </div>
+        </div>
+      </div>
+    </mat-card>
+
+    <mat-expansion-panel *ngFor="let companion of companions$ | async ">
+      <mat-expansion-panel-header>
+        <div class="row row-cols-4 no-gutters">
+
+          <div class="col _no-col-mb">
+            <div class="companions__title _hover">
+              <span> {{companion.customerId}} </span>
+            </div>
+          </div>
+
+          <div class="col _no-col-mb">
+            <div class="companions__title">
+              <span> {{companion.firstName }} </span>
+            </div>
+          </div>
+
+          <div class="col _no-col-mb">
+            <div class="companions__title">
+              <span> {{companion.lastName}} </span>
+            </div>
+          </div>
+
+          <div class="col _no-col-mb">
+            <div class="companions__title">
+              <span> {{companion.dob | date:'dd.MM.yyyy'}} </span>
+            </div>
+          </div>
+
+        </div>
+      </mat-expansion-panel-header>
+
+
+      <ng-template matExpansionPanelContent>
+        <mat-card class="companions__card mat-elevation-z0">
+          <mat-accordion class="companions__accordion" multi="true">
+            <mat-card class="companions__sort mat-elevation-z0">
+              <div class="row no-gutters">
+
+                <div class="col-6 _no-col-mb">
+                  <div class="companions__filter">
+                    <span
+                      matRipple
+                      matRippleColor="rgba(0,0,0,.1)"
+                      matRippleUnbounded="true"
+                      matRippleRadius="50"
+                    >
+                      <b> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.ORDERS.REC_LOC' | translate}} </b>
+                    </span>
+                  </div>
+                </div>
+
+                <div class="col-6 _no-col-mb">
+                  <div class="companions__filter">
+                    <span
+                      matRipple
+                      matRippleColor="rgba(0,0,0,.1)"
+                      matRippleUnbounded="true"
+                      matRippleRadius="50"
+                    >
+                      <b> {{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.ORDERS.BOOKING_CREATE_DATA' | translate}} </b>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </mat-card>
+
+            <mat-expansion-panel *ngFor="let order of companion.orders ">
+              <mat-expansion-panel-header>
+                <div class="row no-gutters">
+
+                  <div class="col-6 _no-col-mb">
+                    <div class="companions__title _hover">
+                      <span> {{order.recLoc}} </span>
+                    </div>
+                  </div>
+
+
+                  <div class="col-6 _no-col-mb">
+                    <div class="companions__title">
+                      <span> {{order.bookingCreateDate | date:'dd.MM.yyyy'}} </span>
+                    </div>
+                  </div>
+
+                </div>
+              </mat-expansion-panel-header>
+
+              <ng-template matExpansionPanelContent>
+                <div class="row row-cols-1 row-cols-lg-3 no-gutters companions__card">
+                  <div class="col" *ngFor=" let coupon of order.coupons">
+                    <mat-card class="companions__card-grid mat-elevation-z0">
+                      <div class="companions__content-wrapper">
+                        <div class="companions__content _right-width">
+                          <div class="companions__content-point">
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.COUPON' | translate}}</span>
+                            <span><b> {{coupon.coupon}}</b></span>
+                          </div>
+                          <div class="companions__content-point">
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.DEP_DATE' | translate}}</span>
+                            <span><b> {{coupon.depDate }}</b></span>
+                          </div>
+                          <div class="companions__content-point">
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TICKET_NUM' | translate}}</span>
+                            <span><b> {{coupon.ticketNum}}</b></span>
+                          </div>
+                          <div class="companions__content-point">
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.FROM' | translate}}</span>
+                            <span><b> {{coupon.from }}</b></span>
+                          </div>
+                          <div class="companions__content-point">
+                            <span
+                              class="companions__content-text">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.COUPONS.TO' | translate}}</span>
+                            <span><b> {{coupon.to }}</b></span>
+                          </div>
+                        </div>
+                      </div>
+                    </mat-card>
+                  </div>
+                </div>
+                <span class="companions__link" routerLink="/crm/profile/{{ companion.customerId }}" (click)="onOpenTab(
+               { selectedIndex: 3, order: { recLocGDS: order.recLoc } }
+                )">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.GO_TO_ORDER' | translate}}</span>
+              </ng-template>
+            </mat-expansion-panel>
+          </mat-accordion>
+          <span class="companions__link"
+                routerLink="/crm/profile/{{ companion.customerId }}"(click)="onOpenTab(
+               { selectedIndex: 0, order: { recLocGDS: '' } }
+                )">{{'PAGE.PROFILES.TABS_PROFILE.COMPANIONS.EXPANSION.TEMPLATE.GO_TO_PROFILE' | translate}}</span>
+        </mat-card>
+      </ng-template>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>

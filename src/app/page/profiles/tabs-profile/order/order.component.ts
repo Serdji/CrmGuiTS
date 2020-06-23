@@ -287,7 +287,6 @@ export class OrderComponent implements OnInit, OnDestroy {
       .subscribe( _ => {
         const panel: HTMLElement = document.getElementById( id );
         panel.scrollIntoView();
-        this.data.recLocGDS = '';
       } );
   }
 

@@ -134,7 +134,7 @@ export class OrderService {
 
     if ( orders.BookingStatus === 'Cancelled' ) {
       _.map( orders.services, service => {
-        if ( service.emd ) ++this.counterCancelledServicesIsEmd;
+        if ( service.emd && service.ssr !== 'OTHS') ++this.counterCancelledServicesIsEmd;
       } );
     }
     return orders;

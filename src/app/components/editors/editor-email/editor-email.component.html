@@ -56,8 +56,19 @@
             <mat-select formControlName="templateId"
                         placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.TEMPLATE' | translate}}">
               <mat-option></mat-option>
-              <mat-option *ngFor="let template of templates"
+              <mat-option *ngFor="let template of templates$ | async"
                           [value]="template.distributionTemplateId"> {{template.title}} </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field class="editor-email__input">
+            <mat-select formControlName="distSubjectId"
+                        placeholder="{{'POP_UP.EDITOR.DIALOG_EMAIL.DIST_SUBJECT_NAME' | translate}}">
+              <mat-option></mat-option>
+              <mat-option *ngFor="let distSubject of distSubjects$ | async"
+                          matTooltip="{{ distSubject.distSubjectDescription }}"
+                          matTooltipPosition="right"
+                          [value]="distSubject.idDistSubject">{{distSubject.distSubjectName}}
+              </mat-option>
             </mat-select>
           </mat-form-field>
         </mat-card>

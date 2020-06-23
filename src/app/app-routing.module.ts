@@ -8,6 +8,7 @@ import { AccessRightsDistributionGuard } from './guards/access-rights-distributi
 
 const routes: Routes = [
     { path: '', loadChildren: () => import('./page/login/login.module').then(m => m.LoginModule) , data: { title: 'Авторизация' } },
+    { path: 'unsubscribe', loadChildren: () => import('./page/unsubscribe/unsubscribe.module').then(m => m.UnsubscribeModule) , data: { title: 'Отписка' } },
     {
       path: 'crm',
       component: LayoutComponent,
@@ -29,6 +30,7 @@ const routes: Routes = [
         { path: 'profile-group', loadChildren: () => import('./page/special-groups/profile-group/profile-group.module').then(m => m.ProfileGroupModule), data: { title: 'MENU.GROUP_CUSTOMER.LIST_GROUP_CUSTOMER' } },
         { path: 'list-email', loadChildren: () => import('./page/distribution/list-email/list-email.module').then(m => m.ListEmailModule), data: { title: 'MENU.DISTRIBUTIONS.LIST_EMAIL' } },
         { path: 'list-sms', loadChildren: () => import('./page/distribution/list-sms/list-sms.module').then(m => m.ListSmsModule), data: { title: 'MENU.DISTRIBUTIONS.LIST_SMS' } },
+        { path: 'distribution-topic', loadChildren: () => import('./page/distribution/distribution-topic/distribution-topic.module').then(m => m.DistributionTopicModule), data: { title: 'MENU.DISTRIBUTIONS.DISTRIBUTION_TOPIC' } },
         { path: 'profile-email-distribution/:id', loadChildren: () => import('./page/distribution/profile-email-distribution/profile-email-distribution.module').then(m => m.ProfileEmailDistributionModule), canActivate: [ AccessRightsDistributionGuard ], data: { title: 'BREADCRUMBS.EMAIL_DISTRIBUTION' } },
         { path: 'profile-sms-distribution/:id', loadChildren: () => import('./page/distribution/profile-sms-distribution/profile-sms-distribution.module').then(m => m.ProfileSmsDistributionModule), canActivate: [ AccessRightsDistributionGuard ], data: { title: 'BREADCRUMBS.SMS_DISTRIBUTION' } },
         { path: 'add-promotions', loadChildren: () => import('./page/promotions/add-promotions/add-promotions.module').then(m => m.AddPromotionsModule), data: { title: 'MENU.PROMOTIONS_CODES.ADD_PROMOTIONS_CODES' } },
@@ -40,6 +42,7 @@ const routes: Routes = [
         { path: 'list-event', loadChildren: () => import('./page/events/list-event/list-event.module').then(m => m.ListEventModule), data: { title: 'MENU.EVENT.LIST_EVENT' } },
         { path: 'form-table-async-profile-settings', loadChildren: () => import('./page/settings/form-table-async-profile-settings/form-table-async-profile-settings.module').then(m => m.FormTableAsyncProfileSettingsModule), data: { title: 'MENU.SETTINGS.TABLE_CUSTOMERS' } },
         { path: 'index', loadChildren: () => import('./page/settings/index/index.module').then(m => m.IndexModule), data: { title: 'MENU.SETTINGS.INDEX' } },
+        { path: 'age-interval', loadChildren: () => import('./page/settings/age-interval/age-interval.module').then(m => m.AgeIntervalModule), data: { title: 'MENU.SETTINGS.AGE_INTERVAL' } },
         { path: 'restart', loadChildren: () => import('./page/settings/restart/restart.module').then(m => m.RestartModule), data: { title: 'MENU.SETTINGS.RESTART' } },
       ],
     },

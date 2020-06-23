@@ -2,9 +2,12 @@ export interface ISegmentationParameters {
   segmentationTitle: string;
   segmentationGranularity: string;
   customer: {
+    ageGroup: string;
     dobFromInclude: string;
     dobToExclude: string;
     withChild: string;
+    relevanceFrom: number;
+    relevanceTo: number;
     gender: string;
   };
   booking: {

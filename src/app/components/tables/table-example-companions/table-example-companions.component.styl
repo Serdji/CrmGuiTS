@@ -1,0 +1,67 @@
+
+router = 50px;
+
+.table
+
+  &__row
+    white-space: nowrap;
+
+  &__cell
+    text-overflow: ellipsis;
+    display: inline-block;
+    min-height auto;
+    &._cp
+      cursor: pointer
+      padding: 16px;
+      &:hover
+        background: rgba(63,81,181,.12)
+
+  &__input
+    width: 100%;
+
+  &__button
+
+    &-wrapper
+      display: flex;
+      width: 100%;
+
+.mat-column
+
+  &-customerId,
+  &-recLoc,
+  &-documentNumber,
+  &-firstName,
+  &-secondName,
+  &-lastName,
+  &-dob,
+  &-ageGroup
+    flex: 1;
+
+  &-router
+   width: router;
+   margin-left: auto;
+   mat-icon
+     cursor: pointer
+     color: #696969;
+     margin-left: auto
+
+
+mat-table
+  display: table;
+  width: 100%;
+
+mat-header-cell,
+mat-cell
+  padding: 0 16px;
+  width: auto
+  flex: none;
+  box-sizing: border-box;
+
+
+.mat-table-sticky:first-child {
+  border-right: 1px solid #e0e0e0;
+}
+
+.mat-table-sticky:last-child {
+  border-left: 1px solid #e0e0e0;
+}

@@ -7,7 +7,7 @@ import { IDistributionPlaceholder } from '../../../interface/idistribution-place
 import { ITemplates } from '../../../interface/itemplates';
 import { ITemplate } from '../../../interface/itemplate';
 import { DialogComponent } from '../../../shared/dialog/dialog.component';
-import { timer } from 'rxjs';
+import { Observable, timer } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
 import * as R from 'ramda';
@@ -17,6 +17,8 @@ import { EditorService } from '../editor.service';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimeAdapter, OWL_DATE_TIME_FORMATS } from 'ng-pick-datetime';
+import { DistributionTopicService } from '../../../page/distribution/distribution-topic/distribution-topic.service';
+import { IDistributionTopic } from '../../../interface/idistribution-topic';
 
 
 @Component( {
@@ -34,7 +36,8 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
 
   public formDistribution: FormGroup;
   public distributionPlaceholders: IDistributionPlaceholder[];
-  public templates: ITemplates[];
+  public templates$: Observable<ITemplates[]>;
+  public distSubjects$: Observable<IDistributionTopic[]>;
   public template: ITemplate;
   public buttonDisabled: boolean;
 
@@ -45,6 +48,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
 
   constructor(
     private ngxWigToolbarService: NgxWigToolbarService,
+    private distributionTopicService: DistributionTopicService,
     private fb: FormBuilder,
     private dialog: MatDialog,
     private editorEmailService: EditorEmailService,
@@ -60,6 +64,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
     this.initForm();
     this.initDistributionPlaceholders();
     this.initTemplates();
+    this.initDistSubject();
     this.insertTemplate();
     this.initIsButtonSave();
     this.translate.stream( 'MENU' ).subscribe( _ => {
@@ -78,6 +83,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
       subject: [ '', [ Validators.required ] ],
       text: [ '', [ Validators.required ] ],
       templateId: '',
+      distSubjectId: '',
       dateFrom: '',
       dateTo: '',
       totalCount: '',
@@ -87,11 +93,11 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   }
 
   private initTemplates() {
-    this.editorEmailService.getTemplates()
-      .pipe( untilDestroyed( this ) )
-      .subscribe( ( templates: ITemplates[] ) => {
-        this.templates = templates;
-      } );
+    this.templates$ = this.editorEmailService.getTemplates();
+  }
+
+  private initDistSubject() {
+    this.distSubjects$ = this.distributionTopicService.getAllDistributionSubjects() as Observable<IDistributionTopic[]>;
   }
 
   private initDistributionPlaceholders() {
@@ -112,6 +118,7 @@ export class EditorEmailComponent implements OnInit, OnDestroy {
   private formFilling() {
     if ( this.params.task ) {
       this.formDistribution.get( 'subject' ).patchValue( this.params.task.subject );
+      this.formDistribution.get( 'distSubjectId' ).patchValue( this.params.task.distSubjectId );
       this.formDistribution.get( 'text' ).patchValue( this.params.task.distributionTemplate );
     }
     this.formDistribution.get( 'dateFrom' ).patchValue( moment().format() );

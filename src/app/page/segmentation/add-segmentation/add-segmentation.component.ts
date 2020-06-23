@@ -1,7 +1,7 @@
 import { ChangeDetectorRef, Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { debounceTime, delay, switchMap, tap } from 'rxjs/operators';
+import { debounceTime, delay, filter, pluck, switchMap, tap } from 'rxjs/operators';
 import { AddSegmentationService } from './add-segmentation.service';
 import { ISegmentationProfile } from '../../../interface/isegmentation-profile';
 import * as _ from 'lodash';
@@ -21,6 +21,9 @@ import { IAirlineLCode } from '../../../interface/iairline-lcode';
 import { untilDestroyed } from 'ngx-take-until-destroy';
 import { ISellType } from '../../../interface/isell-type';
 import { ISegmentationParameters } from '../../../interface/isegmentation-parameters';
+import { IAgeGroups } from '../../../interface/iage-group';
+import { AgeIntervalService } from '../../settings/age-interval/age-interval.service';
+import { ConvertToStream } from '../../../utils/ConvertToStream';
 
 @Component( {
   selector: 'app-add-segmentation',
@@ -48,6 +51,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
   public airportsFromOptionsE: Observable<IAirport[]>;
   public airportsToOptionsE: Observable<IAirport[]>;
   public sellTypeOptionsE: Observable<ISellType[]>;
+  public ageGroupOptions: Observable<IAgeGroups[]>;
   public selectedTimeT: string;
   public selectedTimeE: string;
   public isIconsClockT: boolean;
@@ -73,7 +77,8 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     private tableAsyncService: TableAsyncService,
     private profileSearchService: ProfileSearchService,
     private saveUrlServiceService: SaveUrlServiceService,
-    private cd: ChangeDetectorRef
+    private ageIntervalService: AgeIntervalService,
+    private convertToStream: ConvertToStream
   ) { }
 
   ngOnInit(): void {
@@ -146,6 +151,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
     this.airportsToOptionsE = this.autocomplete( formGroup, 'arrivalLocationCodeE' );
     this.airlineLCodeOptionsT = this.autocomplete( formGroup, 'airlineLCodeIdT' );
     this.airlineLCodeOptionsE = this.autocomplete( formGroup, 'airlineLCodeIdE' );
+    this.ageGroupOptions = this.autocomplete( formGroup, 'ageGroup' );
     this.sellTypeOptionsE = this[ formGroup ].get( 'emdIdSellTypeE' ).valueChanges
       .pipe(
         debounceTime( this.autDelay ),
@@ -188,6 +194,23 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
           } ),
         ) as Observable<IAirlineLCode[]>;
     }
+    if ( formControlName === 'ageGroup' ) {
+      return this[ formGroup ].get( formControlName ).valueChanges
+        .pipe(
+          switchMap( ( text: string ) => {
+            if ( _.size( text ) > 0 ) {
+              return this.ageIntervalService.getAgeGroups()
+                .pipe(
+                  pluck( 'ageGroups' ),
+                  this.convertToStream.stream(
+                    filter( ( ageGroups: IAgeGroups ) => _.includes( ageGroups.title, text ) )
+                  ),
+                );
+            }
+            return EMPTY;
+          } ),
+        );
+    }
     return this[ formGroup ].get( formControlName ).valueChanges
       .pipe(
         debounceTime( this.autDelay ),
@@ -220,9 +243,18 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
             this.formSegmentation.patchValue( value );
           }
         } );
-        if ( !_.isNull( ticket ) ) this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( { title: ticket.airlineLCodeT, idAirline: ticket.airlineLCodeIdT } );
-        if ( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( { title: emd.airlineLCodeE, idAirline: emd.airlineLCodeIdE } );
-        if ( !_.isNull( emd ) ) this.formSegmentation.get( 'emdIdSellTypeE' ).patchValue( { sellTypeCode: emd.emdSellTypeE, idSellType: emd.emdIdSellTypeE } );
+        if ( !_.isNull( ticket ) ) this.formSegmentation.get( 'airlineLCodeIdT' ).patchValue( {
+          title: ticket.airlineLCodeT,
+          idAirline: ticket.airlineLCodeIdT
+        } );
+        if ( !_.isNull( emd ) ) this.formSegmentation.get( 'airlineLCodeIdE' ).patchValue( {
+          title: emd.airlineLCodeE,
+          idAirline: emd.airlineLCodeIdE
+        } );
+        if ( !_.isNull( emd ) ) this.formSegmentation.get( 'emdIdSellTypeE' ).patchValue( {
+          sellTypeCode: emd.emdSellTypeE,
+          idSellType: emd.emdIdSellTypeE
+        } );
         const segmentsCountToExclude = _.parseInt( this.formSegmentation.get( 'segmentsCountToExclude' ).value ) - 1;
         if ( !_.isNull( segmentsCountToExclude ) && !_.isNaN( segmentsCountToExclude ) ) this.formSegmentation.get( 'segmentsCountToExclude' ).patchValue( segmentsCountToExclude );
         this.isProgressSegmentationParams = false;
@@ -259,6 +291,7 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       dobToExclude: '',
       withChild: '',
       gender: '',
+      ageGroup: '',
       subjectAnalysis: '',
       bookingCreateDateFromInclude: '',
       bookingCreateDateToExclude: '',
@@ -300,7 +333,9 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       dateOfServiceFromIncludeE: '',
       dateOfServiceToExcludeE: '',
       dateTransFromIncludeE: '',
-      dateTransToExcludeE: ''
+      dateTransToExcludeE: '',
+      relevanceFrom: '',
+      relevanceTo: ''
     };
   }
 
@@ -485,11 +520,14 @@ export class AddSegmentationComponent implements OnInit, OnDestroy {
       segmentationTitle: this.formSegmentation.get( 'segmentationTitle' ).value,
       segmentationGranularity: this.formSegmentation.get( 'segmentationGranularity' ).value,
       customer: {
+        ageGroup: this.formSegmentation.get( 'ageGroup' ).value,
         dobFromInclude: this.formSegmentation.get( 'dobFromInclude' ).value ?
           moment( this.formSegmentation.get( 'dobFromInclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         dobToExclude: this.formSegmentation.get( 'dobToExclude' ).value ?
           moment( this.formSegmentation.get( 'dobToExclude' ).value ).format( 'YYYY-MM-DD' ) + 'T00:00:00' : '',
         withChild: this.formSegmentation.get( 'withChild' ).value,
+        relevanceFrom: this.formSegmentation.get( 'relevanceFrom' ).value,
+        relevanceTo: this.formSegmentation.get( 'relevanceTo' ).value,
         gender: this.formSegmentation.get( 'gender' ).value,
       },
       booking: {
