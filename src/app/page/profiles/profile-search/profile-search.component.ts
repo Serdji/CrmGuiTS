@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ProfileSearchService } from './profile-search.service';
-import { map, debounceTime, switchMap, pluck } from 'rxjs/operators';
+import { map, debounceTime, switchMap, pluck, delay } from 'rxjs/operators';
 import { forkJoin, Observable } from 'rxjs';
 import { Iprofiles } from '../../../interface/Iprofiles';
 import { IpagPage } from '../../../interface/ipag-page';
@@ -125,7 +125,10 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
 
   private initQueryParams() {
     this.route.queryParams
-      .pipe( untilDestroyed( this ) )
+      .pipe(
+        untilDestroyed( this ),
+        delay( 1000 )
+      )
       .subscribe( params => this.formFilling( params ) );
   }
 
@@ -373,6 +376,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
       this.segmentationChips = segmentationTitles;
       this.customerGroupChips = customerGroupTitles;
 
+
       for ( const key of Object.keys( params ) ) {
         if ( this.isKeys( key, 'all' ) ) {
           newObjectForm[ key ] = params[ key ];
@@ -410,6 +414,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     const formValue = Object.keys( this.formProfileSearch.value );
     const segmentation = [];
     const customerGroup = [];
+
 
     for ( const segmentationChip of this.segmentationChips ) {
       if ( segmentationChip ) {
@@ -453,6 +458,7 @@ export class ProfileSearchComponent implements OnInit, OnDestroy {
     if ( _.size( customerGroup ) > 0 ) {
       _.set( params, 'customerGroupIds', customerGroup );
     }
+
 
     this.serverRequest( params );
   }
