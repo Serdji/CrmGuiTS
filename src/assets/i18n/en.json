@@ -492,9 +492,9 @@
 					"FILTER": {
 						"DEP_DATE_FROM": "Flight date from",
 						"DEP_DATE_TO": "Flight date to",
-						"FROM": "From",
-						"SWITCH_FROM_TO": "Destination Selection",
-						"TO": "To",
+						"FROM": "Departure",
+						"SWITCH_FROM_TO": "Flight point",
+						"TO": "Arrival",
 						"VALUE": "Value"
 					},
 					"TABLE": {
