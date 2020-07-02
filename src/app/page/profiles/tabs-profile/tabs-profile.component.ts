@@ -162,14 +162,15 @@ export class TabsProfileComponent implements OnInit, OnDestroy {
         } ),
         map( ( profile: Iprofile ) => _.merge( profile, _.find( profile.customerNames, { 'customerNameType': 1 } ) ) ),
         // @ts-ignore
-        map( ( profile: Iprofile ) => _.set( profile, 'customerAge', moment().format( 'YYYY' ) - moment( profile.dob ).format( 'YYYY' ) ) ),
-        toArray(),
-        tap( ( profile: Iprofile[] ) => {
-          this.profileService.subjectGetProfile.next( profile );
-          this.profileProgress = false;
-          this.profileSegmentationProgress = false;
-        } ),
-      );
+        map( ( profile: Iprofile ) => _.set( profile, 'customerAge', ( ( new Date().getTime() - new Date( moment( profile.dob ).format( 'YYYY-MM-DD' ) ) ) / ( 24 * 3600 * 365.25 * 1000 ) ) | 0 ) ),
+          toArray(),
+          tap( ( profile: Iprofile[] ) => {
+            this.profileService.subjectGetProfile.next( profile );
+            this.profileProgress = false;
+            this.profileSegmentationProgress = false;
+          } ),
+        )
+    ;
   }
 
   private initProfileSegmentation( profile: Iprofile ) {
